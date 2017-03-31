@@ -128,8 +128,15 @@ public class Emsi_DeclareMA_SearchController {
 				// 客服代表
 				if (client.getSelectedItem() != null
 						&& !"全部".equals(client.getSelectedItem().getLabel())) {
-					sql = sql + " and coba_client='"
-							+ client.getSelectedItem().getLabel() + "'";
+					if ("客户服务部".equals(client.getSelectedItem().getLabel())) {
+						sql = sql + " and coba_client in(select log_name from login where dep_id=2)";
+					}else if ("全国项目部".equals(client.getSelectedItem().getLabel())) {
+						sql = sql + " and coba_client in(select log_name from login where dep_id=6)";
+					}else {
+						sql = sql + " and coba_client='"
+								+ client.getSelectedItem().getLabel() + "'";
+					}
+
 				}
 
 				// 开户状态

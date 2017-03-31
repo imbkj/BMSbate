@@ -550,7 +550,7 @@ public class Embc_InsertEmbcIdController {
 
 								if (m.getEmbc_tapr_id() != null
 										&& !m.getEmbc_tapr_id().equals(0)) {
-									Object[] obj = { m, sql };
+									Object[] obj = {"6", m, sql };
 									WfBusinessService wfbs = new EmBcInfoImpl();
 									WfOperateService wfs = new WfOperateImpl(
 											wfbs);

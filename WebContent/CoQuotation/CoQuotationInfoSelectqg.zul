@@ -5,12 +5,12 @@
 -->
 <?page contentType="text/html;charset=UTF-8"?>
 <zk>
-	<window border="normal" title="项目修改" width="100%" 
-		closable="true" apply="org.zkoss.bind.BindComposer"
+	<window border="normal" title="项目修改" width="100%" closable="true"
+		apply="org.zkoss.bind.BindComposer"
 		viewModel="@id('vm') @init('Controller.CoQuotation.CoQuotationInfoSelectqgController')">
-		
+
 		<grid model="@load(vm.coofferinfoList)" emptyMessage="暂无数据"
-			height="100%" width="100%" >
+			height="100%" width="100%">
 			<columns sizable="true">
 				<column label="序号" width="40px"></column>
 				<column label="产品名称"></column>
@@ -25,8 +25,9 @@
 			</columns>
 			<template name="model">
 				<row>
-				<cell>
-					<label value="${forEachStatus.index+1 }" /></cell>
+					<cell>
+						<label value="${forEachStatus.index+1 }" />
+					</cell>
 					<cell>
 						<label value="@load(each.coli_name)" />
 					</cell>
@@ -49,7 +50,8 @@
 						</hbox>
 					</cell>
 					<cell>
-					<label value="@load(each.coli_standard)" /></cell>
+						<label value="@load(each.coli_standard)" />
+					</cell>
 					<cell>
 						<hbox if="${each.coli_pclass=='商业保险' }">
 							<label value="@load(each.coli_amount)" />
@@ -57,48 +59,54 @@
 						</hbox>
 					</cell>
 					<cell>
-					<div
-						style="cursor:pointer;overflow:hidden;-ms-text-overflow: ellipsis;-o-text-overflow: ellipsis;"
-						tooltip="content_${each.coli_id },position=after_end">
-						<label
-							style="white-space: nowrap;text-overflow:ellipsis;cursor:pointer"
-							value="@load(each.coli_content)">
-						</label>
-						<popup id="content_${each.coli_id }"
-							width="200px">
-							<label value="@load(each.coli_content)">
+						<div
+							style="cursor:pointer;overflow:hidden;-ms-text-overflow: ellipsis;-o-text-overflow: ellipsis;"
+							tooltip="content_${each.coli_id },position=after_end">
+							<label
+								style="white-space: nowrap;text-overflow:ellipsis;cursor:pointer"
+								value="@load(each.coli_content)">
 							</label>
-						</popup>
-					</div>
+							<popup id="content_${each.coli_id }"
+								width="200px">
+								<label
+									value="@load(each.coli_content)">
+								</label>
+							</popup>
+						</div>
 					</cell>
 					<cell>
-					<div
-						tooltip="remark_${each.coli_id },position=after_pointer">
-						<label
-							style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;
+						<div
+							tooltip="remark_${each.coli_id },position=after_pointer">
+							<label
+								style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;
 									cursor:pointer"
-							value="@load(each.coli_remark)">
-						</label>
-						<popup id="remark_${each.coli_id }"
-							width="200px">
-							<label value="@load(each.coli_remark)">
+								value="@load(each.coli_remark)">
 							</label>
-						</popup>
-					</div>
+							<popup id="remark_${each.coli_id }"
+								width="200px">
+								<label
+									value="@load(each.coli_remark)">
+								</label>
+							</popup>
+						</div>
 					</cell>
 					<cell>
-					<div>
-						<menubar autodrop="true">
-							<menu image="../images/pencil-small.png">
-								<menupopup>
-									<menuitem label="费用调整"
-										onClick="@command('co_change',a=each)" />
-									<menuitem label="产品终止" if="${each.coli_pclass ne '人事基础服务费' }"
-										onClick="@command('co_del',a=each)" />
-								</menupopup>
-							</menu>
-						</menubar>
-					</div>
+						<div>
+							<menubar autodrop="true">
+								<menu
+									image="../images/pencil-small.png">
+									<menupopup>
+										<menuitem label="费用调整"
+											onClick="@command('co_change',a=each)" />
+										<menuitem label="产品终止"
+											if="${each.coli_pclass ne '人事基础服务费' }"
+											onClick="@command('co_del',a=each)" />
+										<menuitem label="已分配员工"
+											onClick="@command('fp',model=each)" />
+									</menupopup>
+								</menu>
+							</menubar>
+						</div>
 					</cell>
 				</row>
 			</template>

@@ -36,7 +36,7 @@ public class CoBase_SelectCoOffer_DetailController {
 	public void init() {
 		CoBase_SelectBll bll = new CoBase_SelectBll();
 		try {
-			setEmbaseList(bll.getEmbaseList(" and coof_id=" + daid+" order by emba_name"));
+			setEmbaseList(bll.getEmbaseList(" and cgli_coli_id=" + daid+" order by emba_name"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

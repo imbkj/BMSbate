@@ -1,0 +1,580 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="单位独立户信息修改" border="normal" width="80%" height="90%"
+		closable="true" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoHousingFund.CoHouseInfoModController')">
+		<borderlayout width="100%" height="100%">
+			<center border="0">
+				<grid width="100%" height="100%">
+					<rows>
+						<row>
+							<cell>
+								<groupbox title="账户信息" mold="3d">
+									<grid width="100%" height="100%">
+										<columns visible="false">
+											<column width="120px" />
+											<column width="80px" />
+											<column />
+											<column width="120px" />
+											<column />
+											<column width="120px" />
+											<column />
+										</columns>
+										<rows>
+											<row>
+												<cell colspan="2">
+													公司编号
+												</cell>
+												<cell>
+													<label
+														value="@load(vm.cfm.cid)" />
+												</cell>
+												<cell>单位公积金帐号</cell>
+												<cell>
+													<textbox
+														mold="rounded" width="90%"
+														value="@bind(vm.cfm.cohf_houseid)" />
+												</cell>
+												<cell>托收日</cell>
+												<cell>
+													<combobox
+														mold="rounded" model="@load(vm.tslist)"
+														value="@bind(vm.cfm.cohf_tsday)" readonly="true">
+														<template
+															name="model">
+															<comboitem
+																label="@load(each)" />
+														</template>
+													</combobox>
+												</cell>
+											</row>
+											<row>
+												<cell colspan="2">
+													公司名称
+												</cell>
+												<cell colspan="3">
+													<label
+														value="@bind(vm.cfm.cohf_company)" />
+												</cell>
+												<cell>中智管理状态</cell>
+												<cell>
+													<combobox
+														mold="rounded" readonly="true"
+														value="@bind(vm.cfm.cohf_manstate)">
+														<comboitem
+															label="单位接管" />
+														<comboitem
+															label="我司管理" />
+														<comboitem
+															label="我司开户" />
+														<comboitem
+															label="账户解约" />
+														<comboitem
+															label="账户空置" />
+														<comboitem
+															label="账户注销" />
+													</combobox>
+												</cell>
+											</row>
+											<row>
+												<cell colspan="2">
+													归集银行
+												</cell>
+												<cell>
+
+													<combobox
+														mold="rounded" model="@load(vm.jclist)"
+														value="@bind(vm.cfm.cohf_bankjc)" readonly="true">
+														<template
+															name="model">
+															<comboitem
+																label="@load(each.bank)" />
+														</template>
+													</combobox>
+
+												</cell>
+												<cell>领卡银行</cell>
+												<cell>
+													<textbox
+														mold="rounded" width="90%"
+														value="@bind(vm.cfm.cohf_banklk)" />
+												</cell>
+												<cell>单位/个人缴存比例</cell>
+												<cell>
+													<combobox
+														mold="rounded" model="@load(vm.cplist)"
+														value="@bind(vm.cfm.cohf_cpp)" readonly="true">
+														<template
+															name="model">
+															<comboitem
+																label="@load(each)" />
+														</template>
+													</combobox>
+												</cell>
+											</row>
+
+											<row>
+												<cell rowspan="2">
+													联系人
+												</cell>
+												<cell>姓名</cell>
+												<cell>
+													<textbox
+														mold="rounded" width="90%"
+														value="@bind(vm.cfm.cohf_contactname)" />
+												</cell>
+												<cell>固定电话</cell>
+												<cell>
+													<textbox
+														mold="rounded" width="90%"
+														value="@bind(vm.cfm.cohf_contacttel)" />
+												</cell>
+												<cell></cell>
+												<cell></cell>
+											</row>
+											<row>
+
+												<cell>邮箱</cell>
+												<cell>
+													<textbox
+														mold="rounded" width="90%"
+														value="@bind(vm.cfm.cohf_contactmail)" />
+												</cell>
+												<cell>手机</cell>
+												<cell>
+													<textbox
+														mold="rounded" width="90%"
+														value="@bind(vm.cfm.cohf_contactmobile)" />
+												</cell>
+												<cell></cell>
+												<cell></cell>
+											</row>
+											<row>
+												<cell colspan="2">
+													组织机构代码
+												</cell>
+												<cell>
+													<textbox
+														mold="rounded" width="90%"
+														value="@bind(vm.cfm.cohf_comid)" />
+												</cell>
+												<cell>资格类型</cell>
+												<cell>
+													<textbox
+														mold="rounded" width="90%"
+														value="@bind(vm.cfm.cohf_zgtype)" />
+												</cell>
+												<cell>行业代码</cell>
+												<cell>
+													<combobox
+														mold="rounded" model="@load(vm.pilist)"
+														value="@bind(vm.cfm.cohf_industry)" readonly="true">
+														<template
+															name="model">
+															<comboitem
+																label="@load(each.name)" />
+														</template>
+													</combobox>
+												</cell>
+											</row>
+											<row>
+												<cell colspan="2">
+													单位地址
+												</cell>
+												<cell colspan="3">
+													<textbox
+														mold="rounded" width="90%"
+														value="@bind(vm.cfm.cohf_address)" />
+												</cell>
+
+												<cell>邮编</cell>
+												<cell>
+													<textbox
+														mold="rounded" width="90%"
+														value="@bind(vm.cfm.cohf_pastal)" />
+												</cell>
+											</row>
+											<row>
+												<cell colspan="2">
+													所属行业区域
+												</cell>
+												<cell>
+													<combobox
+														mold="rounded" model="@load(vm.szlist)"
+														value="@bind(vm.cfm.cohf_area)" readonly="true">
+														<template
+															name="model">
+															<comboitem
+																label="@load(each.area)" />
+														</template>
+													</combobox>
+												</cell>
+												<cell>隶属关系</cell>
+												<cell>
+													<combobox
+														mold="rounded" model="@load(vm.mslist)"
+														value="@bind(vm.cfm.cohf_attached)" readonly="true">
+														<template
+															name="model">
+															<comboitem
+																label="@load(each.name)" />
+														</template>
+													</combobox>
+												</cell>
+												<cell></cell>
+												<cell></cell>
+											</row>
+											<row>
+												<cell colspan="2">
+													性质分类
+												</cell>
+												<cell>
+													<combobox
+														mold="rounded" model="@load(vm.cnlist)"
+														value="@bind(vm.cfm.cohf_nature)" readonly="true">
+														<template
+															name="model">
+															<comboitem
+																label="@load(each.pcon_name)" />
+														</template>
+													</combobox>
+												</cell>
+												<cell>企业经济类型</cell>
+												<cell>
+													<combobox
+														mold="rounded" model="@load(vm.ceclist)"
+														value="@bind(vm.cfm.cohf_ecoclass)" readonly="true">
+														<template
+															name="model">
+															<comboitem
+																label="@load(each.pcoe_name)" />
+														</template>
+													</combobox>
+												</cell>
+												<cell></cell>
+												<cell></cell>
+											</row>
+											<row>
+												<cell rowspan="2">
+													法定代表人或负责人
+												</cell>
+												<cell>姓名</cell>
+												<cell>
+													<textbox
+														mold="rounded" width="90%"
+														value="@bind(vm.cfm.cohf_corname)" />
+												</cell>
+												<cell>联系电话</cell>
+												<cell>
+													<textbox
+														mold="rounded" width="90%"
+														value="@bind(vm.cfm.cohf_cortel)" />
+												</cell>
+												<cell></cell>
+												<cell></cell>
+											</row>
+											<row>
+												<cell>证件类型</cell>
+												<cell>
+													<textbox
+														mold="rounded" width="90%"
+														value="@bind(vm.cfm.cohf_coridtype)" />
+												</cell>
+												<cell>证件号码</cell>
+												<cell>
+													<textbox
+														mold="rounded" width="90%"
+														value="@bind(vm.cfm.cohf_coridcard)" />
+												</cell>
+												<cell></cell>
+												<cell></cell>
+											</row>
+											<row>
+												<cell>上级主管部门</cell>
+												<cell>名称</cell>
+												<cell>
+													<textbox
+														mold="rounded" width="90%"
+														value="@bind(vm.cfm.cohf_department)" />
+												</cell>
+												<cell>联系电话</cell>
+												<cell>
+													<textbox
+														mold="rounded" width="90%"
+														value="@bind(vm.cfm.cohf_departmenttel)" />
+												</cell>
+												<cell></cell>
+												<cell></cell>
+											</row>
+											<row>
+												<cell colspan="2">
+													单位成立时间
+												</cell>
+												<cell>
+													<datebox
+														mold="rounded" width="90%"
+														value="@bind(vm.cfm.cohf_createtime2)" />
+												</cell>
+												<cell>工商注册号</cell>
+												<cell>
+													<textbox
+														mold="rounded" width="90%"
+														value="@bind(vm.cfm.cohf_regid)" />
+												</cell>
+												<cell>纳税人识别号</cell>
+												<cell>
+													<textbox
+														mold="rounded" width="90%"
+														value="@bind(vm.cfm.cohf_taxpayerid)" />
+												</cell>
+											</row>
+											<row>
+												<cell colspan="2">
+													公积金缴存银行
+												</cell>
+												<cell>
+													<textbox
+														mold="rounded" width="90%"
+														value="@bind(vm.cfm.cohf_bankjc)" />
+												</cell>
+												<cell>缴存银行帐号</cell>
+												<cell>
+													<textbox
+														mold="rounded" width="90%"
+														value="@bind(vm.cfm.cohf_bankjcid)" />
+												</cell>
+												<cell>社保单位编号</cell>
+												<cell>
+													<textbox
+														mold="rounded" width="90%"
+														value="@bind(vm.cfm.cohf_sorid)" />
+												</cell>
+											</row>
+											<row>
+												<cell colspan="2">
+													托收账户开户银行
+												</cell>
+												<cell>
+													<textbox
+														mold="rounded" width="90%"
+														value="@bind(vm.cfm.cohf_bankts)" />
+												</cell>
+												<cell>托收账户银行帐号</cell>
+												<cell>
+													<textbox
+														mold="rounded" width="90%"
+														value="@bind(vm.cfm.cohf_banktsid)" />
+												</cell>
+												<cell>公积金首次托收月</cell>
+												<cell>
+													<textbox
+														mold="rounded" width="90%"
+														value="@bind(vm.cfm.cohf_firmonth)" />
+												</cell>
+											</row>
+											<row>
+												<cell colspan="2">
+													托收账户名称
+												</cell>
+												<cell colspan="5">
+													<textbox
+														mold="rounded" width="90%"
+														value="@bind(vm.cfm.cohf_banktsacc)" />
+												</cell>
+
+											</row>
+										</rows>
+									</grid>
+								</groupbox>
+								<groupbox title="专办员信息" mold="3d">
+									<grid width="100%" height="250px"
+										sizedByContent="true" span="true" model="@load(vm.zbList)">
+										<columns>
+											<column label="姓名"
+												width="80px" align="center" />
+											<column label="专办员号"
+												width="125px" align="center" />
+											<column label="添加时间"
+												align="center" />
+											<column label="添加人"
+												align="center" />
+											<column label="终止时间"
+												align="center" />
+											<column label="终止原因"
+												align="center" />
+											<column label="操作"
+												align="center" />
+										</columns>
+										<template name="model">
+											<row>
+												<cell>
+													<combobox
+														width="90%" mold="rounded" value="@bind(each.cfzb_name)"
+														instant="true"
+														onChange="@command('updateNumber',a=self,b=each)"
+														model="@load(vm.zilist)">
+														<template
+															name="model">
+															<comboitem
+																label="@load(each.cfzi_name)" />
+														</template>
+													</combobox>
+												</cell>
+												<cell>
+													<textbox
+														mold="rounded" width="90%"
+														value="@bind(each.cfzb_number)" />
+												</cell>
+												<cell>
+													<label
+														value="@bind(each.addtime)" />
+												</cell>
+												<cell>
+													<label
+														value="@bind(each.cfzb_addname)" />
+												</cell>
+												<cell>
+													<datebox
+														mold="rounded" value="@bind(each.stoptime)" />
+												</cell>
+												<cell>
+													<textbox
+														mold="rounded" width="90%"
+														value="@bind(each.cfzb_stopreason)" />
+												</cell>
+												<cell>
+													<button label="删除"
+														onClick="@command('delZb',a=each)" />
+												</cell>
+											</row>
+										</template>
+										<foot>
+											<footer span="7"
+												align="center">
+												<button label="添加专办员"
+													onClick="@command('addzb')" />
+											</footer>
+										</foot>
+									</grid>
+
+								</groupbox>
+								<groupbox title="密钥信息" mold="3d">
+
+									<grid width="100%" height="250px"
+										sizedByContent="true" span="true" model="@load(vm.pwdList)">
+										<columns>
+											<column width="100px"
+												align="center" label="密钥类型" />
+											<column width="100px"
+												align="center" label="起始时间" />
+											<column width="100px"
+												align="center" label="到期日期" />
+											<column width="60px"
+												align="center" label="办理年限" />
+											<column width="100px"
+												align="center" label="密钥专办员" />
+											<column  align="center"
+												label="专办员号" />
+											<column align="center"  width="100px"
+												label="密钥密码" />
+											<column align="center"
+												label="添加时间" />
+											<column align="center"
+												label="添加人" />
+											<column align="center"
+												label="操作" />
+										</columns>
+										<template name="model">
+											<row>
+												<cell>
+													<combobox
+														mold="rounded" width="90%"
+														value="@bind(each.cfpw_type)">
+														<comboitem
+															label="网办密钥" />
+														<comboitem
+															label="公积金密钥" />
+													</combobox>
+												</cell>
+												<cell>
+													<datebox
+														mold="rounded" width="90%" value="@bind(each.startdate)" />
+												</cell>
+												<cell>
+													<datebox
+														mold="rounded" width="90%" value="@bind(each.stopdate)" />
+												</cell>
+												<cell>
+													<combobox
+														width="90%" mold="rounded" readonly="true"
+														value="@bind(each.cfpw_limit)">
+														<comboitem
+															label="1" />
+														<comboitem
+															label="2" />
+														<comboitem
+															label="3" />
+														<comboitem
+															label="4" />
+														<comboitem
+															label="5" />
+													</combobox>
+												</cell>
+												<cell>
+													<combobox
+														readonly="true" width="90%" mold="rounded"
+														value="@bind(each.cfpw_zbname)" instant="true"
+														onChange="@command('updateNum',a=self,b=each)"
+														model="@load(vm.zbList)">
+														<template
+															name="model">
+															<comboitem
+																value="@load(each)" label="@load(each.cfzb_name)" />
+														</template>
+													</combobox>
+												</cell>
+												<cell>
+													<textbox width="90%"
+														mold="rounded" readonly="true"
+														value="@bind(each.cfpw_zbnumber)" />
+												</cell>
+												<cell>
+													<textbox width="90%"
+														mold="rounded" value="@bind(each.cfpw_pwd)" />
+												</cell>
+												<cell>
+													<label
+														value="@load(each.cfpw_addtime)" />
+												</cell>
+												<cell>
+													<label
+														value="@load(each.cfpw_addname)" />
+												</cell>
+												<cell>
+													<button label="删除"
+														onClick="@command('delPwd',a=each)" />
+												</cell>
+											</row>
+										</template>
+										<foot>
+											<footer span="10"
+												align="center">
+												<button label="添加密钥信息"
+													onClick="@command('addPwd')" />
+											</footer>
+										</foot>
+									</grid>
+								</groupbox>
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</center>
+			<south>
+				<div align="center">
+					<button label="提交" />
+				</div>
+			</south>
+		</borderlayout>
+	</window>
+</zk>

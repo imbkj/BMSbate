@@ -143,8 +143,8 @@ public class EmBase_BcListController {
 		List<EmbaseGDModel> checkedlist = new ArrayList<EmbaseGDModel>();
 		String strid = "";
 		for (int i = 0; i < gd.getRows().getChildren().size(); i++) {
-			if (gd.getCell(i, 20) != null) {
-				Cell cell = (Cell) gd.getCell(i, 20);
+			if (gd.getCell(i, 21) != null) {
+				Cell cell = (Cell) gd.getCell(i, 21);
 				Checkbox ck = (Checkbox) cell.getChildren().get(0);
 				if (ck.isChecked()) {
 					EmbaseGDModel m = ck.getValue();

@@ -56,7 +56,7 @@ public class CoQuotationInfoSelectController {
 	@Command("fp")
 	public void fp(@BindingParam("model") CoOfferListModel model) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("daid", model.getColi_coof_id());
+		map.put("daid", model.getColi_id());
 		Window window = (Window) Executions.createComponents(
 				"/CoBase/CoBase_SelectCoOffer_Detail.zul", null, map);
 		window.doModal();

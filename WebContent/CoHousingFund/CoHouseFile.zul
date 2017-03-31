@@ -1,0 +1,82 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winCF" title="操作指引" border="normal" width="100%"
+		height="100%" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoHousingFund.CoHouseFileController')">
+		<borderlayout width="100%" height="100%">
+			<center>
+
+				<include id="ifr" zindex="0" src="@load(vm.fileUrl)">
+				</include>
+			</center>
+			<east width="30%" collapsible="true" splittable="true"
+				open="false">
+				<borderlayout width="100%" height="100%">
+					<north>
+						<grid width="100%">
+							<columns visible="false">
+								<column width="80px" />
+								<column />
+								<column />
+							</columns>
+							<rows>
+								<row>
+									<cell>名称</cell>
+									<cell>
+										<textbox width="90%"
+											mold="rounded" value="@bind(vm.searchName)" />
+									</cell>
+									<cell>
+										<button label="查询"
+											onClick="@command('search')" />
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</north>
+					<center>
+						<grid width="100%" height="100%"
+							model="@load(vm.filelist)">
+							<columns>
+								<column label="序号" align="center"
+									width="80px" />
+								<column label="名称" align="center" />
+								<column label="操作" align="center" />
+							</columns>
+							<template name="model">
+								<row>
+									<cell>
+										<label
+											value="${forEachStatus.index+1 }" />
+									</cell>
+									<cell>
+										<label
+											value="@load(each.chff_name)" />
+									</cell>
+									<cell>
+										<button label="修改" visible="@load(vm.modState)"
+											onClick="@command('mod',a=each)" />
+										<button label="删除" visible="@load(vm.modState)"
+											onClick="@command('del',a=each)" />
+										<button label="查看"
+											onClick="@command('info',a=each)" />
+
+									</cell>
+								</row>
+							</template>
+							<foot>
+								<footer span="3" align="left">
+									<button label="返回"
+										onClick="@command('back')" />
+
+									<button label="新增"  visible="@load(vm.modState)"
+										onClick="@command('add')" />
+								</footer>
+							</foot>
+						</grid>
+					</center>
+				</borderlayout>
+			</east>
+		</borderlayout>
+	</window>
+</zk>

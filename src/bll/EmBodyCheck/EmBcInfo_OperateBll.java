@@ -174,7 +174,7 @@ public class EmBcInfo_OperateBll {
 	// 跳过
 	public String[] EmBodyCheckSkipToNext(EmBodyCheckModel m, String sql) {
 		String[] str = new String[5];
-		Object[] obj = { m, sql };
+		Object[] obj = {"6", m, sql };
 		WfBusinessService wfbs = new EmBcInfoImpl();
 		WfOperateService wfs = new WfOperateImpl(wfbs);
 		String username = UserInfo.getUsername();

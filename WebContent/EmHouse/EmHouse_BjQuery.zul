@@ -15,9 +15,7 @@
 								<column width="110px"></column>
 								<column></column>
 							</columns>
-
 							<rows>
-
 								<row>
 									<cell>公司名称</cell>
 									<cell colspan="3">

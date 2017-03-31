@@ -154,9 +154,9 @@ public class EmbcItem_SelectDal {
 		List<EmBodyCheckItemModel> list = new ListModelList<>();
 		dbconn db = new dbconn();
 		String sql="select isnull(ebit_name2,ebit_name)ebit_name" +
-				" from EmBodyCheckItem where ebit_id in (?)";
+				" from EmBodyCheckItem where ebit_id in ("+itemNums+")";
 		try {
-			list=db.find(sql, EmBodyCheckItemModel.class, null, itemNums);
+			list=db.find(sql, EmBodyCheckItemModel.class, null);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

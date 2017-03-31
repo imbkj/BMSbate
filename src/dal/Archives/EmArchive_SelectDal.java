@@ -134,6 +134,7 @@ public class EmArchive_SelectDal {
 				+ UserInfo.getUserid() + " and dat_selected=1 )"
 
 				+ " order by eada_id desc";
+		System.out.println(sql);
 		try {
 			list = db.find(sql, EmArchiveDatumModel.class,
 					dbconn.parseSmap(EmArchiveDatumModel.class));

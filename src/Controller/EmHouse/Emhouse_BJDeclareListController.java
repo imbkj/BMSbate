@@ -98,7 +98,7 @@ public class Emhouse_BJDeclareListController {
 			@BindingParam("acc") String acc, @BindingParam("com") String com,
 			@BindingParam("cid") String cid, @BindingParam("cacc") String cacc,
 			@BindingParam("ifdeclare") String ifdeclare,
-			@BindingParam("ownmonth") String ownmonth) {
+			@BindingParam("ownmonth") String ownmonth,@BindingParam("single") String single) {
 		String sqlselect = "";
 
 		if (name != null && !name.equals("")) {
@@ -128,6 +128,14 @@ public class Emhouse_BJDeclareListController {
 		}
 		if (ownmonth != null && !ownmonth.equals("")) {
 			sqlselect = sqlselect + " and a.ownmonth ='" + ownmonth + "'";
+		}
+		if (single != null && !single.equals("")) {
+			if (single.equals("中智户")) {
+				sqlselect = sqlselect + " and emhb_single=0";
+			}else if (single.equals("独立户")) {
+				sqlselect = sqlselect + " and emhb_single=1";
+			}
+			
 		}
 		sqlselect += " and ((isnull(b.gid,0)=0 and emhb_ifdeclare in (0,1,2)) or (isnull(b.gid,0)>0 and emhb_ifdeclare in (0,1,2)))";
 

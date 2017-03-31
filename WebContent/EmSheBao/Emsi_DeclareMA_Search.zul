@@ -98,6 +98,8 @@
 									<combobox mold="rounded"
 										value="@load(vm.client)" id="client" readonly="true">
 										<comboitem label="全部" />
+										<comboitem label="客户服务部" />
+										<comboitem label="全国项目部" />
 										<comboitem
 											forEach="${vm.clientList}" label="${each.log_name}" />
 									</combobox>

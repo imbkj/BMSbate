@@ -42,7 +42,7 @@
 							sort="auto(ownmonth)" />
 						<column label="姓名" align="center"
 							sort="auto(escm_name)" />
-						<column label="金额" align="center" />
+						<column label="金额" align="center" sort="auto(escm_fee)"/>
 						<column label="批次号" align="center"
 							sort="auto(emsc_batchnum)" />
 						<column label="申报时间" align="center" />

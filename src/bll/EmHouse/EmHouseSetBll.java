@@ -61,7 +61,7 @@ public class EmHouseSetBll {
 					Date trialTime = new Date();
 					calendar.setTime(trialTime);
 					Integer d2 = calendar.get(Calendar.DATE);
-					if (d1 - d2 <= 0) {
+					if (d1 - d2 < 0) {
 						i = Integer.valueOf(DateStringChange.ownmonthAdd(
 								i.toString(), 1));
 					}

@@ -1,0 +1,136 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="公积金独立户信息管理" border="normal" width="100%"
+		height="100%" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoHousingFund.CoHouseInfoController')">
+		<borderlayout width="100%" height="100%">
+			<north>
+				<grid width="100%" height="100%">
+					<columns visible="false">
+						<column width="120px" />
+						<column />
+						<column width="120px" />
+						<column />
+						<column width="120px" />
+						<column />
+
+					</columns>
+					<rows>
+						<row>
+							<cell>单位编号</cell>
+							<cell>
+								<textbox mold="rounded"
+									value="@bind(vm.houseid)" />
+							</cell>
+							<cell>公司编号</cell>
+							<cell>
+								<textbox mold="rounded"
+									value="@bind(vm.cid)" />
+							</cell>
+							<cell>托收日</cell>
+							<cell>
+								<combobox mold="rounded"
+									model="@load(vm.tslist)" value="@bind(vm.tsday)"
+									readonly="true">
+									<template name="model">
+										<comboitem label="@load(each)" />
+									</template>
+								</combobox>
+							</cell>
+
+
+						</row>
+						<row>
+							<cell>账户类型</cell>
+							<cell>
+								<combobox mold="rounded"
+									value="@bind(vm.single)" readonly="true">
+									<comboitem label="" />
+									<comboitem label="中智户" />
+									<comboitem label="独立户" />
+								</combobox>
+							</cell>
+							<cell>公司名称</cell>
+							<cell>
+								<textbox mold="rounded"
+									value="@bind(vm.company)" />
+							</cell>
+							<cell>比例</cell>
+							<cell>
+								<combobox mold="rounded"
+									model="@load(vm.cplist)" value="@bind(vm.cpp)"
+									readonly="true">
+									<template name="model">
+										<comboitem label="@load(each)" />
+									</template>
+								</combobox>
+							</cell>
+
+						</row>
+					</rows>
+					<foot>
+						<footer align="center" span="8">
+							<button label="查询"
+								onClick="@command('search')" />
+						</footer>
+					</foot>
+				</grid>
+			</north>
+			<center>
+				<grid id="gd" width="100%" height="100%"
+					model="@load(vm.hlist)" sizedByContent="true" span="true">
+					<columns>
+						<column align="center" label="序号" />
+						<column align="center" label="客服" />
+						<column align="center" label="单位编号" />
+						<column align="center" label="单位名称" />
+						<column align="center" label="托收日" />
+						<column align="center" label="缴存比例" />
+						<column align="center" label="归集银行" />
+						<column align="center" label="状态" />
+						<column align="center" label="管理状态" />
+						<column align="center" label="操作" />
+					</columns>
+					<template name="model">
+						<row>
+							<cell>
+								<label
+									value="${forEachStatus.index+1 }" />
+							</cell>
+							<cell>
+								<label value="@load(each.coba_client)" />
+							</cell>
+							<cell>
+								<label value="@load(each.cohf_houseid)" />
+							</cell>
+							<cell>
+								<label value="@load(each.cohf_company)" />
+							</cell>
+							<cell>
+								<label value="@load(each.cohf_tsday)" />
+							</cell>
+							<cell>
+								<label value="@load(each.cohf_cpp)" />
+							</cell>
+							<cell>
+								<label value="@load(each.cohf_bankgj)" />
+							</cell>
+							<cell>
+								<label value="@load(each.statename)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.cohf_manstate)" />
+							</cell>
+							<cell>
+								<button label="修改"
+									onClick="@command('mod',a=each)" />
+
+							</cell>
+						</row>
+					</template>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

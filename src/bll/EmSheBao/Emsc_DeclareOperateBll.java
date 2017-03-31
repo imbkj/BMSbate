@@ -45,10 +45,10 @@ public class Emsc_DeclareOperateBll {
 						jlM.setEmsb_dptime(m.getEmsb_dptime());
 
 						// 更新医疗补交状态
-						if (jlM.getEmsb_ifdeclare() != 6) {// 不能同时和养老补交一起更新成 已申报
+						//if (jlM.getEmsb_ifdeclare() != 6) {// 不能同时和养老补交一起更新成 已申报
 															// 状态
 							BjJLDeclare(jlM, UserInfo.getUsername());
-						}
+						//}
 
 					}
 

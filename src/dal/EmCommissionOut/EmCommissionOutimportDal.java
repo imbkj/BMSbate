@@ -380,8 +380,10 @@ public List<SocialInsuranceAlgorithmViewModel> getSocialInsurance(String strsql)
    			m.setEcou_cbjdate(rs.getString("ecou_cbjdate"));
    			m.setEcou_client(rs.getString("ecou_client"));
    			m.setEcou_com_phone(rs.getString("ecou_com_phone"));
-   			m.setEcou_compact_f(rs.getString("ecou_compact_f")!=null?rs.getString("ecou_compact_f").substring(0, rs.getString("ecou_compact_f").indexOf(" ")):rs.getString("ecou_compact_f"));
-   			m.setEcou_compact_l(rs.getString("ecou_compact_l")!=null?rs.getString("ecou_compact_l").substring(0, rs.getString("ecou_compact_l").indexOf(" ")):rs.getString("ecou_compact_l"));
+//   			m.setEcou_compact_f(rs.getString("ecou_compact_f")!=null?rs.getString("ecou_compact_f").substring(0, rs.getString("ecou_compact_f").indexOf(" ")):rs.getString("ecou_compact_f"));
+//   			m.setEcou_compact_l(rs.getString("ecou_compact_l")!=null?rs.getString("ecou_compact_l").substring(0, rs.getString("ecou_compact_l").indexOf(" ")):rs.getString("ecou_compact_l"));
+   			m.setEcou_compact_f(DateStringChange.Stringformat(rs.getString("ecou_compact_f"),"yyyy-MM-dd"));
+   			m.setEcou_compact_l(DateStringChange.Stringformat(rs.getString("ecou_compact_l"),"yyyy-MM-dd"));
    			m.setEcou_dbdate(rs.getString("ecou_dbdate"));
    			m.setEcou_ecos_id(rs.getInt("ecou_ecos_id"));
    			m.setEcou_email(rs.getString("ecou_email"));

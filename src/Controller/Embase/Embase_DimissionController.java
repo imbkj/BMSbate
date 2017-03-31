@@ -209,8 +209,17 @@ public class Embase_DimissionController {
 				ifsbStop = sbBll.ifStop();
 				// 判断是否停止当月操作社保
 				if (ifsbStop) {
+					// 获取当前所属月份
+					Date nowDate = new Date(); // 获取当前时间
+					DateStringChange dsc = new DateStringChange();
+					int nowmonth = Integer.parseInt(dsc.DatetoSting(nowDate, "yyyyMM"));
+					boolean sbmonth=false;
+					if (nowmonth<sbModel.getOwnmonth()) {
+						sbmonth=true;
+					}
+					
 					sbownmonthList = sbBll.getOwnmonthByUpOwnmonth(
-							String.valueOf(sbModel.getOwnmonth()), false);
+							String.valueOf(sbModel.getOwnmonth()), sbmonth);
 				} else {
 					sbownmonthList = sbBll.getOwnmonthByUpOwnmonth(
 							String.valueOf(sbModel.getOwnmonth()), true);

@@ -31,6 +31,12 @@ public class EmBcInfo_SelectBll {
 		return dal.getEmBodyCheckInfo(str);
 	}
 
+	// 查询员工对应合同类型
+	public List<EmBodyCheckModel> getEmpType(Integer cid) {
+		EmBcInfo_SelectDal dal = new EmBcInfo_SelectDal();
+		return dal.getEmpType(cid);
+	}
+
 	// 查询员工是否已婚
 	public boolean getmarry(Integer gid) {
 		boolean b = false;
@@ -195,11 +201,11 @@ public class EmBcInfo_SelectBll {
 		EmBcInfo_SelectDal dal = new EmBcInfo_SelectDal();
 		return dal.getStateId(idstr);
 	}
-	
-	//根据身份证查询体检中数据
-	public List<EmBodyCheckModel> getBCList(String idcard,String bcid){
+
+	// 根据身份证查询体检中数据
+	public List<EmBodyCheckModel> getBCList(String idcard, String bcid) {
 		EmBcInfo_SelectDal dal = new EmBcInfo_SelectDal();
-		return dal.getBcList(idcard,bcid);
+		return dal.getBcList(idcard, bcid);
 	}
 
 	// 查询公司操作约定中是否已录入联系人信息
@@ -245,12 +251,11 @@ public class EmBcInfo_SelectBll {
 		EmBcInfo_SelectDal dal = new EmBcInfo_SelectDal();
 		return dal.getEmBcItemGroup(group_id);
 	}
-	
+
 	public EmBcItemGroupModel getEmBcItemGroupList(String group_id) {
 		EmBcInfo_SelectDal dal = new EmBcInfo_SelectDal();
 		return dal.getgrouplist(group_id);
 	}
-	
 
 	public boolean getEmBcCancel(Integer ebcl_id) {
 		EmBcInfo_SelectDal dal = new EmBcInfo_SelectDal();

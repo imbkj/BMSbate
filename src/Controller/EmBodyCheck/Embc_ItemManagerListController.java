@@ -253,6 +253,12 @@ public class Embc_ItemManagerListController {
 		List<EmBodyCheckModel> outlist = new ListModelList<>();
 		for (EmBodyCheckModel em : bclist) {
 			if (em.isChecked()) {
+				if (em.getEmpType()==null || em.getEmpType().equals("")) {
+					List<EmBodyCheckModel> el =bll.getEmpType(em.getCid());
+					if (el.size()>0) {
+						em.setEmpType(el.get(0).getEmpType());
+					}
+				}
 				outlist.add(em);
 			}
 		}

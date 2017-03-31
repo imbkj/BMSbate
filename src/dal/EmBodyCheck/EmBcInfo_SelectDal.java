@@ -75,6 +75,22 @@ public class EmBcInfo_SelectDal {
 		return list;
 	}
 
+	// 查询员工对应合同类型
+	public List<EmBodyCheckModel> getEmpType(Integer cid) {
+		List<EmBodyCheckModel> list = new ArrayList<EmBodyCheckModel>();
+		dbconn db = new dbconn();
+		String sql = "select case when MAX(coco_compacttype)!= min(coco_compacttype) then '多个合同' else case MAX(coco_compacttype) when 'FS' THEN '代理员工' when 'EFS' THEN '代理员工' when 'AF' then '派遣员工' when 'FS-2' THEN '派遣员工' when 'FS-4' then '派遣员工' else '' end end empType"
+				+ " from embodycheck a inner join CoCompact b on a.CID=b.cid and coco_state>3 and coco_state!=9"
+				+ " where a.cid=? and coco_compacttype!='CS'"
+				+ " group by a.cid,a.gid";
+		try {
+			list = db.find(sql, EmBodyCheckModel.class, null, cid);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
 	// 查询员工体检信息(婚姻状况)
 	public List<EmBodyCheckModel> getmarry(Integer gid) {
 		List<EmBodyCheckModel> list = new ListModelList<>();
@@ -312,11 +328,11 @@ public class EmBcInfo_SelectDal {
 
 	public EmBcItemGroupModel getgrouplist(String group_id) {
 		EmBcItemGroupModel m = new EmBcItemGroupModel();
-		String sql = "select ebit_id,ebig_name,ebit_name" +
-				" from EmbcIGList a" +
-				" inner join EmBcItemGroup b on a.eigl_ebig_id=b.ebig_id" +
-				" inner join EmBodyCheckItem c on a.eigl_ebit_id=c.ebit_id" +
-				" where ebig_id=?";
+		String sql = "select ebit_id,ebig_name,ebit_name"
+				+ " from EmbcIGList a"
+				+ " inner join EmBcItemGroup b on a.eigl_ebig_id=b.ebig_id"
+				+ " inner join EmBodyCheckItem c on a.eigl_ebit_id=c.ebit_id"
+				+ " where ebig_id=?";
 		dbconn db = new dbconn();
 		try {
 			m.setList(db.find(sql, EmBodyCheckItemModel.class, null, group_id));

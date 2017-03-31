@@ -41,14 +41,15 @@ public class Emsi_fd_DeclareMA_ListController {
 	private List<EmShebaoChangeMAModel> sbDataList;
 
 	private String sql = Executions.getCurrent().getArg().get("sql").toString();
-
+	private String order=" order by declareTime"; 
+	
 	private int count = 0; // 多少条数据
 
 	private boolean all_chkTF = false;// 全选框是否选中
 
 	public Emsi_fd_DeclareMA_ListController() {
 		// 获取页面数据
-		sbDataList = dsbll.getEscmMACData("", sql, "");
+		sbDataList = dsbll.getEscmMACData("", sql, order);
 
 		try {
 			count = sbDataList.size();
@@ -136,7 +137,7 @@ public class Emsi_fd_DeclareMA_ListController {
 				"../SysMessage/Message_Add.zul", null, map);
 		window.doModal();
 		// 刷新
-		sbDataList = dsbll.getEscmMACData("", sql, "");
+		sbDataList = dsbll.getEscmMACData("", sql, order);
 	}
 
 	@Command("confirmAll")
@@ -227,7 +228,7 @@ public class Emsi_fd_DeclareMA_ListController {
 				e.printStackTrace();
 			}
 			// 刷新
-			sbDataList = dsbll.getEscmMACData("", sql, "");
+			sbDataList = dsbll.getEscmMACData("", sql, order);
 		}
 	}
 
@@ -273,7 +274,7 @@ public class Emsi_fd_DeclareMA_ListController {
 			}
 
 			// 刷新
-			sbDataList = dsbll.getEscmMACData("", sql, "");
+			sbDataList = dsbll.getEscmMACData("", sql, order);
 
 		}
 	}

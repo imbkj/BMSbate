@@ -35,7 +35,7 @@ public class EmArchiveDatum_InfoListController {
 	String strss = "";
 
 	public EmArchiveDatum_InfoListController() {
-		setDatumlist(bll.getEmArchiveDatumInfo(" and eada_final=1 and eada_type=0 "));
+		setDatumlist(bll.getEmArchiveDatumInfo("  and eada_type=0 "));
 
 	}
 
@@ -49,7 +49,7 @@ public class EmArchiveDatum_InfoListController {
 			@BindingParam("astate") Combobox astate,
 			@BindingParam("yewclass") Combobox yewclass) {
 		strss = "";
-		String str = " and eada_final>0 and eada_state>0";
+		String str = "  and eada_state>0";
 		if (company != null && !company.equals("") && company != "") {
 			str = str + " and (coba_company like '%" + company
 					+ "%' or coba_shortname like '%" + company + "%')";
@@ -145,13 +145,12 @@ public class EmArchiveDatum_InfoListController {
 		}
 		datumlist = bll.getEmArchiveDatumInfo(strss);
 	}
-	
-	//联系记录
+
+	// 联系记录
 	@Command
-	public void linkinfo(@BindingParam("m") EmArchiveDatumModel model)
-	{
+	public void linkinfo(@BindingParam("m") EmArchiveDatumModel model) {
 		Map<String, Integer> map = new HashMap<String, Integer>();
-		map.put("daid",model.getEada_id());
+		map.put("daid", model.getEada_id());
 		Window window = (Window) Executions.createComponents(
 				"/Archives/Archive_addLink.zul", null, map);
 		window.doModal();
@@ -238,11 +237,12 @@ public class EmArchiveDatum_InfoListController {
 
 	// 弹出备注
 	@Command
-	public void addremark(@BindingParam("archivemodel") EmArchiveDatumModel model) {
+	public void addremark(
+			@BindingParam("archivemodel") EmArchiveDatumModel model) {
 		Map map = new HashMap<>();
 		map.put("id", model.getEada_id().toString());
 		map.put("typeid", "2");
-		map.put("gid",model.getGid());
+		map.put("gid", model.getGid());
 		Window window = (Window) Executions.createComponents(
 				"../Archives/Remark_AddList.zul", null, map);
 		window.doModal();

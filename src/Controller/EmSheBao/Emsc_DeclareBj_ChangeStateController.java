@@ -144,7 +144,7 @@ public class Emsc_DeclareBj_ChangeStateController {
 
 				if ("1".equals(mes[0])) {
 
-					if (state != 1) {// 除了已申报，其他状态都同步
+					//if (state != 1) {// 除了已申报，其他状态都同步
 						// 更新相应的医疗补交数据状态
 						Emsi_OperateDal eDal = new Emsi_OperateDal();
 						boolean ifJLBJ = eDal.getShebaoBJJL(bjModel.getGid(),
@@ -164,7 +164,7 @@ public class Emsc_DeclareBj_ChangeStateController {
 								msg = "，但是社保医疗数据操作失败，请联系IT部！";
 							}
 						}
-					}
+					//}
 
 					// 退回系统短信
 					if (state == 3) {

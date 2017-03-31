@@ -3,7 +3,7 @@
 	<window title="公积金补缴申报列表" border="normal"
 		apply="org.zkoss.bind.BindComposer" id="win" width="99%" height="99%"
 		viewModel="@id('vm') @init('Controller.EmHouse.Emhouse_BJDeclareListController')"
-		closable="true" >
+		closable="true">
 		<borderlayout height="100%">
 			<north border="0" title="检索" collapsible="true" flex="true"
 				style="padding-bottom:10px;" open="true">
@@ -54,7 +54,7 @@
 						</row>
 						<row>
 							<cell>所属月份</cell>
-							<cell colspan="7">
+							<cell>
 								<combobox id="ownmonth" mold="rounded"
 									model="@load(vm.ownmonthlist)">
 									<template name="model">
@@ -64,7 +64,13 @@
 									</template>
 								</combobox>
 							</cell>
-
+							<cell colspan="5">账户类型</cell>
+							<cell>
+								<combobox id="singletype">
+									<comboitem label="中智户"/>
+									<comboitem label="独立户"/>
+								</combobox>
+							</cell>
 						</row>
 					</rows>
 					<foot>
@@ -72,7 +78,7 @@
 							<button
 								onClick="@command('search',name=name.value,gid=gid.value,idcard=idcard.value,
 					acc=acc.value,com=com.value,cid=cid.value,cacc=cacc.value,ifdeclare=ifdeclare.selectedItem.value,
-					ownmonth=ownmonth.value)">
+					ownmonth=ownmonth.value,single=singletype.value)">
 								查询
 							</button>
 

@@ -206,6 +206,7 @@ public class ItemFormula_SelectBll {
 		dataList.add(new String[] { "8", "卡或帐号已挂失" });
 		dataList.add(new String[] { "9", "银行原因，请重新发送即可" });
 		dataList.add(new String[] { "10", "卡或帐号未激活" });
+		dataList.add(new String[] { "11", "当日账户交易金额超限，建议使用“I类银行账户”" });
 		return dataList;
 	}
 
@@ -243,6 +244,9 @@ public class ItemFormula_SelectBll {
 			break;
 		case 10:
 			result = "卡或帐号未激活";
+			break;
+		case 11:
+			result = "当日账户交易金额超限，建议使用“I类银行账户”";
 			break;
 		}
 

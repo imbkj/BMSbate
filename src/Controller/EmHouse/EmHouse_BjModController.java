@@ -54,8 +54,7 @@ public class EmHouse_BjModController {
 
 		if (list.size() > 0) {
 			ejm = list.get(0);
-			ownmonglist = sbll.ownmonthlist("bj", ejm.getCid(), ejm.getGid(),
-					Integer.valueOf(ejm.getOwnmonth()));
+			ownmonglist = sbll.ownmonthlist("bj", ejm.getCid(), ejm.getGid(),null);
 			feeownmonglist = sbll.ownmonthlist("fee", ejm.getCid(),
 					ejm.getGid(), Integer.valueOf(ejm.getOwnmonth()));
 			if (ejm.getEmhb_startmonth() != null) {

@@ -47,7 +47,16 @@ public class CoQuotationInfoSelectqgController {
 				bll.getCoOfferlistList(coof_id)));
 	}
 
-	
+	// 弹出查看页面
+	@Command("fp")
+	public void fp(@BindingParam("model") CoOfferListModel model) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("daid", model.getColi_id());
+		Window window = (Window) Executions.createComponents(
+				"/CoBase/CoBase_SelectCoOffer_Detail.zul", null, map);
+		window.doModal();
+	}
+
 	// 弹出产品终止页面
 	@Command("co_del")
 	@NotifyChange("coofferinfoList")

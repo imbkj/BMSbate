@@ -199,9 +199,9 @@
 												<menuitem label="编辑"
 													if="${each.type eq 'EmShebaoBJ'}"
 													onClick="@command('Detail',id=each.id)" />
-												<menuitem label="编辑"
+												<!-- <menuitem label="编辑"
 													if="${each.emsb_ifdeclare==6 and each.type eq 'EmShebaoBJJL'}"
-													onClick="@command('DetailJL',id=each.id)" />
+													onClick="@command('DetailJL',id=each.id)" /> -->
 												<menuitem label="上传单子"
 													onClick="@command('upload',id=each.id)"
 													if="${each.emsb_ifdeclare==0 and each.type eq 'EmShebaoBJ'}"

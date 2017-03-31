@@ -1044,8 +1044,10 @@ public class EmBase_AddController {
 		String str = null;
 		boolean b = false; // af,fs-2必选签订劳动合同
 		boolean b_2 = false; //FS-4签订聘用合同
+		boolean b_3 = false;
 		boolean b1 = false;
 		boolean b2 = false;
+		boolean b3 = false;
 		for (CoOfferListModel m : cflList) {
 			if (m.getCoco_compacttype().equals("AF")
 					|| m.getCoco_compacttype().equals("FS-2")) {
@@ -1060,6 +1062,15 @@ public class EmBase_AddController {
 					b2 = true;
 				}
 			}
+			if (m.getColi_pclass().equals("商业保险")) {
+				if (m.getColi_name().contains("M") && !m.getColi_name().contains("MC") && !m.getColi_name().contains("FM")) {
+					b_3=true;
+				}
+				if(m.getColi_name().contains("P7")){
+					b3=true;
+				}
+			}
+			
 		}
 		if (b) {
 			if (!b1) {
@@ -1069,6 +1080,11 @@ public class EmBase_AddController {
 		if (b_2) {
 			if (!b2) {
 				str = "请选择[签订聘用合同]!";
+			}
+		}
+		if (b_3) {
+			if (!b3) {
+				str = "请选择[P7-意外B型]!";
 			}
 		}
 
