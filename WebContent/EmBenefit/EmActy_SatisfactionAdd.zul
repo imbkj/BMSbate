@@ -1,0 +1,15 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="满意度信息新增" border="normal" vflex="1">
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell></cell>
+			<cell></cell>
+			<cell></cell>
+			<cell></cell>
+		</row>
+	</rows>
+</grid>
+</window>
+</zk>

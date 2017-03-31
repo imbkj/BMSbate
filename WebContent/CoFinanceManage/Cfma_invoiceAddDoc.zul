@@ -1,0 +1,20 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="打印发票" border="normal" width="95%" id="invoiceWin"
+		apply="org.zkoss.bind.BindComposer" closable="true"
+		viewModel="@id('vm') @init('Controller.CoFinanceManage.Cfma_invoiceAddDocController')">
+
+
+		<grid>
+			<rows>
+				<row>
+					<cell>
+						<include id="incl_id"
+							src="../CoFinanceManage/Cfma_invoiceAddDoc.jsp">
+						</include>
+					</cell>
+				</row>
+			</rows>
+		</grid>
+	</window>
+</zk>

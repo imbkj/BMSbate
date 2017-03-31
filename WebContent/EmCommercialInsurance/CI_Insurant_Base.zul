@@ -1,0 +1,124 @@
+<?page title="商业保险审核" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="商业保险信息" border="normal"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmCommercialInsurance.CI_Insurant_Controller')">
+		<div
+			style="width:100%;height:430px;overflow-y:scroll;overflow-x:hidden;border:1px solid #bcbdbf;">
+			<grid vflex="1" hflex="1" height="400px"
+				model="@load(vm.ci_insurant_blist)">
+				<rows>
+					<template name="model">
+						<row>
+							<cell>
+								<grid>
+									<rows>
+										<row>
+											<cell width="180px">
+												投保类型
+											</cell>
+											<cell>
+												<label
+													value="@load(each.ecin_castsort)" />
+													<label
+													value="@load(each.ecin_state)" />
+											</cell>
+											<cell width="180px">
+												
+											</cell>
+											<cell>
+												
+											</cell>
+										</row>
+										<row>
+											<cell width="180px">
+												生效时间
+											</cell>
+											<cell>
+													<label
+													value="@load(each.ecin_ef_date)" />
+											</cell>
+											<cell width="180px">
+												份数
+											</cell>
+											<cell>
+												<label
+													value="@load(each.ecin_buy_count)" />
+											</cell>
+										</row>
+										<row>
+											<cell width="180px">
+												被保险人
+											</cell>
+											<cell>
+												<label
+													value="@load(each.ecin_insurant)" />
+											</cell>
+											<cell width="180px">
+												身份证号码
+											</cell>
+											<cell>
+												<label
+													value="@load(each.ecin_idcard)" />
+											</cell>
+										</row>
+
+										<row>
+											<cell width="180px">
+												性别
+											</cell>
+											<cell>
+												<label
+													value="@load(each.ecin_sex)" />
+											</cell>
+											<cell width="180px">
+												出生日期
+											</cell>
+											<cell>
+												<label
+													value="@load(each.ecin_birthdays1)" />
+											</cell>
+										</row>
+										
+										<row>
+											<cell width="180px">
+												社保缴交城市
+											</cell>
+											<cell>
+												<label
+													value="@load(each.ecin_work_city)" />
+											</cell>
+											<cell width="180px">
+												工作岗位
+											</cell>
+											<cell>
+												<label
+													value="@load(each.ecin_work_st)" />
+											</cell>
+										</row>
+										
+										<row>
+											<cell width="180px">
+												合同签订方式
+											</cell>
+											<cell>
+												<label
+													value="@load(each.ecin_compact_number)" />
+											</cell>
+											<cell width="180px">
+											
+											</cell>
+											<cell>
+												
+											</cell>
+										</row>
+									</rows>
+								</grid>
+							</cell>
+						</row>
+					</template>
+				</rows>
+			</grid>
+		</div>
+	</window>
+</zk>

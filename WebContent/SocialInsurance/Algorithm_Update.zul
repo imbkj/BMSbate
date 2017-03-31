@@ -1,0 +1,445 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<?component name="docDataList" macro-uri="../CoPolicyNotice/Pono_PubInfoAdd.zul" inline="true"?>
+<zk>
+	<window id="winUpAlg"
+		apply="Controller.SocialInsurance.Algorithm_UpdateController"
+		title="更新社保算法" border="normal" height="99%" width="99%"
+		closable="true">
+		<borderlayout>
+			<north border="none">
+			
+				<grid width="100%">
+					<rows>
+						<row>
+							<cell width="8%" style="color:#666;">
+								城市：
+							</cell>
+							<cell width="10%" style="color:#666;">
+								<label
+									value="${$composer.saModel.getCity()}" />
+									<button id="zcadd"  label="新增政策  " />
+							</cell>
+							<cell width="8%" style="color:#666;">
+								机构名称：
+							</cell>
+							<cell width="10%" style="color:#666;">
+								<label
+									value="${$composer.saModel.getCoab_name()}" />
+							</cell>
+							<cell width="8%" style="color:red;">
+								算法描述：
+							</cell>
+							<cell width="10%" style="color:#666;">
+								<label
+									value="${$composer.saModel.getSoin_title()}" />
+							</cell>
+							<cell width="8%" style="color:red;">
+								开始执行年月：
+							</cell>
+							<cell width="10%" style="color:#666;">
+								<datebox id="dbExecDate" sclass="datebox-month-only"
+									value="${$composer.saModel.getSial_execdate()}"
+									format="yyyy年MM月" constraint="no empty:请输入开始执行年月"
+									mold="rounded" />
+							</cell>
+						</row>
+						<row>
+							<cell width="8%" style="color:#666;">
+								社保标准：
+							</cell>
+							<cell width="10%" style="color:#666;">
+								<combobox id="cbSbStandard"
+									readonly="true" model="${$composer.getSbStandardList()}"
+									mold="rounded">
+									<template name="model">
+										<comboitem
+											label="${each.sist_standard}" value="${each.sist_id}" />
+									</template>
+								</combobox>
+							</cell>
+							<cell width="10%" style="color:#666;">
+								公积金标准：
+							</cell>
+							<cell width="10%" style="color:#666;">
+								<combobox id="cbGjjStandard"
+									mold="rounded" readonly="true"
+									model="${$composer.getGjjStandardList()}">
+									<template name="model">
+										<comboitem
+											label="${each.sist_standard}" value="${each.sist_id}" />
+									</template>
+								</combobox>
+							</cell>
+							<cell width="10%" style="color:#666;">
+								算法标准：
+							</cell>
+							<cell width="10%" style="color:#666;"
+								colspan="3">
+								<textbox id="txtStandard"
+									value="${$composer.saModel.getSial_standard()}" mold="rounded" />
+							</cell>
+						</row>
+						<row>
+							<cell width="8%" style="color:#666;">
+								月平均工资：
+							</cell>
+							<cell width="10%" style="color:#666;">
+								<decimalbox id="dbAvgSalary" format="###.##"
+									value="${$composer.saModel.getSial_avg_salary()==null?0:$composer.saModel.getSial_avg_salary()}"
+									 mold="rounded" />
+							</cell>
+							<cell width="10%" style="color:#666;">
+								最低工资：
+							</cell>
+							<cell width="10%" style="color:#666;">
+								<decimalbox id="dbLowestSalary" format="###.##"
+									value="${$composer.saModel.getSial_lowest_salary()==null?0:$composer.saModel.getSial_lowest_salary()}"
+									 mold="rounded" />
+							</cell>
+							<cell width="10%" style="color:#666;">
+								城市备注：
+							</cell>
+							<cell width="10%" style="color:#666;"
+								colspan="3">
+								<textbox id="txtCityRemark"
+									value="${$composer.saModel.getSial_city_remark()}"
+									mold="rounded" width="90%" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</north>
+			<center border="none">
+				<grid id="gdInfo" width="100%" hflex="1" vflex="1">
+					<auxhead>
+						<auxheader label="类别" align="center" />
+						<auxheader label="项目" colspan="2"
+							align="center" />
+						<auxheader label="基数下限" align="center" />
+						<auxheader label="最低缴存额" align="center" />
+						<auxheader label="基数上限" align="center" />
+						<auxheader label="最高缴存额" align="center" />
+						<auxheader label="缴费比例" align="center" />
+						<auxheader label="具体算法" align="center" />
+						<auxheader label="小数处理" align="center" />
+						<auxheader label="备注" align="center" />
+					</auxhead>
+					<columns sizable="true"></columns>
+					<rows>
+						<template name="model">
+							<row>
+								<cell sclass="class" align="center"
+									width="5%" rowspan="${each.sicl_ifclass}"
+									if="${each.sicl_ifclass!=0?true:false}">
+									<label value="${each.sicl_class}" />
+								</cell>
+								<cell sclass="name" align="center"
+									rowspan="${each.sicl_ifname}"
+									if="${each.sicl_ifname!=0?true:false}">
+									<label value="${each.sicl_name}" />
+								</cell>
+								<cell sclass="util" align="center">
+									<label value="${each.sicl_payunit}" />
+								</cell>
+								<cell align="center">
+									<decimalbox  value="${each.siai_basic_dd==null?0:each.siai_basic_dd}" format="###.##"
+										inplace="true" width="60%" onFocus="showImage(self)" />
+									<image src="../images/130.gif"
+										width="10" height="11" border="0" onClick="AllSame(self)"
+										visible="false" />
+								</cell>
+								<cell align="center">
+									<decimalbox  value="${each.siai_deposit_dd==null?0:each.siai_deposit_dd}" format="###.##"
+										inplace="true" width="60%" onFocus="showImage(self)" />
+									<image src="../images/130.gif"
+										width="10" height="11" border="0" onClick="AllSame(self)"
+										visible="false" />
+								</cell>
+								<cell align="center">
+									<decimalbox  value="${each.siai_basic_ud==null?0:each.siai_basic_ud}" format="###.##"
+										inplace="true" width="60%" onFocus="showImage(self)" />
+									<image src="../images/130.gif"
+										width="10" height="11" border="0" onClick="AllSame(self)"
+										visible="false" />
+								</cell>
+								<cell align="center">
+									<decimalbox  value="${each.siai_deposit_ud==null?0:each.siai_deposit_ud}" format="###.##"
+										inplace="true" width="60%" onFocus="showImage(self)" />
+									<image src="../images/130.gif"
+										width="10" height="11" border="0" onClick="AllSame(self)"
+										visible="false" />
+								</cell>
+								<cell align="center">
+									<textbox inplace="true" width="99%" value="${each.siai_proportion}" constraint="/[\d\%\,\-\.\+]*|\s*/:请注意格式：仅可录入/数字/“-”/“,”/“.”/“%”/“+”（符号为半角）。"/>
+								</cell>
+								<cell align="center">
+									<textbox inplace="true" width="99%" value="${each.siai_algorithm}"/>
+								</cell>
+								<cell align="center">
+									<combobox inplace="true" width="90%"  value="${each.side_decimal}"
+										mold="rounded" readonly="true"
+										onFocus="showImage(self)">
+											<comboitem
+												label="${each.side_decimal}" value="${each.side_id}" forEach="${$composer.getDecimalList()}"/>
+									</combobox>
+									<image src="../images/130.gif"
+										width="10" height="11" border="0" onClick="AllSameCb(self)"
+										visible="false" />
+								</cell>
+								<cell align="center">
+									<textbox inplace="true" width="99%" value="${each.siai_remark}"/>
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</center>
+			<south border="none" collapsible="true" splittable="true">
+						<panel border="0">
+					
+					<panelchildren >
+			<groupbox title="相关政策">			
+					<docDataList  id="docGrid" log_url="/CoPolicyNotice/"/>
+					</groupbox>
+				<groupbox>
+				<grid width="100%">
+					<rows>
+						<row>
+							<cell align="center" width="20%">社保备注</cell>
+							<cell align="center">
+								<textbox id="txtSbRemark" inplace="true"
+									value="${$composer.saModel.getSial_sb_remark()}" width="99%"
+									rows="2" />
+							</cell>
+						</row>
+						<row>
+							<cell align="center">公积金备注</cell>
+							<cell align="center">
+								<textbox id="txtGjjRemark"
+									value="${$composer.saModel.getSial_gjj_remark()}"
+									inplace="true" width="99%" rows="2" />
+							</cell>
+						</row>
+						<row>
+							<cell align="center">残保备注</cell>
+							<cell align="center">
+								<textbox id="txtCbRemark" inplace="true"
+									value="${$composer.saModel.getSial_cb_remark()}" width="99%"
+									rows="2" />
+							</cell>
+						</row>
+					</rows>
+					<foot>
+						<footer align="center">
+							<button label="提交" id="btSubmit" />
+							<button label="直接更新(不走流程)" id="btSubmitOld" if="${$composer.admin==1}"/>
+						</footer>
+					</foot>
+				</grid>
+				</groupbox>
+				</panelchildren>
+				</panel>
+				
+			</south>
+		</borderlayout>
+		<zscript><![CDATA[
+	Component lastDb;
+	//显示单元格“下同”图标
+	void showImage(Component self) {
+		if (lastDb != null) {
+			lastDb.getParent().getChildren().get(1).setVisible(false);
+		}
+		lastDb = self;
+		self.getParent().getChildren().get(1).setVisible(true);
+	}
+	//单元格下同(Decimalbox)
+	void AllSame(Image img) {
+		try {
+			//当前行号
+			int row = ((Row) img.getParent().getParent()).getIndex();
+			//当前行的总列数
+			int thisSumCell = ((Row) img.getParent().getParent()).getChildren()
+					.size();
+			//总列数
+			int sumCell = 0;
+			//当前列号
+			int cell = ((Row) img.getParent().getParent()).getChildren()
+					.indexOf(img.getParent());
+			Decimalbox db = img.getParent().getChildren().get(0);
+			if (db.getValue() != null) {
+				//下拉数据截止到的行数。
+				int SameRows = 0;
+				if (row < 11)
+					SameRows = 12;
+				else if(row > 11)
+					SameRows = row + 2;
+				for (int i = row + 1; i < SameRows; i++) {
+					sumCell = gdInfo.getRows().getChildren().get(i)
+							.getChildren().size();
+					((Decimalbox) gdInfo
+							.getCell(i, cell - (thisSumCell - sumCell))
+							.getChildren().get(0)).setValue(db.getValue());
+				}
+			}
+		} catch (Exception e) {
+
+		}
+	}
+	//单元格下同(combobox)
+	void AllSameCb(Image img) {
+		try {
+			//当前行号
+			int row = ((Row) img.getParent().getParent()).getIndex();
+			//当前行的总列数
+			int thisSumCell = ((Row) img.getParent().getParent()).getChildren()
+					.size();
+			//总列数
+			int sumCell = 0;
+			//当前列号
+			int cell = ((Row) img.getParent().getParent()).getChildren()
+					.indexOf(img.getParent());
+			Combobox cb = img.getParent().getChildren().get(0);
+			if (cb.getSelectedItem() != null) {
+				//下拉数据截止到的行数。
+				int SameRows = 0;
+				if (row < 11)
+					SameRows = 12;
+				else if(row > 11)
+					SameRows = row + 2;
+				for (int i = row + 1; i < SameRows; i++) {
+					sumCell = gdInfo.getRows().getChildren().get(i)
+							.getChildren().size();
+					((Combobox) gdInfo
+							.getCell(i, cell - (thisSumCell - sumCell))
+							.getChildren().get(0)).setSelectedIndex(cb
+							.getSelectedIndex());
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+]]></zscript>
+		<script><![CDATA[
+
+        zk.afterLoad("zul.db", function () {
+
+            // Datebox Calendar Renderer
+
+            var _Cwgt = {};
+
+            zk.override(zul.db.CalendarPop.prototype, _Cwgt, {
+
+                // switch the view after redraw or open as needed
+
+                redraw: function (out) {
+
+                    _Cwgt.redraw.apply(this, arguments); //call the original method
+
+                    this._customChangeView ();
+
+                },
+
+                open: function (silent) {
+
+                    _Cwgt.open.apply(this, arguments); //call the original method
+
+                    this._customChangeView ();
+
+                },
+
+                _customChangeView: function () {
+
+                    // cannot show month/day
+
+                    if (jq(this.parent.$n()).hasClass('datebox-year-only')) {
+
+                        var view = this._view;
+
+                        // switch to year view as needed
+
+                        if (view == 'month' || view == 'day')
+
+                            this._setView("year");
+
+                    } else if (jq(this.parent.$n()).hasClass('datebox-month-only')) {
+
+                        // cannot show day view
+
+                        // switch to month view as needed
+
+                        if (this._view == 'day')
+
+                            this._setView("month");
+
+                    }
+
+                },
+
+                // customize the chooseDate function
+
+                _chooseDate: function (target, val) {
+
+                    var view = this._view;
+
+                    if (jq(this.parent.$n()).hasClass('datebox-month-only')
+
+                        || jq(this.parent.$n()).hasClass('datebox-year-only')) {
+
+                        // do customize chooseDate if the parent (datebox)
+
+                        // has specific class
+
+                        var date = this.getTime(),
+
+                            year = (view == 'decade' || view == 'year')? val : date.getFullYear(),
+
+                            month = view == 'month'? val : 0,
+
+                            date = 1;
+
+                        // set date value
+
+                        this._setTime(year, month, 1);
+
+                        if (view == 'decade') {
+
+                            // switch to year view if at decade view
+
+                            this._setView("year");
+
+                        } else if (jq(this.parent.$n()).hasClass('datebox-month-only')
+
+                            && view == 'year') {
+
+                            // switch to month view if at year view and the month view is allowed
+
+                            this._setView("month");
+
+                        } else if (jq(this.parent.$n()).hasClass('datebox-month-only') && view == 'month'
+
+                            || jq(this.parent.$n()).hasClass('datebox-year-only') && view == 'year') {
+
+                            // close calendar and update value if already at the smallest allowed view
+
+                            this.close();
+
+                            this.parent.updateChange_();
+
+                        }
+
+                    } else {
+
+                        _Cwgt._chooseDate.apply(this, arguments); //call the original method
+
+                    }
+
+                }
+
+            });
+
+        });
+
+    ]]></script>
+	</window>
+</zk>

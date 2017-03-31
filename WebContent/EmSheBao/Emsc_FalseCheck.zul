@@ -1,0 +1,133 @@
+<!--
+	创建人：林少斌
+	创建时间：2014-2-20
+	用途：社保台账后逻辑检查
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="社会保险 -- 台账后逻辑检查页面" border="normal" width="100%"
+		height="100%" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmSheBao.Emsc_FalseCheckController')">
+		<borderlayout vflex="1">
+			<north border="0" title="数据查询" collapsible="true"
+				flex="true" open="true">
+				<panel border="1">
+					<panelchildren style="padding:5px;">
+						<grid width="100%">
+							<rows>
+								<row>
+									<cell align="left" colspan="2">
+										<combobox id="s_ownmonth" value="@load(vm.nowmonth)"
+											mold="rounded" model="@load(vm.s_ownmonth)"
+											readonly="true">
+											<template name="model">
+												<comboitem
+													label="@load(each)" />
+											</template>
+										</combobox>
+									</cell>
+								</row>
+								<row>
+									<cell align="right">
+										<button label="查询"
+											onClick="@command('search',s_ownmonth=s_ownmonth)" />
+									</cell>
+									<cell align="right">
+										<button label="删除本月数据"
+											onClick="@command('clean',s_ownmonth=s_ownmonth)" />
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</panelchildren>
+				</panel>
+			</north>
+			<center>
+				<grid id="dataGrid" width="100%" height="100%"
+					model="@load(vm.sbDataList)">
+					<columns sizable="true">
+						<column label="序号" align="center" width="30px" />
+						<column label="电脑号" align="center" />
+						<column label="身份证号" align="center" />
+						<column label="社保局帐套名称" align="center" />
+						<column label="公司简称" align="center" />
+						<column label="客服" align="center" />
+						<column label="员工姓名" align="center" />
+						<column label="出错情况" align="center" />
+						<column label="结果" align="center" />
+						<column label="详细说明" align="center" />
+						<column label="解决情况" align="center" />
+						<column label="审核人" align="center" />
+						<column label="操作人" align="center" />
+						<column label="操作" align="center" width="100px" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<cell>
+									<label
+										value="${forEachStatus.index + 1}" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emse_computerid)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emse_idcard)" />
+								</cell>
+								<cell>
+									<label value="@load(each.company)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.coba_shortname)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.coba_client)" />
+								</cell>
+								<cell>
+									<label
+										style="color:blue;cursor:pointer;"
+										value="@load(each.emse_name)"
+										onClick="@command('info',model=each)" />
+								</cell>
+								<cell>
+									<label value="@load(each.emse_err)" />
+								</cell>
+								<cell>
+									<label value="是"
+										if="${each.emse_Normal eq '1'}" />
+									<label value="否"
+										if="${each.emse_Normal eq '0'}" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emse_Note)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emse_Solve)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emse_SolveName)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emse_addname)" />
+								</cell>
+								<cell>
+									<label style="cursor:pointer;"
+										value="处理" if="${each.emse_Solve  eq ''}"
+										onClick="@command('edit',model=each,s_ownmonth=s_ownmonth)" />
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

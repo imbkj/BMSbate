@@ -1,0 +1,39 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="领卡信息状态修改" border="normal" width="50%" height="50%" closable="true"
+	apply="org.zkoss.bind.BindComposer" id="uwin"
+	viewModel="@id('vm') @init('Controller.EmSheBaocard.Sbcd_EditStateController')"
+	>
+<grid vflex="1">
+		<rows>
+			<row>
+				<cell>员工姓名</cell>
+				<cell><textbox value="@load(vm.model.sbcd_name)" readonly="true"></textbox></cell>
+				<cell>当之前状态</cell>
+				<cell><textbox value="@load(vm.model.cdst_statename)" readonly="true"></textbox></cell>	
+			</row>
+			<row>
+				<cell>状态修改为</cell>
+				<cell colspan="3">
+					<combobox id="statename" readonly="true">
+						<comboitem label="客户不取" value="20"/>
+						<comboitem label="解约不取" value="21"/>
+						<comboitem label="失败不取" value="22"/>
+						<comboitem label="注销不取" value="23"/>
+						<comboitem label="制卡失败" value="24"/>
+					</combobox>
+				</cell>	
+			</row>
+			<row>
+				<cell>修改原因</cell>
+				<cell colspan="3">
+					<textbox width="80%" rows="5" value="@bind(vm.cancelcase)"></textbox>
+				</cell>	
+			</row>
+		</rows>
+		<foot>
+			<footer align="center"><button onClick="@command('summit',statename=statename,win=uwin)">提交</button></footer>
+		</foot>
+	</grid>
+</window>
+</zk>

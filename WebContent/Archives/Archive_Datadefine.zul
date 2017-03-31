@@ -1,0 +1,122 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<?component name="docDataList" macro-uri="../DocumentsInfo/DocumentsInfo_UpPageList.zul" inline="true"?>
+<zk>
+	<window title="员工档案借阅" border="normal" closable="true" width="80%"
+		height="90%" id="windetial" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.Archives.Archive_DatadefineController')">
+		<radiogroup id="yorn" onCheck="" />
+		<grid vflex="1">
+			<rows>
+				<row>
+					<cell width="80px"></cell>
+					<cell></cell>
+					<cell width="80px"></cell>
+					<cell></cell>
+					<cell width="80px"></cell>
+					<cell></cell>
+				</row>
+				<row>
+					<cell width="80px">借阅材料内容</cell>
+					<cell colspan="5">
+						<!-- 材料内联页 参数：puzu_id：模块页面id， doc_type：员工(g)还是公司(c)，gid：公司数据则插入空白 ，业务表id ，log_url：获取到页面路径的前部分-->
+						<docDataList id="docGrid"
+							puzu_id="${vm.models.eada_doc}" doc_type="g"
+							gid="${vm.models.gid}" tid="${vm.models.eada_id}"
+							log_url="../DocumentsInfo/" dHeight="200px" dWidth="100%" />
+					</cell>
+				</row>
+				<row visible="${vm.tmodel.wfno_step==5}">
+					<cell>借出时间</cell>
+					<cell>
+						<datebox id="outdate"></datebox>
+						<label style="color:red;">(*)</label>
+					</cell>
+					<cell>交接人</cell>
+					<cell>
+						<combobox id="leanpeop"
+							model="@load(vm.modell)">
+							<template name="model">
+								<comboitem label="${each}" />
+							</template>
+						</combobox>
+						<label style="color:red;">(*)</label>
+					</cell>
+					<cell>是否需要归还</cell>
+					<cell>
+						<combobox width="60px" value="@bind(vm.ifend)"
+							readonly="true">
+							<comboitem label="是" />
+							<comboitem label="否" />
+						</combobox>
+						<label style="color:red;">(*)</label>
+					</cell>
+				</row>
+
+				<row visible="${vm.tmodel.wfno_step==6}">
+					<cell>收回时间</cell>
+					<cell colspan="3">
+						<datebox id="backdate"></datebox>
+					</cell>
+				</row>
+				<row>
+					<cell>借用事由</cell>
+					<cell colspan="5">
+						<textbox id="reason" width="80%" rows="3"
+							value="@load(vm.models.eada_lendcause)">
+						</textbox>
+					</cell>
+				</row>
+				<row
+					if="${vm.models.eada_arrearageinfo!='' and vm.models.eada_arrearageinfo!=null}">
+					<cell>费用情况</cell>
+					<cell colspan="5">
+						<textbox rows="3" width="70%"
+							value="@load(vm.models.eada_arrearageinfo)">
+						</textbox>
+					</cell>
+				</row>
+				<row visible="${vm.models.eada_final=='已退回' }">
+					<cell>退回原因</cell>
+					<cell colspan="5">
+						<textbox rows="3" width="70%"
+							value="@load(vm.models.eada_backcase)">
+						</textbox>
+					</cell>
+				</row>
+				<row if="${vm.remarks!='' and vm.remarks!=null}">
+					<cell>备注</cell>
+					<cell colspan="5">
+						<textbox id="remark" width="80%" rows="3"
+							value="@load(vm.remarks)">
+						</textbox>
+					</cell>
+				</row>
+				<row
+					visible="${vm.tmodel.wfno_step==1||vm.tmodel.wfno_step==2}">
+					<cell>是否待确定</cell>
+					<cell>
+						<hlayout>
+							<radio id="yes" label="是" value="1"
+								radiogroup="yorn" />
+							<radio id="no" label="否" value="0"
+								radiogroup="yorn" selected="true" />
+						</hlayout>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button id="summitupdate"
+						onClick="@command('summitupdate',reason=reason.value,remark=remark.value,yorn=yorn.selectedItem,gd=docGrid,outdate=outdate.value,backdate=backdate.value,leanpeop=leanpeop.value,windetial=windetial)">
+						提交
+					</button>
+					<button onClick="@command('addremark',win=windetial)">备注</button>
+					<button if="${vm.tmodel.wfno_step!=2}"
+						onClick="@command('back',win=windetial)">
+						退回
+					</button>
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

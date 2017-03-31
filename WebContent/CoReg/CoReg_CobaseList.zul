@@ -1,0 +1,45 @@
+<?page title="公司列表" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="公司列表" border="normal" width="100%" height="100%"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoReg.CoReg_CobaseListController')">
+		<grid height="100%" width="100%" emptyMessage="暂无数据"
+			model="@load(vm.scobaList)" mold="paging">
+			<columns>
+				<column width="40px"></column>
+				<column align="center" label="公司编号">
+					<separator></separator>
+					<textbox mold="rounded" value="@bind(vm.cid)"
+						width="30%" onChange="@command('search')" />
+				</column>
+				<column align="center" label="公司名称" width="30%">
+					<separator></separator>
+					<textbox mold="rounded" value="@bind(vm.company)"
+						width="80%" onChange="@command('search')" />
+				</column>
+				<column align="center" label="公司简称"></column>
+				<column align="center" label="客服"></column>
+				<column align="center" label="操作" width="60px"></column>
+			</columns>
+			<template name="model">
+				<row>
+					<label value="${forEachStatus.index+1 }"></label>
+					<label value="@load(each.cid)"></label>
+					<label value="@load(each.coba_company)"></label>
+					<label value="@load(each.coba_shortname)"></label>
+					<label value="@load(each.coba_client)"></label>
+					<menubar autodrop="true">
+						<menu image="../images/pencil-small.png">
+							<menupopup>
+								<menuitem label="新开户"
+									onClick="@command('openwin',url='CoReg_Add.zul',cid=each.cid)" />
+								<menuitem label="接管"
+									onClick="@command('openwin',url='CoReg_Tackover.zul',cid=each.cid)" />
+							</menupopup>
+						</menu>
+					</menubar>
+				</row>
+			</template>
+		</grid>
+	</window>
+</zk>

@@ -1,0 +1,26 @@
+<?page title="编辑备注内容" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="编辑备注内容" border="normal"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmSheBao.Emsc_DeclareBj_FlagController')"
+		height="200px" width="450px" closable="true" sizable="true">
+		<grid height="100%" width="100%">
+			<rows>
+				<row>
+					<cell width="20%">备忘</cell>
+					<textbox rows="4" value="@bind(vm.m.emsb_flag)"  width="90%"/>
+				</row>
+				<row>
+					<cell width="20%">添加人</cell>
+					<label value="@load(vm.m.emsb_flagname)" />
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button label="添加备注" id="btSubmit"
+						onClick="@command('upflag')" />
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

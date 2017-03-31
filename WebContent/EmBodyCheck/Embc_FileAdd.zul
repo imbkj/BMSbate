@@ -1,0 +1,50 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="介绍须知上传" border="normal" vflex="1"
+	apply="org.zkoss.bind.BindComposer" id="win"
+    viewModel="@id('vm') @init('Controller.EmBodyCheck.Embc_FileAddController')"
+>
+<grid vflex="1">
+		<rows>
+			<row>
+				<cell width="120px">体检医院</cell>
+				<cell>
+					<combobox model="@load(vm.setuplist)" onChange="@command('setup',cmb=self)" 
+					width="50%" readonly="true" id="setup">
+					<template name="model">
+						<comboitem label="@load(each.ebcs_hospital)" value="@load(each.ebcs_id)"/>
+					</template>
+					</combobox>
+				</cell>
+			</row>
+			<row>
+				<cell>体检医院地址</cell>
+				<cell>
+				<combobox model="@load(vm.addresslist)" width="70%" readonly="true" id="address">
+					<template name="model">
+						<comboitem label="@load(each.ebsa_address)" value="@load(each.ebsa_id)"/>
+					</template>
+				</combobox>
+				</cell>
+			</row>
+			<row>
+				<cell>上传文件</cell>
+				<cell>
+					<hlayout valign="middle">
+						<button id="attachBtn" upload="true" onUpload="@command('upfile',btn=self,bel=filenamebel,cancel=cancel)" label="选择政策文件"/>
+						<label id="filenamebel" visible="false" style="margin-right:10px;"></label>
+						<a id="cancel" visible="false" onClick="@command('cancel',btn=attachBtn,bel=filenamebel,cancelv=cancel)"><label>取消</label></a>
+					</hlayout>
+				</cell>
+			</row>
+			<row>
+				<cell width="120px">备注</cell>
+				<cell><textbox width="60%" rows="5" value="@bind(vm.model.file_remark)"></textbox></cell>
+			</row>
+		</rows>
+		<foot>
+			<footer align="center"><button onClick="@command('summit',setup=setup,address=address)">提交</button></footer>
+		</foot>
+	</grid>
+</window>
+</zk>

@@ -1,0 +1,45 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<?component name="echart" macroURI="/ECharts/echart.zul"?>
+<zk>
+	<window id="win" title="台账每月应收实收统计" border="normal" width="99%" height="99%"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.BusinessIntelligence.CoFinanceBillTotleChartController')">
+		<script src="../ECharts/echartOp.js"></script>
+		<borderlayout>
+			<north border="0" title="数据查询" collapsible="true">
+				<grid>
+					<rows>
+						<row>
+							<cell align="right">选择报表类型：</cell>
+							<cell align="left">
+								<combobox value="@bind(vm.type)"
+									mold="rounded" readonly="true">
+									<comboitem label="柱状图" />
+									<comboitem label="饼图" />
+									<comboitem label="雷达图" />
+								</combobox>
+							</cell>
+						</row>
+					</rows>
+					<foot>
+						<footer align="center">
+							<button id="btSearch" label="查看报表"
+								onClick="@command('search')" />
+						</footer>
+					</foot>
+				</grid>
+			</north>
+			<center autoscroll="true">
+				<vlayout>
+					<scrollview id="div" height="600px" width="100%"></scrollview>
+				</vlayout>
+			</center>
+			<south autoscroll="true" splittable="true"
+				collapsible="true">
+				<vlayout>
+
+				</vlayout>
+			</south>
+		</borderlayout>
+	</window>
+</zk>

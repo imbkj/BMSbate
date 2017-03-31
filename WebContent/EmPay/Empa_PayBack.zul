@@ -1,0 +1,42 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="退回" border="normal" width="800px" height="450px"
+		closable="true" apply="org.zkoss.bind.BindComposer" id="backwin"
+		viewModel="@id('vm') @init('Controller.EmPay.Empa_PayBackController')">
+		<grid model="@load(vm.list)" height="250px">
+			<columns>
+				<column label="退回人" align="center" width="80px" />
+				<column label="退回时间" align="center" width="180px" />
+				<column label="退回原因" align="center" />
+			</columns>
+			<rows>
+				<template name="model">
+					<row>
+						<cell><label value="@load(each.back_addname)"></label></cell>
+						<cell><label value="@load(each.back_addtime)"></label></cell>
+						<cell><label value="@load(each.back_case)"></label></cell>
+					</row>
+				</template>
+			</rows>
+		</grid>
+		<grid vflex="1">
+			<rows>
+				<row>
+					<cell width="80px">退回原因</cell>
+					<cell>
+						<textbox width="80%" rows="5"
+							value="@bind(vm.m.back_case)">
+						</textbox>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer span="2" align="center">
+					<button onClick="@command('submit',win=backwin)">
+						提交
+					</button>
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

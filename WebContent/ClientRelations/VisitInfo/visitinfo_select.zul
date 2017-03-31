@@ -1,0 +1,117 @@
+<?page title="拜访记录查询" contentType="text/html;charset=UTF-8"?>
+<zk>
+<panel title="拜访记录查询" border="normal" width="100%" apply="org.zkoss.bind.BindComposer"  height="100%"  
+viewModel="@id('VisitInfo') @init('Controller.ClientRelations.VisitInfo.VisitInfoController')" >
+<panelchildren>
+<style src="/css/style.css"></style>
+<borderlayout  vflex="1">
+<north border="0" title="数据查询" flex="true" collapsible="true" >
+	   <vlayout  width="100%" >
+                    <panel>
+                        <panelchildren>
+                            <vbox width="100%" >
+                            <grid width="100%" >
+        					<rows width="100%">
+            				<row style="background:#F7F7F7;">
+            				<hlayout >
+            				<label value="拜访执行人:" />
+            				<combobox id="selectcon" style="padding-right:5px;" model="@load(VisitInfo.visipersonlist)"  value="@bind(VisitInfo.viin_person)"  onChange="@command('search')"  mold="rounded"> 
+           					 	<template name="model">
+									<comboitem label="@load(each.log_name)" />
+								</template>
+							</combobox>
+							</hlayout>
+							<hlayout >
+            				<label value="状态:" />
+         					<combobox id="auditingstate" readonly="true" value="@bind(VisitInfo.viin_state)"  onChange="@command('search')"
+								mold="rounded" width="85px" >
+								<comboitem label="未审核" />
+							  <comboitem label="已审核" />
+									
+							</combobox>
+							</hlayout>
+							</row>
+       		 				</rows>
+       		 				
+    						</grid>
+                            </vbox>
+                        </panelchildren>
+                    </panel>
+         </vlayout>
+</north>
+<center  style="height:650px;" flex="true">
+<grid   model="@load(VisitInfo.visitInfolist)" id="gridwin"
+            emptyMessage="暂无符合条件数据" mold="paging" pageSize="300" height="300px" hflex="1" style="border:0;">
+ 		<auxhead sclass="category-center">
+				<auxheader label="权限列表" colspan="10" />
+			</auxhead>
+		<columns sizable="true">
+				<column align="center" label="序号" width="5%"/>
+                <column align="center" sort="auto(cid)">
+               	   公司名称
+                <textbox id="cola_company" instant="true"
+						value="@bind(VisitInfo.cola_company)" onChange="@command('search')"  mold="rounded">
+				</textbox>
+                </column>
+                <column align="center">
+            	 拜访方式
+                <textbox id="viin_class" instant="true" width="50%"
+						value="@bind(VisitInfo.viin_class)" onChange="@command('search')"  mold="rounded" >
+				</textbox>
+                 </column>
+              
+             
+                <column align="center">
+            	    计划拜访时间
+                <textbox id="viin_month" instant="true" width="50%"
+						value="@bind(VisitInfo.viin_month)" onChange="@command('search')"  mold="rounded" >
+				</textbox>
+                 </column>
+                <column align="center">
+                	  添加人
+                 <textbox id="viin_addname" instant="true" width="50%"
+						value="@bind(VisitInfo.viin_addname)" onChange="@command('search')" mold="rounded" >
+				</textbox>
+                  </column>
+                   <column align="center"  label="拜访执行人" >
+               
+               
+                      </column>
+                      
+                        <column align="center"  label="次执行人" >
+         
+                      </column>
+                    
+                <column align="center" label=" 添加时间"/>
+                <column align="center" label="状态"/>
+                <column align="center" label="操作"/>
+ 
+        </columns>
+			  <template name="model">
+			 <row>
+			 		<label value="@load(forEachStatus.index + 1)" />
+			 		<label value="@load(each.cola_company)" />
+			 		<label value="@load(each.viin_class)" />
+			 		<label value="@load(each.viin_month)" />
+			 		<label value="@load(each.viin_addname)" />
+			 		<label value="@load(each.viin_person)" />
+			 		<label value="@load(each.viin_subordinate)" />
+			 		<label value="@load(each.viin_addtime)" />
+			 		<label value="@load(each.viin_stateStr)" />
+			 		<label value="详情" style="cursor:pointer"
+			 			onClick="@command('detail',model=each)" />
+			 </row>	
+			  </template>
+		
+		
+	</grid>
+	
+	
+	
+	
+</center>
+<south></south>
+</borderlayout>
+</panelchildren>
+</panel>
+</zk>

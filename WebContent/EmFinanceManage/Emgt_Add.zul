@@ -1,0 +1,114 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="个人收款新增" border="normal" width="500px" height="300px" closable="true"
+	apply="org.zkoss.bind.BindComposer" id="wind"
+	viewModel="@id('vm') @init('Controller.EmFinanceManage.Emgt_AddController')"
+>
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell width="80px">所属月份</cell>
+			<cell><datebox sclass="datebox-month-only" format="yyyyMM" value="@bind(vm.ownmonth)" id="ownmonth"/></cell>
+		</row>
+		<row>
+			<cell>收费类型</cell>
+			<cell>
+				<combobox value="@bind(vm.model.emgt_type)" readonly="true">
+					<comboitem label="档案"/>
+					<comboitem label="户口"/>
+					<comboitem label="入职体检"/>
+					<comboitem label="档案及户口"/>
+					<comboitem label="人才引进代理费"/>
+					<comboitem label="调户"/>
+					<comboitem label="户口卡押金 " />
+					<comboitem label="其他"/>
+				</combobox>
+			</cell>
+		</row>
+		<row>
+			<cell>收费方式</cell>
+			<cell>
+				<combobox value="@bind(vm.model.emgt_paytype)" readonly="true">
+					<comboitem label="现金交款"/>
+					<comboitem label="银行存款"/>
+					<comboitem label="POS机"/>
+					<comboitem label="微信支付"/>
+				</combobox>
+			</cell>
+		</row>
+		<row>
+			<cell>收费金额</cell>
+			<cell><decimalbox value="@bind(vm.model.emgt_fee)" format="#.##"></decimalbox></cell>
+		</row>
+		<row>
+			<cell>备注</cell>
+			<cell><textbox width="80%" rows="3" value="@bind(vm.model.emgt_remark)"></textbox></cell>
+		</row>
+	</rows>
+	<foot>
+		<footer align="center"><button onClick="@command('summit',win=wind)">提交</button></footer>
+	</foot>
+</grid>
+<script><![CDATA[
+        zk.afterLoad("zul.db", function () {
+            // Datebox Calendar Renderer
+            var _Cwgt = {};
+            zk.override(zul.db.CalendarPop.prototype, _Cwgt, {
+                // switch the view after redraw or open as needed
+                redraw: function (out) {
+                    _Cwgt.redraw.apply(this, arguments); //call the original method
+                    this._customChangeView ();
+                },
+                open: function (silent) {
+                    _Cwgt.open.apply(this, arguments); //call the original method
+                    this._customChangeView ();
+                },
+                _customChangeView: function () {
+                    // cannot show month/day
+                    if (jq(this.parent.$n()).hasClass('datebox-year-only')) {
+                        var view = this._view;
+                        // switch to year view as needed
+                        if (view == 'month' || view == 'day')
+                            this._setView("year");
+                    } else if (jq(this.parent.$n()).hasClass('datebox-month-only')) {
+                        // cannot show day view
+                        // switch to month view as needed
+                        if (this._view == 'day')
+                            this._setView("month");
+                    }
+                },
+                // customize the chooseDate function
+                _chooseDate: function (target, val) {
+                    var view = this._view;
+                    if (jq(this.parent.$n()).hasClass('datebox-month-only')
+                        || jq(this.parent.$n()).hasClass('datebox-year-only')) {
+                        // do customize chooseDate if the parent (datebox)
+                        // has specific class
+                        var date = this.getTime(),
+                            year = (view == 'decade' || view == 'year')? val : date.getFullYear(),
+                            month = view == 'month'? val : 0,
+                            date = 1;
+                        // set date value
+                        this._setTime(year, month, 1);
+                        if (view == 'decade') {
+                            // switch to year view if at decade view
+                            this._setView("year");
+                        } else if (jq(this.parent.$n()).hasClass('datebox-month-only')
+                            && view == 'year') {
+                            // switch to month view if at year view and the month view is allowed
+                            this._setView("month");
+                        } else if (jq(this.parent.$n()).hasClass('datebox-month-only') && view == 'month'
+                            || jq(this.parent.$n()).hasClass('datebox-year-only') && view == 'year') {
+                            // close calendar and update value if already at the smallest allowed view
+                            this.close();
+                            this.parent.updateChange_();
+                        }
+                    } else {
+                        _Cwgt._chooseDate.apply(this, arguments); //call the original method
+                    }
+                }
+            });
+        });
+    ]]></script>
+</window>
+</zk>

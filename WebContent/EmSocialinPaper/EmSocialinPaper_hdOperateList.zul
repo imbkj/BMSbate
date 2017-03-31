@@ -1,0 +1,134 @@
+<?page title="社保卡处理(后道)" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="社保卡处理(后道)" border="normal"
+		apply="org.zkoss.bind.BindComposer" height="100%" width="100%"
+		viewModel="@id('vm') @init('Controller.EmSocialinPaper.EmSocialinPaper_hdOperateListController')">
+		<borderlayout>
+			<north title="批量操作" collapsible="true" open="false">
+				<hbox width="100%" height="100%" pack="center"
+					align="center">
+					<button label="状态变更" disabled="@load(vm.batchDis)"
+						onClick="@command('openwins',url='EmSocialinPaper_Operate.zul',list=ltb.selectedItems)">
+					</button>
+					<button label="退回" disabled="@load(vm.batchDis)"
+						onClick="@command('openwins',url='EmSocialinPaper_Back.zul',list=ltb.selectedItems)">
+					</button>
+				</hbox>
+			</north>
+			<center>
+				<listbox id="ltb" hflex="1" vflex="1" mold="paging"
+					emptyMessage="暂无数据" multiple="@load(vm.mult)"
+					model="@load(vm.sespList)" checkmark="true">
+					<listhead>
+						<listheader width="30px"></listheader>
+						<listheader align="center" label="公司简称"
+							sort="auto(coba_shortname)">
+							<separator></separator>
+							<textbox width="80%" mold="rounded"
+								instant="true" onChange="@command('search')"
+								value="@bind(vm.company)" />
+						</listheader>
+						<listheader align="center" label="编号"
+							sort="auto(gid)">
+							<separator></separator>
+							<textbox width="80%" mold="rounded"
+								instant="true" onChange="@command('search')"
+								value="@bind(vm.gid)" />
+						</listheader>
+						<listheader align="center" label="姓名"
+							sort="auto(name)">
+							<separator></separator>
+							<textbox width="80%" mold="rounded"
+								instant="true" onChange="@command('search')"
+								value="@bind(vm.name)" />
+						</listheader>
+						<listheader align="center" label="身份证"
+							width="15%">
+							<separator></separator>
+							<textbox width="80%" mold="rounded"
+								instant="true" onChange="@command('search')"
+								value="@bind(vm.idcard)" />
+						</listheader>
+						<listheader align="center" label="电脑号">
+							<separator></separator>
+							<textbox width="80%" mold="rounded"
+								instant="true" onChange="@command('search')"
+								value="@bind(vm.computerid)" />
+						</listheader>
+						<listheader align="center" label="社保卡号">
+							<separator></separator>
+							<textbox width="80%" mold="rounded"
+								instant="true" />
+						</listheader>
+						<listheader align="center" label="客户交资料时间"
+							width="100px" sort="auto(espa_filetime)">
+						</listheader>
+						<listheader align="center" label="办卡状态">
+							<separator></separator>
+							<combobox width="80%" mold="rounded"
+								readonly="true" instant="true" onChange="@command('search')"
+								value="@bind(vm.type)">
+								<comboitem />
+								<comboitem label="新办" />
+								<comboitem label="补办" />
+							</combobox>
+						</listheader>
+						<listheader align="center" label="添加人"></listheader>
+						<listheader align="center" label="状态"
+							width="110px" sort="auto(statename)">
+							<separator></separator>
+							<combobox width="80%" mold="rounded"
+								model="@load(vm.stateList)" readonly="true" instant="true"
+								onChange="@command('search')" value="@bind(vm.statename)">
+								<template name="model">
+									<comboitem
+										label="@load(each.statename)" />
+								</template>
+							</combobox>
+						</listheader>
+						<listheader align="center" label="操作"
+							width="60px">
+						</listheader>
+					</listhead>
+					<template name="model">
+						<listitem>
+							<listcell></listcell>
+							<listcell
+								label="@load(each.coba_shortname)">
+							</listcell>
+							<listcell label="@load(each.gid)"></listcell>
+							<listcell label="@load(each.name)"></listcell>
+							<listcell label="@load(each.espa_idcard)"></listcell>
+							<listcell
+								label="@load(each.emba_computerid)">
+							</listcell>
+							<listcell label=""></listcell>
+							<listcell
+								label="@load(each.espa_filetime)">
+							</listcell>
+							<listcell label="@load(each.espa_type)"></listcell>
+							<listcell
+								label="@load(each.espa_addname)">
+							</listcell>
+							<listcell label="@load(each.statename)"></listcell>
+							<listcell>
+								<menubar autodrop="true">
+									<menu
+										image="../images/pencil-small.png">
+										<menupopup>
+											<menuitem label="状态变更"
+												onClick="@command('openwin',url='EmSocialinPaper_Operate.zul',each=each)" />
+											<menuitem label="退回"
+												onClick="@command('openwin',url='EmSocialinPaper_Back.zul',each=each)" />
+										</menupopup>
+									</menu>
+								</menubar>
+							</listcell>
+						</listitem>
+					</template>
+				</listbox>
+			</center>
+		</borderlayout>
+
+	</window>
+</zk>

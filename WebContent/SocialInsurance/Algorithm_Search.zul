@@ -1,0 +1,213 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winAlSearch" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.SocialInsurance.Algorithm_SearchController')"
+		title="社保字典库信息" border="normal" height="99%" width="99%"
+		closable="true">
+		<borderlayout>
+			<north border="none">
+			
+				<grid width="100%">
+					<rows>
+						<row>
+							<cell width="8%" style="color:#666;">
+								城市：
+							</cell>
+							<cell width="10%" style="color:#666;">
+								<label
+									value="@load(vm.saModel.getCity())" />
+							</cell>
+							<cell width="8%" style="color:#666;">
+								机构名称：
+							</cell>
+							<cell width="10%" style="color:#666;">
+								<label
+									value="@load(vm.saModel.getCoab_name())" />
+							</cell>
+							<cell width="8%" style="color:#666;">
+								算法描述：
+							</cell>
+							<cell width="10%" style="color:#666;">
+								<label
+									value="@load(vm.saModel.getSoin_title())" />
+							</cell>
+							<cell width="8%" style="color:#666;">
+								开始执行年月：
+							</cell>
+							<cell width="10%" style="color:#666;">
+								<combobox id="cbExecdate"
+									value="@load(vm.saModel.getSial_execdatestr())" readonly="true"
+									model="@load(vm.execDateList)" mold="rounded"
+									onChange="@command('searchAl',cb=cbExecdate)">
+									<template name="model">
+										<comboitem
+											label="@load(each[1])" value="@load(each[0])" />
+									</template>
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell width="8%" style="color:#666;">
+								社保标准：
+							</cell>
+							<cell width="10%" style="color:#666;">
+								<label
+									value="@load(vm.saModel.getSial_sb_standardstr())" />
+							</cell>
+							<cell width="10%" style="color:#666;">
+								公积金标准：
+							</cell>
+							<cell width="10%" style="color:#666;">
+								<label
+									value="@load(vm.saModel.getSial_gjj_standardstr())" />
+							</cell>
+							<cell width="10%" style="color:#666;">
+								算法标准：
+							</cell>
+							<cell width="10%" style="color:#666;"
+								colspan="3">
+								<label
+									value="@load(vm.saModel.getSial_standard())" />
+							</cell>
+						</row>
+						<row>
+							<cell width="8%" style="color:#666;">
+								月平均工资：
+							</cell>
+							<cell width="10%" style="color:#666;">
+								<label
+									value="@load(vm.saModel.getSial_avg_salary())" />
+							</cell>
+							<cell width="10%" style="color:#666;">
+								最低工资：
+							</cell>
+							<cell width="10%" style="color:#666;">
+								<label
+									value="@load(vm.saModel.getSial_lowest_salary())" />
+							</cell>
+							<cell width="10%" style="color:#666;">
+								城市备注：
+							</cell>
+							<cell width="10%" style="color:#666;"
+								colspan="3">
+								<label
+									value="@load(vm.saModel.getSial_city_remark())" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+				
+			</north>
+			<center border="none">
+				<grid id="gdInfo" width="100%" hflex="1" vflex="1"
+					model="@load(vm.classList)">
+					<auxhead>
+						<auxheader label="类别" align="center" />
+						<auxheader label="项目" colspan="2"
+							align="center" />
+						<auxheader label="基数下限" align="center" />
+						<auxheader label="最低缴存额" align="center" />
+						<auxheader label="基数上限" align="center" />
+						<auxheader label="最高缴存额" align="center" />
+						<auxheader label="缴费比例" align="center" />
+						<auxheader label="具体算法" align="center" />
+						<auxheader label="小数处理" align="center" />
+						<auxheader label="备注" align="center" />
+					</auxhead>
+					<columns sizable="true"></columns>
+					<rows>
+						<template name="model">
+							<row>
+								<cell sclass="class" align="center"
+									width="5%" rowspan="${each.sicl_ifclass}"
+									if="${each.sicl_ifclass!=0?true:false}">
+									<label
+										value="@load(each.sicl_class)" />
+								</cell>
+								<cell sclass="name" align="center"
+									rowspan="${each.sicl_ifname}"
+									if="${each.sicl_ifname!=0?true:false}">
+									<label
+										value="@load(each.sicl_name)" />
+								</cell>
+								<cell sclass="util" align="center">
+									<label
+										value="@load(each.sicl_payunit)" />
+								</cell>
+								<cell align="center">
+									<label
+										value="@load(each.siai_basic_dd)" />
+								</cell>
+								<cell align="center">
+									<label
+										value="@load(each.siai_deposit_dd)" />
+								</cell>
+								<cell align="center">
+									<label
+										value="@load(each.siai_basic_ud)" />
+								</cell>
+								<cell align="center">
+									<label
+										value="@load(each.siai_deposit_ud)" />
+								</cell>
+								<cell align="center">
+									<label
+										value="@load(each.siai_proportion)" />
+								</cell>
+								<cell align="center">
+									<label
+										value="@load(each.siai_algorithm)" />
+								</cell>
+								<cell align="center">
+									<label
+										value="@load(each.side_decimal)" />
+								</cell>
+								<cell align="center">
+									<label style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden"
+										value="@load(each.siai_remark)" tooltiptext="@load(each.siai_remark)"/>
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</center>
+			<south border="none" collapsible="true" splittable="true">
+				<panel border="0">
+					
+					<panelchildren >
+			
+				<groupbox>
+				<grid width="100%">
+					<rows>
+						<row>
+							<cell align="center" width="20%">社保备注</cell>
+							<cell>
+								<label
+									value="@load(vm.saModel.getSial_sb_remark())" />
+							</cell>
+						</row>
+						<row>
+							<cell align="center">公积金备注</cell>
+							<cell>
+								<label
+									value="@load(vm.saModel.getSial_gjj_remark())" />
+							</cell>
+						</row>
+						<row>
+							<cell align="center">残保备注</cell>
+							<cell>
+								<label
+									value="@load(vm.saModel.getSial_cb_remark())" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+				</groupbox>
+				</panelchildren>
+				</panel>
+				
+
+			</south>
+		</borderlayout>
+	</window>
+</zk>

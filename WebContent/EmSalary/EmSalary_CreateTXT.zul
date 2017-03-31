@@ -1,0 +1,80 @@
+<!--
+	创建人：林少斌
+	创建时间：2013-12-20
+	用途：生成报盘文件页面
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winTXTCreate" title="工资报盘数据 -- 生成报盘文件页面" border="normal"
+		width="70%" height="60%" closable="true"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmSalary.EmSalary_CreateTXTController')">
+		<grid width="100%" height="100%">
+			<rows>
+				<row>
+					<cell align="left" width="20%">
+						<label value="发放数据信息：" />
+					</cell>
+					<cell align="left">
+						<vbox>
+							<hbox>
+								<label value="TXT数据共" />
+								<label value="@load(vm.total_count)"
+									style="color:#0000FF" />
+								<label value="笔， 金额合计：" />
+								<label value="@load(vm.total_pay)"
+									style="color:#0000FF" />
+								<label value="元" />
+							</hbox>
+							<hbox>
+								<label value="支付模块数据共" />
+								<label value="@load(vm.total_ep_count)"
+									style="color:#0000FF" />
+								<label value="笔， 金额合计：" />
+								<label value="@load(vm.total_empay)"
+									style="color:#0000FF" />
+								<label value="元" />
+							</hbox>
+							<hbox>
+								<label value="所有数据共" />
+								<label value="@load(vm.all_total_count)"
+									style="color:#0000FF" />
+								<label value="笔， 金额合计：" />
+								<label value="@load(vm.all_total_pay)"
+									style="color:#0000FF" />
+								<label value="元" />
+								<space />
+								<space />
+								<label value="今日银行余额：" />
+								<label value="@load(vm.etfsM.etfs_balance)"
+									style="color:#0000FF" />
+								<label value="元，扣除报盘后余额" />
+								<label value="@load(vm.etfsM.etfs_remaining)"
+									style="color:#0000FF" />
+								<label value="元，" />
+							</hbox>
+						</vbox>
+					</cell>
+				</row>
+				<row>
+					<cell align="left">
+						<label value="发放批次：" />
+					</cell>
+					<cell align="left">
+						<combobox id="txt_batch" width="200px"
+							autodrop="true" readonly="true" mold="rounded">
+							<comboitem label="第1批" value="1" />
+							<comboitem label="第2批" value="2" />
+						</combobox>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button label="生成" id="btSubmit"
+						onClick="@command('submit',winTXTCreate=winTXTCreate,txt_batch=txt_batch)" />
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

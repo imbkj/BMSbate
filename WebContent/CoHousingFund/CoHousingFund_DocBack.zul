@@ -1,0 +1,33 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<!-- 调用内联页的文件名 -->
+<?component name="docDataList" macro-uri="/DocumentsInfo/DocumentsInfo_UpPageList.zul" inline="true"?>
+<zk>
+	<window id="win" title="退还材料" border="normal" width="700px"
+		closable="true" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoHousingFund.CoHousingFund_DocBackController')">
+		<grid>
+			<columns>
+				<column></column>
+			</columns>
+			<rows>
+				<row>
+					<cell>
+						<label value="材料详情" style="color:#666" />
+					</cell>
+				</row>
+				<row>
+					<cell>
+						<docDataList id="docGrid"
+							puzu_id="${vm.m.chfc_puzu_id }" doc_type="c" gid=""
+							tid="${arg.daid }" log_url="/DocumentsInfo/" dHeight=""
+							dWidth="" />
+					</cell>
+				</row>
+			</rows>
+		</grid>
+		<hbox width="100%" pack="center" align="center">
+			<button label="提交"
+				onClick="@command('submit',win=win,gd=docGrid)" />
+		</hbox>
+	</window>
+</zk>

@@ -1,0 +1,95 @@
+<?page title="机构账单领款" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winAgencyCollectDis" title="机构账单领款" border="normal"
+		width="600px" height="500px" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoFinanceManage.Cfma_AgencyCollectDistributionController')"
+		closable="true" sizable="true" maximizable="true">
+		<grid width="100%" height="100%">
+			<rows>
+				<row>
+					<cell width="30%">
+						<label value="所属月份：" />
+					</cell>
+					<cell>
+						<label value="@load(vm.cfabModel.ownmonth)" />
+					</cell>
+				</row>
+				<row>
+					<cell width="30%">
+						<label value="城市：" />
+					</cell>
+					<cell>
+						<label value="@load(vm.cfabModel.city)" />
+					</cell>
+				</row>
+				<row>
+					<cell>
+						<label value="机构名称：" />
+					</cell>
+					<cell>
+						<label value="@load(vm.cfabModel.coab_name)" />
+					</cell>
+				</row>
+				<row>
+					<cell>
+						<label value="可领金额：" />
+					</cell>
+					<cell>
+						<label value="@load(vm.cfabModel.cfat_Balance)"
+							style="color:blue;" />
+						<image src="../images/130.gif"
+							style="cursor:pointer;" width="10" height="11" border="0"
+							if="${vm.cfabModel.cfat_Balance lt -vm.cfabModel.imbalance?true:false}"
+							onClick="@command('autoBalance')" />
+					</cell>
+				</row>
+				<row>
+					<cell>
+						<label value="账单差额：" />
+					</cell>
+					<cell>
+						<label value="@load(vm.cfabModel.imbalance)"
+							style="color:red;" />
+						<image src="../images/130.gif" width="10"
+							height="11" border="0" style="cursor:pointer;"
+							if="${vm.cfabModel.cfat_Balance ge -vm.cfabModel.imbalance?true:false}"
+							onClick="@command('autoImbalance')" />
+					</cell>
+				</row>
+				<row>
+					<cell>
+						<label value="领取金额：" />
+					</cell>
+					<cell>
+						<decimalbox id="dbPaidin" constraint="no empty"
+							value="@bind(vm.amount)" width="150px" mold="rounded"
+							format="###.##" />
+					</cell>
+				</row>
+				<row>
+					<cell width="30%">
+						<label value="添加人：" />
+					</cell>
+					<cell>
+						<label value="@load(vm.username)" />
+					</cell>
+				</row>
+				<row>
+					<cell>
+						<label value="备注：" />
+					</cell>
+					<cell>
+						<textbox id="txtRemark" rows="3" width="75%"
+							mold="rounded" />
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button label="提交"
+						onClick="@command('SubmitCollectDis',win=winAgencyCollectDis,remark=txtRemark.value)" />
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

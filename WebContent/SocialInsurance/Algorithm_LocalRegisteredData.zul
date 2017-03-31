@@ -1,0 +1,95 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winLocalRegData" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.SocialInsurance.Algorithm_LocalRegisteredDataController')"
+		title="深圳本地社保算法在册数据" border="normal" height="99%" width="99%"
+		closable="true">
+		<borderlayout>
+			<north border="none">
+				<grid width="100%">
+					<rows>
+						<row>
+							<cell width="8%" style="color:#666;">
+								城市：
+							</cell>
+							<cell width="10%" style="color:#666;">
+								<label value="深圳" />
+							</cell>
+							<cell width="8%" style="color:#666;">
+								算法描述：
+							</cell>
+							<cell width="10%" style="color:#666;">
+								<label
+									value="@load(vm.saModel.getSoin_title())" />
+							</cell>
+							<cell width="8%" style="color:#666;">
+								开始执行年月：
+							</cell>
+							<cell width="10%" style="color:#666;">
+								<datebox format="yyyy年MM月"
+									mold="rounded" readonly="true"
+									value="@load(vm.saModel.getSial_execdate())" inplace="true"
+									buttonVisible="false" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</north>
+			<center border="none">
+				<grid height="100%" width="100%" vflex="1" hflex="1"
+					emptyMessage="暂无员工在册数据" model="@load(vm.emList)">
+					<columns sizable="true">
+						<column label="序号" align="center" width="40px" />
+						<column label="公司编号" align="center"
+							sort="auto(cid)" />
+						<column label="公司简称" align="center"
+							sort="auto(esiu_company)" />
+						<column label="雇员编号" align="center"
+							sort="auto(gid)" />
+						<column label="雇员姓名" align="center"
+							sort="auto(esiu_name)" />
+						<column label="证件号码" align="center"
+							sort="auto(esiu_idcard)" />
+						<column label="养老保险" align="center"
+							sort="auto(esiu_yl)" />
+						<column label="医疗保险" align="center"
+							sort="auto(esiu_yltype)" />
+						<column label="工伤保险" align="center"
+							sort="auto(each.esiu_gs)" />
+						<column label="生育保险" align="center"
+							sort="auto(esiu_syu)" />
+						<column label="失业保险" align="center"
+							sort="auto(esiu_sye)" />
+						<column label="客服" align="center"
+							sort="auto(esiu_client)" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<label value="${forEachStatus.index+1}" />
+								<label value="@load(each.cid)" />
+								<label value="@load(each.esiu_company)" />
+								<label value="@load(each.gid)" />
+								<label value="@load(each.esiu_name)" />
+								<label value="@load(each.esiu_idcard)" />
+								<label value="@load(each.esiu_yl)" />
+								<label value="@load(each.esiu_yltype)" />
+								<label value="@load(each.esiu_gs)" />
+								<label value="@load(each.esiu_syu)" />
+								<label value="@load(each.esiu_sye)" />
+								<label value="@load(each.esiu_client)" />
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</center>
+			<south border="none">
+				<div align="center" vflex="1" hflex="1">
+					<button label="更新在册数据"
+						onClick="@command('upRegData')" if="${vm.admin==1}"/>
+				</div>
+
+			</south>
+		</borderlayout>
+	</window>
+</zk>

@@ -1,0 +1,29 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="发送手机短信" border="normal" width="500px" height="300px" closable="true" id="win"
+	apply="org.zkoss.bind.BindComposer"
+    viewModel="@id('vm') @init('Controller.SysMessage.SysMessage_AddInfoController')"
+> 
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell width="60px">手机号码</cell>
+			<cell><textbox value="${vm.emmodel.emba_mobile }" id="mobile"></textbox></cell>
+		</row>
+		<row>
+			<cell>短信内容</cell>
+			<cell>
+				<textbox width="95%" rows="6" id="message" onChange="@command('changenum',val=self.value)" instant="true"></textbox>
+				<hlayout>
+					<label style="color:red;" value="剩余字数:"></label>
+					<label style="color:red;" value="@bind(vm.messagenum)"></label>
+				</hlayout>
+			</cell>
+		</row>
+	</rows>
+	<foot>
+		<footer align="center"><button onClick="@command('addSysmessage',mobile=mobile.value,message=message.value,win=win)" >发送</button></footer>
+	</foot>
+</grid>
+</window>
+</zk>

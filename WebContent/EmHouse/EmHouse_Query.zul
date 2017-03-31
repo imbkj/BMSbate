@@ -1,0 +1,274 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="员工公积金 - 信息查询" id="winSearchIndex" border="normal"
+		width="100%" height="100%" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmHouse.EmHouse_QueryController')">
+		<scrollview height="100%">
+			<tablelayout columns="2" width="100%" height="100%">
+				<tablechildren rowspan="2" width="80%" height="100%">
+					<groupbox height="100%" width="100%">
+						<caption>条件检索</caption>
+						<grid height="100%">
+							<columns>
+								<column width="100px"></column>
+								<column></column>
+								<column width="100px"></column>
+								<column></column>
+							</columns>
+							<rows>
+								<row>
+									<cell>公司名称</cell>
+									<cell colspan="3">
+										<combobox id="company" 
+											width="60%" mold="rounded" autodrop="true"
+											model="@load(vm.companyList)"
+											onChanging="@command('updatecobase',a=event)"
+											onSelect="@command('changeEmbase')" buttonVisible="false">
+											<template name="model">
+												<comboitem
+													value="@load(each.cid)" label="@load(each.coba_company)">
+													[${each.coba_spell}]
+													${each.coba_company}|
+													${each.coba_client}
+												</comboitem>
+											</template>
+										</combobox>
+									</cell>
+								</row>
+								<row>
+									<cell>员工姓名</cell>
+									<cell colspan="3">
+										<combobox id="emp"
+											mold="rounded" autodrop="true"
+											onChanging="@command('updateEmbase',a=event)" width="60%"
+											model="@load(vm.empList)" buttonVisible="false">
+											<template name="model">
+												<comboitem
+													value="@load(each.gid)" label="@load(each.emba_name)">
+													${each.cid} |
+													${each.emba_name} |
+													${each.emba_idcard}
+													|
+													${each.emhu_houseid}
+												</comboitem>
+											</template>
+										</combobox>
+									</cell>
+								</row>
+								<row>
+									<cell>所属月份</cell>
+									<cell>
+										<combobox id="ownmonth" value="@bind(vm.ecm.ownmonth)"
+											mold="rounded" model="@load(vm.ownmonthlist)">
+											<template name="model">
+												<comboitem
+													label="@load(each.ownmonth)">
+												</comboitem>
+											</template>
+										</combobox>
+									</cell>
+									<cell>变动情况</cell>
+									<cell>
+										<combobox id="change" value="@bind(vm.ecm.emhc_change)"
+											mold="rounded">
+											<comboitem label="新增"></comboitem>
+											<comboitem label="调入"></comboitem>
+											<comboitem label="停交"></comboitem>
+											<comboitem label="基数调整"></comboitem>
+										</combobox>
+									</cell>
+								</row>
+								<row>
+									<cell>部门</cell>
+									<cell>
+										<combobox id="dept" value="@bind(vm.ecm.dep_name)"
+											mold="rounded" onChange="@command('updateclient')"
+											onChanging="@command('changeClient',a=event)">
+											<comboitem label="客户服务部"></comboitem>
+											<comboitem label="全国项目部"></comboitem>
+										</combobox>
+									</cell>
+									<cell>客服</cell>
+									<cell>
+										<combobox id="client" value="@bind(vm.ecm.emhc_client)"
+											mold="rounded" model="@load(vm.clientList)">
+											<template name="model">
+												<comboitem
+													label="@load(each.log_name)">
+												</comboitem>
+											</template>
+										</combobox>
+									</cell>
+								</row>
+
+								<row>
+									<cell>申报状态</cell>
+									<cell>
+										<combobox id="ifdeclare" value="@bind(vm.ecm.emhc_ifdeclare2)"
+											mold="rounded">
+											<comboitem label="待确认"></comboitem>
+											<comboitem label="未申报"></comboitem>
+											<comboitem label="申报中"></comboitem>
+											<comboitem label="已申报"></comboitem>
+											<comboitem label="核查失败"></comboitem>
+											<comboitem label="退回"></comboitem>
+										</combobox>
+									</cell>
+									<cell>开户状态</cell>
+									<cell>
+										<combobox id="ifsingle" value="@bind(vm.ecm.emhc_single2)"
+											mold="rounded">
+											<comboitem label="独立开户"></comboitem>
+											<comboitem label="中智开户"></comboitem>
+										</combobox>
+									</cell>
+								</row>
+								<row>
+									<cell>独立开户公司</cell>
+									<cell colspan="3">
+										<combobox id="singleCompany" 
+											width="60%" mold="rounded" autodrop="true"
+											model="@load(vm.singleList)"
+											onChanging="@command('updateSingle',a=event)">
+											<template name="model">
+												<comboitem
+													value="@load(each.cid)" label="@load(each.coba_company)">
+													[${each.coba_spell}]
+													${each.coba_company}|
+													${each.coba_client}
+												</comboitem>
+											</template>
+										</combobox>
+									</cell>
+								</row>
+								<row>
+
+									<cell>添加人</cell>
+									<cell colspan="3">
+										<combobox id="addname" value="@bind(vm.ecm.emhc_addname)"
+											mold="rounded" model="@load(vm.addList)">
+											<template name="model">
+												<comboitem
+													label="@load(each.emhc_addname)">
+												</comboitem>
+											</template>
+										</combobox>
+									</cell>
+
+								</row>
+							</rows>
+							<foot>
+								<footer align="center" span="4">
+									<button label="查询"
+										onClick="@command('submit')">
+									</button>
+								</footer>
+							</foot>
+						</grid>
+					</groupbox>
+				</tablechildren>
+
+				<tablechildren>
+					<groupbox>
+						<caption>快速检索</caption>
+						<grid>
+							<rows>
+								<row>
+									<cell width="50px"></cell>
+									<cell></cell>
+								</row>
+								<row>
+									<cell colspan="2" align="center">
+										查询本月我的所有变更
+									</cell>
+								</row>
+								<row>
+									<cell rowspan="4" align="center">
+										<vbox>中</vbox>
+										<vbox>智</vbox>
+										<vbox>开</vbox>
+										<vbox>户</vbox>
+									</cell>
+									<cell>新增数据</cell>
+								</row>
+								<row>
+									<cell>调入数据</cell>
+								</row>
+								<row>
+									<cell>停交数据</cell>
+								</row>
+								<row>
+									<cell>年度调整</cell>
+								</row>
+								<row>
+									<cell rowspan="4" align="center">
+										<vbox>独</vbox>
+										<vbox>立</vbox>
+										<vbox>开</vbox>
+										<vbox>户</vbox>
+									</cell>
+									<cell>新增数据</cell>
+								</row>
+								<row>
+									<cell>调入数据</cell>
+								</row>
+								<row>
+									<cell>停交数据</cell>
+								</row>
+								<row>
+									<cell>年度调整</cell>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+				</tablechildren>
+				<tablechildren>
+					<groupbox>
+						<caption>数据统计</caption>
+						<grid>
+							<rows>
+								<row>
+									<cell>当月变更数</cell>
+									<cell>
+										[
+										<label style="color:red;"
+											value="@load(vm.changeNum)" />
+										]
+									</cell>
+								</row>
+								<row>
+									<cell>已处理数</cell>
+									<cell>
+										[
+										<label style="color:red;"
+											value="@load(vm.finishNum)" />
+										]
+									</cell>
+								</row>
+								<row>
+									<cell>中智大户</cell>
+									<cell>
+										[
+										<label style="color:red;"
+											value="@load(vm.zzNum)" />
+										]
+									</cell>
+								</row>
+
+								<row>
+									<cell>独立开户</cell>
+									<cell>
+										[
+										<label style="color:red;"
+											value="@load(vm.singleNum)" />
+										]
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+				</tablechildren>
+			</tablelayout>
+		</scrollview>
+	</window>
+</zk>

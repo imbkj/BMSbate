@@ -1,0 +1,67 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="员工活动——供应商报价信息新增" border="normal" width="800px"
+		height="580px" closable="true" id="proadd"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmBenefit.EmActy_ProductAddController')">
+		<grid width="100%" height="100%">
+			<columns visible="false">
+				<column width="120px" />
+				<column />
+				<column width="80px" />
+				<column />
+			</columns>
+			<rows>
+				<row>
+					<cell>产品名称</cell>
+					<cell colspan="3">
+						<textbox width="60%" value="@bind(vm.m.prod_name)"
+							mold="rounded">
+						</textbox>
+					</cell>
+				</row>
+				<row>
+					<cell>是否有子分项</cell>
+					<cell colspan="3">
+						<combobox width="60px" value="@bind(vm.suboption)"
+							style="margin-right:10px;" readonly="true"
+							onChange="@command('selectItems',val=self.value)">
+							<comboitem label="有"></comboitem>
+							<comboitem label="无"></comboitem>
+						</combobox>
+						<textbox visible="@load(vm.vis)" style="margin-right:10px;"
+						 width="60%" value="@bind(vm.suboptions)"
+							tooltiptext="多项请用中文逗号隔开">
+						</textbox>
+						<label visible="@load(vm.vis)" style="color:red;" value="多项请用中文逗号隔开"></label>
+					</cell>
+
+				</row>
+				<row>
+					<cell>计算方式</cell>
+					<cell>
+						<combobox value="@bind(vm.m.prod_pricetype)"
+							readonly="true">
+							<comboitem label="折扣" />
+							<comboitem label="金额" />
+						</combobox>
+					</cell>
+					<cell>折扣/价格</cell>
+					<cell>
+						<doublebox id="disprice" value="@bind(vm.m.prod_discount)" format="0.00"
+							width="50%" mold="rounded">
+						</doublebox>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center" span="4">
+					<button
+						onClick="@command('submit',win=proadd)">
+						提交
+					</button>
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

@@ -1,0 +1,75 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="体检机构地址新增" border="normal" closable="true"
+		width="700px" height="450px" id="addresswin"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmBodyCheck.Embc_SetupAddressAddContruller')">
+		<grid width="100%" id="gd">
+			<rows id="rws">
+				<row>
+					<cell width="60px">地址</cell>
+					<cell>
+						<spinner id="num" value="1" onChange="addItem()"
+							instant="true" />
+					</cell>
+				</row>
+
+				<row>
+					<cell width="60px">
+						<label value="地址" id="fad"></label>
+					</cell>
+					<cell>
+						<textbox width="90%" id="address"></textbox>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button
+						onClick="@command('addressAdd',gd=gd,addresswin=addresswin,num=num.value)">
+						提交
+					</button>
+				</footer>
+			</foot>
+		</grid>
+		<zscript><![CDATA[
+	void addItem() {
+		int k = rws.getChildren().size();
+		int nums = num.getValue();
+
+		if (nums > 0) {
+			fad.setValue("地址1");
+			if (nums >= k) {
+				for (int i = k; i < nums + 1; i++) {
+					Row newrow = new Row();
+					Cell addcell = new Cell();
+					Cell txtcell = new Cell();
+					addcell.setParent(newrow);
+					txtcell.setParent(newrow);
+					newrow.setParent(rws);
+					Textbox tx = new Textbox();
+					tx.setWidth("90%");
+					tx.setParent(txtcell);
+					Label l = new Label("地址" + i);
+					l.setParent(addcell);
+				}
+			} else if (k > nums) {
+				
+				for (int i = nums + 1; i < k; i++) {
+					if (i == 1) {
+						fad.setValue("地址");
+					}
+					Row rw = (Row) rws.getChildren().get(i);
+					rws.removeChild(rw);
+				}
+
+			}
+		} else {
+			fad.setValue("地址");
+			Messagebox.show("地址个数不能小于1", "提示", Messagebox.OK, Messagebox.ERROR);
+			num.setValue(1);
+		}
+	}
+]]></zscript>
+	</window>
+</zk>

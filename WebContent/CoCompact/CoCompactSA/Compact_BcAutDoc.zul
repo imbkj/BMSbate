@@ -1,0 +1,19 @@
+<!--
+	创建人：张志强
+	创建时间：2013-10-17
+	用途：公司合同添加页面框架
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="合同审核" border="normal" width="95%" closable="true">
+		<zscript language="Java">
+	import Util.UserInfo;
+	String user = UserInfo.getUserid();
+</zscript>
+		
+		<include
+			src="../CoCompact/CoCompactSA/Compact_BcAutDoc.jsp?coco_tapr_id=${arg.id}&amp;coco_id=${arg.daid}&amp;user=${user}">
+		</include>
+	</window>
+
+</zk>

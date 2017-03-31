@@ -1,0 +1,288 @@
+<?page title="已处理委托单" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="已处理委托单" border="normal"
+		apply="org.zkoss.bind.BindComposer" closable="true"
+		viewModel="@id('vm') @init('Controller.EmCommissionOutNew.EmCommissionOut_OveAutController')">
+		<groupbox title="检索">
+			<grid width="100%">
+				<rows>
+					<row>
+						<cell width="81%">
+							<grid id="searchGird" width="100%">
+								<rows>
+									<row>
+										<cell width="60px">公司编号</cell>
+										<cell>
+											<textbox width="80px"
+												id="cid" mold="rounded" />
+										</cell>
+
+										<cell width="60px">员工编号</cell>
+										<cell>
+											<textbox width="80px"
+												id="gid" mold="rounded" />
+										</cell>
+
+										<cell width="60px">公司名称</cell>
+										<cell>
+											<textbox width="80px"
+												id="company" mold="rounded" />
+										</cell>
+
+										<cell width="60px">员工姓名</cell>
+										<cell>
+											<textbox width="80px"
+												id="name" mold="rounded" />
+										</cell>
+									</row>
+
+									<row>
+										<cell width="60px">委托城市</cell>
+										<cell>
+											<combobox mold="rounded"
+												width="120px" value="" id="city" model="@load(vm.citylist)"
+												onChange="@command('city_search',city=city)">
+												<template
+													name="model">
+													<comboitem
+														label="@load(each.city)" value="@load(each.city)">
+													</comboitem>
+												</template>
+											</combobox>
+										</cell>
+
+										<cell width="60px">委托类型</cell>
+										<cell>
+											<combobox mold="rounded"
+												model="@load(vm.typelist)" width="120px" value=""
+												id="type">
+												<template
+													name="model">
+													<comboitem
+														label="@load(each.ecoc_addtype)"
+														value="@load(each.ecoc_addtype)">
+													</comboitem>
+												</template>
+											</combobox>
+										</cell>
+
+										<cell width="60px">委托机构</cell>
+										<cell>
+											<combobox mold="rounded"
+												width="120px" value="" id="wtjg"
+												model="@load(vm.wtjglist)">
+												<template
+													name="model">
+													<comboitem
+														label="@load(each.coba_shortname)"
+														value="@load(each.coba_shortname)">
+													</comboitem>
+												</template>
+											</combobox>
+										</cell>
+
+										<cell width="60px">客服</cell>
+										<cell>
+											<combobox mold="rounded"
+												width="120px" value="" id="client"
+												model="@load(vm.clientlist)">
+												<template
+													name="model">
+													<comboitem
+														label="@load(each.coba_client)"
+														value="@load(each.coba_client)">
+													</comboitem>
+												</template>
+											</combobox>
+										</cell>
+									</row>
+									<row>
+										<cell width="60px">状态</cell>
+										<cell>
+											<combobox mold="rounded"
+												width="120px" value="" id="state">
+												<comboitem label="已发委托单"
+													value="2">
+												</comboitem>
+												<comboitem
+													label="受托部分完成" value="3">
+												</comboitem>
+											</combobox>
+										</cell>
+									</row>
+								</rows>
+								<foot>
+									<footer align="center">
+										<button id="btSearch" label="查询"
+											onClick="@command('search',cid=cid,gid=gid,name=name,company=company,type=type,city=city,wtjg=wtjg,client=client,state=state)" />
+									</footer>
+								</foot>
+							</grid>
+						</cell>
+						<cell>
+							<grid width="100%">
+								<rows>
+								<row>
+										<cell align="center">
+											<label value="总计（"
+												style="cursor:pointer"
+												onClick="@command('search',cid='',gid='',name='',company='',type='',city='',wtjg='',client='',state='')" />
+											<label style="color:#F00"
+												value="@load(vm.wt_state_list.gid+vm.wt_state_list.c1+vm.wt_state_list.ecoc_id+vm.wt_state_list.c3+vm.wt_state_list.cid+vm.wt_state_list.c2)" />
+											<label value="）" />
+										</cell>
+									</row>
+									
+									<row>
+										<cell align="center">
+											<label value="新增（"
+												style="cursor:pointer"
+												onClick="@command('search',cid='',gid='',name='',company='',type='新增',city='',wtjg='',client='',state='2')" />
+											<label style="color:#F00"
+												value="@load(vm.wt_state_list.gid)" />
+											<label value="）" />
+										</cell>
+
+										<cell align="center">
+											<label value="部分完成（"
+												style="cursor:pointer"
+												onClick="@command('search',cid='',gid='',name='',company='',type='新增',city='',wtjg='',client='',state='3')" />
+											<label style="color:#F00"
+												value="@load(vm.wt_state_list.c1)" />
+											<label value="）" />
+										</cell>
+									</row>
+									<row>
+										<cell align="center">
+											<label value="调整（"
+												style="cursor:pointer"
+												onClick="@command('search',cid='',gid='',name='',company='',type='调整',city='',wtjg='',client='',state='2')" />
+											<label style="color:#F00"
+												value="@load(vm.wt_state_list.ecoc_id)" />
+											<label value="）" />
+										</cell>
+
+										<cell align="center">
+											<label value="部分完成（"
+												style="cursor:pointer"
+												onClick="@command('search',cid='',gid='',name='',company='',type='调整',city='',wtjg='',client='',state='3')" />
+											<label style="color:#F00"
+												value="@load(vm.wt_state_list.c3)" />
+											<label value="）" />
+										</cell>
+									</row>
+									<row>
+										<cell align="center">
+											<label value="离职（"
+												style="cursor:pointer"
+												onClick="@command('search',cid='',gid='',name='',company='',type='离职',city='',wtjg='',client='',state='2')" />
+											<label style="color:#F00"
+												value="@load(vm.wt_state_list.cid)" />
+											<label value="）" />
+										</cell>
+
+										<cell align="center">
+											<label value="部分完成（"
+												style="cursor:pointer"
+												onClick="@command('search',cid='',gid='',name='',company='',type='调整',city='',wtjg='',client='',state='3')" />
+											<label style="color:#F00"
+												value="@load(vm.wt_state_list.c2)" />
+											<label value="）" />
+										</cell>
+									</row>
+									
+								</rows>
+							</grid>
+						</cell>
+					</row>
+				</rows>
+			</grid>
+
+		</groupbox>
+
+		<grid width="100%" id="g1" height="450px" mold="paging"
+			pageSize="600" model="@load(vm.wtout_aut_list)">
+			<columns>
+				<column label="" align="center" width="30px" />
+				<column label="序号" align="center" width="60px" />
+				<column label="城市" align="center" />
+				<column label="受托机构" align="center" />
+				<column label="委托类型" align="center" />
+				<column label="公司名称" align="center" />
+				<column label="公司编号" align="center" />
+				<column label="员工姓名" align="center" />
+				<column label="员工编号" align="center" />
+				<column label="客服" align="center" />
+				<column label="添加时间" align="center" />
+				<column label="操作" align="center" />
+			</columns>
+			<rows>
+				<template name="model">
+					<row>
+						<cell>
+							<checkbox value="@load(each.ecoc_id)" />
+						</cell>
+						<cell>
+							<label value="${forEachStatus.index + 1}" />
+						</cell>
+						<cell>
+							<label value="@load(each.city)" />
+						</cell>
+						<cell>
+							<label value="@load(each.coab_company)" />
+						</cell>
+						<cell>
+							<label value="@load(each.ecoc_addtype)" />
+						</cell>
+						<cell>
+							<label value="@load(each.coba_shortname)" />
+						</cell>
+						<cell>
+							<label value="@load(each.cid)" />
+						</cell>
+						<cell>
+							<label value="@load(each.emba_name)" />
+						</cell>
+						<cell>
+							<label value="@load(each.gid)" />
+						</cell>
+						<cell>
+							<label value="@load(each.coba_client)" />
+						</cell>
+						<cell>
+							<label value="@load(each.ecoc_addtime)" />
+						</cell>
+						<cell>
+							<label value="@load(each.ecoc_statestr)"
+								onClick="@command('wt_aut',emco=each,cid=cid,gid=gid,name=name,company=company,type=type,city=city,wtjg=wtjg,client=client,state=state)" style="cursor:pointer" />
+						</cell>
+					</row>
+				</template>
+			</rows>
+		</grid>
+
+		<grid>
+			<rows>
+				<row>
+					<cell align="left">
+						<checkbox id="cka"
+							onClick="@command('checkall',a=self.checked,b=g1)" />
+						全选
+						<button label="生成批量上传"
+							onClick="@command('ZYTExcel',b=g1)">
+						</button>
+						<button label="批量生成委托单"
+							onClick="@command('ExportExcel',b=g1)">
+						</button>
+						<button label="批量状态确认" 
+							onClick="@command('updates',b=g1,cid=cid,gid=gid,name=name,company=company,type=type,city=city,wtjg=wtjg,client=client,state=state)">
+						</button>
+						<button label="批量退回"
+							onClick="@command('allback',b=g1,cid=cid,gid=gid,name=name,company=company,type=type,city=city,wtjg=wtjg,client=client,state=state)">
+						</button>
+					</cell>
+				</row>
+			</rows>
+		</grid>
+	</window>
+</zk>

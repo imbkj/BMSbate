@@ -1,0 +1,214 @@
+<?page title="合同信息" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="合同信息" border="normal" id="w1" height="600px"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmBaseCompact.EmBaseCompact_BaseController')">
+		<grid width="100%" id="g4" model="@load(vm.emcompact_baselist)">
+			<columns>
+				<column label="" align="center" width="40px" />
+				<column label="合同起始时间" align="center" />
+				<column label="合同到期时间" align="center" />
+				<column label="合同期限" align="center" />
+				<column label="合同类型" align="center" />
+				<column label="添加时间" align="center" />
+			</columns>
+			<rows>
+				<template name="model">
+					<row>
+						<custom-attributes ebco_id="${each.all_t6} " />
+						<detail open="false" fulfill="onOpen">
+							<include height="100px"
+								src="/EmBaseCompact/EmBaseCompact_Baseinfo.zul"
+								ebco_id="${ebco_id}" />
+						</detail>
+						<cell>
+							<label value="@load(each.all_t1)" />
+						</cell>
+						<cell>
+							<label value="@load(each.all_t2)" />
+						</cell>
+						<cell>
+							<label value="@load(each.all_t3)" />
+						</cell>
+						<cell>
+							<label value="@load(each.all_t4)" />
+						</cell>
+						<cell>
+							<label value="@load(each.all_t5)" />
+						</cell>
+					</row>
+				</template>
+			</rows>
+		</grid>
+
+		<grid height="400px" model="@load(vm.emcompact)">
+			<rows>
+				<template name="model">
+					<row>
+						<cell>
+							<grid>
+								<rows>
+									<row>
+										<cell width="180px">
+											最新合同信息
+										</cell>
+										<cell colspan="3">
+											<label
+												value="@load(each.ebco_compact_type)" />
+										</cell>
+
+									</row>
+									<row>
+										<cell width="180px">
+											雇员合同起始日
+										</cell>
+										<cell>
+											<label
+												value="@load(each.ebco_incept_date)" />
+										</cell>
+										<cell width="180px">
+											雇员合同到期日
+										</cell>
+										<cell>
+											<label
+												value="@load(each.ebco_maturity_date)" />
+										</cell>
+									</row>
+
+									<row>
+										<cell width="180px">
+											试用期起始日
+										</cell>
+										<cell>
+											<label
+												value="@load(each.ebco_probation_incept)" />
+										</cell>
+										<cell width="180px">
+											试用期到期日
+										</cell>
+										<cell>
+											<label
+												value="@load(each.ebco_probation_mdate)" />
+										</cell>
+									</row>
+
+									<row>
+										<cell width="180px">
+											<label>正常工作时间的月工资</label>
+										</cell>
+										<cell>
+											<label
+												value="@load(each.ebco_wage)" />
+										</cell>
+										<cell width="180px">
+											<label>月综合补贴</label>
+										</cell>
+										<cell>
+											<label
+												value="@load(each.ebco_wage_bt)" />
+										</cell>
+									</row>
+
+									<row>
+										<cell width="180px">
+											<label>试用期正常工作时间的月工资</label>
+										</cell>
+										<cell>
+											<label
+												value="@load(each.ebco_probation_wage)" />
+										</cell>
+										<cell width="180px">
+											<label>试用期月综合补贴</label>
+										</cell>
+										<cell>
+											<label
+												value="@load(each.ebco_probation_bt)" />
+										</cell>
+									</row>
+
+									<row>
+										<cell width="180px">
+											<label>月工资（含加班工资）</label>
+										</cell>
+										<cell>
+											<label
+												value="@load(each.ebco_wage_gz)" />
+										</cell>
+										<cell width="180px">
+											<label>试用期（含加班工资）</label>
+										</cell>
+										<cell>
+											<label
+												value="@load(each.ebco_probation_gz)" />
+										</cell>
+									</row>
+
+									<row>
+										<cell width="180px">工资发放日</cell>
+										<cell>
+											<label
+												value="@load(each.ebco_payroll_date)" />
+										</cell>
+										<cell width="180px">
+											工资发放方式
+										</cell>
+										<cell>
+											<label
+												value="@load(each.ebco_payroll_mode)" />
+										</cell>
+									</row>
+
+									<row>
+										<cell width="180px">工作地点</cell>
+										<cell>
+											<label
+												value="@load(each.ebco_work_place)" />
+										</cell>
+										<cell width="180px">工作岗位</cell>
+										<cell>
+											<label
+												value="@load(each.ebco_working_station)" />
+										</cell>
+									</row>
+
+									<row>
+										<cell width="180px">工作制度</cell>
+										<cell>
+											<label
+												value="@load(each.ebco_furlough_system)" />
+										</cell>
+										<cell width="180px">休息休假</cell>
+										<cell>
+											<label value="" />
+										</cell>
+									</row>
+
+									<row>
+										<cell width="180px">工作内容</cell>
+										<cell>
+											<label
+												value="@load(each.ebco_work_content)" />
+										</cell>
+										<cell width="180px">其它事项</cell>
+										<cell>
+											<label
+												value="@load(each.ebco_other_business)" />
+										</cell>
+									</row>
+									<row>
+										<cell width="180px">结束时间</cell>
+										<cell colspan="3">
+											<label
+												value="@load(each.ebco_end_date)" />
+										</cell>
+									</row>
+								</rows>
+							</grid>
+						</cell>
+					</row>
+				</template>
+			</rows>
+		</grid>
+
+	</window>
+</zk>

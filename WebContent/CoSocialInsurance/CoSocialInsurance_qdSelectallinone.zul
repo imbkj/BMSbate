@@ -1,0 +1,84 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="独立账户查询" border="normal" width="100%" height="100%"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoSocialInsurance.CoSocialInsurance_qdSelectListallinoneController')">
+		<borderlayout>
+			
+			<center>
+				<grid hflex="1" vflex="1" emptyMessage="暂无数据"
+					model="@load(vm.scsbList)" mold="paging">
+					<columns>
+						<column align="center" width="40px"></column>
+						<column align="center" label="公司编号">
+						
+						</column>
+						<column align="center" label="公司简称">
+							
+						</column>
+						<column align="center" label="所属月份">
+							
+						</column>
+						<column align="center" label="社保编号">
+							
+						</column>
+						<column align="center" label="社保分局">
+						
+						</column>
+						<column align="center" label="企业所在辖区">
+							
+						</column>
+						<column align="center" label="开户类型">
+							
+						</column>
+						<column align="center" label="客服"></column>
+						<column align="center" label="状态">
+						
+						</column>
+						<column align="center" label="详细"
+							width="60px">
+						</column>
+					</columns>
+					<template name="model">
+						<row>
+							<custom-attributes cid="${each.cid }" />
+							<detail fulfill="onOpen" height="100%">
+								<include
+									src="/CoSocialInsurance/CoSocialInsurance_SelectListDetail.zul"
+									cid="${cid }" role="qd">
+								</include>
+							</detail>
+							<label value="@load(each.cid)" />
+							<label value="@load(each.coba_shortname)" />
+							<label value="@load(each.ownmonth)" />
+							<label value="@load(each.cosb_sorid)" />
+							<label value="@load(each.cosb_sbadd)" />
+							<label value="@load(each.cosb_sorarea)" />
+							<label value="@load(each.cosb_addtype)" />
+							<label value="@load(each.coba_client)" />
+							<cell>
+								<label value="@load(each.statename)"
+									style="color:blue" if="${each.cosb_state eq 1 }" />
+								<label value="@load(each.statename)"
+									if="${each.cosb_state eq 2 }" />
+								<label value="@load(each.statename)"
+									style="color:red" if="${each.cosb_state eq 0 }" />
+							</cell>
+							<cell>
+								<menubar autodrop="true">
+									<menu
+										image="../images/pencil-small.png">
+										<menupopup>
+											<menuitem label="账户详情 "
+												onClick="@command('detail',each=each)" />
+										</menupopup>
+									</menu>
+								</menubar>
+							</cell>
+						</row>
+					</template>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

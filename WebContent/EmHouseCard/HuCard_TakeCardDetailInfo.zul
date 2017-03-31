@@ -1,0 +1,217 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<?component name="docDataList" macro-uri="../DocumentsInfo/DocumentsInfo_PageList.zul" inline="true"?>
+<zk>
+	<window title="领卡详细信息" border="normal" width="80%" height="80%"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmHouseCard.HuCard_TakeCardDetailInfoController')"
+		closable="true">
+		<grid vflex="1">
+			<rows>
+				<row>
+					<cell width="110px">单位简称：</cell>
+					<cell>
+						<textbox value="${arg.model.coba_shortname }"
+							width="80%">
+						</textbox>
+					</cell>
+					<cell width="110px">单位公积金号：</cell>
+					<cell>
+						<textbox value="${arg.model.re_cgjjno }"></textbox>
+					</cell>
+					<cell width="110px">公积金缴存银行：</cell>
+					<cell>
+						<textbox value="${arg.model.re_band }"></textbox>
+					</cell>
+				</row>
+				<row>
+					<cell>员工公积金号：</cell>
+					<cell>
+						<textbox value="${arg.model.re_gjjno }"></textbox>
+					</cell>
+					<cell>开户类型：</cell>
+					<cell>
+						<textbox value="${arg.model.re_accounttype }"></textbox>
+					</cell>
+					<cell>申报时间：</cell>
+					<cell>
+						<textbox value="${arg.model.re_apptime }"></textbox>
+					</cell>
+				</row>
+				<row>
+					<cell>制卡状态：</cell>
+					<cell>
+						<textbox value="${arg.model.re_cardstate }"></textbox>
+					</cell>
+					<cell>卡号：</cell>
+					<cell>
+						<textbox value="${arg.model.re_cardid }"
+							width="80%">
+						</textbox>
+					</cell>
+					<cell>领卡状态：</cell>
+					<cell>
+						<textbox value="${arg.model.state_Name}"></textbox>
+					</cell>
+				</row>
+				<row>
+					<cell>员工姓名：</cell>
+					<cell>
+						<textbox value="${arg.model.username }"></textbox>
+					</cell>
+					<cell>身份证号：</cell>
+					<cell>
+						<textbox value="${arg.model.idcard }"
+							width="80%">
+						</textbox>
+					</cell>
+					<cell>客服：</cell>
+					<cell>
+						<textbox value="${arg.model.coba_client }"></textbox>
+					</cell>
+				</row>
+				<row>
+					<cell>客服提交资料时间：</cell>
+					<cell>
+						<textbox value="${arg.model.pla_clienttime }"></textbox>
+					</cell>
+					<cell>中心核收人：</cell>
+					<cell>
+						<textbox
+							value="${arg.model.pla_clientassistant }">
+						</textbox>
+					</cell>
+					<cell>中心核收时间：</cell>
+					<cell>
+						<textbox
+							value="${arg.model.pla_clientassistanttime }">
+						</textbox>
+					</cell>
+				</row>
+				<row>
+					<cell>福利助理：</cell>
+					<cell>
+						<textbox
+							value="${arg.model.pla_welfreassistant }">
+						</textbox>
+					</cell>
+					<cell>福利核收资料时间：</cell>
+					<cell>
+						<textbox
+							value="${arg.model.gjj_welfreassistanttime }">
+						</textbox>
+					</cell>
+					<cell>资料递交人：</cell>
+					<cell>
+						<textbox value="${arg.model.pla_bankpeople }"></textbox>
+					</cell>
+				</row>
+				<row>
+					<cell>递交资料时间：</cell>
+					<cell>
+						<textbox value="${arg.model.pla_tobanktime }"></textbox>
+					</cell>
+					<cell>福利领卡人：</cell>
+					<cell>
+						<textbox value="${arg.model.pla_fl }"></textbox>
+					</cell>
+					<cell>福利领卡时间：</cell>
+					<cell>
+						<textbox value="${arg.model.pla_fltime }"></textbox>
+					</cell>
+				</row>
+				<row>
+					<cell>中心签收人：</cell>
+					<cell>
+						<textbox
+							value="${arg.model.pla_receivename }">
+						</textbox>
+					</cell>
+					<cell>中心签收时间：</cell>
+					<cell>
+						<textbox
+							value="${arg.model.pla_receivetime }">
+						</textbox>
+					</cell>
+					<cell>签收客服：</cell>
+					<cell>
+						<textbox
+							value="${arg.model.pla_receliveclient }">
+						</textbox>
+					</cell>
+				</row>
+				<row>
+					<cell>客服签收时间：</cell>
+					<cell>
+						<textbox
+							value="${arg.model.pla_clientttime }">
+						</textbox>
+					</cell>
+					<cell>领卡员工：</cell>
+					<cell>
+						<textbox value="${arg.model.re_name }"></textbox>
+					</cell>
+					<cell>员工领卡时间：</cell>
+					<cell>
+						<textbox value="${arg.model.re_time }"></textbox>
+					</cell>
+				</row>
+				<row>
+					<cell>员工领卡方式：</cell>
+					<cell>
+						<textbox value="${arg.model.pla_taketype }"></textbox>
+					</cell>
+					<cell>发卡客服：</cell>
+					<cell>
+						<textbox value="${arg.model.send_client }"></textbox>
+					</cell>
+					<cell>失败原因：</cell>
+					<cell>
+						<textbox width="100%"
+							value="${arg.model.re_applycase=='新发卡申请'?'':arg.model.re_applycase }-${arg.model.re_failcase}">
+						</textbox>
+					</cell>
+				</row>
+				<row>
+					<cell>退回原因</cell>
+					<cell colspan="5">
+						<grid width="100%" height="100%"
+							model="@load(vm.mo.list)">
+							<columns>
+								<column width="60px" align="center" label="序号" />
+								<column width="120px" align="center" label="操作人" />
+								<column width="180px" align="center" label="退回时间" />
+								<column align="center" label="退回原因" />
+							</columns>
+							<template name="model">
+								<row>
+									<cell>
+										<label
+											value="${forEachStatus.index+1 }" />
+									</cell>
+									<cell>
+										<label value="@load(each.back_name)" />
+									</cell>
+									<cell>
+										<label value="@load(each.back_time)" />
+									</cell>
+									<cell align="left">
+										<label value="@load(each.back_case)" />
+									</cell>
+								</row>
+							</template>
+						</grid>
+					</cell>
+				</row>
+				<row>
+					<cell>提交资料</cell>
+					<cell colspan="5">
+						<docDataList id="docGrid"
+							puzu_id="${arg.model.re_docId }" doc_type="g"
+							gid="${arg.model.gid}" tid="${arg.model.re_id}"
+							log_url="../DocumentsInfo/" dWidth="100%" />
+					</cell>
+				</row>
+			</rows>
+		</grid>
+	</window>
+</zk>

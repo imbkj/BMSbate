@@ -1,0 +1,152 @@
+<?page title="社保变更审核" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winSbAduit" title="社保变更审核" border="normal" width="800px"
+		height="580px" apply="org.zkoss.bind.BindComposer" closable="true"
+		sizable="true"
+		viewModel="@id('vm') @init('Controller.EmSheBao.Emsi_AduitController')">
+		<div height="98%" style="overflow-y:scroll">
+			<groupbox>
+				<caption label="申报状态更改/备注" />
+				<grid style="border:0px">
+					<rows>
+						<row>
+							<cell>
+								<label value="变动类型" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.ecModel.emsc_change)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="变动内容" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.ecModel.emsc_content)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="原因" />
+							</cell>
+							<cell>
+								<textbox value="@bind(vm.reason)"
+									mold="rounded" />
+							</cell>
+						</row>
+						<row>
+							<cell align="right">
+								<button label="审核通过"
+									onClick="@command('AduitPass',win=winSbAduit)" />
+							</cell>
+							<cell align="left">
+								<button label="退回" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox>
+				<caption label="个人信息" />
+				<grid style="border:0px">
+					<rows>
+						<row>
+							<cell width="20%">
+								<label value="公司编号" />
+							</cell>
+							<cell>
+								<label value="@load(vm.ecModel.cid)" />
+							</cell>
+							<cell width="20%">
+								<label value="员工编号" />
+							</cell>
+							<cell>
+								<label value="@load(vm.ecModel.gid)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="所属公司" />
+							</cell>
+							<cell colspan="3">
+								<label
+									value="@load(vm.ecModel.emsc_company)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="所属月份" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.ecModel.ownmonth)" />
+							</cell>
+							<cell>
+								<label value="个人电脑号" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.ecModel.emsc_computerid)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="姓名" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.ecModel.emsc_name)" />
+							</cell>
+							<cell>
+								<label value="身份证号" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.ecModel.emsc_idcard)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="社保基数" />
+							</cell>
+							<cell colspan="3">
+								<label
+									value="@load(vm.ecModel.emsc_radix)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="添加人" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.ecModel.emsc_addname)" />
+							</cell>
+							<cell>
+								<label value="添加时间" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.ecModel.emsc_addtime)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="备注" />
+							</cell>
+							<cell colspan="3">
+								<textbox rows="4"
+									value="@load(vm.ecModel.emsc_remark)" width="70%" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox>
+				<caption label="系统日志" />
+			</groupbox>
+		</div>
+	</window>
+</zk>

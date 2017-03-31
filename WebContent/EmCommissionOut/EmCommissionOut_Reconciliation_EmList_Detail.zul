@@ -1,0 +1,73 @@
+<grid width="40%" apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('vm') @init('Controller.EmCommissionOut.EmCommissionOut_Reconciliation_EmList_DetailController')"
+	model="@load(vm.efhList)" emptyMessage="暂无数据" mold="paging"
+	pageSize="10">
+	<columns sizable="true">
+		<column align="center">
+			<label value="项目名称" style="font-weight:bold;color:#666" />
+		</column>
+		<column align="center">
+			<label value="应付金额" style="font-weight:bold;color:#666" />
+		</column>
+		<column align="center">
+			<label value="应收金额" style="font-weight:bold;color:#666" />
+		</column>
+		<column align="center">
+			<label value="实付金额" style="font-weight:bold;color:#666" />
+		</column>
+		<column align="center">
+			<label value="差额（应付-应收）"
+				style="font-weight:bold;color:#666" />
+		</column>
+		<column align="center">
+			<label value="差额（应付-实付）"
+				style="font-weight:bold;color:#666" />
+		</column>
+		<column align="center" width="60px">
+			<label value="操作" style="font-weight:bold;color:#666" />
+		</column>
+	</columns>
+	<template name="model">
+		<row
+			style="border:1px dotted #cad9ea;background-color:white;">
+			<cell>
+				<label value="@load(each.eofh_name)" />
+			</cell>
+			<cell>
+				<label value="无数据" style="color:blue"
+					if="${empty each.eofh_month_sum }" />
+				<label value="@load(each.eofh_month_sum)"
+					if="${not empty each.eofh_month_sum }" />
+			</cell>
+			<cell>
+				<label value="无数据" style="color:blue"
+					if="${empty each.epfd_month_sum }" />
+				<label value="@load(each.epfd_month_sum)"
+					if="${not empty each.epfd_month_sum }" />
+			</cell>
+			<cell>
+				<label value="无数据" style="color:blue"
+					if="${empty each.efcd_eofd_month_sum }" />
+				<label value="@load(each.efcd_eofd_month_sum)"
+					if="${not empty each.efcd_eofd_month_sum }" />
+			</cell>
+			<cell>
+				<label value="无数据" style="color:blue"
+					if="${empty each.yf_ys_diff }" />
+				<label value="无数据" style="color:blue"
+					if="${each.yf_ys_diff eq '0.00' }" />
+				<label value="@load(each.yf_ys_diff)" style="color:red"
+					if="${not empty each.yf_ys_diff and each.yf_ys_diff ne '0.00' }" />
+			</cell>
+			<cell>
+				<label value="无数据" style="color:blue"
+					if="${empty each.yf_sf_diff }" />
+				<label value="@load(each.yf_sf_diff)"
+					if="${each.yf_sf_diff eq '0.00' }" />
+				<label value="@load(each.yf_sf_diff)" style="color:red"
+					if="${not empty each.yf_sf_diff and each.yf_sf_diff ne '0.00' }" />
+			</cell>
+			<cell></cell>
+		</row>
+	</template>
+</grid>

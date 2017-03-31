@@ -1,0 +1,164 @@
+<?page title="商业保险查询" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="商业保险查询" border="normal"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmCommercialInsurance.CI_InsurantCheck_Controller')">
+		<grid id="searchGird" width="100%">
+			<rows>
+				<row>
+					<cell width="100px">投保类型</cell>
+					<cell>
+						<combobox mold="rounded" readonly="true"
+							width="120px" value="全部" id="castsort"
+							model="@load(vm.castsortlist)">
+							<comboitem value="全部" label="全部" />
+							<template name="model">
+								<comboitem
+									label="@load(each.ecin_castsort)"
+									value="@load(each.ecin_castsort)">
+								</comboitem>
+							</template>
+						</combobox>
+					</cell>
+					<cell width="100px">变更类型</cell>
+					<cell>
+						<combobox mold="rounded" readonly="true"
+							id="change" value="全部">
+							<comboitem value="全部" label="全部" />
+							<comboitem value="新增" label="新增" />
+							<comboitem value="停缴" label="停缴" />
+						</combobox>
+					</cell>
+					<cell width="100px">申报状态</cell>
+					<cell>
+						<combobox mold="rounded" readonly="true"
+							id="state" value="全部">
+							<comboitem value="全部" label="全部" />
+							<comboitem value="未审核" label="未审核" />
+							<comboitem value="已审核" label="已审核" />
+							<comboitem value="已申报" label="已申报" />
+						</combobox>
+					</cell>
+				</row>
+				<row>
+					<cell width="100px">所属部门</cell>
+					<cell>
+						<combobox mold="rounded" readonly="true" id="bm"
+							value="全部">
+							<comboitem value="全部" label="全部" />
+							<comboitem value="客户服务部" label="客户服务部" />
+							<comboitem value="全国项目部" label="全国项目部" />
+						</combobox>
+					</cell>
+					<cell width="100px">保险公司</cell>
+					<cell>
+						<combobox mold="rounded" readonly="true" id="bx"
+							value="全部">
+							<comboitem value="全部" label="全部" />
+							<comboitem value="泰康人寿" label="泰康人寿" />
+							<comboitem value="平安人寿" label="平安人寿" />
+							<comboitem value="美亚" label="美亚" />
+						</combobox>
+					</cell>
+					<cell width="100px">申报批次</cell>
+					<cell>
+							<combobox mold="rounded" readonly="true"
+							width="120px" value="全部" id="sb_date"
+							model="@load(vm.castsortdatelist)">
+							<template name="model">
+								<comboitem
+									label="@load(each.ecin_de_date)"
+									value="@load(each.ecin_de_date)">
+								</comboitem>
+							</template>
+						</combobox>
+					</cell>
+				</row>
+				<row>
+					<cell width="100px">姓名</cell>
+					<cell>
+						<textbox width="130px" id="name" mold="rounded" />
+					</cell>
+					<cell width="60px">客服</cell>
+					<cell>
+						<combobox model="@load(vm.loginlist)" id="client" mold="rounded" 
+							value="全部">
+							<template name="model">
+								<comboitem label="@load(each)" />
+							</template>
+						</combobox>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button id="btSearch" label="查  询"
+						onClick="@command('ch_search',castsort=castsort,change=change,state=state,bm=bm,bx=bx,sb_date=sb_date,name=name,client=client)" />
+
+					<button id="btDown" label="导  出"
+						onClick="@command('ch_down',castsort=castsort,change=change,state=state,bm=bm,bx=bx,sb_date=sb_date,name=name,client=client)" />
+				</footer>
+			</foot>
+		</grid>
+		<grid width="100%" id="g1" mold="paging" pageSize="16"
+			model="@load(vm.ci_insurant_chlist)">
+			<columns>
+				<column label="员工编号" align="center" width="60px" />
+				<column label="客服" align="center" />
+				<column label="公司名称" align="center" />
+				<column label="被保险人" align="center" />
+				<column label="主险人" align="center" />
+				<column label="与主险人关系" align="center" />
+				<column label="投保类别" align="center" />
+				<column label="份数" align="center" />
+				<column label="证件号码" align="center" />
+				<column label="投保日期" align="center" />
+				<column label="停缴日期" align="center" />
+				<column label="状态" align="center" />
+			</columns>
+			<rows>
+				<template name="model">
+					<row>
+						<cell>
+							<label value="@load(each.gid)" />
+						</cell>
+						<cell>
+							<label value="@load(each.coba_client)" />
+						</cell>
+						<cell>
+							<label value="@load(each.coba_company)" />
+						</cell>
+						<cell>
+							<label value="@load(each.ecin_insurant)" />
+						</cell>
+						<cell>
+							<label value="@load(each.ecin_insurer)" />
+						</cell>
+						<cell>
+							<label value="@load(each.ecin_sconnection)" />
+						</cell>
+						<cell>
+							<label value="@load(each.ecin_castsort)" />
+						</cell>
+						<cell>
+							<label value="@load(each.ecin_buy_count)" />
+						</cell>
+						<cell>
+							<label value="@load(each.ecin_idcard)" />
+						</cell>
+						<cell>
+							<label value="@load(each.ecin_in_date)" />
+						</cell>
+						<cell>
+							<label value="@load(each.ecin_st_date)" />
+						</cell>
+						<cell>
+							<label value="@load(each.ecin_state)" />
+						</cell>
+					</row>
+				</template>
+			</rows>
+
+		</grid>
+	</window>
+</zk>

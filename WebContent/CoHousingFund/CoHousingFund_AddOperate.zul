@@ -1,0 +1,342 @@
+<?page title="缴存登记 - 状态变更" contentType="text/html;charset=UTF-8"?>
+<!-- 调用内联页的文件名 -->
+<?component name="docDataList" macro-uri="/DocumentsInfo/DocumentsInfo_UpPageList.zul" inline="true"?>
+<zk>
+	<window id="win" title="缴存登记 - 状态变更" border="normal" width="800px"
+		height="85%" closable="true" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoHousingFund.CoHousingFund_AddOperateController')">
+		<borderlayout>
+			<center autoscroll="true" border="none">
+				<vbox>
+					<grid hflex="1" vflex="1">
+						<columns>
+							<column width="15%"></column>
+							<column></column>
+							<column width="15%"></column>
+							<column></column>
+						</columns>
+						<rows>
+							<row>
+								<cell>
+									<label style="color:#666"
+										value="当前状态" />
+								</cell>
+								<cell colspan="3">
+									<label
+										value="@load(vm.chfcModel.statename)" />
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label style="color:#666"
+										value="公司编号" />
+								</cell>
+								<cell>
+									<label
+										value="@load(vm.chfcModel.cid)" />
+								</cell>
+								<cell>
+									<label style="color:#666"
+										value="公司全称" />
+								</cell>
+								<cell>
+									<label
+										value="@load(vm.chfcModel.coba_company)" />
+								</cell>
+							</row>
+							<row if="${vm.state eq 1 or vm.state eq 0 }">
+								<cell colspan="4">
+									<label style="color:#666"
+										value="签收材料" />
+								</cell>
+							</row>
+							<row if="${vm.state eq 1 or vm.state eq 0 }">
+								<cell colspan="4">
+									<docDataList id="docGrid"
+										puzu_id="${vm.chfcModel.chfc_puzu_id }" doc_type="c" gid=""
+										tid="${vm.chfcModel.chfc_id }" log_url="/DocumentsInfo/"
+										dHeight="" dWidth="" lh_people="${vm.chfcModel.chfc_addname}"/>
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label style="color:#666"
+										value="上条备注" />
+								</cell>
+								<cell colspan="3">
+									<label
+										value="@bind(vm.chfcModel.chfc_remark)" />
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label style="color:#666"
+										value="新备注" />
+								</cell>
+								<cell colspan="3">
+									<textbox rows="5" hflex="1"
+										vflex="1" value="@bind(vm.chfcModel.chfc_remark1)" />
+								</cell>
+							</row>
+						</rows>
+
+					</grid>
+					<groupbox title="账户信息" mold="3d"
+						if="${vm.state eq 2 }">
+						<grid hflex="1" vflex="1">
+							<columns>
+								<column width="15%"></column>
+								<column></column>
+								<column width="15%"></column>
+								<column></column>
+							</columns>
+							<rows>
+								<row>
+									<cell>
+										<label style="color:#666"
+											value="单位公积金账号" />
+									</cell>
+									<cell>
+										<textbox
+											value="@bind(vm.chfcModel.chfc_houseid)" />
+									</cell>
+									<cell>
+										<label style="color:#666"
+											value="托收日" />
+									</cell>
+									<cell>
+										<textbox
+											value="@bind(vm.chfcModel.chfc_tsday)" />
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<label style="color:#666"
+											value="业务经办部门" />
+									</cell>
+									<cell>
+										<textbox
+											value="@bind(vm.chfcModel.chfc_jbdepartment)" />
+									</cell>
+									<cell>
+										<label style="color:#666"
+											value="中智管理状态" />
+									</cell>
+									<cell>
+										<textbox
+											value="@bind(vm.chfcModel.chfc_manstate)" />
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<label style="color:#666"
+											value="归集银行" />
+									</cell>
+									<cell>
+										<combobox readonly="true"
+											model="@load(vm.gjbankList)"
+											value="@bind(vm.chfcModel.chfc_bankgj)"
+											onChange="@command('gjbankchange')">
+											<template name="model">
+												<comboitem
+													label="@load(each.bank)">
+												</comboitem>
+											</template>
+										</combobox>
+									</cell>
+									<cell>
+										<label style="color:#666"
+											value="领卡银行" />
+									</cell>
+									<cell>
+										<textbox
+											value="@bind(vm.chfcModel.chfc_banklk)">
+										</textbox>
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<label style="color:#666"
+											value="联系人" />
+									</cell>
+									<cell colspan="3">
+										<grid style="border:none">
+											<columns>
+												<column width="10%" />
+												<column width="25%" />
+												<column width="10%" />
+												<column />
+											</columns>
+											<rows>
+												<row>
+													<cell>
+														<label
+															style="color:#666" value="姓名" />
+													</cell>
+													<cell>
+														<textbox
+															value="@bind(vm.chfcModel.chfc_contactname)" />
+													</cell>
+													<cell>
+														<label
+															style="color:#666" value="固定电话" />
+													</cell>
+													<cell>
+														<textbox
+															value="@bind(vm.chfcModel.chfc_contacttel)" />
+													</cell>
+												</row>
+												<row>
+													<cell>
+														<label
+															style="color:#666" value="电子邮箱" />
+													</cell>
+													<cell>
+														<textbox
+															id="chfc_contactmail"
+															value="@bind(vm.chfcModel.chfc_contactmail)"
+															onChange="@command('checkEmailSimple',email=self.value)"
+															context="pop_checkemail"
+															onClick='pop_email.open(self,"after_end")' />
+														<popup
+															id="pop_email">
+															点击右键可验证邮箱真实性
+														</popup>
+														<menupopup
+															id="pop_checkemail">
+															<menuitem
+																label="验证真实性"
+																onClick="@command('checkEmail',email=chfc_contactmail.value)">
+															</menuitem>
+														</menupopup>
+													</cell>
+													<cell>
+														<label
+															style="color:#666" value="移动电话" />
+													</cell>
+													<cell>
+														<textbox
+															value="@bind(vm.chfcModel.chfc_contactmobile)" />
+													</cell>
+												</row>
+											</rows>
+										</grid>
+									</cell>
+								</row>
+							</rows>
+
+						</grid>
+					</groupbox>
+					<groupbox title="专办员信息" mold="3d"
+						if="${vm.state eq 2 }">
+						<grid hflex="1" vflex="1"
+							model="@load(vm.zbList)">
+							<columns>
+								<column align="center" width="60px">
+									序号
+								</column>
+								<column align="center">专办员号</column>
+								<column align="center">姓名</column>
+								<column align="center">固定电话</column>
+								<column align="center">移动电话</column>
+								<column align="center">电子邮箱</column>
+							</columns>
+							<template name="model">
+								<row>
+									<cell style="cursor:pointer"
+										onClick="@command('checkzb',zbModel=each)">
+										<label
+											value="专办员${forEachStatus.index+1 }" style="color:#666" />
+									</cell>
+									<cell>
+										<textbox hflex="1"
+											value="@bind(each.cfzc_number)" />
+									</cell>
+									<cell>
+										<textbox hflex="1"
+											value="@bind(each.cfzc_name)" />
+									</cell>
+									<cell>
+										<textbox hflex="1"
+											value="@bind(each.cfzc_tel)" />
+									</cell>
+									<cell>
+										<textbox hflex="1"
+											value="@bind(each.cfzc_mobile)" />
+									</cell>
+									<cell>
+										<textbox hflex="1"
+											value="@bind(each.cfzc_mail)" />
+									</cell>
+								</row>
+							</template>
+						</grid>
+					</groupbox>
+					<groupbox title="密钥信息" mold="3d"
+						if="${vm.state eq 2 }">
+						<grid hflex="1" vflex="1"
+							model="@load(vm.pwdList)">
+							<columns>
+								<column align="center">密钥专办员号</column>
+								<column align="center">密钥专办员</column>
+								<column align="center">密钥办理年限</column>
+								<column align="center">密钥开始日期</column>
+								<column align="center">密钥到期日期</column>
+							</columns>
+							<template name="model">
+								<row>
+									<cell>
+										<textbox hflex="1"
+											value="@bind(each.cfpc_zb_number)" />
+									</cell>
+									<cell>
+										<textbox hflex="1"
+											value="@bind(each.cfpc_zb_name)" />
+									</cell>
+									<cell>
+										<textbox hflex="1"
+											value="@bind(each.cfpc_yearlimit)" />
+									</cell>
+									<cell>
+										<datebox hflex="1"
+											format="yyyy-MM-dd" value="@bind(each.startdate)" />
+									</cell>
+									<cell>
+										<datebox hflex="1"
+											format="yyyy-MM-dd" value="@bind(each.enddate)" />
+									</cell>
+								</row>
+							</template>
+						</grid>
+					</groupbox>
+				</vbox>
+			</center>
+			<south border="none">
+				<grid>
+					<rows>
+						<row>
+							<cell width="15%">退回原因</cell>
+							<cell>
+								<textbox rows="5" hflex="1" vflex="1"
+									value="@bind(vm.chfcModel.chfc_backreason)" />
+							</cell>
+						</row>
+						<row>
+							<cell colspan="2" align="center">
+								<button label="提交"
+									onClick="@command('submit',win=win,gd=docGrid)" />
+								<button label="暂存"
+									onClick="@command('save',win=win,gd=docGrid)" />
+								<button label="退回"
+									onClick="@command('backdata',win=win)" />
+								<button label="查看账户信息"
+									onClick="@command('look')" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+
+			</south>
+		</borderlayout>
+	</window>
+</zk>

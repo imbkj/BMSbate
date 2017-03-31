@@ -1,0 +1,29 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="调查单位" border="normal" vflex="1"
+	apply="org.zkoss.bind.BindComposer" id="windeclare"
+	viewModel="@id('vm') @init('Controller.EmBenefit.EmActy_SurveyEmbaseListController')"
+>
+<style src="/css/style.css"></style>
+<grid vflex="1" model="@load(vm.list)">
+	<columns>
+		<column label="序号" align="center" width="60px"/>
+			<column label="单位名称" align="center"/>
+			<column label="员工数" align="center"/>
+			<column label="客服" align="center"/>
+			<column label="调查详细" align="center"/>
+		</columns>
+	<rows>
+		<template name="model">
+		<row>
+			<cell><label value="${forEachStatus.index+1 }"></label></cell>
+			<cell><label value="@load(each.coba_shortname)"></label></cell>
+			<cell><label value="@load(each.peopnum)"></label></cell>
+			<cell><label value="@load(each.coba_client)"></label></cell>
+			<cell><a onClick="@command('openzul',model=each,url='EmActy_SurveryCobaResultList.zul')"><label value="调查详细"></label></a></cell>
+		</row>
+		</template>
+	</rows>
+</grid>
+</window>
+</zk>

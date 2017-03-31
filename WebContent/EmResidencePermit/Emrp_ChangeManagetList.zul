@@ -1,0 +1,50 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="居住证转换管理" border="normal" vflex="1" 
+	apply="org.zkoss.bind.BindComposer"
+    viewModel="@id('vm') @init('Controller.EmResidencePermit.Emrp_ChangeManagetListController')"
+>
+<grid vflex="1" model="@load(vm.list)">
+		<columns>
+			<column label="序号" width="40px" align="center"/>
+			<column align="center"><vlayout>公司简称<textbox width="95%" value="@bind(vm.shortname)" onChange="@command('search')"></textbox></vlayout></column>
+			<column  align="center"><vlayout>姓名<textbox width="95%" value="@bind(vm.name)" onChange="@command('search')"></textbox></vlayout></column>
+			<column  align="center"><vlayout>身份证号<textbox width="95%" value="@bind(vm.idcard)" onChange="@command('search')"></textbox></vlayout></column>
+			<column  align="center"><vlayout>客服<textbox width="95%" value="@bind(vm.client)" onChange="@command('search')"></textbox></vlayout></column>
+			<column  align="center"><vlayout>申请转换日期<datebox width="95%" value="@bind(vm.sqdate)" onChange="@command('search')"></datebox></vlayout></column>
+			<column  align="center"><vlayout>操作转换日期<datebox width="95%" value="@bind(vm.czdate)" onChange="@command('search')"></datebox></vlayout></column>
+			<column  align="center">
+				<vlayout>转换状态
+					<combobox value="@bind(vm.statename)" onChange="@command('search')" width="80%">
+						<comboitem label=""/>
+						<comboitem label="待转换"/>
+						<comboitem label="转换中"/>
+						<comboitem label="已转换"/>
+						<comboitem label="退回"/>
+					</combobox>
+				</vlayout>
+				</column>
+			<column  align="center">就业状态</column>
+			<column label="操作" align="center"/>
+			<column width="40px" align="center"><checkbox></checkbox></column>
+		</columns>
+		<rows>
+			<template name="model">
+			<row>
+				<cell><label value="${forEachStatus.index+1 }"></label></cell>
+				<cell><label value="@load(each.coba_shortname)"></label></cell>
+				<cell><a onClick="@command('detail',model=each)"><label value="@load(each.emba_name)"></label></a></cell>
+				<cell><label value="@load(each.emba_idcard)"></label></cell>
+				<cell><label value="@load(each.coba_client)"></label></cell>
+				<cell><label value="@load(each.erpc_csd_ac_date)"></label></cell>
+				<cell><label value="@load(each.erpc_wd_oc_date)"></label></cell>
+				<cell><label value="@load(each.sname)"></label></cell>
+				<cell><label value="@load(each.statename)"></label></cell>
+				<cell><a onClick="@command('open',model=each)" if='${each.erpc_state==1 or each.erpc_state==2 }'><label value="处理"></label></a></cell>
+				<cell><checkbox></checkbox></cell>	
+			</row>
+			</template>
+		</rows>
+	</grid>
+</window>
+</zk>

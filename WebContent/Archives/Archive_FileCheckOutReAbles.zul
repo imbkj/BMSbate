@@ -1,0 +1,73 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="财务确认费用" border="normal" closable="true" width="60%"
+		height="60%" id="win" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.Archives.Archive_FileCheckOutController')">
+		<grid vflex="1">
+			<rows>
+				<row>
+					<cell width="80px">结算人</cell>
+					<cell>
+						<textbox id="fname" value="@load(vm.username)"
+							readonly="true">
+						</textbox>
+					</cell>
+					<cell width="80px">结算时间</cell>
+					<cell>
+						<datebox id="ftime"></datebox>
+					</cell>
+				</row>
+				<row>
+					<cell>档案费</cell>
+					<cell>
+						<textbox value="${vm.models.eada_dnfee}"
+							readonly="${vm.models.eada_final=='待处理'}" />
+					</cell>
+					<cell>户口费</cell>
+					<cell>
+						<textbox value="${vm.models.eada_hkfee}"
+							readonly="${vm.models.eada_final=='待处理'}" />
+					</cell>
+				</row>
+				<row>
+					<cell>违约金</cell>
+					<cell>
+						<textbox value="${vm.models.eada_promisefee}"
+							readonly="${vm.models.eada_final=='待处理'}" />
+					</cell>
+				</row>
+				<row visible="false">
+					<cell>费用情况</cell>
+					<cell colspan="3">
+						<textbox rows="3" width="80%"
+							value="@load(vm.models.eada_arrearageinfo)">
+						</textbox>
+					</cell>
+				</row>
+				<row>
+					<cell>备注</cell>
+					<cell colspan="3">
+						<textbox rows="3" width="80%" id="remark"></textbox>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button id="summit"
+						onClick="@command('summitable',win=win,ftime=ftime.value,remark=remark.value)">
+						确认提交
+					</button>
+					<button onClick="@command('addremark',win=win)">
+						备注
+					</button>
+					<button onClick="@command('backpre',win=win)">
+						退回
+					</button>
+					<button onClick="@command('emfinace',win=winfee)">
+						个人收款明细
+					</button>
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

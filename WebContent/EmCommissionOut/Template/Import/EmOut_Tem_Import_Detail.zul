@@ -1,0 +1,110 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="win" title="模板修改" border="normal" height="550px"
+		width="700px" closable="true" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmCommissionOut.Template.Import.EmOut_Tem_Import_DetailController')">
+		<borderlayout>
+			<center>
+				<grid hflex="1" vflex="1">
+					<columns>
+						<column></column>
+						<column></column>
+						<column></column>
+						<column></column>
+					</columns>
+					<rows>
+						<row>
+							<cell>
+								<label value="模板名称" style="color:#666" />
+							</cell>
+							<cell>
+								<label value="@bind(vm.m.ecut_name)" />
+							</cell>
+							<cell>
+								<label value="表头所在行数"
+									style="color:#666" />
+							</cell>
+							<cell>
+								<label
+									value="@bind(vm.m.ecut_titlerow)">
+								</label>
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="导入的excel文件"
+									style="color:#666" />
+							</cell>
+							<cell colspan="3">
+								<label
+									value="@load(vm.m.ecut_excelname)" />
+							</cell>
+						</row>
+						<row>
+							<cell colspan="4">
+								<grid emptyMessage="暂无数据"
+									model="@load(vm.m.cList)">
+									<columns>
+										<column align="center"
+											label="Excel表头">
+										</column>
+										<column align="center"
+											label="系统字段">
+										</column>
+									</columns>
+									<template name="model"
+										var="cList">
+										<row>
+											<cell>
+												<label
+													value="@load(cList.ecuc_excel_title)" />
+											</cell>
+											<cell>
+												<label
+													value="@load(cList.ecpr_ecpu_fieldstr)" />
+											</cell>
+										</row>
+									</template>
+								</grid>
+							</cell>
+						</row>
+						<row>
+							<cell colspan="4">
+								<label value="操作记录" style="color:#666" />
+							</cell>
+						</row>
+						<row>
+							<cell colspan="4">
+								<grid width="100%" emptyMessage="暂无数据"
+									model="@load(vm.hosList)" mold="paging" pageSize="5">
+									<columns>
+										<column align="center"
+											label="状态" />
+										<column align="center"
+											label="操作" />
+										<column align="center"
+											label="添加人" />
+										<column align="center"
+											label="添加时间" />
+									</columns>
+									<template name="model">
+										<row>
+											<label
+												value="@load(each.pbsr_statename)" />
+											<label
+												value="@load(each.pbsr_content)" />
+											<label
+												value="@load(each.pbsr_addname)" />
+											<label
+												value="@load(each.pbsr_addtime)" />
+										</row>
+									</template>
+								</grid>
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

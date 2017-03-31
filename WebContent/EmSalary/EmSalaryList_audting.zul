@@ -1,0 +1,48 @@
+<?page title="工资审核" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winEmSalaryaudit" title="工资审核" border="normal"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmSalary.EmSalary_audtingController')"
+		height="100%" width="95%" closable="true" sizable="true">
+	
+
+<borderlayout height="100%">
+
+<center flex="true">
+
+<grid vflex="1" id="salarygrid"  mold="paging" pageSize="40"   >
+	<columns id="gridcols" style="cursor:pointer" onCreate="@command('colsInit',self=salarygrid)" >
+	
+	</columns>
+	<rows id="gridrows" onCreate="@command('rowsInit',self=salarygrid)">
+
+	</rows>
+</grid>
+
+</center>
+<south>
+	<vlayout width="100%">
+					<panel border="0">
+						<panelchildren >
+							<vbox width="100%">
+								<grid width="100%">
+									<rows>
+										<row>
+									<cell align="center">
+				<button id="btplsh" label="批量审核"
+			onClick="@command('auditing',gd=salarygrid)" />
+			</cell>
+			
+										</row>
+									</rows>
+									
+								</grid>
+							</vbox>
+						</panelchildren>
+					</panel>
+				</vlayout>
+</south>
+</borderlayout>
+
+</window>
+</zk>

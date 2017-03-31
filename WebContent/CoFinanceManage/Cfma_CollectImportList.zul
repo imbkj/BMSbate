@@ -1,0 +1,163 @@
+<?page title="收款导入列表" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="收款导入列表" border="normal" width="99%" height="99%"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoFinanceManage.Cfma_CollectImportListController')">
+		<borderlayout>
+			<north collapsible="true" splittable="true"
+				autoscroll="true" vflex="1" hflex="1" border="0">
+				<grid>
+					<rows>
+						<row>
+							<cell align="center">
+								<button label="查看出错记录"
+									onClick="@command('importErr')" />
+								<button label="导入收款"
+									onClick="@command('importCollect')" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</north>
+			<center border="0">
+				<grid emptyMessage="暂无导入数据" model="@load(vm.winCiList)"
+					width="100%" mold="paging" pageSize="15" height="100%">
+					<columns sizable="true">
+						<column label="序号" align="center" width="60px" />
+						<column sort="auto(cfci_transactionNo)"
+							align="center">
+							<vlayout>
+								<label value="交易流水号"
+									style="color:#666;" />
+								<textbox width="75%" mold="rounded"
+									value="@bind(vm.transactionNo)"
+									onChange="@command('search',dbTransactionTime=dbTransactionTime,dbAddtime=dbAddtime)"
+									onOK="@command('search',dbTransactionTime=dbTransactionTime,dbAddtime=dbAddtime)" />
+							</vlayout>
+						</column>
+						<column sort="auto(cfci_company)"
+							align="center">
+							<vlayout>
+								<label value="对方账户名称"
+									style="color:#666;" />
+								<textbox width="75%" mold="rounded"
+									value="@bind(vm.company)"
+									onChange="@command('search',dbTransactionTime=dbTransactionTime,dbAddtime=dbAddtime)"
+									onOK="@command('search',dbTransactionTime=dbTransactionTime,dbAddtime=dbAddtime)" />
+							</vlayout>
+						</column>
+						<column sort="auto(cfci_account)"
+							align="center">
+							<vlayout>
+								<label value="对方账户" style="color:#666;" />
+								<textbox width="75%" mold="rounded"
+									value="@bind(vm.account)"
+									onChange="@command('search',dbTransactionTime=dbTransactionTime,dbAddtime=dbAddtime)"
+									onOK="@command('search',dbTransactionTime=dbTransactionTime,dbAddtime=dbAddtime)" />
+							</vlayout>
+						</column>
+						<column label="收款金额" sort="auto(cfci_amount)"
+							align="center" />
+						<column label="摘要" sort="auto(cfci_remark)"
+							align="center" width="80px" />
+						<column label="用途" sort="auto(cfci_usage)"
+							align="center" width="100px" />
+						<column sort="auto(cfci_transactionTime)"
+							align="center" width="120px">
+							<vlayout>
+								<label value="交易日期" style="color:#666;" />
+								<datebox id="dbTransactionTime"
+									width="95%" mold="rounded" format="yyyy-MM-dd"
+									onChange="@command('search',dbTransactionTime=dbTransactionTime,dbAddtime=dbAddtime)"
+									onOK="@command('search',dbTransactionTime=dbTransactionTime,dbAddtime=dbAddtime)" />
+							</vlayout>
+						</column>
+						<column sort="auto(cfci_addname)" align="center"
+							width="100px">
+							<vlayout>
+								<label value="添加人" style="color:#666;" />
+								<textbox width="85%" mold="rounded"
+									value="@bind(vm.addname)"
+									onChange="@command('search',dbTransactionTime=dbTransactionTime,dbAddtime=dbAddtime)"
+									onOK="@command('search',dbTransactionTime=dbTransactionTime,dbAddtime=dbAddtime)" />
+							</vlayout>
+						</column>
+						<column sort="auto(cfci_addtime)" align="center"
+							width="120px">
+							<vlayout>
+								<label value="添加时间" style="color:#666;" />
+								<datebox id="dbAddtime" width="95%"
+									mold="rounded" format="yyyy-MM-dd"
+									onChange="@command('search',dbTransactionTime=dbTransactionTime,dbAddtime=dbAddtime)"
+									onOK="@command('search',dbTransactionTime=dbTransactionTime,dbAddtime=dbAddtime)" />
+							</vlayout>
+						</column>
+						<column sort="auto(cfci_state)" align="center"
+							width="100px">
+							<vlayout>
+								<label value="状态" style="color:#666;" />
+								<combobox width="95%" mold="rounded"
+									readonly="true" value="@bind(vm.state)"
+									onChange="@command('search',dbTransactionTime=dbTransactionTime,dbAddtime=dbAddtime)">
+									<comboitem label="" />
+									<comboitem label="已入账" />
+									<comboitem label="未入账" />
+								</combobox>
+							</vlayout>
+						</column>
+						<column label="操作" align="center" width="80px" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<label
+									value="${forEachStatus.index + 1}" />
+								<label
+									value="@load(each.cfci_transactionNo)" />
+								<label value="@load(each.cfci_company)" />
+								<label value="@load(each.cfci_account)" />
+								<label value="@load(each.cfci_amount)" />
+								<label value="@load(each.cfci_remark)" />
+								<cell align="center"
+									style="color:#666;">
+									<label
+										style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden"
+										value="@load(each.cfci_usage)"
+										tooltiptext="@load(each.cfci_usage)" />
+								</cell>
+								<label
+									value="@load(each.cfci_transactionTime)" />
+								<label value="@load(each.cfci_addname)" />
+								<label value="@load(each.cfci_addtime)" />
+								<cell>
+									<label
+										value="@load(each.cfci_stateStr)"
+										onClick="@command('collectLog',m=each)"
+										style="cursor:pointer;color:#00F;"
+										if="${each.cfci_state==1?true:false}" />
+									<label
+										value="@load(each.cfci_stateStr)" style="color:red;"
+										if="${each.cfci_state!=1?true:false}" />
+								</cell>
+
+								<menubar autodrop="true" width="50px">
+									<menu
+										image="../images/pencil-small.png"
+										if="${each.cfci_state==0?true:false}"
+										visible="@load(each.opVisible)">
+										<menupopup>
+											<menuitem label="入账"
+												onClick="@command('recorded',m=each)" />
+										</menupopup>
+									</menu>
+								</menubar>
+							</row>
+						</template>
+					</rows>
+				</grid>
+
+			</center>
+			<south></south>
+		</borderlayout>
+	</window>
+</zk>

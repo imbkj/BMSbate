@@ -1,0 +1,94 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="体检项目组合信息" border="normal" width="90%" height="90%"
+		closable="true" apply="org.zkoss.bind.BindComposer" id="winInfo"
+		viewModel="@id('vm') @init('Controller.EmBodyCheck.EmBc_ItemGroupInfoController')">
+		<grid>
+			<rows>
+				<row>
+					<cell width="120px">组合名称</cell>
+					<cell>
+						<label value="@load(vm.ebgm.ebig_name)" />
+					</cell>
+					<cell width="120px">金额</cell>
+					<cell>
+						<label value="@load(vm.ebgm.ebig_charge)" />
+					</cell>
+				</row>
+				<row>
+					<cell>公司名称</cell>
+					<cell>
+						<label value="@load(vm.ebgm.coba_shortname)" />
+					</cell>
+					<cell>客服</cell>
+					<cell>
+						<label value="@load(vm.ebgm.coba_client)" />
+
+					</cell>
+
+				</row>
+				<row>
+					<cell>体检机构</cell>
+					<cell colspan="3">
+						<label value="@load(vm.ebgm.ebcs_hospital)" />
+					</cell>
+				</row>
+				<row>
+					<cell>备注</cell>
+					<cell colspan="3">
+						<textbox id="remark" rows="5" width="500px" mold="rounded"
+							value="@load(vm.ebgm.ebig_remark)">
+						</textbox>
+					</cell>
+				</row>
+				<row>
+					<cell>体检项目</cell>
+					<cell colspan="3">
+						<grid emptyMessage="没有数据,请重新选择体检机构"
+							model="@load(vm.list)" height="250px" id="itemgd">
+							<columns>
+								<column label="序号" align="center" width="40px"/>
+								<column align="center" label="项目名称" hflex="2"/>
+								<column align="center" label="项目内容" hflex="4" />
+								<column label="备注" align="center" hflex="2" />
+								<column align="center" label="适用范围" hflex="1" />
+							</columns>
+							<rows>
+								<template name="model">
+									<row>
+										<cell>
+											<label
+												value="${forEachStatus.index+1 }">
+											</label>
+										</cell>
+										<cell align="left">
+											<label
+												value="@load(each.ebit_name)">
+											</label>
+										</cell>
+										<cell>
+											<label
+												value="@load(each.ebit_info)">
+											</label>
+										</cell>
+										<cell>
+											<label
+												value="@load(each.ebit_remark)">
+											</label>
+										</cell>
+										<cell>
+											<label
+												value="@load(each.xzcontent)">
+											</label>
+										</cell>
+									</row>
+								</template>
+							</rows>
+						</grid>
+					</cell>
+				</row>
+			</rows>
+
+		</grid>
+	</window>
+</zk>

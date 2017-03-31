@@ -1,0 +1,309 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="人事/财税"  id="win" border="normal" vflex="1"
+	apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('Controller.EmTax.PropersonTaxationController')">
+<grid width="100%">
+  <columns >
+    <column align="center" width="150px">
+                检索条件
+    </column>
+	<column align="center" width="600px">
+	      客服
+	<combobox value="@bind(vm.clientName)" mold="rounded" width="50%"
+		  onChange="@command('search')" instant="true"
+		  model="@load(vm.clientList)">
+		<template name="model">
+		   <comboitem label="@load(each)" />
+		</template>
+	 </combobox>
+	</column>
+  </columns>
+   <rows>
+	<row>
+		<cell align="center" >总合计：</cell>
+		<cell >
+			<vlayout hflex="1">
+					<hlayout hflex="1">
+							         派遣
+					</hlayout>
+					<hlayout hflex="1">
+							          代理
+					</hlayout>
+					 <hlayout hflex="1">
+							    财税
+					  </hlayout>
+			 </vlayout>
+		</cell>
+					   <cell>
+						<vlayout hflex="1">
+							<hlayout hflex="1">
+							         客户：
+							       <label style="color:red;" value="@load(vm.secusnumall)"/>
+							 </hlayout>
+							 <hlayout hflex="1">
+							        客户：
+							       <label style="color:red;" value="@load(vm.agcusnumall)"/>
+							 </hlayout>
+							  <hlayout hflex="1">
+							        客户：
+							       <label style="color:red;" value="@load(vm.taxcunumall)"/>
+							 </hlayout>
+						 </vlayout>
+					   </cell>
+					   <cell>
+						<vlayout hflex="1">
+							<hlayout hflex="1">
+							        员工：
+							      <label style="color:red;" value="@load(vm.sestanumall)"/>
+							 </hlayout>
+							 <hlayout hflex="1">
+							        员工：
+							      <label style="color:red;" value="@load(vm.agstanumall)"/>
+							 </hlayout>
+							 <hlayout hflex="1">
+							        员工：
+							      <label style="color:red;" value="@load(vm.taxtanumall)"/>
+							 </hlayout>
+						 </vlayout>
+					   </cell>
+		</row>
+	</rows>
+ </grid>					
+<scrollview >
+	<tabbox width="100%" tabscroll="false">
+		<tabs>
+			<tab label="人事" width="100px"/>
+			<tab label="财税类" width="100px"/>
+			<tab label="委托外地" width="100px"/>
+			<tab label="外籍人" width="100px"/>
+		</tabs>
+		<tabpanels>
+			<tabpanel>
+			   <grid width="100%">
+			      <rows>
+			        <row>
+			         <cell align="center" >合计：</cell>
+					   <cell>
+						<vlayout hflex="1">
+							<hlayout hflex="1">
+							         客户：<label style="color:red;" value="@load(vm.secusnum)"/>
+							 </hlayout>
+						 </vlayout>
+					   </cell>
+					   <cell>
+						<vlayout hflex="1">
+							<hlayout hflex="1">
+							        员工：
+							      <label style="color:red;" value="@load(vm.sestanum)"/>
+							 </hlayout>
+						 </vlayout>
+					   </cell>
+			        </row>
+			      </rows>
+			   </grid>
+			   <grid vflex="1" width="100%" height="550px" emptyMessage="无数据"  model="@load(vm.list)" mold="paging" pageSize="12">
+				  <columns>
+				       <column align="center" width="40px"></column>
+				       <column align="center"><label value="客服"/></column>
+					   <!--  <column align="center"><label value="大类"/></column>-->
+					   <column align="center"><label value="客户数"/></column>
+					   <column align="center"><label value="员工数"/></column>
+					   
+					</columns>
+					<rows>
+					  <template name="model">
+					  <row align="center">
+					    <!--  <custom-attributes coba_client="${each.coba_client}" cpct_type="${each.cpct_type}"/>
+							<detail fulfill="onOpen" open="false">
+								<include
+									src="/EmTax/PropersonTaxation_Select.zul" coba_client="${coba_client}" cpct_type="${cpct_type}">
+								</include>
+							</detail>-->
+						<custom-attributes coba_client="${each.coba_client}" />
+							<detail fulfill="onOpen" open="false">
+								<include
+									src="/EmTax/PropersonTaxation_BigSelect.zul" coba_client="${coba_client}">
+								</include>
+							</detail>
+						<label value="@load(each.coba_client)" />
+						<!--  <label value="@load(each.cpct_type)" />-->	
+						<label value="@load(each.n)" />				
+					    <label value="@load(each.m)" />
+					    
+					  </row>
+				      </template>
+				   </rows>		
+			  </grid>
+			</tabpanel>
+			<tabpanel>
+			   <grid width="100%">
+			      <rows>
+			        <row>
+			         <cell align="center" >合计：</cell>
+					  <cell >
+						<vlayout hflex="1">
+							<hlayout hflex="1">
+							     财税
+							 </hlayout>
+						 </vlayout>
+					   </cell>
+					   <cell>
+						<vlayout hflex="1">
+							<hlayout hflex="1">
+							         客户：
+							       <label style="color:red;" value="@load(vm.taxcunum)"/>
+							 </hlayout>
+						 </vlayout>
+					   </cell>
+					   <cell>
+						<vlayout hflex="1">
+							<hlayout hflex="1">
+							        员工：
+							      <label style="color:red;" value="@load(vm.taxtanum)"/>
+							 </hlayout>
+						 </vlayout>
+					   </cell>
+			        </row>
+			      </rows>
+			   </grid>
+			   <grid vflex="1" width="100%" height="550px" emptyMessage="无数据"  model="@load(vm.listFinance)" mold="paging" pageSize="12">
+				  <columns>
+				       <column align="center" width="40px"></column>
+				       <column align="center"><label value="客服"/></column>
+					   <column align="center"><label value="大类"/></column>
+					   <column align="center"><label value="客户数"/></column>
+					   <column align="center"><label value="员工数"/></column>
+					   
+					</columns>
+					<rows>
+					  <template name="model">
+					  <row align="center">
+					    <custom-attributes coba_gzaddname="${each.coba_gzaddname}" cpct_type="${each.cpct_type}"/>
+						   <detail fulfill="onOpen" open="false">
+							 <include
+									src="/EmTax/PropersonTaxation_Select_Tax.zul" coba_gzaddname="${coba_gzaddname}" cpct_type="${cpct_type}">
+							 </include>
+						   </detail>
+						<label value="@load(each.coba_gzaddname)" />
+						<label value="@load(each.cpct_type)" />	
+						<label value="@load(each.n)" />				
+					    <label value="@load(each.m)" />
+					    
+					  </row>
+				      </template>
+				   </rows>		
+			  </grid>
+			</tabpanel>
+			<tabpanel>
+			   <grid width="100%">
+			      <rows>
+			        <row>
+			         <cell align="center" >合计：</cell>
+					   <cell>
+						<vlayout hflex="1">
+							<hlayout hflex="1">
+							         客户：<label style="color:red;" value="@load(vm.enstrcunum)"/>
+							 </hlayout>
+						 </vlayout>
+					   </cell>
+					   <cell>
+						<vlayout hflex="1">
+							<hlayout hflex="1">
+							        员工：
+							      <label style="color:red;" value="@load(vm.enstrstnum)"/>
+							 </hlayout>
+						 </vlayout>
+					   </cell>
+			        </row>
+			      </rows>
+			   </grid>
+			   <grid vflex="1" width="100%" height="550px" emptyMessage="无数据"  model="@load(vm.listEnst)" mold="paging" pageSize="12">
+				  <columns>
+				       <column align="center" width="40px"></column>
+				       <column align="center"><label value="客服"/></column>
+					   <column align="center"><label value="客户数"/></column>
+					   <column align="center"><label value="员工数"/></column>
+					   
+					</columns>
+					<rows>
+					  <template name="model">
+					  <row align="center">
+						<custom-attributes coba_client="${each.coba_client}" />
+							<detail fulfill="onOpen" open="false">
+								<include
+									src="/EmTax/PropersonTaxation_BigSelectEnstr.zul" coba_client="${coba_client}">
+								</include>
+							</detail>
+						<label value="@load(each.coba_client)" />	
+						<label value="@load(each.n)" />				
+					    <label value="@load(each.m)" />
+					    
+					  </row>
+				      </template>
+				   </rows>		
+			  </grid>
+			</tabpanel>
+			<tabpanel>
+			   <grid width="100%">
+			      <rows>
+			        <row>
+			         <cell align="center" >合计：</cell>
+					  <cell >
+						<vlayout hflex="1">
+							<hlayout hflex="1">
+							     外籍人汇总
+							 </hlayout>
+						 </vlayout>
+					   </cell>
+					   <cell>
+						<vlayout hflex="1">
+							<hlayout hflex="1">
+							         客户：
+							       <label style="color:red;" value="@load(vm.forexcunum)"/>
+							 </hlayout>
+						 </vlayout>
+					   </cell>
+					   <cell>
+						<vlayout hflex="1">
+							<hlayout hflex="1">
+							        员工：
+							      <label style="color:red;" value="@load(vm.forexstnum)"/>
+							 </hlayout>
+						 </vlayout>
+					   </cell>
+			        </row>
+			      </rows>
+			   </grid>
+			   <grid vflex="1" width="100%" height="550px" emptyMessage="无数据"  model="@load(vm.listForex)" mold="paging" pageSize="12">
+				  <columns>
+				       <column align="center" width="40px"></column>
+				       <column align="center"><label value="客服"/></column>
+					   <column align="center"><label value="大类"/></column>
+					   <column align="center"><label value="客户数"/></column>
+					   <column align="center"><label value="员工数"/></column>
+					   
+					</columns>
+					<rows>
+					  <template name="model">
+					  <row align="center">
+					    <custom-attributes coba_client="${each.coba_client}" cpct_type="${each.cpct_type}"/>
+						   <detail fulfill="onOpen" open="false">
+							 <include
+									src="/EmTax/PropersonTaxation_Select_Forex.zul" coba_client="${coba_client}" cpct_type="${cpct_type}">
+							 </include>
+						   </detail>
+						<label value="@load(each.coba_client)" />
+						<label value="@load(each.cpct_type)" />	
+						<label value="@load(each.n)" />				
+					    <label value="@load(each.m)" />
+					    
+					  </row>
+				      </template>
+				   </rows>		
+			  </grid>
+			</tabpanel>
+	    </tabpanels>
+    </tabbox>
+</scrollview>
+</window>
+</zk>

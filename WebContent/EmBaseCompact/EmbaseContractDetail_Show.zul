@@ -1,0 +1,134 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="员工合同详情" border="normal" id="win" vflex="1"
+		apply="org.zkoss.bind.BindComposer" closable="true"
+		viewModel="@id('vm') @init('Controller.EmBaseCompact.EmbaseContractDetail_ShowController')">
+		<borderlayout vflex="1">
+			<center>
+				<grid span="true" model="@load(vm.list)" id="listGid"
+					vflex="1" mold="paging" pageSize="20" sizedByContent="true">
+					<frozen columns="4"></frozen>
+					<columns>
+						<!--  <column align="center" width="80px">
+							<label value="序号" />
+						</column>-->
+                        <column width="100px" align="center">
+							公司编号
+						</column>
+						<column width="100px" align="center">
+							员工编号
+						</column>
+						<column width="300px" align="center">
+							公司名
+							<combobox value="@bind(vm.coba_company)"
+								mold="rounded" width="80%"
+								onChange="@command('serch')" instant="true"
+								model="@load(vm.companyList)">
+								<template name="model">
+									<comboitem label="@load(each)" />
+								</template>
+							</combobox>
+						</column>
+						<column width="150px" align="center">
+							员工姓名
+							<combobox value="@bind(vm.emba_name)"
+								mold="rounded" width="60%"
+								onChange="@command('serch')" instant="true"
+								model="@load(vm.nameList)">
+								<template name="model">
+									<comboitem label="@load(each)" />
+								</template>
+							</combobox>
+						</column>
+						<column width="250px" align="center">
+							身份证
+							<combobox value="@bind(vm.emba_idcard)"
+								mold="rounded" width="80%"
+								onChange="@command('serch')" instant="true"
+								model="@load(vm.idcardList)">
+								<template name="model">
+									<comboitem label="@load(each)" />
+								</template>
+							</combobox>
+						</column>
+						<column width="150px" align="center">
+							客服
+							<combobox value="@bind(vm.coba_client)"
+								mold="rounded" width="60%"
+								onChange="@command('serch')" instant="true"
+								model="@load(vm.clientList)">
+								<template name="model">
+									<comboitem label="@load(each)" />
+								</template>
+							</combobox>
+						</column>
+						<column width="150px" align="center">
+							劳动合同终止时间
+						</column>
+						<column width="150px" align="center">
+							添加人
+							<combobox value="@bind(vm.puof_addname)"
+								mold="rounded" width="60%"
+								onChange="@command('serch')" instant="true"
+								model="@load(vm.addnameList)">
+								<template name="model">
+									<comboitem label="@load(each)" />
+								</template>
+							</combobox>
+						</column>
+						<column width="150px" align="center">
+							添加时间
+						</column>
+						<column width="100px" align="center">
+							劳动合同状态
+						</column>
+						<column width="100px" align="center">
+							审核状态
+						</column>
+						<column width="100px" align="center">
+							审核人
+						</column>
+						<column width="150px" align="center">
+							审核时间
+						</column>
+						<column width="100px" align="center">
+							劳动合同详细
+						</column>
+						<column width="80px" align="center">
+							操作
+						</column>
+					</columns>
+					<rows>
+						<template name="model">
+							<row align="center">
+								<!-- <cell>
+									<label value="${forEachStatus.index + 1}" />
+								</cell> -->
+								<label value="@load(each.cid)" />
+								<label value="@load(each.gid)" />
+								<label value="@load(each.coba_company)" />
+								<label value="@load(each.emba_name)" />
+								<label value="@load(each.emba_idcard)" />
+								<label value="@load(each.coba_client)" />
+								<label value="@load(each.ebcc_end_date)" />
+								<label value="@load(each.puof_addname)" />
+								<label value="@load(each.puof_addtime)" />
+								<label value="@load(each.ebcc_change)" />
+								<label value="${each.puof_state=='1'?'已审核':'未审核'}" />
+								<label value="@load(each.puof_editname)" />
+								<label value="@load(each.puof_edittime)" />
+								<cell >
+                                   <label onClick="@command('detail',m=each)" 	style="cursor:pointer;color:#00F;">详情</label>
+                                </cell>
+								<cell>
+								    <label onClick="@command('approve',m=each)" 	style="cursor:pointer;color:#00F;" value="${each.puof_state=='1'?'':'审核'}" />
+                                </cell>
+							</row>
+						</template>
+					</rows>
+
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

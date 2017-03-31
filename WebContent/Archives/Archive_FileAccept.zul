@@ -1,0 +1,133 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<?component name="docDataList" macro-uri="../DocumentsInfo/DocumentsInfo_AddPageList.zul" inline="true"?>
+<zk>
+	<window title="档案调出——受理材料" border="normal" closable="true"
+		id="detail" width="80%" height="80%"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.Archives.Archive_FileAcceptController')">
+		<grid vflex="1">
+			<rows>
+				<row>
+					<cell width="100px">单位名称</cell>
+					<cell>
+						<label value="@load(vm.model.coba_shortname)"></label>
+					</cell>
+					<cell width="100px">单位编号</cell>
+					<cell>
+						<label value="@load(vm.model.cid)"></label>
+					</cell>
+				</row>
+				<row>
+					<cell>员工姓名</cell>
+					<cell>
+						<label value="@load(vm.model.eada_name)"></label>
+					</cell>
+					<cell>员工编号</cell>
+					<cell>
+						<label value="@load(vm.model.gid)"></label>
+					</cell>
+				</row>
+				<row>
+					<cell>身份证号</cell>
+					<cell>
+						<label value="@load(vm.model.emba_idcard)"></label>
+					</cell>
+					<cell>档案所在地</cell>
+					<cell>
+						<label value="@load(vm.model.eada_fileplace)"></label>
+					</cell>
+				</row>
+				<row>
+					<cell>续签协议到期日</cell>
+					<cell>
+						<label value="@load(vm.amodel.emar_continuedeadline)"></label>
+					</cell>
+					<cell>雇员户口挂靠</cell>
+					<cell>
+						<label
+							value="${vm.amodel.emar_colhj==1?'是': vm.amodel.emar_colhj==0?'否':'无此服务'}" />
+					</cell>
+				</row>
+				<row>
+					<cell>档案号</cell>
+					<cell>
+						<label value="@load(vm.model.eada_fid)"></label>
+					</cell>
+					<cell>离职时间</cell>
+					<cell>
+						<textbox value="${vm.model.emba_outdate}"
+							readonly="${vm.model.eada_final=='待处理'}" />
+					</cell>
+				</row>
+				<!-- 档案调出 -->
+				<row visible="false">
+					<cell width="100px">员工欠费情况</cell>
+					<cell>
+						<textbox value="${vm.model.eada_charge}"
+							readonly="${vm.model.eada_final=='待处理'}" />
+					</cell>
+					<cell width="100px">调出日期</cell>
+					<cell>
+						<textbox value="${vm.model.eada_checkoutdate}"
+							readonly="${vm.model.eada_final=='待处理'}" />
+					</cell>
+				</row>
+
+				<row>
+					<cell width="100px">员工欠费时间</cell>
+					<cell>
+						<textbox value="${vm.model.eada_chargedate}"
+							readonly="${vm.model.eada_final=='待处理'}" />
+					</cell>
+					<cell width="100px">员工欠费终止日</cell>
+					<cell>
+						<textbox value="${vm.stopdate}"
+							readonly="${vm.model.eada_final=='待处理'}" />
+					</cell>
+				</row>
+				<row>
+
+				</row>
+				<row visible="false">
+					<cell>调出方式</cell>
+					<cell>
+						<textbox value="${vm.model.eada_checkoutmode}"
+							readonly="${vm.model.eada_final=='待处理'}" />
+					</cell>
+					<cell>是否委托代办</cell>
+					<cell>
+						<textbox
+							value="${vm.model.eada_deputy==1?'是':'否'}"
+							readonly="${vm.model.eada_final=='待处理'}" />
+					</cell>
+				</row>
+				<row>
+					<cell>调出原因</cell>
+					<cell colspan="3">
+						<textbox value="${vm.model.eada_checkoutreason}"
+							rows="3" width="80%" readonly="true" />
+					</cell>
+				</row>
+				<row>
+					<cell>交接材料</cell>
+					<cell colspan="3">
+						<docDataList id="docGrid" puzu_id="11"
+							gid="10001" dWidth="100%" pUsername="陈耀家" pUserId="248" />
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button
+						onClick="@command('summit',gd=docGrid,win=detail)">
+						提交
+					</button>
+					<button
+						onClick="@command('addremark',win=detail)">
+						备注
+					</button>
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

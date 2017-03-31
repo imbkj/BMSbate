@@ -1,0 +1,107 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window width="100%" height="100%" title="员工福利名单" id="winEmp"
+		border="normal" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmBenefit.EmWelfare_ListController')">
+		<borderlayout>
+			<north title="查询条件" collapsible="true" open="false">
+				<grid>
+					<columns>
+						<column width="100px" />
+						<column />
+						<column width="100px" />
+						<column />
+					</columns>
+
+					<rows>
+						<row>
+							
+							<cell>福利项目</cell>
+							<cell>
+
+								<combobox id="item" mold="rounded"
+									model="@load(vm.itemList)">
+									<template name="model">
+										<comboitem
+											label="@load(each.embf_name)" />
+									</template>
+								</combobox>
+							</cell>
+							<cell>批次</cell>
+							<cell>
+								<textbox id="sortid" mold="rounded" />
+
+							</cell>
+						</row>
+						<row>
+
+							
+							<cell></cell>
+							<cell>
+
+
+							</cell>
+
+						</row>
+					</rows>
+					<foot>
+						<footer align="center" span="4">
+							<button label="查询"
+								onClick="@command('Search')" />
+						</footer>
+					</foot>
+				</grid>
+			</north>
+			<center>
+				<grid height="100%" model="@load(vm.list)"
+					sizedByContent="true" span="true" emptyMessage="暂无数据" mold="paging"
+					pageSize="100">
+					<columns>
+						<column align="center">序号</column>
+						<column align="center">福利项目</column>
+						<column align="center">福利类型</column>
+						<column align="center">批次</column>
+						<column align="center">人数</column>
+						<column align="center">操作</column>
+					</columns>
+					<template name="model">
+						<row>
+							<cell>${forEachStatus.index+1 }</cell>
+
+
+							<cell>
+								<label value="@load(each.embf_name)" />
+							</cell>
+							<cell>
+								<label value="@load(each.embf_mold)" />
+							</cell>
+
+							<cell>
+								<label value="@load(each.emwf_sortid)" />
+							</cell>
+							<cell>
+								<label value="@load(each.num)" />
+							</cell>
+
+							<cell>
+								<div align="center">
+									<menubar autodrop="true"
+										width="50px" sclass="mymb">
+										<menu
+											image="../images/pencil-small.png">
+											<menupopup>
+												<menuitem label="查看明细"
+													onClick="@command('look',a=each)" />
+
+											</menupopup>
+										</menu>
+									</menubar>
+								</div>
+							</cell>
+						</row>
+					</template>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

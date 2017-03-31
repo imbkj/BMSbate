@@ -1,0 +1,8 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="new page title" border="normal"
+	viewModel="@id('vm') @init('Controller.Embase.Embase_editListController')"
+>
+<include src="../Embase/emba_list.jsp?list=${vm.embaselist }"></include>
+</window>
+</zk>

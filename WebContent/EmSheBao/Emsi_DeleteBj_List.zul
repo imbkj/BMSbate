@@ -1,0 +1,111 @@
+<?page title="编辑社保补缴" contentType="text/html;charset=UTF-8"?>
+<?component name="embase" macro-uri="Emsi_EmBase.zul" inline="true"?>
+<zk>
+	<window title="编辑社保补缴" border="normal" height="550px" width="100%"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmSheBao.Emsi_DeleteBj_ListController')"
+		closable="true" sizable="true" maximizable="true">
+		<borderlayout vflex="1">
+			<north title="个人信息" border="none">
+				<embase gid="${vm.emModel.gid}"
+					name="${vm.emModel.emba_name}" />
+			</north>
+			<center title="变更列表">
+				<grid span="true" model="@load(vm.bjList)"
+					emptyMessage="暂无数据" sizedByContent="true" hflex="1" vflex="1">
+					<columns sizable="true">
+						<column label="序号" align="center" />
+						<column label="所属月份" align="center"
+							sort="auto(ownmonth)" />
+						<column label="变动类型" align="center" />
+						<column label="补缴月份" align="center"
+							sort="auto(emsb_startmonth)" />
+						<column label="补缴基数" align="center"
+							sort="auto(emsb_radix)" />
+						<column label="添加时间" align="center"
+							sort="auto(emsb_addtime)" width="70px" />
+						<column label="添加人" align="center"
+							sort="auto(emsb_addname)" />
+						<column label="状态" align="center"
+							sort="auto(emsb_ifdeclare)" />
+						<column label="操作" align="center" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<cell>
+									<label
+										value="${forEachStatus.index + 1}" />
+								</cell>
+								<cell>
+									<label value="@load(each.ownmonth)" />
+								</cell>
+								<cell>
+									<label value="补缴社保养老" if="${each.type eq '1'}"/>
+									<label value="补缴社保医疗" if="${each.type eq '2'}"/>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emsb_startmonth)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emsb_radix)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emsb_addtime)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emsb_addname)" />
+								</cell>
+								<cell>
+									<label value="未申报"
+										if="${each.emsb_ifdeclare==0}" />
+									<label value="中心待核收"
+										if="${each.emsb_ifdeclare==7}" />
+									<label value="已申报"
+										if="${each.emsb_ifdeclare==1}" style="color:blue" />
+									<label value="已打单"
+										if="${each.emsb_ifdeclare==2}" style="color:green" />
+									<label value="已交单"
+										if="${each.emsb_ifdeclare==6}" style="color:blue" />
+									<label value="退回"
+										if="${each.emsb_ifdeclare==3}" style="color:red" />
+									<label value="待确认"
+										if="${each.emsb_ifdeclare==4}" style="color:red" />
+									<label value="待申报"
+										if="${each.emsb_ifdeclare==8}" />
+								</cell>
+								<cell>
+									<menubar autodrop="true"
+										width="50px"
+										if="${(each.emsb_ifdeclare==4 or each.emsb_ifdeclare==3 or each.emsb_ifdeclare==0 or (each.emsb_ifdeclare==8 and each.emsb_single!=1)) and each.type eq '1'}">
+										<menu
+											image="../images/pencil-small.png">
+											<menupopup>
+												<menuitem label="撤回"
+													onClick="@command('revokeBj',id=each.id,taprid=each.emsb_tapr_id)"
+													if="${each.emsb_ifdeclare==0 or (each.emsb_ifdeclare==8 and each.emsb_single!=1)}" />
+												<menuitem label="删除"
+													onClick="@command('delBj',bjM=each)"
+													if="${each.emsb_ifdeclare==3 or each.emsb_ifdeclare==4}" />
+												<menuitem label="确认"
+													onClick="@command('confirmBj',m=each)"
+													if="${each.emsb_ifdeclare==4}" />
+												<!-- <menuitem label="重新发送"
+													onClick="@command('resendBj',id=each.id)"
+													if="${each.emsb_ifdeclare==3}" /> -->
+											</menupopup>
+										</menu>
+									</menubar>
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

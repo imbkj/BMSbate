@@ -1,0 +1,161 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="转正定级" border="normal" closable="true"
+		id="detail" width="80%" height="80%"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.Archives.Archive_FilePassAcceptController')">
+		<grid vflex="1">
+			<rows>
+				<!-- 公共显示信息 -->
+				<row>
+					<cell width="85px">公司名称</cell>
+					<cell>
+						<label value="${vm.model.coba_shortname}" />
+					</cell>
+					<cell width="85px">客服</cell>
+					<cell>
+						<label value="${vm.model.coba_client}" />
+					</cell>
+				</row>
+				<row>
+					<cell width="85px">员工姓名</cell>
+					<cell>
+						<label value="${vm.model.emba_name}" />
+					</cell>
+					<cell width="80px">身份证号码</cell>
+					<cell>
+						<label width="50%"
+							value="${vm.model.eada_idcard}" />
+					</cell>
+				</row>
+				<row>
+					<cell>入职中智时间</cell>
+					<cell>
+						<label value="${vm.model.indate}" />
+					</cell>
+				</row>
+				<row>
+					<cell>手机</cell>
+					<cell>
+						<label width="80%"
+							value="${vm.model.emba_mobile}" />
+					</cell>
+					<cell>邮箱</cell>
+					<cell>
+						<label width="80%"
+							value="${vm.model.emba_email}" />
+					</cell>
+				</row>
+				<row>
+					<cell>档案类型</cell>
+					<cell>
+						<label value="${vm.model.eada_filetype}" />
+					</cell>
+					<cell>档案编号</cell>
+					<cell>
+						<label value="${vm.model.eada_fid}" />
+					</cell>
+				</row>
+				<row>
+					<cell>档案所在地</cell>
+					<cell colspan="3">
+						<label width="80%"
+							value="${vm.model.eada_fileplace}" />
+					</cell>
+				</row>
+				<row>
+					<cell>户籍性质</cell>
+					<cell>
+						<label width="80%" value="${vm.model.eada_hj}" />
+					</cell>
+					<cell>是否需要协助确认转正资格</cell>
+					<cell>
+						<label value="${vm.model.eada_zg==1?'是':'否'}" />
+					</cell>
+				</row>
+
+				<row>
+					<cell>是否代购表格</cell>
+					<cell>
+						<label value="${vm.model.eada_bf==1?'是':'否'}" />
+					</cell>
+					<cell>后续事宜是否雇员自行办理</cell>
+					<cell>
+						<label value="${vm.model.eada_dms==1?'是':'否'}" />
+					</cell>
+				</row>
+				<row>
+					<cell>毕业生接收单位</cell>
+					<cell>
+						<label value="${vm.amodel.emar_rsetup}" />
+					</cell>
+					<cell>毕业生接收时间</cell>
+					<cell>
+						<label value="${vm.amodel.emar_rdate}" />
+					</cell>
+				</row>
+				<row visible="false">
+					<cell>办理转正日期</cell>
+					<cell colspan="3">
+						<label value="${vm.model.eada_transactdate}" />
+					</cell>
+				</row>
+				<row>
+					<cell>联系记录</cell>
+					<cell colspan="3">
+						<grid emptyMessage="暂无记录" model="@load(vm.ealist)">
+					<columns>
+						<column width="90px" align="center">
+							联系时间
+						</column>
+						<column width="120px" align="center">
+							联系人
+						</column>
+						<column width="120px" align="center">
+							联系方式
+						</column>
+						<column align="center">联系内容</column>
+					</columns>
+					<template name="model">
+						<row>
+							<cell>
+								<label
+									value="@load(each.eali_linktime)" />
+							</cell>
+							<cell>
+								<label value="@load(each.eali_addname)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.eali_linkmode)" />
+							</cell>
+							<cell align="left">
+								<label
+									value="@load(each.eali_linkcontent)" />
+							</cell>
+						</row>
+					</template>
+
+				</grid>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button
+							onClick="@command('submit',win=detail)">
+							提交
+						</button>
+						<button onClick="@command('addremark',win=detail)">备注</button>
+						<button onClick="@command('back',win=detail)">
+							退回
+						</button>
+						<button label="查看报价单"
+							onClick="@command('check')" />
+						<button label="添加联系记录"
+							onClick="@command('addlink')" />
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

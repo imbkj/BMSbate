@@ -1,0 +1,35 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window border="0" vflex="1"
+	apply="org.zkoss.bind.BindComposer"
+    viewModel="@id('vm') @init('Controller.EmExpress.EmExpressAddressInfoListController')"
+>
+<style src="/css/style.css"></style>
+<grid vflex="1" model="@load(vm.list)">
+		<columns>
+			<column label="序号" width="40px" align="center"/>
+			<column label="收件人" width="70px" align="center"/>
+			<column label="手机号码" width="100px" align="center"/>
+			<column label="电话号码" width="100px" align="center"/>
+			<column label="邮政编码" width="100px" align="center"/>
+			<column label="邮寄类型" width="100px" align="center"/>
+			<column label="详细地址" align="center"/>
+			<column label="修改" align="center" width="50px"/>
+		</columns>
+		<rows>
+			<template name="model">
+				<row>
+					<cell><label value="${forEachStatus.index+1 }"></label></cell>
+					<cell><label value="@load(each.exct_receivename)"></label></cell>
+					<cell><label value="@load(each.exct_mobile)"></label></cell>
+					<cell><label value="@load(each.exct_phone)"></label></cell>
+					<cell><label value="@load(each.exct_code)"></label></cell>
+					<cell><label value="@load(each.exct_type)"></label></cell>
+					<cell><label value="@load(each.exct_address)"></label></cell>
+					<cell><a onClick="@command('openzul',model=each)"><label value="修改"></label></a></cell>
+				</row>
+			</template>
+		</rows>
+	</grid>
+</window>
+</zk>

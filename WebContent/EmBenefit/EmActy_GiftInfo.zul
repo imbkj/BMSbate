@@ -1,0 +1,83 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="礼品x详细信息" border="normal" width="70%" height="75%" closable="true"
+	apply="org.zkoss.bind.BindComposer" id="editwin"
+	viewModel="@id('vm') @init('Controller.EmBenefit.EmActy_GiftInfoEditController')"
+>
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell width="60px">供应商</cell>
+			<cell>
+				<textbox value="${arg.model.supp_name }"  mold="rounded"></textbox>
+			</cell>
+			<cell width="60px">名称</cell>
+			<cell>
+				<textbox  value="${arg.model.gift_name }" mold="rounded"></textbox>
+			</cell>
+			<cell width="60px">所属月份</cell>
+			<cell><textbox id="giftband" value="${arg.model.ownmonth}" mold="rounded"></textbox></cell>
+		</row>
+		<row>
+			<cell width="60px">实收金额</cell>
+			<cell><textbox mold="rounded" value="${arg.model.gift_realinmoney }" id="realinprice"></textbox></cell>
+			<cell>收款时间</cell>
+			<cell><textbox mold="rounded" value="${arg.model.gift_realintime }"></textbox></cell>
+			<cell>收款人</cell>
+			<cell><textbox value="${arg.model.gift_realinname }" mold="rounded" id="inname"></textbox></cell>
+		</row>
+		<row>
+			<cell>实付金额</cell>
+			<cell><textbox id="nownum" value="${arg.model.gift_totalprice }" mold="rounded"></textbox></cell>
+			<cell>付款日期</cell>
+			<cell><textbox id="innum" value="${arg.model.gift_paydate }" mold="rounded"></textbox></cell>
+			<cell>付款人</cell>
+			<cell><textbox value="${arg.model.gift_payname }" mold="rounded"></textbox></cell>
+		</row>
+		<row visible="${arg.model.gift_type!='活动' }">
+			<cell>采购人员</cell>
+			<cell><textbox id="gift_buyname" value="${arg.model.gift_buyname }" mold="rounded"></textbox></cell>
+			<cell>入库时间</cell>
+			<cell><textbox id="gift_intime"  value="${arg.model.gift_intime }" mold="rounded"></textbox></cell>
+			<cell>入库人</cell>
+			<cell><textbox id="gift_inname"  value="${arg.model.gift_inname}" mold="rounded"></textbox></cell>
+		</row>
+		<row visible="${arg.model.gift_type!='活动' }">
+			<cell>入库总量</cell>
+			<cell><textbox value="${arg.model.gift_totalnum }" mold="rounded"></textbox></cell>
+			<cell>现存总量</cell>
+			<cell><textbox value="${arg.model.gift_nownum }" mold="rounded"></textbox></cell>
+			<cell>有效期</cell>
+			<cell><textbox value="${arg.model.gift_validdate }" mold="rounded"></textbox></cell>
+		</row>
+		<row>
+			<cell>交发票时间</cell>
+			<cell><textbox id="price" value="${arg.model.gift_invoiceupdate }" mold="rounded"></textbox></cell>
+			<cell>发票日期</cell>
+			<cell><textbox id="nowprice"  value="${arg.model.gift_invoicedate }" mold="rounded"></textbox></cell>
+			<cell>发票号</cell>
+			<cell><textbox id="totalrice"  value="${arg.model.gift_invoicenumber}" mold="rounded"></textbox></cell>
+		</row>
+		<row>
+			<cell>审核时间</cell>
+			<cell><textbox id="gift_AuditTime" value="${arg.model.gift_audittime }" mold="rounded"></textbox></cell>
+			<cell>审核人</cell>
+			<cell colspan="3"><textbox id="gift_AuditName"  value="${arg.model.gift_auditname }" mold="rounded"></textbox></cell>
+		</row>
+		
+		<row>
+			<cell>添加人</cell>
+			<cell><textbox value="${arg.model.gift_addname}" mold="rounded"></textbox></cell>
+			<cell>添加时间</cell>
+			<cell><textbox value="${arg.model.gift_addtime }" mold="rounded"></textbox></cell>
+			<cell>状态</cell>
+			<cell><textbox id="statename" value="${arg.model.statename }" mold="rounded"></textbox></cell>
+		</row>
+		<row>
+			<cell>备注</cell>
+			<cell colspan="5"><textbox id="remark" width="80%" rows="3" value="${arg.model.gift_remark }" mold="rounded"></textbox></cell>
+		</row>
+	</rows>
+</grid>
+</window>
+</zk>

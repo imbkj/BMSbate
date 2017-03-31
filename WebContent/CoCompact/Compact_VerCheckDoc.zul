@@ -1,0 +1,18 @@
+<!--
+	创建人：张志强
+	创建时间：2013-12-6
+	用途：合同查看页面框架
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="合同模板查看" border="normal" width="95%"
+		closable="true">
+		<zscript language="Java">
+	import Util.UserInfo;
+	String user = UserInfo.getUserid();
+</zscript>
+		<include id="incl_id"
+			src="../CoCompact/Compact_VerCheckDoc.jsp?id=${arg.id}">
+		</include>
+	</window>
+</zk>

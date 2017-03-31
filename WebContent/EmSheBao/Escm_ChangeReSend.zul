@@ -1,0 +1,290 @@
+<!--
+	创建人：林少斌
+	创建时间：2016-10-9
+	用途：社保生育津贴重新发送
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<?component name="docDataList" macro-uri="/DocumentsInfo/DocumentsInfo_AddPageList.zul" inline="true"?>
+<zk>
+	<window id="winESCMRS" title="社保生育津贴重新发送" border="normal"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmSheBao.Escm_ChangeReSendController')"
+		height="600px" width="1060px" closable="true" sizable="true">
+		<div width="100%" height="100%" if="${vm.existsShebao}"
+			align="center">
+			<label value="${vm.existsMessage}" />
+		</div>
+		<borderlayout if="${!vm.existsShebao}">
+			<north title="个人信息" border="none">
+				<grid width="100%" height="100%">
+					<rows>
+						<row>
+							员工编号
+							<cell>
+								<label value="@load(vm.maModel.gid)" />
+							</cell>
+							姓名
+							<cell>
+								<label
+									value="@load(vm.maModel.escm_name)" />
+							</cell>
+						</row>
+						<row>
+							身份证
+							<cell>
+								<label
+									value="@load(vm.maModel.escm_idcard)" />
+							</cell>
+							电脑号
+							<cell>
+								<label
+									value="@load(vm.maModel.escm_computerid)" />
+							</cell>
+						</row>
+						<row>
+							性别
+							<cell>
+								<label
+									value="@load(vm.maModel.escm_sex)" />
+							</cell>
+							年龄
+							<cell>
+								<label
+									value="@load(vm.maModel.escm_age)" />
+							</cell>
+						</row>
+						<row>
+							户籍
+							<cell colspan="3">
+								<label
+									value="@load(vm.maModel.escm_hj)" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</north>
+			<center title="生育津贴申请信息" border="none">
+				<grid width="100%" height="100%">
+					<rows>
+						<row>
+							<cell align="right">所属月份</cell>
+							<cell colspan="3">
+								<vlayout>
+									<combobox mold="rounded"
+										readonly="true" value="@bind(vm.ownmonth)"
+										model="@load(vm.ownmonthList)">
+										<template name="model">
+											<comboitem
+												label="@load(each)" />
+										</template>
+									</combobox>
+									<label value="已过申报截止日，当月已不能变更"
+										if="${vm.isIfStop()}" style="color:red;" />
+								</vlayout>
+							</cell>
+						</row>
+						<row>
+							<cell align="right" rowspan="8">
+								申请项目(单选)
+							</cell>
+							<cell colspan="3" align="center">
+								<label style="font-weight:bold;"
+									value="生育产假" />
+							</cell>
+						</row>
+						<row>
+							<cell colspan="3">
+								<hlayout>
+									<checkbox label="顺产"
+										checked="@bind(vm.maModel.chkeasylabour)" />
+									<combobox readonly="true" value="@load(vm.maModel.escm_easylabourmb_str)"
+										onChange="@command('changeMB',mb=self,type='e')" width="45px"
+										mold="rounded" model="@load(vm.birthsList)">
+										<template name="model">
+											<comboitem
+												label="@load(each)" />
+										</template>
+									</combobox>
+									<label value="胞胎" />
+								</hlayout>
+							</cell>
+						</row>
+						<row>
+							<cell colspan="3">
+								<hlayout>
+									<checkbox label="难产"
+										checked="@bind(vm.maModel.chkdystocia)" />
+									<combobox readonly="true" value="@load(vm.maModel.escm_dystociatype_str)"
+										onChange="@command('changeDystociatype',type=self)"
+										width="90px" mold="rounded" 
+										model="@load(vm.dystociatypeList)">
+										<template name="model">
+											<comboitem
+												value="@load(each[0])" label="@load(each[1])" />
+										</template>
+									</combobox>
+									<combobox readonly="true" value="@load(vm.maModel.escm_dystociamb_str)"
+										onChange="@command('changeMB',mb=self,type='d')" width="45px"
+										mold="rounded" model="@load(vm.birthsList)">
+										<template name="model">
+											<comboitem
+												label="@load(each)" />
+										</template>
+									</combobox>
+									<label value="胞胎" />
+								</hlayout>
+							</cell>
+						</row>
+						<row>
+							<cell colspan="3">
+								<hlayout>
+									<checkbox label="怀孕未满4个月流产的"
+										checked="@bind(vm.maModel.chkabortion_nfm)" />
+									<space />
+									<space />
+									<checkbox label="怀孕满4个月流产的"
+										checked="@bind(vm.maModel.chkabortion_fm)" />
+								</hlayout>
+							</cell>
+						</row>
+						<row>
+							<cell colspan="3" align="center">
+								<label style="font-weight:bold;"
+									value="计划生育手术产假" />
+							</cell>
+						</row>
+						<row>
+							<cell colspan="3">
+								<hlayout>
+									<checkbox label="放置宫内节育器"
+										checked="@bind(vm.maModel.chksetiud)" />
+									<space />
+									<space />
+									<checkbox label="取出宫内节育器"
+										checked="@bind(vm.maModel.chkgetiud)" />
+								</hlayout>
+							</cell>
+						</row>
+						<row>
+							<cell colspan="3">
+								<hlayout>
+									<checkbox label="施行输卵管结扎"
+										checked="@bind(vm.maModel.chktuballigation)" />
+									<space />
+									<space />
+									<checkbox label="输卵管复通手术"
+										checked="@bind(vm.maModel.chktubalreversal)" />
+								</hlayout>
+							</cell>
+						</row>
+						<row>
+							<cell colspan="3">
+								<hlayout>
+									<checkbox label="施行输精管结扎"
+										checked="@bind(vm.maModel.chkvasoligation)" />
+									<space />
+									<space />
+									<checkbox label="输精管复通手术"
+										checked="@bind(vm.maModel.chkvasostomy)" />
+								</hlayout>
+							</cell>
+						</row>
+						<row>
+							<cell align="right">妊娠/计划生育结束日期</cell>
+							<cell>
+								<hlayout>
+									<datebox format="yyyy-MM-dd"
+										value="@bind(vm.endoffpDate)" readonly="true" />
+									<label value="(格式：YYYY-MM-DD)"
+										style="color:red;" />
+								</hlayout>
+							</cell>
+							<cell align="right">联系电话</cell>
+							<cell>
+								<textbox mold="rounded"
+									value="@bind(vm.maModel.escm_mobile)" />
+							</cell>
+						</row>
+						<row>
+							<cell align="right">垫付情况</cell>
+							<cell colspan="3">
+								<vlayout>
+									<label
+										value="是否确认对上述职工垫付产假期间的生育津贴？" />
+									<radiogroup>
+										<hlayout>
+											<radio label="已支付"
+												checked="true" value="1" />
+											<space /><!-- 
+												<radio label="未支付"
+												value="0" /> -->
+										</hlayout>
+									</radiogroup>
+								</vlayout>
+							</cell>
+						</row>
+						<row>
+							<cell align="right">重要提示内容</cell>
+							<cell colspan="3">
+								<vlayout>
+									<label
+										value="1、按规定，生育津贴将拨付到企业社保缴费的账户，贵单位目前缴费账户：" />
+									<hlayout>
+										<space />
+										<label value="银行名称：" />
+										<label
+											value="@load(vm.maModel.escm_bank)" />
+										<space />
+										<space />
+										<space />
+										<label value="银行账户：" />
+										<label
+											value="@load(vm.maModel.escm_bankacc)" />
+									</hlayout>
+									<hlayout>
+										<space />
+										<space />
+										<space />
+										<space />
+										<label value="是否同意以上内容：" />
+										<combobox readonly="true"
+											value="@bind(vm.ifagree)" width="45px" mold="rounded">
+											<comboitem value="1"
+												label="是" />
+											<!-- <comboitem value="0"
+												label="否" /> -->
+										</combobox>
+									</hlayout>
+								</vlayout>
+							</cell>
+						</row>
+						<row>
+							备注
+							<cell colspan="3">
+								<textbox mold="rounded" rows="3"
+									width="30%" value="@bind(vm.maModel.escm_remark)" />
+							</cell>
+						</row>
+						<row>
+							<cell colspan="4">
+								<docDataList id="docGrid" puzu_id="359"
+									gid="${vm.maModel.gid}" dWidth="100%" dHeight="210px" />
+							</cell>
+						</row>
+						<row>
+							<cell colspan="4" align="center">
+								<button label="提交" id="btSubmit"
+									onClick="@command('submit',win=winESCMRS,cb_dystociatype=cb_dystociatype,gd=docGrid)" />
+							</cell>
+						</row>
+						<row>
+							<cell colspan="4" align="center">
+								<space/>
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

@@ -1,0 +1,46 @@
+<?page title="更新知识库信息" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window closable="true" id="win" border="normal" width="700px" height="500px" title="知识库信息更新"
+apply="Controller.KnowledgeBase.KnowledgeInfo_UpdateController">
+<panel vflex="1">
+<panelchildren>
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell width="95px">问题类型：</cell>
+			<cell><combobox readonly="true" id="classname"></combobox></cell>
+		</row>
+		<row>
+			<cell>问题：</cell>
+			<cell><textbox id="questions" width="95%" rows="3" value="${arg.model.kbco_title}"/></cell>
+		</row>
+		<row>
+			<cell>问题答案：</cell>
+			<cell>
+				<ckeditor id="answer" height="120px" toolbar="MyToolbar"
+				customConfigurationsPath="/js/ckeditor-config.js"
+				 value="${arg.model.kbco_content}"></ckeditor>
+			</cell>
+		</row>
+		<row>
+			<cell>政策指引：</cell>
+			<cell><a><label id="remark" value="${arg.model.kbco_remark}"/></a></cell>
+		</row>
+		<row>
+			<cell><label id="upre" value="修改政策指引"/></cell>
+			<cell><vlayout>
+				<vlayout id="filelist" visible="false"></vlayout>
+			 	<button id="attachBtn" upload="true" label="选择政策文件"/>
+			</vlayout></cell>
+		</row>
+	</rows>
+	<foot>
+	<footer align="center">
+	<button id="summit">提交</button>
+	</footer>
+	</foot>
+	</grid>
+</panelchildren>
+</panel>
+ </window>
+</zk>

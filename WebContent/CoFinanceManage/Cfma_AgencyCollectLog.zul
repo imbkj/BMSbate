@@ -1,0 +1,73 @@
+<?page title="收款纪录" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="收款纪录" border="normal" width="750px" height="650px"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoFinanceManage.Cfma_AgencyCollectLogController')"
+		closable="true" sizable="true">
+		<borderlayout>
+			<north title="机构信息" border="none" collapsible="true"
+				splittable="true">
+				<grid>
+					<rows>
+						<row>
+							<cell width="35%">
+								<label value="城市：" />
+							</cell>
+							<cell>
+								<label value="@load(vm.city)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="机构名称：" />
+							</cell>
+							<cell>
+								<label value="@load(vm.coab_name)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="收款合计：" />
+							</cell>
+							<cell>
+								<label value="@load(vm.sumPaidin)"
+									style="color:blue;" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</north>
+			<center title="收款纪录" border="none">
+				<grid span="true" mold="paging"
+					model="@load(vm.collectList)" pageSize="10" emptyMessage="暂无收款纪录"
+					sizedByContent="true" hflex="1" height="100%" vflex="1">
+					<columns sizable="true">
+						<column label="序号" align="center" />
+						<column label="收款编号" align="center" />
+						<column label="收款金额"
+							sort="auto(cfac_TotalPaidIn)" align="center" />
+						<column label="收款时间" sort="auto(cfac_addtime)"
+							align="center" />
+						<column label="收款人" sort="auto(cfac_addname)"
+							align="center" />
+						<column label="备注" align="center" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<label
+									value="${forEachStatus.index + 1}" />
+								<label value="@load(each.cfac_id)" />
+								<label
+									value="@load(each.cfac_TotalPaidIn)" />
+								<label value="@load(each.cfac_addtime)" />
+								<label value="@load(each.cfac_addname)" />
+								<label value="@load(each.cfac_remark)" />
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

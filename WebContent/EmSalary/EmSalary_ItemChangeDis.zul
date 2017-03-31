@@ -1,0 +1,98 @@
+<!--
+	创建人：林少斌
+	创建时间：2015-1-6
+	用途：工资项目新增页面
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winItemDis" title="薪酬管理 -- 显示隐藏状态修改页面" border="normal"
+		width="70%" height="60%" closable="true"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmSalary.EmSalary_ItemChangeDisController')">
+		<grid width="100%" height="100%">
+			<rows>
+				<row>
+					<cell align="left">
+						<hbox>
+							<label value="@load(vm.ownmonth)" />
+							<label value="月份工资项目" />
+							<combobox id="fd_state" readonly="true"
+								autodrop="true" mold="rounded" value="全部"
+								onChange="@command('search',fd_state=self)">
+								<comboitem label="全部" />
+								<comboitem label="显示" />
+								<comboitem label="隐藏" />
+							</combobox>
+						</hbox>
+					</cell>
+				</row>
+				<row>
+					<cell align="left">
+						 
+							<listbox id="itemList" width="100%"
+							checkmark="true" multiple="true" height="300px"
+							model="@load(vm.itemFormulaList)" emptyMessage="无数据">
+							<listhead>
+							<listheader label="项目名称" />
+							<listheader label="显示状态" />
+							</listhead>
+							<template name="model">
+							<listitem>
+							<listcell>
+							<label
+							value="@load(each.csii_item_name)" />
+							</listcell>
+							<listcell>
+							<label value="显示"
+							if="${each.csii_fd_state==1}" />
+							<label value="隐藏"
+							if="${each.csii_fd_state==0}" />
+							</listcell>
+							</listitem>
+							</template>
+							</listbox>
+						<!-- 
+						<grid id="grid" width="100%" height="300px"
+							model="@load(vm.itemFormulaList)" emptyMessage="无数据">
+							<columns>
+								<column width="40px">
+									<checkbox id="all"
+										onCheck="@command('allCheck',all=all,grid=grid)">
+									</checkbox>
+								</column>
+								<column label="项目名称" />
+								<column label="显示状态" />
+							</columns>
+							<template name="model">
+								<row>
+									<cell>
+										<checkbox></checkbox>
+									</cell>
+									<cell>
+										<label
+											value="@load(each.csii_item_name)" />
+									</cell>
+									<cell>
+										<label value="显示"
+											if="${each.csii_fd_state==1}" />
+										<label value="隐藏"
+											if="${each.csii_fd_state==0}" />
+									</cell>
+								</row>
+							</template>
+						</grid>
+ -->
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button label="显示"
+						onClick="@command('submit',winItemDis=winItemDis,itemList=itemList,state=1)" />
+					<button label="隐藏"
+						onClick="@command('submit',winItemDis=winItemDis,itemList=itemList,state=0)" />
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

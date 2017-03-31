@@ -1,0 +1,96 @@
+<?page title="商业保险理赔列表" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="商业保险理赔列表" border="normal"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmCommercialInsurance.CI_InsurantClaim_Controller')">
+		<grid id="searchGird" width="100%">
+			<rows>
+				<row>
+
+					<cell width="100px">被保险人</cell>
+					<cell>
+						<textbox mold="rounded"  id="name" />
+					</cell>
+					<cell width="100px">身份证号码</cell>
+					<cell>
+						<textbox mold="rounded"  id="idcard" />
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button id="btSearch" label="查询"
+						onClick="@command('cladd_search',name=name,idcard=idcard)" />
+				</footer>
+			</foot>
+		</grid>
+			<grid width="100%" id="g1"   mold="paging" pageSize="19"
+				model="@load(vm.ci_insurant_claddlist)">
+				<columns>
+					<column label="序号" align="center" width="50px" />
+					<column label="公司名称" align="center" />
+					<column label="员工编号" align="center"  width="60px" />
+					<column label="被保险人" align="center" width="60px"  />
+					<column label="身份证号码" align="center" />
+					<column label="主险人" align="center" width="60px"  />
+					<column label="投保类型" align="center" />
+					<column label="投保时间" align="center" />
+					<column label="停缴时间" align="center" />
+					<column label="客服代表" align="center" />
+					<column label="状态" align="center" />
+					<column label="操作" align="center" />
+				</columns>
+				<rows>
+					<template name="model">
+						<row>
+							<cell>
+								<label
+									value="${forEachStatus.index + 1}" />
+							</cell>
+							<cell>
+								<label value="@load(each.eccl_company)" />
+							</cell>
+							<cell>
+								<label value="@load(each.gid)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.eccl_insurant)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.eccl_visiting_count)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.eccl_insurer)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.eccl_castsort)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.eccl_addtime)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.eccl_associate_date)" />
+							</cell>
+							<cell>
+								<label value="@load(each.coba_client)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.eccl_state)" />
+							</cell>
+							<cell>
+								<label value="理赔添加" style="cursor:pointer"
+							onClick="@command('ci_insurant_cladd', emco=each,gridco=g1)" />
+							</cell>
+						</row>
+					</template>
+				</rows>
+			</grid>
+	</window>
+</zk>

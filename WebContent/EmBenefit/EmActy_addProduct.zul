@@ -1,0 +1,50 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window width="700px" height="200px" title="供应商合同产品" id="winproduct"
+		border="normal" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmBenefit.EmActy_addProductController')"
+		closable="true" onCreate="@command('winC',a=self)">
+		<grid>
+			<rows>
+				<row>
+					<cell width="120px">供应商</cell>
+					<cell>
+						<label value="@load(vm.eam.supp_name)" />
+					</cell>
+					<cell width="120px">产品</cell>
+					<cell>
+						<combobox id="pd" model="@load(vm.list)" mold="rounded" readonly="true"
+							onChange="@command('update',a=self.selectedItem)">
+							<template name="model">
+								<comboitem value="@load(each.prod_id)"
+									label="@load(each.prod_name)" />
+							</template>
+						</combobox>
+					</cell>
+				</row>
+				<row>
+					<cell>价格</cell>
+					<cell>
+						<label value="@load(vm.eam.prod_price)" />
+					</cell>
+					<cell>折扣价</cell>
+					<cell>
+						<label value="@load(vm.eam.prod_discountprice)" />
+					</cell>
+				</row>
+				<row>
+					<cell>备注</cell>
+					<cell colspan="3">
+						<textbox />
+					</cell>
+
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button label="提交" onClick="@command('submit')" />
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

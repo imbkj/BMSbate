@@ -1,0 +1,60 @@
+<?page title="薪酬负责人设置" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winCompanySet" title="薪酬负责人设置" border="normal"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmSalary.EmSalary_CompanySetController')"
+		closable="true" sizable="true" width="850px" height="200px">
+		<borderlayout>
+			<center title="薪酬负责人设置">
+				<grid width="100%" height="100%">
+					<rows>
+						<row>
+							<cell width="30%">公司简称：</cell>
+							<cell>
+								<label value="@load(vm.shortname)" />
+							</cell>
+							<cell>公司编号：</cell>
+							<cell>
+								<label value="@load(vm.cid)" />
+							</cell>
+						</row>
+						<row>
+							<cell>薪酬负责人：</cell>
+							<cell>
+								<combobox id="cbGzUser" mold="rounded"
+									value="@load(vm.gzUser)" readonly="true">
+									<comboitem label="" />
+									<comboitem label="${each}"
+										forEach="${vm.cwUserList}" />
+
+								</combobox>
+							</cell>
+							<cell>薪酬审核人：</cell>
+							<cell>
+								<combobox id="cbGzAudUser"
+									value="@load(vm.gzAudUser)" mold="rounded" readonly="true">
+									<comboitem label="" />
+									<comboitem label="${each}"
+										forEach="${vm.cwUserList}" />
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell colspan="4" align="center">
+								<label value="请检查公司注册信息中的“个税开户状态”是否已选择。"
+									style="color:red" />
+							</cell>
+
+						</row>
+					</rows>
+					<foot>
+						<footer align="center">
+							<button label="提交" id="btSubmit"
+								onClick="@command('update',win=winCompanySet,gz=cbGzUser.value,gzaud=cbGzAudUser.value)" />
+						</footer>
+					</foot>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

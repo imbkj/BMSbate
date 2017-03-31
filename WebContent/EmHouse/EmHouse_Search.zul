@@ -1,0 +1,551 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="员工公积金 - 信息查询" id="winSearchIndex" border="normal"
+		width="100%" height="100%" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmHouse.EmHouse_SearchController')">
+		<scrollview height="100%">
+			<tablelayout columns="2" width="100%" height="100%">
+				<tablechildren rowspan="2" width="75%" height="100%">
+					<groupbox height="100%" width="100%">
+						<caption>条件检索</caption>
+						<grid height="100%">
+							<columns>
+								<column width="100px"></column>
+								<column></column>
+								<column width="100px"></column>
+								<column></column>
+							</columns>
+							<rows>
+								<row>
+									<cell>所属月份</cell>
+									<cell>
+										<combobox id="ownmonth"
+											value="@bind(vm.ecm.ownmonth)" mold="rounded"
+											model="@load(vm.ownmonthlist)">
+											<template name="model">
+												<comboitem
+													label="@load(each.ownmonth)">
+												</comboitem>
+											</template>
+										</combobox>
+									</cell>
+									<cell>办理进度</cell>
+									<cell>
+										<combobox id="progress"
+											readonly="true" value="@bind(vm.ecm.emhc_ifprogress2)"
+											mold="rounded">
+											<comboitem label=""
+												value="" />
+											<comboitem value="11"
+												label="新增(等待设立)" />
+											<comboitem value="12"
+												label="新增(设立完成)" />
+											<comboitem value="21"
+												label="调入(等待转移)" />
+											<comboitem value="22"
+												label="调入(等待启封)" />
+											<comboitem value="23"
+												label="调入(调入完成)" />
+											<comboitem value="31"
+												label="停交(等待封存)" />
+											<comboitem value="32"
+												label="停交(封存完成)" />
+											<comboitem value="41"
+												label="调基(等待调整)" />
+											<comboitem value="42"
+												label="调基(调整完成)" />
+										</combobox>
+									</cell>
+
+								</row>
+								<row>
+									<cell>开户状态</cell>
+									<cell>
+										<combobox id="ifsingle"
+											readonly="true" value="@bind(vm.ecm.emhc_single2)"
+											mold="rounded">
+											<comboitem label=""
+												value="" />
+											<comboitem value="1"
+												label="独立开户">
+											</comboitem>
+											<comboitem value="0"
+												label="中智开户">
+											</comboitem>
+
+										</combobox>
+									</cell>
+									<cell>申报状态</cell>
+									<cell>
+										<combobox id="ifdeclare"
+											readonly="true" value="@bind(vm.ecm.emhc_ifdeclare2)"
+											mold="rounded">
+											<comboitem label=""
+												value="" />
+											<comboitem value="0"
+												label="未申报">
+											</comboitem>
+											<comboitem value="2"
+												label="申报中">
+											</comboitem>
+											<comboitem value="1"
+												label="已申报">
+											</comboitem>
+											<comboitem value="3"
+												label="退回">
+												<comboitem value="6"
+													label="核查失败">
+												</comboitem>
+											</comboitem>
+										</combobox>
+									</cell>
+
+								</row>
+								<row>
+									<cell>比例</cell>
+									<cell>
+										<combobox mold="rounded"
+											readonly="true" value="@bind(vm.ecm.emhc_cpp2)"
+											model="@load(vm.ecList)">
+											<template name="model">
+												<comboitem
+													value="@load(each.cp)" label="@load(each.cpName)" />
+											</template>
+										</combobox>
+									</cell>
+									<cell>变动情况</cell>
+									<cell>
+										<combobox id="change"
+											readonly="true" value="@bind(vm.ecm.emhc_change)"
+											mold="rounded">
+											<comboitem label=""
+												value="" />
+											<comboitem label="新增"></comboitem>
+											<comboitem label="调入"></comboitem>
+											<comboitem label="停交"></comboitem>
+											<comboitem label="基数调整"></comboitem>
+
+										</combobox>
+									</cell>
+								</row>
+								<row>
+									<cell>独立开户公司</cell>
+									<cell colspan="3">
+										<hbox>
+											<combobox id="singleCompany"
+												value="@bind(vm.ecm.coba_company)" width="500px"
+												mold="rounded" autodrop="true" model="@load(vm.singleList)"
+												onChanging="@command('updateSingle',a=event)">
+												<template
+													name="model">
+													<comboitem
+														value="@load(each.cohf_houseid)"
+														label="@load(each.coba_company)">
+														[${each.coba_spell}]
+														${each.coba_company}|
+														${each.coba_client}
+													</comboitem>
+												</template>
+											</combobox>
+											<checkbox label="快速查询"
+												checked="@bind(vm.singleCheck)" />
+										</hbox>
+									</cell>
+								</row>
+								<row>
+									<cell>特殊筛选</cell>
+									<cell colspan="3">
+										<checkbox id="ifsame" />
+										特殊数据
+										<checkbox id="ifmodify" />
+										多次变更
+										<checkbox id="houseid" />
+										空公积金号
+										<checkbox id="todayAdd" />
+										今日添加
+										<checkbox id="flag" />
+										<image tooltiptext="有客服备注"
+											src="../images/hongqi.gif" />
+										<checkbox id="ifmsg" />
+										<image tooltiptext="有短信息"
+											src="../images/read.gif" />
+										<checkbox id="ifwrong" />
+										<image tooltiptext="核对有误数据"
+											src="../images/20070708132244958.gif" />
+										<checkbox id="ifchange" />
+										<image
+											src="../images/20070708132244928.gif" tooltiptext="转账户调基" />
+										转账户数据
+
+									</cell>
+
+								</row>
+								<row>
+									<cell>公司名称</cell>
+									<cell colspan="3">
+										<hbox>
+											<combobox id="company"
+												width="500px" mold="rounded" autodrop="true"
+												model="@load(vm.companyList)"
+												onChanging="@command('updatecobase',a=event)"
+												onSelect="@command('changeEmbase')">
+												<template
+													name="model">
+													<comboitem
+														value="@load(each.cid)"
+														label="@load(each.coba_shortname)">
+														[${each.coba_spell}]
+														${each.coba_company}|
+														${each.coba_client}
+													</comboitem>
+												</template>
+											</combobox>
+											<checkbox label="快速查询"
+												checked="@bind(vm.companyCheck)" />
+										</hbox>
+									</cell>
+								</row>
+								<row>
+									<cell>员工姓名</cell>
+									<cell colspan="3">
+										<hbox>
+											<combobox id="emp"
+												mold="rounded" autodrop="true"
+												onChanging="@command('updateEmbase',a=event)" width="500px"
+												model="@load(vm.empList)">
+												<template
+													name="model">
+													<comboitem
+														value="@load(each.gid)" label="@load(each.emba_name)">
+														${each.cid} |
+														${each.emba_name}
+														|
+														${each.emba_idcard}
+														|
+														${each.emhu_houseid}
+													</comboitem>
+												</template>
+											</combobox>
+											<checkbox label="快速查询"
+												checked="@bind(vm.empCheck)" />
+										</hbox>
+									</cell>
+								</row>
+								<row>
+									<cell>缴存银行</cell>
+									<cell colspan="3">
+										<combobox id="jc" mold="rounded"
+											autodrop="true" model="@load(vm.jclist)" value="@bind(vm.ecm.jc)">
+											<template name="model">
+												<comboitem label="@load(each.cohf_bankjc)" />
+											</template>
+										</combobox>
+									</cell>
+								</row>
+								<row>
+									<cell>部门</cell>
+									<cell>
+										<combobox id="dept"
+											value="@bind(vm.ecm.dep_name)" mold="rounded"
+											onChange="@command('updateclient')"
+											onChanging="@command('changeClient',a=event)">
+											<comboitem label="客户服务部"></comboitem>
+											<comboitem label="全国项目部"></comboitem>
+										</combobox>
+									</cell>
+									<cell>客服</cell>
+									<cell>
+										<combobox id="client"
+											value="@bind(vm.ecm.emhc_client)" mold="rounded"
+											model="@load(vm.clientList)">
+											<template name="model">
+												<comboitem
+													label="@load(each.log_name)">
+												</comboitem>
+											</template>
+										</combobox>
+									</cell>
+								</row>
+								<row>
+									<cell>添加人</cell>
+									<cell>
+										<combobox id="addname"
+											value="@bind(vm.ecm.emhc_addname)" mold="rounded"
+											model="@load(vm.addList)">
+											<template name="model">
+												<comboitem
+													label="@load(each.emhc_addname)">
+												</comboitem>
+											</template>
+										</combobox>
+									</cell>
+									<cell>添加时间</cell>
+									<cell>
+										<datebox id="addtime"
+											mold="rounded" />
+										<combobox width="60px"
+											id="addarea" value="@bind(vm.ecm.addtimeArea)"
+											mold="rounded">
+											<comboitem label="之前" />
+											<comboitem label="之后" />
+										</combobox>
+									</cell>
+								</row>
+								<row>
+									<cell>公积金单位编号</cell>
+									<cell>
+										<textbox id="companyid"
+											mold="rounded" value="@bind(vm.ecm.emhc_companyid)">
+										</textbox>
+									</cell>
+									<cell>申报时间</cell>
+									<cell>
+										<datebox id="declareTime"
+											mold="rounded" />
+										<combobox width="60px"
+											id="declareArea" value="@bind(vm.ecm.declaretimeArea)"
+											mold="rounded">
+											<comboitem label="之前" />
+											<comboitem label="之后" />
+										</combobox>
+									</cell>
+
+								</row>
+								<row>
+									<cell>每页行数</cell>
+									<cell>
+										<combobox mold="rounded"
+											 id="pageSize"
+											value="@bind(vm.ecm.pageSize)">
+											<comboitem label="100" />
+											<comboitem label="300" />
+											<comboitem label="500" />
+											<comboitem label="1000" />
+											<comboitem label="3000" />
+										</combobox>
+									</cell>
+									<cell>托收日</cell>
+									<cell>
+										<combobox mold="rounded"
+											readonly="true" value="@bind(vm.ecm.tsday)"
+											model="@load(vm.dateList)">
+											<template name="model">
+												<comboitem
+													label="@load(each)" value="@load(each)" />
+											</template>
+										</combobox>
+									</cell>
+
+								</row>
+
+							</rows>
+							<foot>
+								<footer align="center" span="4">
+									<button label="查询"
+										onClick="@command('submit')">
+									</button>
+								</footer>
+							</foot>
+						</grid>
+					</groupbox>
+				</tablechildren>
+
+				<tablechildren>
+					<groupbox>
+						<caption>快速检索</caption>
+						<grid>
+							<rows>
+								<row>
+									<cell></cell>
+									<cell></cell>
+								</row>
+								<row>
+									<cell rowspan="4" align="center"
+										width="50px">
+										<vbox>中</vbox>
+										<vbox>智</vbox>
+										<vbox>开</vbox>
+										<vbox>户</vbox>
+									</cell>
+									<cell>
+										新增未申报
+										<combobox
+											onChange="@command('qSearch',a='new',b=0,c=self)"
+											model="@load(vm.ecList)" width="55px">
+											<template name="model">
+												<comboitem
+													value="@load(each.cp)" label="@load(each.cpName)" />
+											</template>
+										</combobox>
+									</cell>
+								</row>
+								<row>
+									<cell>
+										启封未申报
+										<combobox
+											onChange="@command('qSearch',a='move',b=0,c=self)"
+											model="@load(vm.ecList)" width="55px">
+											<template name="model">
+												<comboitem
+													value="@load(each.cp)" label="@load(each.cpName)" />
+											</template>
+										</combobox>
+									</cell>
+								</row>
+								<row>
+									<cell>
+										停交未申报
+										<combobox
+											onChange="@command('qSearch',a='stop',b=0,c=self)"
+											model="@load(vm.ecList)" width="55px">
+											<template name="model">
+												<comboitem
+													value="@load(each.cp)" label="@load(each.cpName)" />
+											</template>
+										</combobox>
+									</cell>
+								</row>
+								<row>
+									<cell>
+										年调未申报
+										<combobox
+											onChange="@command('qSearch',a='year',b=0,c=self)"
+											model="@load(vm.ecList)" width="55px">
+											<template name="model">
+												<comboitem
+													value="@load(each.cp)" label="@load(each.cpName)" />
+											</template>
+										</combobox>
+									</cell>
+								</row>
+								<row>
+									<cell rowspan="4" align="center">
+										<vbox>独</vbox>
+										<vbox>立</vbox>
+										<vbox>开</vbox>
+										<vbox>户</vbox>
+									</cell>
+									<cell>
+										<a
+											onClick="@command('qSearch',a='new',b=1)">
+											新增未申报,比例不限
+										</a>
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<a
+											onClick="@command('qSearch',a='move',b=1)">
+											调入未申报,比例不限
+										</a>
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<a
+											onClick="@command('qSearch',a='stop',b=1)">
+											停交未申报,比例不限
+										</a>
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<a
+											onClick="@command('qSearch',a='year',b=1)">
+											年度未申报,比例不限
+										</a>
+									</cell>
+								</row>
+								<row>
+									<cell align="center">特殊</cell>
+									<cell>
+										<a
+											onClick="@command('aduitNotPass')">
+											<label>联网核查不通过人员名单[</label>
+											<label style="color:red;"
+												value="@load(vm.notpassNum)" />
+											<label>]</label>
+										</a>
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+				</tablechildren>
+				<tablechildren>
+					<groupbox>
+						<caption>数据统计</caption>
+						<grid>
+							<rows>
+								<row>
+									<cell>当月变更数</cell>
+									<cell>
+										[
+										<label style="color:red;"
+											value="@load(vm.changeNum)" />
+										]
+									</cell>
+								</row>
+								<row>
+									<cell>已处理数</cell>
+									<cell>
+										[
+										<label style="color:red;"
+											value="@load(vm.finishNum)" />
+										]
+									</cell>
+								</row>
+								<row>
+									<cell>中智大户总数</cell>
+									<cell>
+										[
+										<label style="color:red;"
+											value="@load(vm.zzNum)" />
+										]
+									</cell>
+								</row>
+
+								<row>
+									<cell>独立开户总数</cell>
+									<cell>
+										[
+										<label style="color:red;"
+											value="@load(vm.singleNum)" />
+										]
+									</cell>
+								</row>
+								<row>
+									<cell>特殊数据总数</cell>
+									<cell>
+										[
+										<label style="color:red;"
+											value="" />
+										]
+									</cell>
+								</row>
+								<row>
+									<cell>多次申报数据</cell>
+									<cell>
+										[
+										<label style="color:red;"
+											value="" />
+										]
+									</cell>
+								</row>
+								<row>
+									<cell>核对有误数据</cell>
+									<cell>
+										[
+										<label style="color:red;"
+											value="" />
+										]
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+				</tablechildren>
+			</tablelayout>
+		</scrollview>
+	</window>
+</zk>

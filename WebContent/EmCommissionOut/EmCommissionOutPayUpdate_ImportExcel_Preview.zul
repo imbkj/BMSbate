@@ -1,0 +1,32 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winPre" title="导入预览" border="normal" height="550px"
+		width="880px" closable="true" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmCommissionOut.EmCommissionOutPayUpdate_ImportExcel_PreviewController')">
+		<grid model="@load(vm.puList)" emptyMessage="暂无数据" hflex="1"
+			vflex="1" sizedByContent="true" span="true" mold="paging">
+			<columns sizable="true">
+				<column width="40px"></column>
+				<column forEach="${vm.fieldList }" align="center">
+					<label value="${each.ecpr_ecpu_fieldstr }" />
+				</column>
+			</columns>
+			<template name="model" var="puList">
+				<row
+					style="border:1px dotted #cad9ea;background-color:#f5fafe;">
+					<custom-attributes feeList="${puList.feeList }"
+						ecut_id="${vm.ecut_id }" />
+					<detail open="false" fulfill="onOpen">
+						<include
+							src="/EmCommissionOut/EmCommissionOutPayUpdate_ImportExcel_Preview_Detail.zul"
+							feeList="${feeList }" ecut_id="${ecut_id }">
+						</include>
+					</detail>
+					<cell forEach="${puList.objsList }">
+						<label value="${each }" />
+					</cell>
+				</row>
+			</template>
+		</grid>
+	</window>
+</zk>

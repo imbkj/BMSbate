@@ -1,0 +1,135 @@
+<?page title="商业保险支付通知制作" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="商业保险支付通知" border="normal"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmCommercialInsurance.CI_Insurant_Controller')">
+		<grid id="searchGird" width="100%">
+			<rows>
+				<row>
+
+					<cell width="100px">投保类型</cell>
+					<cell>
+						<combobox mold="rounded" readonly="true"
+							width="120px" value="全部" id="castsort"
+							model="@load(vm.castsortlist)">
+							<template name="model">
+								<comboitem
+									label="@load(each.ecin_castsort)"
+									value="@load(each.ecin_castsort)">
+								</comboitem>
+							</template>
+						</combobox>
+					</cell>
+					<cell width="100px">投保批次</cell>
+					<cell>
+						<combobox mold="rounded" readonly="true"
+							width="120px" value="全部" id="date_list"
+							model="@load(vm.castsortdatelist)">
+							<template name="model">
+								<comboitem
+									label="@load(each.ecin_de_date)"
+									value="@load(each.ecin_de_date)">
+								</comboitem>
+							</template>
+						</combobox>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button id="btSearch" label="查询"
+						onClick="@command('search_pay',castsort=castsort,date_list=date_list)" />
+				</footer>
+			</foot>
+		</grid>
+		<div
+			style="width:100%;height:430px;overflow-y:scroll;overflow-x:hidden;border:1px solid #bcbdbf;">
+			<grid width="100%" id="g1"
+				model="@load(vm.ci_insurant_paylist)">
+				<columns>
+					<column label="序号" align="center" width="60px" />
+					<column label="公司名称" align="center" />
+					<column label="员工姓名" align="center" />
+					<column label="投保类型" align="center" />
+					<column label="投保份数" align="center" />
+					<column label="客服代表" align="center" />
+					<column label="金额" align="center" />
+					<column label="状态" align="center" />
+					<column width="30px" align="center">
+
+					</column>
+					<column label="" align="center" visible="false" />
+					<column label="" align="center" visible="false" />
+					<column label="" align="center" visible="false" />
+					<column label="" align="center" visible="false" />
+				</columns>
+				<rows>
+					<template name="model">
+						<row>
+							<cell>
+								<label
+									value="${forEachStatus.index + 1}" />
+							</cell>
+							<cell>
+								<label value="@load(each.coba_company)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.ecin_insurant)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.ecin_castsort)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.ecin_buy_count)" />
+							</cell>
+							<cell>
+								<label value="@load(each.coba_client)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.ecin_add_money)" />
+							</cell>
+							<cell>
+								<label value="@load(each.ecin_state)" />
+							</cell>
+							<cell>
+								<checkbox value="@load(each.ecin_id)" />
+							</cell>
+							<cell visible="false">
+								<label value="@load(each.ecin_tapr_id)" />
+							</cell>
+							<cell visible="false">
+								<label value="@load(each.ecin_id)" />
+							</cell>
+							<cell visible="false">
+								<label value="@load(each.gid)" />
+							</cell>
+							<cell visible="false">
+								<label value="@load(each.cid)" />
+							</cell>
+						</row>
+					</template>
+				</rows>
+
+			</grid>
+		</div>
+		<grid>
+			<rows>
+				<row>
+					<cell align="right" width="55%">
+						<button label="制作支付通知"
+							onClick="@command('ci_insurant_pay', emco=each,gridco=g1)" />
+					</cell>
+					<cell align="right">
+						全选
+						<checkbox id="cka"
+							onClick="@command('checkall_pay',a=self.checked,b=g1)" />
+					</cell>
+				</row>
+			</rows>
+		</grid>
+	</window>
+</zk>

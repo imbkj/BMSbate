@@ -1,0 +1,121 @@
+<?page title="电子台账" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winOwnmonthList" title="电子台账" border="normal"
+		width="99%" height="99%" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoFinanceManage.Cfma_OwnmonthFinanceListController')"
+		closable="true" sizable="true">
+		<grid span="true" model="@load(vm.cfmaList)" mold="paging"
+			pageSize="30" emptyMessage="无数据" sizedByContent="true" hflex="1"
+			vflex="1">
+			<columns sizable="true">
+				<column width="35px" align="center" />
+				<column label="公司编号" align="center" sort="auto(cid)" />
+				<column label="公司名称" align="center"
+					sort="auto(coba_company)" />
+				<column label="所属月份" align="center"
+					sort="auto(ownmonth)" />
+				<column label="人事应收" align="center"
+					sort="auto(cfma_PersonnelReceivable)" />
+				<column label="财务应收" align="center"
+					sort="auto(cfma_FinanceReceivable)" />
+				<column label="本月应收" align="center"
+					sort="auto(totalReceivable)" />
+				<column label="本月实收" align="center"
+					sort="auto(totalPaidIn)" />
+				<column label="垫付金额" align="center"
+					sort="auto(totalLoanBalance)" />
+				<column label="结转金额" align="center"
+					sort="auto(totalCarryForwardEx)" />
+				<column label="差额" align="center"
+					sort="auto(totalImbalance)" />
+				<column label="客服" align="center"
+					sort="auto(coba_client)" width="70px" />
+				<column label="台账提示" align="center" width="70px" />
+				<column label="操作" align="center" width="70px" />
+			</columns>
+			<rows>
+				<template name="model">
+					<row>
+						<custom-attributes
+							cfta_id="${each.cfma_cfta_id}" ownmonth="${each.ownmonth}" />
+						<detail open="false" fulfill="onOpen"
+							height="100%">
+							<include
+								src="/CoFinanceManage/Cfma_OwnmonthFinanceDetail.zul"
+								cfta_id="${cfta_id}" ownmonth="${ownmonth}" />
+						</detail>
+						<cell>
+							<label value="@load(each.cid)" />
+						</cell>
+						<cell>
+							<label value="@load(each.coba_company)"
+								onClick="@command('viewMonthlyCompany',cid=each.cid,ownmonth=each.ownmonth)"
+								style="cursor:pointer;color:#00F;" />
+						</cell>
+						<cell>
+							<label value="@load(each.ownmonth)" />
+						</cell>
+						<cell>
+							<label
+								value="@load(each.cfma_PersonnelReceivable)" />
+						</cell>
+						<cell>
+							<label
+								value="@load(each.cfma_FinanceReceivable)" />
+						</cell>
+						<cell>
+							<label value="@load(each.totalReceivable)" />
+						</cell>
+						<cell>
+							<label value="@load(each.totalPaidIn)" />
+						</cell>
+						<cell>
+							<label value="@load(each.totalLoanBalance)" />
+						</cell>
+						<cell>
+							<label
+								value="@load(each.totalCarryForwardEx)" />
+						</cell>
+						<cell>
+							<label value="@load(each.totalImbalance)"
+								style="color:red;" />
+						</cell>
+						<cell>
+							<label value="@load(each.coba_client)" />
+						</cell>
+						<cell>
+							<image src="../images/20070708132244928.gif"
+								width="18" height="18" border="0"
+								onClick="@command('suggest',noBill=each.existsNoBill,personnelConfirm=each.existsPersonnelConfirm,financeNoConfirm=each.existsFinanceNoConfirm,pop=popMessage,com=self)"
+								style="cursor:pointer;"
+								if="${each.existsNoBill or each.existsPersonnelConfirm==1 or each.existsFinanceNoConfirm==1?true:false }" />
+						</cell>
+						<cell>
+							<menubar autodrop="true" width="50px">
+								<menu
+									image="../images/pencil-small.png">
+									<menupopup>
+										<menuitem label="账单管理"
+											onClick="@command('mothlyBillManage',cfma_id=each.cfma_id)" />
+									</menupopup>
+								</menu>
+							</menubar>
+						</cell>
+					</row>
+				</template>
+			</rows>
+		</grid>
+		<popup id="popMessage">
+			<grid model="@load(vm.message)" width="200px">
+				<rows>
+					<template name="model">
+						<row>
+							<label value="@load(each)" />
+						</row>
+					</template>
+				</rows>
+			</grid>
+		</popup>
+	</window>
+
+</zk>

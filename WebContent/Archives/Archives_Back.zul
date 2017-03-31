@@ -1,0 +1,21 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="档案业务信息退回" border="normal" width="500px" height="300px" closable="true" id="backwin"
+	apply="Controller.Archives.EmArchiveDatum_InfoController">
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell width="60px" valign="middle">退回原因</cell>
+			<cell><textbox id="remark" rows="5" width="95%"/></cell>
+		</row>
+		<row>
+			<cell width="60px" valign="middle">发送短息</cell>
+			<cell><hlayout><checkbox id="tosys"></checkbox>系统短息<checkbox id="toemail"></checkbox>电子邮件</hlayout></cell>
+		</row>
+	</rows>
+	<foot>
+		<footer align="center"><button id="backinfo">提交</button></footer>
+	</foot>
+</grid>
+</window>
+</zk>

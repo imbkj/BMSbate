@@ -1,0 +1,31 @@
+<grid width="99%" emptyMessage="无数据"
+	apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('vm') @init('Controller.CoAgency.WtAgency_ServiceCityController')"
+	model="@load(vm.serviceCityList)" mold="paging" pageSize="5">
+	<auxhead>
+		<auxheader label="服务城市" colspan="6" />
+	</auxhead>
+	<columns sizable="true">
+		<column label="编号" align="center" sort="auto(cabc_id)" />
+		<column label="地区" align="center" sort="auto(region)" />
+		<column label="省份" align="center" sort="auto(province)" />
+		<column label="城市" align="center" sort="auto(city)" />
+		<column label="是否该地区默认机构" align="center"
+			sort="auto(cabc_ifdefault)" />
+		<column label="合作情况" align="center" sort="auto(cabc_state)" />
+	</columns>
+	<rows>
+		<template name="model">
+			<row>
+				<label value="@load(each.cabc_id)" />
+				<label value="@load(each.region)" />
+				<label value="@load(each.province)" />
+				<label value="@load(each.city)" />
+				<label value="@load(each.cabc_ifdefaultStr)"
+					style="${each.cabc_ifdefault==1?'color:blue;':''}" />
+				<label value="@load(each.cabc_stateStr)"
+					style="${each.cabc_state==0?'color:red;':''}" />
+			</row>
+		</template>
+	</rows>
+</grid>

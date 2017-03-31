@@ -1,0 +1,67 @@
+<!--
+	创建人：林少斌
+	创建时间：2014-8-6
+	用途：业务交接页面材料显示页
+-->
+<grid id="${arg.id}" apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('vm') @init('Controller.DocumentsInfo.DocumentsInfo_HOPageListController')"
+	emptyMessage="无数据" model="@load(vm.docList)" height="${arg.dHeight}"
+	width="${arg.dWidth}">
+	<columns>
+		<column width="35px">
+			<checkbox
+				onClick="@command('gdallselect',grid=docGrid,check=self.checked)" />
+		</column>
+		<column label=" 内容" align="center" sort="auto(doin_content)" />
+		<column width="50px" label=" 份数" align="center" />
+		<column label="是否有上传文件" align="center" sort="auto(pupi_state)" />
+		<column label=" 上一手交接人" align="center" />
+		<column label=" 操作" align="center" />
+	</columns>
+	<rows>
+		<template name="model">
+			<row style="color:#666;">
+				<cell>
+					<checkbox
+						checked="${each.dsin_ifsubmit==vm.ifSubmit?  true:false}"
+						onClick="@command('onclickck',ck=self)"
+						value="${each.dsin_ifsubmit}" />
+				</cell>
+				<cell>
+					<hbox>
+						<label value="@load(each.doin_content)" />
+						<label style="color:red;" value="(*)"
+							if="${each.dire_ifhaveto==1}" />
+					</hbox>
+				</cell>
+				<cell>
+					<intbox width="30px" value="@load(each.dsin_count)"
+						mold="rounded" readonly="true" />
+				</cell>
+				<cell>
+					<label value="${each.pupi_state!=1? '无':''}" />
+					<label value="${each.pupi_state==1? '已有上传文件':''}"
+						style="cursor:pointer;" onClick="@command('ShowDoc')" />
+				</cell>
+				<cell>
+					<hbox>
+						<combobox model="@load(vm.handoverList)" value="@load(vm.lh_people)"
+							width="80%" visible="${each.pupi_state==1?  false:true}"
+							mold="rounded">
+							<template name="model">
+								<comboitem label="@load(each.log_name)" />
+							</template>
+						</combobox>
+						<image src="../images/130.gif"
+							style="cursor:pointer;"
+							onClick="@command('copylp',grid=self.parent.parent.parent.parent.parent,rowIndex=forEachStatus.index)" />
+					</hbox>
+				</cell>
+				<cell>
+					<label style="cursor:pointer;" value="记录"
+						onClick="@command('ShowDocLog',dsin_id=each.dsin_id)" />
+				</cell>
+			</row>
+		</template>
+	</rows>
+</grid>

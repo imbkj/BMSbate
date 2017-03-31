@@ -1,0 +1,79 @@
+<!-- 
+	创建人：潘浪宇
+	创建时间：2013-10-18
+	用途：报价单-报价单查询
+-->
+
+<?page contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="报价单查询" border="normal" height="100%"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoQuotation.CoQuotation_List1Controller')">
+		<grid emptyMessage="没有潜在客户信息" height="100%"
+			model="@load(vm.listmodel)" mold="paging">
+			<auxhead sclass="category-center">
+				<auxheader label="潜在客户列表" colspan="9"></auxheader>
+			</auxhead>
+			<columns>
+				<column width="40px" align="center"></column>
+				<column width="40px" align="center">序号</column>
+				<column align="center">
+					<vlayout>
+						公司名称
+						<textbox value="@bind(vm.companyName)"
+							width="80%" onChange="@command('searchmenu')" instant="true"
+							mold="rounded" />
+					</vlayout>
+				</column>
+				<column align="center">客户规模</column>
+				<column align="center">
+					报价人
+					<separator></separator>
+					<combobox value="@bind(vm.addname)" mold="rounded"
+						width="60%" onChange="@command('searchmenu')" instant="true"
+						model="@load(vm.addnamelist)">
+						<template name="model">
+							<comboitem label="@load(each)" />
+						</template>
+					</combobox>
+				</column>
+				<column align="center">添加时间</column>
+				<column align="center">客户要求服务内容</column>
+				<column align="center">最终报价</column>
+				<column align="center">
+					成功率
+					<separator></separator>
+					<combobox readonly="true" value="@bind(vm.level)"
+						width="60%" mold="rounded" onChange="@command('searchmenu')"
+						instant="true">
+						<comboitem label="" />
+						<comboitem label="较高" />
+						<comboitem label="一般" />
+						<comboitem label="较低" />
+					</combobox>
+				</column>
+			</columns>
+			<rows>
+				<template name="model">
+					<row height="35px">
+						<custom-attributes cola_id="${each.cola_id }" />
+						<detail open="false" fulfill="onOpen"
+							visible="${each.quonum>0?true:false }">
+							<include
+								src="/CoQuotation/CoQuotationDetail_SelectList.zul"
+								cola_id="${cola_id}" />
+						</detail>
+						<label value="${forEachStatus.index+1 }" />
+						<label value="@load(each.cola_company)" />
+						<label value="@load(each.cola_clientsize)" />
+						<label value="@load(each.cola_addname)" />
+						<label value="@load(each.cola_addtime)" />
+						<label value="@load(each.cola_servicecontent)" />
+						<label value="@load(each.cola_company)" />
+						<label value="@load(each.cola_successname)" />
+					</row>
+				</template>
+			</rows>
+		</grid>
+	</window>
+</zk>

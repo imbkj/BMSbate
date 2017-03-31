@@ -1,0 +1,177 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<style src="/css/style.css"></style>
+	<window title="居住证费用管理" border="normal"
+		apply="org.zkoss.bind.BindComposer" vflex="1"
+		viewModel="@id('vm') @init('Controller.EmResidencePermit.Emrp_FeeManagerController')">
+		<borderlayout>
+			<north border="0" title="检索" collapsible="true" flex="true" open="false"
+				style="padding-bottom:10px;">
+				<grid>
+					<rows>
+						<row>
+							<cell width="80px">所属月份</cell>
+							<cell><monthbox format="yyyyMM" id="ownmonth"></monthbox></cell>
+							<cell width="80px">公司简称</cell>
+							<cell><textbox width="95%" value="@bind(vm.model.coba_shortname)"></textbox></cell>
+							<cell width="80px">员工姓名</cell>
+							<cell><textbox value="@bind(vm.model.emba_name)"></textbox></cell>
+							<cell width="80px">客服</cell>
+							<cell>
+								<combobox model="@load(vm.clientlist)" value="@bind(vm.model.coba_client)">
+									<template name="model">
+										<comboitem label="@load(each)"/>
+									</template>
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>付款性质</cell>
+							<cell>
+								<combobox value="@bind(vm.model.erpi_payment_kind)">
+									<comboitem label=""/>
+									<comboitem label="公司付"/>
+									<comboitem label="个人付"/>
+									<comboitem label="随付款"/>
+									<comboitem label="中智付"/>
+								</combobox>
+							</cell>
+							<cell>付款状态</cell>
+							<cell>
+								<combobox value="@bind(vm.model.erpi_payment_state)">
+									<comboitem label=""/>
+									<comboitem label="已付"/>
+									<comboitem label="未付"/>
+								</combobox>
+							</cell>
+							<cell>费用明细单号</cell>
+							<cell><textbox value="@bind(vm.model.erpi_cl_number)"></textbox></cell>
+							<cell>费用状态</cell>
+							<cell>
+								<combobox value="@bind(vm.model.feestate)">
+									<comboitem label=""/>
+									<comboitem label="未借款"/>
+									<comboitem label="已借款"/>
+									<comboitem label="已清帐"/>
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>借款申请人</cell>
+							<cell><textbox value="@bind(vm.model.erpi_wd_applicant)"></textbox></cell>
+							<cell>借款日期</cell>
+							<cell><datebox value="@bind(vm.erpi_wd_loan_date)"></datebox></cell>
+							<cell>交发票日期</cell>
+							<cell colspan="3"><datebox value="@bind(vm.erpi_ri_date)"></datebox></cell>
+						</row>
+					</rows>
+					<foot>
+						<footer align="center">
+							<button onClick="@command('search',ownmonth=ownmonth.value)">查询</button>
+							<button onClick="@command('Export',gd=gd)">生成费用明细单</button>
+						</footer>
+					</foot>
+				</grid>
+			</north>
+			<center>
+				<grid vflex="1" model="@load(vm.list)" mold="paging" id="gd"
+					pageSize="100">
+					<columns>
+						<column label="序号" width="40px" align="center" />
+						<column label="公司简称" align="center" />
+						<column label="所属月份" align="center" />
+						<column label="员工姓名" align="center" />
+						<column label="客服" align="center" />
+						<column label="付款性质" align="center" />
+						<column label="金额" align="center" />
+						<column label="付款状态" align="center" />
+						<column label="费用明细单号" align="center" />
+						<column label="借款申请人" align="center" />
+						<column label="借款日期" align="center" />
+						<column label="交发票日期" align="center" />
+						<column label="费用状态" align="center" />
+						<column align="center" width="60px">
+							<checkbox onCheck="@command('checkall',gd=gd,ck=self)"></checkbox>
+						</column>
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<cell>
+									<label
+										value="@load(forEachStatus.index + 1)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.coba_shortname)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ownmonth)">
+									</label>
+								</cell>
+								<cell>
+									<a onClick="@command('detail',each=each,role='qd')">
+									<label
+										value="@load(each.emba_name)">
+									</label>
+								</a>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.coba_client)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.erpi_payment_kind)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.erpi_fee)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.erpi_payment_state)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.erpi_cl_number)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.erpi_wd_applicant)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.erpi_wd_loan_date)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.erpi_ri_date)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.feestate)">
+									</label>
+								</cell>
+								<cell>
+									<checkbox value="@load(each)" onCheck="@command('checkck',gd=gd,ck=self)"></checkbox>
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

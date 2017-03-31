@@ -1,0 +1,137 @@
+<!-- 
+	创建人：潘浪宇
+	创建时间：2013-10-18
+	用途：报价单详情
+-->
+<?page contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="报价单详情-产品修改" border="normal" width="1200px"
+		closable="true" id="w1" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoQuotation.CoQuotationInfoSelectController')">
+		<grid>
+			<rows>
+				<row>
+					<cell width="100px">
+						<label value="补充协议：" />
+					</cell>
+					<cell align="left">
+						<textbox mold="rounded" rows="1" width="200px"
+							readonly="true" value="@load(vm.filename)" />
+						<button label="浏览..."
+							upload="true,multiple=true" onUpload="@command('browse')" />
+					</cell>
+				</row>
+			</rows>
+		</grid>
+		<grid model="@load(vm.coofferinfoList)" emptyMessage="暂无数据"
+			id="g1" width="100%" span="true">
+			<columns sizable="true">
+				<column label="序号" width="30px"></column>
+				<column label="产品名称"></column>
+				<column label="收费金额/收费单位"></column>
+				<column label="产品类型"></column>
+				<column label="城市/机构"></column>
+				<column label="享受方式"></column>
+				<column label="份数"></column>
+				<column label="描述"></column>
+				<column label="备注"></column>
+				<column label="生效时间"></column>
+				<column label="终止时间"></column>
+				<column label="coco_id" visible="false"></column>
+				<column label="coli_id" visible="false"></column>
+			</columns>
+			<template name="model">
+				<row>
+					<cell>
+						<label value="${forEachStatus.index+1 }" />
+					</cell>
+					<cell>
+						<label value="@load(each.coli_name)" />
+					</cell>
+					<cell if="${each.coli_group_count ne 0 }"
+						rowspan="${each.coli_group_count }">
+							<textbox value="@load(each.coli_fee)"
+								width="40px" />
+					</cell>
+					<cell>
+						<label value="@load(each.coli_pclass)" />
+					</cell>
+					<cell>
+						<hbox if="${not empty each.city }">
+							<label value="@load(each.city)" />
+							/
+							<label value="@load(each.coab_name)" />
+						</hbox>
+					</cell>
+					<cell>
+						<label value="@load(each.coli_standard)" />
+					</cell>
+					<cell>
+						<hbox if="${each.coli_pclass=='商业保险' }">
+							<label value="@load(each.coli_amount)" />
+							份
+						</hbox>
+					</cell>
+					<cell>
+						<div
+							style="cursor:pointer;overflow:hidden;-ms-text-overflow: ellipsis;-o-text-overflow: ellipsis;"
+							tooltip="content_${each.coli_id },position=after_end">
+							<label
+								style="white-space: nowrap;text-overflow:ellipsis;cursor:pointer"
+								value="@load(each.coli_content)">
+							</label>
+							<popup id="content_${each.coli_id }"
+								width="200px">
+								<label
+									value="@load(each.coli_content)">
+								</label>
+							</popup>
+						</div>
+						</cell>
+						<cell>
+						<div
+							tooltip="remark_${each.coli_id },position=after_pointer">
+							<label
+								style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;
+									cursor:pointer"
+								value="@load(each.coli_remark)">
+							</label>
+							<popup id="remark_${each.coli_id }"
+								width="200px">
+								<label
+									value="@load(each.coli_remark)">
+								</label>
+							</popup>
+						</div>
+					</cell>
+					<cell>
+						<monthbox width="100px" mold="rounded"
+							format="yyyyMM" />
+					</cell>
+					<cell>
+						<monthbox width="100px" mold="rounded"
+							format="yyyyMM" />
+					</cell>
+					<cell>
+						<label value="@load(each.coli_coco_id)"
+							visible="false" />
+					</cell>
+					<cell>
+						<label value="@load(each.coli_id)"
+							visible="false" />
+					</cell>
+				</row>
+			</template>
+		</grid>
+		<grid>
+			<rows>
+				<row>
+					<cell colspan="4" align="center">
+						<button label="提交"
+							onClick="@command('upload', gridco=g1,w1=w1)" />
+					</cell>
+				</row>
+			</rows>
+		</grid>
+	</window>
+</zk>

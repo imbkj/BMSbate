@@ -1,0 +1,49 @@
+<?page title="商业保险理赔处理" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="商业保险理赔处理" border="normal" width="55%"
+		apply="org.zkoss.bind.BindComposer" sizable="true"
+		viewModel="@id('vm') @init('Controller.EmCommercialInsurance.CI_InsurantClaim_Controller')"
+		closable="true">
+		<label id="eccl_id" value="${arg.daid}" visible="false" />
+		<label id="eccl_tapr_id" value="${arg.id}" visible="false" />
+		<groupbox title="交接信息" mold="3d">
+			<grid width="100%" id="g3">
+				<rows>
+					<row>
+						<grid width="100%">
+							<rows>
+								<row>
+									<cell>交保险公司时间：</cell>
+									<cell>
+										<datebox width="130px"
+											readonly="true" mold="rounded" format="yyyy-MM-dd"
+											id="bx_date" />
+									</cell>
+								</row>
+								<row>
+									<cell>保险公司签收人：</cell>
+									<cell>
+										<textbox mold="rounded"
+											id="bx_name" />
+									</cell>
+								</row>
+
+							</rows>
+						</grid>
+					</row>
+				</rows>
+			</grid>
+		</groupbox>
+		<grid width="100%">
+			<rows>
+				<row>
+					<cell colspan="5" align="center">
+						<button label="提交"
+							onClick="@command('ci_claim_waitup', emco=each,eccl_id=eccl_id,eccl_tapr_id=eccl_tapr_id,bx_date=bx_date,bx_name=bx_name)" />
+					</cell>
+				</row>
+
+			</rows>
+		</grid>
+	</window>
+</zk>

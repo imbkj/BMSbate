@@ -1,0 +1,288 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+
+<zk>
+	<style src="/css/style.css"></style>
+	<window title="员工列表查询" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmSheBao.Emsc_backlistyfzxContorller')"
+		border="normal" sizable="true" height="100%" width="100%">
+		<borderlayout>
+			<north border="0" title="检索" collapsible="true"
+				open="true">
+				<grid>
+					<rows>
+						<row>
+
+							所属月份 :
+							<cell>
+
+								<combobox mold="rounded" readonly="true"
+									value="@bind(vm.ownmonth)" model="@load(vm.ownmonthList)">
+									<template name="model">
+										<comboitem label="@load(each)" />
+									</template>
+								</combobox>
+							</cell>
+							客服代表：
+							<cell>
+								<combobox id="sqrcom"
+									style="padding-right:5px;" model="@load(vm.sqrlist)"
+									value="@bind(vm.sqrname)" mold="rounded">
+									<template name="model">
+										<comboitem
+											label="@load(each.log_name)" />
+									</template>
+								</combobox>
+							</cell>
+							公司查询：
+							<cell>
+
+								<textbox value="@bind(vm.cobasestring)"
+									popup="pop_coof_cobase">
+								</textbox>
+
+								<popup id="pop_coof_cobase">
+									可输入拼音/CID/公司简称 查询
+								</popup>
+							</cell>
+						</row>
+
+						<row>
+
+							员工查询：
+							<cell>
+
+
+								<combobox id="combo" autodrop="true"
+									buttonVisible="false" onChange="@command('search')"
+									onOK="@command('search')" value="@bind(vm.strwhere)"
+									mold="rounded" popup="pop_coof_name" />
+								<zscript><![CDATA[
+	/*Dictionary.getDictionary() returns a String[] containing the dictionary words*/
+	ListModel dictModel = new SimpleListModel(
+			bll.Embase.EmbaseListBll.searchembaselists());
+	combo.setModel(dictModel);
+]]></zscript>
+
+								<popup id="pop_coof_name">
+									可输入拼音/GID/CID/手机号码/员工拼音 公司拼音 查询
+								</popup>
+
+							</cell>
+
+
+							操作状态：
+							<cell>
+
+
+								<combobox mold="rounded" readonly="true"
+									value="@bind(vm.statestring)">
+									<comboitem label="" />
+									<comboitem label="未处理" />
+									<comboitem label="已申报" />
+									<comboitem label="退回" />
+
+								</combobox>
+							</cell>
+							联系方式：
+							<cell>
+
+
+								<combobox mold="rounded" readonly="true"
+									value="@bind(vm.lxstring)">
+									<comboitem label="" />
+									<comboitem label="员工本人" />
+									<comboitem label="指定联系人" />
+									<comboitem label="内部客服" />
+
+								</combobox>
+							</cell>
+						</row>
+
+						<row>
+
+
+							联系状态:
+							<cell>
+
+								<combobox mold="rounded" readonly="true"
+									value="@bind(vm.lxstatestring)">
+									<comboitem label="" />
+									<comboitem label="未联系" />
+
+									<comboitem label="部分确认" />
+									<comboitem label="联系完成" />
+
+
+								</combobox>
+							</cell>
+
+							入职网状态:
+							<cell>
+
+								<combobox mold="rounded" readonly="true"
+									value="@bind(vm.lxwebstatestr)">
+									<comboitem label="" />
+									<comboitem label="未创建" />
+									<comboitem label="未更新" />
+									<comboitem label="部分更新" />
+									<comboitem label="已更新" />
+
+								</combobox>
+							</cell>
+
+							材料状态：
+							<cell>
+
+								<combobox mold="rounded" readonly="true"
+									value="@bind(vm.clstatestring)">
+									<comboitem label="" />
+									<comboitem label="未提交" />
+									<comboitem label="部分提交" />
+									<comboitem label="资料齐全" />
+
+								</combobox>
+							</cell>
+
+						</row>
+
+
+					</rows>
+					<foot>
+						<footer align="center">
+							<button id="btSearch" label="综合检索"
+								onClick="@command('search')" />
+						</footer>
+					</foot>
+				</grid>
+			</north>
+			<center>
+
+				<grid model="@load(vm.embaselist)" id="gridwin"
+					height="100%" width="100%" emptyMessage="暂无数据" mold="paging"
+					pageSize="30">
+					<columns style="cursor:pointer">
+						<column label="序号" hflex="1" align="center" />
+						<column label="所属月份" hflex="2" align="center"
+							style="cursor:pointer" sort="auto(cid)" />
+						<column label="公司编号" hflex="2" align="center"
+							sort="auto(cid)" />
+						<column label="公司简称" hflex="5" align="center"
+							sort="auto(coba_shortname)" />
+						<column label="客服代表" hflex="2" align="center"
+							sort="auto(coba_client)" />
+						<column label="员工编号" hflex="2" align="center"
+							sort="auto(gid)" />
+						<column label="姓名" hflex="2" align="center"
+							sort=" " />
+<!-- 						<column label="任务单提交日期" hflex="4" align="center" -->
+<!-- 							sort="auto(tali_addtime)" /> -->
+<!-- 						<column label="操作状态" hflex="3" align="center" -->
+<!-- 							sort=" " /> -->
+<!-- 						<column label="联系状态" hflex="2" align="center" -->
+<!-- 							sort=" " /> -->
+<!-- 						<column label="联系方式" hflex="2" align="center" -->
+<!-- 							sort=" " /> -->
+<!-- 						<column label="入职网状态" hflex="3" align="center" -->
+<!-- 							sort=" " /> -->
+<!-- 						<column label="材料状态" hflex="3" align="center" -->
+<!-- 							sort=" " /> -->
+<!-- 						<column label="备注" hflex="4" align="center" -->
+<!-- 							sort=" " /> -->
+						<column label="业务操作" hflex="6" align="center"
+							sort=" " />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<label
+									value="@load(forEachStatus.index + 1)" />
+								<label value="@load(each.ownmonth)" />
+								<label value="@load(each.cid)" />
+								<label
+									value="@load(each.coba_shortname)" />
+								<label value="@load(each.coba_client)" />
+								<label value="@load(each.gid)" />
+								<label value="@load(each.emba_name)" />
+								<label value="@load(each.tali_addtime)" />
+								<label
+									value="@load(each.emba_statestr)" />
+								<!-- 								<label value="@load(each.emzt_contactstatestr)" /> -->
+
+								<combobox
+									onChange="@command('changestate',type=1,id=each.gid,state=self)"
+									readonly="true" value="@load(each.emzt_contactstatestr)">
+									<comboitem label="未联系" />
+									<comboitem label="部分确认" />
+									<comboitem label="联系完成" />
+
+								</combobox>
+								<label style="cursor:pointer"
+									value="@load(each.cosp_enty_caliname)"
+									onClick="@command('linkinfo',cid=each.cid,val=self.value)" />
+								<label
+									value="@load(each.emzt_contactstatewebstr)" />
+								<!-- 								<label value="@load(each.emzt_datastatestr)" /> -->
+
+								<combobox
+									onChange="@command('changestate',type=2,id=each.gid,state=self)"
+									readonly="true" value="@load(each.emzt_datastatestr)">
+
+									<comboitem label="未提交" />
+									<comboitem label="部分提交" />
+									<comboitem label="提交完成" />
+
+								</combobox>
+
+
+								<!-- 								<label value="@load(each.emzt_r_record)" /> -->
+
+								<label value="备注" />
+
+
+
+								<cell>
+									<hlayout>
+
+										<!-- 										<a   -->
+										<!-- 											onClick="@command('contentinfo',a=each)"> -->
+										<!-- 											<label value="联系员工" /> -->
+										<!-- 										</a> -->
+
+										<a if="${each.emba_state==5}"
+											onClick="@command('embasein',a=each)">
+											<label value="入职" />
+										</a>
+
+										<a
+											if="${each.emzt_contactstateweb==0}"
+											onClick="@command('embaseinonly',a=each)">
+											<label value="入职网" />
+										</a>
+
+										<a
+											if="${each.emzt_contactstateweb==2}"
+											onClick="@command('embaseindr',a=each)">
+											<label value="导入信息" />
+										</a>
+ 
+										<a if="${each.emzt_contactstateweb==3}"
+											onClick="@command('embaseindr',a=each)">
+											<label value="导入信息" />
+										</a>
+
+
+
+
+
+									</hlayout>
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+
+			</center>
+
+		</borderlayout>
+	</window>
+</zk>

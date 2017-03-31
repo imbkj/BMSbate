@@ -1,0 +1,48 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<grid width="98%" id="g4" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmBaseCompact.EmBaseCompact_BaseinfoController')"
+		model="@load(vm.emcompact_chlist)">
+		<columns>
+			<column label="合同起始时间" align="center" />
+			<column label="合同到期时间" align="center" />
+			<column label="合同期限" align="center" />
+			<column label="签收时间" align="center" />
+			<column label="归档时间" align="center" />
+			<column label="合同类型" align="center" />
+			<column label="合同状态" align="center" />
+			<column label="操作" align="center" />
+		</columns>
+		<rows>
+			<template name="model">
+				<row>
+					<cell>
+						<label value="@load(each.all_t1)" />
+					</cell>
+					<cell>
+						<label value="@load(each.all_t2)" />
+					</cell>
+					<cell>
+						<label value="@load(each.all_t3)" />
+					</cell>
+					<cell>
+						<label value="@load(each.all_t4)" />
+					</cell>
+					<cell>
+						<label value="@load(each.all_t5)" />
+					</cell>
+					<cell>
+						<label value="@load(each.all_t6)" />
+					</cell>
+					<cell>
+						<label value="@load(each.all_t7)" />
+					</cell>
+					<cell>
+						<label style="cursor:pointer;color:#03F" 
+							onClick="@command('emcompact_check', emco=each)" value="合同查看" if="${each.all_t7=='合同历史数据'||each.all_t6=='解除'||each.all_t6=='终止'?false:true}" />
+					</cell>
+				</row>
+			</template>
+		</rows>
+	</grid>
+</zk>

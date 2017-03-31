@@ -1,0 +1,38 @@
+<?page title="终止任务单" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winStopTask" title="终止任务单1" border="normal"
+		closable="true" width="700px" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmCommercialInsurance.Task_StopTaskController')" sizable="true">
+		<grid width="100%">
+			<rows>
+				<row>
+					<cell width="100px">
+						<label value="任务单编号：" />
+					</cell>
+					<cell width="120px">
+						<label value="@load(vm.tali_id)" />
+					</cell>
+					<cell width="100px">
+						<label value="任务单名称：" />
+					</cell>
+					<cell>
+						<label value="@load(vm.tali_name)" />
+					</cell>
+				</row>
+				<row>
+					<cell width="15%" style="color:#666;">终止原因：</cell>
+					<cell colspan="3">
+						<textbox rows="5" value="@bind(vm.remark)"
+							width="80%" mold="rounded" constraint="no empty:请填写终止原因。" />
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button label="提交"
+						onClick="@command('stopTask',win=winStopTask)" />
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

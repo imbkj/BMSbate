@@ -1,0 +1,8 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="导出体检介绍信" border="normal" width="80%" height="80%" closable="true">
+	<include
+		src="../EmBodyCheck/Embc_OutDoc.jsp?id=${arg.model.ebcl_id}">
+	</include>
+</window>
+</zk>

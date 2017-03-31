@@ -1,0 +1,84 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="员工活动——供应商详细信息" border="normal" width="800px" height="500px" closable="true"
+apply="org.zkoss.bind.BindComposer" id="winedit"
+	viewModel="@id('vm') @init('Controller.EmBenefit.EmActy_SupplierInfoEditController')"
+>
+<scrollview vflex="1">
+<groupbox  open="true" title="供应商基本信息" style="margin-bottom:20px;">
+<grid>
+	<rows>
+		<row>
+			<cell width="100px">供应商名称</cell>
+			<cell><textbox id="supname" value="${arg.model.supp_name }" mold="rounded" readonly="true"></textbox></cell>
+			<cell width="100px">供应商网址</cell>
+			<cell><textbox id="website" value="${arg.model.supp_website }" mold="rounded" readonly="true"></textbox></cell>
+		</row>
+		<row>
+			<cell>供应商地址</cell>
+			<cell colspan="3"><textbox width="80%" id="address" value="${arg.model.supp_address}" mold="rounded" readonly="true"></textbox></cell>
+		</row>
+		<row>
+			<cell>备注</cell>
+			<cell colspan="3"><textbox width="80%" id="remark" rows="3" value="${arg.model.supp_remark}" mold="rounded" readonly="true"></textbox></cell>
+		</row>
+	</rows>
+</grid>
+</groupbox>
+<groupbox open="true" title="联系人信息" style="margin-bottom:20px;">
+<grid emptyMessage="没有联系人信息" model="@load(vm.esm.manList)" id="congd">
+	<columns>
+		<column label="序号" width="40px" align="center"/>
+		<column label="姓名" align="center"/>
+		<column label="电话号码" align="center"/>
+		<column label="手机号码" align="center"/>
+		<column label="电子邮箱" align="center"/>
+		<column label="地址" align="center"/>
+		<column label="备注" align="center"/>
+		<column label="状态" align="center" width="50px"/>
+	</columns>
+	<rows>
+	<template name="model">
+		<row>
+			<cell><label value="${forEachStatus.index+1 }"></label></cell>
+			<cell><label value="@load(each.coct_name)"></label></cell>
+			<cell><label value="@load(each.coct_phone)"></label></cell>
+			<cell><label value="@load(each.coct_mobile)"></label></cell>
+			<cell><label value="@load(each.coct_Email)"></label></cell>
+			<cell><label value="@load(each.coct_address)" width="90%"></label></cell>
+			<cell><label value="@load(each.coct_remark)" width="90%"></label></cell>
+			<cell><label value="${each.coct_state==1?'有效':'无效' }"></label></cell>
+		</row>
+		</template>
+	</rows>
+</grid>
+</groupbox>
+<groupbox open="true" title="报价信息">
+<grid emptyMessage="没有报价信息" model="@load(vm.esm.productList)" id="progd">
+	<columns>
+		<column label="序号" width="40px" align="center"/>
+		<column label="产品名称" align="center"/>
+		<column label="原价" align="center"/>
+		<column label="折扣价" align="center"/>
+		<column label="折扣" align="center"/>
+		<column label="备注" align="center"/>
+		<column label="状态" align="center" width="50px"/>
+	</columns>
+	<rows>
+	<template name="model">
+		<row>
+			<cell><label value="${forEachStatus.index+1 }"></label></cell>
+			<cell><label value="@load(each.prod_name)"></label></cell>
+			<cell><label value="@load(each.prod_price)"></label></cell>
+			<cell><label value="@load(each.prod_discountprice)"></label></cell>
+			<cell><label value="@load(each.prod_discount)"></label></cell>
+			<cell><label value="@load(each.prod_totalnum)"></label></cell>
+			<cell><label value="${each.prod_state==1?'有效':'无效' }" width="90%"></label></cell>
+		</row>
+	</template>
+	</rows>
+</grid>
+</groupbox>
+</scrollview>
+</window>
+</zk>

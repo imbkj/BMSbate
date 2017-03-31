@@ -1,0 +1,95 @@
+<!--
+	创建人：林少斌
+	创建时间：2014-4-9
+	用途：修改员工工资银行信息页面
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winUpBank" title="薪酬管理 -- 修改员工工资银行信息页面" border="normal" width="70%"
+		closable="true" sizable="true" height="60%"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmSalary.EmSalary_UpBankInfoController')">
+		<grid width="100%" height="100%">
+			<rows>
+				<row>
+					<cell align="left" width="15%">
+						<label value="公司简称：" />
+					</cell>
+					<cell align="left" width="35%">
+						<textbox width="80%" mold="rounded"
+							value="@load(vm.esdaM.coba_shortname)" readonly="true" />
+					</cell>
+					<cell align="left" width="15%">
+						<label value="公司编号：" />
+					</cell>
+					<cell align="left" width="35%">
+						<textbox width="80%" mold="rounded"
+							value="@load(vm.esdaM.cid)" readonly="true" />
+					</cell>
+				</row>
+				<row>
+					<cell align="left">
+						<label value="员工姓名：" />
+					</cell>
+					<cell align="left">
+						<textbox width="80%" mold="rounded"
+							value="@load(vm.esdaM.emba_name)" readonly="true" />
+					</cell>
+					<cell align="left">
+						<label value="员工编号：" />
+					</cell>
+					<cell align="left">
+						<textbox width="80%" mold="rounded"
+							value="@load(vm.esdaM.gid)" readonly="true" />
+					</cell>
+				</row>
+				<row>
+					<cell align="left">
+						<label value="银行账户名：" />
+					</cell>
+					<cell align="left">
+						<textbox id="baname" width="80%" mold="rounded" value="@load(vm.embaM.esda_ba_name)" />
+					</cell>
+					<cell align="left">
+					</cell>
+					<cell align="left">
+					</cell>
+				</row>
+				<row>
+					<cell align="left">
+						<label value="工资银行：" />
+					</cell>
+					<cell align="left">
+						<textbox id="gzbank" width="80%" mold="rounded" value="@load(vm.embaM.emba_gz_bank)" />
+					</cell>
+					<cell align="left">
+						<label value="工资银行账号：" />
+					</cell>
+					<cell align="left">
+						<textbox id="gzbankacc" width="80%" mold="rounded" value="@load(vm.embaM.emba_gz_account)" />
+					</cell>
+				</row>
+				<row>
+					<cell align="left">
+						<label value="报销银行：" />
+					</cell>
+					<cell align="left">
+						<textbox id="wfbank" width="80%" mold="rounded" value="@load(vm.embaM.emba_writeoff_bank)" />
+					</cell>
+					<cell align="left">
+						<label value="报销银行账号：" />
+					</cell>
+					<cell align="left">
+						<textbox id="wfbankacc" width="80%" mold="rounded" value="@load(vm.embaM.emba_writeoff_account)" />
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button label="提交" id="btSubmit"
+						onClick="@command('submit',win=winUpBank,gzbank=gzbank,gzbankacc=gzbankacc,wfbank=wfbank,wfbankacc=wfbankacc,baname=baname)" />
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

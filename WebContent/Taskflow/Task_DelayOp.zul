@@ -1,0 +1,43 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winDalayOp" title="任务单暂缓处理" border="normal"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.Taskflow.Task_DalayOpController')"
+		width="700px" sizable="true" closable="true" hflex="1">
+		<grid>
+			<rows>
+				<row>
+					<cell width="80px">任务单名称：</cell>
+					<cell>
+						<label value="@load(vm.tali_name)" />
+					</cell>
+				</row>
+				<row>
+					<cell width="80px">节点：</cell>
+					<cell>
+						<label value="@load(vm.wfno_name)" />
+					</cell>
+				</row>
+				<row>
+					<cell>操作人：</cell>
+					<cell>
+						<label value="@load(vm.username)" />
+					</cell>
+				</row>
+				<row>
+					<cell>暂缓原因：</cell>
+					<cell>
+						<textbox rows="5" width="70%"
+							value="@bind(vm.reason)" />
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button label="提交" onClick="@command('addDalay',win=winDalayOp)" />
+				</footer>
+			</foot>
+
+		</grid>
+	</window>
+</zk>

@@ -1,0 +1,156 @@
+<?page title="员工就业登记处理(后道)" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="员工就业登记处理(后道)" border="normal" width="100%"
+		height="100%" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmReg.EmReg_hdOperateListController')">
+		<borderlayout>
+			<north title="操作" collapsible="true" open="false">
+				<hbox width="100%" height="100%" pack="center"
+					align="center">
+					<button label="批量状态变更" disabled="@load(vm.opsDis)"
+						onClick="@command('openwins',set=ltb.selectedItems)">
+					</button>
+					<button label="批量生成上传文件"
+						onClick="@command('ExportExcel',set=ltb.selectedItems)">
+					</button>
+				</hbox>
+			</north>
+			<center>
+				<listbox id="ltb" hflex="1" vflex="1"
+					multiple="@load(vm.mult)" emptyMessage="暂无数据" checkmark="true"
+					model="@load(vm.semregList)" mold="paging">
+					<listhead>
+						<listheader align="center" width="40px"></listheader>
+						<listheader align="center" label="公司编号">
+							<separator></separator>
+							<textbox width="50%" mold="rounded"
+								instant="true" value="@bind(vm.cid)"
+								onChange="@command('search')" />
+						</listheader>
+						<listheader align="center" label="公司简称">
+							<separator></separator>
+							<textbox width="90%" mold="rounded"
+								value="@bind(vm.shortname)" onChange="@command('search')" />
+						</listheader>
+						<listheader align="center" label="员工编号">
+							<separator></separator>
+							<textbox width="90%" mold="rounded"
+								value="@bind(vm.gid)" onChange="@command('search')" />
+						</listheader>
+						<listheader align="center" label="姓名">
+							<separator></separator>
+							<textbox width="90%" mold="rounded"
+								value="@bind(vm.name)" onChange="@command('search')" />
+						</listheader>
+						<listheader align="center" label="是否深户">
+							<separator></separator>
+							<combobox width="90%" mold="rounded"
+								instant="true" readonly="true" value="@bind(vm.is_sh)"
+								onChange="@command('search')">
+								<comboitem />
+								<comboitem label="深户" />
+								<comboitem label="非深户" />
+							</combobox>
+						</listheader>
+						<listheader align="center" label="办理性质">
+							<separator></separator>
+							<combobox width="90%" mold="rounded"
+								instant="true" readonly="true" value="@bind(vm.t_kind)"
+								onChange="@command('search')">
+								<comboitem />
+								<comboitem label="新办" />
+								<comboitem label="续办" />
+							</combobox>
+						</listheader>
+						<listheader align="center" label="状态">
+							<separator></separator>
+							<combobox width="90%" mold="rounded"
+								instant="true" readonly="true" value="@bind(vm.statename)"
+								onChange="@command('search')" model="@load(vm.stateList)">
+								<template name="model">
+									<comboitem
+										label="@load(each.statename)" />
+								</template>
+							</combobox>
+						</listheader>
+						<listheader align="center" label="添加人"></listheader>
+						<listheader align="center" label="添加时间"
+							width="15%">
+							<separator></separator>
+							<datebox width="90%" mold="rounded"
+								instant="true" format="yyyy-MM-dd" value="@bind(vm.addtime)"
+								onChange="@command('search')" />
+						</listheader>
+						<listheader align="center" label="操作"
+							width="60px">
+						</listheader>
+					</listhead>
+					<template name="model">
+						<listitem>
+							<listcell></listcell>
+							<listcell label="@load(each.cid)" />
+							<listcell>
+								<label if="${each.zhtype==0 }"
+									tooltiptext="中智户" value="@load(each.coba_shortname)" />
+								<label if="${each.zhtype==1 }"
+									tooltiptext="独立户" value="@load(each.coba_shortname)"
+									style="color:blue" />
+							</listcell>
+							<listcell label="@load(each.gid)" />
+							<listcell label="@load(each.emba_name)" />
+							<listcell label="@load(each.is_sh)" />
+							<listcell label="@load(each.erin_t_kind)" />
+							<listcell>
+								<image
+									src="/images/20070708132244928.gif" tooltiptext="还未退回材料"
+									if="${(each.erin_state eq 6 or each.erin_state eq 7 or 
+									each.erin_state eq 8) and each.erin_tzl_state eq 0 }"
+									style="cursor:pointer">
+								</image>
+								<label value="@load(each.statename)"
+									if="${each.erin_state ne 9 and each.erin_state ne 10 and 
+									each.erin_state ne 11 }" />
+								<label value="@load(each.statename)"
+									style="color:red"
+									if="${each.erin_state eq 9 or each.erin_state eq 10 or 
+									each.erin_state eq 11 }" />
+							</listcell>
+							<listcell label="@load(each.erin_addname)" />
+							<listcell label="@load(each.erin_addtime)" />
+							<listcell>
+								<menubar autodrop="true">
+									<menu
+										image="../images/pencil-small.png">
+										<menupopup>
+											<menuitem label="详情 "
+												onClick="@command('detail',daid=each.erin_id,role='hd')" />
+											<menuitem label="材料详情 "
+												onClick="@command('docdetail',daid=each.erin_id)" />
+											<menuitem label="系统短信 "
+												onClick="@command('sysmessage',each=each)" />
+											<menuseparator></menuseparator>
+											<menuitem label="状态变更"
+												disabled="${each.erin_state eq 1 or each.erin_state gt 6 
+												or (each.erin_state eq 4 and each.zhtype ne 0) }"
+												onClick="@command('openwin',each=each)" />
+											<menuitem label="重新提交"
+												disabled="${not((each.erin_state==9 or each.erin_state==10 or 
+												each.erin_state==11) and 
+												(each.erin_laststate==2 or each.erin_laststate==3 or 
+												each.erin_laststate==5 or each.erin_laststate==6 or 
+												(each.erin_laststate==4 and each.zhtype==0))) }"
+												onClick="@command('resubmit',each=each)" />
+											<menuseparator></menuseparator>
+											<menuitem label="补充信息"
+												onClick="@command('mod',daid=each.erin_id)" />
+										</menupopup>
+									</menu>
+								</menubar>
+							</listcell>
+						</listitem>
+					</template>
+				</listbox>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

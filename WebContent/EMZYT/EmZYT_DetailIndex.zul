@@ -1,0 +1,35 @@
+<!--
+	创建人：林少斌
+	创建时间：2015-4-29
+	用途：委托单明细
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="智翼通接口 -- 委托单详细" border="normal" width="100%"
+		height="100%" apply="org.zkoss.bind.BindComposer" closable="true"
+		viewModel="@id('vm') @init('Controller.EmZYT.EmZYT_DetailIndexController')">
+		<scrollview vflex="1" hflex="1">
+			<tabbox width="100%" tabscroll="false">
+				<tabs>
+					<tab forEach="${vm.dataList}" label="${each.emzt_name}-- ${each.emzt_class}" />
+				</tabs>
+				<tabpanels>
+					<tabpanel  forEach="${vm.dataList}">
+						<grid width="100%" height="100%">
+							<rows>
+								<row>
+									<cell>
+										<include if="${each.emzt_class ne '终止'}"
+											src="EmZYT_DetailNew.zul" emztM="${each}" />
+										<include if="${each.emzt_class eq '终止'}"
+											src="EmZYT_DetailDimission.zul" emztM="${each}" />
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</tabpanel>
+				</tabpanels>
+			</tabbox>
+		</scrollview>
+	</window>
+</zk>

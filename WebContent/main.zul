@@ -1,0 +1,201 @@
+<zk>
+	<style>
+		label.tablestring { white-space: nowrap; text-overflow:
+		ellipsis; overflow: hidden; }
+	</style>
+	<div apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.MainController')">
+		<portallayout id="main" maximizedMode="whole"
+			onPortalMove="@command('saveStatus',portallayout=self)"
+			onCreate="@command('initStatus',portallayout=self)">
+			<portalchildren id="ptc1" width="40%" hflex="1"
+				style="padding:5px;">
+				<panel id="xtdx" height="360px" border="normal" collapsible="true"
+					style="margin-bottom:10px" title="系统短信">
+					<caption>
+						<hlayout style="float:right">
+							<!-- <menubar autodrop="true" style="background:#e1ecf4;border:none">
+								<menu label="选项">
+									<menupopup>
+										<menuitem label="发送"
+											onClick="@command('sysmessageadd')" />
+										<menuitem label="收件箱" onClick="@command('reci')" />
+										<menuitem label="已发送信息" onClick="@command('sended')" />
+										<menuitem label="草稿" onClick="@command('draft')" />
+									</menupopup>
+								</menu>
+							</menubar> -->
+							<toolbar>
+								<!-- <toolbarbutton image="/images/bbcodeAddM.png" tooltiptext="发送"
+									onClick="@command('sysmessageadd')" />
+								<toolbarbutton image="/images/galleryAlbumsM.png" tooltiptext="收件箱"
+									onClick="@command('reci')" />
+								<toolbarbutton image="/images/pmFolderEditM.png" tooltiptext="已发送短信"
+									onClick="@command('sended')" />
+								<toolbarbutton image="/images/pmDraftsM.png" tooltiptext="草稿"
+									onClick="@command('draft')" /> -->
+								<toolbarbutton label="发送" onClick="@command('sysmessageadd')"
+									style="color:#666:font-size:8pt" />
+								<toolbarbutton label="收件箱" onClick="@command('reci')"
+									style="color:#666:font-size:8pt" />
+								<toolbarbutton label="已发送信息" onClick="@command('sended')"
+									style="color:#666:font-size:8pt" />
+								<toolbarbutton label="草稿" onClick="@command('draft')" if="false"
+									style="color:#666:font-size:8pt" />
+							</toolbar>
+						</hlayout>
+					</caption>
+					<panelchildren>
+						<include src="/SysMessage/SysMessage_NotReadList.zul"></include>
+					</panelchildren>
+				</panel>
+				<panel id="wszz" height="250px" border="normal" collapsible="true"
+					style="margin-bottom:10px" title="网上中智">
+					<panelchildren>
+						<grid hflex="1" vflex="1">
+							<columns>
+								<column width="25%"></column>
+								<column></column>
+							</columns>
+							<rows>
+								<row>
+									<label value="新增员工" />
+									<cell>
+										未确认[
+										<span style="color:red">0</span>
+										] 已确认[
+										<span style="color:red">0</span>
+										]
+									</cell>
+								</row>
+								<row>
+									<label value="终止员工" />
+									<cell>
+										未确认[
+										<span style="color:red">0</span>
+										] 已确认[
+										<span style="color:red">0</span>
+										]
+									</cell>
+								</row>
+								<row>
+									<label value="社保调整" />
+									<cell>
+										未确认[
+										<span style="color:red">0</span>
+										] 已确认[
+										<span style="color:red">0</span>
+										]
+									</cell>
+								</row>
+								<row>
+									<label value="商保理赔" />
+									<cell>
+										未确认[
+										<span style="color:red">0</span>
+										] 已确认[
+										<span style="color:red">0</span>
+										]
+									</cell>
+								</row>
+								<row>
+									<label value="网上入职" />
+									<cell>
+										未更新[
+										<span style="color:red">0</span>
+										] 已更新[
+										<span style="color:red">0</span>
+										]
+									</cell>
+								</row>
+								<row>
+									<label value="委托任务" />
+									<cell>
+										未处理[
+										<span style="color:red">0</span>
+										] 已处理[
+										<span style="color:red">0</span>
+										]
+									</cell>
+								</row>
+								<row>
+									<label value="法律咨询" />
+									<cell>
+										未确认[
+										<span style="color:red">0</span>
+										] 已确认[
+										<span style="color:red">0</span>
+										]
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</panelchildren>
+				</panel>
+			</portalchildren>
+			<portalchildren id="ptc2" width="60%"
+				style="padding:5px;">
+				<panel id="sjyj" height="300px" border="normal" collapsible="true"
+					style="margin-bottom:10px" title="数据预警">
+					<panelchildren>
+					<include onCreate="@command('frashFrame',a=self)" ></include>
+					</panelchildren>
+				</panel>
+				<panel id="wxfw" height="170px" border="normal" collapsible="true"
+					style="margin-bottom:10px">
+					<caption>
+						<div style="text-align:left">
+							无线服务(短信网关：
+							<span style="color:blue">10657</span>
+							，传真：
+							<span style="color:blue">83222952</span>
+							或
+							<span style="color:blue">83361044</span>
+							)
+						</div>
+					</caption>
+					<panelchildren>
+						<vlayout>
+							<groupbox title="短信">
+								<include src="/SmsMessage/SmsManager.zul"></include>
+								
+							</groupbox>
+							<groupbox title="传真">
+								<tablelayout columns="3" hflex="1"
+									vflex="1">
+									<tablechildren>
+										<label value="发送记录"></label>
+										[
+										<span style="color:red">0</span>
+										]
+									</tablechildren>
+									<tablechildren>
+										<label value="未上传"></label>
+										[
+										<span style="color:red">0</span>
+										]
+									</tablechildren>
+									<tablechildren>
+										提示：暂时没有新传真
+									</tablechildren>
+								</tablelayout>
+							</groupbox>
+						</vlayout>
+					</panelchildren>
+				</panel>
+				<panel id="xttx" height="130px" border="normal" collapsible="true"
+					style="margin-bottom:10px" title="系统提醒">
+					<caption>
+						<toolbarbutton label="添加"
+							style="color:#666;font-size:8pt"
+							onClick="@command('addRemind')">
+						</toolbarbutton>
+					</caption>
+					<panelchildren>
+						<include src="/SysRemind/SysRemind_Main.zul"></include>
+					</panelchildren>
+				</panel>
+			</portalchildren>
+		</portallayout>
+	</div>
+</zk>

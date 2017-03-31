@@ -1,0 +1,185 @@
+<!--
+	创建人：林少斌
+	创建时间：2014-5-22
+	用途：报表导出页面
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winTaxEC" title="个人所得税 -- 报表导出页面" border="normal"
+		width="100%" height="100%" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmTax.EmTax_ExcelCreateController')">
+		<groupbox visible="false">
+			<caption label="公司汇总数据" />
+			<grid>
+				<rows>
+					<row>
+						<cell width="15%">
+							<label value="开户状态：" />
+						</cell>
+						<cell>
+							<combobox id="co_gtstate" mold="rounded"
+								readonly="true">
+								<comboitem label="全部" value="" />
+								<comboitem label="中智开户" value="中智开户" />
+								<comboitem label="独立开户" value="独立开户" />
+							</combobox>
+						</cell>
+						<cell width="15%">
+							<label value="个税缴交地：" />
+						</cell>
+						<cell>
+							<combobox id="co_taxplace"
+								model="@load(vm.citylist)" autodrop="true" mold="rounded">
+								<template name="model">
+									<comboitem label="@load(each)" />
+								</template>
+							</combobox>
+						</cell>
+					</row>
+					<row>
+						<cell>
+							<label value="起始月份：" />
+						</cell>
+						<cell>
+							<monthbox id="co_ownmonth" readonly="true"
+								format="yyyyMM" mold="rounded" />
+						</cell>
+						<cell>
+							<label value="结束月份：" />
+						</cell>
+						<cell>
+							<monthbox id="co_ownmonth2" readonly="true"
+								format="yyyyMM" mold="rounded" />
+						</cell>
+					</row>
+					<row>
+						<cell>
+							<label value="公司列表：" />
+						</cell>
+						<cell>
+							<combobox id="co_company"
+								model="@load(vm.cobaList)" autodrop="true" mold="rounded">
+								<template name="model">
+									<comboitem value="@load(each.cid)"
+										label="${each.coba_shortname } (${each.cid})" />
+								</template>
+							</combobox>
+						</cell>
+						<cell>
+							<label value="个税状态：" />
+						</cell>
+						<cell>
+							<combobox id="co_state" mold="rounded"
+								readonly="true">
+								<comboitem label="全部" value="" />
+								<comboitem label="未申报" value="0" />
+								<comboitem label="已申报" value="2" />
+							</combobox>
+						</cell>
+					</row>
+				</rows>
+				<foot>
+					<footer align="center">
+						<!-- <button label="导出" id="coExcel"
+							onClick="@command('coSubmit',win=winTaxEC,gtstate=co_gtstate,taxplace=co_taxplace,ownmonth=co_ownmonth,ownmonth2=co_ownmonth2,company=co_company,state=co_state)" /> -->
+					</footer>
+				</foot>
+			</grid>
+		</groupbox>
+		<groupbox>
+			<caption label="个税数据" />
+			<grid>
+				<rows>
+					<row>
+						<cell width="15%">
+							<label value="开户状态：" />
+						</cell>
+						<cell>
+							<hbox>
+								<combobox id="em_gtstate" mold="rounded"
+									readonly="true">
+									<comboitem label="全部" value="" />
+									<comboitem label="中智开户"
+										value="中智开户" />
+									<comboitem label="独立开户"
+										value="独立开户" />
+									<comboitem label="委托出" value="委托出" />
+								</combobox>
+							</hbox>
+						</cell>
+						<cell width="15%">
+							<label value="个税缴交地：" />
+						</cell>
+						<cell>
+							<combobox id="em_taxplace"
+								model="@load(vm.citylist)" autodrop="true" mold="rounded">
+								<template name="model">
+									<comboitem label="@load(each)" />
+								</template>
+							</combobox>
+						</cell>
+					</row>
+					<row>
+						<cell>
+							<label value="税款所属月份：" />
+						</cell>
+						<cell>
+							<monthbox id="em_ownmonth" readonly="true"
+								format="yyyyMM" mold="rounded" />
+						</cell>
+						<cell>
+							<!-- <label value="结束月份：" /> -->
+						</cell>
+						<cell>
+							<!-- <monthbox id="em_ownmonth2" readonly="true"
+								format="yyyyMM" mold="rounded" /> -->
+						</cell>
+					</row>
+					<row>
+						<cell>
+							<label value="公司列表：" />
+						</cell>
+						<cell>
+							<combobox id="em_company"
+								model="@load(vm.cobaList)" autodrop="true" mold="rounded">
+								<template name="model">
+									<comboitem value="@load(each.cid)"
+										label="${each.coba_shortname } (${each.cid})" />
+								</template>
+							</combobox>
+						</cell>
+						<cell>
+							<label value="个税状态：" />
+						</cell>
+						<cell>
+							<combobox id="em_state" mold="rounded"
+								readonly="true">
+								<comboitem label="全部" value="" />
+								<comboitem label="未申报" value="0" />
+								<comboitem label="已申报" value="2" />
+							</combobox>
+						</cell>
+					</row>
+				</rows>
+				<foot>
+					<footer align="center">
+						<button label="查询导出" id="emExcel"
+							onClick="@command('emSubmit',win=winTaxEC,gtstate=em_gtstate,taxplace=em_taxplace,ownmonth=em_ownmonth,company=em_company,state=em_state)" />
+						<space />
+						<space />
+						<button label="汇总导出" id="coExcel"
+							onClick="@command('coSubmit',win=winTaxEC,gtstate=em_gtstate,taxplace=em_taxplace,ownmonth=em_ownmonth,company=em_company,state=em_state)" />
+						<space />
+						<space />
+						<space />
+						<space />
+						<space />
+						<button label="申报导出" id="emUpdate"
+							visible="@load(vm.chk_p)"
+							onClick="@command('emUpdate',win=winTaxEC,gtstate=em_gtstate,taxplace=em_taxplace,ownmonth=em_ownmonth,company=em_company,state=em_state)" />
+					</footer>
+				</foot>
+			</grid>
+		</groupbox>
+	</window>
+</zk>

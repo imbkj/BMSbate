@@ -1,0 +1,95 @@
+<?page title="支付通知审核" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="支付通知审核" border="normal"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmPay.EmPay_Controller')">
+		<grid id="searchGird" width="100%">
+			<rows>
+				<row>
+
+					<cell width="100px">所属科目</cell>
+					<cell>
+					<combobox mold="rounded" readonly="true"
+						width="120px" value="全部" id="castsort" >
+								<comboitem label="201401"
+									value="201401">
+								</comboitem>
+								<comboitem label="201402"
+									value="201402">
+								</comboitem>
+					</combobox>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button id="btSearch" label="查询"
+						onClick="@command('search',castsort=castsort)" />
+				</footer>
+			</foot>
+		</grid>
+		<div
+			style="width:100%;height:430px;overflow-y:scroll;overflow-x:hidden;border:1px solid #bcbdbf;">
+			<grid width="100%" id="g1"
+				model="@load(vm.empay_autlist)">
+				<columns>
+					<column label="序号" align="center" width="60px" />
+					<column label="所属月份" align="center" />
+					<column label="支付单号" align="center" />
+					<column label="所属类型" align="center" />
+					<column label="应收金额" align="center" />
+					<column label="实收金额" align="center" />
+					<column label="应付金额" align="center" />
+					<column label="实付金额" align="center" />
+					<column label="费用差额" align="center" />
+					<column label="操作" align="center" />
+					<column label="" align="center"  visible="false"/>
+				</columns>
+				<rows>
+					<template name="model">
+						<row>
+							<cell>
+								<label
+									value="${forEachStatus.index + 1}" />
+							</cell>
+							<cell>
+								<label value="@load(each.ownmonth)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.espa_paynum)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.espa_type)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.espa_ys_fee)" />
+							</cell>
+							<cell>
+								<label value="@load(each.espa_ss_fee)" />
+							</cell>
+							<cell>
+								<label value="@load(each.espa_yf_fee)" />
+							</cell>
+							<cell>
+								<label value="@load(each.espa_sf_fee)" />
+							</cell>
+							<cell>
+								<label value="@load(each.espa_dis_fee)" />
+							</cell>
+							<cell>
+								<label value="审核" style="cursor:pointer"
+							onClick="@command('empay_aut', emco=each)" />
+							</cell>
+							<cell>
+								<label value="@load(each.espa_id)" />
+							</cell>
+						</row>
+					</template>
+				</rows>
+			</grid>
+		</div>
+	</window>
+</zk>

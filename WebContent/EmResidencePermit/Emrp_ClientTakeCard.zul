@@ -1,0 +1,61 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="win" title="客服签收居住证" border="normal" width="60%"
+		closable="true" apply="org.zkoss.bind.BindComposer" height="60%"
+		viewModel="@id('vm') @init('Controller.EmResidencePermit.Emrp_OperateController')">
+		<grid vflex="1">
+			<columns>
+				<column width="15%"></column>
+				<column></column>
+				<column width="15%"></column>
+				<column></column>
+			</columns>
+			<rows>
+				<row>
+					<cell>公司编号</cell>
+					<cell>
+						<label value="@load(vm.epm.cid)" />
+					</cell>
+					<cell>公司名称</cell>
+					<cell>
+						<label value="@load(vm.epm.coba_company)" />
+					</cell>
+				</row>
+				<row>
+					<cell>员工姓名</cell>
+					<cell>
+						<label value="@load(vm.epm.emba_name)" />
+					</cell>
+					<cell>身份证号</cell>
+					<cell>
+						<label value="@load(vm.epm.emba_idcard)" />
+					</cell>
+				</row>
+				<row>
+					<cell>签收时间</cell>
+					<cell colspan="3">
+						<hlayout>
+							<datebox value="@bind(vm.statetime)"></datebox>
+							<label style="color:red;">(*)</label>
+						</hlayout>
+					</cell>
+				</row>
+				<row>
+					备注
+					<cell colspan="3">
+						<textbox rows="5" mold="rounded" hflex="1"
+							value="@bind(vm.epm.epsr_remark)">
+						</textbox>
+					</cell>
+				</row>
+
+			</rows>
+			<foot>
+				<footer align="center" span="4">
+					<button label="提交"
+						onClick="@command('clienttakecard',win=win)" />
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

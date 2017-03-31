@@ -1,0 +1,120 @@
+<!--
+	创建人：林少斌
+	创建时间：2016-9-12
+	用途：公司合同客服处理列表页面(法务)
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="公司合同 -- 法务处理页面" border="normal" width="100%"
+		height="100%" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoCompact.Compact_DoListfwController')">
+		<borderlayout vflex="1">
+			<north border="0" title="数据查询" collapsible="true"
+				flex="true" open="true">
+				<panel border="1">
+					<panelchildren style="padding:5px;">
+						<grid id="searchGird" width="100%">
+							<rows>
+								<row>
+									<cell width="100px"
+										style="color:#666;">
+										公司名称
+									</cell>
+									<textbox id="coco_company"
+										width="150px" value="@bind(vm.coco_company)" mold="rounded" />
+									<cell width="100px"
+										style="color:#666;">
+										合同编号
+									</cell>
+									<textbox id="coco_compactid"
+										width="150px" value="@bind(vm.coco_compactid)" mold="rounded" />
+								</row>
+								<row>
+									<cell width="100px"
+										style="color:#666;">
+										添加人
+									</cell>
+									<combobox id="coco_addname" onChange="@command('search')"
+										readonly="true" value="@bind(vm.coco_addname)" autodrop="true"
+										mold="rounded">
+										<comboitem label="" />
+										<comboitem
+											forEach="${vm.cocoAddnameList}" label="${each.coco_addname}" />
+									</combobox>
+									<cell width="100px"
+										style="color:#666;">
+										状态
+									</cell>
+									<combobox id="coco_state" onChange="@command('search')"
+										readonly="true" value="@bind(vm.coco_state)" autodrop="true"
+										mold="rounded">
+										<comboitem label="" />
+										<comboitem label="待审核" />
+										<comboitem label="待打印" />
+										<comboitem label="待盖章" />
+										<comboitem label="待签回" />
+										<comboitem label="待归档" />
+									</combobox>
+								</row>
+							</rows>
+							<foot>
+								<footer align="center">
+									<button id="btSearch" label="查询"
+										onClick="@command('search')" />
+								</footer>
+							</foot>
+						</grid>
+					</panelchildren>
+				</panel>
+			</north>
+			<center>
+				<grid width="100%" height="100%"
+					model="@load(vm.cocoBaseList)" emptyMessage="无数据" mold="paging"
+					pageSize="20">
+					<columns sizable="true">
+						<column label="序号" align="center" width="60px" />
+						<column label="公司名称" align="center"
+							sort="auto(company)" />
+						<column label="合同编号" align="center" />
+						<column label="合同类型" align="center"
+							sort="auto(coco_compacttype)" />
+						<column label="添加人" align="center" />
+						<column label="状态" align="center" />
+						<column label="备注" align="center" />
+						<column label="操作" align="center" width="100px" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<label
+									value="${forEachStatus.index + 1}" />
+								<label value="@load(each.company)" />
+								<label
+									value="@load(each.coco_compactid)" />
+								<label
+									value="@load(each.coco_compacttype)" />
+								<label value="@load(each.coco_addname)" />
+								<cell>
+									<label value="待审核"
+										if="${each.coco_state==2 and each.coco_autst==1 }" />
+									<label value="待打印"
+										if="${each.coco_state==2 and each.coco_autst==2 }" />
+									<label value="待盖章"
+										if="${each.coco_state==2 and each.coco_autst==3 }" />
+									<label value="待签回"
+										if="${each.coco_state==2 and each.coco_autst==4 }" />
+									<label value="待归档"
+										if="${each.coco_state==4}" />
+								</cell>
+								<label value="@load(each.coco_remark)" />
+								<label
+									style="cursor:pointer; color:#666;" value="处理"
+									onClick="@command('open', cocoM=each)" />
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

@@ -1,0 +1,122 @@
+<?page title="支付通知审核" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="支付通知" border="normal" id="w1" height="440px"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmPay.EmPay_BaseController')"
+		width="650px" closable="true">
+		<label id="espa_id" value="${arg.id}" visible="false" />
+		<label id="espa_tapr_id" value="${arg.espa_tapr_id}" visible="false" />
+		<groupbox title="支付信息" mold="3d" height="130px">
+			<grid vflex="1" hflex="1">
+				<rows>
+					<row>
+						<cell width="70px">所属月份：</cell>
+						<cell>
+							<label id="embase1" width="90px"
+								value="${arg.ownmonth}" />
+						</cell>
+						<cell width="70px">支付单号：</cell>
+						<cell>
+							<label id="embase2" width="90px"
+								value="${arg.paynum}" />
+						</cell>
+					</row>
+					<row>
+						<cell width="70px">所属类别：</cell>
+						<cell>
+							<label id="embase3" width="90px"
+								value="${arg.stype}" />
+						</cell>
+						<cell>实付金额：</cell>
+						<cell>
+							<label id="embase4" width="90px"
+								value="${arg.fee}" />
+						</cell>
+					</row>
+					<row>
+						<cell>支付单位：</cell>
+						<cell colspan="3">
+							<label id="embase5" width="200px" />
+						</cell>
+					</row>
+				</rows>
+			</grid>
+		</groupbox>
+		<groupbox title="支付明细" mold="3d" height="270px">
+			<grid vflex="1" hflex="1">
+				<rows>
+					<row>
+						<cell width="70px">收款人：</cell>
+						<cell colspan="3">
+							<combobox mold="rounded" readonly="true"
+								width="220px" value="全部" id="em1">
+								<comboitem label="中国国际技术智力合作公司"
+									value="中国国际技术智力合作公司">
+								</comboitem>
+								<comboitem label="中智上海经济技术合作公司"
+									value="中智上海经济技术合作公司">
+								</comboitem>
+							</combobox>
+						</cell>
+					</row>
+					<row>
+						<cell width="70px">银行名称：</cell>
+						<cell>
+							<textbox id="em2" width="150px"
+								value="" />
+						</cell>
+						<cell width="70px">银行帐号：</cell>
+						<cell>
+							<textbox id="em3" width="150px"
+								value="" />
+						</cell>
+					</row>
+					<row>
+						<cell width="70px">支付时间：</cell>
+						<cell>
+							<datebox width="130px" id="em4"
+											readonly="true" mold="rounded" format="yyyy-MM-dd" />
+						</cell>
+						<cell width="70px">支付金额：</cell>
+						<cell>
+							<textbox id="em5" width="150px"
+								value="${arg.fee}" />
+						</cell>
+					</row>
+					<row>
+						<cell width="70px">支付方式：</cell>
+						<cell colspan="3">
+							<combobox mold="rounded" readonly="true"
+								width="120px" value="全部" id="em6">
+								<comboitem label="电汇"
+									value="电汇">
+								</comboitem>
+								<comboitem label="支票"
+									value="支票">
+								</comboitem>
+								<comboitem label="转帐"
+									value="转帐">
+								</comboitem>
+								<comboitem label="托收"
+									value="托收">
+								</comboitem>
+							</combobox>
+						</cell>
+					</row>
+					<row>
+						<cell width="70px">备注：</cell>
+						<cell colspan="3">
+							<textbox id="em7" width="250px"
+								value="" rows="3" />
+						</cell>
+					</row>
+					<row>
+						<cell colspan="4" align="center">
+							<button label="支付" onClick="@command('pay_ok',em1=em1,em2=em2,em3=em3,em4=em4,em5=em5,em6=em6,em7=em7,ownmonth=embase1,paynum=embase2,espa_id=espa_id,espa_tapr_id=espa_tapr_id)"/>
+						</cell>
+					</row>
+				</rows>
+			</grid>
+		</groupbox>
+	</window>
+</zk>

@@ -1,0 +1,245 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<scrollview>
+		<window title="预警项目分配" border="normal" width="100%"
+			height="100%" apply="org.zkoss.bind.BindComposer"
+			viewModel="@id('vm') @init('Controller.SystemControl.AlarmAllot_ManagerController')">
+			<tablelayout width="100%">
+				<tablechildren width="100%">
+					<panel width="98%" title="按项目分配"
+						collapsible="true">
+						<panelchildren>
+							<groupbox width="100%">
+								<grid>
+									<rows>
+										<row>
+											<cell align="left"
+												width="120px">
+												项目名称:
+											</cell>
+											<cell align="left">
+												<combobox id="cbItem"
+													model="@load(vm.aimList)" autodrop="true"
+													onChanging="@command('updateItemName',a=event,b=cbClass.selectedItem.value)"
+													onChange="@command('getRudList',a=self.selectedItem.value,b=cbClass.selectedItem.value)">
+													<template
+														name="model">
+														<comboitem
+															label="@load(each.alin_name)" />
+													</template>
+												</combobox>
+											</cell>
+											<cell align="left"
+												width="120px">
+												项目类别:
+											</cell>
+											<cell align="left">
+												<combobox id="cbClass"
+													model="@load(vm.acmList)" readonly="true"
+													onChange="@command('getItemName',a=self.selectedItem.value,b=cbItem)">
+													<template
+														name="model">
+														<comboitem
+															label="@load(each.alcl_name)" />
+													</template>
+												</combobox>
+											</cell>
+										</row>
+									</rows>
+								</grid>
+								<hbox align="center">
+									<listbox id="ltbrd"
+										model="@load(vm.rdList)" height="260px" multiple="true"
+										emptyMessage="暂无数据">
+										<listhead>
+											<listheader
+												align="center">
+												<label value="角色" />
+												<textbox id="tbRol"
+													instant="true"
+													onChange="@command('SearchRdList',a=self,b=cbDep.selectedItem.value,c=cbItem.selectedItem.value,d=cbClass.selectedItem.value)">
+												</textbox>
+											</listheader>
+											<listheader
+												align="center">
+												<label value="部门" />
+												<combobox id="cbDep"
+													model="@load(vm.dlmList)" readonly="true" instant="true"
+													onChange="@command('SearchRdList',a=tbRol,b=cbDep.selectedItem.value,c=cbItem.selectedItem.value,d=cbClass.selectedItem.value)">
+													<template
+														name="model">
+														<comboitem
+															label="@load(each.dep_name)" />
+													</template>
+												</combobox>
+											</listheader>
+										</listhead>
+										<template name="model">
+											<listitem>
+												<listcell
+													label="@load(each.rol_name)"
+													onClick="@command('ltrRdList',a=each)" />
+												<listcell
+													label="@load(each.dep_name)"
+													onClick="@command('ltrRdList',a=each)" />
+											</listitem>
+										</template>
+									</listbox>
+									<vbox>
+										<image style="cursor:pointer"
+											src="/images/rightrightarrow_g.png"
+											onClick="@command('ltrRdAllList')" />
+
+										<image style="cursor:pointer"
+											src="/images/leftleftarrow_g.png"
+											onClick="@command('rtlRdAllList')" />
+									</vbox>
+									<listbox id="ltbrdSelect"
+										model="@load(vm.rdSelectList)" height="260px"
+										emptyMessage="暂无数据">
+										<listhead>
+											<listheader>
+												<label value="已选列表" />
+											</listheader>
+										</listhead>
+										<template name="model">
+											<listitem>
+												<listcell
+													onClick="@command('rtlRdList',a=each)"
+													value="@load(each.rol_id)">
+													<label
+														value="@load(each.dep_name)" />
+													<label value=" - " />
+													<label
+														value="@load(each.rol_name)" />
+												</listcell>
+											</listitem>
+										</template>
+									</listbox>
+								</hbox>
+								<div align="center" height="35px">
+									<button label="提交" onClick="@command('rdSubmit',a=cbItem)" />
+								</div>
+							</groupbox>
+						</panelchildren>
+					</panel>
+				</tablechildren>
+				<tablechildren width="100%" height="35px;"></tablechildren>
+				<tablechildren width="100%">
+					<panel width="98%" title="按角色分配"
+						collapsible="true">
+						<panelchildren>
+							<groupbox width="100%">
+								<grid>
+									<rows>
+										<row>
+											<cell align="left"
+												width="120px">
+												角色:
+											</cell>
+											<cell align="left">
+												<combobox id="cbRol"
+													model="@load(vm.rmList)" autodrop="true" instant="true"
+													onChange="@command('getItemList',a=self.selectedItem.value,b=cbDep2.selectedItem.value)">
+													<template
+														name="model">
+														<comboitem
+															label="@load(each.rol_name)" />
+													</template>
+												</combobox>
+											</cell>
+											<cell align="left"
+												width="120px">
+												部门:
+											</cell>
+											<cell align="left">
+												<combobox id="cbDep2"
+													readonly="true" model="@load(vm.dlmList2)" autodrop="true"
+													onChange="@command('getRolName',a=self.selectedItem.value,b=cbRol)">
+													<template
+														name="model">
+														<comboitem
+															label="@load(each.dep_name)" />
+													</template>
+												</combobox>
+											</cell>
+										</row>
+									</rows>
+								</grid>
+								<hbox align="center" width="100%">
+									<listbox id="ltbItem" height="260px"
+										multiple="true" emptyMessage="暂无数据"
+										model="@load(vm.aaList)">
+										<listhead>
+											<listheader
+												align="center">
+												<label value="项目名称" />
+												<textbox id="tbItem"
+													instant="true" onChange="@command('SearchAAList',a=tbItem,b=cbRol.selectedItem.value,c=cbDep2.selectedItem.value,d=cbClass2.selectedItem.value)">
+												</textbox>
+											</listheader>
+											<listheader
+												align="center">
+												<label value="项目类别" />
+												<combobox id="cbClass2"
+													model="@load(vm.acmList2)" readonly="true"
+													instant="true" onChange="@command('SearchAAList',a=tbItem,b=cbRol.selectedItem.value,c=cbDep2.selectedItem.value,d=cbClass2.selectedItem.value)">
+													<template
+														name="model">
+														<comboitem
+															label="@load(each.alcl_name)" />
+													</template>
+												</combobox>
+											</listheader>
+										</listhead>
+										<template name="model">
+											<listitem>
+												<listcell onClick="@command('ltrItemList',a=each)"
+													label="@load(each.alin_name)" />
+												<listcell onClick="@command('ltrItemList',a=each)"
+													label="@load(each.alcl_name)" />
+											</listitem>
+										</template>
+									</listbox>
+									<vbox spacing="10px" width="24px">
+
+										<image style="cursor:pointer"
+											src="/images/rightrightarrow_g.png" onClick="@command('ltrItemAllList')" />
+
+										<image style="cursor:pointer"
+											src="/images/leftleftarrow_g.png" onClick="@command('rtlItemAllList')" />
+									</vbox>
+									<listbox id="ltbselectItem"
+										model="@load(vm.aaSelectList)" height="260px"
+										emptyMessage="暂无数据">
+										<listhead>
+											<listheader>
+												<label value="已选列表" />
+											</listheader>
+										</listhead>
+										<template name="model">
+											<listitem>
+												<listcell onClick="@command('rtlItemList',a=each)">
+													<label
+														value="@load(each.alcl_name)" />
+													<label
+														value=" - ">
+													</label>
+													<label
+														value="@load(each.alin_name)" />
+												</listcell>
+											</listitem>
+										</template>
+									</listbox>
+								</hbox>
+								<div align="center" height="35px">
+									<button label="提交" onClick="@command('aaSubmit',a=cbRol,b=cbDep2)" />
+								</div>
+							</groupbox>
+						</panelchildren>
+					</panel>
+				</tablechildren>
+			</tablelayout>
+		</window>
+	</scrollview>
+</zk>

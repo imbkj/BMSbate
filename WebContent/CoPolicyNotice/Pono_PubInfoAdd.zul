@@ -1,0 +1,39 @@
+
+<listbox id="${arg.id}" apply="org.zkoss.bind.BindComposer" checkmark="true" multiple="true" mold="paging" pageSize="4"
+	viewModel="@id('vm') @init('Controller.CoPolicyNotice.Pono_PubInfoAddController')" rows="4" height="130px"
+	model="@load(vm.list)"
+	>
+	<listhead>
+		<listheader width="40px" align="center"/>
+		<listheader label="序号" hflex="1" align="center"/>
+		<listheader label="所属月份" hflex="1" align="center"/>
+		<listheader label="类型" hflex="1" align="center"/>
+		<listheader label="标题" hflex="4" align="center"/>
+		<listheader label="发文机构" hflex="4" align="center" />
+		<listheader label="城市" hflex="1" align="center" />
+		<listheader label="添加人" hflex="1" align="center" />
+		<listheader label="详细" align="center" width="60px" />
+	</listhead>
+	<template name="model">
+	<listitem>
+		<listcell />
+		<listcell label="${forEachStatus.index+1 }" />
+		<listcell label="@load(each.ownmonth)" />
+		<listcell label="@load(each.pono_type)" />
+		<listcell label="@load(each.pono_title)" />
+		<listcell label="@load(each.pono_agencies)" />
+		<listcell label="@load(each.pono_city)" />
+		<listcell label="@load(each.pono_addname)" />
+		<listcell>
+			<menubar autodrop="true">
+				<menu
+					image="../images/pencil-small.png">
+				<menupopup>
+					<menuitem label="详细" onClick="@command('detail',model=each)" />
+					</menupopup>
+				</menu>
+			</menubar>
+		</listcell>
+	</listitem>
+	</template>
+</listbox>

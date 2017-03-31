@@ -1,0 +1,22 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winCoLinkDel" title="公司联系人信息删除" border="normal" closable="true"
+		width="600px" apply="Controller.CoBase.CoBaseLinkMan_DelController">
+		<grid width="100%">
+			<rows>
+				<row>
+					<cell width="15%" style="color:#666;">删除原因：</cell>
+					<cell>
+						<textbox id="cali_delreason" rows="5"
+							width="80%" mold="rounded" constraint="no empty:请填写删除原因。"/>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button label="提交" id="btSubmit" />
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

@@ -1,0 +1,23 @@
+<zk>
+	<window title="数据预警 - 新增类型" border="normal" height="100%"
+		width="100%" apply="org.zkoss.bind.BindComposer,Controller.SystemControl.AlarmClass_AddController">
+		<div height="100%">
+			<grid height="100%">
+				<rows>
+					<row>
+						<cell width="20%">类型名称:</cell>
+						<cell>
+							<textbox id="tb" value="" />
+						</cell>
+					</row>
+				</rows>
+				<foot>
+					<footer align="center">
+						<button id="btnSubmit" label="提交" />
+					</footer>
+				</foot>
+			</grid>
+
+		</div>
+	</window>
+</zk>

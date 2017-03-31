@@ -1,0 +1,77 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="win" title="管理终止 - 详情" border="normal" width="700px"
+		closable="true" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoSocialInsurance.CoSocialInsurance_TerminationDetailController')">
+		<groupbox title="申报详情" mold="3d">
+			<grid>
+				<columns>
+					<column width="20%"></column>
+					<column width="15%"></column>
+					<column width="15%"></column>
+					<column></column>
+				</columns>
+				<rows>
+					<row>
+						公司编号
+						<cell>
+							<label value="@load(vm.m.cid)" />
+						</cell>
+						公司名称
+						<cell>
+							<label value="@load(vm.m.coba_company)" />
+						</cell>
+					</row>
+					<row>
+						社保编号
+						<cell>
+							<label value="@load(vm.m.csbc_sorid)" />
+						</cell>
+						密码
+						<cell>
+							<!-- <label value="@load(vm.m.csbc_pwd)" /> -->
+						</cell>
+					</row>
+					<row>
+						终止原因
+						<cell colspan="3">
+							<label value="@load(vm.m.csbc_stop_reason)" />
+						</cell>
+					</row>
+					<row>
+						深圳市企业参加社会保险信息变更申请表
+						<cell colspan="3">
+							<label value="@load(vm.m.csbc_pdf)"
+								style="cursor:pointer;color:blue" tooltiptext="点击下载"
+								onClick="@command('download',filename=self.value)" />
+						</cell>
+					</row>
+				</rows>
+			</grid>
+		</groupbox>
+		<groupbox title="状态变更记录" mold="3d">
+			<grid width="100%" emptyMessage="暂无数据"
+				model="@load(vm.hosList)" mold="paging" pageSize="5">
+				<columns>
+					<column align="center" label="状态" />
+					<column align="center" label="操作" />
+					<column align="center" label="添加人" />
+					<column align="center" label="添加时间" />
+					<column align="center" label="备注" />
+				</columns>
+				<template name="model">
+					<row>
+						<label value="@load(each.pbsr_statename)" />
+						<label value="@load(each.pbsr_content)" />
+						<label value="@load(each.pbsr_addname)" />
+						<label value="@load(each.pbsr_addtime)"
+							maxlength="10" />
+						<label value="@load(each.pbsr_remark)"
+							maxlength="20" tooltiptext="${each.pbsr_remark }"
+							style="cursor:pointer" />
+					</row>
+				</template>
+			</grid>
+		</groupbox>
+	</window>
+</zk>

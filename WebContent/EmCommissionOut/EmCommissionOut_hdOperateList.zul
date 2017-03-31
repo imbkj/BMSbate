@@ -1,0 +1,351 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="委托确认" border="normal" width="100%" height="100%"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmCommissionOut.EmCommissionOut_hdOperateListController')">
+		<label id="urlstate" value="0" visible="false" />
+		<borderlayout>
+			<north title="综合操作" collapsible="true" open="true">
+				<vbox width="100%" height="100%">
+					<hbox width="100%" height="100%" pack="center"
+						align="center">
+						<grid width="550px" model="@load(vm.countList)"
+							emptyMessage="暂无统计数据">
+							<columns height="10px">
+								<column width="80px" align="center" />
+								<column align="center">
+									<toolbarbutton label="全部"
+										style="cursor:pointer;font-weight:bold"
+										onClick="@command('multsearch',ecoc_addtype='',
+												ecoc_state='')" />
+								</column>
+								<column label="待一次确认" align="center" />
+								<column label="待二次确认" align="center" />
+								<column label="二次确认中" align="center" />
+							</columns>
+							<template name="model">
+								<row>
+									<cell>
+										<label
+											value="@load(each.ecoc_addtype)" />
+									</cell>
+									<cell>
+										<div if="${each.c6 eq 0 }">
+											[
+											<label
+												value="@load(each.c6)" />
+											]
+										</div>
+										<div if="${each.c6 gt 0 }"
+											style="cursor:pointer"
+											onClick="@command('multsearch',ecoc_addtype=each.ecoc_addtype,
+												ecoc_state='',url_state=urlstate)">
+											[
+											<label style="color:red"
+												value="@load(each.c6)" />
+											]
+										</div>
+									</cell>
+									<cell>
+										<div if="${each.c1 eq 0 }">
+											[
+											<label
+												value="@load(each.c1)" />
+											]
+										</div>
+										<div if="${each.c1 gt 0 }"
+											style="cursor:pointer"
+											onClick="@command('multsearch',ecoc_addtype=each.ecoc_addtype,
+												ecoc_state='未确认',url_state=urlstate)">
+											[
+											<label style="color:red"
+												value="@load(each.c1)" />
+											]
+										</div>
+									</cell>
+									<cell>
+										<div if="${each.c2 eq 0 }">
+											[
+											<label
+												value="@load(each.c2)" />
+											]
+										</div>
+										<div if="${each.c2 gt 0 }"
+											style="cursor:pointer"
+											onClick="@command('multsearch',ecoc_addtype=each.ecoc_addtype,
+												ecoc_state='一次确认',url_state=urlstate)">
+											[
+											<label style="color:red"
+												value="@load(each.c2)" />
+											]
+										</div>
+									</cell>
+									<cell>
+										<div if="${each.c5 eq 0 }">
+											[
+											<label
+												value="@load(each.c5)" />
+											]
+										</div>
+										<div if="${each.c5 gt 0 }"
+											style="cursor:pointer"
+											onClick="@command('multsearch',ecoc_addtype=each.ecoc_addtype,
+												ecoc_state='二次确认',url_state=urlstate)">
+											[
+											<label style="color:red"
+												value="@load(each.c5)" />
+											]
+										</div>
+									</cell>
+
+								</row>
+							</template>
+						</grid>
+					</hbox>
+					<hbox width="100%" height="100%" pack="center"
+						align="center">
+						<button label="生成批量上传"
+							onClick="@command('ZYTExcel',set=ltb.selectedItems)"
+							disabled="@load(vm.ifexcel)">
+						</button>
+						<button label="批量生成委托单"
+							onClick="@command('ExportExcel',set=ltb.selectedItems)"
+							disabled="@load(vm.ifexcel)">
+						</button>
+						<button label="批量状态确认"
+							disabled="@load(vm.ifupdates)"
+							onClick="@command('updates',set=ltb.selectedItems)">
+						</button>
+						<button label="批量退回"
+							onClick="@command('allback',set=ltb.selectedItems)">
+						</button>
+						<button label="特殊数据显示"
+							onClick="@command('ts_search',ecoc_addtype='',ecoc_state='',url_state=urlstate)">
+						</button>
+
+					</hbox>
+				</vbox>
+			</north>
+			<center>
+				<listbox id="ltb" hflex="1" vflex="1"
+					emptyMessage="暂无数据" model="@load(vm.secocList)" checkmark="true"
+					multiple="@load(vm.mu)"
+					onSelect="@command('ListOnClick',set=ltb.selectedItems)">
+					<listhead sizable="true">
+						<listheader width="40px" align="center">
+						</listheader>
+						<listheader width="40px" align="center" label="序号">
+						</listheader>
+						<listheader align="center" label="委托类型">
+							<separator></separator>
+							<combobox width="90%" mold="rounded"
+								instant="true" readonly="true" value="@bind(vm.addtype)"
+								onSelect="@command('statelistbind')">
+								<comboitem label="" />
+								<comboitem label="新增" />
+								<comboitem label="调整" />
+								<comboitem label="离职" />
+								<comboitem label="取消" />
+								<comboitem label="一次性费用" />
+							</combobox>
+						</listheader>
+						<listheader align="center" label="公司编号">
+							<separator></separator>
+							<textbox width="50%" mold="rounded"
+								instant="true" value="@bind(vm.cid)"
+								onChange="@command('search')" />
+						</listheader>
+						<listheader align="center" label="公司简称">
+							<separator></separator>
+							<textbox width="90%" mold="rounded"
+								value="@bind(vm.shortname)" onChange="@command('search')" />
+						</listheader>
+						<listheader align="center" label="雇员编号">
+							<separator></separator>
+							<textbox width="90%" mold="rounded"
+								value="@bind(vm.gid)" onChange="@command('search')" />
+						</listheader>
+						<listheader align="center" label="雇员姓名">
+							<separator></separator>
+							<textbox width="90%" mold="rounded"
+								value="@bind(vm.name)" onChange="@command('search')" />
+						</listheader>
+						<listheader align="center" label="合同标准"
+							visible="false">
+							<separator></separator>
+							<combobox width="90%" mold="rounded"
+								model="@load(vm.stardList)" instant="true" readonly="true"
+								value="@bind(vm.sointitle)" onChange="@command('search')">
+								<template name="model">
+									<comboitem label="@load(each)" />
+								</template>
+							</combobox>
+						</listheader>
+						<listheader align="center" label="委托地">
+							<separator></separator>
+							<combobox width="90%" mold="rounded"
+								model="@load(vm.cityList)" instant="true" value="@bind(vm.city)"
+								onChange="@command('search')">
+								<template name="model">
+									<comboitem label="@load(each.city)" />
+								</template>
+							</combobox>
+						</listheader>
+						<listheader align="center" label="委托机构">
+							<separator></separator>
+							<combobox width="90%" mold="rounded"
+								model="@load(vm.coabList)" instant="true"
+								value="@bind(vm.coabname)" onChange="@command('search')">
+								<template name="model">
+									<comboitem
+										label="@load(each.coab_name)" />
+								</template>
+							</combobox>
+						</listheader>
+						<listheader align="center" label="客服">
+							<separator></separator>
+							<combobox width="90%" mold="rounded"
+								model="@load(vm.clientList)" instant="true" readonly="true"
+								value="@bind(vm.client)" onChange="@command('search')">
+								<template name="model">
+									<comboitem
+										label="@load(each.ecoc_client)" />
+								</template>
+							</combobox>
+						</listheader>
+						<listheader align="center" label="添加时间">
+							<separator></separator>
+							<datebox width="90%"
+								 format="yyyy-MM-dd" value="@bind(vm.addtime)"
+								onChange="@command('search')" />
+						</listheader>
+						<listheader align="center" label="状态">
+							<separator></separator>
+							<combobox width="90%" mold="rounded"
+								model="@load(vm.stateList)" instant="true" readonly="true"
+								value="@bind(vm.statename)" onChange="@command('search')">
+								<template name="model">
+									<comboitem
+										label="@load(each.statename)" />
+								</template>
+							</combobox>
+						</listheader>
+						<listheader align="center" label="操作"
+							width="60px">
+						</listheader>
+					</listhead>
+					<template name="model">
+						<listitem>
+							<listcell></listcell>
+							<listcell label="${forEachStatus.index + 1}" />
+							<listcell label="@load(each.ecoc_addtype)" />
+							<listcell label="@load(each.cid)" />
+							<listcell
+								label="@load(each.coba_shortname)" />
+							<listcell label="@load(each.gid)" />
+							<listcell label="@load(each.emba_name)" />
+							<listcell label="@load(each.soin_title)"
+								visible="false" />
+							<listcell label="@load(each.city)" />
+							<listcell label="@load(each.coab_name)" />
+							<listcell label="@load(each.ecoc_client)" />
+							<listcell>
+								<label
+									value="@load(each.ecoc_addtime1)" />
+							</listcell>
+							<listcell>
+								<label value="@load(each.statename)"
+									if="${each.statename ne '退回' and each.statename ne '撤销'
+										and each.statename ne '取消' and each.statename ne '已完成' }" />
+								<label value="@load(each.statename)"
+									style="color:blue" if="${each.statename eq '已完成' }" />
+								<label value="@load(each.statename)"
+									style="color:red"
+									if="${each.statename eq '退回' or each.statename eq '撤销'
+										or each.statename eq '取消' }" />
+							</listcell>
+							<listcell>
+								<menubar autodrop="true"
+									if="${each.ecoc_addtype eq '新增' }">
+									<menu
+										image="../images/pencil-small.png">
+										<menupopup>
+											<menuitem label="委托单详情 "
+												onClick="@command('detail',each=each,
+												url='/EmCommissionOut/EmCommissionOut_AddDetail.zul')" />
+
+											<menuitem label="委托确认"
+												if="${each.ecoc_state ge 1 and each.ecoc_state le 3 }"
+												onClick="@command('updatestate',each=each,url_state=urlstate,
+													url='/EmCommissionOut/EmCommissionOut_AddOperate.zul')" />
+										</menupopup>
+									</menu>
+								</menubar>
+								<menubar autodrop="true"
+									if="${each.ecoc_addtype eq '调整' }">
+									<menu
+										image="../images/pencil-small.png">
+										<menupopup>
+											<menuitem label="委托单详情 "
+												onClick="@command('detail',each=each,url_state=urlstate,
+												url='/EmCommissionOut/EmCommissionOut_ChangeDetail.zul')" />
+											<menuitem label="委托确认"
+												if="${each.ecoc_state ge 1 and each.ecoc_state le 3 }"
+												onClick="@command('updatestate',each=each,url_state=urlstate,
+													url='/EmCommissionOut/EmCommissionOut_ChangeOperate.zul')" />
+										</menupopup>
+									</menu>
+								</menubar>
+								<menubar autodrop="true"
+									if="${each.ecoc_addtype eq '离职' }">
+									<menu
+										image="../images/pencil-small.png">
+										<menupopup>
+											<menuitem label="委托单详情 "
+												onClick="@command('detail',each=each,
+												url='/EmCommissionOut/EmCommissionOut_TerminationDetail.zul')" />
+											<menuitem label="委托确认"
+												if="${each.ecoc_state ge 1 and each.ecoc_state le 3 }"
+												onClick="@command('updatestate',each=each,url_state=urlstate,
+													url='/EmCommissionOut/EmCommissionOut_TerminationOperate.zul')" />
+										</menupopup>
+									</menu>
+								</menubar>
+								<menubar autodrop="true"
+									if="${each.ecoc_addtype eq '一次性费用' }">
+									<menu
+										image="../images/pencil-small.png">
+										<menupopup>
+											<menuitem label="委托单详情 "
+												onClick="@command('detail',each=each,
+												url='/EmCommissionOut/EmCommissionOut_OneTimeFeeDetail.zul')" />
+											<menuitem label="委托确认"
+												if="${each.ecoc_state eq 1 }"
+												onClick="@command('updatestate',each=each,url_state=urlstate,
+													url='/EmCommissionOut/EmCommissionOut_OneTimeFeeOperate.zul')" />
+										</menupopup>
+									</menu>
+								</menubar>
+								<menubar autodrop="true"
+									if="${each.ecoc_addtype eq '取消' }">
+									<menu
+										image="../images/pencil-small.png">
+										<menupopup>
+											<menuitem label="委托单详情 "
+												onClick="@command('detail',each=each,
+												url='/EmCommissionOut/EmCommissionOut_CancelDetail.zul')" />
+											<menuitem label="委托确认"
+												if="${each.ecoc_state eq 1 }"
+												onClick="@command('updatestate',each=each,url_state=urlstate,
+													url='/EmCommissionOut/EmCommissionOut_CancelOperate.zul')" />
+										</menupopup>
+									</menu>
+								</menubar>
+							</listcell>
+						</listitem>
+					</template>
+				</listbox>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

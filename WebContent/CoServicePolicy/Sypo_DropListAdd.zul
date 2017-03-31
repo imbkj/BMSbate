@@ -1,0 +1,27 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="下拉列表内容新增" border="normal" width="600px" height="400px" closable="true"
+	apply="org.zkoss.bind.BindComposer" id="awin"
+	viewModel="@id('vm') @init('Controller.CoServicePolicy.Sypo_DropListAddController')"
+>
+<grid vflex="1" id="gd">
+	<rows>
+		<row>
+			<cell width="120px">内容</cell>
+			<cell>
+				<vlayout hflex="1" id="vyt" onCreate="@command('creatvl',vl=self)">
+					<textbox width="80%"></textbox>
+					<textbox width="80%"></textbox>
+					<textbox width="80%"></textbox>
+					<textbox width="80%"></textbox>
+					<textbox width="80%"></textbox>
+				</vlayout>
+			</cell>	
+		</row>
+	</rows>
+	<foot>
+		<footer align="center"><button onClick="@command('submit',vyt=vyt,win=awin)">提交</button></footer>
+	</foot>
+</grid>
+</window>
+</zk>

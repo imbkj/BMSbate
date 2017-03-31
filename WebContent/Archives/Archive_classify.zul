@@ -1,0 +1,199 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<?component name="docDataList" macro-uri="../DocumentsInfo/DocumentsInfo_UpPageList.zul" inline="true"?>
+
+<zk>
+	<window title="档案受理" border="normal" closable="true" id="winclass"
+		width="900px" height="100%" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.Archives.Archive_classifyController')"
+		onCreate="@command('winD',a=self)">
+
+		<borderlayout width="100%" height="100%">
+			<north>
+				<groupbox>
+					<grid width="100%" height="100%">
+						<columns visible="false">
+							<column width="120px"></column>
+							<column></column>
+							<column width="120px"></column>
+							<column></column>
+						</columns>
+						<rows>
+							<row>
+								<cell>公司名称</cell>
+								<cell>
+									<label
+										value="@load(vm.edm.coba_company)" />
+								</cell>
+								<cell>客服</cell>
+								<cell>
+									<label
+										value="@load(vm.edm.coba_client)" />
+								</cell>
+							</row>
+							<row>
+								<cell>姓名</cell>
+								<cell>
+									<label
+										value="@load(vm.edm.eada_name)" />
+								</cell>
+								<cell>身份证</cell>
+								<cell>
+									<label
+										value="@load(vm.edm.eada_idcard)" />
+								</cell>
+							</row>
+							<row>
+								<cell>手机号码</cell>
+								<cell>
+									<label
+										value="@load(vm.edm.emba_mobile)" />
+								</cell>
+								<cell>邮箱</cell>
+								<cell>
+									<label
+										value="@load(vm.edm.emba_email)" />
+								</cell>
+							</row>
+							<row>
+								<cell>入职中智时间</cell>
+								<cell>
+									<label value="@load(vm.edm.indate)" />
+								</cell>
+								<cell>收费起始日期</cell>
+								<cell>
+									<label value="" />
+								</cell>
+							</row>
+							<row>
+								<cell>现存档机构全称</cell>
+								<cell>
+									<label
+										value="@load(vm.edm.eada_fileplace)" />
+								</cell>
+								<cell>存档起始日期</cell>
+								<cell>
+									<label
+										value="@load(vm.edm.savefiledate)" />
+								</cell>
+							</row>
+							<row>
+								<cell>档案费用付款性质</cell>
+								<cell>
+									<label
+										value="@load(vm.edm.eada_rspaykind)" />
+
+								</cell>
+								<cell>档案发票</cell>
+								<cell>
+									<label
+										value="@load(vm.edm.eada_rsinvoice)" />
+								</cell>
+							</row>
+							<row>
+								<cell>户口详细地址</cell>
+								<cell>
+									<label
+										value="@load(vm.edm.emba_hjadd)" />
+								</cell>
+							</row>
+							<row>
+								<cell>户口费用付款性质</cell>
+								<cell>
+									<label
+										value="@load(vm.edm.eada_hjpaykind)" />
+								</cell>
+								<cell>户口发票</cell>
+								<cell>
+									<label
+										value="@load(vm.edm.eada_hjinvoice)" />
+								</cell>
+							</row>
+							<row>
+								<cell>费用结清情况</cell>
+								<cell colspan="3">
+									<label
+										value="@load(vm.edm.eada_charge)" />
+								</cell>
+							</row>
+							<row>
+								<cell>备注</cell>
+								<cell colspan="3">
+									<label
+										value="@load(vm.edm.eada_remark)" />
+								</cell>
+							</row>
+						</rows>
+					</grid>
+				</groupbox>
+			</north>
+			<center>
+				<groupbox>
+					<grid>
+						<columns visible="false">
+							<column width="120px"></column>
+							<column></column>
+							<column width="120px"></column>
+							<column></column>
+						</columns>
+						<rows>
+							<row>
+								<cell>档案类型</cell>
+								<cell>
+									<combobox id="filetype" width="100px"
+										value="@bind(vm.filetype)" mold="rounded" readonly="true"
+										onSelect="@command('getArea')">
+										<comboitem label="中智保管" />
+										<comboitem label="委托人才" />
+									</combobox>
+									<combobox id="filearea" width="80px"
+										value="@bind(vm.filearea)" mold="rounded" readonly="true"
+										visible="@load(vm.dis)">
+										<comboitem label="市内" />
+										<comboitem label="市外" />
+									</combobox>
+								</cell>
+								<cell visible="@load(vm.dissdh)">是否打印商调函</cell>
+								<cell visible="@load(vm.dissdh)">
+									<combobox
+										value="@bind(vm.eada_issdh)" readonly="true">
+										<comboitem label="是" />
+										<comboitem label="否" />
+									</combobox>
+									
+								</cell>
+							</row>
+						</rows>
+					</grid>
+					<grid if="${vm.edm.eada_doc>0 }">
+						<rows>
+							<row>
+								<cell colspan="4">
+									<!-- 材料内联页 参数：puzu_id：模块页面id， doc_type：员工(g)还是公司(c)，gid：公司数据则插入空白 ，业务表id ，log_url：获取到页面路径的前部分-->
+									<docDataList id="docGrid"
+										puzu_id="5" doc_type="g" gid="${vm.edm.gid }"
+										tid="${vm.edm.eada_id }" log_url="../DocumentsInfo/"
+										dHeight="100%" dWidth="100%" />
+
+								</cell>
+							</row>
+						</rows>
+					</grid>
+				</groupbox>
+			</center>
+			<south>
+				<div align="center">
+					<button label="查看报价单" onClick="@command('check')" />
+
+					<button label="备注" onClick="@command('addremark')" />
+
+					<button label="添加联系记录"
+						onClick="@command('addlink')" />
+					<button label="保存" onClick="@command('save')" />
+					<button label="退回" onClick="@command('back')"/>
+					<button label="下一步" onClick="@command('submit')" />
+				</div>
+			</south>
+		</borderlayout>
+
+	</window>
+</zk>

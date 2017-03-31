@@ -1,0 +1,32 @@
+<!--
+	创建人：林少斌
+	创建时间：2015-11-19
+	用途：工资历史数据导出用友页面
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="工资历史数据导出用友" border="normal" width="420px" height="260px" closable="true"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmSalary.EmSalary_HistoryUFtxtController')"
+	>
+		<grid vflex="1">
+			<rows>
+				<row>
+					<cell width="120px">生成历史记录日期</cell>
+					<cell><label value="@load(vm.historyDate)"></label></cell>
+				</row>
+				<row>
+					<cell>填制时间</cell>
+					<cell><datebox id="makedate" readonly="true"></datebox></cell>
+				</row>
+				<row>
+					<cell>凭证号</cell>
+					<cell><textbox width="80px" value="@bind(vm.number)"></textbox><label style="color:red;">(4位数)</label></cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center"><button onClick="@command('submit',makedate=makedate.value)">提交</button></footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

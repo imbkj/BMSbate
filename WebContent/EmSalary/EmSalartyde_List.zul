@@ -1,0 +1,26 @@
+<!--
+	创建人：林少斌
+	创建时间：2013-9-25
+	用途：委托机构列表
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<style src="./css/style.css" />
+	<grid width="400px"  apply="org.zkoss.bind.BindComposer"  viewModel="@id('salaryvm') @init('Controller.EmSalary.EmSalartyde_ListController')" emptyMessage="无数据"
+	model="@load(salaryvm.salaryinfolist)">
+		<columns sizable="true">
+			<column label="项目" align="center" width="200px"/>
+			<column label="金额" align="center" width="200px" sort="" />
+		
+		</columns>
+		<rows>
+			<template name="model">
+				<row>
+					<label value="@load(each.gzmc)" style="cursor:pointer" onDoubleClick="@command('updategrid',self=self)"/>
+					<label value="@load(each.gzje)" />
+				
+				</row>
+			</template>
+		</rows>
+	</grid>
+</zk>

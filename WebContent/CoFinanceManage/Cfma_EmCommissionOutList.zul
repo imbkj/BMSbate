@@ -1,0 +1,93 @@
+<?page title="委托出费用" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<div style="overflow:auto;" hflex="1" vflex="1">
+		<grid apply="org.zkoss.bind.BindComposer"
+			viewModel="@id('vm') @init('Controller.CoFinanceManage.Cfma_EmCommissionOutListController')"
+			emptyMessage="暫未找到数据" mold="paging" pageSize="50"
+			sizedByContent="true" width="@load(vm.gridWidth)">
+			<auxhead>
+				<auxheader label="序号" rowspan="2" align="center"
+					width="10px" />
+				<auxheader label="员工编号" rowspan="2" align="center" />
+				<auxheader label="姓名" rowspan="2" align="center" />
+				<auxheader label="缴费标准" rowspan="2" align="center" />
+				<auxheader label="${each.item}" colspan="3"
+					align="center" forEach="${vm.emCommissionOutModel.detailItemList}" />
+
+				<auxheader label="${each.item }" rowspan="2"
+					align="center"
+					forEach="${vm.emCommissionOutModel.productItemList}" />
+				<auxheader label="应收总计" rowspan="2" align="center" />
+			</auxhead>
+			<auxhead>
+				<zk
+					forEach="${vm.emCommissionOutModel.detailItemList}">
+					<auxheader label="基数" align="center" />
+					<auxheader label="公司" align="center" />
+					<auxheader label="个人" align="center" />
+				</zk>
+			</auxhead>
+			<columns></columns>
+			<rows>
+				<row forEach="${vm.emCommissionOutModel.soinList}">
+					<cell align="center">
+						<label value="" />
+					</cell>
+					<cell align="center">
+						<label value="" />
+					</cell>
+					<cell align="center">
+						<label value="" />
+					</cell>
+					<cell align="center">
+						<label value="${each.soin_title}" />
+					</cell>
+					<zk forEach="${each.detailItemList}">
+						<cell align="center">
+							<label value="" />
+						</cell>
+						<cell align="center">
+							<label value="${each.cpp}" />
+						</cell>
+						<cell align="center">
+							<label value="${each.opp}" />
+						</cell>
+					</zk>
+				</row>
+				<row
+					forEach="${vm.emCommissionOutModel.emFinanceCommissionOutList}">
+					<cell align="center">
+						<label value="${forEachStatus.index + 1}" />
+					</cell>
+					<cell align="center">
+						<label value="${each.gid}" />
+					</cell>
+					<cell align="center">
+						<label value="${each.emba_name}" />
+					</cell>
+					<cell align="center">
+						<label value="${each.soin_title}" />
+					</cell>
+					<zk forEach="${each.detailItemList}">
+						<cell align="center">
+							<label value="${each.base}" />
+						</cell>
+						<cell align="center">
+							<label value="${each.coSum}" />
+						</cell>
+						<cell align="center">
+							<label value="${each.emSum}" />
+						</cell>
+					</zk>
+					<cell align="center"
+						forEach="${each.productItemList}">
+						<label value="${each.receivable}" />
+					</cell>
+					<cell align="center">
+						<label value="${each.efco_receivable}" />
+					</cell>
+				</row>
+			</rows>
+		</grid>
+	</div>
+</zk>

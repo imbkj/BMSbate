@@ -1,0 +1,96 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="工资单公司设置" id="coSetwin" width="40%" height="40%"
+		closable="true" border="normal" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.SalaryPaper.SalaryPaper_CoSetInfoController')">
+
+		<borderlayout>
+			<north>
+				<grid>
+					<rows>
+						<row>
+							<cell width="20%" align="center">
+								<label value="公司名称" />
+							</cell>
+							<cell>
+								<label value="@load(vm.m.coba_company)" />
+							</cell>
+						</row>
+						<row>
+							<cell align="center">
+								<label value="公司编号" />
+							</cell>
+							<cell>
+								<label value="@load(vm.m.cid)" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</north>
+			<center>
+				<grid>
+					<rows>
+						<row>
+							<cell width="20%" align="center">
+								<label value="是否暗送" />
+							</cell>
+							<cell width="15%">
+								<combobox width="60%" readonly="true"
+									value="@bind(vm.m.coss_StringSectetend)">
+									<comboitem label="是" />
+									<comboitem label="否" />
+								</combobox>
+							</cell>
+							<cell align="center" width="20%">
+								<label value="暗送地址" />
+							</cell>
+							<cell>
+								<textbox
+									value="@bind(vm.m.coss_secretsendaddress)" />
+							</cell>
+						</row>
+						<row>
+							<cell align="center">
+								<label value="是否抄送" />
+							</cell>
+							<cell>
+								<combobox width="60%" readonly="true"
+									value="@bind(vm.m.coss_StringcarbonCopy)">
+									<comboitem label="是" />
+									<comboitem label="否" />
+								</combobox>
+							</cell>
+							<cell align="center">
+								<label value="抄送地址" />
+							</cell>
+							<cell>
+								<textbox
+									value="@bind(vm.m.coss_ccaddress)" />
+							</cell>
+						</row>
+						<row>
+							<cell align="center">
+								<label value="是否自动发送工资单" />
+							</cell>
+							<cell colspan="3">
+								<combobox width="10%" readonly="true"
+									value="@bind(vm.m.coss_StringSendstate)">
+									<comboitem label="是" />
+									<comboitem label="否" />
+								</combobox>
+							</cell>
+						</row>
+					</rows>
+				</grid>
+
+			</center>
+			<south>
+				<div align="center">
+					<button label="提交"
+						onClick="@command('btnset',win=coSetwin)" />
+				</div>
+			</south>
+		</borderlayout>
+
+	</window>
+</zk>

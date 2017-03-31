@@ -1,0 +1,251 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="委托查询" border="normal" width="100%" height="100%"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmCommissionOut.EmCommissionOut_ChangeSelectListController')">
+
+		<grid width="100%" height="5%">
+			<columns>
+
+			</columns>
+			<rows>
+				<row valign="center">
+
+					<button label="导出excel"
+						onClick="@command('excelout')">
+					</button>
+				</row>
+
+			</rows>
+		</grid>
+
+		<borderlayout>
+
+			<center>
+
+
+				<grid emptyMessage="暂无数据" height="90%" width="100%"
+					model="@load(vm.secocList)" mold="paging" pageSize="20">
+					<columns sizable="true">
+
+						<column align="center" label="公司编号"  width="60px">
+							<separator></separator>
+							<textbox width="90%" mold="rounded"
+								instant="true" value="@bind(vm.cid)"
+								onChange="@command('search')" />
+						</column>
+						<column align="center" label="公司名称">
+							<separator></separator>
+							<textbox width="90%" mold="rounded"
+								value="@bind(vm.shortname)" onChange="@command('search')" />
+						</column>
+						<column align="center" label="变更类型">
+							<separator></separator>
+
+							<combobox width="90%" mold="rounded"
+								instant="true" readonly="true" value="@bind(vm.addtype)"
+								onChange="@command('search')">
+								<comboitem />
+								<comboitem label="新增" />
+								<comboitem label="调整" />
+								<comboitem label="年调" />
+								<comboitem label="离职" />
+								<comboitem label="一次性费用" />
+								<comboitem label="取消" />
+
+							</combobox>
+
+						</column>
+						<column align="center" label="委托地"
+							sort="auto(city)">
+							<separator></separator>
+							<combobox width="90%" mold="rounded"
+								model="@load(vm.cityList)" instant="true" readonly="true"
+								value="@bind(vm.city)" onChange="@command('search')">
+								<template name="model">
+									<comboitem label="@load(each.city)" />
+								</template>
+							</combobox>
+						</column>
+
+
+						<column align="center" label="委托机构">
+							<separator></separator>
+							<combobox width="90%" mold="rounded"
+								model="@load(vm.coabList)" instant="true" readonly="true"
+								value="@bind(vm.coabname)" onChange="@command('search')">
+								<template name="model">
+									<comboitem
+										label="@load(each.coab_name)" />
+								</template>
+							</combobox>
+						</column>
+
+						<column align="center" label="雇员编号">
+							<separator></separator>
+							<textbox width="90%" mold="rounded"
+								value="@bind(vm.gid)" onChange="@command('search')" />
+						</column>
+						<column align="center" label="雇员姓名">
+							<separator></separator>
+							<textbox width="90%" mold="rounded"
+								value="@bind(vm.name)" onChange="@command('search')" />
+						</column>
+						<column align="center" label="证件号码">
+							<separator></separator>
+							<textbox width="90%" mold="rounded"
+								value="@bind(vm.idcard)" onChange="@command('search')" />
+						</column>
+
+						<column align="center" label="社保基数">
+							<separator></separator>
+							<!-- 							<textbox width="90%" mold="rounded" -->
+							<!-- 								value="@bind(vm.idcard)" onChange="@command('search')" /> -->
+						</column>
+
+						<column align="center" label="住房基数">
+							<!-- 							<separator></separator> -->
+							<!-- 							<textbox width="90%" mold="rounded" -->
+							<!-- 								value="@bind(vm.idcard)" onChange="@command('search')" /> -->
+						</column>
+
+						<column align="center" label="住房个人" width="40px">
+							<separator></separator>
+							<!-- 							<textbox width="90%" mold="rounded" -->
+							<!-- 								value="@bind(vm.idcard)" onChange="@command('search')" /> -->
+						</column>
+						<column align="center" label="住房企业" width="40px">
+							<separator></separator>
+							<!-- 							<textbox width="90%" mold="rounded" -->
+							<!-- 								value="@bind(vm.idcard)" onChange="@command('search')" /> -->
+						</column>
+
+						<column align="center" label="养老起始日"
+							sort="auto(sbownmonth)">
+							<separator></separator>
+							<textbox width="90%" mold="rounded"
+								value="@bind(vm.sbownmonth)" onChange="@command('search')" />
+						</column>
+
+						<column align="center" label="住房起始日"
+							sort="auto(gjjownmonth)">
+							<separator></separator>
+							<textbox width="90%" mold="rounded"
+								value="@bind(vm.gjjownmonth)" onChange="@command('search')" />
+						</column>
+
+
+
+
+
+						<column align="center" label="客服">
+							<separator></separator>
+							<textbox width="90%" mold="rounded"
+								value="@bind(vm.client)" onChange="@command('search')" />
+						</column>
+
+						<column align="center" label="状态">
+							<separator></separator>
+							<combobox width="90%" mold="rounded"
+								instant="true" readonly="true" value="@bind(vm.statename)"
+								onChange="@command('search')">
+								<comboitem />
+								<comboitem label="待一次确认" />
+								<comboitem label="待二次确认" />
+								<comboitem label="二次确认中" />
+								<comboitem label="退回" />
+								<comboitem label="已完成" />
+							</combobox>
+						</column>
+						<column align="center" label="添加人">
+							<separator></separator>
+							<textbox width="90%" mold="rounded"
+								value="@bind(vm.addname)" onChange="@command('search')" />
+
+						</column>
+
+						<column align="center" label="添加时间"  width="120px">
+							<separator></separator>
+							<hbox>
+							<combobox 
+								model="@load(vm.addtime_ylist)" instant="true" readonly="true" width="25px"
+								value="@bind(vm.addtime_y)" onChange="@command('search')">
+								<template name="model">
+									<comboitem
+										label="@load(each.addtime_y)" />
+								</template>
+							</combobox>
+							
+							<combobox  
+								model="@load(vm.addtime_mlist)" instant="true" readonly="true" width="25px"
+								value="@bind(vm.addtime_m)" onChange="@command('search')">
+								<template name="model">
+									<comboitem
+										label="@load(each.addtime_m)" />
+								</template>
+							</combobox>
+							
+							<combobox  
+								model="@load(vm.addtime_dlist)" instant="true" readonly="true"  width="40px"
+								value="@bind(vm.addtime_d)" onChange="@command('search')">
+								<template name="model">
+									<comboitem
+										label="@load(each.addtime_d)" />
+								</template>
+							</combobox>
+							
+							</hbox>
+						</column>
+
+					</columns>
+					<template name="model">
+						<row>
+							<!-- 							<custom-attributes daid="${each.eecoc_id }" /> -->
+							<!-- 							<detail open="false" fulfill="onOpen"> -->
+							<!-- 								<include -->
+							<!-- 									src="/EmCommissionOut/EmCommissionOut_SelectDetail.zul" -->
+							<!-- 									daid="${daid }"> -->
+							<!-- 								</include> -->
+							<!-- 							</detail> -->
+							<label value="@load(each.cid)" />
+							<label value="@load(each.coba_company)" />
+							<label value="@load(each.ecoc_addtype)" />
+							<label value="@load(each.city)" />
+							<label value="@load(each.coab_name)" />
+							<label value="@load(each.gid)" />
+							<label value="@load(each.emba_name)" />
+
+							<label value="@load(each.emba_idcard)" />
+							<label value="@load(each.ecoc_sb_base)" />
+							<label value="@load(each.ecoc_house_base)" />
+							<label value="@load(each.zfeofc_op)" />
+							<label value="@load(each.zfeofc_cp)" />
+							<label value="@load(each.sbownmonth)" />
+							<label value="@load(each.gjjownmonth)" />
+							<label value="@load(each.coba_client)" />
+							<cell>
+								<label
+									value="@load(each.ecoc_statestr)" />
+							</cell>
+							<cell>
+								<label value="@load(each.ecoc_addname)" />
+							</cell>
+							<cell width="220px">
+								<hbox>
+									<label
+										value="@load(each.addtime_y)" />
+									-
+									<label
+										value="@load(each.addtime_m)" />
+									-
+									<label
+										value="@load(each.addtime_d)" />
+								</hbox>
+							</cell>
+						</row>
+					</template>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

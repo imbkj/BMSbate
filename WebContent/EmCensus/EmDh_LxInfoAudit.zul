@@ -1,0 +1,72 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="信息预审" border="normal" width="60%" height="60%"
+		closable="true" id="dhwin" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmCensus.EmDh.EmDh_LxInfoAuditController')">
+		<grid vflex="1">
+			<rows>
+				<row>
+					<cell width="100px">公司编号</cell>
+					<cell>
+						<label value="@load(vm.dhmodel.cid)"></label>
+					</cell>
+					<cell width="100px">公司名称</cell>
+					<cell>
+						<label
+							value="@load(vm.dhmodel.coba_shortname)">
+						</label>
+					</cell>
+				</row>
+				<row>
+					<cell>员工姓名</cell>
+					<cell>
+						<label value="@load(vm.dhmodel.emdh_name)"></label>
+					</cell>
+					<cell>身份证号码</cell>
+					<cell>
+						<label value="@load(vm.dhmodel.emdh_idcard)"></label>
+					</cell>
+				</row>
+				<row>
+					<cell>调户方式</cell>
+					<cell>
+						<label value="@load(vm.dhmodel.emdh_dhtype)"></label>
+					</cell>
+					<cell>账户类型</cell>
+					<cell>
+						<label value="@load(vm.dhmodel.emdh_zhtype)"></label>
+					</cell>
+				</row>
+				<row>
+					<cell>当前状态</cell>
+					<cell colspan="3">
+						<textbox readonly="true"
+							value="${vm.dhmodel.states }">
+						</textbox>
+					</cell>
+				</row>
+				<row>
+					<cell>信息预审日期</cell>
+					<cell colspan="3">
+						<datebox value="@bind(vm.dhmodel.emdh_time4)">
+						</datebox>
+					</cell>
+				</row>
+				</rows>
+			<foot>
+				<footer align="center">
+					<button id="summit"
+						onClick="@command('submit',win=dhwin)">
+						提交
+					</button>
+					<button onClick="@command('openZul',openType='联系员工')">联系员工</button>
+					<button onClick="@command('openZul',openType='备注')">备注</button>
+					<button
+						onClick="@command('beginagain',win=dhwin)">
+						重置流程
+					</button>
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

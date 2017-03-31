@@ -1,0 +1,99 @@
+<?page title="修改工资非清零字段数据" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winEmSalaryUpdateNonZero" title="修改工资非清零字段数据"
+		border="normal" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmSalary.EmSalary_UpdateNonZeroDataController')"
+		height="100%" width="100%" closable="true" sizable="true">
+		<borderlayout>
+			<center>
+				<grid id="gdSalary" height="100%" mold="paging"
+					pageSize="50" sizedByContent="true" model="@load(vm.salaryWinList)"
+					emptyMessage="暂无可修改的工资数据">
+					<columns sizable="true">
+						<column label="序号" width="50px" align="center" />
+						<column width="100px" align="center"
+							sort="auto(gid)">
+							<vbox align="center">
+								<label value="员工编号"
+									style="color:black;" />
+								<intbox id="ibGid"
+									constraint="no negative"
+									onChange="@command('changeList', ibGid=ibGid,txtName=txtName)" />
+							</vbox>
+						</column>
+						<column width="150px" align="center"
+							sort="auto(name)">
+							<vbox align="center">
+								<label value="员工姓名"
+									style="color:black;" />
+								<textbox id="txtName"
+									onChange="@command('changeList', ibGid=ibGid,txtName=txtName)" />
+							</vbox>
+						</column>
+						<column label="用途" width="80px" align="center"
+							sort="auto(esda_usage_typestr)" />
+						<column label="备注" width="80px" align="center" />
+						<column label="工资状态" width="80px" align="center"
+							sort="auto(esda_payment_statestr)" />
+						<column label="操作" width="80px" align="center" />
+						<column label="${each.csii_item_name}"
+							width="80px" forEach="${vm.itemList}" />
+
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<cell>
+									<checkbox visible="false" />
+									<label
+										value="${forEachStatus.index + 1}" />
+								</cell>
+								<label value="@load(each.gid)" />
+								<label value="@load(each.name)"
+									style="cursor:pointer;"
+									onClick="@command('SelEmbase', lbl=self)" />
+								<label
+									value="@load(each.esda_usage_typestr)" />
+								<cell align="center">
+									<label
+										style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden"
+										value="@load(esda_remark)" tooltiptext="@load(esda_remark)" />
+								</cell>
+								<label
+									value="@load(each.esda_payment_statestr)" />
+								<label value="刪除"
+									style="cursor:pointer;color:#00F;"
+									onClick="@command('DelSalary', lbl=self,win=winEmSalaryUpdateNonZero)" />
+								<decimalbox format="###.##"
+									value="${each.amount}" forEach="${each.itemList}"
+									inplace="true" onChange="changeStytle(self)"
+									constraint="no empty" />
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</center>
+			<south>
+				<div align="center" width="100%">
+					<button label="保存修改" visible="false"
+						onClick="@command('UpSalary', gdSalary=gdSalary)" />
+					<button label="导入变动数据"
+						onClick="@command('ChangeSalary')" />
+					<button label="转下一步"
+						onClick="@command('PassToNext', win=winEmSalaryUpdateNonZero, gdSalary=gdSalary)" />
+					<button label="终止任务"
+						onClick="@command('StopTask', win=winEmSalaryUpdateNonZero)" />
+					<!-- <label value="修改完数据后，请点击转下一步按钮。" style="color:red" /> -->
+				</div>
+			</south>
+		</borderlayout>
+
+		<zscript><![CDATA[
+	void changeStytle(Decimalbox db) {
+		((Checkbox) db.getParent().getChildren().get(0).getChildren().get(0))
+				.setChecked(true);
+		db.setStyle("background-color:#FFCCFF;");
+	}
+]]></zscript>
+	</window>
+</zk>

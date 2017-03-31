@@ -1,0 +1,138 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="社保卡信息管理列表" border="normal" vflex="1"
+	apply="org.zkoss.bind.BindComposer" id="win"
+    viewModel="@id('vm') @init('Controller.EmSheBaocard.Sbcd_EditListController')"
+>
+<style src="/css/style.css"></style>
+<borderlayout vflex="1">
+<north border="0" title="检索" collapsible="true" style="padding-bottom:10px;">
+<grid>
+	<rows>
+		<row>
+			<cell width="80px">员工编号</cell>
+			<cell><textbox value="@bind(vm.gid)"></textbox></cell>
+			<cell width="80px">员工姓名</cell>
+			<cell><textbox value="@bind(vm.sbcd_name)"></textbox></cell>
+			<cell width="80px">身份证号码</cell>
+			<cell><textbox value="@bind(vm.idcard)"></textbox></cell>
+			<cell width="90px">个人社保电脑号</cell>
+			<cell><textbox value="@bind(vm.sbcd_computerid)"></textbox></cell>
+		</row>
+		<row>
+			<cell width="80px">单位编号</cell>
+			<cell><textbox value="@bind(vm.cid)"></textbox></cell>
+			<cell width="80px">单位名称</cell>
+			<cell><textbox value="@bind(vm.company)"></textbox></cell>
+			<cell width="80px">社保单位编码</cell>
+			<cell><textbox value="@bind(vm.sbcd_comno)"></textbox></cell>
+			<cell width="80px">制卡状态</cell>
+			<cell>
+				<combobox model="@load(vm.statelist)" readonly="true" id="sbcdstate">
+					<template name="model">
+						<comboitem label="@load(each.cdst_statename)" value="@load(each.cdst_id)"/>
+					</template>
+				</combobox>
+			</cell>
+		</row>
+		<row>
+							<cell width="80px">办理类型</cell>
+							<cell>
+								<combobox readonly="true" value="@bind(vm.blclass)">
+									<comboitem label="" />
+									<comboitem label="新增" />
+									<comboitem label="存量(换卡)" />
+								</combobox>
+							</cell>
+							<cell width="80px">发卡对象</cell>
+							<cell>
+								<combobox readonly="true" value="@bind(vm.cosp_card_caliname)">
+									<comboitem label="" />
+									<comboitem label="客服" />
+									<comboitem label="联系人" />
+								</combobox>
+							</cell>
+							<cell width="80px">表格交接人</cell>
+							<cell>
+								<combobox readonly="true" value="@bind(vm.cosp_bsal_caliname)">
+									<comboitem label="" />
+									<comboitem label="客服" />
+									<comboitem label="联系人" />
+								</combobox>
+							</cell>
+							<cell width="80px">制卡银行</cell>
+							<cell>
+								<combobox
+									model="@load(vm.branbanklist)" value="@bind(vm.branbank)">
+									<template name="model">
+										<comboitem label="@load(each)" />
+									</template>
+								</combobox>
+							</cell>
+						</row>
+	</rows>
+	<foot>
+		<footer align="center">
+			<button onClick="@command('search',sbcdstate=sbcdstate)">查询</button>
+			<button onClick="@command('editall',gd=gd,operater='client')">批量处理</button>
+		</footer>
+	</foot>
+</grid>
+</north>
+<center>
+<grid model="@load(vm.list)" vflex="1" mold="paging" pageSize="50" id="gd" emptyMessage="没有数据">
+		<columns>
+			<column label="序号" width="40px" align="center"/>
+			<column label="社保账户编号" align="center"/>
+			<column label="公司简称（编号）" align="center" width="220px"/>
+			<column label="姓名" align="center"/>
+			<column label="社保电脑号" align="center"/>
+			<column label="证件号码" align="center" width="150px"/>
+			<column label="照片回执码" align="center"/>
+			<column label="户口性质" align="center"/>
+			<column label="办理类型" align="center"/>
+			<column label="制卡银行" align="center"/>
+			<column label="客服" align="center"/>
+			<column label="图像" align="center"></column>
+			<column label="状态" align="center"/>
+			<column label="操作" align="center" width="60px"/>
+			<column align="center" width="40px"><checkbox onCheck="@command('checkall',gd=gd,ck=self)"></checkbox></column>
+		</columns>
+		<rows>
+			<template name="model">
+			<row>
+				<cell><label value="${forEachStatus.index+1 }"></label></cell>
+				<cell><label value="@load(each.sbcd_sbnumber)"></label></cell>
+				<cell><label value="${each.coba_shortname}(${each.cid })"></label></cell>
+				<cell><label value="@load(each.sbcd_name)"></label></cell>
+				<cell><label value="@load(each.sbcd_computerid)"></label></cell>
+				<cell><label value="@load(each.sbcd_idcard)"></label></cell>
+				<cell><label value="@load(each.sbcd_photonum)"></label></cell>
+				<cell><label value="@load(each.sbcd_hj)"></label></cell>
+				<cell><label value="@load(each.sbcd_content)"></label></cell>
+				<cell><label value="@load(each.sbcd_upbankname)"></label></cell>
+				<cell><label value="@load(each.coba_client)"></label></cell>
+				<cell>
+					<image src="../images/in_pic.gif" if="${each.picnum>0 }" style="cursor:pointer"
+						onClick="@command('openempic',a=each)" />
+				</cell>
+				<cell>
+					<hlayout>
+						<label value="@load(each.cdst_statename)"></label>
+						<image src="../images/20070708132244928.gif" if="${each.gidnum>1 }"
+						width="18" height="18" border="0" style="cursor:pointer;"
+						tooltiptext="该员工有${each.gidnum}条社保卡数据"/>
+					</hlayout>
+				</cell>
+				<cell >
+					<a onClick="@command('openzul',model=each)" visible="${each.cdst_statename=='转交客服' or each.cdst_statename=='客服签收' }"><label value="处理"></label></a>
+				</cell>
+				<cell><checkbox value="@load(each)" onCheck="@command('checksingle',gd=gd)"></checkbox></cell>
+			</row>
+			</template>
+		</rows>
+	</grid>
+</center>
+</borderlayout>
+</window>
+</zk>

@@ -1,0 +1,59 @@
+<grid hflex="1" vflex="1" emptyMessage="暂无数据" model="@load(vm.csbcList)"
+	mold="paging" pageSize="5" apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('vm') @init('Controller.CoSocialInsurance.CoSocialInsurance_SelectListDetailController')">
+	<columns>
+		<column align="center" label="所属月份"></column>
+		<column align="center" label="变动情况"></column>
+		<column align="center" label="添加人"></column>
+		<column align="center" label="添加时间"></column>
+		<column align="center" label="状态"></column>
+		<column align="center" label="提示" width="60px"></column>
+		<column align="center" label="操作" width="60px"></column>
+	</columns>
+	<template name="model">
+		<row>
+			<label value="@load(each.ownmonth)" />
+			<label value="@load(each.csbc_addtype)" />
+			<label value="@load(each.csbc_addtime)" />
+			<label value="@load(each.csbc_addtime1)" />
+			<cell>
+				<image src="/images/20070708132244928.gif"
+					tooltiptext="还未退还材料"
+					if="${(each.csbc_addtype eq '缴存登记'
+					or each.csbc_addtype eq '信息变更') and 
+					each.csbc_state eq 4 and each.csbc_tzlstate eq 0 }"
+					style="cursor:pointer">
+				</image>
+				<label value="@load(each.statename)" style="color:#666"
+					if="${each.csbc_state ge 1 and each.csbc_state le 4 }" />
+				<label value="@load(each.statename)" style="color:red"
+					if="${each.csbc_state eq 5 or each.csbc_state eq 6 }" />
+			</cell>
+			<cell>
+				<hlayout>
+					<image src="/images/hongqi.gif"
+						tooltiptext="${each.csbc_pdf }"
+						if="${(each.csbc_addtype eq '缴存登记' or 
+						each.csbc_addtype eq '信息变更') and not empty each.csbc_pdf}"
+						style="cursor:pointer"
+						onClick="@command('download',filename=each.csbc_pdf)">
+					</image>
+					<image src="/images/xls.gif"
+						tooltiptext="${each.csbc_xls }"
+						if="${each.csbc_addtype eq '账户接管' and not empty each.csbc_xls}"
+						style="cursor:pointer"
+						onClick="@command('download',filename=each.csbc_xls)">
+					</image>
+					<image src="/images/20070402165940954.gif"
+						tooltiptext="${each.csbc_image }"
+						if="${each.csbc_addtype eq '账户接管' and not empty each.csbc_image}"
+						style="cursor:pointer"
+						onClick="@command('download',filename=each.csbc_image)">
+					</image>
+				</hlayout>
+			</cell>
+			<label value="申报详情" style="cursor:pointer;color:blue"
+				onClick="@command('detail',each=each)" />
+		</row>
+	</template>
+</grid>

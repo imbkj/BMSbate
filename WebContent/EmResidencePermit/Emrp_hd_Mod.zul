@@ -1,0 +1,192 @@
+<?page title="员工居住证信息修改(后道)" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="win" title="员工居住证信息修改" border="normal" width="880px"
+		closable="true" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmResidencePermit.Emrp_hd_ModController')">
+		<div height="100%">
+			<groupbox title="基本信息" mold="3d">
+				<grid>
+					<columns>
+						<column width="14%" />
+						<column />
+						<column width="15%" />
+						<column />
+					</columns>
+					<rows>
+						<row>
+							公司编号
+							<label value="@load(vm.erm.cid)" />
+							公司名称
+							<label style="color:#666"
+								value="@load(vm.erm.coba_company)" />
+						</row>
+						<row>
+							员工编号
+							<label value="@load(vm.erm.gid)" />
+							姓名
+							<label style="color:#666"
+								value="@load(vm.erm.emba_name)" />
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox title="居住证信息" mold="3d">
+				<grid>
+					<columns>
+						<column width="15%" />
+						<column />
+						<column width="15%" />
+						<column />
+						<column width="12%" />
+						<column />
+					</columns>
+					<rows>
+						<row>
+							申办类型
+							<combobox mold="rounded" readonly="true"
+								hflex="1" model="@load(vm.apptypeList)"
+								selectedItem="@bind(vm.apptypeM)">
+								<template name="model">
+									<comboitem
+										label="@load(each.pcco_cn)" />
+								</template>
+							</combobox>
+							申领居住证条件
+							<cell colspan="3">
+								<combobox mold="rounded" readonly="true"
+									hflex="1" model="@load(vm.appconList)"
+									selectedItem="@bind(vm.appconM)">
+									<template name="model">
+										<comboitem
+											label="@load(each.pcco_cn)" />
+									</template>
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							相片图像号
+							<textbox mold="rounded"
+								value="@bind(vm.erm.erin_photo_number)" />
+							职业技能等级
+							<cell colspan="3">
+								<combobox mold="rounded" readonly="true"
+									model="@load(vm.skillList)" selectedItem="@bind(vm.skillM)">
+									<template name="model">
+										<comboitem
+											label="@load(each.pcco_cn)" />
+									</template>
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							来深时间
+							<datebox format="yyyy-MM-dd" mold="rounded"
+								value="@bind(vm.come_sz_date)" />
+							入住时间
+							<cell colspan="3">
+								<datebox format="yyyy-MM-dd"
+									mold="rounded" value="@bind(vm.r_date)" />
+							</cell>
+						</row>
+						<row>
+							就业类型
+							<combobox mold="rounded" readonly="true"
+								hflex="1" model="@load(vm.oetypeList)"
+								selectedItem="@bind(vm.oetypeM)">
+								<template name="model">
+									<comboitem
+										label="@load(each.pcco_cn)" />
+								</template>
+							</combobox>
+							身份证完整住址
+							<cell colspan="3">
+								<textbox mold="rounded" hflex="1"
+									value="@bind(vm.erm.erin_idcard_address)" />
+							</cell>
+						</row>
+						<row>
+							住所类别
+							<combobox mold="rounded" readonly="true"
+								hflex="1" model="@load(vm.houseList)"
+								selectedItem="@bind(vm.houseM)">
+								<template name="model">
+									<comboitem
+										label="@load(each.pcco_cn)" />
+								</template>
+							</combobox>
+							服务处所全称
+							<cell colspan="3">
+								<textbox mold="rounded" hflex="1"
+									value="@bind(vm.erm.erin_s_place)" />
+							</cell>
+						</row>
+						<row>
+							居住方式
+							<combobox mold="rounded" readonly="true"
+								hflex="1" model="@load(vm.housemodeList)"
+								selectedItem="@bind(vm.housemodeM)">
+								<template name="model">
+									<comboitem
+										label="@load(each.pcco_cn)" />
+								</template>
+							</combobox>
+							现居住地址
+							<cell colspan="3">
+								<textbox mold="rounded" hflex="1"
+									value="@bind(vm.erm.erin_nowadd)" />
+							</cell>
+						</row>
+						<row>
+							来深居住事由
+							<combobox mold="rounded" readonly="true"
+								hflex="1" model="@load(vm.comeszList)"
+								selectedItem="@bind(vm.comeszM)">
+								<template name="model">
+									<comboitem
+										label="@load(each.pcco_cn)" />
+								</template>
+							</combobox>
+							居住房地址编码
+							<cell colspan="3">
+								<textbox mold="rounded" hflex="1"
+									value="@bind(vm.erm.erin_address_number)" />
+							</cell>
+						</row>
+						<row>
+							本人固定电话
+							<textbox mold="rounded" hflex="1"
+								value="@bind(vm.erm.erin_phone)" />
+							本人手机
+							<cell colspan="3">
+								<textbox mold="rounded" hflex="1"
+									value="@bind(vm.erm.erin_mobile)" />
+							</cell>
+						</row>
+						<row>
+							紧急联系人姓名
+							<textbox mold="rounded" hflex="1"
+								value="@bind(vm.erm.erin_epname)" />
+							紧急联系人固定电话
+							<textbox mold="rounded" hflex="1"
+								value="@bind(vm.erm.erin_epphone)" />
+							紧急联系人手机
+							<textbox mold="rounded" hflex="1"
+								value="@bind(vm.erm.erin_epmobile)" />
+						</row>
+						<row>
+							<label style="color:#666"
+								value="广东省流动人口 避孕节育情况报告单号" />
+							<cell colspan="5">
+								<textbox mold="rounded" width="300px"
+									value="@bind(vm.erm.erin_birthcontrol)" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<hbox width="100%" pack="center" align="center">
+				<button label="提交" onClick="@command('submit',win=win)" />
+			</hbox>
+		</div>
+	</window>
+</zk>

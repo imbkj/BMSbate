@@ -1,0 +1,77 @@
+<?page title="劳动合同审核列表" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="劳动合同审核列表" border="normal" width="100%"
+		apply="org.zkoss.bind.BindComposer" sizable="true" height="800px"
+		viewModel="@id('vm') @init('Controller.EmBaseCompact.EmBaseCompact_MakeListController')">
+		<borderlayout vflex="1">
+			<north border="0" title="数据查询" collapsible="true"
+				flex="true" open="true">
+				<panel border="1">
+					<panelchildren style="padding:5px;">
+						<grid id="searchGird" width="100%">
+							<rows>
+								<row>
+
+									<cell width="100px">公司名称</cell>
+									<textbox id="company" width="150px"
+										value="" />
+									<cell width="100px">合同类型</cell>
+									<combobox id="emco_class"
+										mold="rounded" width="120px" readonly="true" 	value="请选择">
+										<comboitem label="全部"
+											value="">
+											</comboitem>
+										<comboitem label="一般非标"
+											value="1">
+										</comboitem>
+										<comboitem label="特殊非标"
+											value="2">
+										</comboitem>
+									</combobox>
+									<cell></cell>
+
+								</row>
+							</rows>
+							<foot>
+								<footer align="center">
+									<button id="btSearch" label="查询"
+										onClick="@command('search',company=company,emco_class=emco_class)" />
+								</footer>
+							</foot>
+						</grid>
+					</panelchildren>
+				</panel>
+			</north>
+			<center>
+				<grid width="100%" mold="paging" pageSize="19"
+					model="@load(vm.tempemcompactlistall)">
+					<columns>
+						<column label="序号" align="center" width="60px" />
+						<column label="公司名称" align="center" />
+						<column label="模板名称" align="center" />
+						<column label="添加人" align="center" />
+						<column label="添加时间" align="center" />
+						<column label="合同类型" align="center"
+							width="100px" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<label
+									value="${forEachStatus.index + 1}" />
+								<label value="@load(each.company)" />
+								<label value="@load(each.name)" />
+								<label
+									value="@load(each.ebco_incept_date)" />
+								<label
+									value="@load(each.ebco_maturity_date)" />
+								<label style="cursor:pointer"
+									value="@load(each.ebct_class)" />
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

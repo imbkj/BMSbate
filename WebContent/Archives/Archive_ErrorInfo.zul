@@ -1,0 +1,9 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="页面错误提示" border="normal" width="100%" height="100%"
+	apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('vm') @init('Controller.Archives.Archive_ErrorInfoController')"
+>
+<label value="@load(vm.errorinfo)"></label>
+</window>
+</zk>

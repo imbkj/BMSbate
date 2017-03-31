@@ -1,0 +1,68 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="领取发票" border="normal" id="invoiceWin" width="100%"
+		closable="true" height="100%" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoFinanceManage.CoInvoice.Cfma_InvoiceReceiveController')">
+		<grid model="@load(vm.sinvoices)">
+			<columns>
+				<column label="所属月份" align="center">
+					<separator></separator>
+					<textbox value="@bind(vm.ownmonth)"
+						onChange="@command('search')" />
+				</column>
+				<column label="客服" align="center">
+					<separator></separator>
+					<textbox value="@bind(vm.client)"
+						onChange="@command('search')" />
+				</column>
+				<column label="开票日期" align="center">
+					<separator></separator>
+					<datebox value="@bind(vm.date)"
+						onChange="@command('search')" />
+				</column>
+				<column label="客户名称" align="center">
+					<separator></separator>
+					<textbox value="@bind(vm.username)"
+						onChange="@command('search')" />
+				</column>
+				<column label="发票编号" align="center">
+					<separator></separator>
+					<textbox value="@bind(vm.invoiceid)"
+						onChange="@command('search')" />
+				</column>
+				<column label="发票代码号" align="center">
+					<separator></separator>
+					<textbox value="@bind(vm.codeid)"
+						onChange="@command('search')" />
+				</column>
+				<column label="总金额" align="center">
+					<separator></separator>
+					<decimalbox value="@bind(vm.total)"
+						onChange="@command('search')" />
+				</column>
+				<column label="领取人">
+					<separator></separator>
+					<textbox value="@bind(vm.receivename)"
+						onChange="@command('search')" />
+				</column>
+			</columns>
+			<rows>
+
+				<template name="model">
+					<row>
+						<label value="@load(each.ownmonth)" />
+						<label value="@load(each.coin_addname)" />
+						<label value="@load(each.coin_idate)" />
+						<label value="@load(each.coin_title)" />
+						<label value="@load(each.coin_invoiceid)" />
+						<label value="@load(each.coin_codeid)" />
+						<label value="@load(each.coin_total)" />
+						<textbox value="@bind(each.receivename)"
+							inplace="true" onChange="@command('save',m=each)" />
+					</row>
+				</template>
+			</rows>
+		</grid>
+
+	</window>
+</zk>

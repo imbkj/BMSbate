@@ -1,0 +1,78 @@
+<?page title="公司列表" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="单位收件地址信息列表" border="normal"  width="100%" height="100%"
+apply="org.zkoss.bind.BindComposer"
+    viewModel="@id('vm') @init('Controller.EmExpress.CobaseListController')">
+<borderlayout>
+<north border="0" title="检索" collapsible="true" flex="true" style="padding-bottom:10px;" open="false">
+<grid>
+	<rows>
+		<row>
+			<cell width="50px" align="center"><label>公司简称</label></cell>
+			<cell><textbox value="@bind(vm.cobaname)"></textbox></cell>
+			<cell width="50px" align="center"><label>公司编号</label></cell>
+			<cell><textbox value="@bind(vm.cid)"></textbox></cell>
+			<cell width="50px" align="center"><label>客服代表</label></cell>
+			<cell>
+				<combobox model="@load(vm.clientlist)" value="@bind(vm.client)">
+					<template name="model">
+						<comboitem label="@load(each)"/>
+					</template>
+				</combobox>
+			</cell>
+		</row>
+	</rows>
+	<foot><footer align="center">
+		<button onClick="@command('search')">查询</button>
+	</footer></foot>
+</grid>
+</north>
+<center>
+<grid  width="100%" height="100%" model="@load(vm.list)" mold="paging" pageSize="40">
+		<columns>
+			<column width="40px" label="地址" align="center"/>
+			<column label="序号" width="40px" align="center"/>
+			<column label="公司编号" align="center" width="70px" sort="auto(cid)"/>
+			<column label="a~z" align="center" width="50px" sort="auto(coba_spell)"/>
+			<column label="公司简称" align="center" sort="auto(coba_shortname)"/>
+			<column label="客服" align="center" width="60px" sort="auto(coba_client)"/>
+			<column label="办公地址" align="center"/>
+			<column label="操作" align="center" width="80px"></column>
+		</columns>
+		<rows>
+		<template name="model">
+			<row>
+			<custom-attributes cid="${each.cid}" />
+			<detail open="false" fulfill="onOpen" visible="${each.peopnum>0 }">
+				<include src="/EmExpress/EmExpressAddressInfoList.zul" cid="${cid}"/>
+			</detail>
+				<cell><label value="${forEachStatus.index+1 }"></label></cell>
+				<cell><label value="@load(each.cid)"></label></cell>
+				<cell><label value="@load(each.coba_spell)"></label></cell>
+				<cell>
+					<label value="@load(each.coba_shortname)"></label>
+					<label style="color:red;" visible="${each.coba_servicestate==1?false:true}">(已解约)</label>
+				</cell>
+				<cell><label value="@load(each.coba_client)"></label></cell>
+				<cell><label value="@load(each.coba_address)"></label></cell>
+				<cell>
+					<menubar autodrop="true">
+					<menu
+					image="../images/pencil-small.png">
+						<menupopup>
+							<menuitem label="添加收件地址"
+								onClick="@command('address',model=each)" />
+							<menuitem label="新增快递"
+								onClick="@command('addexpress',model=each)" />
+						</menupopup>
+					</menu>
+				</menubar>
+				</cell>
+			</row>
+			</template>
+		</rows>
+	</grid>
+</center>
+</borderlayout>
+</window>
+</zk>

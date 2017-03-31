@@ -1,0 +1,137 @@
+<!--
+	创建人：林少斌
+	创建时间：2015-9-18
+	用途：社保台账后逻辑检查处理页面
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winFCMsg" title="社会保险 -- 台账后逻辑检查处理页面" border="normal"
+		width="50%" height="50%" apply="org.zkoss.bind.BindComposer"
+		closable="true"
+		viewModel="@id('vm') @init('Controller.EmSheBao.Emsc_FalseCheckMsgController')">
+		<div height="98%" style="overflow-y:scroll">
+			<groupbox>
+				<caption label="台帐前社保问题数据操作" />
+				<grid style="border:0px">
+					<rows>
+						<row>
+							<cell width="20%">
+								<label value="是否正常数据：" />
+							</cell>
+							<cell>
+								<combobox mold="rounded" 
+									value="@bind(vm.normal)" readonly="true">
+									<comboitem value="1" label="是" />
+									<comboitem value="0" label="否" />
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="详细说明：" />
+							</cell>
+							<cell>
+								<combobox mold="rounded" onChange="@command('changeNote')"
+									value="@bind(vm.note)" readonly="true">
+									<comboitem label="被其他公司调走" />
+									<comboitem label="已退保或在个人窗口缴交" />
+									<comboitem label="提取住房公积金" />
+									<comboitem label="参加大学生医疗" />
+									<comboitem label="由大学生医疗转为一档医疗" />
+									<comboitem label="系统问题" />
+									<comboitem label="申报操作出现问题" />
+									<comboitem label="其他" />
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="解决情况：" />
+							</cell>
+							<cell>
+								<combobox mold="rounded"
+									value="@bind(vm.solve)" readonly="true">
+									<comboitem label="已短信通知客服" />
+									<comboitem label="已通知信息部解决" />
+									<comboitem label="调到下月解决" />
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="收件人：" />
+							</cell>
+							<cell>
+								<bandbox id="bd" mold="rounded"
+									autodrop="true" readonly="true" width="80%"
+									value="@bind(vm.selectedname)">
+									<bandpopup>
+										<grid width="370px"
+											model="@load(vm.deptlist)">
+											<columns>
+												<column width="40px" />
+											</columns>
+											<rows>
+												<template
+													name="model">
+													<row>
+														<detail
+															open="false" fulfill="onOpen">
+															<listbox
+																width="170px" model="@load(each.loginlist)"
+																checkmark="true" multiple="true">
+																<template
+																	name="model">
+																	<listitem
+																		label="@load(each.log_name)" value="@load(each)"
+																		onClick="@command('checkname',model=each,bd=bd,lbitem=self)" />
+																</template>
+															</listbox>
+														</detail>
+														<cell>
+															<label
+																value="@load(each.dep_name)">
+															</label>
+														</cell>
+													</row>
+												</template>
+											</rows>
+										</grid>
+									</bandpopup>
+								</bandbox>
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="标题：" />
+							</cell>
+							<cell>
+								<textbox width="70%"
+									value="@bind(vm.title)" />
+								<checkbox label="发邮件" checked="true"
+									style="border:0;margin-left:10px;" id="cb">
+								</checkbox>
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="内容：" />
+							</cell>
+							<cell>
+								<textbox rows="6"
+									value="@bind(vm.content)" cols="50" readonly="false"
+									width="70%" mold="rounded" />
+							</cell>
+						</row>
+					</rows>
+					<foot>
+						<footer align="center">
+							<button label="提交" id="btSubmit"
+								onClick="@command('submit',win=winFCMsg,cb=cb)" />
+						</footer>
+					</foot>
+				</grid>
+			</groupbox>
+		</div>
+	</window>
+</zk>

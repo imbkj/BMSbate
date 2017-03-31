@@ -1,0 +1,134 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="win" title="合同类型 - 编辑详情" border="normal" width="80%"
+		closable="true" height="600px" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoProduct.CoProduct_CompactModController')">
+		<borderlayout>
+			<north height="15%" autoscroll="true" title="基本信息">
+				<grid>
+					<columns>
+						<column width="15%"></column>
+						<column></column>
+						<column width="15%"></column>
+						<column></column>
+					</columns>
+					<rows>
+						<row>
+							<cell>
+								<label value="简称" style="color:#666" />
+							</cell>
+							<cell>
+								<textbox
+									value="@bind(vm.m.cpct_shortname)" />
+							</cell>
+							<cell>
+								<label value="全称" style="color:#666" />
+							</cell>
+							<cell>
+								<textbox value="@bind(vm.m.cpct_name)" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</north>
+			<center title="产品分配列表">
+				<grid model="@load(vm.scoprList)" mold="paging"
+					height="100%" width="100%" emptyMessage="暂无数据">
+					<columns style="height:30px">
+						<column align="center" width="40px">
+							<checkbox
+								onCheck="@command('allcheck',checked=self.checked)">
+							</checkbox>
+						</column>
+						<column align="center" width="40px">序号</column>
+						<column align="center">
+							产品名称
+							<separator></separator>
+							<image src="/images/SearchM.png"
+								height="15px" width="15px">
+							</image>
+							<textbox mold="rounded" width="70%"
+								onChange="@command('search')" value="@bind(vm.copr_name)">
+							</textbox>
+						</column>
+						<column align="center">
+							产品大类
+							<separator></separator>
+							<combobox readonly="true" mold="rounded"
+								width="60%" onChange="@command('search')"
+								value="@bind(vm.copr_type)">
+								<comboitem label=""></comboitem>
+								<comboitem label="服务产品"></comboitem>
+								<comboitem label="福利产品"></comboitem>
+							</combobox>
+						</column>
+						<column align="center">
+							产品类型
+							<separator></separator>
+							<combobox readonly="true" mold="rounded"
+								width="60%" onChange="@command('search')"
+								model="@load(vm.classlist)" value="@bind(vm.copc_name)">
+								<template name="model">
+									<comboitem
+										label="@load(each.copc_name)">
+									</comboitem>
+								</template>
+							</combobox>
+						</column>
+						<column align="center">
+							所属科目
+							<separator></separator>
+							<combobox readonly="true" mold="rounded"
+								width="60%" onChange="@command('search')"
+								model="@load(vm.accountlist)" value="@bind(vm.cpac_name)">
+								<template name="model">
+									<comboitem
+										label="@load(each.cpac_name)">
+									</comboitem>
+								</template>
+							</combobox>
+						</column>
+						<column align="center">
+							城市
+							<separator></separator>
+							<combobox readonly="true" mold="rounded"
+								width="60%" onChange="@command('search')"
+								model="@load(vm.cityList)" selectedItem="@bind(vm.cityModel)">
+								<template name="model">
+									<comboitem
+										label="@load(each.name)">
+									</comboitem>
+								</template>
+							</combobox>
+						</column>
+						<column align="center">委托机构</column>
+					</columns>
+					<template name="model">
+						<row>
+							<cell>
+								<checkbox
+									checked="@bind(each.ifChecked)">
+								</checkbox>
+							</cell>
+							<label value="${forEachStatus.index+1 }"></label>
+							<label value="@load(each.copr_name)"></label>
+							<label value="@load(each.copr_type)"></label>
+							<label value="@load(each.copc_name)"></label>
+							<label value="@load(each.cpac_name)"></label>
+							<label value="@load(each.name)"></label>
+							<label value="@load(each.coab_name)"></label>
+						</row>
+					</template>
+				</grid>
+			</center>
+			<south>
+				<hbox width="100%" height="100%" align="center"
+					pack="center">
+					<button label="保存"
+						onClick="@command('submit',win=win)">
+					</button>
+				</hbox>
+			</south>
+		</borderlayout>
+	</window>
+</zk>

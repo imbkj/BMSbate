@@ -1,0 +1,120 @@
+<?page title="结转" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window id="wind" title="结转" border="normal"
+      width="700px" height="500px" apply="org.zkoss.bind.BindComposer"
+                     closable="true" sizable="true" maximizable="true" 
+      viewModel="@id('vm')
+      @init('Controller.CoFinanceManage.Cfma_CollectCarryController')">
+		<div>
+		   <radiogroup id="a"  />
+        </div>
+       <borderlayout>
+            <north splittable="true" border="0">
+            <grid>
+					<rows>
+						<row>
+							<cell  width="11%">
+								<label value="公司编号：" />
+							</cell>
+							<cell align="center" colspan="2">
+								<label
+									value="@load(vm.company_id)" />
+							</cell>
+							<cell>
+								<label value="公司名称：" />
+							</cell>
+							<cell align="center" colspan="2">
+								<label
+									value="@load(vm.company)" />
+							</cell>
+							<cell>
+								<label value="客服：" />
+							</cell>
+							<cell align="center" colspan="2">
+								<label
+									value="@load(vm.coba_client)" />
+							</cell>
+						</row>
+						<row>
+							<cell >
+								<label value="所属月份：" />
+							</cell>
+							<cell align="center" colspan="2">
+							<monthbox  width="100%" mold="rounded" id="ownmonth"
+									 format="yyyyMM" value="@bind(vm.ownmonth)"
+									onChange="@command('ownmon',own=self.value)" />
+							</cell>
+							<cell>
+							<label value="产品小类："/>
+							</cell>
+							<cell align="center" colspan="2" >
+							 <label  width="100%"
+								value="@load(vm.cfsa_cpac_name)" />
+							</cell>
+							<cell>
+						     <label value="应收费用："/>
+						    </cell>
+						    <cell align="center" colspan="2">
+						      <textbox  mold="rounded" width="100%" value="@bind(vm.recexpense)"/>
+						    </cell>
+						</row>
+						
+						<row >
+						 <cell >
+						 <label value="收费原因："/>
+						 </cell>
+						 <cell align="center" colspan="8">
+						  <textbox id="txtRemark" rows="1"
+								value="@bind(vm.remak)" width="100%" mold="rounded" />
+						 </cell>
+						
+						</row>
+					</rows>
+				</grid>
+            </north>
+          	<center border="0" title="可添加结转员工">
+				<grid span="true" mold="paging" pageSize="10"
+					id="gridid" model="@load(vm.listEmbaseModel)" emptyMessage="无数据"
+					 vflex="1">
+					 
+					<columns sizable="true" id="colums">
+					    <column align="center"   width="30px"/>
+						<column label="员工编号" align="center"  width="80px"/>
+						<column 
+							align="center" width="120px">
+							<vbox align="center">
+								<label value="姓名" />
+								<textbox id="txtNo" mold="rounded" instant="true"
+									value="@bind(vm.usname)" onChange="@command('serch')"/>
+							</vbox>
+						</column>
+					</columns>
+			 
+					<template name="model">
+						<row>
+						       <radio radiogroup="a" value="@load(each.gid)" onCheck="@command('Check',gid=self.value)"/>
+							<cell>
+								<label value="@load(each.gid)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emba_name)" />
+							</cell>
+						</row>
+						
+					</template>
+				</grid>
+			</center>
+			 <south splittable="true" border="0">
+			 <grid >
+			   <foot>
+						<footer align="center">
+							<button label="提交"
+								onClick="@command('subimt',win=wind)" />
+						</footer>
+					</foot>
+            </grid>
+			 </south> 
+		</borderlayout>
+       
+</window>
+</zk>

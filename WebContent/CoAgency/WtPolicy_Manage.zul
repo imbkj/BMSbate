@@ -1,0 +1,97 @@
+<?page title="政策信息" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="政策信息" border="normal" vflex="1" hflex="1"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoAgency.WtPolicy_ManageController')">
+		<hlayout style="margin:10px;">
+			<label>请选择类型</label>
+			<bandbox id="bd" mold="rounded" autodrop="true"
+				tooltiptext="@load(vm.tiptxt)">
+				<bandpopup>
+					<listbox width="170px" model="@load(vm.typelist)"
+						id="typelb" onSelect="@command('checktype',lb=self,bd=bd)"
+						checkmark="true" multiple="true">
+						<template name="model">
+							<listitem label="${each.note_type}"
+								value="@load(each)" />
+						</template>
+					</listbox>
+				</bandpopup>
+			</bandbox>
+			<button onClick="@command('Export2',gd=gd)">导出数据</button>
+			<label style="margin-left:30px;" visible="false">
+				请选择问题
+			</label>
+			<bandbox id="title" mold="rounded" autodrop="true"
+				width="300px" visible="false">
+				<bandpopup>
+					<listbox width="300px" model="@load(vm.titlelist)"
+						id="titlelb" onSelect="@command('checktitle',lb=self,bd=title)"
+						checkmark="true" multiple="true">
+						<template name="model">
+							<listitem label="${each.item_title}"
+								value="@load(each)" />
+						</template>
+					</listbox>
+				</bandpopup>
+			</bandbox>
+		</hlayout>
+		<grid model="@load(vm.list)" vflex="1" id="gd">
+			<rows>
+				<template name="model">
+					<row
+						style="border:1px solid #CCCCCC;background-color:#f5fafe">
+						<cell width="150px">
+							<checkbox value="@load(each)"
+								onCheck="@command('checktitle',model=each,ck=self)">
+							</checkbox>
+							<label value="@load(each.note_type)"></label>
+						</cell>
+						<cell>
+							<grid vflex="1"
+								model="@bind(each.titlelist)">
+								<rows>
+									<template name="model">
+										<row
+											style="border:1px solid #CCCCCC;background-color:#f5fafe;cursor:pointer">
+											<cell width="30px"
+												align="center">
+												<checkbox
+													value="@load(each)">
+												</checkbox>
+											</cell>
+											<cell width="40px"
+												align="center">
+												<label
+													value="${forEachStatus.index+1 }">
+												</label>
+											</cell>
+											<cell width="250px">
+												<label
+													value="@load(each.item_title)">
+												</label>
+											</cell>
+											<cell>
+												<label width="90%"
+													value="@bind(each.item_content)">
+												</label>
+											</cell>
+										</row>
+									</template>
+								</rows>
+							</grid>
+						</cell>
+					</row>
+				</template>
+			</rows>
+			<foot>
+				<footer align="center" span="12">
+					<button label="更新政策" id="btSubmit"
+						onClick="@command('addPolicy')" />
+					<button label="导入更新"
+						onClick="@command('importexcel')" />
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

@@ -1,0 +1,20 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<grid apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('vm') @init('Controller.CoAgencies.CoAg_CityListController')"
+	model="@load(vm.list)"
+	>
+		<columns>
+			<column label="序号" width="60px" align="center"/>
+			<column label="城市" align="center"/>
+		</columns>
+		<rows>
+			<template name="model">
+				<row>
+					<cell><label value="${forEachStatus.index+1 }"></label></cell>
+					<cell><label value="@load(each.name)"></label></cell>
+				</row>
+			</template>
+		</rows>
+	</grid>
+</zk>

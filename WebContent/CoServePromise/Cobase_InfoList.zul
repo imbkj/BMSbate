@@ -1,0 +1,49 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="单位列表" border="normal" apply="org.zkoss.bind.BindComposer" vflex="1"
+	viewModel="@id('vm') @init('Controller.CoServePromise.Cobase_InfoListController')">
+	<style src="/css/style.css"></style>
+<borderlayout>
+<north></north>
+<center>
+<grid vflex="1" id="cobaseinfo" model="@load(vm.list)"
+ mold="paging" pageSize="40" emptyMessage="没有数据">
+		<columns>
+			<column label="序号" align="center" width="60px" sort="auto(cid)"/>
+			<column label="a~z" align="center" sort="auto(coba_spell)"/>
+			<column label="公司名称" sort="auto(coba_company)"/>
+			<column label="vip" align="center" sort="auto(coba_vip)"/>
+			<column label="员工数" align="center" sort="auto(peopnum)"/>
+			<column label="合同数" align="center" sort="auto(coconum)"/>
+			<column label="客服" align="center" sort="auto(coba_client)"/>
+			<column label="操作" align="center" width="150px"/>
+		</columns>
+		<rows>
+			<template name="model">
+			<row>
+				<cell><label value="@load(each.cid)"/></cell>
+				<cell><label value="@load(each.coba_spell)"/></cell>
+				<cell>
+					<hlayout>
+						<label value="${each.coba_company}" />
+						<label style="color:red;" 
+						visible="${each.coba_servicestate==1?false:true}">(已解约)</label>
+					</hlayout>
+				</cell>
+				<cell><label value="@load(each.coba_vip)" style="color:red;"/></cell>
+				<cell><label value="@load(each.peopnum)"/></cell>
+				<cell><label value="@load(each.coconum)"/></cell>
+				<cell><label value="@load(each.coba_client)"/></cell>
+				<cell>
+					<a style="cursor:pointer" id="${each.cid}" onClick="@command('addpromise',model=each)">
+						<label value="新增服务约定"/>
+					</a>
+				</cell>
+			</row>
+			</template>
+		</rows>
+	</grid>
+</center>
+</borderlayout>
+</window>
+</zk>

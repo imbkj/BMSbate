@@ -1,0 +1,52 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="采购礼品" border="normal" width="70%" height="70%" closable="true"
+	apply="org.zkoss.bind.BindComposer" id="editwin"
+	viewModel="@id('vm') @init('Controller.EmBenefit.EmActy_GiftBuysController')"
+>
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell width="100px"><label value="采购人"></label></cell>
+			<cell><textbox value="@load(vm.username)" readonly="true" mold="rounded"></textbox></cell>
+			<cell width="100px"><label value="采购时间"></label></cell>
+			<cell><datebox focus="true" id="datetxt" mold="rounded" value="@bind(vm.buydate)"></datebox></cell>
+		</row>
+		<row>
+			<cell width="100px"><label value="采购清单"></label></cell>
+			<cell colspan="3">
+				<grid model="@load(vm.list)" id="gd">
+					<columns>
+						<column width="50px" align="center">序号</column>
+						<column align="center">商品名称</column>
+						<column align="center">总金额</column>
+						<column align="center">使用库存数量</column>
+						<column align="center">需采购数量</column>
+						<column align="center">采购金额</column>
+					</columns>
+					<rows>
+						<template name="model">
+						<row>
+							<cell><label value="${forEachStatus.index+1 }"></label></cell>
+							<cell><label value="${each.emwf_producefo}${each.emwf_producenum} ${each.prod_unit }"></label></cell>
+							<cell><label value="${each.emwf_price}元"></label></cell>
+							<cell><label value="${each.useh_num} ${each.prod_unit }"></label></cell>
+							<cell><label value="${each.buy_num} ${each.prod_unit }"></label></cell>
+							<cell><label value="${each.emwf_buyprice} 元"></label></cell>
+						</row>
+						</template>
+					</rows>
+				</grid>
+			</cell>
+		</row>
+		<row>
+			<cell>备注</cell>
+			<cell colspan="3"><textbox width="80%" rows="3" id="remark" value="@load(vm.remark)"></textbox></cell>
+		</row>
+	</rows>
+	<foot>
+		<footer align="center"><button onClick="@command('EditGift',win=editwin)">提交</button></footer>
+	</foot>
+</grid>
+</window>
+</zk>

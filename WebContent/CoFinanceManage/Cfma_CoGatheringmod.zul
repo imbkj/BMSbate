@@ -1,0 +1,163 @@
+<?page title="账单收款" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winCollectToBill" title="财务收款" border="normal"
+		width="800px" height="650px" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoFinanceManage.Cfma_CoGatheringmodController')"
+		closable="true" sizable="true" maximizable="true">
+		<borderlayout>
+			<north splittable="true" border="0">
+				<grid width="100%" height="100%">
+					<rows>
+						<row>
+							<cell width="30%">
+								<label value="公司编号：" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.cid)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="公司名称：" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.cobasemodel.coba_company)" />
+							</cell>
+						</row>
+							<row>
+							<cell>
+								<label value="客服：" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.cobasemodel.coba_client)" />
+							</cell>
+						</row>
+							<row>
+							<cell>
+								<label value="合同类别：" />
+							</cell>
+							<cell>
+								<combobox readonly="true"
+									value="@bind(vm.cfss_type)">
+									<comboitem label="派遣" />
+									<comboitem label="非派遣" />
+									<comboitem label="全外包" />
+								</combobox>
+									<label
+									value="*" style="color:red;" />
+							</cell>
+						</row>
+						
+						<row>
+							<cell>
+								<label value="是否提前开票：" />
+							</cell>
+							<cell>
+								 	<label value="是" />
+								 <checkbox   disabled="@load(!vm.kpfrist)" checked="@bind(vm.kpfrist)"></checkbox>
+							 
+									
+							</cell>
+						</row>
+						<row><cell><label value="是否全额开服务费"/></cell><cell><checkbox checked="@bind(vm.allin)" value="是"/></cell></row>
+						
+						<row>
+							<cell>
+								<label value="收款总额：" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.amount)" style="color:red;" />
+							</cell>
+						</row>
+
+						<row>
+							<cell>
+								<label value="本次合计：" />
+							</cell>
+							<cell>
+								 	<label
+									value="@load(vm.sumEx1)" style="color:blue;" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="所属月份" />
+							</cell>
+							<cell>
+							<combobox value="@bind(vm.ownmonth)"
+										mold="rounded" readonly="true">
+										 
+										<comboitem label="${each}"
+											forEach="${vm.ownmonthList}" />
+									</combobox>
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</north>
+			<center border="0">
+				 
+					<grid   height="90%" width="100%"
+					model="@load(vm.ssModellist1)" mold="paging" pageSize="20">
+					<columns>
+						<column align="center" label="科目"/>
+						<column align="center" label="金额"/>
+					</columns>
+					<template name="model">
+						<row>
+							<cell>
+								<label
+									value="@bind(each.cfss_cpac_name)" />
+						
+									
+							</cell>
+							
+							<cell>
+								<decimalbox value="@bind(each.cfss_Receivable)"
+								width="50%" 
+									 mold="rounded" format="###.##"
+									constraint="no empty"
+									onChange="@command('checksum')"
+									 
+									instant="true" />
+							</cell>
+						 </row>	
+					 </template>
+				</grid>
+			</center>
+			<south splittable="true" border="0">
+				<grid width="100%" height="100%">
+				 
+					<rows>
+						<row>
+							<cell width="30%">
+								<label value="备注：" />
+							</cell>
+							<cell>
+								 <textbox value="@bind(vm.remark)"
+									width="80%" mold="rounded" />
+									
+							</cell>
+						</row>
+					</rows>
+					<foot>
+						<footer align="center">
+							<button label="提交"
+								onClick="@command('SubmitCollectDis',win=winCollectToBill)" />
+						</footer>
+					</foot>
+				</grid>
+			</south>
+		</borderlayout>
+		<popup id="popMessage">
+			<groupbox closable="false">
+				<caption>提示</caption>
+				<label value="@load(vm.message)" style="color:blue" />
+			</groupbox>
+		</popup>
+	</window>
+</zk>

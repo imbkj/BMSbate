@@ -1,0 +1,98 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window width="100%" height="100%" title="福利项目 - 新增" id="winEW"
+		border="normal" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmBenefit.EmBenefit_addController')"
+		closable="true">
+
+		<panel title="福利产品信息" collapsible="true">
+			<panelchildren>
+				<grid>
+					<columns>
+						<column width="100px"></column>
+						<column></column>
+						<column width="100px"></column>
+						<column></column>
+					</columns>
+					<rows>
+						<row>
+							<cell>名称</cell>
+							<cell>
+								<combobox id="name"
+									model="@load(vm.nameList)" mold="rounded">
+									<template name="model">
+										<comboitem
+											label="@load(each.embf_name)" />
+									</template>
+								</combobox>
+							</cell>
+							<cell>任务启动时间</cell>
+							<cell>
+								<datebox id="start" mold="rounded" />
+							</cell>
+						</row>
+						<row>
+							<cell>是否循环启动</cell>
+							<cell>
+								<combobox id="aroundType"
+									readonly="true" value="否" mold="rounded">
+									<comboitem label="否" />
+									<comboitem label="是" />
+								</combobox>
+							</cell>
+							<cell>循环周期</cell>
+							<cell>
+								<intbox id="cycle" mold="rounded" />
+								<combobox id="unit" width="50px"
+									value="年" readonly="true" mold="rounded">
+									<comboitem label="年" />
+									<comboitem label="月" />
+									<comboitem label="日" />
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>生成次月数据</cell>
+							<cell>
+								<combobox readonly="true" mold="rounded"
+									value="@bind(vm.ebfm.embf_month)">
+									<comboitem label="是" />
+									<comboitem label="否" />
+								</combobox>
+							</cell>
+							<cell>生效字段</cell>
+							<cell>
+								<combobox readonly="true" mold="rounded"
+									value="@bind(vm.ebfm.embf_field)">
+									<comboitem label="所属月份" />
+									<comboitem label="生日" />
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>福利性质</cell>
+							<cell>
+								<combobox id="mold" mold="rounded"
+									readonly="true">
+
+									<comboitem label="礼品" />
+									<comboitem label="活动" />
+								</combobox>
+							</cell>
+							<cell></cell>
+							<cell>
+
+							</cell>
+						</row>
+					</rows>
+					<foot>
+						<footer align="center" span="4">
+							<button label="提交"
+								onClick="@command('submit')" />
+						</footer>
+					</foot>
+				</grid>
+			</panelchildren>
+		</panel>
+	</window>
+</zk>

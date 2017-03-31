@@ -1,0 +1,33 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<?component name="docDataList" macro-uri="../DocumentsInfo/DocumentsInfo_UpAndBackPageList.zul" inline="true"?>
+<zk>
+	<window title="材料鉴别归档--退回材料" border="normal" width="80%"
+		height="90%" closable="true" id="win"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.Archives.Archive_FileFilingDataUpOrBackController')">
+		<grid>
+			<rows>
+				<row>
+					<cell width="80px">退回资料</cell>
+					<cell>
+						<!-- 材料内联页 参数：puzu_id：模块页面id， doc_type：员工(g)还是公司(c)，gid：公司数据则插入空白 ，业务表id ，log_url：获取到页面路径的前部分-->
+						<docDataList id="docGrid" puzu_id="9"
+							doc_type="g" gid="${vm.models.gid}" tid="${vm.models.eada_id}"
+							log_url="../DocumentsInfo/" dHeight="200px" dWidth="100%" />
+					</cell>
+				</row>
+				<row>
+					<cell align="center" colspan="2">
+						<button
+							onClick="@command('summitback',docGrid=docGrid,win=win)">
+							提交
+						</button>
+						<button onClick="@command('addremark',win=win)">
+						备注
+					</button>
+					</cell>
+				</row>
+			</rows>
+		</grid>
+	</window>
+</zk>

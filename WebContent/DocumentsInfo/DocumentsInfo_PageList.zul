@@ -1,0 +1,57 @@
+<!--
+	创建人：陈耀家
+	创建时间：2014-3-17
+	用途：业务显示页面材料显示页
+-->
+<grid id="${arg.id}" apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('vm') @init('Controller.DocumentsInfo.DocumentsInfo_UpPageListController')"
+	emptyMessage="无数据" model="@load(vm.docList)" height="${arg.dHeight}"
+	width="${arg.dWidth}">
+	<columns>
+		<column width="35px"></column>
+		<column label=" 内容" align="center" sort="auto(doin_content)" />
+		<column width="50px" label=" 份数" align="center" />
+		<column label="是否有上传文件" align="center" sort="auto(pupi_state)" />
+		<column label=" 上一手交接人" align="center" />
+		<column label=" 操作" align="center" />
+	</columns>
+	<rows>
+		<template name="model">
+			<row style="color:#666;">
+				<cell>
+					<checkbox
+						checked="${each.dsin_ifsubmit==0?  false:true}"
+						onClick="@command('onclickck',ck=self)" />
+				</cell>
+				<cell>
+					<hbox>
+						<label value="@load(each.doin_content)" />
+						<label style="color:red;" value="(*)"
+							if="${each.dire_ifhaveto==1}" />
+					</hbox>
+				</cell>
+				<cell>
+					<intbox width="30px" value="@load(each.dsin_count)"
+						mold="rounded" />
+				</cell>
+				<cell>
+					<label value="${each.pupi_state!=1? '无':''}" />
+					<label value="${each.pupi_state==1? '已有上传文件':''}"
+						style="cursor:pointer;" onClick="@command('ShowDoc')" />
+				</cell>
+				<cell>
+					<combobox model="@load(vm.handoverList)" width="80%"
+						visible="${each.pupi_state==1?  false:true}" mold="rounded">
+						<template name="model">
+							<comboitem label="@load(each.log_name)" />
+						</template>
+					</combobox>
+				</cell>
+				<cell>
+					<label style="cursor:pointer;" value="记录"
+						onClick="@command('ShowDocLog',dsin_id=each.dsin_id)" />
+				</cell>
+			</row>
+		</template>
+	</rows>
+</grid>

@@ -1,0 +1,113 @@
+<?page title="社保算法变更审核" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winAlExamined" title="社保算法变更审核" border="normal"
+		height="80%" width="60%" closable="true"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.SocialInsurance.Algorithm_ExaminedController')"
+		sizable="true">
+		<borderlayout vflex="1" hflex="1">
+			<center title="变更信息">
+				<panel border="0" >
+					
+					<panelchildren >
+			<scrollview height="40%"  >
+			<groupbox title="政策信息" >
+					<include src="../CoPolicyNotice/Pono_PubInfoList.zul" cpnt_type="字典库新增" 
+					cpnr_data_id="${vm.sich_id}">
+					</include>
+
+				</groupbox>
+			</scrollview>
+				<groupbox height="60%">
+				<grid>
+					<rows>
+						<row>
+							<cell style="color:#666;">算法描述：</cell>
+							<cell style="color:#666;">
+								<label
+									value="@load(vm.sicModel.sich_title)" />
+							</cell>
+							<cell style="color:#666;">算法开始执行时间：</cell>
+							<cell style="color:#666;">
+								<label
+									value="@load(vm.sicModel.execdate)" />
+							</cell>
+							<cell style="color:#666;">变更类型：</cell>
+							<cell style="color:#666;">
+								<label
+									value="@load(vm.sicModel.sich_change_typestr)"
+									style="color:red;" />
+							</cell>
+						</row>
+						<row>
+							<cell style="color:#666;">城市：</cell>
+							<cell style="color:#666;">
+								<label value="@load(vm.sicModel.city)" />
+							</cell>
+							<cell style="color:#666;">机构名称：</cell>
+							<cell style="color:#666;" colspan="3">
+								<label
+									value="@load(vm.sicModel.coab_name)" />
+							</cell>
+						</row>
+						<row>
+							<cell style="color:#666;">添加人：</cell>
+							<cell style="color:#666;">
+								<label
+									value="@load(vm.sicModel.sich_addname)" />
+							</cell>
+							<cell style="color:#666;">添加时间：</cell>
+							<cell style="color:#666;">
+								<label
+									value="@load(vm.sicModel.sich_addtime)" />
+							</cell>
+							<cell style="color:#666;">状态：</cell>
+							<cell style="color:#666;">
+								<label
+									value="@load(vm.sicModel.sich_statestr)" />
+							</cell>
+						</row>
+						<row
+							if="${vm.sicModel.sich_change_type==4 or vm.sicModel.sich_change_type==5}">
+							<cell style="color:#666;">停用原因：</cell>
+							<cell style="color:#666;" colspan="5">
+								<label
+									value="@bind(vm.sicModel.sich_Reason)" />
+							</cell>
+						</row>
+						<row>
+							<cell style="color:#666;">退回原因：</cell>
+							<cell style="color:#666;" colspan="5">
+								<textbox
+									value="@bind(vm.sicModel.sich_ReturnReason)" rows="3"
+									width="60%" mold="rounded" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+				</groupbox>
+				</panelchildren>
+				</panel>
+			</center>
+			<south collapsible="true" splittable="true"
+				autoscroll="true">
+				<div align="center" width="100%">
+					<button label="查看算法" onClick="@command('searchAl')" />
+					<button label="重新提交" visible="@load(vm.submitVis)"
+						onClick="@command('resubmit',win=winAlExamined)"
+						if="${vm.sicModel.sich_state==2}" />
+					<button label="退回" if="${vm.sicModel.sich_state==0}"
+						onClick="@command('returnPre',win=winAlExamined)"
+						visible="@load(vm.submitVis)" />
+					<button label="审核通过"
+						if="${vm.sicModel.sich_state==0}"
+						onClick="@command('confirm',win=winAlExamined)"
+						visible="@load(vm.submitVis)" />
+					<button label="终止流程"
+						onClick="@command('StopTask',win=winAlExamined)"
+						if="${vm.sicModel.sich_state==2}" visible="@load(vm.submitVis)" />
+				</div>
+			</south>
+		</borderlayout>
+	</window>
+</zk>

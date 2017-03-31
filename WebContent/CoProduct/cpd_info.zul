@@ -1,0 +1,135 @@
+<?page contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="mywin" title="产品信息详情" border="normal" width="700px"
+		height="580px" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoProduct.cpd_infoController')"
+		closable="true" onCreate="@command('cw',w=self)">
+		<borderlayout>
+			<center autoscroll="true">
+				<grid>
+					<columns>
+						<column width="15%"></column>
+						<column></column>
+						<column width="15%"></column>
+						<column></column>
+					</columns>
+					<rows>
+						<row>
+							产品名称：
+							<cell colspan="3">
+								${arg.cop.copr_name }
+							</cell>
+						</row>
+						<row>
+							产品类型：
+							<cell>
+								<hlayout>
+									${arg.cop.copr_type }
+									<space />
+									${arg.cop.copc_name }
+								</hlayout>
+							</cell>
+							所属科目：
+							<cell>${arg.cop.cpac_name }</cell>
+						</row>
+						<row>
+							享受方式：
+							<cell colspan="3">
+								<checkbox id="allchose" label="(全选)"
+									onCheck="@command('allselect',select=event.checked)">
+								</checkbox>
+								<chosenbox id="cpst_name"
+									model="@load(vm.standardlist)" emptyMessage="请选择享受方式" hflex="1"
+									onCreate="@command('selectedstand')">
+								</chosenbox>
+							</cell>
+						</row>
+						<row>
+							城市/委托机构:
+							<cell colspan="3">
+								<hlayout>
+									<combobox id="city"
+										model="@load(vm.cityList)" width="180px"
+										onSelect="@command('city_change')"
+										selectedItem="@bind(vm.cityModel)">
+										<template name="model">
+											<comboitem
+												label="@load(each.name)" />
+										</template>
+									</combobox>
+									<space />
+									<combobox
+										model="@load(vm.scoagList)" readonly="true"
+										selectedItem="@bind(vm.coagModel)">
+										<template name="model">
+											<comboitem
+												label="@load(each.coab_name)" />
+										</template>
+									</combobox>
+								</hlayout>
+							</cell>
+						</row>
+						<row>
+							描述：
+							<cell colspan="3">
+								<textbox id="copr_content" rows="5"
+									width="99%" value="${arg.cop.copr_content }">
+								</textbox>
+							</cell>
+						</row>
+						<row>
+							<cell colspan="4">默认收费单位与默认收费金额：</cell>
+						</row>
+						<row height="240px">
+							<cell colspan="4" valign="top">
+								<grid id="gd"
+									model="@load(vm.eclasslist)">
+									<columns>
+										<column label="默认收费金额"
+											align="center">
+										</column>
+										<column label="默认收费单位"
+											align="center">
+											<checkbox
+												onClick="@command('gdallselect',check=self.checked)" />
+										</column>
+										<column label="费用锁定"
+											align="center">
+											<image
+												src="/images/lock.png">
+											</image>
+										</column>
+									</columns>
+									<template name="model">
+										<row>
+											<cell>
+												<doublebox
+													onFocus="self.select()" format=",###.###"
+													value="@bind(each.fee)" />
+											</cell>
+											<cell>
+												<checkbox
+													style="cursor:pointer" value="@load(each.cpfc_id)"
+													label="@load(each.cpfc_name)" checked="@bind(each.ifU)" />
+											</cell>
+											<cell>
+												<checkbox
+													checked="@bind(each.cpfr_lock1)" tooltiptext="是否锁定">
+												</checkbox>
+											</cell>
+										</row>
+									</template>
+								</grid>
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</center>
+			<south>
+				<hbox width="100%" align="center" pack="center">
+					<button id="submit" label="保存" onClick="@command('cpdMod')"></button>
+				</hbox>
+			</south>
+		</borderlayout>
+	</window>
+</zk>

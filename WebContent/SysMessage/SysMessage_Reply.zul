@@ -1,0 +1,156 @@
+<?page contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="win" title="回复系统短信" border="normal" width="780px"
+		height="600px" closable="true" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.SysMessage.SysMessage_ReplyController')">
+		<grid height="95%">
+			<columns>
+				<column width="15%"></column>
+				<column></column>
+			</columns>
+			<rows>
+				<row>
+					<cell colspan="2">
+						<columnlayout height="280px">
+							<columnchildren width="60%">
+								<panel title="员工列表">
+									<caption>
+										<checkbox label="回复全部" style="color:#666"
+											checked="@bind(vm.ischeck)" onCheck="@command('check')" />
+									</caption>
+									<panelchildren>
+										<listbox id="ltblogin"
+											mold="paging" pageSize="15" model="@load(vm.loginList)"
+											height="240px" multiple="true" emptyMessage="暂无数据">
+											<listhead>
+												<listheader
+													align="center">
+													<label value="姓名" />
+													<separator
+														height="0px" />
+													<textbox
+														instant="true" value="@bind(vm.name)"
+														onChange="@command('search')" mold="rounded">
+													</textbox>
+												</listheader>
+												<listheader
+													align="center">
+													<label value="部门" />
+													<separator
+														height="0px" />
+													<combobox
+														model="@load(vm.deptList)" readonly="true"
+														selectedItem="@bind(vm.depModel)" instant="true"
+														onChange="@command('search')">
+														<template
+															name="model">
+															<comboitem
+																label="@load(each.dep_name)" />
+														</template>
+													</combobox>
+												</listheader>
+											</listhead>
+											<template name="model">
+												<listitem>
+													<listcell
+														label="@load(each.log_name)"
+														onClick="@command('addsingleselect',selectitem=each)" />
+													<listcell
+														label="@load(each.dep_name)" />
+												</listitem>
+											</template>
+										</listbox>
+									</panelchildren>
+								</panel>
+							</columnchildren>
+							<columnchildren width="70px">
+								<div style="margin:60px 25px">
+									<image style="cursor:pointer"
+										src="/images/rightrightarrow_g.png"
+										onClick="@command('allselect')" />
+									<separator height="15px" />
+									<image style="cursor:pointer"
+										src="/images/rightarrow_g.png"
+										onClick="@command('addselect',selectitems=ltblogin.selectedItems)" />
+									<separator height="15px" />
+									<image style="cursor:pointer"
+										src="/images/leftarrow_g.png"
+										onClick="@command('removeselect',selectitems=ltbselect.selectedItems)" />
+									<separator height="15px" />
+									<image style="cursor:pointer"
+										src="/images/leftleftarrow_g.png"
+										onClick="@command('allremove')" />
+								</div>
+							</columnchildren>
+							<columnchildren width="40%">
+								<panel title="已选择的接收人">
+									<panelchildren>
+										<listbox id="ltbselect"
+											mold="paging" pageSize="15"
+											onCreate="@command('initltb',ltb=self)"
+											model="@load(vm.selectloginliList)" height="240px"
+											emptyMessage="暂无数据">
+											<listhead>
+												<listheader>
+													<label value="姓名" />
+												</listheader>
+											</listhead>
+											<template name="model">
+												<listitem>
+													<listcell
+														onClick="@command('removesingleselect',selectitem=each)"
+														label="@load(each.log_name)" />
+												</listitem>
+											</template>
+										</listbox>
+									</panelchildren>
+								</panel>
+							</columnchildren>
+						</columnlayout>
+					</cell>
+				</row>
+				<row>
+					可选择模板
+					<combobox readonly="true" instant="true"
+						onChange="@command('temselect',cbbClass=cbbClass)" 
+						model="@load(vm.temList)"
+						selectedItem="@bind(vm.temModel)" mold="rounded">
+						<template name="model">
+							<comboitem label="@load(each.pmte_model)" />
+						</template>
+					</combobox>
+				</row>
+				<row>
+					业务类型
+					<combobox id="cbbClass" readonly="true" mold="rounded"
+						model="@load(vm.classList)" value="@bind(vm.title)">
+						<template name="model">
+							<comboitem label="@load(each.wfcl_name)" />
+						</template>
+					</combobox>
+				</row>
+				<row>
+					<cell colspan="2">
+
+					</cell>
+				</row>
+				<row>
+					<label value="内容" style="color:#666" />
+					<cell>
+						<textbox rows="5" hflex="1" vflex="1"
+							value="@bind(vm.content)">
+						</textbox>
+					</cell>
+				</row>
+				<row>
+					发送人
+					<label value="@load(vm.username)" />
+				</row>
+			</rows>
+		</grid>
+		<hbox pack="center" width="100%">
+			<button label="暂存" onClick="@command('save',win=win)"></button>
+			<button label="发送" onClick="@command('send',win=win)"></button>
+		</hbox>
+	</window>
+</zk>

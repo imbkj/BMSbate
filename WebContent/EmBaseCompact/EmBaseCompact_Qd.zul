@@ -1,0 +1,42 @@
+<?page title="合同待签订" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="合同待签订" border="normal" 
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmBaseCompact.EmBaseCompact_QdController')"
+		width="400px" closable="true">
+		<label id="ebcc_id" value="${arg.daid}" visible="false" />
+		<label id="ebcc_tapr_id" value="${arg.id}" visible="false" />
+		<groupbox title="合同待签订信息" mold="3d">
+			<grid vflex="1" hflex="1">
+				<rows>
+					<row>
+						<cell width="100px">签订方式：</cell>
+						<cell>
+							<combobox width="130px" id="embase2"
+								readonly="true" mold="rounded">
+								<comboitem value="上门签订" label="上门签订" />
+								<comboitem value="邮寄员工" label="邮寄员工" />
+								<comboitem value="邮寄指定人" label="邮寄指定人" />
+								<comboitem value="转交客服" label="转交客服" />
+							</combobox>
+						</cell>
+					</row>
+					<row>
+						<cell width="130px">签订时间：</cell>
+						<cell>
+							<datebox width="130px" id="embase1"
+								format="yyyy-MM-dd" mold="rounded" onFocus="self.select()" />
+						</cell>
+					</row>
+					
+					<row>
+						<cell colspan="2" align="center">
+							<button label="提交" id="qdcompact" onClick="@command('qdcompact',embase2=embase2,embase1=embase1,ebcc_id=ebcc_id,ebcc_tapr_id=ebcc_tapr_id)" />
+							<button label="查看合同约定" id="chcompact" onClick="@command('Submit',gd=docGrid,tb1=content)" />
+						</cell>
+					</row>
+				</rows>
+			</grid>
+		</groupbox>
+	</window>
+</zk>

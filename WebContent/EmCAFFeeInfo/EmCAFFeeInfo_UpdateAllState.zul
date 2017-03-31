@@ -1,0 +1,88 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="证件档案费用 -- 费用数据处理页面" border="normal" width="80%"
+		height="75%" closable="true" id="winEUSA"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmCAFFeeInfo.EmCAFFeeInfo_UpdateAllStateController')">
+		<scrollview vflex="1" hflex="1">
+			<grid id="gridwin" height="100%" width="100%">
+				<rows>
+					<row>
+						<cell>付款状态</cell>
+						<cell style="color:#00F;">
+							<combobox mold="rounded" width="70%"
+								id="ecfi_payment_state" readonly="true">
+								<comboitem label="未付" />
+								<comboitem label="已付" />
+							</combobox>
+						</cell>
+						<cell>是否可借款</cell>
+						<cell style="color:#00F;">
+							<combobox mold="rounded" width="70%"
+								id="ecfi_loanstate" readonly="true">
+								<comboitem label="是" value="1" />
+								<comboitem label="否" value="0" />
+							</combobox>
+						</cell>
+					</row>
+					<row>
+						<cell>福利部申请人</cell>
+						<cell style="color:#00F;">
+							<combobox mold="rounded" width="70%"
+								model="@load(vm.wdaList)" id="ecfi_wd_applicant"
+								readonly="true">
+								<template name="model">
+									<comboitem
+										label="@load(each.hape_username)" />
+								</template>
+							</combobox>
+						</cell>
+						<cell>客服部申请人</cell>
+						<cell style="color:#00F;">
+							<combobox mold="rounded" width="70%"
+								model="@load(vm.csdaList)" id="ecfi_csd_applicant"
+								readonly="true">
+								<template name="model">
+									<comboitem
+										label="@load(each.hape_username)" />
+								</template>
+							</combobox>
+						</cell>
+					</row>
+					<row>
+						<cell>福利部借款日期</cell>
+						<cell style="color:#00F;">
+							<datebox id="ecfi_wd_loan_date" constraint="no future"
+								mold="rounded" readonly="true" />
+						</cell>
+						<cell>客服部借款日期</cell>
+						<cell style="color:#00F;">
+							<datebox id="ecfi_csd_loan_date" constraint="no future"
+								mold="rounded" readonly="true" />
+						</cell>
+					</row>
+					<row>
+						<cell>
+							<label value="收发票日期"/>
+						</cell>
+						<cell style="color:#00F;">
+							<datebox id="ecfi_ri_date" mold="rounded" constraint="no future"
+								readonly="true" />
+						</cell>
+						<cell>客服部清账日期</cell>
+						<cell style="color:#00F;">
+							<datebox id="ecfi_csd_clearing_date"  constraint="no future"
+								mold="rounded" readonly="true" />
+						</cell>
+					</row>
+				</rows>
+				<foot>
+					<footer align="center">
+						<button label="提交" id="btSubmit"
+							onClick="@command('submit',win=winEUSA)" />
+					</footer>
+				</foot>
+			</grid>
+		</scrollview>
+	</window>
+</zk>

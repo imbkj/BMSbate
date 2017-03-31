@@ -1,0 +1,146 @@
+<?page title="公积金台账入账" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="公积金台账入账" border="normal" vflex="1"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmFinanceManage.Finance_HouseGatListController')">
+		<borderlayout>
+			<north border="0" title="检索" collapsible="true"
+				style="padding-bottom:10px;">
+				<grid>
+					<rows>
+						<row>
+							<cell width="80px">公司编号</cell>
+							<cell>
+								<textbox value="@bind(vm.cid)"></textbox>
+							</cell>
+							<cell width="80px">公司名称</cell>
+							<cell>
+								<textbox value="@bind(vm.company)"></textbox>
+							</cell>
+							<cell width="80px">客服</cell>
+							<cell>
+								<textbox value="@bind(vm.client)"></textbox>
+							</cell>
+							<cell width="80px">所属月份</cell>
+							<cell>
+								<monthbox id="ownmonth" sclass="datebox-month-only"
+									format="yyyyMM"></monthbox>
+							</cell>
+							<cell width="80px">账户类型</cell>
+							<cell>
+								<combobox value="@bind(vm.single)">
+									<comboitem label="" />
+									<comboitem label="中智户" />
+								
+								</combobox>
+							</cell>
+						</row>
+
+					</rows>
+					<foot>
+						<footer align="center">
+							<label value="中智帐户扣款总额："></label>
+							<label value="@load(vm.zztotal)" style="color:red;font-weight:bold;font-size:14px;"></label>
+							<label value="元" style="margin-right:20px;"></label>
+							
+							<button
+								onClick="@command('search',ownmonth=ownmonth.value)">
+								查询
+							</button>
+							<button
+								onClick="@command('OutExcel')">
+								导出Excel
+							</button>
+							<button
+								onClick="@command('addoffer')">
+								生成中智户会计分录
+							</button>
+						</footer>
+					</foot>
+				</grid>
+			</north>
+			<center>
+				<grid span="true" mold="paging" pageSize="100" id="gd"
+					model="@load(vm.list)" emptyMessage="无数据" sizedByContent="true"
+					hflex="1" vflex="1">
+					<columns id="colums">
+						<column label="序号" align="center" sort=""
+							width="60px" />
+						<column label="委托机构" align="center" sort="" />
+						<column label="所属月份" align="center" sort=""
+							width="60px" />
+						<column label="用友编号" align="center" sort=""
+							width="60px" />
+						<column label="客户类型" align="center" sort="" />
+						<column label="科目代码" align="center" sort="" />
+						<column label="公司编号" align="center" sort="" />
+						<column label="公司名称" align="center" sort="" />
+						<column label="公积金扣款总额" align="center" sort="" />
+						<column label="公积金收款金额" align="center" sort="" />
+						<column label="差额" align="center" sort="" />
+						<column label="客服" align="center" sort="" />
+						<column label="到账情况" align="center" sort="" />
+						<column label="操作" align="center" sort=""
+							width="60px" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<cell>
+									<label
+										value="@load(forEachStatus.index + 1)" />
+								</cell>
+								<cell>
+									<label value="@load(each.coab_name)" />
+								</cell>
+								<cell>
+									<label value="@load(each.ownmonth)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.coba_ufid2)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.clientclass)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.coba_hsufclass)" />
+								</cell>
+								<cell>
+									<label value="@load(each.cid)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.coba_company)" />
+								</cell>
+								<cell>
+									<label value="@load(each.hstotal)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.cfsa_total)" />
+								</cell>
+								<cell>
+									<label
+										value="${each.hstotal-each.cfsa_total }" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.coba_client)" />
+								</cell>
+								<cell>
+									<label value="已托收" />
+								</cell>
+								<cell>
+									
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

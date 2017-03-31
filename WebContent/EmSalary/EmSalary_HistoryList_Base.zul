@@ -1,0 +1,190 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<vbox apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('vm') @init('Controller.EmSalary.EmSalary_HistoryList_BaseController')"
+	width="100%">
+	<div width="100%" align="center" if="${!vm.ifData}">
+		<label value="暂无数据" />
+	</div>
+	<div width="100%" align="center" if="${vm.ifData}">
+		<label value="共" />
+		<label value="${vm.sumData+vm.empa_count}" style="color:red;" />
+		<label value="条记录，总金额" />
+		<label value="${vm.totalEx+vm.empa_total}" style="color:red;" />
+		<label value="元" />
+	</div>
+	<groupbox mold="3d" width="100%" forEach="${vm.map}">
+		<caption>
+			<hbox align="start" width="100%">
+				<label value="公司编号：" />
+				<label value="${each.value.cid}" style="color:blue;" />
+				<separator />
+				<label value="公司简称：" style="padding-left: 10px;" />
+				<label value="${each.value.coba_shortname}"
+					style="color:blue;" />
+				<separator />
+				<label value="所属月份：" style="padding-left: 10px;" />
+				<label value="${each.value.ownmonth}"
+					style="color:blue;" />
+				<separator />
+				<label value="共" style="padding-left: 10px;" />
+				<label value="${each.value.esdaListSize}"
+					style="color:red;" />
+				<label value="条记录，总发放金额" />
+				<label value="${each.value.sumModel.esda_pay}"
+					style="color:red;" />
+				<label value="元" />
+			</hbox>
+		</caption>
+		<grid emptyMessage="暂无数据" sizedByContent="true" span="true"
+			height="100%">
+			<columns sizable="true">
+				<column label="员工姓名" align="center" />
+				<column label="员工编号" align="center" />
+				<column label="用         途" align="center" />
+				<column label="财务备注" align="center" />
+				<column label="税前工资" align="center" />
+				<column label="社保个人部分" align="center" />
+				<column label="住房公积金个人部分" align="center" />
+				<column label="应纳税工资" align="center" />
+				<column label="劳务报酬" align="center" />
+				<column label="劳务报酬个人所得税" align="center" />
+				<column label="个人所得税" align="center" />
+				<column label="年终奖金" align="center" />
+				<column label="年终奖金个税" align="center" />
+				<column label="离职补偿金" align="center" />
+				<column label="离职补偿金个税" align="center" />
+				<column label="股票收入" align="center" />
+				<column label="股票税" align="center" />
+				<column label="报销费用" align="center" />
+				<column label="住房返还" align="center" />
+				<column label="实发工资" align="center" />
+			</columns>
+			<rows>
+				<row forEach="${each.value.esdaList}">
+					<label value="${each.name}" />
+					<label value="${each.gid}" />
+					<cell>
+						<hbox>
+							<label value="${each.esda_usage_typestr}" />
+							<label value=" - 重发" if="${each.esda_rp_reason !=0}"/>
+						</hbox>
+					</cell>
+					<label
+						style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden"
+						value="${each.esda_fd_remark}"
+						tooltiptext="${each.esda_fd_remark}" />
+					<label value="${each.esda_total_pretax}" />
+					<label value="${each.esda_siop}" />
+					<label value="${each.esda_hafop}" />
+					<label value="${each.esda_tax_base}" />
+					<label value="${each.esda_lw_tax_base}" />
+					<label value="${each.esda_lw_tax}" />
+					<label value="${each.esda_tax}" />
+					<label value="${each.esda_db}" />
+					<label value="${each.esda_db_tax}" />
+					<label value="${each.esda_dc}" />
+					<label value="${each.esda_dc_tax}" />
+					<label value="${each.esda_stock}" />
+					<label value="${each.esda_stock_tax}" />
+					<label value="${each.esda_write_off}" />
+					<label value="${each.esda_house_bf}" />
+					<label value="${each.esda_pay}" />
+				</row>
+				<row style="background-color: #E3F2FF;">
+					<label value="金额合计" />
+					<cell colspan="3">
+						<hlayout>
+							<label value="共" />
+							<label value="${each.value.esdaListSize}"
+								style="color:red;" />
+							<label value="条记录" />
+						</hlayout>
+					</cell>
+					<label
+						value="${each.value.sumModel.esda_total_pretax}" />
+					<label value="${each.value.sumModel.esda_siop}" />
+					<label value="${each.value.sumModel.esda_hafop}" />
+					<label value="${each.value.sumModel.esda_tax_base}" />
+					<label
+						value="${each.value.sumModel.esda_lw_tax_base}" />
+					<label value="${each.value.sumModel.esda_lw_tax}" />
+					<label value="${each.value.sumModel.esda_tax}" />
+					<label value="${each.value.sumModel.esda_db}" />
+					<label value="${each.value.sumModel.esda_db_tax}" />
+					<label value="${each.value.sumModel.esda_dc}" />
+					<label value="${each.value.sumModel.esda_dc_tax}" />
+					<label value="${each.value.sumModel.esda_stock}" />
+					<label
+						value="${each.value.sumModel.esda_stock_tax}" />
+					<label
+						value="${each.value.sumModel.esda_write_off}" />
+					<label value="${each.value.sumModel.esda_house_bf}" />
+					<label value="${each.value.sumModel.esda_pay}" />
+				</row>
+				<row>
+					<label value="财务备注" />
+					<label
+						value="${each.value.sumModel.esda_fd_remark}" />
+				</row>
+				<row>
+					<label value="客服备注" />
+					<label value="${each.value.sumModel.esda_remark}" />
+				</row>
+			</rows>
+		</grid>
+	</groupbox>
+	<groupbox mold="3d" width="100%">
+		<caption>
+			<hbox align="start" width="100%">
+				<label value="通过支付模块发放的数据" />
+				<separator />
+				<label value="共" style="padding-left: 10px;" />
+				<label value="${vm.empa_count}" style="color:red;" />
+				<label value="条记录，总发放金额" />
+				<label value="${vm.empa_total}" style="color:red;" />
+				<label value="元" />
+			</hbox>
+		</caption>
+		<grid emptyMessage="暂无数据" sizedByContent="true" span="true"
+			height="100%">
+			<columns sizable="true">
+				<column label="公司编号" align="center" />
+				<column label="公司简称" align="center" />
+				<column label="所属月份" align="center" />
+				<column label="员工编号" align="center" />
+				<column label="员工姓名" align="center" />
+				<column label="款项类别" align="center" />
+				<column label="状态" align="center" />
+				<column label="金额" align="center" />
+				<column label="备注" align="center" />
+			</columns>
+			<rows>
+				<row forEach="${vm.empaList}">
+					<label value="${each.cid}" />
+					<label value="${each.coba_shortname}" />
+					<label value="${each.ownmonth}" />
+					<label value="${each.gid}" />
+					<label value="${each.empa_ba_name}" />
+					<label value="${each.empa_class}" />
+					<label value="未发" if="${each.empa_ifpay==0}" />
+					<label value="已发" if="${each.empa_ifpay==1}" />
+					<label value="${each.empa_fee}" />
+					<label value="${each.empa_remark}" />
+				</row>
+				<row style="background-color: #E3F2FF;">
+					<label value="金额合计" />
+					<cell colspan="6">
+						<hlayout>
+							<label value="共" />
+							<label value="${vm.empa_count}"
+								style="color:red;" />
+							<label value="条记录" />
+						</hlayout>
+					</cell>
+					<label value="${vm.empa_total}" />
+					<cell></cell>
+				</row>
+			</rows>
+		</grid>
+	</groupbox>
+</vbox>

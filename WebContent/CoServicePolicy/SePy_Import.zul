@@ -1,0 +1,25 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="导入服务政策信息" border="normal" width="500px"
+		apply="org.zkoss.bind.BindComposer" id="uploadwin"
+		viewModel="@id('vm') @init('Controller.CoServicePolicy.SePy_ImportController')"
+		height="300px" closable="true">
+		<grid vflex="1">
+			<rows>
+				<row>
+					<cell width="100px">请选择上传文件</cell>
+					<cell>
+						<textbox width="70%" value="@bind(vm.filename)"></textbox>
+						<button upload="true" onUpload="@command('onupload')"
+							label="选择文件" />
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button onClick="@command('submit',win=uploadwin)">提交</button>
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

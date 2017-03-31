@@ -1,0 +1,18 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="退回" border="normal" width="600px" height="300px" id="backwin"
+		closable="true" apply="org.zkoss.bind.BindComposer"
+    viewModel="@id('vm') @init('Controller.EmBodyCheck.Embc_BackController')">
+		<grid vflex="1">
+			<rows>
+				<row>
+					<cell width="80px">退回原因</cell>
+					<cell><textbox width="80%" rows="5" value="@bind(vm.contents)"></textbox></cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center"><button onClick="@command('backclient',win=backwin)">提交</button></footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

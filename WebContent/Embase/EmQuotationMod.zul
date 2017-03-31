@@ -1,0 +1,139 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window width="100%" height="100%" title="员工报价单信息" id="winQTM"
+		border="normal" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.Embase.EmQuotationModController')"
+		onCreate="@command('winq',a=self)" closable="true">
+
+		<borderlayout>
+			<north height="40%">
+				<groupbox height="100%">
+					<grid height="16%">
+						<rows>
+							<row>
+								<cell width="120px">员工信息</cell>
+								<cell>
+									<textbox value="@bind(vm.emp)"
+										onChange="@command('searchEmp')" instant="true" />
+								</cell>
+							</row>
+						</rows>
+					</grid>
+					<grid id="EmpGd" model="@load(vm.eblist)"
+						height="84%">
+
+						<columns>
+							<column width="60px" align="center">
+								序号
+							</column>
+							<column align="center">公司名称</column>
+							<column align="center">姓名</column>
+							<column align="center">身份证</column>
+							<column align="center">员工编号</column>
+							<column align="center"></column>
+						</columns>
+						<template name="model">
+							<row>
+								<cell>${forEachStatus.index+1 }</cell>
+								<cell>
+									<label
+										value="@load(each.coba_company)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emba_name)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emba_idcard)" />
+								</cell>
+								<cell>
+									<label value="@load(each.gid)" />
+								</cell>
+								<cell>
+									<button label="修改员工产品"
+										onClick="@command('info',a=each)" />
+
+								</cell>
+							</row>
+						</template>
+					</grid>
+				</groupbox>
+			</north>
+			<center>
+				<groupbox height="100%">
+					<grid>
+						<rows>
+							<row>
+								<cell width="120px">产品名称</cell>
+								<cell width="250px">
+									<textbox value="@bind(vm.item)"
+										onChange="@command('searchItem')" instant="true" />
+								</cell>
+								<cell width="60px">员工编号:</cell>
+								<cell>
+									<label value="@load(vm.gid)" />
+								</cell>
+							</row>
+						</rows>
+					</grid>
+					<grid model="@load(vm.cgList)" height="90%">
+						<columns>
+							<column align="center" width="60px"
+								label="序号" />
+							<column align="center" label="合同号" />
+							<column align="center" label="报价单名称" />
+							<column align="center" label="产品类型" />
+							<column align="center" label="产品名称" />
+							<column align="center" label="服务起始时间" />
+							<column align="center" label="收费起始时间" />
+							<column align="center" label="终止收费时间" />
+							<column align="center" width="60px" />
+						</columns>
+						<template name="model">
+							<row>
+								<cell>${forEachStatus.index+1 }</cell>
+								<cell>
+									<label
+										value="@load(each.coco_compactid)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.coof_name)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.copc_name)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.coli_name)" />
+								</cell>
+								<cell>
+									<monthbox hflex="1" inplace="true"
+										value="@bind(each.startDate2)" format="yyyyMM"
+										onChange="@command('updateInfo',a=each,b=1,c=self)" />
+								</cell>
+								<cell>
+									<monthbox hflex="1" inplace="true"
+										value="@bind(each.startDate)" format="yyyyMM"
+										onChange="@command('updateInfo',a=each,b=2,c=self)" />
+								</cell>
+								<cell>
+									<monthbox hflex="1" inplace="true"
+										value="@bind(each.stopDate)" format="yyyyMM"
+										onChange="@command('updateInfo',a=each,b=3,c=self)" />
+								</cell>
+								<cell>
+									<checkbox
+										checked="@bind(each.checked)"
+										onClick="@command('updateInfo',a=each,b=4,c=self)" />
+								</cell>
+							</row>
+						</template>
+					</grid>
+				</groupbox>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

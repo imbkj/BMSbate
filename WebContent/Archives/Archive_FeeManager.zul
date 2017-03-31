@@ -1,0 +1,225 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winfee" width="100%" height="100%" title="员工档案 - 档案续费"
+		border="normal" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.Archives.Archive_FeeManagerController')"
+		onCreate="@command('winC',a=self)">
+		<borderlayout>
+			<north title="高级查询" collapsible="true" open="true">
+				<grid>
+					<rows>
+						<row>
+							<cell width="100px">所属月份:</cell>
+							<cell>
+								<combobox id="ownmonth" readonly="true"
+									mold="rounded" value="@bind(vm.epModel.ownmonth)"
+									model="@load(vm.ownmonthList)">
+									<template name="model">
+										<comboitem
+											label="@load(each.ownmonth)" />
+									</template>
+								</combobox>
+							</cell>
+							<cell width="100px">公司名称:</cell>
+							<cell>
+								<textbox id="company" mold="rounded"
+									value="@bind(vm.epModel.emap_company)" />
+							</cell>
+							<cell width="100px">员工姓名:</cell>
+							<cell>
+								<textbox id="emp" mold="rounded"
+									value="@bind(vm.epModel.emap_name)" />
+							</cell>
+
+						</row>
+						<row>
+							<cell>档案所在地:</cell>
+							<cell>
+								<textbox id="fileplace" mold="rounded"
+									value="@bind(vm.epModel.emap_fileplace)" />
+							</cell>
+							<cell>单号:</cell>
+							<cell>
+								<textbox id="filenum" mold="rounded"
+									value="@bind(vm.epModel.emap_idlist)" />
+							</cell>
+							<cell>费用状态:</cell>
+							<cell>
+								<combobox id="feetype" mold="rounded"
+									readonly="true">
+									<comboitem value="" label=""></comboitem>
+									<comboitem value="1" label="未确认"></comboitem>
+									<comboitem value="2" label="待确认"></comboitem>
+									<comboitem value="3" label="可借款"></comboitem>
+									<comboitem value="4" label="待借款"></comboitem>
+									<comboitem value="5" label="已借款"></comboitem>
+									<comboitem value="6" label="已清帐"></comboitem>
+									<comboitem value="0" label="已撤回"></comboitem>
+								</combobox>
+							</cell>
+
+						</row>
+						<row>
+							<cell>借款日期</cell>
+							<cell>
+								<datebox id="loandate" mold="rounded"
+									onChange="@command('updateDate',a=self.value,c='emap_ltime')"
+									 />
+							</cell>
+							<cell>交发票日期</cell>
+							<cell>
+								<datebox id="invoicedate"
+								onChange="@command('updateDate',a=self.value,c='emap_itime')"
+									 mold="rounded" />
+							</cell>
+							<cell>缴费时段</cell>
+							<cell>
+								<datebox id="paydate_s" mold="rounded"
+								onChange="@command('updateDate',a=self.value,c='emap_cdate')"
+								 />
+								<datebox id="paydate_e" mold="rounded"
+								onChange="@command('updateDate',a=self.value,c='emap_sdate')"
+							 />
+							</cell>
+						</row>
+
+						<row>
+							<cell>借款申请人:</cell>
+							<cell colspan="5">
+								<combobox id="loanman" readonly="true"
+									value="@bind(vm.epModel.emap_lname)" mold="rounded"
+									model="@load(vm.loanManList)">
+									<template name="model">
+										<comboitem
+											label="@load(each.emap_lname)" />
+									</template>
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell colspan="6">
+								<div align="center">
+									<button label="查询"
+										onClick="@command('SearchInfo')" />
+									<button label="新增续费"
+										onClick="@command('newfee')" />
+									<button label="生成单号"
+										visible="@load(vm.billDisplay)" onClick="@command('listId')" />
+									<button label="导出报表"
+										onClick="@command('report')" />
+								</div>
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</north>
+			<center>
+				<grid id="gdpay" height="100%" sizedByContent="true"
+					span="true" model="@load(vm.eaplist)">
+					<columns>
+						<column align="center">序号</column>
+						<column align="center">缴费时段</column>
+						<column align="center">客服</column>
+						<column align="center">公司名称</column>
+						<column align="center">所属月份</column>
+						<column align="center">名称</column>
+						<column align="center">档案</column>
+						<column align="center">户口</column>
+						<column align="center">滞纳金</column>
+						<column align="center">借款申请人</column>
+						<column align="center">交发票日期</column>
+						<column align="center">费用状态</column>
+						<column align="center">短信</column>
+						<column align="center">操作</column>
+						<column align="center">
+							<checkbox id="cka"
+								onClick="@command('checkall',a=self,b=gdpay)" />
+						</column>
+					</columns>
+					<template name="model">
+						<row>
+							<cell>
+								<label
+									value="${forEachStatus.index+1 }" />
+							</cell>
+							<cell>
+								<label value="@load(each.cddate)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emap_client)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emap_company)" />
+							</cell>
+							<cell>
+								<label value="@load(each.ownmonth)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emap_name)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emap_file)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emap_hj)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emap_op)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emap_lname)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emap_itime)" />
+							</cell>
+							<cell>
+								<label value="@load(each.lstatename)" />
+							</cell>
+							<cell>
+
+								<image style="cursor:pointer"
+									if="${each.message==true and each.readState==false }"
+									src="../images/noread.gif"
+									onClick="@command('message',a=each)" />
+								<image style="cursor:pointer"
+									if="${each.message==true and each.readState==true }"
+									src="../images/readed.gif"
+									onClick="@command('message',a=each)" />
+							</cell>
+							<cell>
+								<menubar width="50px" sclass="mymb"
+									autodrop="true">
+									<menu
+										image="../images/pencil-small.png">
+										<menupopup>
+											<menuitem label="查看"
+												onClick="@command('info',a=each)" />
+											<menuitem label="短信"
+												onClick="@command('message',a=each)" />
+											<menuitem
+												if="${each.emap_lstate==1 or each.emap_lstate==2 or each.emap_lstate==3 }"
+												label="修改" onClick="@command('mod',a=each)" />
+
+											<menuitem
+												if="${each.emap_lstate==5}" label="撤回"
+												onClick="@command('back',a=each)" />
+											<menuitem
+												if="${each.emap_lstate==1 or each.emap_lstate==2 or each.emap_lstate==3 or each.emap_lstate==4}"
+												label="删除" onClick="@command('del',a=each)" />
+
+										</menupopup>
+									</menu>
+								</menubar>
+							</cell>
+							<cell>
+								<checkbox checked="@bind(each.checked)"
+									onClick="@command('checksingle',a=self,b=cka)" />
+							</cell>
+						</row>
+					</template>
+				</grid>
+			</center>
+			<south></south>
+		</borderlayout>
+	</window>
+</zk>

@@ -1,0 +1,182 @@
+<?page title="社保补缴详情" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winBjReSend" title="社保补缴退回数据" border="normal"
+		width="800px" height="580px" apply="org.zkoss.bind.BindComposer"
+		closable="true" sizable="true"
+		viewModel="@id('vm') @init('Controller.EmSheBao.Emsi_BjReSendController')">
+		<div height="98%" style="overflow-y:scroll">
+		<groupbox>
+				<caption label="个人信息" />
+				<grid style="border:0px">
+					<rows>
+					<row>
+					<cell>
+					<label value="所属月份" />
+					</cell>
+					<cell colspan="3">
+								<vlayout>
+									<combobox mold="rounded"
+										readonly="true" value="@bind(vm.ownmonth)"
+										model="@load(vm.ownmonthList)"
+										>
+										<template name="model">
+											<comboitem
+												label="@load(each)" />
+										</template>
+									</combobox>
+									<label value="已过申报截止日，当月已不能变更"
+										if="${vm.isIfStop()}" style="color:red;" />
+								</vlayout>
+							</cell>
+					</row>
+						<row>
+							<cell width="20%">
+								<label value="公司编号" />
+							</cell>
+							<cell>
+								<label value="@load(vm.bjModel.cid)" />
+							</cell>
+							<cell width="20%">
+								<label value="员工编号" />
+							</cell>
+							<cell>
+								<label value="@load(vm.bjModel.gid)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="所属公司" />
+							</cell>
+							<cell colspan="3">
+								<label
+									value="@load(vm.bjModel.emsb_company)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="所属月份" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.bjModel.ownmonth)" />
+							</cell>
+							<cell>
+								<label value="个人电脑号" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.bjModel.emsb_computerid)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="姓名" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.bjModel.emsb_name)" />
+							</cell>
+							<cell>
+								<label value="身份证号" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.bjModel.emsb_idcard)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="补缴月份" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.bjModel.emsb_startmonth)" />
+							</cell>
+							<cell>
+								<label value="补缴基数" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.bjModel.emsb_radix)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="添加人" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.bjModel.emsb_addname)" />
+							</cell>
+							<cell>
+								<label value="添加时间" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.bjModel.emsb_addtime)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="备注" />
+							</cell>
+							<cell colspan="3">
+								<textbox rows="4"
+									value="@load(vm.bjModel.emsb_remark)" width="70%" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox>
+				<caption label="申报状态更改/备注" />
+				<grid style="border:0px">
+					<rows>
+						
+						<row>
+						
+							<cell width="20%">
+								<label value="申报状态：" />
+							</cell>
+							<cell>
+								<label value="退回"
+									if="${vm.bjModel.emsb_ifdeclare==3}" style="color:red" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="退回原因：" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.bjModel.emsb_reason)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="备忘：" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.bjModel.emsb_flag)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="操作：" />
+							</cell>
+							<cell>
+								<button label="重新发送"
+									onClick="@command('reSend',win=winBjReSend)" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			
+			<groupbox>
+				<caption label="系统日志" />
+			</groupbox>
+		</div>
+	</window>
+</zk>

@@ -1,0 +1,106 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="支付详情" border="normal" width="95%" height="80%"
+		apply="org.zkoss.bind.BindComposer" id="paywin"
+		viewModel="@id('vm') @init('Controller.EmPay.EmPa_InfoController')"
+		closable="true">
+		<grid width="100%" height="100%" model="@load(vm.list)" id="gd"
+			sizedByContent="true" span="true" emptyMessage="没有数据" mold="paging"
+			pageSize="500">
+			<columns>
+				<column label="序号" align="center" />
+				<column label="公司名称" align="center" />
+				<column label="员工姓名" align="center" />
+				<column label="身份证号" align="center" />
+				<column label="所属月份" align="center" />
+				<column label="开户银行" align="center" />
+				<column label="银行账号" align="center" />
+				<column label="账户名" align="center" />
+				<column label="支付方式" align="center" />
+				<column label="支付形式" align="center" />
+				<column label="收款方式" align="center" />
+				<column label="付款金额" align="center" />
+				<column label="应缴税" align="center" />
+				<column label="税后金额" align="center" />
+				<column label="款项类别" align="center"
+					sort="auto(empa_class)" />
+				<column label="付款时间" align="center" />
+				<column label="状态" align="center" />
+				<column label="备注" align="center" />
+			</columns>
+			<rows>
+				<template name="model">
+					<row>
+						<cell>
+							<label value="${forEachStatus.index+1 }">
+							</label>
+						</cell>
+						<cell>
+							<label value="@load(each.coba_shortname)">
+							</label>
+						</cell>
+						<cell>
+							<label value="@load(each.emba_name)">
+							</label>
+						</cell>
+						<cell>
+							<label value="@load(each.emba_idcard)">
+							</label>
+						</cell>
+						<cell>
+							<label
+								value="${each.ownmonth}~${each.ownmonthend }">
+							</label>
+						</cell>
+						<cell>
+							<label value="@load(each.empa_account)"></label>
+						</cell>
+						<cell>
+							<label value="@load(each.empa_bank)"></label>
+						</cell>
+						<cell>
+							<label value="@load(each.empa_ba_name)"></label>
+						</cell>
+						<cell>
+							<label value="@load(each.empa_payclass)"></label>
+						</cell>
+						<cell>
+							<label value="@load(each.empa_paytype)"></label>
+						</cell>
+						<cell>
+							<label
+								value="@load(each.empa_paymenttype)">
+							</label>
+						</cell>
+						<cell>
+							<label value="@load(each.empa_fee)"></label>
+						</cell>
+						<cell>
+							<label value="@load(each.empa_tax)"></label>
+						</cell>
+						<cell>
+							<label value="@load(each.empa_aftertax)"></label>
+						</cell>
+						<cell>
+							<label value="@load(each.empa_class)">
+							</label>
+						</cell>
+						<cell>
+							<label value="@load(each.empa_paytime)">
+							</label>
+						</cell>
+						<cell>
+							<label value="@load(each.state_name)">
+							</label>
+						</cell>
+						<cell>
+							<label value="@load(each.empa_remark)">
+							</label>
+						</cell>
+					</row>
+				</template>
+			</rows>
+
+		</grid>
+	</window>
+</zk>

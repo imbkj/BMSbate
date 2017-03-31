@@ -1,0 +1,88 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="个人工资单发送" id="setwin" width="100%" height="100%"
+		closable="true" border="normal" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.SalaryPaper.SalaryPaper_personSendController')">
+
+		<borderlayout>
+			<north>
+				<grid>
+					<rows>
+						<row>
+							<cell width="10%">
+								<label value="所属月份" />
+							</cell>
+							<cell>
+								<monthbox />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="公司简称" />
+							</cell>
+							<cell>
+								<combobox width="5%"/>
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="员工姓名" />
+							</cell>
+							<cell>
+								<textbox />
+							</cell>
+						</row>
+						<row>
+							<cell colspan="2" align="center">
+								<button label="查询" />
+								<button label="批量发送工资单" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</north>
+			<center border="0">
+				<grid sizedByContent="true" hflex="1" vflex="1"
+					span="true" mold="paging" emptyMessage="无数据">
+					<columns sizable="true">
+						<column width="40px" />
+						<column width="40px">
+							<checkbox />
+						</column>
+						<column label="员工编号" align="center" sort=""/>
+						<column label="员工姓名" align="center" sort=""/>
+						<column label="用途" align="center" sort=""/>
+						<column label="发送状态" align="center" sort=""/>
+						<column label="发送时间" align="center" sort=""/>
+						<column label="实发工资" align="center" sort=""/>
+						<column label="基本工资" align="center" sort=""/>
+						<column label="岗位工资" align="center" sort=""/>
+						<column label="加班工资" align="center" sort=""/>
+						<column label="考勤扣款" align="center" sort=""/>
+						<column label="其他扣款" align="center" sort=""/>
+						<column label="月/季度奖金" align="center" sort=""/>
+						<column label="误餐费" align="center" sort=""/>
+						<column label="补贴" align="center" sort=""/>
+						<column label="其他" align="center" sort=""/>
+						<column label="其他款项1" align="center" sort=""/>
+						<column label="住房补贴" align="center" sort=""/>
+						<column label="税前工资" align="center" sort=""/>
+						<column label="社保个人部分" align="center" sort=""/>
+						<column label="住房公积金个人部分" align="center" sort=""/>
+						<column label="住房公积金纳税部分" align="center" sort=""/>
+						<column label="商业保险费" align="center" sort=""/>
+						<column label="其他调整" align="center" sort=""/>
+						<column label="应纳税工资" align="center" sort=""/>
+						<column label="个人所得税" align="center" sort=""/>
+						<column label="税后工资" align="center" sort=""/>
+						<column label="年终奖金" align="center" sort=""/>
+						<column label="年终奖个税" align="center" sort=""/>
+						<column label="报销费用" align="center" sort=""/>
+						<column label="住房返还" align="center" sort=""/>
+					</columns>
+					
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

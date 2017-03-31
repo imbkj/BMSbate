@@ -1,0 +1,145 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="个人支付批量新增" border="normal" width="100%" height="90%"
+		apply="org.zkoss.bind.BindComposer" closable="true" id="paywin"
+		viewModel="@id('vm') @init('Controller.EmPay.EmPa_BatchAddController')">
+		<grid width="100%" height="100%" model="@load(vm.lists)" id="gd"
+			sizedByContent="true" span="true" emptyMessage="没有数据" mold="paging"
+			pageSize="500">
+			<columns>
+				<column label="序号" align="center" width="30px"/>
+				<column label="公司名称" align="center" />
+				<column label="姓名" align="center" />
+				<column label="帐款所属期" align="center" width="180px"/>
+				<column label="收款银行账号" align="center" width="130px"/>
+				<column label="收款开户行" align="center" width="150px"/>
+				<column label="帐户名" align="center"/>
+				<column label="付款金额" align="center"/>
+				<column label="款项类别" align="center" width="80px"/>
+				<column label="支付方式" align="center" width="100px"  />
+				<column label="支付形式" align="center"  width="100px" />
+				<column label="收款方式" align="center" width="100px"  />
+				<column label="备注（用途）" align="center"/>
+				<column label="操作" align="center"/>
+			</columns>
+			<rows>
+				<template name="model">
+					<row>
+						<cell>
+							<label value="${forEachStatus.index+1 }">
+							</label>
+						</cell>
+						<cell>
+							<label value="@load(each.coba_shortname)">
+							</label>
+						</cell>
+						<cell>
+							<label value="@load(each.emba_name)">
+							</label>
+						</cell>
+						<cell>
+							<hlayout>
+								<datebox width="70px" readonly="true"
+									sclass="datebox-month-only" value="@bind(each.ownmonth)"
+									format="yyyyMM" />
+								-
+								<datebox width="70px" readonly="true"
+									sclass="datebox-month-only" value="@bind(each.ownmonthend)"
+									format="yyyyMM" />
+								<image src="../images/130.gif"
+									style="cursor:pointer;"
+									onClick="@command('copyown',grid=gd,rowIndex=forEachStatus.index)" />
+							</hlayout>
+						</cell>
+						<cell>
+							<textbox width="95%"
+								value="@bind(each.emba_gz_account)">
+							</textbox>
+						</cell>
+						<cell>
+							<textbox width="95%"
+								value="@bind(each.emba_gz_bank)">
+							</textbox>
+						</cell>
+						<cell>
+							<textbox width="95%"
+								value="@bind(each.emba_ba_name)">
+							</textbox>
+						</cell>
+						<cell>
+							<decimalbox width="70%"
+								value="@bind(each.emba_fee)">
+							</decimalbox>
+							<image src="../images/130.gif"
+								style="cursor:pointer;"
+								onClick="@command('copyfee',grid=gd,rowIndex=forEachStatus.index)" />
+						</cell>
+						<cell>
+							<combobox readonly="true" width="85%"
+								value="@bind(each.emba_class)">
+								<comboitem label="体检"></comboitem>
+								<comboitem label="书报"></comboitem>
+								<comboitem label="活动"></comboitem>
+								<comboitem label="商保"></comboitem>
+								<comboitem label="社保"></comboitem>
+								<comboitem label="公积金"></comboitem>
+								<comboitem label="档案费"></comboitem>
+							</combobox>
+							<image src="../images/130.gif"
+								style="cursor:pointer;"
+								onClick="@command('copyclass',grid=gd,rowIndex=forEachStatus.index)" />
+						</cell>
+						<cell>
+							<combobox readonly="true" width="85%"
+								value="@bind(each.emba_payclass)">
+								<comboitem label="现金支付"></comboitem>
+								<comboitem label="银行支付"></comboitem>
+							</combobox>
+							<image src="../images/130.gif"
+								style="cursor:pointer;"
+								onClick="@command('copypayclass',grid=gd,rowIndex=forEachStatus.index)" />
+						</cell>
+						<cell>
+							<combobox readonly="true" width="80%"
+								value="@bind(each.emba_paytype)">
+								<comboitem label="报销"></comboitem>
+								<comboitem label="个税发放"></comboitem>
+							</combobox>
+							<image src="../images/130.gif"
+								style="cursor:pointer;"
+								onClick="@command('copypaytype',grid=gd,rowIndex=forEachStatus.index)" />
+						</cell>
+						<cell>
+							<combobox readonly="true" width="80%"
+								value="@bind(each.emba_paymenttype)">
+								<comboitem label="中智承担"></comboitem>
+								<comboitem label="随付款"></comboitem>
+							</combobox>
+							<image src="../images/130.gif"
+								style="cursor:pointer;"
+								onClick="@command('copypaymenttype',grid=gd,rowIndex=forEachStatus.index)" />
+						</cell>
+						<cell>
+							<textbox width="95%" rows="2"
+								value="@bind(each.emba_remark)">
+							</textbox>
+						</cell>
+						<cell>
+							<checkbox visible="false" value="@load(each)"/>
+							<button
+								onClick="@command('cancelpay',model=each)" label="删除" />
+						</cell>
+					</row>
+				</template>
+			</rows>
+			<foot>
+				<footer align="center" span="14">
+					<button onClick="@command('submit',win=paywin)">
+						提交
+					</button>
+				</footer>
+			</foot>
+		</grid>
+	</window>
+
+</zk>

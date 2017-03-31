@@ -1,0 +1,350 @@
+<?page title="业务总览" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="win" title="客户服务部管理页面" border="normal" width="99%"
+		height="99%">
+		<script src="../ECharts/echartOp.js"></script>
+		<borderlayout width="100%" apply="org.zkoss.bind.BindComposer"
+			viewModel="@id('vm') @init('chart.bar.BarChartVM')">
+
+			<west width="32%" border="normal">
+
+				<vbox align="center" width="98%">
+					<label value="" />
+					<tabbox>
+						<tabs>
+							<tab label="我的业务" />
+							<tab label="我的预警" />
+							<tab label="我的短信" />
+						</tabs>
+						<tabpanels>
+							<tabpanel>
+								<grid width="98%" height="225px">
+									<rows>
+										<row>
+											<cell align="center">
+												<label value="开发客户数" />
+											</cell>
+											<cell>
+												<label value="10" />
+											</cell>
+											<cell align="center">
+												<label value="开发员工数" />
+											</cell>
+											<cell>
+												<label value="10" />
+											</cell>
+										</row>
+										<row>
+											<cell align="center">
+												<label value="开发服务收入" />
+											</cell>
+											<cell>
+												<label value="10" />
+											</cell>
+											<cell align="center">
+												<label value="" />
+											</cell>
+											<cell>
+												<label value="" />
+											</cell>
+										</row>
+										
+										<row>
+											<cell align="center">
+												<label value="福利销售收入" />
+											</cell>
+											<cell>
+												<label value="10" />
+											</cell>
+											<cell align="center">
+												<label value="" />
+											</cell>
+											<cell>
+												<label value="" />
+											</cell>
+										</row>
+										<row>
+											<cell align="center">
+												<label value="潜在客户数" />
+											</cell>
+											<cell>
+												<label value="10" />
+											</cell>
+											<cell align="center">
+												<label value="" />
+											</cell>
+											<cell>
+												<label value="" />
+											</cell>
+										</row>
+
+									</rows>
+								</grid>
+
+							</tabpanel>
+							<tabpanel>
+								<grid height="225px">
+									<rows>
+										<row>
+											<cell align="center">
+												<label value="业务合同应签" />
+											</cell>
+											<cell>
+												<label value="10" />
+											</cell>
+											<cell align="center">
+												<label value="业务合同实签" />
+											</cell>
+											<cell>
+												<label value="10" />
+											</cell>
+										</row>
+										<row>
+											<cell align="center">
+												<label value="业务合同未签回" />
+											</cell>
+											<cell>
+												<label value="10" />
+											</cell>
+											<cell align="center">
+												<label value="业务合同签订率" />
+											</cell>
+											<cell>
+												<label value="10" />
+											</cell>
+										</row>
+
+									</rows>
+								</grid>
+							</tabpanel>
+							<tabpanel>
+								<panel id="xtdx" height="217px"
+									border="normal" collapsible="true" style="margin-bottom:10px"
+									title="系统短信">
+									<caption>
+										<hlayout style="float:right">
+											<toolbar>
+												<toolbarbutton
+													label="发送" onClick="@command('sysmessageadd')"
+													style="color:#666:font-size:8pt" />
+												<toolbarbutton
+													label="收件箱" onClick="@command('reci')"
+													style="color:#666:font-size:8pt" />
+												<toolbarbutton
+													label="已发送信息" onClick="@command('sended')"
+													style="color:#666:font-size:8pt" />
+												<toolbarbutton
+													label="草稿" onClick="@command('draft')" if="false"
+													style="color:#666:font-size:8pt" />
+											</toolbar>
+										</hlayout>
+									</caption>
+									<panelchildren>
+										<include
+											src="SysMessage_NotReadList.zul">
+										</include>
+									</panelchildren>
+								</panel>
+							</tabpanel>
+						</tabpanels>
+					</tabbox>
+					<scrollview id="div" height="270px" width="100%"
+						onCreate="@command('pie_load',st_name='任务指标完成情况')">
+					</scrollview>
+				</vbox>
+			</west>
+
+			<center border="normal">
+				<vbox align="center" width="100%">
+					<label value="" />
+					<tabbox>
+						<tabs>
+							<tab label="客户数统计" />
+							<tab label="员工数统计"
+								onClick="@command('bar_load',st_name='员工数统计',st_id='bar1')" />
+							<tab label="服务费收入"
+								onClick="@command('bar_load',st_name='服务费收入',st_id='bar2')" />
+								<tab label="AF合同数统计"
+								onClick="@command('bar_load',st_name='AF合同数统计',st_id='bar3')" />
+								<tab label="FS-2合同数统计"
+								onClick="@command('bar_load',st_name='FS-2合同数统计',st_id='bar4')" />
+								<tab label="CS合同数统计"
+								onClick="@command('bar_load',st_name='CS合同数统计',st_id='bar5')" />
+								<tab label="FS合同数统计"
+								onClick="@command('bar_load',st_name='FS合同数统计',st_id='bar6')" />
+						</tabs>
+						<tabpanels>
+							<tabpanel>
+								<scrollview id="bar" height="245px"
+									width="900px"
+									onCreate="@command('bar_load',st_name='客户数统计',st_id='bar')">
+								</scrollview>
+							</tabpanel>
+							<tabpanel>
+								<scrollview id="bar1" height="245px"
+									width="900px">
+								</scrollview>
+							</tabpanel>
+							<tabpanel>
+								<scrollview id="bar2" height="245px"
+									width="900px">
+								</scrollview>
+							</tabpanel>
+							<tabpanel>
+								<scrollview id="bar3" height="245px"
+									width="900px">
+								</scrollview>
+							</tabpanel>
+							<tabpanel>
+								<scrollview id="bar4" height="245px"
+									width="900px">
+								</scrollview>
+							</tabpanel>
+							<tabpanel>
+								<scrollview id="bar5" height="245px"
+									width="900px">
+								</scrollview>
+							</tabpanel>
+							<tabpanel>
+								<scrollview id="bar6" height="245px"
+									width="900px">
+								</scrollview>
+							</tabpanel>
+						</tabpanels>
+					</tabbox>
+
+
+					<tabbox>
+						<tabs>
+							<tab label="潜在客户数" />
+							<tab label="福利销售客户数"
+								onClick="@command('line_load',st_name='福利销售客户数',st_id='line1')" />
+							<tab label="福利销售员工数"
+								onClick="@command('line_load',st_name='福利销售员工数',st_id='line2')" />
+							<tab label="福利销售收入"
+								onClick="@command('line_load',st_name='福利销售收入',st_id='line3')" />
+						</tabs>
+						<tabpanels>
+							<tabpanel>
+								<scrollview id="line" height="245px"
+									width="900px"
+									onCreate="@command('line_load',st_name='潜在客户数',st_id='line')">
+								</scrollview>
+							</tabpanel>
+							<tabpanel>
+								<scrollview id="line1" height="245px"
+									width="900px">
+								</scrollview>
+							</tabpanel>
+							<tabpanel>
+								<scrollview id="line2" height="245px"
+									width="900px">
+								</scrollview>
+							</tabpanel>
+							<tabpanel>
+								<scrollview id="line3" height="245px"
+									width="900px">
+								</scrollview>
+							</tabpanel>
+						</tabpanels>
+					</tabbox>
+				</vbox>
+			</center>
+			<east visible="false" border="normal"></east>
+			<south border="normal">
+				<hbox width="100%" height="160px">
+					<label value="" />
+					<label value="" />
+					<tabbox>
+						<tabs>
+							<tab label="任务单处理情况" />
+							<tab label="客户拜访情况" />
+						</tabs>
+						<tabpanels>
+							<tabpanel>
+								<grid width="100%">
+									<columns>
+										<column label="" align="center" />
+										<column label="刘玉洁"
+											align="center" />
+										<column label="汤斯宇"
+											align="center" />
+										<column label="黄君霞"
+											align="center" />
+										<column label="姚磊"
+											align="center" />
+
+									</columns>
+									<rows>
+										<row>
+											<cell>未处理</cell>
+											<cell>23</cell>
+											<cell>222</cell>
+											<cell>34</cell>
+											<cell>4</cell>
+
+										</row>
+										<row>
+											<cell>处理中</cell>
+											<cell>23</cell>
+											<cell>222</cell>
+											<cell>34</cell>
+											<cell>4</cell>
+										</row>
+										<row>
+											<cell>已完成</cell>
+											<cell>23</cell>
+											<cell>222</cell>
+											<cell>34</cell>
+											<cell>4</cell>
+										</row>
+									</rows>
+								</grid>
+							</tabpanel>
+							<tabpanel>
+								<grid width="100%">
+									<columns>
+										<column label="" align="center" />
+										<column label="刘玉洁"
+											align="center" />
+										<column label="汤斯宇"
+											align="center" />
+										<column label="黄君霞"
+											align="center" />
+										<column label="姚磊"
+											align="center" />
+									</columns>
+									<rows>
+										<row>
+											<cell>计划情况</cell>
+											<cell>23</cell>
+											<cell>222</cell>
+											<cell>34</cell>
+											<cell>4</cell>
+
+										</row>
+										<row>
+											<cell>实际拜访</cell>
+											<cell>23</cell>
+											<cell>222</cell>
+											<cell>34</cell>
+											<cell>4</cell>
+										</row>
+										<row>
+											<cell>完成率</cell>
+											<cell>23</cell>
+											<cell>222</cell>
+											<cell>34</cell>
+											<cell>4</cell>
+										</row>
+									</rows>
+								</grid>
+							</tabpanel>
+						</tabpanels>
+					</tabbox>
+				</hbox>
+			</south>
+
+		</borderlayout>
+	</window>
+</zk>

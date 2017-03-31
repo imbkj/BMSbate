@@ -1,0 +1,91 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="委托外地账单导入" border="normal" width="100%" height="100%"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmCommissionOut.EmCommissionOutPayUpdate_OperateListController')">
+		<script type="text/javascript" src="/js/Datebox.js"></script>
+		<borderlayout>
+			<north title="综合操作" collapsible="true" open="true">
+				<hbox width="100%" height="100%" pack="center"
+					align="center">
+					<button label="导入excel"
+						onClick="@command('importExcel')">
+					</button>
+				</hbox>
+			</north>
+			<center>
+				<grid model="@load(vm.spuList)" emptyMessage="暂无数据"
+					hflex="1" vflex="1" sizedByContent="true" span="true"
+					mold="paging">
+					<columns sizable="true">
+						<column width="40px"></column>
+						<column forEach="${vm.fieldList }"
+							align="center">
+							<label value="${each.ecpr_ecpu_fieldstr }" />
+							<separator></separator>
+							<combobox readonly="true" width="95%"
+								model="@load(vm.cityList)" selectedItem="@bind(vm.cityM)"
+								onChange="@command('search')"
+								if="${each.ecpr_ecpu_fieldstr eq '委托城市' }">
+								<template name="model">
+									<comboitem label="@load(each.city)" />
+								</template>
+							</combobox>
+							<combobox readonly="true" width="95%"
+								model="@load(vm.scoabList)" selectedItem="@bind(vm.coabM)"
+								onChange="@command('search')"
+								if="${each.ecpr_ecpu_fieldstr eq '委托机构' }">
+								<template name="model">
+									<comboitem
+										label="@load(each.coab_name)" />
+								</template>
+							</combobox>
+							<combobox readonly="true" width="80px"
+								value="@bind(vm.ownmonth)" onChange="@command('search')"
+								if="${each.ecpr_ecpu_fieldstr eq '缴纳月份' }"
+								model="@load(vm.ownmonthList)">
+								<template name="model">
+									<comboitem label="@load(each)" />
+								</template>
+							</combobox>
+							<textbox width="80px"
+								onFocus="self.select()" value="@bind(vm.name)"
+								onChange="@command('search')"
+								if="${each.ecpr_ecpu_fieldstr eq '姓名' }">
+							</textbox>
+							<textbox width="95%" onFocus="self.select()"
+								value="@bind(vm.company)" onChange="@command('search')"
+								if="${each.ecpr_ecpu_fieldstr eq '公司名称' }">
+							</textbox>
+							<textbox width="60px"
+								onFocus="self.select()" value="@bind(vm.cid)"
+								onChange="@command('search')"
+								if="${each.ecpr_ecpu_fieldstr eq '公司编号' }">
+							</textbox>
+							<textbox width="80px"
+								onFocus="self.select()" value="@bind(vm.gid)"
+								onChange="@command('search')"
+								if="${each.ecpr_ecpu_fieldstr eq '员工编号' }">
+							</textbox>
+						</column>
+					</columns>
+					<template name="model" var="puList">
+						<row>
+							<custom-attributes
+								ecpu_id="${puList.ecpu_id }" />
+							<detail open="false" fulfill="onOpen">
+								<include
+									src="/EmCommissionOut/EmCommissionOutPayUpdate_OperateList_Detail.zul"
+									daid="${ecpu_id }">
+								</include>
+							</detail>
+							<cell forEach="${puList.objsList }">
+								<label value="${each }" />
+							</cell>
+						</row>
+					</template>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

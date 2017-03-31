@@ -1,0 +1,107 @@
+<?page title="未完成列表" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="未完成列表" border="normal"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmCommissionOut.EmCommissionOutPay_UnfinishedController')">
+		<grid id="searchGird" width="100%">
+			<rows>
+				<row>
+					<cell width="100px">所属月份</cell>
+					<cell>
+						<combobox mold="rounded" readonly="true" model="@load(vm.ownmonthlist)"
+							width="120px" value="" id="ownmonth">
+							<template name="model">
+								<comboitem label="@load(each.ownmonth)" />
+							</template>
+						</combobox>
+					</cell>
+
+					<cell width="100px">城市</cell>
+					<cell>
+						<combobox model="@load(vm.cityList)" id="city" mold="rounded" 
+							width="180px" onSelect="@command('city_change')" value=""
+							selectedItem="@bind(vm.cityModel)">
+							<template name="model">
+								<comboitem label="@load(each.name)" />
+							</template>
+						</combobox>
+
+					</cell>
+
+					<cell width="100px">委托机构</cell>
+					<cell>
+						<combobox model="@load(vm.scoagList)" id="company" mold="rounded" 
+							readonly="true" selectedItem="@bind(vm.coagModel)" value="">
+							<template name="model">
+								<comboitem
+									label="@load(each.coab_name)" />
+							</template>
+						</combobox>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button id="btSearch" label="查询"
+						onClick="@command('search',ownmonth=ownmonth,city=city,company=company)" />
+				</footer>
+			</foot>
+		</grid>
+		<div
+			style="width:100%;height:430px;overflow-y:scroll;overflow-x:hidden;border:1px solid #bcbdbf;">
+			<grid width="100%" id="g1" model="@load(vm.wt_unflist)">
+				<columns>
+					<column label="序号" align="center" width="60px" />
+					<column label="所属月份" align="center" />
+					<column label="委托城市" align="center" />
+					<column label="委托机构" align="center" />
+					<column label="公司名称" align="center" />
+					<column label="员工姓名" align="center" />
+					<column label="身份证号码" align="center" />
+					<column label="费用" align="center" />
+					<column label="状态" align="center" />
+					<column label="反馈" align="center" />
+				</columns>
+				<rows>
+					<template name="model">
+						<row>
+							<cell>
+								<label
+									value="${forEachStatus.index + 1}" />
+							</cell>
+							<cell>
+								<label value="@load(each.ownmonth)" />
+							</cell>
+							<cell>
+								<label value="@load(each.ecop_cabc_id)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.ecop_dep_company)" />
+							</cell>
+							<cell>
+								<label value="@load(each.ecop_company)" />
+							</cell>
+							<cell>
+								<label value="@load(each.ecop_name)" />
+							</cell>
+							<cell>
+								<label value="@load(each.ecop_file_di)" />
+							</cell>
+							<cell>
+								<label value="@load(each.ecop_sf_fee)" />
+							</cell>
+							<cell>
+								<label value="@load(each.ecop_state)" />
+							</cell>
+							<cell>
+								<label value="查看" onClick="@command('remark', emco=each)" style="cursor:pointer; color:#666;"  />
+							</cell>
+						</row>
+					</template>
+				</rows>
+
+			</grid>
+		</div>
+	</window>
+</zk>

@@ -1,0 +1,124 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="批量审核员工任务单" border="normal" width="100%" height="100%"
+		closable="true" apply="org.zkoss.bind.BindComposer" id="plcheckWin"
+		viewModel="@id('vm') @init('Controller.CoFinanceManage.Cfma_plCheckEmManualDisController')">
+
+		<borderlayout>
+			<north>
+				<grid>
+					<rows>
+						<row>
+							<cell width="8%">
+								<label value="所属月份" />
+							</cell>
+							<cell>
+								<monthbox value="@bind(vm.ownmonth)"
+									mold="rounded" format="yyyy-MM" onChange="@command('search',month=self.value)" />
+							</cell>
+							<cell width="8%">
+								<label value="公司检索" />
+							</cell>
+							<cell>
+								<textbox value="@bind(vm.company)"
+									mold="rounded" onChange="@command('search')" />
+							</cell>
+							<cell width="8%">
+								<label value="添加人" />
+							</cell>
+							<cell>
+								<combobox model="@load(vm.clients)"
+									value="@bind(vm.client)" mold="rounded"
+									onSelect="@command('search')">
+									<template name="model">
+										<comboitem value="@bind(each)"
+											label="@bind(each)" />
+									</template>
+								</combobox>
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</north>
+			<center>
+				<grid model="@load(vm.smanauls)" sizedByContent="true"
+					hflex="1" vflex="1" span="true">
+					<columns sizable="true" id="colums">
+						<column width="40px">
+							<checkbox
+								onCheck="@command('allcheck',check=self,rows=rows)" />
+						</column>
+						<column label="公司名称" sort="auto(coba_company)" />
+						<column label="公司编号" sort="auto(cid)" />
+						<column label="员工姓名" sort="auto(emba_name)" />
+						<column label="员工编号" sort="auto(gid)" />
+						<column label="所属月份" sort="auto(ownmonth)" />
+						<column label="财务科目名称"
+							sort="auto(cfmd_cpac_name)" />
+						<column label="福利产品名称"
+							sort="auto(cfmd_copr_name)" />
+						<column label="收费原因" sort="auto(cfmd_Reason)" />
+						<column label="应收费用"
+							sort="auto(cfmd_Receivable)" />
+						<column label="状态" sort="auto(cfmd_state)" />
+						<column label="添加人" sort="auto(cfmd_addname)" />
+						<column label="添加时间" sort="auto(cfmd_addtime)" />
+						<column label="操作" />
+					</columns>
+					<rows id="rows">
+						<template name="model">
+							<row>
+								<checkbox value="@load(each)" />
+								<label value="@load(each.coba_company)" />
+								<label value="@load(each.cid)" />
+								<label value="@load(each.emba_name)" />
+								<label value="@load(each.gid)" />
+								<label value="@load(each.ownmonth)" />
+								<label
+									value="@load(each.cfmd_cpac_name)" />
+								<label
+									value="@load(each.cfmd_copr_name)" />
+								<label value="@load(each.cfmd_Reason)" />
+								<label
+									value="@load(each.cfmd_Receivable)" />
+								<label if="${each.cfmd_state == 1}"
+									value="已入账" style="color:blue" />
+								<label if="${each.cfmd_state == 2}"
+									value="有效" />
+								<label if="${each.cfmd_state == 3}"
+									value="退回" style="color:red" />
+								<label if="${each.cfmd_state == 4}"
+									value="审核中" style="color:green" />
+								<label value="@load(each.cfmd_addname)" />
+								<label value="@load(each.cfmd_addtime)" />
+								<menubar autodrop="true">
+									<menu
+										image="../images/pencil-small.png">
+										<menupopup>
+											<menuitem label="删除"
+												onClick="@command('delete',m=each)" />
+										</menupopup>
+									</menu>
+								</menubar>
+							</row>
+						</template>
+					</rows>
+					<foot>
+						<footer align="center">
+
+						</footer>
+					</foot>
+				</grid>
+			</center>
+			<south>
+				<div align="center">
+					<button label="审核"
+						onClick="@command('plcheck',rows=rows)" />
+				</div>
+			</south>
+		</borderlayout>
+
+
+
+	</window>
+</zk>

@@ -1,0 +1,45 @@
+<?page title="工资信息" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<grid id="gdSalary" height="100%"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoFinanceManage.Cfma_SalaryListController')"
+		emptyMessage="暫未找到数据" mold="paging" pageSize="10"
+		sizedByContent="true" model="@load(vm.salaryList)">
+		<frozen style="background: #DFDED8" columns="3">
+						<div style="padding: 0 10px;" />
+					</frozen>
+		<columns sizable="true">
+			<column label="序号" width="50px" align="center" />
+			<column label="员工编号" width="100px" align="center"
+				sort="auto(gid)" />
+			<column label="员工姓名" width="150px" align="center"
+				sort="auto(emba_name)" />
+			<column label="用途" width="80px" align="center"
+				sort="auto(emsdModel.esda_usage_typestr)" />
+			<column label="状态" width="80px" align="center"
+				sort="auto(emsdModel.esda_payment_statestr)" />
+			<column label="${each.csii_item_name}" width="100px"
+				forEach="${vm.itemList}" />
+			<column label="应收" width="80px" align="center"
+				sort="auto(efsa_Receivable)" />
+		</columns>
+		<rows>
+			<template name="model">
+				<row>
+					<label value="${forEachStatus.index + 1}" />
+					<label value="@load(each.gid)" />
+					<label value="@load(each.emba_name)" />
+					<label
+						value="@load(each.emsdModel.esda_usage_typestr)" />
+					<label
+						value="@load(each.emsdModel.esda_payment_statestr)"
+						style="${each.emsdModel.esda_payment_state==3?'color:red':''}" />
+					<decimalbox format="###.##" value="${each.amount}"
+						forEach="${each.emsdModel.itemList}" inplace="true"
+						readonly="true" />
+					<label value="@load(each.efsa_receivable)" />
+				</row>
+			</template>
+		</rows>
+	</grid>
+</zk>

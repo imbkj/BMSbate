@@ -1,0 +1,85 @@
+<?page title="更新合同" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="win" title="更新合同" border="normal" width="700px"
+		height="250px" closable="true" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoSocialInsurance.CoSocialInsurance_UpdateCompactController')">
+		<borderlayout hflex="1" vflex="1">
+			<center border="none">
+				<grid hflex="1" vflex="1">
+					<columns>
+						<column width="15%"></column>
+						<column></column>
+						<column width="15%"></column>
+						<column></column>
+					</columns>
+					<rows>
+						<row>
+							公司编号
+							<label value="@load(vm.m.cid)" />
+							公司名称
+							<label value="@load(vm.m.coba_company)" />
+						</row>
+						<row>
+							选择合同
+							<cell colspan="3">
+								<combobox model="@load(vm.compactList)"
+									selectedItem="@bind(vm.compactModel)" readonly="true"
+									onSelect="@command('if_submit')">
+									<template name="model">
+										<comboitem
+											label="@load(each.coco_compactid)" />
+									</template>
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							单位社保编号
+							<cell colspan="3">
+								<label value="@bind(vm.m.csbc_sorid)" />
+								<!-- <textbox value="@bind(vm.m.csbc_sorid)" /> -->
+							</cell>
+						</row>
+						<row>
+							银行全称
+							<cell>
+								<label
+									value="@bind(vm.m.csbc_bankname)" />
+								<!-- <textbox
+									value="@bind(vm.m.csbc_bankname)" /> -->
+							</cell>
+							银行账号
+							<cell>
+								<label
+									value="@bind(vm.m.csbc_bankacctid)" />
+								<!-- <textbox
+									value="@bind(vm.m.csbc_bankacctid)" /> -->
+							</cell>
+						</row>
+						<row>
+							失业比例
+							<cell>
+								<label value="@bind(vm.per1)" />
+								<!-- <doublebox width="30px"
+									value="@bind(vm.per1)" /> -->
+								%
+							</cell>
+							工伤比例
+							<cell>
+								<label value="@bind(vm.per2)" />
+								<!-- <doublebox width="30px"
+									value="@bind(vm.per2)" /> -->
+								%
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</center>
+			<south border="none">
+				<hbox width="100%" pack="center" align="center">
+					<button label="提交" disabled="@load(vm.m.if_submit)"
+						onClick="@command('submit',win=win)" />
+				</hbox>
+			</south>
+		</borderlayout>
+	</window>
+</zk>

@@ -1,0 +1,43 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<style src="/css/style.css"></style>
+	<window title="居住证费用明细单" border="normal"
+		apply="org.zkoss.bind.BindComposer" vflex="1"
+		viewModel="@id('vm') @init('Controller.EmResidencePermit.Emrp_FeeInfoListController')">
+		<grid vflex="1" model="@load(vm.list)" mold="paging" pageSize="50">
+			<columns>
+				<column label="序号" width="60px" align="center" />
+				<column label="类型" align="center" />
+				<column align="center">
+				<vlayout>
+					<label>费用明细单号</label>
+					<textbox onChange="@command('search',number=self.value)"></textbox>
+				</vlayout>
+				</column>
+				<column label="操作" align="center" />
+			</columns>
+			<rows>
+				<template name="model">
+					<row>
+						<cell>
+							<label
+								value="@load(forEachStatus.index + 1)">
+							</label>
+						</cell>
+						<cell>
+							<label value="@load(each.ecfi_class)">
+							</label>
+						</cell>
+						<cell>
+							<label value="@load(each.ecfi_cl_number)">
+							</label>
+						</cell>
+						<cell>
+							<a onClick="@command('detail',model=each)"><label>查看明细</label></a>
+						</cell>
+					</row>
+				</template>
+			</rows>
+		</grid>
+	</window>
+</zk>

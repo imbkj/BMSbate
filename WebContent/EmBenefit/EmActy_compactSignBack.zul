@@ -1,0 +1,37 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="供应商合同签回" width="500px" height="250px"
+		id="wincompactsign" border="normal"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmBenefit.EmActy_compactSignBackController')"
+		closable="true">
+		<grid width="100%" height="100%">
+			<rows>
+				<row>
+					<cell width="120px">供应商</cell>
+					<cell>
+						<label value="@load(vm.eacm.eaco_name)" />
+					</cell>
+
+				</row>
+				<row>
+					<cell>合同号</cell>
+					<cell>
+						<label value="@load(vm.eacm.eaco_compactid)" />
+					</cell>
+				</row>
+				<row>
+					<cell>合同签回时间</cell>
+					<cell>
+						<datebox id="db" />
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button label="提交" onClick="@command('submit')"></button>
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

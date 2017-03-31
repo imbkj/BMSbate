@@ -1,0 +1,139 @@
+<?page title="体检项目管理列表" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="bcWin" title="体检项目管理列表" border="normal" width="100%"
+		height="100%" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmBodyCheck.Embc_ItemInfoListController')">
+		<borderlayout>
+			<north border="0" title="检索" collapsible="true">
+				<grid>
+					<rows>
+						<row>
+							<cell width="60px">机构名称</cell>
+							<cell width="150px">
+								<combobox id="setup" readonly="true"
+									mold="rounded" instant="true"
+									onChange="@command('updateSelect')"
+									model="@load(vm.setupList)">
+									<template name="model">
+										<comboitem
+											value="@load(each.ebcs_id)"
+											label="@load(each.ebcs_hospital)" />
+									</template>
+								</combobox>
+
+							</cell>
+							<cell width="60px">项目名称</cell>
+							<cell width="150px">
+								<combobox id="itemname" mold="rounded"
+									buttonVisible="false" autodrop="true" instant="true"
+									onChange="@command('updateSelect')" model="@load(vm.eiList)">
+									<template name="model">
+										<comboitem
+											label="@load(each.ebit_name)" />
+									</template>
+								</combobox>
+
+							</cell>
+
+						</row>
+						<row>
+							<cell>机构状态</cell>
+							<cell>
+								<combobox id="setupState" value="生效"
+									readonly="true" mold="rounded">
+									<comboitem value="1" label="生效" />
+									<comboitem value="0" label="终止" />
+								</combobox>
+							</cell>
+							<cell>产品状态</cell>
+							<cell>
+								<combobox id="itemState" value="生效"
+									readonly="true" mold="rounded">
+									<comboitem value="1" label="生效" />
+									<comboitem value="0" label="终止" />
+								</combobox>
+							</cell>
+						</row>
+					</rows>
+					<foot>
+						<footer align="center">
+							<button label="查询"
+								onClick="@command('search')" />
+							<button label="导出"
+								onClick="@command('exportpix',gd=gd)" />
+						</footer>
+					</foot>
+				</grid>
+			</north>
+			<center>
+				<grid vflex="1" model="@load(vm.itemlist)" mold="paging" id="gd"
+					pageSize="50" emptyMessage="没有查询到数据">
+					<columns>
+						<column label="序号" align="center" width="50px" />
+						<column label="机构名称" align="center" hflex="1" />
+						<column label="项目名称" align="center" hflex="1"></column>
+						<column label="项目全额" align="center" hflex="1"></column>
+						<column label="项目折扣价" align="center" hflex="1"></column>
+						<column label="项目内容" align="center" hflex="4"></column>						
+						<column label="备注" align="center" hflex="2"></column>
+						<column label="状态" align="center" hflex="1"></column>
+						<column label="操作" align="center" hflex="1"></column>
+						<column align="center" width="60px"><checkbox onCheck="@command('checkallpix',gd=gd,ck=self)"></checkbox></column>
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<cell>
+									<label
+										value="${forEachStatus.index+1 }">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ebcs_hospital)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ebit_name)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ebit_charge)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ebit_discount)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ebit_info)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ebit_remark)">
+									</label>
+								</cell>
+								<cell><label
+										value="@load(each.state)">
+									</label></cell>
+								<cell>
+									<button label="修改"
+										onClick="@command('itemupdate',model=each)" />
+
+								</cell>
+								<cell>
+									<checkbox value="@load(each)"></checkbox>
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

@@ -1,0 +1,97 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="比例基数调整" id="winchange" width="850px" height="420px"
+		closable="true" border="normal" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmHouse.Emhouse_ChangeInfoController')"
+		onCreate="@command('winC',a=self)">
+		<scrollview>
+			<groupbox title="个人信息" mold="3d">
+				<grid>
+					<rows>
+						<row>
+							<cell width="100px">公司名称</cell>
+							<cell>
+								${vm.eum.emhu_company}(${vm.eum.cid})
+							</cell>
+							<cell>姓名</cell>
+							<cell>
+								${vm.eum.emhu_name}(${vm.eum.gid})
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox title="参保信息" mold="3d">
+				<grid>
+					<rows>
+						<row>
+							<cell width="100px">所属月份</cell>
+							<cell>
+								<combobox model="@load(vm.ownmonthlist)"
+									value="@bind(vm.eum.ownmonth)">
+									<template name="model">
+										<comboitem label="@load(each)" />
+
+									</template>
+								</combobox>
+							</cell>
+							<cell>个人公积金号码</cell>
+							<cell>
+								<label
+									value="@load(vm.eum.emhu_houseid)" />
+							</cell>
+						</row>
+						<row>
+							<cell>缴存工资基数</cell>
+							<cell>
+								<doublebox
+									constraint="no negative,no zero" readonly="@load(vm.read)"
+									value="@bind(vm.eum.emhu_radix)" mold="rounded" />
+							</cell>
+							<cell>比例</cell>
+							<cell>
+								<combobox id="cpp"
+									model="@load(vm.cpList)" value="@load(vm.cppName)"
+									mold="rounded" readonly="true">
+									<template name="model">
+										<comboitem
+											value="@load(each.cp)" label="@load(each.cpName)" />
+									</template>
+								</combobox>
+							</cell>
+						</row>
+
+						<row>
+							<cell>申请原因</cell>
+							<cell colspan="3">
+								<textbox id="remark" rows="3"
+									width="50%" mold="rounded" value="" />
+							</cell>
+						</row>
+						<row>
+							<cell>注意事项</cell>
+							<cell colspan="3">
+								<label style="color:red;">
+									①由于公积金管理中心系统尚无变更比例和基数业务，因此业务系统采用停交调入方式以达到修改比例基数的目的；
+								</label>
+								<label style="color:red;">
+									②独立开户的客户只有一个比例，不能选择修改比例；
+								</label>
+								<label style="color:red;">
+									③系统会自动生成4条变更数据，分别是在本单位停交，在中智11%帐户调入，在中智11%帐户停交，最后按新基数和比例调回。
+								</label>
+							</cell>
+						</row>
+					</rows>
+					<foot>
+						<footer align="center">
+							<button label="提交"
+								onClick="@command('submit')" />
+
+						</footer>
+					</foot>
+				</grid>
+			</groupbox>
+		</scrollview>
+	</window>
+</zk>

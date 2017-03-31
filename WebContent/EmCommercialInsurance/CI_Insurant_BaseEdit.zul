@@ -1,0 +1,62 @@
+<?page title="商业保险信息" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="商业保险信息" border="normal"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmCommercialInsurance.CI_Insurant_Controller')">
+		<grid width="100%" id="g1"
+				model="@load(vm.ci_insurant_editlist)">
+				<columns>
+					<column label="序号" align="center" width="60px" />
+					<column label="被保险人" align="center" />
+					<column label="投保类型" align="center" />
+					<column label="投保份数" align="center" />
+					<column label="投保时间" align="center" />
+					<column label="停缴时间" align="center" />
+					<column label="状态" align="center" />
+					<column label="操作" align="center" />
+					<column label="" align="center" visible="false" />
+				</columns>
+				<rows>
+					<template name="model">
+						<row>
+							<cell>
+								<label
+									value="${forEachStatus.index + 1}" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.ecin_insurant)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.ecin_castsort)" />
+							</cell>
+							<cell>
+								<label value="@load(each.ecin_buy_count)" />
+							</cell>
+							<cell>
+								<label value="@load(each.ecin_in_date)" />
+							</cell>
+							<cell>
+								<label value="@load(each.ecin_st_date)" />
+							</cell>
+							<cell>
+							<hbox>
+								<label value="@load(each.ecin_state)" />
+								<label value="--" />
+								<label value="未申报" if="${each.ecin_state2==0?true:false}" />
+								<label value="处理中"  if="${each.ecin_state2>0?true:false}"  />
+								</hbox>
+							</cell>
+							<cell>
+							<label value="删除" onClick="@command('ecin_del',emco=each)" style="cursor:pointer"   if="${each.ecin_state2==0?true:false}"  />
+							</cell>
+							<cell visible="false">
+								<label value="@load(each.ecin_tapr_id)" />
+							</cell>
+						</row>
+					</template>
+				</rows>
+			</grid>
+	</window>
+</zk>

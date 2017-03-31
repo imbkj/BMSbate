@@ -1,0 +1,110 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="居住证信息列表" border="normal" width="100%" height="100%"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmResidencePermit.Emrp_qdSelectListController')">
+		<listbox id="ltb" hflex="1" vflex="1" emptyMessage="暂无数据"
+			model="@load(vm.serpList)" mold="paging">
+			<listhead>
+				<listheader align="center" width="40px">序号</listheader>
+				<listheader align="center" label="公司编号">
+					<separator></separator>
+					<textbox width="50%" mold="rounded" instant="true"
+						value="@bind(vm.cid)" onChange="@command('search')" />
+				</listheader>
+				<listheader align="center" label="公司简称">
+					<separator></separator>
+					<textbox width="90%" mold="rounded"
+						value="@bind(vm.shortname)" onChange="@command('search')" />
+				</listheader>
+				<listheader align="center" label="员工编号">
+					<separator></separator>
+					<textbox width="90%" mold="rounded"
+						value="@bind(vm.gid)" onChange="@command('search')" />
+				</listheader>
+				<listheader align="center" label="姓名">
+					<separator></separator>
+					<textbox width="90%" mold="rounded"
+						value="@bind(vm.name)" onChange="@command('search')" />
+				</listheader>
+				<listheader align="center" label="办理性质">
+					<separator></separator>
+					<combobox width="90%" mold="rounded" instant="true"
+						readonly="true" value="@bind(vm.t_kind)"
+						onChange="@command('search')">
+						<comboitem />
+						<comboitem label="新办" />
+						<comboitem label="补办" />
+					</combobox>
+				</listheader>
+				<listheader align="center" label="状态">
+					<separator></separator>
+					<combobox width="90%" mold="rounded" instant="true"
+						readonly="true" value="@bind(vm.statename)"
+						onChange="@command('search')" model="@load(vm.stateList)">
+						<template name="model">
+							<comboitem label="@load(each.statename)" />
+						</template>
+					</combobox>
+				</listheader>
+				<listheader align="center" label="添加人"></listheader>
+				<listheader align="center" label="添加时间" width="15%">
+					<separator></separator>
+					<datebox width="90%" mold="rounded" instant="true"
+						format="yyyy-MM-dd" value="@bind(vm.addtime)"
+						onChange="@command('search')" />
+				</listheader>
+				<listheader align="center" label="操作" width="60px">
+				</listheader>
+			</listhead>
+			<template name="model">
+				<listitem>
+					<listcell>
+						<label value="@load(forEachStatus.index + 1)"></label>
+					</listcell>
+					<listcell label="@load(each.cid)" />
+					<listcell>
+						<label if="${each.zhtype==1 }" tooltiptext="独立户"
+							value="@load(each.coba_shortname)" style="color:blue">
+						</label>
+						<label if="${each.zhtype==0 }" tooltiptext="中智户"
+							value="@load(each.coba_shortname)">
+						</label>
+					</listcell>
+					<listcell label="@load(each.gid)" />
+					<listcell label="@load(each.emba_name)" />
+					<listcell label="@load(each.erpi_t_kind)" />
+					<listcell>
+						<image src="/images/20070708132244928.gif"
+							tooltiptext="还未退回材料"
+							if="${(each.erpi_state eq 9 or each.erpi_state eq 10 or 
+									each.erpi_state eq 11) and each.erpi_tzl_state eq 0 }"
+							style="cursor:pointer">
+						</image>
+						<label value="@load(each.statename)"
+							if="${each.erpi_state ne 12 and each.erpi_state ne 13 and 
+									each.erpi_state ne 14 }" />
+						<label value="@load(each.statename)"
+							style="color:red"
+							if="${each.erpi_state eq 12 or each.erpi_state eq 13 or 
+									each.erpi_state eq 14 }" />
+					</listcell>
+					<listcell label="@load(each.erpi_addname)" />
+					<listcell label="@load(each.erpi_addtime)" />
+					<listcell>
+						<menubar autodrop="true">
+							<menu image="../images/pencil-small.png">
+								<menupopup>
+									<menuitem label="详情"
+										onClick="@command('detail',each=each,role='qd')" />
+									<menuitem label="材料详情"
+										onClick="@command('docdetail',each=each)" />
+								</menupopup>
+							</menu>
+						</menubar>
+					</listcell>
+				</listitem>
+			</template>
+		</listbox>
+	</window>
+</zk>

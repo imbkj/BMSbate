@@ -1,0 +1,51 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="设置发送方式" id="sendwin" width="60%" height="60%"
+		closable="true" border="normal" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.SalaryPaper.SalaryPaper_PlSetSpController')">
+		<borderlayout>
+			<center>
+				<grid>
+					<rows>
+						<row>
+							<cell width="20%" align="center">
+								<label value="发送方式" />
+							</cell>
+							<cell>
+								<grid id="grid" vflex="1" hflex="1"
+									model="@load(vm.stmList2)">
+									<columns>
+										<column>
+											<radiogroup id="radio"
+												model="@load(vm.stmList1)">
+												<template
+													name="model">
+													<radio 
+														label="@bind(each.cost_name)" />
+												</template>
+											</radiogroup>
+										</column>
+									</columns>
+									<template name="model">
+										<row>
+											<cell>
+												<checkbox
+													label="@load(each.cost_name)" value="@bind(each.cost_id)" />
+											</cell>
+										</row>
+									</template>
+								</grid>
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</center>
+			<south>
+				<div align="center">
+					<button label="提交"
+						onClick="@command('commit',grid=grid,win=sendwin,radio=radio)" />
+				</div>
+			</south>
+		</borderlayout>
+	</window>
+</zk>

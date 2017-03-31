@@ -1,0 +1,148 @@
+<?page contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="win" title="系统提醒新增" border="normal" width="700px" height="610px"
+		closable="true" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.SysRemind.SysRemind_AddController')">
+		<grid height="95%" width="100%">
+			<columns>
+				<column width="15%"></column>
+				<column></column>
+			</columns>
+			<rows>
+				<row>
+					<cell colspan="2">
+						<columnlayout width="100%">
+							<columnchildren width="55%">
+								<panel title="员工列表">
+									<panelchildren>
+										<listbox id="ltblogin"
+											mold="paging" pageSize="15" model="@load(vm.loginList)"
+											height="210px" multiple="true" emptyMessage="暂无数据">
+											<listhead>
+												<listheader
+													align="center">
+													<label
+														value="姓名(手机)" />
+													<textbox width="65%"
+														mold="rounded" instant="true" value="@bind(vm.name)"
+														onChange="@command('search')">
+													</textbox>
+												</listheader>
+												<listheader
+													align="center">
+													<label value="部门" />
+													<combobox
+														model="@load(vm.deptList)" readonly="true" width="70%"
+														selectedItem="@bind(vm.depModel)" instant="true"
+														onChange="@command('search')" mold="rounded">
+														<template
+															name="model">
+															<comboitem
+																label="@load(each.dep_name)" />
+														</template>
+													</combobox>
+												</listheader>
+											</listhead>
+											<template name="model">
+												<listitem
+													onClick="@command('addsingleselect',selectitem=each)">
+													<listcell>
+														<label value="@load(each.log_name)" />(
+														<label value="@load(each.log_mobile)" />)
+													</listcell>
+													<listcell
+														label="@load(each.dep_name)" />
+												</listitem>
+											</template>
+										</listbox>
+									</panelchildren>
+								</panel>
+							</columnchildren>
+							<columnchildren style="margin:50px 5px">
+								<vbox>
+									<image style="cursor:pointer"
+										src="/images/rightrightarrow_g.png"
+										onClick="@command('allselect')" />
+									<image style="cursor:pointer"
+										src="/images/rightarrow_g.png"
+										onClick="@command('addselect',selectitems=ltblogin.selectedItems)" />
+									<image style="cursor:pointer"
+										src="/images/leftarrow_g.png"
+										onClick="@command('removeselect',selectitems=ltbselect.selectedItems)" />
+									<image style="cursor:pointer"
+										src="/images/leftleftarrow_g.png"
+										onClick="@command('allremove')" />
+								</vbox>
+							</columnchildren>
+							<columnchildren width="39%">
+								<panel title="要提醒的人">
+									<panelchildren>
+										<listbox id="ltbselect"
+											mold="paging" pageSize="15"
+											onCreate="@command('initltb',ltb=self)"
+											model="@load(vm.selectloginliList)" height="210px"
+											emptyMessage="暂无数据">
+											<listhead>
+												<listheader
+													align="center">
+													<label value="姓名" />
+												</listheader>
+												<listheader
+													align="center">
+													<label value="手机" />
+												</listheader>
+											</listhead>
+											<template name="model">
+												<listitem>
+													<listcell
+														label="@load(each.log_name)" onClick="@command('removesingleselect',selectitem=each)" />
+													<listcell>
+														<label value="@load(each.log_mobile)" />
+													</listcell>
+												</listitem>
+											</template>
+										</listbox>
+									</panelchildren>
+								</panel>
+							</columnchildren>
+						</columnlayout>
+						<separator></separator>
+						<label style="color:red" 
+							value="注：添加提醒前请确认自己或者对方的手机号码是否正确，单击姓名可以移动" />
+					</cell>
+				</row>
+				<row>
+					<label value="提醒方式" />
+					<hlayout>
+						<checkbox label="手机短信" checked="@bind(vm.ifsms)" />
+						<checkbox label="Email" checked="@bind(vm.ifemail)" />
+					</hlayout>
+				</row>
+				<row>
+					<label value="提醒时间" />
+					<datebox format="yyyy-MM-dd kk:mm" width="150px" mold="rounded" 
+						constraint="no past" value="@bind(vm.remindtime)" />
+				</row>
+				<row>
+					<cell colspan="2">
+						<label value="内容" style="color:#666" />
+					</cell>
+				</row>
+				<row>
+					<cell colspan="2">
+						<textbox rows="7" hflex="1" vflex="1"
+							value="@bind(vm.content)">
+						</textbox>
+					</cell>
+				</row>
+				<row>
+					添加人
+					<label value="@load(vm.username)" />
+				</row>
+			</rows>
+		</grid>
+		<hbox pack="center" width="100%">
+			<button label="提交" onClick="@command('submit',win=win)"></button>
+		</hbox>
+	</window>
+</zk>

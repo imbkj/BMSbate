@@ -1,0 +1,68 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winCreateBill" title="生成账单" border="normal" width="50%"
+		height="80%" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoFinanceManage.Cfma_MonthlyBillCreateController')"
+		closable="true" sizable="true">
+		<grid hflex="1" vflex="1">
+			<rows>
+				<row>
+					<cell width="30%">账单模板：</cell>
+					<cell align="center">
+						<combobox id="cbTemplate" readonly="true"
+							mold="rounded" autodrop="true" model="@load(vm.btModel)"
+							onChange="@command('cbChange',cb=self)">
+							<template name="model">
+								<comboitem label="@load(each.cfmt_name)"
+									value="@load(each.cfmt_prefix)" />
+							</template>
+						</combobox>
+					</cell>
+				</row>
+				<row visible="@load(vm.winVisible)">
+					<cell colspan="2">
+						<grid span="true" emptyMessage="暂无数据"
+							model="@load(vm.winTempList)" sizedByContent="true" width="99%"
+							hflex="1" mold="paging" pageSize="50">
+							<columns sizable="true">
+								<column align="center" width="30px" />
+								<column label="序号" hflex="2"
+									align="center" />
+								<column label="@load(vm.cellIdName)"
+									sort="auto(winId)" hflex="4" align="center"
+									visible="@load(vm.cellIdVisible)" />
+								<column label="@load(vm.cellName)"
+									sort="auto(name)" hflex="6" align="center" />
+							</columns>
+							<rows>
+								<template name="model">
+									<row>
+										<checkbox
+											checked="@bind(each.check)" />
+										<label
+											value="${forEachStatus.index + 1}" />
+										<label
+											value="@load(each.winId)" />
+										<label value="@load(each.name)" />
+									</row>
+								</template>
+							</rows>
+						</grid>
+					</cell>
+				</row>
+				<row>
+					<cell>备注：</cell>
+					<cell align="center">
+						<textbox id="txtRemark" rows="3" width="80%" />
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button label="生成账单"
+						onClick="@command('createBill',cb=cbTemplate,remark=txtRemark.value,win=winCreateBill)" />
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

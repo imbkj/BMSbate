@@ -1,0 +1,57 @@
+<?page title="菜单权限设置" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<div apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('role') @init('Controller.SystemControl.MenuList_PubManangerController')">
+	<panel title="菜单权限设置" border="normal" hflex="1" vflex="1">
+	<panelchildren>
+	<grid>
+		<rows>
+			<row>
+				<cell width="100px"></cell>
+				<cell></cell>
+				<cell width="110px"></cell>
+				<cell></cell>
+			</row>
+			<row>
+				<cell width="80px">操作角色
+				</cell>
+				<cell>
+					<combobox id="rolelist" model="@load(role.rolemodel)" onSelect="@command('roleselect',rolelist=rolelist,
+					tree=tree,tre=tre,menuall=menuall,busall=busall)">
+						<template name="model">
+            				<comboitem label="@load(each.rol_name)" value="@load(each.rol_id)"/>
+                   	 	</template>
+					</combobox>
+				</cell>
+				<cell visible="false"><a onClick="@command('Export')"><label>导出主菜单</label></a></cell>
+			</row>
+			<row>
+				<cell></cell>
+				<cell>全选<checkbox id="menuall" onCheck="@command('checkallmenu',tree=tree,ck=self)"></checkbox></cell>
+				<cell></cell>
+				<cell>全选<checkbox id="busall" onCheck="@command('checkallmenubu',tree=tre,ck=self)"></checkbox></cell>
+			</row>
+			 <row hflex="1">
+					<cell>主菜单权限分配</cell>
+					<cell>
+						<tree id="tree" multiple="true" checkmark="true" height="510px"
+						onCreate="@command('addTree',tree=tree)"
+						onClick="@command('menucheck',tree=self)"></tree>
+					</cell>
+					<cell>业务中心菜单分配</cell>
+					<cell>
+						<tree id="tre" vflex="1" onCreate="@command('oncreatetree',tree=self)"
+						 multiple="true" checkmark="true" height="510px"
+				 		onClick="@command('embumenucheck',tree=self)"></tree>
+					</cell>
+				</row>
+				<row align="center">
+					<cell colspan="2"><button id="menusummit" onClick="@command('menusummit')">提交</button></cell>
+					<cell colspan="2"><button id="menusummits" onClick="@command('embusummit')">提交</button></cell>					
+				</row>
+			 </rows>
+		</grid>
+	</panelchildren>
+</panel>
+	</div>
+</zk>

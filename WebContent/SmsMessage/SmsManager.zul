@@ -1,0 +1,26 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<style>.black {font-weight:bold;}</style>
+	<tablelayout width="100%" columns="3" hflex="1" vflex="1"
+		apply="org.zkoss.bind.BindComposer,Controller.SmsMessage.SmsMessage_ManagerController">
+		<tablechildren>
+			<label id="send" value="发送记录" style="cursor:pointer;" />
+			[
+			<span style="color:red;font-weight:bold;">
+				${$composer.sendSms }
+			</span>
+			]
+		</tablechildren>
+		<tablechildren>
+			<label id="rec" value="接收记录" style="cursor:pointer;" />
+			[
+			<span style="color:red;font-weight:bold;">
+				${$composer.revSms }
+			</span>
+			]
+		</tablechildren>
+		<tablechildren>${$composer.newSms }
+		<image src="images/dot_1.gif" style="cursor:pointer"  id="sms" />
+		</tablechildren>
+	</tablelayout>
+</zk>

@@ -1,0 +1,77 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="设置工资单模版" id="modelwin" width="60%" height="60%"
+		closable="true" border="normal" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.SalaryPaper.SalaryPaper_setModelController')"
+		onCreate="@command('createInfo',grid=grid,radio=radio)">
+
+		<borderlayout>
+			<north border="0">
+				<grid>
+					<rows>
+						<row>
+							<cell width="20%" align="center">
+								<label value="员工编号" />
+							</cell>
+							<cell>
+								<label value="@load(vm.m.gid)" />
+							</cell>
+
+						</row>
+
+						<row>
+							<cell width="20%" align="center">
+								<label value="员工姓名" />
+							</cell>
+							<cell>
+								<label value="@load(vm.m.emba_name)" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</north>
+			<center>
+				<grid>
+					<rows>
+						<row>
+							<cell width="20%" align="center">
+								<label value="选择模版" />
+							</cell>
+							<cell>
+								<grid id="grid" vflex="1" hflex="1"
+									model="@load(vm.csmList2)">
+									<columns>
+										<column>
+											<radiogroup id="radio"
+												model="@load(vm.csmList1)">
+												<template
+													name="model">
+													<radio
+														label="@load(each.cosm_name)" value="@bind(each)" />
+												</template>
+											</radiogroup>
+										</column>
+									</columns>
+									<template name="model">
+										<row>
+											<cell>
+												<checkbox
+													label="@load(each.cosm_name)" value="@bind(each)" />
+											</cell>
+										</row>
+									</template>
+								</grid>
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</center>
+			<south>
+				<div align="center">
+					<button label="提交"
+						onClick="@command('commit',grid=grid,win=modelwin,radio=radio)" />
+				</div>
+			</south>
+		</borderlayout>
+	</window>
+</zk>

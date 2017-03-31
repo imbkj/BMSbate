@@ -1,0 +1,43 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window width="90%" height="90%" title="员工福利明细" id="windetail"
+		border="normal" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmBenefit.EmWelf_DetailController')"
+		closable="true">
+		<borderlayout>
+			<north>
+
+			</north>
+			<center>
+				<grid width="100%" height="100%" model="@load(vm.list)" sizedByContent="true" span="true" emptyMessage="暂无数据">
+					<columns>
+						<column align="center">序号</column>
+						<column align="center">客服</column>
+						<column align="center">公司名称</column>
+						<column align="center">员工姓名</column>
+						<column align="center">入职时间</column>
+						<column align="center">付款性质</column>
+						<column align="center">寄送方式</column>
+						<column align="center">何时需要</column>
+						<column align="center">包含家属</column>
+						<column align="center">礼品签收</column>
+					</columns>
+					<template name="model">
+						<row>
+							<cell>${forEachStatus.index+1 }</cell>
+							<cell><label value="@load(each.emwf_client)" /></cell>
+							<cell><label value="@load(each.emwf_company)" /></cell>
+							<cell><label value="@load(each.emwf_name)" /></cell>
+							<cell><label value="@load(each.emwf_intime)" /></cell>
+							<cell><label value="@load(each.emwf_paykind)" /></cell>
+							<cell><label value="@load(each.emwf_delivery)" /></cell>
+							<cell><label value="@load(each.emwf_need)" /></cell>
+							<cell><label value="@load(each.emwf_family)" /></cell>
+							<cell><label value="@load(each.emwf_signState)" /></cell>
+						</row>
+					</template>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

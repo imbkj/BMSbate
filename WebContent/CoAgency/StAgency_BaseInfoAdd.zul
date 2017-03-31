@@ -1,0 +1,423 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winStBaseAdd" title="受托机构 -- 新增页面" border="normal"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoAgency.StAgency_BaseInfoAddController')"
+		width="100%">
+		<zscript>
+	//约定付款日期
+	day = new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10",
+			"11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21",
+			"22", "23", "24", "25", "26", "27", "28", "29", "30", "31" };
+</zscript>
+		<groupbox open="true" title="基本信息" mold="3d">
+			<grid width="100%">
+				<rows>
+					<row>
+						<cell width="10%" style="color:#666;">
+							机构名称：
+							<label style="color:red;">(*)</label>
+						</cell>
+						<cell>
+							<vbox width="100%">
+								<textbox
+									value="@bind(vm.winCabaModel.coab_name)" mold="rounded"
+									width="90%"
+									onChange="@command('selAgency',coab_name=self.value,cbSerCity=cbSerCity)" />
+								<label value="（系统存在该机构，已为您读取基本信息。）"
+									style="color:red;" visible="@load(vm.readVis)" />
+							</vbox>
+						</cell>
+						<cell width="10%" style="color:#666;">
+							机构简称：
+							<label style="color:red;">(*)</label>
+						</cell>
+						<cell>
+							<textbox
+								value="@bind(vm.winCabaModel.coab_shortname)" mold="rounded"
+								width="90%" />
+						</cell>
+						<cell width="10%" style="color:#666;">
+							机构性质：
+						</cell>
+						<cell width="25%">
+							<combobox readonly="true" width="30%"
+								mold="rounded" value="@bind(vm.winCabaModel.coab_setuptype)">
+								<comboitem label="集团内" />
+								<comboitem label="民营" />
+								<comboitem label="国企" />
+								<comboitem label="事业单位" />
+							</combobox>
+						</cell>
+					</row>
+					<row>
+						<cell style="color:#666;">
+							所属省市：
+							<label style="color:red;">(*)</label>
+						</cell>
+						<cell width="25%">
+							<combobox readonly="true" width="30%"
+								hflex="1" mold="rounded" model="@load(vm.provincelist)"
+								value="@bind(vm.winCabaModel.coab_province)"
+								onChange="@command('selCity', contact=event.value,cb=cbCity)">
+								<template name="model">
+									<comboitem label="@load(each)" />
+								</template>
+							</combobox>
+							<combobox id="cbCity" readonly="true"
+								width="40%" hflex="1" mold="rounded" model="@load(vm.citylist)"
+								value="@bind(vm.winCabaModel.coab_city)">
+								<template name="model">
+									<comboitem label="@load(each)" />
+								</template>
+							</combobox>
+						</cell>
+						<cell width="10%" style="color:#666;">
+							客户来源：
+						</cell>
+						<cell width="20%">
+							<combobox mold="rounded" width="60%"
+								readonly="true" value="@bind(vm.winCabaModel.coab_source)">
+								<comboitem label="中智介绍" />
+								<comboitem label="同行介绍" />
+								<comboitem label="网络查询" />
+								<comboitem label="其它" />
+							</combobox>
+						</cell>
+						<cell width="10%" style="color:#666;">
+							机构业务范围：
+						</cell>
+						<cell>
+							<textbox mold="rounded" width="80%"
+								value="@bind(vm.winCabaModel.coab_business)" />
+						</cell>
+					</row>
+					<row>
+						<cell style="color:#666;">法定代表人：</cell>
+						<cell>
+							<textbox mold="rounded" width="60%"
+								value="@bind(vm.winCabaModel.coab_companymanager)" />
+						</cell>
+						<cell style="color:#666;">注册资金：</cell>
+						<cell>
+							<vlayout>
+								<textbox mold="rounded" width="60%"
+									value="@bind(vm.winCabaModel.coab_capital)" />
+								<label value="(单位：万元；币种：人民币)"
+									style="color:red;">
+								</label>
+							</vlayout>
+						</cell>
+						<cell style="color:#666;">注册地址：</cell>
+						<textbox mold="rounded" width="80%"
+							value="@bind(vm.winCabaModel.coab_regaddress)" />
+					</row>
+					<row>
+						备注：
+						<cell colspan="5">
+							<textbox rows="5" mold="rounded" hflex="1"
+								value="@bind(vm.winCabaModel.coab_remark)" />
+						</cell>
+					</row>
+				</rows>
+			</grid>
+		</groupbox>
+		<groupbox open="true" title="服务信息" mold="3d">
+			<grid width="100%">
+				<rows>
+					<row>
+						<cell width="10%" style="color:#666;">客服：</cell>
+						<combobox readonly="true"
+							model="@load(vm.clientList)" width="60%" mold="rounded"
+							value="@bind(vm.cabsModel.coas_client)">
+							<template name="model">
+								<comboitem label="@load(each)" />
+							</template>
+						</combobox>
+						<cell width="10%" style="color:#666;">
+							合作状态：
+						</cell>
+						<combobox id="cbHz" readonly="true"
+							mold="rounded" width="30%" value="@bind(vm.cabsModel.coas_hz)">
+							<comboitem label="未合作" />
+							<comboitem label="合作" />
+							<comboitem label="终止合作" />
+						</combobox>
+					</row>
+				</rows>
+			</grid>
+		</groupbox>
+		<groupbox open="false" title="财务信息" mold="3d">
+			<grid width="100%">
+				<rows>
+					<row>
+						<cell width="10%" style="color:#666;">
+							开户银行：
+						</cell>
+						<textbox mold="rounded" width="60%"
+							value="@bind(vm.cabsModel.coas_accountBank)" />
+						<cell width="10%" style="color:#666;">
+							开户银行全称：
+						</cell>
+						<textbox mold="rounded" width="80%"
+							value="@bind(vm.cabsModel.coas_accountName)" />
+						<cell width="10%" style="color:#666;">
+							银行账户：
+						</cell>
+						<textbox mold="rounded" width="80%"
+							value="@bind(vm.cabsModel.coas_accountNum)" />
+					</row>
+				</rows>
+			</grid>
+		</groupbox>
+		<groupbox open="false" title="受托约定" mold="3d">
+			<grid width="100%">
+				<rows>
+					<row>
+						<cell width="10%" style="color:#666;">
+							联系地址
+						</cell>
+						<cell width="10%" style="color:#666;">
+							公司邮编：
+						</cell>
+						<cell width="20%">
+							<textbox mold="rounded" width="60%"
+								value="@bind(vm.cabsModel.coas_zipcode)" />
+						</cell>
+						<cell width="10%" style="color:#666;">
+							联系地址：
+						</cell>
+						<cell width="20%">
+							<textbox mold="rounded" width="80%"
+								value="@bind(vm.cabsModel.coas_coaddress)" />
+						</cell>
+					</row>
+					<row>
+						<cell style="color:#666;" rowspan="2"
+							width="10%">
+							账单
+						</cell>
+						<cell style="color:#666;">提交账单日期：</cell>
+						<combobox readonly="true" width="30%"
+							mold="rounded" value="@bind(vm.cabsModel.coas_billDay)">
+							<comboitem label="" />
+							<comboitem label="${each}" forEach="${day}" />
+						</combobox>
+						<cell style="color:#666;">费用支付方式：</cell>
+						<combobox readonly="true" width="50%"
+							mold="rounded" value="@bind(vm.cabsModel.coas_payMethods)">
+							<comboitem label="" />
+							<comboitem label="互委托抵扣结算" />
+							<comboitem label="按月支付" />
+							<comboitem label="按季度支付" />
+							<comboitem label="二月支付一次" />
+						</combobox>
+					</row>
+					<row>
+						<cell style="color:#666;">费用支付日期：</cell>
+						<combobox readonly="true" width="30%"
+							mold="rounded" value="@bind(vm.cabsModel.coas_payday)">
+							<comboitem label="" />
+							<comboitem label="${each}" forEach="${day}" />
+						</combobox>
+						<cell style="color:#666;">费用支付周期：</cell>
+						<combobox readonly="true" width="30%"
+							mold="rounded" value="@bind(vm.cabsModel.coas_paymon)">
+							<comboitem label="" />
+							<comboitem label="上月" />
+							<comboitem label="当月" />
+							<comboitem label="下月" />
+						</combobox>
+					</row>
+					<row>
+						<cell style="color:#666;" rowspan="2">发票</cell>
+						<cell width="10%" style="color:#666;">
+							是否要求寄送发票：
+						</cell>
+						<combobox readonly="true" width="30%"
+							mold="rounded" value="@bind(vm.cabsModel.coas_ifSendInvoice)">
+							<comboitem label="是" />
+							<comboitem label="否" />
+						</combobox>
+						<cell width="10%" style="color:#666;">
+							发票寄送联系人：
+						</cell>
+						<textbox mold="rounded" width="80%"
+							value="@bind(vm.cabsModel.coas_invoiceLinkman)" />
+					</row>
+					<row>
+						<cell width="10%" style="color:#666;">
+							发票寄送地址：
+						</cell>
+						<cell colspan="3">
+							<textbox mold="rounded" width="80%"
+								value="@bind(vm.cabsModel.coas_invoiceAdd)" />
+						</cell>
+					</row>
+					<row>
+						备注：
+						<cell colspan="3">
+							<textbox rows="5" mold="rounded" hflex="1"
+								value="@bind(vm.cabsModel.coas_remark)" />
+						</cell>
+					</row>
+				</rows>
+			</grid>
+		</groupbox>
+		<groupbox open="false" title="联系人" mold="3d">
+			<grid id="gdLinkman" width="100%">
+				<rows>
+					<row>
+						<cell style="color:#666;">联系人个数：</cell>
+						<cell colspan="5">
+							<spinner id="linkmanNum" value="1"
+								instant="true" onChange="addLinkman()"
+								constraint="no negative;no zero;max 10;" />
+						</cell>
+					</row>
+					<row>
+						<cell colspan="6">
+							<grid id="gdLinkmanDefult">
+								<rows>
+									<row>
+										<cell rowspan="7" width="10%">
+											<label value="联系人1" />
+										</cell>
+										<cell width="15%"
+											style="color:#666;">
+											联系人类型：
+										</cell>
+										<cell width="25%">
+											<textbox mold="rounded" />
+										</cell>
+										<cell width="15%"
+											style="color:#666;">
+											是否重要联系人：
+										</cell>
+										<cell width="25%">
+											<checkbox />
+										</cell>
+									</row>
+									<row>
+										姓名：
+										<cell>
+											<textbox mold="rounded" />
+											<label style="color:red;">
+												(*)
+											</label>
+										</cell>
+										英文名：
+										<cell>
+											<textbox mold="rounded" />
+										</cell>
+									</row>
+									<row>
+										手机：
+										<cell>
+											<textbox mold="rounded" />
+										</cell>
+										座机：
+										<cell>
+											<textbox mold="rounded" />
+										</cell>
+									</row>
+									<row>
+										职位：
+										<cell>
+											<textbox mold="rounded" />
+										</cell>
+										传真：
+										<cell>
+											<textbox mold="rounded" />
+										</cell>
+									</row>
+									<row>
+										生日：
+										<cell>
+											<datebox readonly="true"
+												format="yyyy-MM-dd" mold="rounded" />
+										</cell>
+										兴趣爱好：
+										<cell>
+											<textbox mold="rounded" />
+										</cell>
+									</row>
+									<row>
+										Email：
+										<cell>
+											<textbox mold="rounded" />
+										</cell>
+										联系地址：
+										<cell>
+											<textbox mold="rounded" />
+										</cell>
+									</row>
+									<row>
+										个性描述：
+										<cell>
+											<textbox rows="5"
+												width="80%" mold="rounded" />
+										</cell>
+										备注：
+										<cell>
+											<textbox rows="5"
+												width="80%" mold="rounded" />
+										</cell>
+									</row>
+								</rows>
+							</grid>
+
+						</cell>
+					</row>
+				</rows>
+			</grid>
+		</groupbox>
+		<div width="100%" align="center">
+			<button id="btSubmit" label="提交"
+				onClick="@command('addBase',gdLinkman=gdLinkman,win=winStBaseAdd)" />
+		</div>
+		<zscript><![CDATA[
+	//declare zscript methods
+	//动态生成联系人控件
+	void addLinkman() {
+		//联系人个数
+		int num = linkmanNum.getValue();
+		if (num >= 1) {
+			//现有联系人个数
+			int nowLink = gdLinkman.getRows().getChildren().size() - 1;
+			//需添加联系人个数
+			int addcount = num - nowLink;
+
+			if (addcount > 0) {
+				//增加联系人
+				for (int i = 0; i < addcount; i++) {
+					nowLink++;
+					Row row = new Row();
+					Cell cell = new Cell();
+					cell.setColspan(6);
+					cell.setParent(row);
+					Grid gd = gdLinkmanDefult.clone();
+					gd.setId("");
+					Label lblNum = gd.getChildren().get(0).getChildren().get(0)
+							.getChildren().get(0).getChildren().get(0);
+					lblNum.setValue("联系人" + nowLink);
+					gd.setParent(cell);
+					Rows = gdLinkman.getRows();
+					row.setParent(Rows);
+				}
+			} else if (addcount < 0) {
+				//减少联系人
+				for (int j = addcount; j < 0; j++) {
+					List comp = gdLinkman.getRows().getChildren();
+					int s = comp.size();
+					if (s >= 2) {
+						Row row = (Row) comp.get(s - 1);
+						gdLinkman.getRows().removeChild(row);
+					}
+				}
+			}
+		}
+	}
+]]></zscript>
+	</window>
+</zk>

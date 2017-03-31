@@ -1,0 +1,551 @@
+<?page title="缴存登记 - 申报详情" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="win" title="@load(vm.title)" border="normal"
+		width="800px" height="85%" closable="true"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoHousingFund.CoHousingFund_AddInfoController')">
+		<borderlayout>
+			<center autoscroll="true" border="none">
+				<vbox>
+					<groupbox title="账户信息" mold="3d">
+						<grid hflex="1" vflex="1">
+							<columns>
+								<column width="15%"></column>
+								<column></column>
+								<column width="15%"></column>
+								<column></column>
+							</columns>
+							<rows>
+								<row>
+									<cell>
+										<label style="color:#666"
+											value="当前状态" />
+									</cell>
+									<cell colspan="3">
+										<label
+											value="@load(vm.chfcModel.statename)" />
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<label style="color:#666"
+											value="公司编号" />
+									</cell>
+									<cell>
+										<label
+											value="@load(vm.chfcModel.cid)" />
+									</cell>
+									<cell>
+										<label style="color:#666"
+											value="公司全称" />
+									</cell>
+									<cell>
+										<label
+											value="@load(vm.chfcModel.coba_company)" />
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<label style="color:#666"
+											value="单位公积金账号" />
+									</cell>
+									<cell>
+										<label
+											value="@bind(vm.chfcModel.chfc_houseid)" />
+									</cell>
+									<cell>
+										<label style="color:#666"
+											value="托收日" />
+									</cell>
+									<cell>
+										<label
+											value="@bind(vm.chfcModel.chfc_tsday)" />
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<label style="color:#666"
+											value="业务经办部门" />
+									</cell>
+									<cell>
+										<label
+											value="@bind(vm.chfcModel.chfc_jbdepartment)" />
+									</cell>
+									<cell>
+										<label style="color:#666"
+											value="中智管理状态" />
+									</cell>
+									<cell>
+										<label
+											value="@bind(vm.chfcModel.chfc_manstate)" />
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<label style="color:#666"
+											value="归集银行" />
+									</cell>
+									<cell>
+										<label
+											value="@bind(vm.chfcModel.chfc_bankgj)" />
+									</cell>
+									<cell>
+										<label style="color:#666"
+											value="领卡银行" />
+									</cell>
+									<cell>
+										<label
+											value="@bind(vm.chfcModel.chfc_banklk)">
+										</label>
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<label style="color:#666"
+											value="联系人" />
+									</cell>
+									<cell colspan="3">
+										<grid style="border:none">
+											<columns>
+												<column width="10%" />
+												<column width="25%" />
+												<column width="10%" />
+												<column />
+											</columns>
+											<rows>
+												<row>
+													<cell>
+														<label
+															style="color:#666" value="姓名" />
+													</cell>
+													<cell>
+														<label
+															value="@bind(vm.chfcModel.chfc_contactname)" />
+													</cell>
+													<cell>
+														<label
+															style="color:#666" value="固定电话" />
+													</cell>
+													<cell>
+														<label
+															value="@bind(vm.chfcModel.chfc_contacttel)" />
+													</cell>
+												</row>
+												<row>
+													<cell>
+														<label
+															style="color:#666" value="电子邮箱" />
+													</cell>
+													<cell>
+														<label
+															value="@bind(vm.chfcModel.chfc_contactmail)" />
+													</cell>
+													<cell>
+														<label
+															style="color:#666" value="移动电话" />
+													</cell>
+													<cell>
+														<label
+															value="@bind(vm.chfcModel.chfc_contactmobile)" />
+													</cell>
+												</row>
+											</rows>
+										</grid>
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<label style="color:#666"
+											value="组织机构代码" />
+									</cell>
+									<cell>
+										<label
+											value="@bind(vm.chfcModel.chfc_comid)" />
+									</cell>
+									<cell>
+										<label style="color:#666"
+											value="资格类型" />
+									</cell>
+									<cell>
+										<label
+											value="@bind(vm.chfcModel.chfc_zgtype)" />
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<label style="color:#666"
+											value="单位地址" />
+									</cell>
+									<cell>
+										<label
+											value="@bind(vm.chfcModel.chfc_address)" hflex="1" />
+									</cell>
+									<cell colspan="2"></cell>
+								</row>
+								<row>
+									<cell>
+										<label style="color:#666"
+											value="行业代码" />
+									</cell>
+									<cell>
+										<label
+											value="@bind(vm.chfcModel.chfc_industry)" />
+									</cell>
+									<cell>
+										<label style="color:#666"
+											value="邮政编码" />
+									</cell>
+									<cell>
+										<label
+											value="@bind(vm.chfcModel.chfc_pastal)" />
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<label style="color:#666"
+											value="所属行政区域" />
+									</cell>
+									<cell>
+										<label
+											value="@bind(vm.chfcModel.chfc_area)" />
+									</cell>
+									<cell>
+										<label style="color:#666"
+											value="性质分类" />
+									</cell>
+									<cell>
+										<label
+											value="@bind(vm.chfcModel.chfc_nature)" />
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<label style="color:#666"
+											value="隶属关系" />
+									</cell>
+									<cell>
+										<label
+											value="@bind(vm.chfcModel.chfc_attached)" />
+									</cell>
+									<cell>
+										<label style="color:#666"
+											value="企业经济类型" />
+									</cell>
+									<cell>
+										<label
+											value="@bind(vm.chfcModel.chfc_ecoclass)" />
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<label style="color:#666"
+											value="法定代表人或负责人" />
+									</cell>
+									<cell colspan="3">
+										<grid style="border:none">
+											<columns>
+												<column width="10%" />
+												<column width="20%" />
+												<column width="10%" />
+												<column />
+											</columns>
+											<rows>
+												<row>
+													<cell>
+														<label
+															style="color:#666" value="姓名" />
+													</cell>
+													<cell>
+														<label
+															value="@bind(vm.chfcModel.chfc_corname)" />
+													</cell>
+													<cell>
+														<label
+															style="color:#666" value="证件类型" />
+													</cell>
+													<cell>
+														<label
+															value="@bind(vm.chfcModel.chfc_coridtype)" />
+													</cell>
+												</row>
+												<row>
+													<cell>
+														<label
+															style="color:#666" value="联系电话" />
+													</cell>
+													<cell>
+														<label
+															value="@bind(vm.chfcModel.chfc_cortel)" />
+													</cell>
+													<cell>
+														<label
+															style="color:#666" value="证件号码" />
+													</cell>
+													<cell>
+														<label
+															value="@bind(vm.chfcModel.chfc_coridcard)" />
+													</cell>
+												</row>
+											</rows>
+										</grid>
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<label style="color:#666"
+											value="上级主管部门" />
+									</cell>
+									<cell colspan="3">
+										<grid style="border:none">
+											<columns>
+												<column width="10%" />
+												<column />
+											</columns>
+											<rows>
+												<row>
+													<cell>
+														<label
+															style="color:#666" value="名称" />
+													</cell>
+													<cell>
+														<label
+															value="@bind(vm.chfcModel.chfc_department)" />
+													</cell>
+												</row>
+												<row>
+													<cell>
+														<label
+															style="color:#666" value="联系电话" />
+													</cell>
+													<cell>
+														<label
+															value="@bind(vm.chfcModel.chfc_departmenttel)" />
+													</cell>
+												</row>
+											</rows>
+										</grid>
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<label style="color:#666"
+											value="单位成立时间" />
+									</cell>
+									<cell>
+										<label
+											value="@bind(vm.chfcModel.chfc_createtime)" />
+									</cell>
+									<cell>
+										<label style="color:#666"
+											value="社保单位编号" />
+									</cell>
+									<cell>
+										<label
+											value="@bind(vm.chfcModel.chfc_sorid)" />
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<label style="color:#666"
+											value="工商注册号" />
+									</cell>
+									<cell>
+										<label
+											value="@bind(vm.chfcModel.chfc_regid)" />
+									</cell>
+									<cell>
+										<label style="color:#666"
+											value="纳税人识别号" />
+									</cell>
+									<cell>
+										<label
+											value="@bind(vm.chfcModel.chfc_taxpayerid)" />
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<label style="color:#666"
+											value="单位/个人缴存比例" />
+									</cell>
+									<cell colspan="3">
+										<label
+											value="@bind(vm.chfcModel.cpp)" />
+										%
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<label style="color:#666"
+											value="公积金缴存银行" />
+									</cell>
+									<cell>
+										<hlayout>
+											<label
+												value="@bind(vm.chfcModel.chfc_bankjc)" />
+											<hbox
+												visible="@load(vm.chfcModel.vis_bankjcid)">
+												<space />
+												<label value="账号:"
+													style="color:#666" />
+												<label
+													value="@bind(vm.chfcModel.chfc_bankjcid)" />
+											</hbox>
+										</hlayout>
+									</cell>
+									<cell>
+										<label style="color:#666"
+											value="公积金首次托收月" />
+									</cell>
+									<cell>
+										<label
+											value="@bind(vm.chfcModel.chfc_firmonth)" />
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<label style="color:#666"
+											value="托收账户开户银行" />
+									</cell>
+									<cell>
+										<label
+											value="@bind(vm.chfcModel.chfc_bankts)" />
+									</cell>
+									<cell>
+										<label style="color:#666"
+											value="托收账户银行帐号" />
+									</cell>
+									<cell>
+										<label hflex="1"
+											value="@bind(vm.chfcModel.chfc_banktsid)" />
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<label style="color:#666"
+											value="托收账户名称" />
+									</cell>
+									<cell>
+										<label hflex="1"
+											value="@bind(vm.chfcModel.chfc_banktsacc)" />
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+					<groupbox title="专办员信息" mold="3d">
+						<grid hflex="1" vflex="1"
+							model="@load(vm.zbList)">
+							<columns>
+								<column align="center" width="60px">
+									序号
+								</column>
+								<column align="center">专办员号</column>
+								<column align="center">姓名</column>
+								<column align="center">固定电话</column>
+								<column align="center">移动电话</column>
+								<column align="center">电子邮箱</column>
+							</columns>
+							<template name="model">
+								<row>
+									<cell style="cursor:pointer"
+										onClick="@command('checkzb',zbModel=each)">
+										<label
+											value="专办员${forEachStatus.index+1 }" style="color:#666" />
+									</cell>
+									<cell>
+										<label hflex="1"
+											value="@bind(each.cfzc_number)" />
+									</cell>
+									<cell>
+										<label hflex="1"
+											value="@bind(each.cfzc_name)" />
+									</cell>
+									<cell>
+										<label hflex="1"
+											value="@bind(each.cfzc_tel)" />
+									</cell>
+									<cell>
+										<label hflex="1"
+											value="@bind(each.cfzc_mobile)" />
+									</cell>
+									<cell>
+										<label hflex="1"
+											value="@bind(each.cfzc_mail)" />
+									</cell>
+								</row>
+							</template>
+						</grid>
+					</groupbox>
+					<groupbox title="密钥信息" mold="3d">
+						<grid hflex="1" vflex="1"
+							model="@load(vm.pwdList)">
+							<columns>
+								<column align="center">密钥专办员号</column>
+								<column align="center">密钥专办员</column>
+								<column align="center">密钥办理年限</column>
+								<column align="center">密钥开始日期</column>
+								<column align="center">密钥到期日期</column>
+							</columns>
+							<template name="model">
+								<row>
+									<cell>
+										<label hflex="1"
+											value="@bind(each.cfpc_zb_number)" />
+									</cell>
+									<cell>
+										<label hflex="1"
+											value="@bind(each.cfpc_zb_name)" />
+									</cell>
+									<cell>
+										<label hflex="1"
+											value="@bind(each.cfpc_yearlimit)" />
+									</cell>
+									<cell>
+										<label
+											value="@bind(each.startdate)" />
+									</cell>
+									<cell>
+										<label
+											value="@bind(each.enddate)" />
+									</cell>
+								</row>
+							</template>
+						</grid>
+					</groupbox>
+					<groupbox title="状态变更记录" mold="3d">
+						<grid hflex="1" vflex="min" emptyMessage="暂无数据"
+							model="@load(vm.hosList)" mold="paging" pageSize="5">
+							<columns>
+								<column align="center" label="状态" />
+								<column align="center" label="操作" />
+								<column align="center" label="添加人" />
+								<column align="center" label="添加时间" />
+								<column align="center" label="备注" />
+							</columns>
+							<template name="model">
+								<row>
+									<label
+										value="@load(each.pbsr_statename)" />
+									<label
+										value="@load(each.pbsr_content)" />
+									<label
+										value="@load(each.pbsr_addname)" />
+									<label
+										value="@load(each.pbsr_addtime)" />
+									<label
+										value="@load(each.pbsr_remark)" maxlength="20"
+										tooltip="remark_${each.pbsr_id }" style="cursor:pointer" />
+									<popup
+										id="remark_${each.pbsr_id }">
+										<label
+											value="@load(each.pbsr_remark)" style="word-break:break-all" />
+									</popup>
+								</row>
+							</template>
+						</grid>
+					</groupbox>
+				</vbox>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

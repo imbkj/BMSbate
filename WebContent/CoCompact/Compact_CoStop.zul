@@ -1,0 +1,92 @@
+<?page title="产品终止" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="产品终止" border="normal" closable="true" width="80%"  id="w1"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoCompact.CoGlist_ChangeController')">
+		<label value="${arg.cocoM.coli_id}" id="coli_id"
+			visible="false" />
+		<label value="${arg.cocoM.coli_coco_id}" id="coco_id"
+			visible="false" />
+		<grid>
+			<rows>
+				<row>
+					<cell>产品名称：</cell>
+					<cell>
+						<label value="${arg.cocoM.coli_name}" />
+					</cell>
+					<cell>收费单位：</cell>
+					<cell>
+						<label value="${arg.cocoM.coli_cpfc_name}" />
+					</cell>
+				</row>
+
+				<row>
+					<cell>产品类型：</cell>
+					<cell>
+						<label value="${arg.cocoM.coli_pclass}" />
+					</cell>
+					<cell>城市/机构：</cell>
+					<cell>
+						<label value="${arg.cocoM.city}" />
+						<label value=" / " />
+						<label value="${arg.cocoM.coab_name}" />
+					</cell>
+				</row>
+
+				<row>
+					<cell>享受方式：</cell>
+					<cell>
+						<label value="${arg.cocoM.coli_standard}" />
+					</cell>
+					<cell>份数：</cell>
+					<cell>
+						<div if="${each.coli_pclass=='商业保险' }">
+							<label value="$(arg.cocoM.coli_amount)" />
+							份
+						</div>
+					</cell>
+				</row>
+
+				<row>
+					<cell>描述：</cell>
+					<cell colspan="3">
+						<label value="${arg.cocoM.coli_content}" />
+					</cell>
+				</row>
+
+				<row>
+					<cell>收费金额：</cell>
+					<cell>
+						<label id="coli_fee" value="${arg.cocoM.coli_fee}" />
+					</cell>
+					<cell>终止时间：</cell>
+					<cell>
+						<monthbox width="130px" id="st_date"
+							readonly="true" mold="rounded" format="yyyyMM" />
+					</cell>
+				</row>
+
+				<row>
+					<cell>
+						<label value="文件目录：" />
+					</cell>
+					<cell colspan="3">
+						<textbox mold="rounded" rows="1" width="200px"
+							readonly="true" value="@load(vm.filename)" />
+						<button label="浏览..."
+							upload="true,multiple=true" onUpload="@command('browse')" />
+					</cell>
+				</row>
+
+				<row>
+					
+					<cell colspan="4" align="center">
+					<label style="color:#F00" value="该业务有员工正在使用中，未做停缴操作，请先操作停缴！"  if="${arg.cocoM.coli_parid>=1?true:false}" />
+						<button label="提交" id="co_stopok" if="${arg.cocoM.coli_parid==0?true:false}"
+							onClick="@command('co_stopok', coli_id=coli_id,coli_fee=coli_fee,st_date=st_date,cocoid=coco_id,w1=w1)" />
+					</cell>
+				</row>
+			</rows>
+		</grid>
+	</window>
+</zk>

@@ -1,0 +1,46 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="win" title="取消委托单 - 状态变更" border="normal" width="450px"
+		height="230px" closable="true" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmCommissionOut.EmCommissionOut_CancelDetailController')">
+		<script type="text/javascript" src="/js/Datebox.js"></script>
+		<borderlayout>
+			<center>
+				<grid height="100%">
+					<columns>
+						<column width="15%"></column>
+						<column></column>
+					</columns>
+					<rows>
+						<row>
+							<cell>
+								<label value="取消原因" style="color:#666" />
+							</cell>
+							<cell>
+								<textbox hflex="1" readonly="true"
+									value="@bind(vm.m.ecoc_cancel_cause)" rows="6" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="操作人" style="color:#666" />
+							</cell>
+							<cell>
+								<label value="@load(vm.m.ecoc_addname)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="取消时间" style="color:#666" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.m.ecoc_title_date)" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

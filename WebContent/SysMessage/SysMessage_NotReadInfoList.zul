@@ -1,0 +1,153 @@
+<?page contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="nriwin" title="未阅信息" border="normal" width="750px" height="600px"
+		closable="true" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.SysMessage.SysMessage_NotReadInfoListController')"
+		style="background-color:white">
+		<borderlayout hflex="1" vflex="1">
+			<west width="200px">
+				<borderlayout>
+					<north collapsible="true" title="检索">
+						<vbox height="100%" width="100%" pack="center"
+							align="center">
+							<hbox height="100%" width="100%"
+								pack="center" align="center">
+								<label value="日期：" style="color#666" />
+								<datebox format="yyyy-MM-dd"
+									width="120px" mold="rounded" value="@bind(vm.time)"
+									instant="true" onChange="@command('search')" />
+							</hbox>
+							<hbox height="100%" width="100%"
+								pack="center" align="center">
+								<label value="内容：" style="color#666" />
+								<textbox width="120px" mold="rounded"
+									value="@bind(vm.searcontent)" instant="true"
+									onChange="@command('search')" />
+							</hbox>
+						</vbox>
+					</north>
+					<center>
+						<listbox hflex="1" vflex="1" selectedItem="@bind(vm.replyMd)"
+							model="@load(vm.infoList)" emptyMessage="暂无数据">
+							<listhead>
+								<listheader sort="auto(syme_addtime)">
+									发送人 / 发送时间 / 类型
+								</listheader>
+							</listhead>
+							<template name="model">
+								<listitem
+									style="background-color:white">
+									<listcell
+										onClick="@command('selectCon',each=each)">
+										<vbox width="100%" style="border-bottom:1px solid #cccccc;
+									height: 1px;overflow:hidden;background-color:white;">
+											<label
+												value="@load(each.syme_addname)" />
+											<hlayout>
+												<label
+													style="color:blue" value="@load(each.syme_addtime)" />
+												<space />
+												<label value="未阅"
+													style="font-weight:bold" if="${each.symr_readstate==0 }" />
+											</hlayout>
+											<label
+													value="@load(each.syme_title)"
+													style="white-space: nowrap;text-overflow: 
+													ellipsis;overflow: hidden;color:#666;margin-bottom:2px;" />
+										</vbox>
+									</listcell>
+								</listitem>
+							</template>
+						</listbox>
+					</center>
+				</borderlayout>
+			</west>
+			<center>
+				<div style="height:100%;padding:5px 5px 0px 5px">
+					<hbox width="100%" height="25px" pack="start"
+						align="center">
+						<toolbarbutton label="回复" style="color:#666;font-size:8pt"
+							onClick="@command('reply')" />
+					</hbox>
+					<grid model="@load(vm.replyList)"
+						style="border:0px;height:62%" emptyMessage="暂无数据">
+						<template name="model">
+							<row
+								style="border-bottom:1px solid #cccccc;border-top:1px solid #cccccc;
+									height: 1px;overflow:hidden;background-color:white">
+								<vlayout>
+									<div height="15px">
+										<label
+											value="@load(each.syme_title)"
+											style="color:black;font-size:10pt" />
+									</div>
+									<hlayout>
+										<label value="发送人:"
+											style="color:#666" />
+										<label
+											style="color:black;font-size:10pt"
+											value="@load(each.syme_addname)" />
+									</hlayout>
+									<hlayout>
+										<label value="发送时间："
+											style="color:#666" />
+										<label style="color:black"
+											value="@load(each.syme_addtime)" />
+									</hlayout>
+									<hlayout>
+										<label value="接收人："
+											style="color:#666" />
+										<label style="color:black"
+											value="@load(each.symr_name)" />
+									</hlayout>
+									<separator />
+									<html
+										content="@load(each.syme_content)" if="${empty each.syme_url }" />
+									<a label="@load(each.syme_content)" if="${not empty each.syme_url }"
+										onClick="@command('opennew',win=nriwin,model=each)"></a>
+								</vlayout>
+							</row>
+						</template>
+					</grid>
+					<groupbox mold="3d" title="快速回复" closable="false"
+						height="32%">
+						<vlayout>
+							<hbox width="100%" height="100%"
+								align="center">
+								<label value="可选择模版：" />
+								<combobox readonly="true" mold="rounded" width="150px"
+									model="@load(vm.temList)" selectedItem="@bind(vm.temModel)"
+									onChange="@command('temselect',cbbClass=cbbClass)">
+									<template name="model">
+										<comboitem
+											label="@load(each.pmte_model)" />
+									</template>
+								</combobox>
+							</hbox>
+							<hbox width="100%" height="100%"
+								align="center">
+								<label value="业务类型：" /><space width="7px" />
+								<combobox id="cbbClass" readonly="true" width="150px"
+									mold="rounded" model="@load(vm.classList)"
+									value="@bind(vm.title)">
+									<template name="model">
+										<comboitem
+											label="@load(each.wfcl_name)" />
+									</template>
+								</combobox>
+								<space width="10px" />
+								<checkbox label="回复全部"
+									checked="@bind(vm.isall)" />
+								<space width="20px" />
+								<button label="发送"
+									onClick="@command('quickreply')" />
+							</hbox>
+							<textbox rows="5" hflex="1"
+								onOK="@command('quickreply')" value="@bind(vm.content)" />
+						</vlayout>
+					</groupbox>
+				</div>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

@@ -1,0 +1,105 @@
+<?page title="档案修改" contentType="text/html;charset=UTF-8"?>
+<?component name="embase" macro-uri="Emsi_EmBase.zul" inline="true"?>
+<zk>
+	<window id="winEmsiUpFile" title="档案修改" border="normal"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmSheBao.Emsi_UpFileController')"
+		height="500px" width="1060px" closable="true" sizable="true"
+		maximizable="true">
+		<div width="100%" height="100%" if="${vm.existsShebao}"
+			align="center">
+			<label value="${vm.existsMessage}" />
+		</div>
+		<borderlayout if="${!vm.existsShebao}">
+			<north title="个人信息" border="none">
+				<embase gid="${vm.gid}" name="${vm.sbModel.esiu_name}" />
+			</north>
+			<center title="参保信息" border="none">
+				<grid width="100%" height="100%">
+					<rows>
+						<row>
+							所属月份
+							<cell>
+								<vlayout>
+									<combobox mold="rounded"
+										readonly="true" value="@bind(vm.ownmonth)"
+										model="@load(vm.ownmonthList)">
+										<template name="model">
+											<comboitem
+												label="@load(each)" />
+										</template>
+									</combobox>
+									<label value="已过申报截止日，当月已不能变更"
+										if="${vm.isIfStop()}" style="color:red;" />
+								</vlayout>
+							</cell>
+							电脑号
+							<cell>
+								<textbox width="100px" readonly="true"
+									value="@load(vm.sbModel.esiu_computerid)" />
+							</cell>
+
+						</row>
+						<row>
+							月工资总数
+							<cell>
+								<label
+									value="@load(vm.sbModel.esiu_radix)" />
+							</cell>
+							户籍
+							<cell>
+								<textbox readonly="true" width="80px"
+									value="@load(vm.sbModel.esiu_hj)"
+									tooltiptext="员工变更户籍不能通过网上申报，只能通过提交资料至社保局申请。请通过业务中心-&gt;社保信息-&gt;特殊(交单)变更-&gt;变更户籍提交申请。" />
+							</cell>
+						</row>
+						<row>
+							医疗保险
+							<cell>
+								<combobox readonly="true" width="100px"
+									mold="rounded" value="@bind(vm.yltype)">
+									<comboitem label="一档" />
+									<comboitem label="二档" />
+									<comboitem label="三档" />
+								</combobox>
+							</cell>
+							参保人手机
+							<cell>
+								<hlayout>
+									<textbox value="@bind(vm.mobile)"
+										mold="rounded" constraint="/1[3|5|7|8|][0-9]{9}/:格式不正确" />
+									<checkbox label="确认修改手机号"
+										checked="@bind(vm.mobileCk)" />
+								</hlayout>
+							</cell>
+						</row>
+						<row>
+							是否待确认
+							<cell colspan="3">
+								<radiogroup id="rgDeclare">
+									<radio label="是" value="4"
+										disabled="true" />
+									<radio label="否" value="0"
+										checked="true" />
+								</radiogroup>
+							</cell>
+						</row>
+						<row>
+							申请原因
+							<cell colspan="3">
+								<textbox mold="rounded" rows="3"
+									width="30%" value="@bind(vm.remark)" />
+							</cell>
+						</row>
+					</rows>
+					<foot>
+						<footer align="center">
+							<button label="提交" id="btSubmit"
+								onClick="@command('upfile',win=winEmsiUpFile,rg=rgDeclare)" />
+						</footer>
+					</foot>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

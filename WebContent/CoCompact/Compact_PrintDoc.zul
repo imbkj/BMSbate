@@ -1,0 +1,16 @@
+<!--
+	创建人：张志强
+	创建时间：2013-10-17
+	用途：公司合同打印详细页面
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="合同制作" border="normal" width="95%" closable="true">
+<zscript language="Java">
+import Util.UserInfo;
+String user = UserInfo.getUserid();
+</zscript>
+<include src="../CoCompact/Compact_PrintDoc.jsp?coco_tapr_id=${arg.id}&amp;coco_id=${arg.daid}&amp;user=${user}&amp;way=${arg.way}"></include>
+</window>
+
+</zk>

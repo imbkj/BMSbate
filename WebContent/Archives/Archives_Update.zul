@@ -1,0 +1,408 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="档案信息修改" border="normal" closable="true"
+		id="winupdate" width="80%" height="80%"
+		apply="Controller.Archives.Archives_UpdateController">
+		<scrollview vflex="1">
+			<groupbox open="true" id="info" closable="false"
+				style="margin-bottom:20px;">
+				<caption>
+					<hlayout>
+						<label>基本信息</label>
+						<label value="(档案号：${arg.model.emar_fid})"
+							style="color:red;">
+						</label>
+					</hlayout>
+				</caption>
+				<grid>
+					<rows>
+						<row>
+							<cell width="70px"></cell>
+							<cell></cell>
+							<cell width="70px"></cell>
+							<cell></cell>
+							<cell width="70px"></cell>
+							<cell></cell>
+						</row>
+						<row>
+							<cell width="60px">公司编号</cell>
+							<cell>
+								<textbox id="cid"
+									value="${arg.model.cid}" readonly="true" />
+							</cell>
+							<cell width="60px">公司名称</cell>
+							<cell colspan="3">
+								<textbox width="92%" id="company"
+									value="${arg.model.emar_company}" readonly="true" />
+							</cell>
+						</row>
+						<row>
+							<cell>雇员编号</cell>
+							<cell>
+								<textbox id="gid"
+									value="${arg.model.gid}" readonly="true" />
+							</cell>
+							<cell>雇员姓名</cell>
+							<cell>
+								<textbox id="name"
+									value="${arg.model.emar_name}" readonly="true" />
+							</cell>
+							<cell>雇员性别</cell>
+							<cell>
+								<textbox id="sex"
+									value="${arg.model.emar_sex}" readonly="true" />
+							</cell>
+						</row>
+						<row>
+							<cell>身份证号</cell>
+							<cell>
+								<textbox id="idcard"
+									value="${arg.model.emar_idcard}" readonly="true" />
+							</cell>
+							<cell>雇员户口挂靠</cell>
+							<cell>
+								<combobox id="hj"
+									value="${arg.model.emar_censusregister}">
+									<comboitem label="中智集体户" />
+									<comboitem label="客户公司集体户" />
+									<comboitem label="人才中介机构集体户" />
+									<comboitem label="其他" />
+								</combobox>
+							</cell>
+							<cell>户籍性质</cell>
+							<cell>
+								<combobox id="hjtype"
+									value="${arg.model.emar_crbelongs==1?'隶属中智':'其他'}"
+									readonly="true">
+									<comboitem label="" />
+									<comboitem label="深户" />
+									<comboitem label="非深户" />
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>政治面貌</cell>
+							<cell>
+								<combobox id="zz"
+									value="${arg.model.emar_party}" readonly="true">
+									<comboitem label="中共党员" />
+									<comboitem label="预备党员" />
+									<comboitem label="群众" />
+								</combobox>
+							</cell>
+							<cell>党籍挂靠</cell>
+							<cell>
+								<combobox id="party"
+									value="${arg.model.emar_partybelongs==1?'隶属中智':'其他'}"
+									readonly="true">
+									<comboitem label="" />
+									<comboitem label="隶属中智" />
+									<comboitem label="其他" />
+								</combobox>
+							</cell>
+							<cell>入党时间</cell>
+							<cell>
+								<datebox id="partytime" />
+							</cell>
+						</row>
+						<row>
+							<cell>学历</cell>
+							<cell>
+								<combobox id="degree"
+									value="${arg.model.emar_degree}" readonly="true">
+									<comboitem label="" />
+									<comboitem label="职高" />
+									<comboitem label="高中" />
+									<comboitem label="中专" />
+									<comboitem label="大专" />
+									<comboitem label="本科" />
+									<comboitem label="硕士" />
+									<comboitem label="博士" />
+									<comboitem label="职专" />
+									<comboitem label="其他" />
+								</combobox>
+							</cell>
+							<cell>毕业院校</cell>
+							<cell>
+								<textbox id="school"
+									value="${arg.model.emar_school}" />
+							</cell>
+							<cell>所学专业</cell>
+							<cell>
+								<textbox id="specialty"
+									value="${arg.model.emar_specialty}" />
+							</cell>
+						</row>
+						<row>
+							<cell>毕业时间</cell>
+							<cell>
+								<datebox id="gradate" />
+							</cell>
+							<cell>婚姻状况</cell>
+							<cell>
+								<combobox id="marrystate"
+									value="${arg.model.emar_marrystate}">
+									<comboitem value="未婚" label="未婚" />
+									<comboitem value="初婚" label="初婚" />
+									<comboitem value="再婚" label="再婚" />
+									<comboitem value="离异" label="离异" />
+									<comboitem value="丧偶" label="丧偶" />
+								</combobox>
+							</cell>
+							<cell>生育状况</cell>
+							<cell>
+								<combobox id="fertilitystate"
+									value="${arg.model.emar_fertilitystate}">
+									<comboitem value="未育" label="未育" />
+									<comboitem value="一孩" label="一孩" />
+									<comboitem value="二孩" label="二孩" />
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>参加工作时间</cell>
+							<cell>
+								<datebox id="workdate" />
+							</cell>
+							<cell>职称</cell>
+							<cell>
+								<combobox id="caste"
+									value="${arg.model.emar_caste}">
+									<comboitem value="初级职称" label="初级职称" />
+									<comboitem value="中级职称" label="中级职称" />
+									<comboitem value="高级职称" label="高级职称" />
+								</combobox>
+							</cell>
+							<cell>评定时间</cell>
+							<cell>
+								<datebox id="castedate" />
+							</cell>
+						</row>
+						<row>
+							<cell>入深方式</cell>
+							<cell>
+								<combobox id="pfoldmode"
+									value="${arg.model.emar_peoplefoldmode}" readonly="true">
+									<comboitem label="" />
+									<comboitem label="招工" />
+									<comboitem label="调工" />
+									<comboitem label="毕业生接收" />
+									<comboitem label="留学生接收" />
+									<comboitem label="调干" />
+									<comboitem label="家属随迁" />
+									<comboitem label="其他" />
+								</combobox>
+							</cell>
+							<cell>联系方式</cell>
+							<cell>
+								<textbox id="link"
+									value="${arg.model.emar_link}" />
+							</cell>
+							<cell>入职中智日期</cell>
+							<cell>
+								<textbox id="intime"
+									value="${arg.model.emar_inciicdate}" readonly="true" />
+							</cell>
+						</row>
+						<row>
+							<cell>分组类别</cell>
+							<cell>
+								<textbox id="grouptype"
+									value="${arg.model.emar_grouptype}" readonly="true" />
+							</cell>
+							<cell>客服专员</cell>
+							<cell colspan="3">
+								<textbox id="client"
+									value="${arg.model.emar_client}" readonly="true" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox open="true" id="infos" closable="false">
+				<caption>
+					<label>档案资料</label>
+				</caption>
+				<grid>
+					<rows id="rows">
+						<row>
+							<cell width="85px">档案类别</cell>
+							<cell>
+								<combobox id="archiveclass"
+									value="${arg.model.emar_archiveclass}" readonly="true">
+									<comboitem label="" />
+									<comboitem label="干部" />
+									<comboitem label="工人" />
+									<comboitem label="学生" />
+									<comboitem label="其他" />
+								</combobox>
+							</cell>
+							<cell width="85px"
+								visible="${arg.model.emar_archivetype=='中智保管'}">
+								现档案存放机构
+							</cell>
+							<cell colspan="3"
+								visible="${arg.model.emar_archivetype=='中智保管'}">
+								<combobox id="archiveplace"
+									value="${arg.model.emar_archiveplace}">
+									<comboitem label="" />
+									<comboitem label="深圳市人才交流服务中心罗湖分部" />
+									<comboitem label="深圳市人才交流服务中心高新分部" />
+									<comboitem label="深圳市人才交流服务中心中心区分部" />
+									<comboitem label="深圳市人才交流服务中心派遣部" />
+									<comboitem label="深圳市人才交流服务中心龙华分部" />
+									<comboitem label="深圳市福田区公共人事人才服务中心" />
+									<comboitem label="深圳市福田区人力资源服务中心" />
+									<comboitem label="深圳市南山区人才服务中心" />
+									<comboitem label="深圳市职业介绍服务中心" />
+									<comboitem label="深圳市对外劳动服务有限公司" />
+									<comboitem label="深圳市宝安区人才服务中心" />
+									<comboitem label="深圳市龙岗区人才流动中心" />
+								</combobox>
+							</cell>
+							<cell
+								visible="${arg.model.emar_archivetype=='委托人才'}">
+								人才机构代理号
+							</cell>
+							<cell
+								visible="${arg.model.emar_archivetype=='委托人才'}">
+								<textbox id="surrogate"
+									value="${arg.model.emar_surrogateid}" />
+							</cell>
+
+						</row>
+						<row>
+							<cell>档案何处转入</cell>
+							<cell>
+								<textbox id="archivesource"
+									value="${arg.model.emar_archivesource}" />
+							</cell>
+							<cell>档案转入方式</cell>
+							<cell>
+								<combobox readonly="true" id="foldmode"
+									value="${arg.model.emar_archivefoldmode}">
+									<comboitem label="" />
+									<comboitem label="凭函机要" />
+									<comboitem label="凭函自带" />
+									<comboitem label="凭函邮寄" />
+									<comboitem label="无函自带" />
+									<comboitem label="其他" />
+								</combobox>
+							</cell>
+							<cell>档案转入时间</cell>
+							<cell>
+								<datebox id="folddate" />
+							</cell>
+						</row>
+						<row>
+							<cell>档案转入缘由</cell>
+							<cell>
+								<combobox id="foldreason"
+									value="${arg.model.emar_archivefoldreason}">
+									<comboitem label="" />
+									<comboitem label="入职" />
+									<comboitem label="招工" />
+									<comboitem label="调工" />
+									<comboitem label="调干" />
+									<comboitem label="毕业生接收" />
+									<comboitem label="留学生接收" />
+									<comboitem label="其他" />
+								</combobox>
+							</cell>
+							<cell>调令号</cell>
+							<cell>
+								<textbox id="transferorderid"
+									value="${arg.model.emar_transferorderid}" />
+							</cell>
+						</row>
+						<row>
+							<cell>转往单位</cell>
+							<cell>
+								<textbox id="removeplace"
+									value="${arg.model.emar_archiveremoveplace}" />
+							</cell>
+							<cell
+								visible="${arg.model.emar_archivetype=='中智保管'}">
+								承诺书签订时间
+							</cell>
+							<cell
+								visible="${arg.model.emar_archivetype=='中智保管'}">
+								<datebox id="promisesdate" />
+							</cell>
+							<cell
+								visible="${arg.model.emar_archivetype=='中智保管'}">
+								协议书签订日期
+							</cell>
+							<cell
+								visible="${arg.model.emar_archivetype=='中智保管'}">
+								<datebox id="prodate" />
+							</cell>
+							<cell
+								visible="${arg.model.emar_archivetype=='委托人才'}">
+								初次协议到期日
+							</cell>
+							<cell
+								visible="${arg.model.emar_archivetype=='委托人才'}">
+								<datebox id="firstdeadline" />
+							</cell>
+							<cell
+								visible="${arg.model.emar_archivetype=='委托人才'}">
+								续签协议到期日
+							</cell>
+							<cell
+								visible="${arg.model.emar_archivetype=='委托人才'}">
+								<datebox id="continuedeadline" />
+							</cell>
+						</row>
+						<row>
+							<cell>调出方式</cell>
+							<cell>
+								<textbox id="removermode"
+									value="${arg.model.emar_archiveremovermode}" />
+							</cell>
+							<cell>调出原因</cell>
+							<cell>
+								<textbox id="remorereason"
+									value="${arg.model.emar_archiveremovereason}" />
+							</cell>
+							<cell>调出日期</cell>
+							<cell>
+								<datebox id="removedate" />
+							</cell>
+						</row>
+						<row>
+							<cell>添加人</cell>
+							<cell>
+								<textbox id="addname"
+									value="${arg.model.emar_addname}" readonly="true" />
+							</cell>
+							<cell>添加时间</cell>
+							<cell colspan="3">
+								<textbox id="addtime"
+									value="${arg.model.emar_addtime}" readonly="true" />
+							</cell>
+
+						</row>
+						<row>
+							<cell colspan="6">
+								<button id="addrow">+</button>
+							</cell>
+						</row>
+						<row>
+
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<grid>
+				<rows>
+					<row>
+						<cell align="center">
+							<button id="updatearc">提交</button>
+						</cell>
+					</row>
+				</rows>
+			</grid>
+		</scrollview>
+	</window>
+</zk>

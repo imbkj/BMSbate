@@ -1,0 +1,197 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="体检项目组合修改" border="normal" width="90%" height="90%"
+		closable="true" apply="org.zkoss.bind.BindComposer" id="winedit"
+		viewModel="@id('vm') @init('Controller.EmBodyCheck.EmBc_ItemGroupEditController')">
+		<grid vflex="1">
+			<rows>
+				<row>
+					<cell width="120px">组合名称</cell>
+					<cell>
+						<textbox width="400px" id="groupname"
+							readonly="true" mold="rounded" value="@load(vm.ebgm.ebig_name)" />
+					</cell>
+					<cell width="120px">公司名称</cell>
+					<cell>
+						<combobox model="@load(vm.cobaseList)"
+							buttonVisible="false" readonly="true" mold="rounded" id="cobase"
+							value="@load(vm.ebgm.coba_shortname)">
+							<template name="model">
+								<comboitem
+									label="@load(each.coba_shortname)" value="@load(each.cid)">
+
+								</comboitem>
+							</template>
+						</combobox>
+					</cell>
+				</row>
+				<row>
+					<cell>客服</cell>
+					<cell>
+						<combobox model="@load(vm.clientList)"
+							buttonVisible="false" readonly="true" mold="rounded" id="client"
+							value="@load(vm.ebgm.coba_client)"
+							onChange="@command('getCompanyList')" instant="true">
+							<template name="model">
+								<comboitem label="@load(each.log_name)" />
+							</template>
+						</combobox>
+					</cell>
+					<cell>体检机构</cell>
+					<cell>
+						<combobox model="@load(vm.esList)" id="setup"
+							readonly="true" mold="rounded"
+							onChange="@command('updateList',a=self)"
+							value="@load(vm.ebgm.ebcs_hospital)" instant="true">
+							<template name="model">
+								<comboitem value="@load(each.ebcs_id)"
+									label="@load(each.ebcs_hospital)" />
+							</template>
+						</combobox>
+					</cell>
+				</row>
+				<row>
+					<cell>备注</cell>
+					<cell colspan="3">
+						<textbox id="remark" rows="3" width="80%"
+							mold="rounded" value="@load(vm.ebgm.ebig_remark)" />
+
+					</cell>
+				</row>
+				<row>
+					<cell>已选项目</cell>
+					<cell colspan="3">
+						<grid model="@load(vm.gList)" height="200px">
+							<columns>
+								<column label="序号" width="40px"
+									align="ceter" />
+								<column label="项目名称" hflex="2"
+									align="center" />
+								<column label="项目内容" hflex="4"
+									align="center" />
+								<column align="center" label="适用范围"
+									hflex="1" />
+								<column label="备注" align="center"
+									hflex="2" />
+								<column align="center" width="50px"
+									label="取消" />
+							</columns>
+							<rows>
+								<template name="model">
+									<row>
+										<cell>
+											<label
+												value="${forEachStatus.index+1 }">
+											</label>
+										</cell>
+										<cell>
+											<label
+												value="@load(each.ebit_name)">
+											</label>
+										</cell>
+										<cell>
+											<label maxlength="25"
+												tooltiptext="@load(each.ebit_info)"
+												value="@load(each.ebit_info)">
+											</label>
+										</cell>
+										<cell>
+											<label
+												value="@load(each.sex)">
+											</label>
+										</cell>
+										<cell>
+											<label maxlength="20"
+												tooltiptext="@load(each.ebit_remark)"
+												value="@load(each.ebit_remark)">
+											</label>
+										</cell>
+
+										<cell>
+											<a
+												onClick="@command('cancel',model=each)">
+												<label>取消</label>
+											</a>
+										</cell>
+									</row>
+								</template>
+							</rows>
+						</grid>
+					</cell>
+				</row>
+				<row>
+					<cell>查询</cell>
+					<cell colspan="3">
+						<textbox value="@bind(vm.searchContent)"
+							onChange="@command('search')" instant="true" />
+					</cell>
+				</row>
+				<row>
+					<cell>未选项目</cell>
+					<cell colspan="3">
+						<grid emptyMessage="没有数据,请重新选择体检机构"
+							height="200px" model="@load(vm.list)" id="itemgd">
+							<columns>
+								<column label="序号" align="center"
+									width="40px" />
+								<column align="center" label="项目名称"
+									hflex="2" />
+								<column align="center" label="项目内容"
+									hflex="4" />
+								<column align="center" label="适用范围"
+									hflex="1" />
+								<column label="备注" align="center"
+									hflex="2" />
+								<column align="center" width="50px" />
+							</columns>
+							<rows>
+								<template name="model">
+									<row>
+										<cell>
+											<label
+												value="${forEachStatus.index+1 }">
+											</label>
+										</cell>
+										<cell>
+											<label
+												value="@load(each.ebit_name)">
+											</label>
+										</cell>
+										<cell>
+											<label maxlength="20"
+												tooltiptext="@load(each.ebit_info)"
+												value="@load(each.ebit_info)">
+											</label>
+										</cell>
+										<cell>
+											<label
+												value="@load(each.sex)">
+											</label>
+										</cell>
+										<cell>
+											<label maxlength="20"
+												tooltiptext="@load(each.ebit_remark)"
+												value="@load(each.ebit_remark)">
+											</label>
+										</cell>
+
+										<cell>
+											<checkbox
+												value="@load(each.ebit_id)"
+												onClick="@command('updateGlist',a=each,b=self)" />
+										</cell>
+									</row>
+								</template>
+							</rows>
+						</grid>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button onClick="@command('submit')">提交</button>
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

@@ -1,0 +1,26 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="明细"  id="win" border="normal" vflex="1"
+	apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('Controller.EmTax.PropersonTaxation_SelectTaxController')">
+     <grid vflex="1" width="100%"  emptyMessage="无数据"  model="@load(vm.list)" mold="paging">
+			<columns>
+			       <column align="center"><label value="客服"/></column>
+				   <column align="center"><label value="大类"/></column>
+				   <column align="center"><label value="客户数"/></column>
+				   <column align="center"><label value="员工数"/></column>
+				   
+					</columns>
+					<rows>
+					  <template name="model">
+					  <row align="center">
+					    <label value="@load(each.coba_gzaddname)" />
+						<label value="@load(each.cpct_type)" />	
+						<label value="@load(each.n)" />				
+					    <label value="@load(each.m)" />
+					    
+					  </row>
+				    </template>
+			</rows>		
+	</grid>
+</window>
+</zk>

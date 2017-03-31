@@ -1,0 +1,22 @@
+<window title="已分配员工" border="normal" width="500px" closable="true"
+	apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('vm') @init('Controller.CoBase.CoBase_SelectCoOffer_DetailController')">
+	<grid model="@load(vm.embaseList)" mold="paging" emptyMessage="暂无数据"
+		width="100%">
+		<columns>
+			<column label="员工编号" align="center"></column>
+			<column label="姓名" align="center" />
+		</columns>
+		<template name="model">
+			<row
+				style="border:1px dotted #cad9ea;background-color:white;">
+				<cell>
+					<label value="@load(each.gid)" />
+				</cell>
+				<cell>
+					<label value="@load(each.emba_name)" />
+				</cell>
+			</row>
+		</template>
+	</grid>
+</window>

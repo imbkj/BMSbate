@@ -1,0 +1,48 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="受托合同基本信息" border="normal" width="80%" height="80%" closable="true"
+	apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('vm') @init('Controller.CoAgencies.CoAg_CompactUpdateController')"
+>
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell width="80px"></cell>
+			<cell></cell>
+			<cell width="80px"></cell>
+			<cell></cell>
+		</row>
+		<row>
+			<cell>受托机构</cell>
+			<cell colspan="3">
+				<textbox readonly="true" width="60%" value="@bind(vm.model.coct_coagname)" />
+			</cell>
+		</row>
+		<row>
+			<cell width="80px">合同编号</cell>
+			<cell><textbox value="@bind(vm.model.coct_compactid)" readonly="true"></textbox></cell>
+			<cell width="80px">合同类型</cell>
+			<cell><textbox value="@bind(vm.model.coct_category)" readonly="true"></textbox></cell>
+		</row>
+		<row>
+			<cell>签订时间</cell>
+			<cell><textbox value="@bind(vm.model.coct_signdate)" readonly="true"></textbox></cell>
+			<cell>合同生效时间</cell>
+			<cell><textbox value="@bind(vm.model.coct_effectdate)" readonly="true"></textbox></cell>
+		</row>
+		<row>
+			<cell>合同到期时间</cell>
+			<cell><textbox value="@bind(vm.model.coct_expiredate)" readonly="true"></textbox></cell>
+			<cell>是否自动续约</cell>
+			<cell>
+				<textbox readonly="true" value="@bind(vm.model.autoex)"></textbox>
+			</cell>
+		</row>
+		<row>
+			<cell>备注</cell>
+			<cell colspan="3"><textbox readonly="true" value="@bind(vm.model.coct_remark)" rows="3" width="80%"></textbox></cell>
+		</row>
+	</rows>
+</grid>
+</window>
+</zk>

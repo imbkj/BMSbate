@@ -1,0 +1,71 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<grid apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoFinanceManage.Cfma_AgencyWriteOffInfoController')"
+		width="100%">
+		<rows>
+			<row>
+				<cell width="50%">
+					<grid width="100%" model="@load(vm.wtList)">
+						<auxhead>
+							<auxheader label="委托出" colspan="3" />
+						</auxhead>
+						<columns>
+							<column label="序号" align="center"/>
+							<column label="账单所属月份" align="center"/>
+							<column label="冲销金额" align="center"/>
+						</columns>
+						<rows>
+							<template name="model">
+								<row>
+									<cell align="center">
+										<label
+											value="${forEachStatus.index + 1}" />
+									</cell>
+									<cell align="center">
+										<label
+											value="@load(each.ownmonth)" />
+									</cell>
+									<cell align="center">
+										<label
+											value="@load(each.cawi_writeOffEx)" />
+									</cell>
+								</row>
+							</template>
+						</rows>
+					</grid>
+				</cell>
+				<cell width="50%">
+					<grid width="100%" model="@load(vm.stList)">
+						<auxhead>
+							<auxheader label="受托" colspan="3" />
+						</auxhead>
+						<columns>
+							<column label="序号" align="center"/>
+							<column label="账单所属月份" align="center"/>
+							<column label="冲销金额" align="center"/>
+						</columns>
+						<rows>
+							<template name="model">
+								<row>
+									<cell align="center">
+										<label
+											value="${forEachStatus.index + 1}" />
+									</cell>
+									<cell align="center">
+										<label
+											value="@load(each.ownmonth)" />
+									</cell>
+									<cell align="center">
+										<label
+											value="@load(each.cawi_writeOffEx)" />
+									</cell>
+								</row>
+							</template>
+						</rows>
+					</grid>
+				</cell>
+			</row>
+		</rows>
+	</grid>
+</zk>

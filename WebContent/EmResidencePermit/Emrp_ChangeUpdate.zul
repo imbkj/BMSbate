@@ -1,0 +1,30 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="居住证转换处理" border="normal" width="80%" height="80%" closable="true">
+<grid vflex="1">
+		<rows>
+			<row>
+				<cell width="100px">单位名称</cell>
+				<cell><label value="${arg.model.coba_company }"></label></cell>
+				<cell width="100px">单位编号</cell>
+				<cell><label value="${arg.model.cid }"></label></cell>
+			</row>
+			<row>
+				<cell>员工姓名</cell>
+				<cell><label value="${arg.model.emba_name}"></label></cell>
+				<cell>员工编号</cell>
+				<cell><label value="${arg.model.gid}"></label></cell>
+			</row>
+			<row>
+				<cell>操作转换日期</cell>
+				<cell><datebox></datebox></cell>
+				<cell>确认转换成功日期</cell>
+				<cell><datebox></datebox></cell>
+			</row>
+		</rows>
+		<foot>
+			<footer align="center"><button>提交</button></footer>
+		</foot>
+	</grid>
+</window>
+</zk>

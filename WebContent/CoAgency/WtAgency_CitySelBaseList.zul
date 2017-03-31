@@ -1,0 +1,49 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<grid apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoAgency.WtAgency_CitySelBaseListController')"
+		width="98%" emptyMessage="暂无数据" model="@load(vm.baselist)"
+		mold="paging" pageSize="5">
+		<columns>
+			<column label="机构编号" hflex="1" align="center"
+				sort="auto(coab_id)" />
+			<column label="机构名称" hflex="5" align="center"
+				sort="auto(coab_name)" />
+			<column label="所属城市" hflex="3" align="center"
+				sort="auto(coab_city)" />
+			<column label="机构性质" hflex="3" align="center"
+				sort="auto(coab_setuptype)" />
+			<column label="客服" hflex="3" align="center"
+				sort="auto(cabsModel.coas_client)" />
+			<column label="是否为默认机构" hflex="2" align="center"
+				sort="auto(crModel.cabc_ifdefault)" />
+			<column label="最低人事服务费" hflex="2" align="center"
+				sort="auto(crModel.cabc_fee)" />
+			<column label="合作状态" hflex="2" align="center"
+				sort="auto(crModel.cabc_state)" />
+		</columns>
+		<rows>
+			<template name="model">
+				<row>
+					<label value="@load(each.coab_id)" />
+				 
+									
+					<label value="@load(each.coab_name)"
+									style="cursor:pointer;color:#00F;"
+									onClick="@command('manage',cabc_id=each.crModel.cabc_id)" />
+					<label value="@load(each.coab_city)" />
+					<label value="@load(each.coab_setuptype)" />
+					<label value="@load(each.cabsModel.coas_client)" />
+					<label
+						value="${each.crModel.cabc_ifdefault==1?'默认机构':'否'}"
+						style="${each.crModel.cabc_ifdefault==1?'color:blue;':''}" />
+					<label
+						value="@load(each.cabc_fee)"/>
+					<label
+						value="@load(each.crModel.cabc_state eq '1'?'合作':'取消合作')"
+						style="${each.crModel.cabc_state==0?'color:red;':''}" />
+				</row>
+			</template>
+		</rows>
+	</grid>
+</zk>

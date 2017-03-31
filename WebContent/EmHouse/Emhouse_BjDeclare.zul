@@ -1,0 +1,115 @@
+<?page title="补缴申报" contentType="text/html;charset=UTF-8"?>
+<?component name="docDataList" macro-uri="../DocumentsInfo/DocumentsInfo_UpPageList.zul" inline="true"?>
+
+<zk>
+	<window title="补缴申报" border="normal" width="700px" height="500px"
+		closable="true" apply="org.zkoss.bind.BindComposer" id="windeclare"
+		viewModel="@id('vm') @init('Controller.EmHouse.Emhouse_BjDeclareController')">
+	
+		<groupbox>
+			<caption label="基本信息" />
+			<grid>
+			<columns>
+					<column width="120px"></column>
+					<column></column>
+					<column width="120px"></column>
+					<column></column>
+				</columns>
+				<rows>
+				<row>
+						<cell width="60px">申报状态</cell>
+						<cell colspan="3">
+							<label value="@load(vm.model.states)"></label>
+						</cell>
+					</row>
+					<row>
+						<cell>退回原因</cell>
+						<cell colspan="3">
+							<label
+								value="@load(vm.model.emhb_backreason)">
+							</label>
+						</cell>
+
+					</row>
+					<row>
+						<cell width="60px">公司编号</cell>
+						<cell>
+							<label value="${arg.model.cid }" />
+						</cell>
+						<cell width="60px">员工编号</cell>
+						<cell>
+							<label value="${arg.model.gid }" />
+						</cell>
+					</row>
+					<row>
+						<cell>公司名称</cell>
+						<cell colspan="3">
+							<label width="90%"
+								value="${arg.model.emhb_company }" />
+						
+						</cell>
+					</row>
+					<row>
+						<cell>所属月份</cell>
+						<cell>
+							<label value="${arg.model.ownmonth}" />
+						</cell>
+						<cell>个人公积金号</cell>
+						<cell>
+							<label
+								value="${arg.model.emhb_houseid}" />
+					
+						</cell>
+					</row>
+					<row>
+						<cell>姓名</cell>
+						<cell>
+							<label value="${arg.model.emhb_name}" />
+						</cell>
+						<cell>身份证号</cell>
+						<cell>
+							<label value="${arg.model.emhb_idcard}" />
+						</cell>
+					</row>
+					<row>
+						<cell>补缴金额</cell>
+						<cell colspan="3">
+							<label value="${arg.model.emhb_total }" />
+						</cell>
+					</row>
+					<row>
+						<cell>添加人</cell>
+						<cell>
+							<label
+								value="${arg.model.emhb_addname }" />
+							
+						</cell>
+						<cell>添加时间</cell>
+						<cell>
+							<label
+								value="${arg.model.emhb_addtime }" />
+						
+						</cell>
+					</row>
+					<row>
+						<cell>备注</cell>
+						<cell colspan="3">
+							<label width="90%"
+								value="${arg.model.emhb_remark }" />
+						
+						</cell>
+					</row>
+					<row>
+						<cell>所交资料</cell>
+						<cell colspan="3">
+							<docDataList id="docGrid" puzu_id="93"
+								doc_type="g" gid="${vm.model.gid }" tid="${vm.model.emhb_id }"
+								dHeight="150px" dWidth="100%" log_url="/DocumentsInfo/" />
+
+						</cell>
+					</row>
+				</rows>
+			</grid>
+		</groupbox>
+	</window>
+</zk>

@@ -1,0 +1,97 @@
+<?page title="商业保险理赔新增" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="商业保险理赔发票新增" border="normal" width="100%"
+		apply="org.zkoss.bind.BindComposer" sizable="true" closable="true"
+		id="w2"
+		viewModel="@id('vm') @init('Controller.EmCommercialInsurance.CI_InsurantClaim_Controller')">
+		<label id="eccv_id" value="${arg.eccv_id}" visible="false" />
+		<label id="eccl_id" value="${arg.eccl_id}" visible="false" />
+		<label id="eccl_castsort" value="${arg.eccl_castsort}" visible="false" />
+		<grid width="100%">
+			<columns>
+				<column label="发票号" align="center" />
+				<column label="发票金额" align="center" />
+				<column label="西药" align="center" />
+				<column label="中成药" align="center" />
+				<column label="中草药" align="center" />
+				<column label="诊查费" align="center" />
+				<column label="床位费" align="center" />
+				<column label="检查费" align="center" />
+				<column label="CT" align="center" />
+				<column label="检验费" align="center" />
+				<column label="治疗费" align="center" />
+				<column label="手术费" align="center" />
+				<column label="其它" align="center" />
+				<column label="服务费" align="center" />
+				<column label="材料费" align="center" />
+				<column label="挂号费" align="center" />
+				<column label="护理费" align="center" />
+			</columns>
+			<rows>
+				<row>
+					<cell>
+						<textbox id="em1" mold="rounded" width="60px" />
+					</cell>
+					<cell>
+						<textbox id="em2" mold="rounded" width="60px" value="0" />
+					</cell>
+					<cell>
+						<textbox id="em3" mold="rounded" width="60px" value="0" />
+					</cell>
+					<cell>
+						<textbox id="em4" mold="rounded" width="60px" value="0" />
+					</cell>
+					<cell>
+						<textbox id="em5" mold="rounded" width="60px" value="0" />
+					</cell>
+					<cell>
+						<textbox id="em6" mold="rounded" width="60px" value="0" />
+					</cell>
+					<cell>
+						<textbox id="em7" mold="rounded" width="60px" value="0" />
+					</cell>
+					<cell>
+						<textbox id="em8" mold="rounded" width="60px" value="0" />
+					</cell>
+					<cell>
+						<textbox id="em9" mold="rounded" width="60px" value="0" />
+					</cell>
+					<cell>
+						<textbox id="em10" mold="rounded" width="60px" value="0" />
+					</cell>
+					<cell>
+						<textbox id="em11" mold="rounded" width="60px" value="0" />
+					</cell>
+					<cell>
+						<textbox id="em12" mold="rounded" width="60px" value="0" />
+					</cell>
+					<cell>
+						<textbox id="em13" mold="rounded" width="60px" value="0" />
+					</cell>
+					<cell>
+						<textbox id="em14" mold="rounded" width="60px" value="0" />
+					</cell>
+					<cell>
+						<textbox id="em15" mold="rounded" width="60px" value="0" />
+					</cell>
+					<cell>
+						<textbox id="em16" mold="rounded" width="60px" value="0" />
+					</cell>
+					<cell>
+						<textbox id="em17" mold="rounded" width="60px" value="0" />
+					</cell>
+				</row>
+			</rows>
+		</grid>
+		<grid width="100%">
+			<rows>
+				<row>
+					<cell colspan="5" align="center">
+						<button label="提交"
+							onClick="@command('ci_pidadd', eccl_castsort=eccl_castsort,eccl_id=eccl_id,eccv_id=eccv_id,em1=em1,em2=em2,em3=em3,em4=em4,em5=em5,em6=em6,em7=em7,em8=em8,em9=em9,em10=em10,em11=em11,em12=em12,em13=em13,em14=em14,em15=em15,em16=em16,em17=em17,w1=w1,w2=w2)" />
+					</cell>
+				</row>
+			</rows>
+		</grid>
+	</window>
+</zk>

@@ -1,0 +1,127 @@
+<?page title="商业保险保全核对" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="商业保险保全核对" border="normal"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmCommercialInsurance.CI_Insurant_AutUpController')">
+		<grid id="searchGird" width="100%">
+			<rows>
+				<row>
+					<cell width="100px">投保类型</cell>
+					<cell>
+						<combobox mold="rounded" readonly="true"
+							width="120px" value="全部" id="castsort"
+							model="@load(vm.castsortlist)">
+							<template name="model">
+								<comboitem
+									label="@load(each.ecin_castsort)"
+									value="@load(each.ecin_castsort)">
+								</comboitem>
+							</template>
+						</combobox>
+					</cell>
+					<cell width="100px">申报时间</cell>
+					<cell>
+						<combobox mold="rounded" readonly="true"
+							width="120px" value="全部" id="de_date"
+							model="@load(vm.castsortdatelist)">
+							<template name="model">
+								<comboitem
+									label="@load(each.ecin_de_date)"
+									value="@load(each.ecin_de_date)">
+								</comboitem>
+							</template>
+						</combobox>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button id="btSearch" label="查询"
+						onClick="@command('search_up',castsort=castsort,de_date=de_date)" />
+				</footer>
+			</foot>
+		</grid>
+		<div
+			style="width:100%;height:430px;overflow-y:scroll;overflow-x:hidden;border:1px solid #bcbdbf;">
+			<grid width="100%" id="g1"
+				model="@load(vm.ci_insurant_autlist)">
+				<columns>
+					<column label="序号" align="center" width="60px" />
+					<column label="公司名称" align="center" />
+					<column label="被保险人" align="center" />
+					<column label="投保类型" align="center" />
+					<column label="投保份数" align="center" />
+					<column label="投保时间" align="center" />
+					<column label="停缴时间" align="center" />
+					<column label="客服代表" align="center" />
+					<column label="状态" align="center" />
+					<column width="30px" align="center">
+
+					</column>
+					<column label="" align="center" visible="false" />
+				</columns>
+				<rows>
+					<template name="model">
+						<row>
+							<cell>
+								<label
+									value="${forEachStatus.index + 1}" />
+							</cell>
+							<cell>
+								<label value="@load(each.coba_company)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.ecin_insurant)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.ecin_castsort)" />
+							</cell>
+							<cell>
+								<label
+									value="1" />
+							</cell>
+							<cell>
+								<label value="@load(each.ecin_in_date)" />
+							</cell>
+							<cell>
+								<label value="@load(each.ecin_st_date)" />
+							</cell>
+							<cell>
+								<label value="@load(each.coba_client)" />
+							</cell>
+							<cell>
+								<label value="@load(each.ecin_state)" />
+							</cell>
+							<cell>
+								<checkbox value="@load(each.ecin_id)"  if="${each.ecin_state2==1?true:false}"/>
+							</cell>
+							<cell visible="false">
+								<label value="@load(each.ecin_tapr_id)" />
+							</cell>
+						</row>
+					</template>
+				</rows>
+			</grid>
+		</div>
+		<grid>
+			<rows>
+				<row>
+					<cell align="right" width="50%">
+						<button label="提交"
+							onClick="@command('ci_insurant_autup', emco=each,gridco=g1)" />
+
+						<button label="数据核对"
+							onClick="@command('ci_insurant_upload', emco=each,gridco=g1)" />
+					</cell>
+					<cell align="right">
+						全选
+						<checkbox id="cka"
+							onClick="@command('checkall',a=self.checked,b=g1)" />
+					</cell>
+				</row>
+			</rows>
+		</grid>
+	</window>
+</zk>

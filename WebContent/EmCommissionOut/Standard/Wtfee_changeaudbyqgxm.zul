@@ -1,0 +1,147 @@
+<?page title="委托出服务费" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winwtfeeduptatebyqgxm" title="委托出服务费审核" border="normal" width="730px"
+		closable="true" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmCommissionOut.Standard.Wtfee_changeUpdateController')">
+		<div height="100%">
+			<grid vflex="1">
+				<columns>
+					<column width="15%" />
+					<column />
+					<column width="15%" />
+					<column />
+				</columns>
+				<rows>
+					<row>
+						<cell>
+							<label value="公司名称" style="color:#666" />
+						</cell>
+						<cell>
+							<label value="@bind(vm.com.coba_company)" />
+						</cell>
+						<cell>
+							<label value="公司编号" style="color:#666" />
+						</cell>
+						<cell>
+							<label value="@bind(vm.com.cid)" />
+						</cell>
+					</row>
+					<row>
+							<cell>
+							<label value="服务费名称" style="color:#666" />
+						</cell>
+						<cell>
+							<textbox value="@bind(vm.m.wtot_feetitle)" />
+						</cell>
+						
+						<cell>
+							<label value="服务标准" style="color:#666" />
+						</cell>
+						<cell>
+<!-- 							<combobox autodrop="true" hflex="1" -->
+<!-- 								autocomplete="true" instant="true" model="@load(vm.mlsit)" -->
+<!-- 								selectedItem="@bind(vm.mm)" -->
+<!-- 								value="@bind(vm.mm.wtss_title"> -->
+<!-- 									<template name="model"> -->
+<!-- 									<comboitem label="@load(each.wtss_title)" /> -->
+<!-- 								</template> -->
+<!-- 							</combobox> -->
+							<a onClick="@command('openwt')">
+							<label value="@bind(vm.mm.wtss_title)"  style="color:#bule"/>
+							</a>
+							
+							
+						</cell>
+					</row>
+					<row>
+						<cell>
+							<label value="委托地区" style="color:#666" />
+						</cell>
+						<cell>
+<!-- 							<combobox autodrop="true" hflex="1" -->
+<!-- 								autocomplete="true" instant="true" model="@load(vm.cityList)" -->
+<!-- 								selectedItem="@bind(vm.ppcModel)" -->
+<!-- 								value="@bind(vm.m.wtss_city)" -->
+<!-- 								onChange="@command('cityOnChange')"> -->
+<!-- 								<template name="model"> -->
+<!-- 									<comboitem label="@load(each.name)" /> -->
+<!-- 								</template> -->
+<!-- 							</combobox> -->
+							
+								<label  value="@bind(vm.m.wtss_city)"  style="color:#bule"/>
+						</cell>
+						<cell>
+							<label value="默认委托机构" style="color:#666" />
+						</cell>
+						<cell>
+									
+							<combobox autodrop="true" hflex="1"
+								autocomplete="true" instant="true" model="@load(vm.coAgencyList)"
+								selectedItem="@bind(vm.cabm)"
+								value="@bind(vm.cabm.coab_name)"
+								onChange="@command('cityOnChangefee')">
+								<template name="model">
+									<comboitem label="@load(each.coab_name)" />
+								</template>
+							</combobox>
+						</cell>
+					</row>
+					<row>
+						<cell>
+							<label value="机构默认服务费" style="color:#666" />
+						</cell>
+						<cell>
+							<label value="@bind(vm.cabm.cabc_fee)" />
+						</cell>
+						<cell>
+							<label value="委托出服务费" style="color:#666" />
+						</cell>
+						<cell>
+								<textbox value="@load(vm.m.wtot_fee)" />
+						</cell>
+					</row>
+			
+						<row>
+						<cell colspan="2">
+							<label value="服务费生效日期" style="color:#666" />
+						</cell>
+						<cell colspan="2">
+							<datebox width="140px"
+													sclass="datebox-month-only" value="@bind(vm.m.wtot_comfdate)"
+													format="yyyy-MM-01" 
+													>
+							</datebox>
+						</cell>
+						 
+					</row>
+					<row>
+					<cell>
+							<label value="服务要求" style="color:#666" />
+						</cell>
+						<cell colspan="3">
+							<textbox rows="5" hflex="1"
+								value="@bind(vm.m.wtot_remark)" />
+						</cell>
+						</row>
+							<row>
+					<cell>
+							<label value="退回原因" style="color:#666" />
+						</cell>
+						<cell colspan="3">
+							<textbox rows="5" hflex="1"
+								value="@bind(vm.m.wtot_backremark)" />
+						</cell>
+						</row>
+				
+				</rows>
+			</grid>
+			<hbox width="100%" pack="center" align="center">
+				<button label="提交"
+					onClick="@command('submit',win=winwtfeeduptatebyqgxm)" />
+			
+				<button label="退回"
+					onClick="@command('returnback',win=winwtfeeduptatebyqgxm)" />
+			</hbox>
+		</div>
+	</window>
+</zk>

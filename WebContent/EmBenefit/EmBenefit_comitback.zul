@@ -1,0 +1,22 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="new page title" border="normal" width="600px" closable="true"
+		height="400px" apply="org.zkoss.bind.BindComposer" id="backwin"
+	viewModel="@id('vm') @init('Controller.EmBenefit.EmBenefit_comitbackController')">
+		<grid vflex="1">
+			<rows>
+				<row>
+					<cell width="80px">退回原因</cell>
+					<cell>
+						<textbox value="@bind(vm.backcase)" width="80%" rows="5"></textbox>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button onClick="@command('back',win=backwin)">确认退回</button>
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

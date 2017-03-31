@@ -1,0 +1,140 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<?component name="docDataList" macro-uri="../DocumentsInfo/DocumentsInfo_UpPageList.zul" inline="true"?>
+<zk>
+	<window title="新增专办员信息" border="normal" width="60%" vflex="1"
+		hflex="1" closable="true" apply="org.zkoss.bind.BindComposer" id="win"
+		viewModel="@id('vm') @init('Controller.CoHousingFund.CoHouse_ZbAddCheckController')">
+		<grid height="100%">
+			<rows>
+				<row>
+					<grid>
+						<columns>
+							<column width="20%"></column>
+							<column></column>
+						</columns>
+						<rows>
+							<row id="statusRow"
+								if="${vm.m.cfzc_state == 1 ? true : false }">
+								<cell colspan="2">
+									<radiogroup id="okradio">
+										<radio label="申报中" value="2"
+											selected="true" />
+										<radio label="已申报" value="3" />
+									</radiogroup>
+								</cell>
+							</row>
+							<row>
+								<cell align="left" width="15%">
+									<label value="姓名" />
+									<label value="*" style="color:red" />
+								</cell>
+								<cell align="left">
+									<textbox mold="rounded"
+										value="@bind(vm.m.cfzc_name)" />
+								</cell>
+							</row>
+							<row>
+								<cell align="left">
+									<label value="专办员号" />
+									<label value="*" style="color:red" />
+								</cell>
+								<cell>
+									<textbox mold="rounded"
+										value="@bind(vm.m.cfzc_number)" />
+								</cell>
+							</row>
+							<row>
+								<cell align="left" width="15%">
+									<label value="固定电话" />
+									<label value="*" style="color:red" />
+								</cell>
+								<cell align="left">
+									<textbox mold="rounded"
+										value="@bind(vm.m.cfzc_tel)"
+										onChange="@command('checkPhone',tel=self.value)" />
+								</cell>
+							</row>
+							<row>
+								<cell align="left" width="15%">
+									<label value="移动电话" />
+									<label value="*" style="color:red" />
+								</cell>
+								<cell align="left">
+									<textbox mold="rounded"
+										value="@bind(vm.m.cfzc_mobile)"
+										onChange="@command('checkMobile',mobile = self.value)" />
+								</cell>
+							</row>
+							<row>
+								<cell align="left" width="15%">
+									<label value="电子邮箱" />
+									<label value="*" style="color:red" />
+								</cell>
+								<cell align="left">
+									<textbox mold="rounded"
+										value="@bind(vm.m.cfzc_mail)"
+										onChange="@command('checkEmailSimple',email=self.value)" />
+								</cell>
+							</row>
+							<row>
+								<cell align="left" width="15%">
+									<label value="操作月份" />
+									<label value="*" style="color:red" />
+								</cell>
+								<cell align="left">
+									<label value="@bind(vm.m.ownmonth)" />
+								</cell>
+							</row>
+							<row>
+								<cell align="left" width="15%">
+									<label value="备注 " />
+
+								</cell>
+								<cell align="left" context="2">
+									<textbox mold="rounded"
+										value="@bind(vm.m.cfzc_remark)" width="60%" />
+								</cell>
+							</row>
+						</rows>
+					</grid>
+				</row>
+				<row>
+					<groupbox visible="false">
+						<caption label="系统日志" />
+						<grid>
+							<rows></rows>
+						</grid>
+					</groupbox>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<grid id="gd">
+						<rows>
+							<row>
+								<cell>
+									<label value="提交资料" />
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<!-- 材料内联页 参数：puzu_id：模块页面id， doc_type：员工(g)还是公司(c)，gid：公司数据则插入空白 ，业务表id,log_url：获取到页面路径的前部分，ifSubmit：当前页面已勾选后的材料状态 -->
+									<docDataList id="docGrid"
+										puzu_id="117" doc_type="c" cid="${ vm.m.cid}"
+										tid="${vm.m.cfzc_id}" dHeight="200px" dWidth="100%" log_url="/DocumentsInfo/"/>
+								</cell>
+							</row>
+						</rows>
+					</grid>
+					<button id="foot"
+						if="${vm.m.cfzc_state == 1 ? true : false }"
+						onClick="@command('submit',win=win,gd=docGrid,sbstate=okradio.selectedItem.value)"
+						label="申报" />
+					<button id="shenbao"
+						if="${vm.m.cfzc_state==2 ? true : false}"
+						onClick="@command('shenbao',win=win)" label="已申报" />
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

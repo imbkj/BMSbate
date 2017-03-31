@@ -1,0 +1,20 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="添加备注" border="normal" width="600px" height="300px" closable="true" id="remarkwin"
+	apply="Controller.Archives.Archives_RemarkAddController">
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell>
+				<textbox rows="5" width="100%" id="remark"></textbox>
+			</cell>
+		</row>
+	</rows>
+	<foot>
+		<footer align="center">
+			<button id="addremark">提交</button>
+		</footer>
+	</foot>
+</grid>
+</window>
+</zk>

@@ -1,0 +1,71 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="发送手机短信" border="normal" width="60%" height="70%"
+		closable="true" id="linkwin" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmReg.EmReg_LinkAddController')">
+		<grid model="@load(vm.list)" emptyMessage="没有联系记录"
+			vflex="1">
+			<columns>
+				<column label="手机号码" align="center" width="100px" />
+				<column label="发送人" align="center" width="60px" />
+				<column label="发送时间" align="center" width="100px" />
+				<column label="内容" align="center" />
+			</columns>
+			<rows>
+				<template name="model">
+					<row>
+						<cell>
+							<label value="@load(each.phoneNumber)">
+							</label>
+						</cell>
+						<cell>
+							<label value="@load(each.smsUser)"></label>
+						</cell>
+						<cell>
+							<label value="@load(each.smsTime)"></label>
+						</cell>
+						<cell>
+							<label value="@load(each.smsContent)">
+							</label>
+						</cell>
+					</row>
+				</template>
+			</rows>
+		</grid>
+		<grid vflex="1">
+			<rows>
+				<row>
+					<cell width="60px">手机号码</cell>
+					<cell>
+						<textbox value="${vm.emmodel.emba_mobile }"
+							id="mobile">
+						</textbox>
+					</cell>
+				</row>
+				<row>
+					<cell>短信内容</cell>
+					<cell>
+						<textbox width="95%" rows="6" id="message"
+							onChange="@command('changenum',val=self.value)" instant="true">
+						</textbox>
+						<hlayout>
+							<label style="color:red;" value="剩余字数:">
+							</label>
+							<label style="color:red;"
+								value="@bind(vm.messagenum)">
+							</label>
+						</hlayout>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button
+						onClick="@command('addSysmessage',mobile=mobile.value,message=message.value,win=linkwin)">
+						发送
+					</button>
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

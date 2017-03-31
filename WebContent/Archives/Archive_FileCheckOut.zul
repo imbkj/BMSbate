@@ -1,0 +1,102 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="档案转出新增" border="normal" width="80%" height="95%"
+		closable="true" id="windd" apply="org.zkoss.bind.BindComposer"
+		onCreate="@command('addwin',win=self)"
+		viewModel="@id('vm') @init('Controller.Archives.Archive_FileCheckOutController')">
+		<radiogroup id="yorn" onCheck="" />
+		<grid vflex="1">
+			<rows>
+				<row>
+					<cell width="120px">员工姓名</cell>
+					<cell>
+						<label id="name"
+							value="@load(vm.emmodel.emba_name)">
+						</label>
+					</cell>
+					<cell width="120px">身份证号</cell>
+					<cell>
+						<label id="idcard"
+							value="@load(vm.emmodel.emba_idcard)">
+						</label>
+					</cell>
+				</row>
+				<row visible="false">
+					<cell>员工缴费情况</cell>
+					<cell colspan="3">
+						<textbox width="80%" rows="5" id="charge"></textbox>
+					</cell>
+				</row>
+				<row>
+					<cell>服务终止时间</cell>
+					<cell>
+						<hlayout>
+							<datebox id="chargedate"></datebox>
+							<label style="color:red;">(*)</label>
+						</hlayout>
+					</cell>
+					<cell>档案类型(档案号)</cell>
+					<cell>
+						<combobox id="fid" model="@load(vm.fidlist)"
+							readonly="true" value="@load(vm.emar_fid)">
+							<template name="model">
+								<comboitem value="@load(each.emar_fid)"
+									label="${each.emar_archivetype}(${each.emar_fid})" />
+							</template>
+						</combobox>
+					</cell>
+				</row>
+				<row visible="false">
+					<cell>调出日期</cell>
+					<cell>
+						<datebox id="checkoutdate"></datebox>
+					</cell>
+					<cell>调出方式</cell>
+					<cell>
+						<textbox width="50%" id="checkoutmode"></textbox>
+					</cell>
+				</row>
+				<row visible="false">
+					<cell>转往单位</cell>
+					<cell>
+						<textbox id="checkoutsetup" width="90%"></textbox>
+					</cell>
+					<cell>是否待确定</cell>
+					<cell>
+						<hlayout>
+							<radio id="yes" label="是" value="1"
+								radiogroup="yorn" />
+							<radio id="no" label="否" value="0"
+								radiogroup="yorn" selected="true" />
+						</hlayout>
+					</cell>
+				</row>
+				<row>
+					<cell>调出原因</cell>
+					<cell colspan="3">
+						<textbox width="80%" rows="5"
+							id="checkoutreason">
+						</textbox>
+					</cell>
+				</row>
+				<row>
+					<cell>备注</cell>
+					<cell colspan="3">
+						<textbox width="80%" rows="5" id="remark"></textbox>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button id="summit"
+						onClick="@command('summit',charge=charge.value,
+		yorn=yorn.selectedItem.value,remark=remark.value,win=windd,chargedate=chargedate.value,checkoutdate=checkoutdate.value,
+		checkoutmode=checkoutmode.value,checkoutsetup=checkoutsetup.value,checkoutreason=checkoutreason.value,
+		fid=fid)">
+						提交
+					</button>
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

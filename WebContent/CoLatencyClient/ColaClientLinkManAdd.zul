@@ -1,0 +1,45 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="添加新的潜在客户联系人" border="normal" closable="true" width="600px" id="winb"
+apply="Controller.CoLatencyClient.ColaClientLinkManUpdate_Controller">
+<grid id="linkinfo">
+<rows>
+<row>
+<cell width="100px">联系人姓名</cell>
+<cell colspan="3"><textbox id="linkname" /></cell>
+</row>
+<row>
+<cell width="100px">职位</cell>
+<cell><textbox id="job" /></cell>
+<cell width="100px">职责</cell>
+<cell><textbox id="cali_duty"/></cell>
+</row>
+<row>
+<cell>电话号码1</cell>
+<cell><textbox id="tel"/></cell>
+<cell>电话号码2</cell>
+<cell><textbox id="tel1"/></cell>
+</row>
+<row>
+<cell>手机号码</cell>
+<cell><textbox id="mobile"/></cell>
+<cell>传真</cell>
+<cell><textbox id="fax"/></cell>
+</row>
+<row>
+<cell>电子邮箱1</cell>
+<cell><textbox id="email" instant="true"/></cell>
+<cell>电子邮箱2</cell>
+<cell><textbox id="email1" instant="true"/></cell>
+</row>
+<row>
+<cell>备注</cell>
+<cell colspan="3"><textbox width="80%" rows="3" id="remark" /></cell>
+</row>
+<row>
+<cell colspan="4" align="center"><button label="提交" id="addlinkman"/></cell>
+</row>
+</rows>
+</grid>
+</window>
+</zk>

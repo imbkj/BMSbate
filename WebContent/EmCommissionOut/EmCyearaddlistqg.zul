@@ -1,0 +1,201 @@
+<?page title="委托外地_年调" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="wtwodows" title="委托外地年调列表" border="normal"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmCommissionOut.EmCyearaddlistqgController')"
+		height="100%" width="100%" closable="true" sizable="true">
+		<borderlayout>
+	<north>
+			<groupbox title="查询">
+										<grid width="100%">
+							<rows>
+								<row>
+									<cell width="10%"
+										style="color:#666;" align="center">
+										地区
+									</cell>
+									<combobox id="cbregion" 
+										model="@load(vm.regionlist)" width="40%" autodrop="true"
+										mold="rounded"
+										onChange="@command('selProvince', contact=event.value,com=cbprovince)">
+										<template name="model">
+											<comboitem
+												label="@load(each)" />
+										</template>
+									</combobox>
+									<cell width="10%"
+										style="color:#666;" align="center">
+										省份
+									</cell>
+									<combobox id="cbprovince"
+										model="@load(vm.provincelist)" width="40%" autodrop="true"
+										mold="rounded"
+										onChange="@command('selCity', contact=event.value,com=cbcity)">
+										<template name="model">
+											<comboitem
+												label="@load(each)" />
+										</template>
+									</combobox>
+									<cell width="10%"
+										style="color:#666;" align="center">
+										城市
+									</cell>
+									<cell colspan="3" >
+									<combobox id="cbcity"
+										model="@load(vm.citylist)" value="@bind(vm.cityname)" width="50%" autodrop="true"
+										mold="rounded" selectedItem="@bind(vm.cbcity)"
+										onChange="@command('selwtjg', contact=event.value,com=wtjg)">
+											<template name="model">
+											<comboitem
+												label="@load(each)" />
+										</template>
+									</combobox>
+									</cell>
+								</row>
+								<row>
+									<cell width="10%"
+										style="color:#666;" align="center">
+										委托机构
+	
+									</cell>
+									<cell colspan="3" >
+									<combobox id="wtjg" 
+										model="@load(vm.wtjglist)" width="50%" autodrop="true" value="@bind(vm.wtjgname)"
+										mold="rounded">
+									<template name="model">
+											<comboitem
+												label="@load(each.coab_name)" />
+										</template>
+									</combobox>
+									</cell>
+										<cell width="10%" 
+										style="color:#666;" align="center">
+										状态：
+</cell>
+									<cell colspan="3" >
+									<combobox id="wtzt" 
+										model="@load(vm.wtztlist)" width="50%" autodrop="true" mold="rounded" selectedItem="@bind(vm.wtzt)">
+										
+										<template name="model">
+											<comboitem
+												label="@load(each)" />
+										</template>
+										</combobox>
+									</cell>								
+									</row>
+									<row>
+									<cell colspan="8" align="center">
+							<button label="查询" id="btselect"
+						onClick="@command('search',grd=gridwin)" />
+					</cell>
+				</row>
+							</rows>
+							</grid>
+			</groupbox>
+		</north>
+					<center>
+					<grid id ="gridwin" apply="Controller.EmCommissionOut.EmCyearaddlistqgController" width="100%" model="@load(vm.semcomm)" 
+					emptyMessage="暂无数据" mold="paging" pageSize="10" height="500px" hflex="1" style="border:0;">
+				<columns sizable="true">
+	        			 <column label="编号" align="center" />
+                		<column label=" 城市" align="center" />
+						<column label="委托机构" align="center" />
+						<column label="采集范围" align="center" />
+						<column label="年调反馈截止时间" align="center" />
+						<column label="约定执行时间" align="center" />
+<!-- 						<column label="养老" align="center" /> -->
+<!-- 						<column label="医疗" align="center" /> -->
+<!-- 						<column label="失业" align="center" /> -->
+<!-- 						<column label="生育" align="center" /> -->
+<!-- 						<column label="工伤" align="center" /> -->
+<!-- 						<column label="公积金" align="center" /> -->
+<!-- 						<column label="补充公积金" align="center" /> -->
+						<column label="状态" align="center" />
+						<column label="更新时间" align="center" />
+						<column label="更新人" align="center" />
+						<column label="添加时间" align="center" />
+						<column label="添加人" align="center" />
+						<column label="说明" align="center" />
+						<column label="操作" align="center" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+							<label value="@load(each.ecyt_id)" />	
+								<label value="@load(each.city)" />								
+								<label value="@load(each.jgname)"
+							onClick="@command('viewjtlist',jgname=each.jgname,city=each.city,id=each.ecyt_id)"
+							style="cursor:pointer;color:#00F;" />
+								<label 	value="@load(each.ecyt_singlestr)"	 />
+								 <label value="@load(each.ecyt_monthsart)" />
+								 <label value="@load(each.ecyt_startdate)" />
+<!-- 								  <label value="@load(each.ecyt_ylaostr)" /> -->
+<!-- 								  <label value="@load(each.ecyt_yliaostr)" /> -->
+<!-- 								  <label value="@load(each.ecyt_syestr)" /> -->
+<!-- 								  <label value="@load(each.ecyt_syustr)" /> -->
+<!-- 								  <label value="@load(each.ecyt_gshangstr)" /> -->
+<!-- 								  <label value="@load(each.ecyt_gjjstr)" /> -->
+<!-- 								 <label value="@load(each.ecyt_bcgjjstr)" /> -->
+								  <label value="@load(each.ecyt_statestr)" />
+								   <label value="@load(each.ecyt_modtime)" />
+								    <label value="@load(each.ecyt_modname)" />
+								      <label value="@load(each.ecyt_addtime)" />
+								    <label value="@load(each.ecyt_addname)" />
+								 <label value="@load(each.ecyt_remark)" />
+								  <label value="更新" onClick="@command('qrtime',jgname=each.jgname,city=each.city,id=each.ecyt_id)"
+							style="cursor:pointer;color:#00F;" />
+	
+							</row>
+						</template>
+					</rows>
+<!-- 					<foot> -->
+<!-- 						<footer span="8" align="center"> -->
+<!-- 							<hlayout> -->
+<!-- 								社保企业合计: -->
+<!-- 								<label -->
+<!-- 									value="@load(vm.m.ecoc_sb_co_sum)" /> -->
+<!-- 								<space /> -->
+<!-- 								社保个人合计: -->
+<!-- 								<label -->
+<!-- 									value="@load(vm.m.ecoc_sb_em_sum)" /> -->
+<!-- 								<space /> -->
+<!-- 								社保合计: -->
+<!-- 								<label value="@load(vm.m.ecoc_sb_sum)" /> -->
+<!-- 								<space /> -->
+<!-- 								公积金企业合计: -->
+<!-- 								<label -->
+<!-- 									value="@load(vm.m.ecoc_gjj_co_sum)" /> -->
+<!-- 								<space /> -->
+<!-- 								公积金个人合计: -->
+<!-- 								<label -->
+<!-- 									value="@load(vm.m.ecoc_gjj_em_sum)" /> -->
+<!-- 								<space /> -->
+<!-- 								公积金合计: -->
+<!-- 								<label value="@load(vm.m.ecoc_gjj_sum)" /> -->
+<!-- 							</hlayout> -->
+<!-- 						</footer> -->
+<!-- 					</foot> -->
+				</grid>
+			</center>
+			<south>
+	<vlayout width="100%">
+					<panel border="0">
+						<panelchildren >
+							<vbox width="100%">
+								<grid width="100%">
+									<rows>
+										<row>
+							
+			
+										</row>
+									</rows>
+									
+								</grid>
+							</vbox>
+						</panelchildren>
+					</panel>
+				</vlayout>
+</south>
+		</borderlayout>
+	</window>
+</zk>

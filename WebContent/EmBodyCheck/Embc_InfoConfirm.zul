@@ -1,0 +1,239 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="员工体检信息确认" border="normal" width="80%" closable="true"
+		height="80%" apply="org.zkoss.bind.BindComposer" id="win"
+		viewModel="@id('vm') @init('Controller.EmBodyCheck.Embc_InfoController')">
+		<grid vflex="1">
+			<rows>
+				<row>
+					<cell width="80px">单位全称</cell>
+					<cell>
+						<textbox width="80%"
+							value="${vm.model.embc_company }" readonly="true">
+						</textbox>
+					</cell>
+					<cell width="80px">单位简称</cell>
+					<cell>
+						<textbox width="80%"
+							value="${vm.model.embc_shortname }" readonly="true">
+						</textbox>
+					</cell>
+				</row>
+				<row>
+					<cell>员工姓名</cell>
+					<cell>
+						<textbox value="${vm.model.embc_name }"
+							readonly="true">
+						</textbox>
+					</cell>
+					<cell>员工性别</cell>
+					<cell>
+						<textbox value="${vm.model.embc_sex }"
+							readonly="true">
+						</textbox>
+					</cell>
+				</row>
+				<row>
+					<cell>员工年龄</cell>
+					<cell>
+						<textbox value="${vm.model.embc_age }"
+							readonly="true">
+						</textbox>
+					</cell>
+					<cell>身份证号</cell>
+					<cell>
+						<textbox value="@load(vm.emmodel.emba_idcard )"
+							readonly="true" width="80%">
+						</textbox>
+					</cell>
+				</row>
+				<row>
+					<cell>婚姻状况</cell>
+					<cell>
+						<combobox value="@bind(vm.model.embc_marry)">
+							<comboitem label="已婚" />
+							<comboitem label="未婚" />
+						</combobox>
+					</cell>
+					<cell>客服</cell>
+					<cell>
+						<textbox value="${vm.model.embc_client }"
+							readonly="true">
+						</textbox>
+					</cell>
+				</row>
+				<row>
+					<cell>邮寄费用</cell>
+					<cell>
+						<textbox readonly="true"
+							value="@bind(vm.model.cosp_bcrp_postfee)">
+
+						</textbox>
+					</cell>
+					<cell>注意事项</cell>
+					<cell>
+						<textbox
+							value="@load(vm.model.cosp_bcrp_careinfo )" width="90%"
+							readonly="true">
+						</textbox>
+					</cell>
+				</row>
+				<row>
+					<cell>体检联系对象</cell>
+					<cell>
+						<textbox
+							value="@load(vm.pomodel.cosp_bcrp_bclinkname)" readonly="true">
+						</textbox>
+						<a onClick="@command('lookinfo')"
+							visible="@load(vm.vislinkname)">
+							<label>查看联系人</label>
+						</a>
+					</cell>
+					<cell>联系对象号码</cell>
+					<cell>
+						<textbox
+							value="@load(vm.pomodel.cosp_bcrp_linknumber)" readonly="true">
+						</textbox>
+					</cell>
+				</row>
+				<row>
+					<cell>联系对象邮箱</cell>
+					<cell>
+						<textbox
+							value="@load(vm.pomodel.cosp_bcrp_email)">
+						</textbox>
+					</cell>
+				</row>
+				<row>
+					<cell>体检医院</cell>
+					<cell>
+						<textbox width="80%"
+							value="${vm.model.ebcs_hospital }" readonly="true">
+						</textbox>
+
+					</cell>
+					<cell>体检类型</cell>
+					<cell>
+						<textbox value="@load(vm.embctype)"
+							readonly="true">
+						</textbox>
+					</cell>
+				</row>
+				<row>
+					<cell>体检地址</cell>
+					<cell colspan="3">
+						<combobox model="@load(vm.addresslist)"
+							width="80%" id="address" readonly="true"
+							value="@bind(vm.model.ebsa_address)">
+							<template name="model">
+								<comboitem
+									label="@load(each.ebsa_address)" value="@load(each.ebsa_id)" />
+							</template>
+						</combobox>
+					</cell>
+				</row>
+				<row if="${vm.model.embc_statebname=='福利退回' }"
+					style="color:red;">
+					<cell>退回原因</cell>
+					<cell colspan="3">
+						<textbox style="color:red;" width="80%"
+							readonly="true" rows="3" value="@load(vm.model.ebcl_backcase)">
+						</textbox>
+					</cell>
+				</row>
+				<row>
+					<cell>备注</cell>
+					<cell colspan="3">
+						<textbox width="80%" readonly="true" rows="3"
+							value="${vm.model.embc_remark }">
+						</textbox>
+					</cell>
+				</row>
+				<row>
+					<cell>预约时间</cell>
+					<cell>
+
+						<datebox value="@bind(vm.bookdate)"
+							readonly="true">
+						</datebox>
+					</cell>
+					<cell>预约模式</cell>
+					<cell>
+						<textbox
+							value="${vm.model.ebcl_bookmode==1?'固定时间':'不固定时间'}"
+							readonly="true">
+						</textbox>
+					</cell>
+				</row>
+				<row>
+					<cell colspan="4">
+					<label value="@bind(vm.msg)" id="bel"
+						style="color:red;" width="90%">
+					</label>
+					<label value="@bind(vm.model.ebcs_tips)"
+						style="color:red;" width="90%">
+					</label>
+					</cell>
+				</row>
+				<row>
+					<cell>体检项目</cell>
+					<cell colspan="3">
+						<grid vflex="1" model="@load(vm.itemlist)"
+							id="it" emptyMessage="没有数据">
+							<columns>
+								<column label="序号" align="center"
+									width="50px" />
+								<column label="项目名称" align="center" />
+								<column label="项目内容" align="center" />
+								<column label="备注" align="center" />
+								<column label="适用范围" align="center" />
+							</columns>
+							<rows id="rws">
+								<template name="model">
+									<row>
+										<cell>
+											<label
+												value="${forEachStatus.index+1 }">
+											</label>
+										</cell>
+										<cell>
+											<label
+												value="@load(each.ebit_name)">
+											</label>
+										</cell>
+										<cell>
+											<label
+												value="@load(each.ebit_info)">
+											</label>
+										</cell>
+										<cell>
+											<label
+												value="@load(each.ebit_remark)">
+											</label>
+										</cell>
+										<cell>
+											<label
+												value="@load(each.sex)">
+											</label>
+										</cell>
+									</row>
+								</template>
+							</rows>
+						</grid>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button
+						onClick="@command('confirm',win=win,address=address)">
+						提交
+					</button>
+					<button onClick="@command('backclient',win=win)">
+						退回客服
+					</button>
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

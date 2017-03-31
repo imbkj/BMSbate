@@ -1,0 +1,413 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="单位缴存信息" border="normal" width="80%"
+		closable="true" height="80%" hflex="2" vflex="2">
+		<grid height="100%">
+			<columns>
+				<column label="单位缴存信息" />
+			</columns>
+			<rows>
+				<row>
+					<grid>
+						<rows>
+							<!-- 组织机构代码 -->
+							<row>
+								<cell>
+									<label value="*" style="color:red" />
+									<label value="组织机构代码" />
+								</cell>
+								<cell>
+									<textbox value="" />
+								</cell>
+								<cell>
+									<label value="*" style="color:red" />
+									<label value="资格类型" />
+								</cell>
+								<cell>
+									<textbox value="" />
+								</cell>
+								<cell>
+									<label value="*" style="color:red" />
+									<label value="公积金号" />
+								</cell>
+								<cell>
+									<textbox value="" />
+								</cell>
+							</row>
+
+							<!-- 单位名称 -->
+							<row>
+								<cell>
+									<label value="*" style="color:red" />
+									<label value="单位名称(全称)" />
+								</cell>
+								<cell>
+									<textbox value="" />
+								</cell>
+								<cell>
+									<label value="*" style="color:red" />
+									<label value="单位编号" />
+								</cell>
+								<cell>
+									<textbox value="" />
+								</cell>
+							</row>
+
+							<!-- 单位地址 -->
+							<row>
+								<cell>
+									<label value="*" style="color:red" />
+									<label value="单位地址" />
+								</cell>
+								<cell>
+									<textbox value="" />
+								</cell>
+								<cell>
+									<label value="*" style="color:red" />
+									<label value="行业代码" />
+								</cell>
+								<cell>
+									<textbox value="" />
+								</cell>
+							</row>
+
+							<!-- 所属行政区域 -->
+							<row>
+								<cell>
+									<label value="*" style="color:red" />
+									<label value="所属行政区域" />
+								</cell>
+								<cell>
+									<textbox value="" />
+								</cell>
+								<cell>
+									<label value="*" style="color:red" />
+									<label value="邮政编码" />
+								</cell>
+								<cell>
+									<textbox value="" />
+								</cell>
+								<cell>
+									<label value="*" style="color:red" />
+									<label value="业务经办部门" />
+								</cell>
+								<cell>
+									<textbox value="" />
+								</cell>
+							</row>
+							<!-- 性质分类 -->
+
+							<row>
+								<cell>
+									<label value="*" style="color:red" />
+									<label value="性质分类" />
+								</cell>
+								<cell>
+									<textbox value="" />
+								</cell>
+								<cell>
+									<label value="*" style="color:red" />
+									<label value="隶属关系" />
+								</cell>
+								<cell>
+									<textbox value="" />
+								</cell>
+								<cell>
+									<label value="*" style="color:red" />
+									<label value="企业经济类型" />
+								</cell>
+								<cell>
+									<textbox value="" />
+								</cell>
+							</row>
+
+							<!-- 法定代表人或负责人 -->
+							<row>
+								<cell>
+									<label value="*" style="color:red" />
+									<label value="法定代表人或负责人" />
+								</cell>
+
+								<cell>
+
+									<label value="姓名 ：" />
+									<textbox value="" width="73%" />
+									<label value="联系电话 ：" />
+									<textbox value="" />
+								</cell>
+								<cell align="center">
+									<label value="证件类型 ：" />
+									<textbox value="" />
+									<label value="证件号码 ：" />
+									<textbox value="" />
+								</cell>
+							</row>
+
+
+							<!-- 联系人 -->
+							<row>
+								<cell>
+									<label value="*" style="color:red" />
+									<label value="联系人" />
+								</cell>
+
+								<cell>
+
+									<label value="姓名 ：" />
+									<textbox value="" width="73%" />
+									<label value="电子邮箱 ：" />
+									<textbox value="" />
+								</cell>
+								<cell align="center">
+									<label value="固定电话 ：" />
+									<textbox value="" />
+									<label value="移动电话 ：" />
+									<textbox value="" />
+								</cell>
+							</row>
+
+							<!-- 上级主管部门 -->
+							<row>
+								<cell>
+									<label value="*" style="color:red" />
+									<label value="上级主管部门" />
+								</cell>
+
+								<cell>
+									<label value="名称 ：" />
+									<textbox value="" width="73%" />
+									<label value="联系电话 ：" />
+									<textbox value="" />
+								</cell>
+							</row>
+
+							<!-- 单位成立时间 -->
+							<row>
+								<cell>
+									<label value="*" style="color:red" />
+									<label value="单位成立时间" />
+								</cell>
+								<cell>
+									<textbox value="" />
+								</cell>
+								<cell>
+									<label value="*" style="color:red" />
+									<label value="社保单位编号" />
+								</cell>
+								<cell>
+									<textbox value="" />
+								</cell>
+							</row>
+
+							<!-- 工商注册号 -->
+							<row>
+								<cell>
+									<label value="*" style="color:red" />
+									<label value="工商注册号" />
+								</cell>
+								<cell>
+									<textbox value="" />
+								</cell>
+								<cell>
+									<label value="*" style="color:red" />
+									<label value="纳税人识别号" />
+								</cell>
+								<cell>
+									<textbox value="" />
+								</cell>
+							</row>
+
+							<!-- 单位个人缴存比例 -->
+							<row>
+								<cell>
+									<label value="*" style="color:red" />
+									<label value="单位/个人缴存比例" />
+								</cell>
+								<cell>
+									<textbox value="" />
+								</cell>
+							</row>
+
+							<!-- 归集银行 -->
+							<row>
+								<cell>
+									<label value="*" style="color:red" />
+									<label value="归集银行" />
+								</cell>
+								<cell>
+									<textbox value="" />
+								</cell>
+								<cell>
+									<label value="*" style="color:red" />
+									<label value="领卡银行" />
+								</cell>
+								<cell>
+									<textbox value="" />
+								</cell>
+							</row>
+
+							<!-- 公积金缴存银行 -->
+							<row>
+								<cell>
+									<label value="*" style="color:red" />
+									<label value="公积金缴存银行" />
+								</cell>
+								<cell>
+									<textbox value="" />
+								</cell>
+								<cell>
+									<label value="*" style="color:red" />
+									<label value="公积金首次托收月" />
+								</cell>
+								<cell>
+									<textbox value="" />
+								</cell>
+								<cell>
+									<label value="*" style="color:red" />
+									<label value="托收日" />
+								</cell>
+								<cell>
+									<textbox value="" />
+								</cell>
+							</row>
+
+							<!-- 托收账户开户银行 -->
+							<row>
+								<cell>
+									<label value="*" style="color:red" />
+									<label value="托收账户开户银行" />
+								</cell>
+								<cell>
+									<textbox value="" />
+								</cell>
+								<cell>
+									<label value="*" style="color:red" />
+									<label value="托收账户银行帐号" />
+								</cell>
+								<cell>
+									<textbox value="" />
+								</cell>
+								<cell>
+									<label value="*" style="color:red" />
+									<label value="托收账户名称" />
+								</cell>
+								<cell>
+									<textbox value="" />
+								</cell>
+							</row>
+						</rows>
+					</grid>
+				</row>
+
+				<!-- 专办员信息 -->
+				<row>
+					<grid>
+						<rows>
+							<row>
+								<label value="专办员信息" />
+							</row>
+							<row>
+								<grid>
+									<columns>
+										<column label="编号"
+											align="center" />
+										<column label="专办员号"
+											align="center" />
+										<column label="姓名"
+											align="center" />
+										<column label="固定电话"
+											align="center" />
+										<column label="移动电话"
+											align="center" />
+										<column label="电子邮箱"
+											align="center" />
+									</columns>
+									<rows>
+										<row>
+											<cell align="center">
+												<label value="(密)"
+													style="color:red" />
+												<label value="专办员1" />
+											</cell>
+											<cell align="center">
+												<label
+													value="44122919830601373XGO" />
+											</cell>
+											<cell align="center">
+												<label value="陈景桃 " />
+											</cell>
+											<cell align="center">
+												<label
+													value="83970625 " />
+											</cell>
+											<cell align="center">
+												<label
+													value="13570810224 " />
+											</cell>
+											<cell align="center">
+												<label
+													value="cjt@szciic.com " />
+											</cell>
+										</row>
+									</rows>
+								</grid>
+							</row>
+						</rows>
+					</grid>
+
+				</row>
+
+
+				<!-- 密钥信息 -->
+				<row>
+					<grid height="100%">
+						<rows>
+							<row>
+								<label value="密钥信息" />
+							</row>
+							<row>
+								<grid>
+									<columns>
+										<column label="密钥专办员号"
+											align="center" />
+										<column label="密钥专办员"
+											align="center" />
+										<column label="密钥办理年限"
+											align="center" />
+										<column label="密钥起始日期"
+											align="center" />
+										<column label="密钥到期日期"
+											align="center" />
+									</columns>
+									<rows>
+										<row>
+											<cell align="center">
+												<label
+													value="44122919830601373XGO " />
+											</cell>
+											<cell align="center">
+												<label value="陈景桃 " />
+											</cell>
+											<cell align="center">
+												<label value="3 " />
+											</cell>
+											<cell align="center">
+												<label
+													value="2014-10-16 " />
+											</cell>
+											<cell align="center">
+												<label
+													value="2017-10-15 " />
+											</cell>
+										</row>
+									</rows>
+								</grid>
+							</row>
+						</rows>
+					</grid>
+				</row>
+			</rows>
+		</grid>
+
+	</window>
+</zk>

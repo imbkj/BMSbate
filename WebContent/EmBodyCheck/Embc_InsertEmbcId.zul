@@ -1,0 +1,77 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="${arg.title }" border="normal" width="80%" height="80%" closable="true"
+	apply="org.zkoss.bind.BindComposer" id="upwin"
+		viewModel="@id('vm') @init('Controller.EmBodyCheck.Embc_InsertEmbcIdController')"
+>
+<grid>
+		<rows>
+			
+			<row>
+				<cell width="80px">文件</cell>
+				<cell><textbox width="70%" id="filepath"></textbox>
+				<button id="attachBtn" upload="true" label="选择文件" onUpload="@command('uploadfile',win=upwin,tb=filepath)"/></cell>
+			</row>
+		</rows>
+	</grid>
+	<grid model="@load(vm.list)" vflex="1" mold="paging" pageSize="1000">
+			<columns>
+				<column label="序号" width="40px" align="center" />
+				<column label="体检编号" align="center" />
+				<column label="公司编号" align="center" />
+				<column label="员工姓名" align="center" />
+				<column label="身份证号" align="center" />
+				<column label="体检费用" align="center" />
+				<column label="完成体检时间" align="center" />
+				<column label="状态" align="center" />
+				<column label="操作" align="center" width="60px" />
+			</columns>
+			<rows>
+				<template name="model">
+					<row>
+						<cell>
+							<label value="${forEachStatus.index+1 }">
+							</label>
+						</cell>
+						<cell>
+							<label value="@load(each.embc_bcid)">
+							</label>
+						</cell>
+						<cell>
+							<label value="@load(each.cid)"></label>
+						</cell>
+						<cell>
+							<label value="@load(each.embc_name)">
+							</label>
+						</cell>
+						<cell>
+							<label value="@load(each.embc_idcard)">
+							</label>
+						</cell>
+						<cell>
+							<label value="@load(each.ebcl_charge)">
+							</label>
+						</cell>
+						<cell>
+							<label value="@load(each.ebcl_completedate)">
+							</label>
+						</cell>
+						<cell>
+							<label
+								value="@load(each.embc_statebname)">
+							</label>
+						</cell>
+						<cell>
+							<a onClick="@command('cancel',model=each)"><label>取消导入</label></a>
+						</cell>
+					</row>
+				</template>
+			</rows>
+			<foot>
+				<footer align="center" span="8">
+					<button onClick="@command('summit',win=upwin,flag='0')">提交</button>
+				</footer>
+			</foot>
+		</grid>
+</window>
+</zk>

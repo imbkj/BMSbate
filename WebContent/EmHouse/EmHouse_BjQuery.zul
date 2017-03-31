@@ -1,0 +1,304 @@
+<?page title="员工公积金 补缴信息查询" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="员工公积金 补缴- 信息申报" id="bjwin" border="normal"
+		width="100%" height="100%" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmHouse.EmHouse_BjQueryController')">
+		<scrollview height="100%">
+			<tablelayout columns="2" width="100%" height="100%">
+				<tablechildren rowspan="2" width="80%" height="100%">
+					<groupbox height="100%" width="100%">
+						<caption>条件检索</caption>
+						<grid height="100%">
+							<columns>
+								<column width="110px"></column>
+								<column></column>
+								<column width="110px"></column>
+								<column></column>
+							</columns>
+
+							<rows>
+
+								<row>
+									<cell>公司名称</cell>
+									<cell colspan="3">
+										<hbox>
+											<combobox id="company"
+												onChanging="@command('updatecobase',a=event)"
+												onSelect="@command('changeEmbase')" width="500px"
+												mold="rounded" autodrop="true"
+												model="@load(vm.companyList)">
+												<template
+													name="model">
+													<comboitem
+														value="@load(each.cid)"
+														label="@load(each.coba_shortname)">
+														[${each.coba_spell}]
+														${each.coba_company}|
+														${each.coba_client}
+													</comboitem>
+												</template>
+											</combobox>
+											<checkbox label="快速查询"
+												checked="@bind(vm.companyCheck)" />
+										</hbox>
+									</cell>
+								</row>
+								<row>
+									<cell>员工姓名</cell>
+									<cell colspan="3">
+										<hbox>
+											<combobox id="emp"
+												width="500px" onChanging="@command('updateEmbase',a=event)"
+												mold="rounded" autodrop="true" model="@load(vm.empList)">
+												<template
+													name="model">
+													<comboitem
+														value="@load(each.gid)" label="@load(each.emba_name)">
+														${each.cid} |
+														${each.emba_name}
+														|
+														${each.emba_idcard}
+														|
+														${each.emhu_houseid}
+
+													</comboitem>
+												</template>
+											</combobox>
+											<checkbox label="快速查询"
+												checked="@bind(vm.empCheck)" />
+										</hbox>
+									</cell>
+								</row>
+								<row>
+									<cell>所属月份</cell>
+									<cell>
+										<combobox id="ownmonth"
+											value="@bind(vm.month)" mold="rounded"
+											model="@load(vm.ownmonthlist)">
+											<template name="model">
+												<comboitem
+													label="@load(each.ownmonth)">
+												</comboitem>
+											</template>
+										</combobox>
+									</cell>
+									<cell>补缴原因</cell>
+									<cell>
+										<combobox id="reason"
+											mold="rounded">
+											<comboitem label="漏缴"></comboitem>
+											<comboitem label="少缴"></comboitem>
+											<comboitem
+												label="外省市转入补缴">
+											</comboitem>
+											<comboitem label="基数调整补缴"></comboitem>
+											<comboitem label="比例调整补缴"></comboitem>
+											<comboitem label="缓缴补缴"></comboitem>
+											<comboitem label="其他"></comboitem>
+										</combobox>
+									</cell>
+								</row>
+								<row>
+									<cell>单位比例</cell>
+									<cell>
+										<combobox id="op"
+											mold="rounded">
+											<comboitem label="5%"
+												value="0.05">
+											</comboitem>
+											<comboitem label="6%"
+												value="0.06">
+											</comboitem>
+											<comboitem label="7%"
+												value="0.07">
+											</comboitem>
+											<comboitem label="8%"
+												value="0.08">
+											</comboitem>
+											<comboitem label="9%"
+												value="0.09">
+											</comboitem>
+											<comboitem label="10%"
+												value="0.10">
+											</comboitem>
+											<comboitem label="11%"
+												value="0.11">
+											</comboitem>
+											<comboitem label="12%"
+												value="0.12">
+											</comboitem>
+											<comboitem label="13%"
+												value="0.13">
+											</comboitem>
+											<comboitem label="14%"
+												value="0.14">
+											</comboitem>
+											<comboitem label="15%"
+												value="0.15">
+											</comboitem>
+											<comboitem label="16%"
+												value="0.16">
+											</comboitem>
+											<comboitem label="17%"
+												value="0.17">
+											</comboitem>
+											<comboitem label="18%"
+												value="0.18">
+											</comboitem>
+											<comboitem label="19%"
+												value="0.19">
+											</comboitem>
+											<comboitem label="20%"
+												value="0.20">
+											</comboitem>
+										</combobox>
+									</cell>
+									<cell>客服</cell>
+									<cell>
+										<combobox id="client"
+											mold="rounded" model="@load(vm.clientList)">
+											<template name="model">
+												<comboitem
+													label="@load(each.log_name)">
+												</comboitem>
+											</template>
+										</combobox>
+									</cell>
+								</row>
+
+								<row>
+									<cell>申报状态</cell>
+									<cell>
+										<combobox id="ifdeclare"
+											mold="rounded">
+											<comboitem label="未申报"
+												value="0">
+											</comboitem>
+											<comboitem label="申报中"
+												value="2">
+											</comboitem>
+											<comboitem label="已申报"
+												value="1">
+											</comboitem>
+											<comboitem label="退回"
+												value="3">
+											</comboitem>
+										</combobox>
+									</cell>
+									<cell>开户状态</cell>
+									<cell>
+										<combobox id="ifsingle"
+											mold="rounded">
+											<comboitem label="独立开户"
+												value="1">
+											</comboitem>
+											<comboitem label="中智开户"
+												value="0">
+											</comboitem>
+										</combobox>
+									</cell>
+								</row>
+								<row>
+									<cell>申报时间</cell>
+									<cell>
+										<datebox id="declaretime"
+											mold="rounded">
+										</datebox>
+									</cell>
+									<cell>添加时间</cell>
+									<cell>
+										<datebox id="addtime"
+											mold="rounded">
+										</datebox>
+									</cell>
+								</row>
+								<row>
+									<cell>缴存银行</cell>
+									<cell colspan="3">
+										<combobox id="jc" mold="rounded"
+											autodrop="true" model="@load(vm.jclist)">
+											<template name="model">
+												<comboitem
+													label="@load(each.cohf_bankjc)" />
+											</template>
+										</combobox>
+									</cell>
+								</row>
+								<row>
+									<cell>添加人</cell>
+									<cell>
+										<combobox id="addname"
+											mold="rounded" model="@load(vm.clientList)">
+											<template name="model">
+												<comboitem
+													label="@load(each.log_name)">
+												</comboitem>
+											</template>
+										</combobox>
+									</cell>
+									<cell>单位公积金号</cell>
+									<cell>
+										<textbox id="companyid"
+											mold="rounded">
+										</textbox>
+									</cell>
+								</row>
+							</rows>
+							<foot>
+								<footer span="4" align="center">
+									<button label="查询"
+										onClick="@command('submit')">
+									</button>
+								</footer>
+							</foot>
+						</grid>
+					</groupbox>
+				</tablechildren>
+				<tablechildren vflex="1">
+					<groupbox vflex="1">
+						<caption>数据统计</caption>
+						<grid>
+							<rows>
+								<row>
+									<cell>当月变更数</cell>
+									<cell>
+										[
+										<label style="color:red;"
+											value="@load(vm.allNum)" />
+										]
+									</cell>
+								</row>
+								<row>
+									<cell>已处理数</cell>
+									<cell>
+										[
+										<label style="color:red;"
+											value="@load(vm.declareNum)" />
+										]
+									</cell>
+								</row>
+								<row>
+									<cell>中智大户</cell>
+									<cell>
+										[
+										<label style="color:red;" />
+										]
+									</cell>
+								</row>
+								
+								<row>
+									<cell>独立开户</cell>
+									<cell>
+										[
+										<label style="color:red;" />
+										]
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+				</tablechildren>
+			</tablelayout>
+		</scrollview>
+	</window>
+</zk>

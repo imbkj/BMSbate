@@ -1,0 +1,10 @@
+<zk> 
+   		<script src="../js/dist/echarts-all.js"></script>
+		<script type="text/javascript"><![CDATA[
+		function getdata(comId,op){
+			var myChart = echarts.init(document.getElementById(comId));
+	        var option = op;
+	    myChart.setOption(option);
+		}       
+    ]]></script>
+</zk>  

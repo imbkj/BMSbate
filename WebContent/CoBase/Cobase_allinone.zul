@@ -1,0 +1,730 @@
+<?page title="cobase_allinone" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="业务纵览" border="normal" width="980px" height="650px" closable="true"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoBase.Cobase_allinoneCintroller')">
+		<div
+			style="width:100%;height:550px;overflow-y:scroll;overflow-x:hidden;border:1px solid #bcbdbf;">
+			<groupbox title="所选服务项目"  >
+<!-- 					<grid hflex="1" vflex="1"> -->
+<!-- 					<columns> -->
+<!-- 						<column width="10%"></column> -->
+<!-- 						<column></column> -->
+<!-- 					</columns> -->
+<!-- 					<rows> -->
+<!-- 						<row> -->
+<!-- 							<cell> -->
+<!-- 								<label value="合同编号" style="color:#666" /> -->
+<!-- 							</cell> -->
+<!-- 							<cell> -->
+<!-- 								<combobox readonly="true" -->
+<!-- 									model="@load(vm.compactList)" -->
+<!-- 									selectedItem="@bind(vm.compactModel)" -->
+<!-- 									onChange="@command('search')"> -->
+<!-- 									<template name="model"> -->
+<!-- 										<comboitem -->
+<!-- 											label="@load(each.coco_compactid)"> -->
+<!-- 										</comboitem> -->
+<!-- 									</template> -->
+<!-- 								</combobox> -->
+<!-- 							</cell> -->
+<!-- 						</row> -->
+<!-- 					</rows> -->
+<!-- 				</grid> -->
+			
+			
+				<grid width="100%" model="@load(vm.scoofferList)"
+					mold="paging" pageSize="10" emptyMessage="暂无报价单数据">
+					
+									
+					<columns>
+						<column width="40px"></column>
+						<column label="所属合同" />
+						<column label="报价单名称" />
+						<column label="报价金额" />
+						<column label="合同类型" />
+						<column label="人数规模" />
+						<column label="添加人" />
+						<column label="添加时间" />
+						<column label="操作" width="60px" />
+					</columns>
+					<template name="model">
+						<row>
+							<custom-attributes daid="${each.coof_id }" />
+							<detail open="false" fulfill="onOpen">
+								<include
+									src="/CoBase/CoBase_SelectCoOffer_Detail.zul"
+									daid="${daid }">
+								</include>
+							</detail>
+							<label value="@load(each.coco_compactid)" />
+							<label value="@load(each.coof_name)" />
+							<label value="@load(each.coof_sum)" />
+							<label value="@load(each.cpct_name1)" />
+							<label value="@load(each.coof_gm)" />
+							<label value="@load(each.coof_addname)" />
+							<label value="@load(each.addtime)" />
+							<label value="项目详情" style="cursor:pointer"
+								onClick="@command('chakan',model=each)" />
+						</row>
+					</template>
+				</grid>
+			</groupbox>
+
+			<groupbox title="社会保险" open="false">
+				<grid width="100%" model="@load(vm.sb_listcount)" >
+				<rows>
+					<template name="model">
+				<row >
+				<cell>
+				<label value="总计:" ></label>
+				</cell>
+				<cell>
+				<label value="@load(each.all_t1)"></label>
+				<label value="人"></label>
+				</cell>
+				
+					<cell>
+				<label value="总计:" ></label>
+				</cell>
+				<cell>
+				<label value="@load(each.all_t4)"></label>
+				<label value="元"></label>
+				</cell>
+				<cell>
+				
+				<label value="单位交合计:"></label>
+				</cell>
+				<cell>
+				<label value="@load(each.all_t2)"></label>
+				<label value="元"></label>
+				</cell>
+				<cell>
+				<label value="个人交合计："></label>
+				</cell>
+				<cell>
+				<label value="@load(each.all_t3)"></label>
+				<label value="元"></label>
+				</cell>
+				<cell>
+				<label value="Excel"></label>
+				</cell>
+				</row>
+				</template>
+				</rows>
+				</grid>
+				<grid width="100%" id="g2" model="@load(vm.sb_list)"  mold="paging" pageSize="10" >
+					<columns>
+					<column label="姓名" align="center" />
+						<column label="电脑号" align="center" />
+						<column label="基数" align="center" />
+						<column label="户籍" align="center" />
+						<column label="单位交" align="center" />
+						<column label="个人交" align="center" />
+						<column label="养老" align="center" />
+						<column label="医疗" align="center" />
+						<column label="工伤" align="center" />
+						<column label="失业" align="center" />
+						<column label="生育" align="center" />
+						<column label="本月状态" align="center" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<cell>
+									<label value="@load(each.all_t1)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t2)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t3)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t4)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t5)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t6)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t7)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t8)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t9)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t10)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t11)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_st12)" />
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</groupbox>
+
+			<groupbox title="住房公积金" open="false">
+			
+					<grid width="100%"  model="@load(vm.house_listcount)" >
+				<rows >
+				<template name="model">
+				<row>
+				<cell>
+				<label value="总计:" ></label>
+				</cell>
+				<cell>
+				<label value="@load(each.all_t1)"></label>
+				<label value="人"></label>
+				</cell>
+				<cell>
+				<label value="总计:" ></label>
+				</cell>
+				<cell>
+				<label value="@load(each.all_t4)"></label>
+				<label value="元"></label>
+				</cell>
+				<cell>
+				<label value="单位交合计:"></label>
+				</cell>
+				<cell>
+				<label value="@load(each.all_t2)"></label>
+				<label value="元"></label>
+				</cell>
+				<cell>
+				<label value="个人交合计："></label>
+				</cell>
+				<cell>
+				<label value="@load(each.all_t3)"></label>
+				<label value="元"></label>
+				</cell>
+				<cell>
+				<label value="Excel"></label>
+				</cell>
+				</row>
+				</template>
+				</rows>
+				</grid>
+				<grid width="100%" id="g3"  mold="paging" pageSize="10" 
+					model="@load(vm.house_list)">
+					<columns>
+						<column label="姓名" align="center" />
+						<column label="单位编号" align="center" />
+						<column label="单位公积金号" align="center" />
+						<column label="个人公积金号" align="center" />
+						<column label="基数" align="center" />
+						<column label="比例" align="center" />
+						<column label="单位交" align="center" />
+						
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<cell>
+									<label value="@load(each.all_t1)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t2)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t3)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t4)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t5)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t6)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t7)" />
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</groupbox>
+
+			<groupbox title="劳动合同" open="false">
+				<grid width="100%" id="g4"  mold="paging" pageSize="10" 
+					model="@load(vm.emcompact_list)">
+					<columns>
+					
+					<column label="姓名" align="center" />
+						<column label="合同起始时间" align="center" />
+						<column label="合同到期时间" align="center" />
+						<column label="合同期限" align="center" />
+						<column label="签收时间" align="center" />
+						<column label="归档时间" align="center" />
+						<column label="合同类型" align="center" />
+						<column label="合同状态" align="center" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<cell>
+									<label value="@load(each.all_t1)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t2)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t3)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t4)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t5)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t6)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t7)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t8)" />
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</groupbox>
+			
+			<groupbox title="商业保险" open="false">
+				<grid width="100%" id="g13"  mold="paging" pageSize="10" 
+					model="@load(vm.sy_list)">
+					<columns>
+						<column label="被保险人" align="center" />
+						<column label="主险人" align="center" />
+						<column label="投保类型" align="center" />
+						<column label="生效时间" align="center" />
+						<column label="停缴时间" align="center" />
+						<column label="状态" align="center" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<cell>
+									<label value="@load(each.all_t1)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t2)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t3)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t4)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t5)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t6)" />
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</groupbox>
+
+			<groupbox title="委托外地" open="false">
+				<grid width="100%" id="g5" model="@load(vm.wt_list)"  mold="paging" pageSize="10" >
+					<columns>
+					<column label="姓名" align="center" />
+						<column label="养老基数" align="center" />
+						<column label="医疗基数" align="center" />
+						<column label="工伤基数" align="center" />
+						<column label="失业基数" align="center" />
+						<column label="生育基数" align="center" />
+						<column label="住房基数" align="center" />
+						<column label="档案费" align="center" />
+						<column label="服务费" align="center" />
+						<column label="状态" align="center" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<cell>
+									<label value="@load(each.all_t1)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t2)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t3)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t4)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t5)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t6)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t7)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t8)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t9)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t10)" />
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</groupbox>
+
+			<groupbox title="代发工资" open="false">
+				<grid width="100%" id="g6" model="@load(vm.gz_list)"  mold="paging" pageSize="10" >
+					<columns>
+						<column label="姓名" align="center" />
+						<column label="所属月份" align="center" />
+						<column label="用途" align="center" />
+						<column label="数据类型" align="center" />
+						<column label="发放金额" align="center" />
+						<column label="状态" align="center" />
+						<column label="发放时间" align="center" />
+						<column label="Email状态" align="center" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<cell>
+									<label value="@load(each.all_t1)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t2)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t3)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t4)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t5)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t6)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t7)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t8)" />
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</groupbox>
+
+			<groupbox title="档案保管" open="false">
+				<grid width="100%" id="g7"  mold="paging" pageSize="10" 
+					model="@load(vm.file_list)">
+					<columns>
+							<column label="姓名" align="center" />
+						<column label="所属月份" align="center" />
+						<column label="档案类型" align="center" />
+						<column label="档案号" align="center" />
+						<column label="档案来源" align="center" />
+						<column label="档案所在地" align="center" />
+						<column label="协议到期日" align="center" />
+						<column label="状态" align="center" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<cell>
+									<label value="@load(each.all_t1)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t2)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t3)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t4)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t5)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t6)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t7)" />
+								</cell>
+									<cell>
+									<label value="@load(each.all_t8)" />
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</groupbox>
+
+			<groupbox title="户籍保管" open="false">
+				<grid width="100%" id="g10" model="@load(vm.hj_list)"  mold="paging" pageSize="10" >
+					<columns>
+						<column label="户口编号" align="center" />
+						<column label="姓名" align="center" />
+						<column label="公司" align="center" />
+						<column label="身份证号" align="center" />
+						<column label="户口所在地" align="center" />
+						<column label="入户时间" align="center" />
+						<column label="入户方式" align="center" />
+						<column label="状态" align="center" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<cell>
+									<label value="@load(each.all_t1)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t2)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t3)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t4)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t5)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t6)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t7)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t8)" />
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</groupbox>
+
+			<groupbox title="劳动保障卡" open="false">
+				<grid width="100%" id="g9"  mold="paging" pageSize="10" 
+					model="@load(vm.card_list)">
+					<columns>
+					<column label="姓名" align="center" />
+						<column label="社保单位编码" align="center" />
+						<column label="社保单位名称" align="center" />
+						<column label="社保电脑号" align="center" />
+						<column label="照片回执码" align="center" />
+						<column label="户口性质" align="center" />
+						<column label="办理类型" align="center" />
+						<column label="添加人" align="center" />
+						<column label="添加时间" align="center" />
+						<column label="状态" align="center" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<cell>
+									<label value="@load(each.all_t1)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t2)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t3)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t4)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t5)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t6)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t7)" />
+								</cell>
+								
+								<cell>
+									<label value="@load(each.all_t8)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t9)" />
+								</cell>
+									<cell>
+									<label value="@load(each.all_t10)" />
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</groupbox>
+
+			<groupbox title="员工体检" open="false">
+				<grid width="100%" id="g8" model="@load(vm.tj_list)"  mold="paging" pageSize="10" >
+					<columns>
+					<column label="姓名" align="center" />
+						<column label="体检医院" align="center" />
+						<column label="体检地址" align="center" />
+						<column label="体检项目" align="center" />
+						<column label="安排体检时间" align="center" />
+						<column label="状态" align="center" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<cell>
+									<label value="@load(each.all_t1)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t2)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t3)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t4)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t5)" />
+								</cell>
+									<cell>
+									<label value="@load(each.all_t6)" />
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</groupbox>
+
+			<groupbox title="公积金卡制卡" open="false">
+				<grid width="100%" id="g11"  mold="paging" pageSize="10" 
+					model="@load(vm.gzk_list)">
+					<columns>
+						<column label="所属月份" align="center" />
+						<column label="姓名" align="center" />
+						<column label="个人公积金号" align="center" />
+						<column label="单位公积金号" align="center" />
+						<column label="缴存银行" align="center" />
+						<column label="制卡原因" align="center" />
+						<column label="添加人" align="center" />
+						<column label="添加时间" align="center" />
+						<column label="客服" align="center" />
+						<column label="状态" align="center" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<cell>
+									<label value="@load(each.all_t1)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t2)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t3)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t4)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t5)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t6)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t7)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t8)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t9)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t10)" />
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</groupbox>
+			
+			<groupbox title="公积金卡领卡" open="false">
+				<grid width="100%" id="g12"  mold="paging" pageSize="10" 
+					model="@load(vm.glk_list)">
+					<columns>
+						<column label="所属月份" align="center" />
+						<column label="姓名" align="center" />
+						<column label="个人公积金号" align="center" />
+						<column label="单位公积金号" align="center" />
+						<column label="卡号" align="center" />
+						<column label="账户类型" align="center" />
+						<column label="申报日期" align="center" />
+						<column label="领卡银行" align="center" />
+						<column label="状态" align="center" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<cell>
+									<label value="@load(each.all_t1)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t2)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t3)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t4)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t5)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t6)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t7)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t8)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_t9)" />
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</groupbox>
+		</div>
+	</window>
+</zk>

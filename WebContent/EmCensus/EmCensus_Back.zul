@@ -1,0 +1,19 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="退回" border="normal" width="600px" height="300px" closable="true"
+	apply="org.zkoss.bind.BindComposer" id="backwin"
+    viewModel="@id('vm') @init('Controller.EmCensus.EmCensus_BackCntroller')"
+>
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell width="80px">退回原因</cell>
+			<cell><textbox width="80%" rows="4" value="@bind(vm.backcause)"></textbox></cell>
+		</row>
+	</rows>
+	<foot>
+		<footer align="center"><button onClick="@command('back',win=backwin)">提交</button></footer>
+	</foot>
+</grid>
+</window>
+</zk>

@@ -1,0 +1,120 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="技术员维护记录方案的操作" border="normal" vflex="1"
+		apply="org.zkoss.bind.BindComposer"  closable="true"
+		viewModel="@id('vm') @init('Controller.MainRecord.MaintenanceRecordHr_OperatController')">
+		<borderlayout>
+			<north border="0" title="检索" collapsible="true"
+				style="padding-bottom:10px;">
+				<grid>
+					<rows>
+						<row>
+							<cell width="80px">申请人</cell>
+							<cell>
+								<textbox width="200px"  value="@bind(vm.proposer)"></textbox>
+							</cell>
+							<cell width="80px">申请原因</cell>
+							<cell>
+								<textbox width="400px" height="30px" value="@bind(vm.proposereson)"></textbox>
+							</cell>
+							<cell width="80px">申请日期</cell>
+							<cell>
+							    <combobox id="client"
+									model="@load(vm.list)" readonly="true" value="@bind(vm.proposerdate)">
+									<template name="model">
+										<comboitem label="@load(each)"></comboitem>
+									</template>
+								</combobox>
+							</cell>
+						</row>
+						<row>
+						    <cell width="80px">审核状态</cell>
+							<cell >
+								<combobox readonly="true" 
+									value="@bind(vm.status)">
+									<comboitem label="" />
+									<comboitem label="已审核" />
+									<comboitem label="未审核" />
+								</combobox>
+							</cell>
+							<cell width="80px">备份状态</cell>
+							<cell>
+								<combobox readonly="true" 
+									value="@bind(vm.isbackup)">
+									<comboitem label="" />
+									<comboitem label="已备份" />
+									<comboitem label="未备份" />
+								</combobox>
+							</cell>
+						</row>
+					</rows>
+					<foot>
+						<footer align="center">
+						   <button onClick="@command('findCore')">查询</button>
+						   <button onClick="@command('addresult',gd=lmtGrid)">添加维护结果</button>
+						   <button onClick="@command('batchReview',gd=lmtGrid)">批量修改审核状态</button>
+						   <button onClick="@command('batchBackup',gd=lmtGrid)">批量修改备份状态</button>
+						</footer>
+					</foot>
+				</grid>
+			</north>
+             <center>
+	       <grid vflex="1" model="@load(vm.mainRecordList)" emptyMessage="无数据" mold="paging" id="lmtGrid"
+					pageSize="20">
+					<columns sizable="true">
+						<column align="center" width="60px" ><label value="序号"/><checkbox value="@load(each)" onClick="@command('checkAll',gd=lmtGrid,ck=self)"></checkbox></column>
+						<column label="申请人" align="center"/>
+						<column label="申请日期" align="center"/>
+						<column label="申请原因" align="center"/>
+						<column label="sql语句" align="center"/>
+						<column label="审核人" align="center"/>
+						<column label="审核日期" align="center"/>
+						<column label="审核状态" align="center"/>
+						<column label="维护结果" align="center"/>
+						<column label="备份状态" align="center"/>
+						<column label="操作" align="center"/>
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+							    <cell onClick="@command('checkCb',cel=self)">
+								<label value="${forEachStatus.index + 1}" /><checkbox value="@load(each)"></checkbox>
+								</cell>
+								<cell>
+								<label value="@load(each.proposer)" />
+								</cell>
+								<cell>
+                                  <label value="@load(each.proposerdate)" />
+                                </cell>
+								<cell>
+								<label value="@load(each.proposereson)" />
+								</cell>
+                                <cell>
+                                <label value="@load(each.sql)" />
+                                </cell>
+                                <cell>
+                                <label value="@load(each.approver)" />
+                                </cell>
+                                <cell>
+                                  <label value="@load(each.audittime)" /> 
+                                </cell>
+                                <cell>
+                                <label onClick="@command('audit',m=each)" style="${each.status=='0'?'color:red;':''}" value="${each.status!='0'?'已审核':'未审核' }" />
+                                </cell>
+                                <cell>
+                                <label value="@load(each.mainresult)" />
+                                </cell>
+                                <cell>
+                                <label onClick="@command('backup',m=each)" style="${each.isbackup=='0'?'color:red;':''}" value="${each.isbackup!='0'?'已备份':'未备份' }" />
+                                </cell>
+                                <cell>
+                                  <button onClick="@command('maintain',m=each)" >添加/修改维护结果</button>
+                                </cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+	      </center>
+	 </borderlayout>
+</window>
+</zk>

@@ -1,0 +1,43 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<?component name="docDataList" macro-uri="../DocumentsInfo/DocumentsInfo_UpPageList.zul" inline="true"?>
+<zk>
+	<window title="转正定级" border="normal" width="60%" height="60%"
+		closable="true" id="win" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.Archives.Archive_FilePassController')">
+		<grid vflex="1">
+			<rows>
+				<row>
+					<cell width="100px"></cell>
+					<cell></cell>
+				</row>
+				<row>
+					<cell>交接表格</cell>
+					<cell>
+						<docDataList id="docGrid" puzu_id="10"
+							doc_type="g" gid="${vm.models.gid}" tid="${vm.models.eada_id}"
+							log_url="../DocumentsInfo/" dHeight="100px" dWidth="100%" />
+					</cell>
+				</row>
+
+				<row>
+					<cell>转正日期</cell>
+					<cell>
+						<datebox id="finishdate"></datebox>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button
+						onClick="@command('summitend',win=win,finishdate=finishdate.value)">
+						提交
+					</button>
+					<button
+						onClick="@command('addremark',win=win)">
+						备注
+					</button>
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

@@ -1,0 +1,94 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="公司合同到期信息" id="winHouseReturn" width="70%"
+		height="80%" closable="true" border="normal"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoCompact.Compact_indateListController')">
+		<borderlayout>
+			<north>
+				<grid width="100%" height="100%">
+					<columns>
+						<column width="120px" />
+						<column />
+						<column width="120px" />
+						<column />
+					</columns>
+					<rows>
+						<row>
+							<cell>
+								<label value="公司名称" />
+							</cell>
+							<cell>
+								<textbox mold="rounded"
+									value="@bind(vm.company)" />
+							</cell>
+							<cell>
+								<label value="客服" />
+							</cell>
+							<cell>
+								<combobox mold="rounded"
+									model="@load(vm.clientlist)" value="@bind(vm.client)">
+									<template name="model">
+										<comboitem
+											label="@load(each.client)" />
+									</template>
+								</combobox>
+							</cell>
+						</row>
+					</rows>
+					<foot>
+						<footer span="4" align="center">
+							<button label="查询"
+								onClick="@command('search')" />
+						</footer>
+					</foot>
+				</grid>
+			</north>
+			<center>
+				<grid width="100%" height="100%" sizedByContent="true"
+					span="true" model="@load(vm.list)" mold="paging" pageSize="100">
+					<columns>
+						<column align="center" label="序号" />
+						<column align="center" label="客服"
+							sort="auto(client)" />
+						<column align="center" label="公司编号"
+							sort="auto(cid2)" />
+						<column align="center" label="公司名称"
+							sort="auto(company)" />
+						<column align="center" label="合同号" />
+						<column align="center" label="合同生效日期"
+							sort="auto(coco_inuredate)" />
+						<column align="center" label="合同到期日"
+							sort="auto(coco_indate)" />
+
+					</columns>
+					<template name="model">
+						<row>
+							<cell>${forEachStatus.index+1 }</cell>
+							<cell>
+								<label value="@load(each.client)" />
+							</cell>
+							<cell>
+								<label value="@load(each.cid2)" />
+							</cell>
+							<cell align="left">
+								<label value="@load(each.company)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.coco_compactid)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.coco_inuredate)" />
+							</cell>
+							<cell>
+								<label value="@load(each.coco_indate)" />
+							</cell>
+						</row>
+					</template>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

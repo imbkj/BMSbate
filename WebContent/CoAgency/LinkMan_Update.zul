@@ -1,0 +1,121 @@
+<!--
+	创建人：林少斌
+	创建时间：2013-9-23
+	用途：委托机构联系人修改页面
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="w1" title="委托机构联系人-- 修改页面" border="normal"
+		apply="Controller.CoAgency.LinkMan_UpdateController" closable="true"
+		width="800px">
+		<grid width="100%">
+			<rows>
+				<row>
+					<cell width="15%" style="color:#666;">联系人类型：</cell>
+					<cell width="35%">
+						<hlayout>
+							<textbox id="cali_linkman"
+								value="${arg.caliM.cali_linkman}" mold="rounded" />
+							<label style="color:red;">(*)</label>
+						</hlayout>
+					</cell>
+					<cell width="15%" style="color:#666;">
+						是否重要联系人：
+					</cell>
+					<cell width="35%">
+						<checkbox id="cali_vip"
+							checked="${arg.caliM.cali_vip==1?true:false}" />
+					</cell>
+				</row>
+				<row>
+					姓名：
+					<cell>
+						<hlayout>
+							<textbox id="cali_name"
+								value="${arg.caliM.cali_name}" mold="rounded" />
+							<label style="color:red;">(*)</label>
+						</hlayout>
+					</cell>
+					英文名：
+					<cell>
+						<textbox id="cali_ename"
+							value="${arg.caliM.cali_ename}" mold="rounded" />
+					</cell>
+				</row>
+				<row>
+					手机：
+					<cell>
+						<hlayout>
+							<textbox id="cali_mobile"
+								value="${arg.caliM.cali_mobile}" mold="rounded" />
+							<label style="color:red;">(*)</label>
+						</hlayout>
+					</cell>
+					座机：
+					<cell>
+						<hlayout>
+							<textbox id="cali_tel"
+								value="${arg.caliM.cali_tel}" mold="rounded" />
+							<label style="color:red;">(*)</label>
+						</hlayout>
+					</cell>
+				</row>
+				<row>
+					职位：
+					<cell>
+						<textbox id="cali_job"
+							value="${arg.caliM.cali_job}" mold="rounded" />
+					</cell>
+					传真：
+					<cell>
+						<textbox id="cali_fax"
+							value="${arg.caliM.cali_fax}" mold="rounded" />
+					</cell>
+				</row>
+				<row>
+					生日：
+					<cell>
+						<datebox id="cali_birth"
+							value="${$composer.bDate}" readonly="true" format="yyyy-MM-dd"
+							mold="rounded" />
+					</cell>
+					兴趣爱好：
+					<cell>
+						<textbox id="cali_hobby"
+							value="${arg.caliM.cali_hobby}" mold="rounded" />
+					</cell>
+				</row>
+				<row>
+					Email：
+					<cell>
+						<textbox id="cali_email"
+							value="${arg.caliM.cali_email}" mold="rounded" />
+					</cell>
+					联系地址：
+					<cell>
+						<textbox id="cali_address"
+							value="${arg.caliM.cali_address}" mold="rounded" />
+					</cell>
+				</row>
+				<row>
+					个性描述：
+					<cell>
+						<textbox id="cali_personality"
+							value="${arg.caliM.cali_personality}" rows="5" width="80%"
+							mold="rounded" />
+					</cell>
+					备注：
+					<cell>
+						<textbox id="cali_remark" rows="5" width="80%"
+							value="${arg.caliM.cali_remark}" mold="rounded" />
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button label="提交" id="btSubmit" />
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

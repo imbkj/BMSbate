@@ -1,0 +1,60 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="审核" border="normal" width="90%" height="90%" closable="true"
+	apply="org.zkoss.bind.BindComposer" id="editwin"
+	viewModel="@id('vm') @init('Controller.EmBenefit.EmActy_GiftBuyUpdateController')"
+>
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell width="60px"></cell>
+			<cell></cell>
+			<cell width="60px"></cell>
+			<cell></cell>
+			<cell width="60px"></cell>
+			<cell></cell>
+		</row>
+		<row>
+			<cell>支付信息</cell>
+			<cell colspan="5">
+				<scrollview>
+					<include height="100%" src="../EmBenefit/EmActy_GiftInfoAudit.jsp?id=${vm.sortid}"></include>
+				</scrollview>
+			</cell>
+		</row>
+		<row visible="false">
+			<cell width="60px">名称</cell>
+			<cell><textbox value="@load(vm.model.gift_name)" readonly="true" mold="rounded"></textbox></cell>
+			<cell width="60px">数量</cell>
+			<cell><textbox value="@load(vm.model.gift_totalnum)" readonly="true" mold="rounded"></textbox></cell>
+			<cell width="60px">单价</cell>
+			<cell><textbox value="${vm.model.gift_price }" readonly="true" mold="rounded"></textbox></cell>
+		</row>
+		<row visible="false">
+			<cell width="60px">实收</cell>
+			<cell><textbox mold="rounded" value="${vm.model.gift_totalnum*vm.model.gift_price }" id="realinprice"></textbox></cell>
+			<cell>收款人</cell>
+			<cell><textbox value="@load(vm.username)" mold="rounded" id="inname"></textbox></cell>
+			<cell>收款时间</cell>
+			<cell><datebox mold="rounded" id="intime"></datebox></cell>
+		</row>
+		<row>
+			<cell><label value="@load(vm.steppeopstr)"></label></cell>
+			<cell><textbox value="@load(vm.username)" readonly="true" mold="rounded"></textbox></cell>
+			<cell><label value="@load(vm.steptimestr)"></label></cell>
+			<cell colspan="3"><datebox focus="true" id="datetxt" mold="rounded"></datebox></cell>
+		</row>
+		<row>
+			<cell>备注</cell>
+			<cell colspan="5"><textbox width="80%" rows="3" id="remark" value="@load(vm.model.gift_remark)" mold="rounded"></textbox></cell>
+		</row>
+	</rows>
+	<foot>
+		<footer align="center"><button onClick="@command('AuditGift',win=editwin,dateval=datetxt.value,remark=remark.value,
+		realinprice=realinprice.value,inname=inname.value,intime=intime.value)">提交</button>
+			<button onClick="@command('back',win=editwin)">退回</button>
+		</footer>
+	</foot>
+</grid>
+</window>
+</zk>

@@ -1,0 +1,39 @@
+<?page title="合同签回" contentType="text/html;charset=UTF-8"?>
+<?component name="docDataList" macro-uri="DocumentsInfo_AUPageList.zul" inline="true"?>
+<zk>
+	<window title="合同签回" border="normal" id="wq1"
+		apply="Controller.EmBaseCompact.EmBaseCompact_AddController" width="1000px" closable="true" height="540px">
+		<label id="ebcc_id" value="${arg.daid}" visible="false" />
+		<label id="ebcc_tapr_id" value="${arg.id}" visible="false" />
+		<groupbox title="合同签回信息" mold="3d">
+			<grid vflex="1" hflex="1">
+				<rows>
+					<row>
+						<cell width="130px">签收时间：</cell>
+						<cell>
+							<datebox width="130px" id="embase1"
+								readonly="true" mold="rounded" format="yyyy-MM-dd" />
+							<label style="color:red;">(*)</label>
+						</cell>
+					</row>
+<row>
+						<cell width="20%">材料</cell>
+						<cell>
+							<!-- 材料内联页 参数：puzu_id：模块页面id，doType：新增(a)还是修改(u)，doc_type：员工(g)还是公司(c)，gid：公司数据则插入空白 ，业务表id，
+								log_url：获取到页面路径的前部分，lh_people：上一手交接人默认值-->
+
+								<docDataList f_puzu_id="" doType="a" id="docGrid"
+											puzu_id="132" tid="${arg.daid}"
+											log_url="../DocumentsInfo/" dWidth="100%" />
+						</cell>
+					</row>
+					<row>
+						<cell colspan="2" align="center">
+							<button label="提交" id="signemcompact" />
+						</cell>
+					</row>
+				</rows>
+			</grid>
+		</groupbox>
+	</window>
+</zk>

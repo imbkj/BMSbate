@@ -1,0 +1,273 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="公积金信息导入" border="normal" width="100%" height="100%"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.Batchprocessing.BatP_HouseController')">
+		<borderlayout>
+			<north title="导入模板" collapsible="true" open="true">
+				<grid width="100%" height="100%">
+					<columns visible="false">
+						<column width="120px" />
+						<column />
+					</columns>
+					<rows>
+						<row>
+							<cell width="30%">操作类型:</cell>
+							<cell>
+								<combobox value="@bind(vm.type)"
+									mold="rounded" readonly="true"
+									onChange="@command('yearChange')" instant="true">
+									<comboitem label="" />
+									<comboitem label="新增" />
+									<comboitem label="调入" />
+									<comboitem label="年度调基" />
+									<comboitem label="独立户接管" />
+								</combobox>
+								<button label="下载导入模板"
+									onClick="@command('downloadTemplet')" />
+							</cell>
+						</row>
+						<row>
+							<cell>文件上传:</cell>
+							<cell>
+								<textbox mold="rounded" rows="1"
+									readonly="true" value="@load(vm.uploadFlieName)" width="280px" />
+								<button label="浏览..."
+									upload="true,multiple=true" onUpload="@command('browse')" />
+
+								<button label="提交" id="btSubmit"
+									visible="false" onClick="@command('upload')" />
+								<label
+									value=" (注意：如果修改基数采集模板文件的格式，将无法正常导入数据！)" style="color:red" />
+							</cell>
+
+						</row>
+					</rows>
+					<foot>
+						<footer span="2" align="center">
+							<button label="查询" onClick="@command('changestate')"/>
+							<button
+								onClick="@command('summitUpload')">
+								导入数据
+							</button>
+						</footer>
+					</foot>
+				</grid>
+			</north>
+			<center>
+				<grid id="gridwin" width="100%" emptyMessage="暂无数据"
+					model="@load(vm.list)" mold="paging" pageSize="2000" height="100%"
+					style="border:0;">
+					<columns>
+						<column align="center" width="40px">
+							<checkbox
+								onClick="@command('checkall',cb=self,gd=gridwin)" />
+						</column>
+						<column align="center" label="序号" width="40px" />
+						<column align="center" label="所属月份"
+							width="60px" />
+						<column align="center" label="客服" width="55px" />
+						<column align="center" width="60px">
+							<vlayout>
+								<label value="公司编号" />
+								<textbox value="@bind(vm.m_cid)" onChange="@command('changestate')" />
+							</vlayout>
+						</column>
+						<column align="center" width="60px">
+							<vlayout>
+								<label value="员工编号" />
+								<textbox value="@bind(vm.m_gid)" onChange="@command('changestate')" />
+							</vlayout>
+						</column>
+						<column align="center">
+							<vlayout>
+								<label value="公司名称" />
+								<textbox value="@bind(vm.m_company)" onChange="@command('changestate')" />
+							</vlayout>
+						</column>
+						<column align="center" label="单位公积金号" />
+						<column align="center" width="60px">
+							<vlayout>
+								<label value="姓名" />
+								<textbox value="@bind(vm.m_name)" onChange="@command('changestate')" />
+							</vlayout>
+						</column>
+						<column align="center">
+							<vlayout>
+								<label value="身份证" />
+								<textbox value="@bind(vm.m_idcard)" onChange="@command('changestate')" />
+							</vlayout>
+						</column>
+						<column align="center" label="个人公积金号" />
+						<column align="center" width="70px">
+							<vlayout>
+								<label value="基数" />
+								<textbox value="@bind(vm.m_radix)" onChange="@command('changestate')" />
+							</vlayout>
+						</column>
+						<column align="center" width="50px">
+							<vlayout>
+								<label value="比例" />
+								<textbox value="@bind(vm.m_cpp)" onChange="@command('changestate')" />
+							</vlayout>
+						</column>
+						<!-- 
+							<column align="center" label="户籍" />
+							<column align="center" label="最高学历" />
+							<column align="center" label="职称" />
+							<column align="center" label="移动电话" />
+							<column align="center" label="配偶姓名"
+							width="60px" />
+							<column align="center" label="配偶身份证" /> -->
+						<column align="center" label="添加人" width="55px" />
+						<column align="center" label="变动类型"
+							width="70px" />
+						<column align="center" width="70px">
+							<vlayout>
+								<label value="状态" />
+								<combobox width="98%"
+									onChange="@command('changestate')"
+									value="@bind(vm.searchstate)">
+									<comboitem value="0"></comboitem>
+									<comboitem value="1" label="未提交"></comboitem>
+									<comboitem value="2" label="已提交"></comboitem>
+								</combobox>
+							</vlayout>
+						</column>
+						<column align="center" label="提示" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<cell>
+									<checkbox value="@load(each)"
+										checked="@bind(each.checked)" if="${each.hsup_state!=1 }">
+									</checkbox>
+								</cell>
+								<cell>
+									<label
+										value="${forEachStatus.index+1 }">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ownmonth)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.coba_client)">
+									</label>
+								</cell>
+								<cell>
+									<label value="@load(each.cid)"></label>
+								</cell>
+								<cell>
+									<label value="@load(each.gid)"></label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.coba_company)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.hsup_companyid)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.hsup_name)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.hsup_idcard)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.hsup_houseid)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.hsup_trueradix)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.hsup_opp)">
+									</label>
+								</cell>
+								<!--  
+									<cell>
+									<label
+									value="@load(each.hsup_hj)">
+									</label>
+									</cell>
+									<cell>
+									<label
+									value="@load(each.hsup_degree)">
+									</label>
+									</cell>
+									<cell>
+									<label
+									value="@load(each.hsup_title)">
+									</label>
+									</cell>
+									<cell>
+									<label
+									value="@load(each.hsup_mobile)">
+									</label>
+									</cell>
+									<cell>
+									<label
+									value="@load(each.hsup_wifename)">
+									</label>
+									</cell>
+									<cell>
+									<label
+									value="@load(each.hsup_wifeidcard)">
+									</label>
+									</cell>-->
+								<cell>
+									<label
+										value="@load(each.hsup_addname)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.hsup_change)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="${each.hsup_state==1?'已提交':'未提交' }">
+									</label>
+								</cell>
+								<cell>
+									<label style="color:red;"
+										value="@load(each.hsup_errormsg)">
+									</label>
+								</cell>
+							</row>
+						</template>
+					</rows>
+					<foot>
+						<footer span="19" align="center">
+							<button
+								onClick="@command('summit',gd=gridwin)">
+								提交
+							</button>
+							<button
+								onClick="@command('del',gd=gridwin)">
+								删除数据
+							</button>
+						</footer>
+					</foot>
+				</grid>
+			</center>
+		</borderlayout>
+
+	</window>
+</zk>

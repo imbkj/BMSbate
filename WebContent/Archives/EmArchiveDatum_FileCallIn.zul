@@ -1,0 +1,10 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="档案调入" border="normal" width="95%" closable="true">
+<zscript language="Java">
+import Util.UserInfo;
+String user = UserInfo.getUserid();
+</zscript>
+<include src="../Archives/EmArchiveDatum_OpenDoc.jsp?eada_id=${arg.model.eada_id}"></include>
+</window>
+</zk>

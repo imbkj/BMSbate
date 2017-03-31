@@ -1,0 +1,257 @@
+<?page title="独立账户新增申报管理" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="独立账户新增申报管理" border="normal" width="100%"
+		height="100%" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoSocialInsurance.CoSocialInsurance_qdOperateListController')">
+		<borderlayout>
+			<north title="综合查询" collapsible="true" open="false"></north>
+			<center>
+				<grid hflex="1" vflex="1" emptyMessage="暂无数据"
+					model="@load(vm.scsbcList)" mold="paging">
+					<columns>
+						<column align="center" label="公司编号">
+							<separator></separator>
+							<textbox width="50%" mold="rounded"
+								instant="true" value="@bind(vm.cid)"
+								onChange="@command('search')" />
+						</column>
+						<column align="center" label="公司简称">
+							<separator></separator>
+							<textbox width="90%" mold="rounded"
+								value="@bind(vm.shortname)" onChange="@command('search')" />
+						</column>
+						<column align="center" label="所属月份">
+							<separator></separator>
+							<textbox width="90%" mold="rounded"
+								value="@bind(vm.ownmonth)" onChange="@command('search')" />
+						</column>
+						<column align="center" label="社保编号">
+							<separator></separator>
+							<textbox width="90%" mold="rounded"
+								value="@bind(vm.sorid)" onChange="@command('search')" />
+						</column>
+						<column align="center" label="社保分局">
+							<separator></separator>
+							<textbox width="90%" mold="rounded"
+								value="@bind(vm.sbadd)" onChange="@command('search')" />
+						</column>
+						<column align="center" label="企业所在辖区">
+							<separator></separator>
+							<combobox width="90%" mold="rounded"
+								model="@load(vm.areaList)" instant="true" readonly="true"
+								value="@bind(vm.sorarea)" onChange="@command('search')">
+								<template name="model">
+									<comboitem label="@load(each.name)" />
+								</template>
+							</combobox>
+						</column>
+						<column align="center" label="变动情况">
+							<separator></separator>
+							<combobox width="90%" mold="rounded"
+								instant="true" readonly="true" value="@bind(vm.addtype)"
+								onChange="@command('search')"
+								onSelect="@command('addtypeOnSelect')">
+								<comboitem />
+								<comboitem label="缴存登记" />
+								<comboitem label="账户接管" />
+								<comboitem label="信息变更" />
+								<comboitem label="账户注销" />
+								<comboitem label="管理终止" />
+							</combobox>
+						</column>
+						<column align="center" label="添加人"></column>
+						<column align="center" label="添加时间"></column>
+						<column align="center" label="状态">
+							<separator></separator>
+							<combobox width="90%" mold="rounded"
+								model="@load(vm.stateList)" instant="true" readonly="true"
+								value="@bind(vm.statename)" onChange="@command('search')">
+								<template name="model">
+									<comboitem
+										label="@load(each.statename)" />
+								</template>
+							</combobox>
+						</column>
+						<column align="center" label="提示"
+							width="60px">
+						</column>
+						<column align="center" label="操作"
+							width="60px">
+						</column>
+					</columns>
+					<template name="model">
+						<row>
+							<label value="@load(each.cid)" />
+							<label value="@load(each.coba_shortname)" />
+							<label value="@load(each.ownmonth)" />
+							<label value="@load(each.csbc_sorid)" />
+							<label value="@load(each.csbc_sbadd)" />
+							<label value="@load(each.csbc_sorarea)" />
+							<label value="@load(each.csbc_addtype)" />
+							<label value="@load(each.csbc_addname)" />
+							<label value="@load(each.csbc_addtime1)" />
+							<cell>
+								<image
+									src="/images/20070708132244928.gif" tooltiptext="还未退还材料"
+									if="${(each.csbc_addtype eq '缴存登记'
+									or each.csbc_addtype eq '信息变更' or 
+									each.csbc_addtype eq '账户注销') and 
+									each.csbc_state eq 4 and each.csbc_tzlstate eq 0 }"
+									style="cursor:pointer">
+								</image>
+								<image
+									src="/images/20070708132244928.gif" tooltiptext="还未交接密码"
+									if="${each.csbc_addtype eq '管理终止' and empty each.csbc_pwd }"
+									style="cursor:pointer">
+								</image>
+								<label value="@load(each.statename)"
+									style="color:#666"
+									if="${each.statename ne '退回' and each.statename ne '撤销' }" />
+								<label value="@load(each.statename)"
+									style="color:red"
+									if="${each.statename eq '退回' or each.statename eq '撤销' }" />
+							</cell>
+							<cell>
+								<hlayout>
+									<image src="/images/hongqi.gif"
+										tooltiptext="${each.csbc_pdf }"
+										if="${(each.csbc_addtype eq '缴存登记' or 
+										each.csbc_addtype eq '信息变更' or each.csbc_addtype eq '账户注销' 
+										or each.csbc_addtype eq '管理终止') and not empty each.csbc_pdf}"
+										style="cursor:pointer"
+										onClick="@command('download',filename=each.csbc_pdf)">
+									</image>
+									<image src="/images/xls.gif"
+										tooltiptext="${each.csbc_xls }"
+										if="${each.csbc_addtype eq '账户接管' and not empty each.csbc_xls}"
+										style="cursor:pointer"
+										onClick="@command('download',filename=each.csbc_xls)">
+									</image>
+									<image
+										src="/images/20070402165940954.gif"
+										tooltiptext="${each.csbc_image }"
+										if="${each.csbc_addtype eq '账户接管' and not empty each.csbc_image}"
+										style="cursor:pointer"
+										onClick="@command('download',filename=each.csbc_image)">
+									</image>
+									<popup id="pwd_${each.csbc_id }">
+										<html>
+											
+										</html>
+									</popup>
+									<image
+										src="/images/permissionsS.png"
+										tooltip="pwd_${each.csbc_id },position=after_pointer"
+										if="${each.csbc_addtype eq '管理终止' and not empty each.csbc_pwd}"
+										style="cursor:pointer">
+									</image>
+								</hlayout>
+							</cell>
+							<cell>
+								<menubar autodrop="true"
+									if="${each.csbc_addtype eq '缴存登记' }">
+									<menu
+										image="../images/pencil-small.png">
+										<menupopup>
+											<menuitem label="申报详情 "
+												onClick="@command('detail',each=each,
+												url='/CoSocialInsurance/CoSocialInsurance_AddDetail.zul')" />
+											<menuitem label="材料详情 "
+												onClick="@command('docdetail',each=each)" />
+											<menuitem label="重新提交 "
+												onClick="@command('readd',each=each,
+												url='/CoSocialInsurance/CoSocialInsurance_ReAdd.zul')"
+												if="${(each.csbc_state eq 5 or each.csbc_state eq 6) and
+													each.csbc_laststate eq 0 }" />
+											<menuitem label="更新合同 "
+												onClick="@command('upcompact',each=each,
+												url='/CoSocialInsurance/CoSocialInsurance_UpdateCompact.zul')"
+												if="${each.csbc_state eq 4 and not each.csbc_if_update_compact }" />
+											<menuitem label="退还材料"
+												if="${each.csbc_state eq 4 and each.csbc_tzlstate eq 0}"
+												onClick="@command('docback',each=each)" />
+										</menupopup>
+									</menu>
+								</menubar>
+								<menubar autodrop="true"
+									if="${each.csbc_addtype eq '账户接管' }">
+									<menu
+										image="../images/pencil-small.png">
+										<menupopup>
+											<menuitem label="申报详情 "
+												onClick="@command('detail',each=each,
+												url='/CoSocialInsurance/CoSocialInsurance_AddDetail.zul')" />
+											<menuitem label="重新提交 "
+												onClick="@command('readd',each=each,
+												url='/CoSocialInsurance/CoSocialInsurance_ReTran.zul')"
+												if="${(each.csbc_state eq 3 or each.csbc_state eq 4) and
+													each.csbc_laststate eq 0 }" />
+										</menupopup>
+									</menu>
+								</menubar>
+								<menubar autodrop="true"
+									if="${each.csbc_addtype eq '信息变更' }">
+									<menu
+										image="../images/pencil-small.png">
+										<menupopup>
+											<menuitem label="申报详情 "
+												onClick="@command('detail',each=each,
+												url='/CoSocialInsurance/CoSocialInsurance_InforChangeDetail.zul')" />
+											<menuitem label="材料详情 "
+												onClick="@command('docdetail',each=each)" />
+											<menuitem label="重新提交 "
+												onClick="@command('readd',each=each,
+												url='/CoSocialInsurance/CoSocialInsurance_ReInforChange.zul')"
+												if="${(each.csbc_state eq 5 or each.csbc_state eq 6) and
+													each.csbc_laststate eq 0 }" />
+											<menuitem label="退还材料"
+												if="${each.csbc_state eq 4 and each.csbc_tzlstate eq 0}"
+												onClick="@command('docback',each=each)" />
+										</menupopup>
+									</menu>
+								</menubar>
+								<menubar autodrop="true"
+									if="${each.csbc_addtype eq '账户注销' }">
+									<menu
+										image="../images/pencil-small.png">
+										<menupopup>
+											<menuitem label="申报详情 "
+												onClick="@command('detail',each=each,
+												url='/CoSocialInsurance/CoSocialInsurance_CancellationDetail.zul')" />
+											<menuitem label="材料详情 "
+												onClick="@command('docdetail',each=each)" />
+											<menuitem label="重新提交 "
+												onClick="@command('readd',each=each,
+												url='/CoSocialInsurance/CoSocialInsurance_ReCancellation.zul')"
+												if="${(each.csbc_state eq 5 or each.csbc_state eq 6) and
+													each.csbc_laststate eq 0 }" />
+											<menuitem label="退还材料"
+												if="${each.csbc_state eq 4 and each.csbc_tzlstate eq 0}"
+												onClick="@command('docback',each=each)" />
+										</menupopup>
+									</menu>
+								</menubar>
+								<menubar autodrop="true"
+									if="${each.csbc_addtype eq '管理终止' }">
+									<menu
+										image="../images/pencil-small.png">
+										<menupopup>
+											<menuitem label="申报详情 "
+												onClick="@command('detail',each=each,
+												url='/CoSocialInsurance/CoSocialInsurance_TerminationDetail.zul')" />
+											<menuitem label="重新提交 "
+												onClick="@command('readd',each=each,
+												url='/CoSocialInsurance/CoSocialInsurance_ReTermination.zul')"
+												if="${(each.csbc_state eq 4 or each.csbc_state eq 5) and
+													each.csbc_laststate eq 0 }" />
+										</menupopup>
+									</menu>
+								</menubar>
+							</cell>
+						</row>
+					</template>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

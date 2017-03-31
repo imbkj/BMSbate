@@ -1,0 +1,73 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window border="0" apply="org.zkoss.bind.BindComposer" width="100%"
+		height="100%"
+		viewModel="@id('vm') @init('Controller.SalaryPaper.SalaryPaper_EmSalaryDataIncludeController')">
+		<grid model="@load(vm.salaryWinList)" mold="paging" width="100%"
+			id="gdSalary" height="100%" pageSize="50" sizedByContent="true">
+			<columns sizable="true">
+				<column width="40px">
+					<checkbox
+						onClick="@command('checkAll',gdSalary=gdSalary,cbAll=self)" />
+				</column>
+				<column label="员工编号" />
+				<column label="员工姓名" />
+				<column label="Email状态" />
+				<column label="Email时间" />
+				<column label="工资单样式" />
+				<column>
+					<button label="批量发送"
+						onClick="@command('sendAll',gdSalary=gdSalary)" />
+				</column>
+				<column label="${each.csii_item_name}" width="100px"
+					forEach="${vm.itemList}" />
+			</columns>
+			<template name="model">
+				<row>
+					<cell>
+						<checkbox />
+					</cell>
+					<cell>
+						<label value="@load(each.gid)" />
+					</cell>
+					<cell>
+						<label value="@load(each.esda_ba_name)" />
+					</cell>
+					<cell>
+						<label
+							value="${each.esda_email_state == 1 ? '已发送':'未发送' }" />
+					</cell>
+					<cell>
+						<label value="@load(each.esda_email_date)" />
+					</cell>
+					<cell>
+						<label value="@load(each.esin_cost_type)" />
+					</cell>
+					<cell align="center">
+						<a
+							if="${ each.esda_email_state == 1 ? true:false}"
+							onClick="@command('send',m=each,resend='resend')">
+							重发
+						</a>
+						<div align="center"
+							if="${ each.esda_email_state != 1 ? true:false}">
+							<menubar autodrop="true" width="50px"
+								sclass="mymb">
+								<menu
+									image="../images/pencil-small.png">
+									<menupopup>
+										<menuitem label="${each }"
+											forEach="${each.sendType }"
+											onClick="@command('send',m=each,st=self.label)" />
+									</menupopup>
+								</menu>
+							</menubar>
+						</div>
+					</cell>
+					<label value="${each.amount}"
+						forEach="${each.itemList}" />
+				</row>
+			</template>
+		</grid>
+	</window>
+</zk>

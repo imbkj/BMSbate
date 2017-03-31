@@ -1,0 +1,97 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="社会保险到帐查询" border="normal"
+		apply="org.zkoss.bind.BindComposer" width="100%" height="100%"
+		viewModel="@id('vm') @init('Controller.CoSocialInsurance.CoShebao_QueryBillsController')">
+		<borderlayout>
+			<north>
+				<grid>
+					<rows>
+						<row>
+							<cell width="10%">
+								<label value="选取月份" />
+							</cell>
+							<cell>
+								<monthbox mold="rounded" id="ownmonth"
+									width="10%" format="yyyyMM"
+									onChange="@command('search',own=self.value)" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</north>
+			<center border="0">
+				<grid span="true" mold="paging" pageSize="50"
+					model="@load(vm.sQueryBillsList)" id="gridid" emptyMessage="无数据"
+					sizedByContent="true" hflex="1" vflex="1">
+					<columns sizable="true" id="colums">
+						<column width="40px" />
+						<column label="社保编号" align="center" />
+						<column label="公司全称" align="center" />
+						<column label="客服" align="center" />
+						<column label="所属月份" align="center" />
+						<column label="最终到账状态" align="center">
+							<separator></separator>
+							<combobox mold="rounded" instant="true"
+								width="40%" readonly="true" value="@bind(vm.isAccount)"
+								onChange="@command('search')">
+								<comboitem value="" label="" />
+								<comboitem value="无台账" label="无台账" />
+								<comboitem value="未处理" label="未处理" />
+								<comboitem value="财务账" label="财务账" />
+								<comboitem value="已到账" label="已到账" />
+								<comboitem value="未到账" label="未到账" />
+							</combobox>
+						</column>
+						<column label="缴纳人数" align="center" />
+						<column label="缴纳金额" align="center" />
+						<column label="操作" align="center" />
+					</columns>
+					<template name="model">
+						<row>
+							<custom-attributes cspaid="${each.cspa_id}" />
+							<detail open="false" fulfill="onOpen">
+								<include
+									src="/CoSocialInsurance/CoShebao_BillsList.zul"
+									cspaid="${cspaid}" />
+							</detail>
+							<cell>
+								<label value="@load(each.coirdcard)" />
+							</cell>
+							<cell>
+								<label value="@load(each.companyname)" />
+							</cell>
+							<cell>
+								<label value="@load(each.coba_client)" />
+							</cell>
+
+							<cell>
+								<label value="@load(each.ownmonth)" />
+							</cell>
+							<cell>
+								<label value="@load(each.isaccount)" />
+							</cell>
+							<cell>
+								<label value="@load(each.bodycount)" />
+							</cell>
+							<cell>
+								<label value="@load(each.acount)" />
+							</cell>
+							<cell>
+								<menubar autodrop="true">
+									<menu
+										image="../images/pencil-small.png">
+										<menupopup>
+											<menuitem label="缴交信息"
+												onClick="@command('addPayInfo',m=each)" />
+										</menupopup>
+									</menu>
+								</menubar>
+							</cell>
+						</row>
+					</template>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

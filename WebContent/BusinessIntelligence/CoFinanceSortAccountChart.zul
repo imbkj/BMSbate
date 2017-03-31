@@ -1,0 +1,49 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="win" title="财务科目统计" border="normal" width="99%"
+		height="99%" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.BusinessIntelligence.CoFinanceSortAccountChartController')">
+		<script src="../ECharts/echartOp.js"></script>
+		<borderlayout>
+			<north border="0" title="数据查询" collapsible="true">
+				<grid>
+					<rows>
+						<row>
+							<cell align="right">所属月份：</cell>
+							<cell align="left">
+								<combobox value="@bind(vm.ownmonth)"
+									mold="rounded" readonly="true">
+									<comboitem label="" />
+									<comboitem label="201410" />
+									<comboitem label="201411" />
+									<comboitem label="201412" />
+									<comboitem label="201501" />
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell align="right">选择报表类型：</cell>
+							<cell align="left">
+								<combobox value="@bind(vm.type)"
+									mold="rounded" readonly="true">
+									<comboitem label="柱状图" />
+									<comboitem label="饼图" />
+									<comboitem label="雷达图" />
+								</combobox>
+							</cell>
+						</row>
+					</rows>
+					<foot>
+						<footer align="center">
+							<button id="btSearch" label="查看报表"
+								onClick="@command('search')" />
+						</footer>
+					</foot>
+				</grid>
+			</north>
+			<center autoscroll="true">
+				<scrollview id="div" height="600px" width="100%"></scrollview>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

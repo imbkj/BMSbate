@@ -1,0 +1,18 @@
+<zk>
+	<window title="${arg.title}" height="${arg.height}" 
+		width="${arg.width}" position="${arg.position}" border="${arg.border}"
+		closable="${arg.closable}" sizable="${arg.sizable}"
+		maximizable="${arg.maximizable}">
+		<grid height="100%" width="100%">
+			<rows>
+				<row>${arg.sendMessage}</row>
+			</rows>
+
+			<foot height="3%" if="${arg.sendUrl!=null}" apply="Controller.systemWindowController">
+				<footer align="center">
+					<button label="查看" id="btSubmit" />
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

@@ -1,0 +1,77 @@
+<?page title="员工列表" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="员工列表"  border="0" height="100%"
+	apply="org.zkoss.bind.BindComposer"
+    viewModel="@id('vm') @init('Controller.EmCensus.EmCensus_ListController')">
+    <style src="/css/style.css"></style>
+ <borderlayout height="100%">
+ <north border="0" title="检索" collapsible="true" flex="true" style="padding-bottom:10px;">
+ <grid>
+ <rows>
+ 	<row>
+ 		<cell width="60px">员工姓名</cell>
+ 		<cell><textbox id="name" value="@bind(vm.name)"></textbox></cell>
+ 		<cell width="60px">员工编号</cell>
+ 		<cell><textbox id="gid" value="@bind(vm.gid)"></textbox></cell>
+ 		<cell width="60px">身份证号</cell>
+ 		<cell><textbox id="idcard" value="@bind(vm.idcard)"></textbox></cell>
+ 		<cell width="60px">状态</cell>
+ 		<cell>
+ 			<combobox value="@bind(vm.emstate)">
+ 				<comboitem label=""/>
+ 				<comboitem label="在职"/>
+ 				<comboitem label="离职"/>
+ 			</combobox>
+ 		</cell>
+ 	</row>
+ 	<row>
+ 		<cell width="60px">单位名称</cell>
+ 		<cell><textbox id="company" value="@bind(vm.company)"></textbox></cell>
+ 		<cell width="60px">单位编号</cell>
+ 		<cell><textbox id="cid" value="@bind(vm.cid)"></textbox></cell>
+ 		<cell width="60px">服务地区</cell>
+ 		<cell><textbox id="address" value="@bind(vm.address)"></textbox></cell>
+ 		<cell width="60px">客服</cell>
+ 		<cell><textbox id="client" value="@bind(vm.client)"></textbox></cell>
+ 	</row>
+ 	<row>
+ 		<cell colspan="8" align="center"><button id="summit" onClick="@command('search')">查询</button></cell>
+ 	</row>
+ </rows>
+ </grid>
+ </north>
+ <center>
+<grid emptyMessage="没有员工信息" model="@load(vm.embaselist)" mold="paging" pageSize="40" vflex="1" hflex="1">
+	<columns>
+		<column label="序号" width="60px" align="center"/>
+		<column label="公司编号" align="center"/>
+		<column label="公司名称" align="center"/>
+		<column label="服务地区" align="center"/>
+		<column label="员工编号" align="center"/>
+		<column label="姓名" align="center"/>
+		<column label="性别" width="50px" align="center"/>
+		<column label="客服" width="80px" align="center"/>
+		<column label="状态" width="80px" align="center"/>
+		<column label="操作" width="80px" align="center"/>
+	</columns>
+	<rows>
+	<template name="model">
+		<row>
+			<cell><label value="${forEachStatus.index+1 }"></label></cell>
+			<cell><label value="@load(each.cid)"></label></cell>
+			<cell><label value="@load(each.coba_name)"></label></cell>
+			<cell><label value="@load(each.emba_wt)"></label></cell>
+			<cell><label value="@load(each.gid)" ></label></cell>
+			<cell><label value="@load(each.emba_name)"></label></cell>
+			<cell><label value="@load(each.emba_sex)"></label></cell>
+			<cell><label value="@load(each.coba_client)"></label></cell>
+			<cell><label value="${each.emba_state==1?'在职':'离职'}" style="color:${each.emba_state==1?'':'red'};"></label></cell>
+			<cell><a onClick="@command('openZUL',model=each)"><label value="入户申请"></label></a></cell>
+		</row>
+	</template>
+	</rows>
+</grid>
+</center>
+</borderlayout>
+</window>
+</zk>

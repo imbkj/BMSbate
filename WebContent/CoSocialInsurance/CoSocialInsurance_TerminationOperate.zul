@@ -1,0 +1,57 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<!-- 调用内联页的文件名 -->
+<?component name="docDataList" macro-uri="/DocumentsInfo/DocumentsInfo_UpPageList.zul" inline="true"?>
+<zk>
+	<window id="win" title="管理终止 - 状态变更" border="normal" width="60%"
+		closable="true" apply="org.zkoss.bind.BindComposer" height="60%"
+		viewModel="@id('vm') @init('Controller.CoSocialInsurance.CoSocialInsurance_CancellationOperateController')">
+		<grid vflex="1">
+			<columns>
+				<column width="10%"></column>
+				<column></column>
+				<column width="10%"></column>
+				<column></column>
+				<column width="10%"></column>
+				<column></column>
+			</columns>
+			<rows>
+				<row>
+					公司编号
+					<cell>
+						<label value="@load(vm.m.cid)" />
+					</cell>
+					公司名称
+					<cell colspan="3">
+						<label value="@load(vm.m.coba_company)" />
+					</cell>
+				</row>
+				<row>
+					注销原因
+					<cell colspan="5">
+						<label value="@load(vm.m.csbc_stop_reason)" />
+					</cell>
+				</row>
+				<row>
+					<cell>社保账号</cell>
+					<cell>
+						<textbox value="@bind(vm.m.csbc_sorid)"></textbox>
+					</cell>
+					<cell>社保密码</cell>
+					<cell>
+						<textbox value="@bind(vm.m.csbc_pwd)"></textbox>
+					</cell>
+					<cell>密钥密码</cell>
+					<cell>
+						<textbox value="@bind(vm.m.cosb_ukey)"></textbox>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center" span="6">
+					<button label="提交"
+						onClick="@command('summitbtn',win=win)" />
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

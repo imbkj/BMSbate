@@ -1,0 +1,74 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="员工列表" border="normal" vflex="1"
+	apply="org.zkoss.bind.BindComposer" id="win"
+    viewModel="@id('vm') @init('Controller.EmSheBaocard.Sbcd_ClientEmbaseListController')"
+>
+<style src="/css/style.css"></style>
+<borderlayout>
+<north border="0" title="检索" collapsible="true" style="padding-bottom:10px;">
+<grid>
+	<rows>
+		<row>
+			<cell width="80px">员工编号</cell>
+			<cell><textbox value="@bind(vm.model.gid)"></textbox></cell>
+			<cell width="80px">员工姓名</cell>
+			<cell><textbox value="@bind(vm.model.emba_name)"></textbox></cell>
+			<cell width="80px">身份证号</cell>
+			<cell><textbox value="@bind(vm.model.emba_idcard)"></textbox></cell>
+			<cell width="80px">社保电脑号</cell>
+			<cell><textbox value="@bind(vm.model.emba_computerid)"></textbox></cell>
+		</row>
+		<row>
+			<cell>单位编号</cell>
+			<cell><textbox value="@bind(vm.model.cid)"></textbox></cell>
+			<cell>单位简称</cell>
+			<cell colspan="3"><textbox width="80%" value="@bind(vm.model.coba_shortname)"></textbox></cell>
+			<cell>客服</cell>
+			<cell>
+				<combobox model="@load(vm.clientlist)"  value="@bind(vm.model.coba_client)">
+					<template name="model">
+						<comboitem label="@load(each)"/>
+					</template>
+				</combobox>
+			</cell>	
+		</row>
+	</rows>
+	<foot>
+		<footer align="center"><button onClick="@command('search')">查询</button></footer>
+	</foot>
+</grid>
+</north>
+<center>
+<grid model="@load(vm.list)" vflex="1" mold="paging" pageSize="50">
+		<columns>
+			<column label="序号" width="40px" align="center"/>
+			<column label="单位编号" align="center"/>
+			<column label="单位简称" align="center"/>
+			<column label="员工编号" align="center"/>
+			<column label="员工姓名" align="center"/>
+			<column label="身份证号码" align="center" width="150px"/>
+			<column label="社保电脑号" align="center"/>
+			<column label="客服" align="center"/>
+			<column label="操作" width="60px" align="center"/>
+		</columns>
+		<rows>
+			<template name="model">
+				<row>
+					<cell><label value="${forEachStatus.index+1 }"></label></cell>
+					<cell><label value="@load(each.cid)"></label></cell>
+					<cell><label value="@load(each.coba_shortname)"></label></cell>
+					<cell><label value="@load(each.gid)"></label></cell>
+					<cell><label value="@load(each.emba_name)"></label></cell>
+					<cell><label value="@load(each.emba_idcard)"></label></cell>
+					<cell><label value="@load(each.emsc_computerid)"></label></cell>
+					<cell><label value="@load(each.coba_client)"></label></cell>
+					<cell><a onClick="@command('openzul',model=each)" ><label value="办卡"></label></a></cell>
+				</row>
+			</template>
+		</rows>
+	</grid>
+	</center>
+</borderlayout>
+</window>
+</zk>

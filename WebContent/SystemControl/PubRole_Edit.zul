@@ -1,0 +1,24 @@
+<?page title="修改角色" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="修改角色" id="wins" border="normal"
+		apply="org.zkoss.bind.BindComposer,Controller.SystemControl.PubRoleEditController" closable="true">
+		<label value="${arg.myDao.rol_id}" id="rol_id" visible="false"/>
+		<grid width="360px" >
+			<rows>
+				<row>
+					角色名称:
+					<textbox id="name" width="160px"
+						constraint="no empty" value="${arg.myDao.rol_name}" />
+				</row>
+				<row>
+					角色首页:
+					<textbox id="index" width="160px"
+						constraint="no empty"  value="${arg.myDao.rol_index}"/>
+				</row>
+			</rows>
+		</grid>
+		<toolbar mold="panel" align="center">
+			<button id="submitButton" label="提 交" onClick="" />
+		</toolbar>
+	</window>
+</zk>

@@ -1,0 +1,268 @@
+<?page title="商业保险理赔明细" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="商业保险理赔明细" border="normal"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmCommercialInsurance.CI_InsurantClaim_Controller')"
+		width="98%" closable="true" id="w1">
+		<label id="eccl_id" value="${arg.daid}" visible="false" />
+		<label id="eccv_id" value="${arg.eccv_id}" visible="false" />
+
+		<grid id="searchGird" width="100%">
+			<rows>
+				<row>
+					<cell width="100px">投保类型</cell>
+					<cell>
+						<label value="${arg.eccl_castsort}"
+							id="cl_castsort" />
+					</cell>
+					<cell width="100px">就诊日期</cell>
+					<cell>
+						<datebox width="130px" readonly="true"
+							mold="rounded" format="yyyy-MM-dd" id="jz_date" />
+					</cell>
+				</row>
+				<row>
+					<cell width="100px">就诊医院</cell>
+					<cell>
+						<textbox mold="rounded" id="jz_host" />
+					</cell>
+					<cell width="100px">就诊原因</cell>
+					<cell>
+						<textbox mold="rounded" id="jz_content" />
+					</cell>
+				</row>
+				<row>
+					<cell width="100px">保险类别</cell>
+					<cell>
+						<combobox mold="rounded" width="90px"
+							readonly="true" value="" id="cl_class"
+							model="@load(vm.ci_castsort_class)"
+							onChange="@command('ci_class_classl', emco=each,cl_class=cl_class)">
+							<template name="model">
+								<comboitem
+									label="@load(each.eccl_castsort)" value="@load(each.eccc_id)" />
+							</template>
+						</combobox>
+					</cell>
+					<cell width="100px">索赔类型</cell>
+					<cell>
+						<combobox mold="rounded" width="90px"
+							readonly="true" value="" id="cl_class_la"
+							model="@load(vm.ci_class_l)">
+							<template name="model">
+								<comboitem
+									label="@load(each.eccl_castsort)" value="@load(each.eccc_id)" />
+							</template>
+						</combobox>
+					</cell>
+				</row>
+				<row>
+					<cell width="100px">审核备注</cell>
+					<cell colspan="3">
+						<textbox rows="3" width="60%" mold="rounded"
+							id="sk_remark" />
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button id="btSearch" label="提交"
+						onClick="@command('vist_add',cl_castsort=cl_castsort,jz_date=jz_date,jz_host=jz_host,jz_content=jz_content,cl_class=cl_class,cl_class_la=cl_class_la,eccl_id=eccl_id,w1=w1,sk_remark=sk_remark)" />
+				</footer>
+			</foot>
+		</grid>
+		<div
+			style="width:100%;height:350px;overflow-y:scroll;overflow-x:hidden;border:1px solid #bcbdbf;">
+			<grid width="100%" id="g1"
+				model="@load(vm.ci_claim_vistlist)">
+				<rows>
+					<template name="model">
+						<row>
+							<groupbox
+								title="就诊${forEachStatus.index + 1}" mold="3d">
+								<grid>
+									<rows>
+										<row>
+											<cell>索赔金额</cell>
+											<cell>
+												<label
+													value="@load(each.eccv_pay_money)" />
+											</cell>
+											<cell>收据数量</cell>
+											<cell>
+												<label
+													value="@load(each.eccv_invoice_count)" />
+											</cell>
+											<cell>投保类型</cell>
+											<cell>
+												<label
+													value="@load(each.eccv_castsort)" />
+											</cell>
+											<cell>就诊日期</cell>
+											<cell>
+												<label
+													value="@load(each.eccv_visiting_date)" />
+											</cell>
+										</row>
+										<row>
+											<cell>就诊医院</cell>
+											<cell>
+												<label
+													value="@load(each.eccv_visiting_hospital)" />
+											</cell>
+											<cell>就诊原因</cell>
+											<cell>
+												<label
+													value="@load(each.eccv_visiting_cause)" />
+											</cell>
+											<cell>审核备注</cell>
+											<cell>
+												<label
+													value="@load(each.eccv_remark)" />
+											</cell>
+											<cell>索赔类型</cell>
+											<cell>
+												<label
+													value="@load(each.eccv_claim_bclass)" />
+											</cell>
+										</row>
+										<row>
+											<cell>保险类别</cell>
+											<cell colspan="6">
+												<label
+													value="@load(each.eccv_claim_class)" />
+											</cell>
+											<cell>
+												<button label="添加发票"
+													onClick="@command('ci_pidup', emco=each,w1=w1,eccl_id=eccl_id,cl_castsort=cl_castsort)" />
+											</cell>
+										</row>
+										<row>
+											<cell colspan="8">
+												<grid width="100%"
+													model="@load(each.pid_list)">
+													<columns>
+														<column
+															label="发票号" align="center" width="60px" />
+														<column
+															label="发票金额" align="center" />
+														<column
+															label="西药" align="center" />
+														<column
+															label="中成药" align="center" />
+														<column
+															label="中草药" align="center" />
+														<column
+															label="诊查费" align="center" />
+														<column
+															label="床位费" align="center" />
+														<column
+															label="检查费" align="center" />
+														<column
+															label="CT" align="center" />
+														<column
+															label="检验费" align="center" />
+														<column
+															label="治疗费" align="center" />
+														<column
+															label="手术费" align="center" />
+														<column
+															label="其它" align="center" />
+														<column
+															label="服务费" align="center" />
+														<column
+															label="材料费" align="center" />
+														<column
+															label="挂号费" align="center" />
+														<column
+															label="护理费" align="center" />
+													</columns>
+													<rows>
+														<template
+															name="model" var="pid_name">
+															<row>
+																<cell>
+																	<label
+																		value="@load(pid_name.ecci_pid)" />
+																</cell>
+																<cell>
+																	<label
+																		value="@load(pid_name.ecci_invoice_money)" />
+																</cell>
+																<cell>
+																	<label
+																		value="@load(pid_name.ecci_west_medicine)" />
+																</cell>
+																<cell>
+																	<label
+																		value="@load(pid_name.ecci_chinese_medicine)" />
+																</cell>
+																<cell>
+																	<label
+																		value="@load(pid_name.ecci_herbal_medicine)" />
+																</cell>
+																<cell>
+																	<label
+																		value="@load(pid_name.ecci_exmine_fee)" />
+																</cell>
+																<cell>
+																	<label
+																		value="@load(pid_name.ecci_bed_fee)" />
+																</cell>
+																<cell>
+																	<label
+																		value="@load(pid_name.ecci_check_fee)" />
+																</cell>
+																<cell>
+																	<label
+																		value="@load(pid_name.ecci_ct_fee)" />
+																</cell>
+																<cell>
+																	<label
+																		value="@load(pid_name.ecci_prove_fee)" />
+																</cell>
+																<cell>
+																	<label
+																		value="@load(pid_name.ecci_cure_fee)" />
+																</cell>
+																<cell>
+																	<label
+																		value="@load(pid_name.ecci_ops_fee)" />
+																</cell>
+																<cell>
+																	<label
+																		value="@load(pid_name.ecci_other_fee)" />
+																</cell>
+																<cell>
+																	<label
+																		value="@load(pid_name.ecci_service_fee)" />
+																</cell>
+																<cell>
+																	<label
+																		value="@load(pid_name.ecci_stuff_fee)" />
+																</cell>
+																<cell>
+																	<label
+																		value="@load(pid_name.ecci_register_fee)" />
+																</cell>
+																<cell>
+																	<label
+																		value="@load(pid_name.ecci_nurse_fee)" />
+																</cell>
+															</row>
+														</template>
+													</rows>
+												</grid>
+											</cell>
+										</row>
+									</rows>
+								</grid>
+							</groupbox>
+						</row>
+					</template>
+				</rows>
+
+			</grid>
+		</div>
+	</window>
+</zk>

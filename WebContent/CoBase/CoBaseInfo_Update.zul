@@ -1,0 +1,408 @@
+<?page title="公司信息修改" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="公司信息修改" border="normal" id="win" closable="true"
+		apply="org.zkoss.bind.BindComposer" height="100%"
+		viewModel="@id('vm') @init('Controller.CoBase.CoBaseInfo_UpdateController')">
+		<div height="98%" style="overflow-y:scroll">
+			<groupbox mold="3d" open="true">
+				<grid>
+					<rows>
+						<row>
+							<cell width="100px">公司名称</cell>
+							<cell>
+								<hlayout>
+									<textbox width="100%" id="company"
+										readonly="true" value="@bind(vm.frommodel.coba_company)" />
+									<label style="color:red;">
+										(*)
+									</label>
+								</hlayout>
+							</cell>
+							<cell width="80px">公司简称</cell>
+							<cell>
+								<hlayout>
+									<textbox width="100%" id="shortname"
+										readonly="true" value="@bind(vm.frommodel.coba_shortname)" />
+									<label style="color:red;">
+										(*)
+									</label>
+								</hlayout>
+							</cell>
+						</row>
+						<row>
+							<cell>英文名称</cell>
+							<cell>
+								<textbox id="enname"
+									value="@bind(vm.frommodel.coba_englishname)" />
+							</cell>
+							<cell>客户来源</cell>
+							<cell>
+								<label id="clientsource"
+									value="@bind(vm.frommodel.coba_clientsource)" />
+							</cell>
+						</row>
+						<row>
+							<cell>客户规模</cell>
+							<cell>
+								<combobox id="clientsize"
+									value="@bind(vm.frommodel.coba_clientsize)" readonly="true">
+									<comboitem label="" />
+									<comboitem label="小型(20人以下)" />
+									<comboitem label="中型(20-50人)" />
+									<comboitem label="大型(50人以上)" />
+								</combobox>
+							</cell>
+							<cell>所属行业</cell>
+							<cell>
+								<combobox id="trade"
+									model="@load(vm.tradlist)" readonly="true"
+									value="@bind(vm.frommodel.coba_industytype)">
+									<template name="model">
+										<comboitem
+											label="@load(each.name)" />
+									</template>
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>机构性质</cell>
+							<cell>
+								<hlayout>
+									<combobox id="clientstyle"
+										value="@bind(vm.frommodel.coba_setuptype)" readonly="true">
+										<comboitem label="" />
+										<comboitem label="公司" />
+										<comboitem label="分公司" />
+										<comboitem label="代表处" />
+										<comboitem label="办事处" />
+									</combobox>
+									<label style="color:red;">
+										(*)
+									</label>
+								</hlayout>
+							</cell>
+							<cell>客户企业性质</cell>
+							<cell>
+								<hlayout>
+									<combobox id="kind"
+										value="@bind(vm.frommodel.coba_kind)" readonly="true">
+										<comboitem label="" />
+										<comboitem label="央企或下属企业" />
+										<comboitem label="国企" />
+										<comboitem label="股份制企业" />
+										<comboitem label="民企" />
+										<comboitem label="外企" />
+										<comboitem label="中外合资或合作企业" />
+										<comboitem label="事业单位" />
+										<comboitem label="其他性质" />
+									</combobox>
+									<label style="color:red;">
+										(*)
+									</label>
+								</hlayout>
+							</cell>
+						</row>
+						<row>
+							<cell>所在区域</cell>
+							<cell>
+								<combobox id="ClientArea"
+									value="@bind(vm.frommodel.coba_area)" readonly="true">
+									<comboitem label="" />
+									<comboitem label="罗湖区" />
+									<comboitem label="福田区" />
+									<comboitem label="南山区" />
+									<comboitem label="龙岗区" />
+									<comboitem label="盐田区" />
+									<comboitem label="宝安区" />
+									<comboitem label="光明新区" />
+									<comboitem label="坪山区" />
+									<comboitem label="外地" />
+								</combobox>
+							</cell>
+							<cell>是否签订反贿赂协议书</cell>
+							<cell>
+								<combobox
+									value="@bind(vm.frommodel.coba_ifhasbribery)">
+									<comboitem label=""></comboitem>
+									<comboitem label="是"></comboitem>
+									<comboitem label="否"></comboitem>
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>注册资金</cell>
+							<cell>
+								<hlayout>
+									<textbox id="registermaney"
+										value="@bind(vm.frommodel.coba_reg_fund)"  />
+									<label style="color:red;">
+										(单位:万元;币种:人民币)
+									</label>
+								</hlayout>
+							</cell>
+							<cell>合作起始日</cell>
+							<cell>
+								<datebox id="hzbegindate"
+									value="@bind(vm.hzbegindate)" />
+							</cell>
+						</row>
+						<row>
+							<cell>办公地址</cell>
+							<cell colspan="3">
+								<textbox width="86%" id="bgaddress"
+									value="@bind(vm.frommodel.coba_address)" />
+							</cell>
+						</row>
+						<row>
+							<cell>公司网址</cell>
+							<cell colspan="3">
+								<textbox width="86%" id="website"
+									value="@bind(vm.frommodel.coba_website)" />
+							</cell>
+						</row>
+						<row>
+							<cell>合同履行地</cell>
+							<cell>
+								<combobox id="comtserarea"
+									value="@bind(vm.frommodel.coba_servicearea)" readonly="true">
+									<comboitem label="" />
+									<comboitem label="深圳" />
+									<comboitem label="北京" />
+									<comboitem label="上海" />
+									<comboitem label="广州" />
+									<comboitem label="顺德" />
+									<comboitem label="杭州" />
+									<comboitem label="苏州" />
+									<comboitem label="四川" />
+									<comboitem label="武汉" />
+									<comboitem label="南京" />
+									<comboitem label="青岛" />
+									<comboitem label="湖北" />
+									<comboitem label="天津" />
+									<comboitem label="西安" />
+									<comboitem label="昆明" />
+									<comboitem label="长春" />
+									<comboitem label="长沙" />
+									<comboitem label="大连" />
+									<comboitem label="东莞" />
+									<comboitem label="厦门" />
+									<comboitem label="安徽" />
+									<comboitem label="宁波" />
+									<comboitem label="珠海" />
+									<comboitem label="中山" />
+									<comboitem label="济南" />
+									<comboitem label="山东" />
+									<comboitem label="惠州" />
+								</combobox>
+							</cell>
+							<cell>是否国内注册</cell>
+							<cell>
+								<combobox id="sign" readonly="true"
+									value="@bind(vm.sign)">
+									<comboitem value="-1" label="" />
+									<comboitem value="1" label="是" />
+									<comboitem value="0" label="否" />
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>开发人员</cell>
+							<cell>
+								<label id="developer"
+									value="@bind(vm.frommodel.coba_developer)" />
+							</cell>
+							<cell>薪酬负责人</cell>
+							<cell>
+								<combobox id="gzaddname"
+									buttonVisible="false"
+									value="@bind(vm.frommodel.coba_gzaddname)" readonly="true">
+									<comboitem label="" />
+									<comboitem
+										label="@load(vm.frommodel.coba_gzaddname)" />
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>薪酬审核人</cell>
+							<cell>
+								<combobox id="gzaudname"
+									buttonVisible="false"
+									value="@bind(vm.frommodel.coba_gzaudname)" readonly="true">
+									<comboitem label="" />
+									<comboitem
+										label="@load(vm.frommodel.coba_gzaudname)" />
+								</combobox>
+							</cell>
+							<cell>客服代表</cell>
+							<cell>
+								<hlayout>
+									<combobox id="client"
+										model="@load(vm.loginlist)" buttonVisible="false"
+										value="@bind(vm.frommodel.coba_client)" readonly="true">
+										<template name="model">
+											<comboitem
+												label="@load(each)" />
+										</template>
+									</combobox>
+
+								</hlayout>
+							</cell>
+						</row>
+						<row>
+
+							<cell>客服经理</cell>
+							<cell>
+								<hlayout>
+									<combobox id="clientmanager"
+										model="@load(vm.loginlist2)" buttonVisible="false"
+										value="@bind(vm.frommodel.coba_clientmanager)"
+										readonly="true">
+										<template name="model">
+											<comboitem
+												label="@load(each)" />
+										</template>
+									</combobox>
+
+								</hlayout>
+							</cell>
+							<cell>部门经理</cell>
+							<cell>
+								<hlayout>
+									<combobox id="deptclientmanager"
+										model="@load(vm.loginlist3)" buttonVisible="false"
+										value="@bind(vm.frommodel.coba_manager)" readonly="true">
+										<template name="model">
+											<comboitem
+												label="@load(each)" />
+										</template>
+									</combobox>
+								</hlayout>
+							</cell>
+						</row>
+
+						<row>
+							<cell>发票开票规则</cell>
+							<cell colspan="3">
+								<textbox width="70%" id="fpremark"
+									value="@bind(vm.frommodel.coba_fpremark)" />
+							</cell>
+						</row>
+
+						<row>
+							<cell>备注</cell>
+							<cell colspan="3">
+								<textbox width="70%" id="remark"
+									value="@bind(vm.frommodel.coba_remark)" />
+							</cell>
+						</row>
+						<row>
+							<cell width="80px">电话</cell>
+							<cell colspan="3">
+								<hlayout>
+									<textbox id="cfva_tel"
+										value="@bind(vm.coFinanceVATModel.cfva_tel)" />
+								</hlayout>
+							</cell>
+						</row>
+						<!-- 
+							<row>
+							<cell width="80px">电话</cell>
+							<cell>
+							<hlayout>
+							<textbox id="cfva_tel"
+							value="@bind(vm.coFinanceVATModel.cfva_tel)" />
+							</hlayout>
+							</cell>
+							<cell> 增值税一般纳税人 </cell>
+							<cell>
+							<hlayout>
+							<combobox id="cfva_taxpayers"
+							value="@bind(vm.coFinanceVATModel.cfva_taxpayers)">
+							<comboitem label="" />
+							<comboitem label="是" />
+							<comboitem label="否" />
+							</combobox>
+							</hlayout>
+							</cell>
+							</row>
+							<row>
+							<cell width="60px">纳税人识别号（开票用编码）</cell>
+							<cell>
+							<hlayout>
+							<textbox id="cfva_number1"
+							value="@bind(vm.coFinanceVATModel.cfva_number1)" />
+							</hlayout>
+							</cell>
+							<cell  width="60px">注册地址</cell>
+							<cell >
+							<hlayout>
+							<textbox  id="adderss"
+							value="@bind(vm.adderss)" />
+							<label style="color:red;">(*)</label>
+							</hlayout>
+							</cell>
+							</row>
+							<row>
+							
+							<cell width="100px">发票联系人</cell>
+							<cell>
+							<hlayout>
+							<textbox width="100%" id="cfva_contact" 
+							value="@bind(vm.coFinanceVATModel.cfva_contact)" />
+							<label style="color:red;">(*)</label>
+							</hlayout>
+							</cell>
+							<cell width="80px">发票联系人电话</cell>
+							<cell>
+							<hlayout>
+							<textbox width="100%" id="cfva_contact_tel" 
+							value="@bind(vm.coFinanceVATModel.cfva_contact_tel)" />
+							<label style="color:red;">(*)</label>
+							</hlayout>
+							</cell>
+							</row>
+							<row>
+							<cell width="80px">银行账号</cell>
+							<cell>
+							<hlayout>
+							<textbox width="100%" id="cfva_bank_acc" 
+							value="@bind(vm.coFinanceVATModel.cfva_bank_acc)" />
+							</hlayout>
+							</cell>
+							<cell width="80px">开户银行名称</cell>
+							<cell>
+							<hlayout>
+							<textbox width="100%" id="cfva_bank" 
+							value="@bind(vm.coFinanceVATModel.cfva_bank)" />
+							</hlayout>
+							</cell>
+							</row>
+							<row>
+							<cell>发票抬头</cell>
+							<cell colspan="3">
+							<textbox id="cfva_title" width="70%"
+							value="@bind(vm.coFinanceVATModel.cfva_title)" />
+							</cell>
+							</row>
+							<row>
+							<cell >发票接收地址</cell>
+							<cell colspan="3">
+							<textbox  id="cfva_vat_add" width="70%"
+							value="@bind(vm.coFinanceVATModel.cfva_vat_add)" />
+							</cell>
+							</row> -->
+					</rows>
+
+					<foot>
+						<footer align="center">
+							<button id="updatecobase"
+								onClick="@command('updateCoBase')">
+								提交
+							</button>
+						</footer>
+					</foot>
+				</grid>
+			</groupbox>
+		</div>
+	</window>
+</zk>

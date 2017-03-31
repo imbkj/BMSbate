@@ -1,0 +1,41 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="联系人信息管理" border="normal" width="90%" height="80%"
+		closable="true" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoLatencyClient.Cola_LinkManInfoController')">
+		<grid width="100%" height="100%" sizedByContent="true" span="true" model="@load(vm.list)" emptyMessage="没有联系人信息">
+			<columns>
+				<column align="center" label="姓名" />
+				<column align="center" label="职位" />
+				<column align="center" label="职责" />
+				<column align="center" label="手机号码" />
+				<column align="center" label="电话号码1" />
+				<column align="center" label="电话号码2" />
+				<column align="center" label="传真" />
+				<column align="center" label="电子邮件1" />
+				<column align="center" label="电子邮件2" />
+				<column align="center" width="60px" label="操作" />
+			</columns>
+			<rows>
+				<template name="model">
+					<row align="center">
+						<label value="@load(each.cali_name)" />
+						<label value="@load(each.cali_job)" />
+						<label value="@load(each.cali_duty)" />
+						<label value="@load(each.cali_mobile)" />
+						<label value="@load(each.cali_tel)" />
+						<label value="@load(each.cali_tel1)" />
+						<label value="@load(each.cali_fax)" />
+						<label value="@load(each.cali_email)" />
+						<label value="@load(each.cali_email1)" />
+						<a onClick="@command('linkUpdate',model=each)"
+							style="cursor:pointer">
+							<label>修改</label>
+						</a>
+					</row>
+				</template>
+			</rows>
+			<foot><footer span="10" align="center"><button onClick="@command('add')">新增联系人</button></footer></foot>
+		</grid>
+	</window>
+</zk>

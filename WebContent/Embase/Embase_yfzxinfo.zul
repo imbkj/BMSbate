@@ -1,0 +1,43 @@
+<?page title="雇员操作中心" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="yfwin" title="" border="normal"
+		  closable="true" apply="Controller.Embase.Embase_yfzxinfoController" width="100%" 
+		>
+		<tabbox>
+			<tabs>
+				<tab label="联系记录--${$composer.m.emba_name}" />
+				<tab label="服务约定" />
+				<tab label="手机短信" />
+				<tab label="雇员资料记录" />
+				
+			
+
+			</tabs>
+			<tabpanels>
+				<tabpanel>
+					<include src="../Embase/EmContactinfo.zul" 
+					gid="${$composer.m.gid}"/>
+				</tabpanel>
+				<tabpanel>
+				<include src="../CoServePromise/CoPromise_Info.zul" 
+				cid="${$composer.m.cid}"/>
+	 
+				</tabpanel>
+				<tabpanel>
+					<include src="../Embase/SMS_Add.zul" 
+					gid="${$composer.m.gid}" />
+				</tabpanel>
+				
+			
+					<tabpanel>
+					<include src="../Embase/EmPic_Up.zul" 
+					gid="${$composer.m.gid}"/>
+				</tabpanel>
+				
+			
+
+			</tabpanels>
+		</tabbox>
+
+	</window>
+</zk>

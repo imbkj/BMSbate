@@ -1,0 +1,149 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<?component name="docDataList" macro-uri="/DocumentsInfo/DocumentsInfo_UpPageList.zul" inline="true"?>
+<zk>
+	<window id="win" title="计划生育责任书流程" border="normal" height="80%"
+		width="80%" closable="true" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoReg.ResponsblilityBookStepController')">
+		<div style="overflow-y:auto">
+			<grid>
+				<columns>
+					<column width="20%"></column>
+					<column></column>
+				</columns>
+				<rows>
+					<row>
+						公司名称
+						<label value="@load(vm.m.coba_company)" />
+					</row>
+					<row if="${vm.r.rebk_step_state == 2}">
+						<cell colspan="2">
+							<label value="勾选所需材料" style="color:#666" />
+						</cell>
+					</row>
+
+					<row if="${vm.r.rebk_step_state == 3}">
+						<cell colspan="2">
+							<label value="材料签收" style="color:#666" />
+						</cell>
+					</row>
+					<row if="${ vm.r.rebk_step_state == 3}">
+						<cell colspan="2"
+							if="${ vm.r.rebk_step_state == 3}">
+							<docDataList id="docGrid" puzu_id="13"
+								doc_type="c" gid="" tid="${arg.daid }" log_url="/DocumentsInfo/"
+								dHeight="180px" dWidth="100%" />
+						</cell>
+					</row>
+
+					<row if="${vm.r.rebk_step_state == 4 }">
+						<cell colspan="2">
+							<grid style="border:0px" width="100%"
+								height="230px">
+								<columns>
+									<column width="15%" />
+									<column />
+									<column width="15%" />
+									<column />
+									<column width="15%" />
+									<column />
+								</columns>
+								<rows>
+									<row>
+										法定代表人
+										<textbox mold="rounded"
+											hflex="1" value="@bind(vm.m.cori_legal_person)">
+										</textbox>
+										注册资金
+										<cell colspan="3">
+											<doublebox format=",###.##"
+												mold="rounded" value="@bind(vm.m.cori_reg_fund)">
+											</doublebox>
+										</cell>
+									</row>
+									<row>
+										组织机构代码
+										<textbox mold="rounded"
+											hflex="1" value="@bind(vm.m.cori_oi_code)">
+										</textbox>
+										营业执照注册号
+										<doublebox format=",###.##"
+											mold="rounded" value="@bind(vm.m.cori_bl_code)">
+										</doublebox>
+										网上立户时间
+										<datebox format="yyyy-MM-dd"
+											hflex="1" mold="rounded" value="@bind(vm.reg_date)">
+										</datebox>
+									</row>
+									<row>
+										所属街道办及社区工作站
+										<textbox mold="rounded"
+											hflex="1" value="@bind(vm.m.cori_ws_name)">
+										</textbox>
+										联系电话
+										<cell colspan="3">
+											<textbox mold="rounded"
+												value="@bind(vm.m.cori_ws_tel)">
+											</textbox>
+										</cell>
+									</row>
+									<row>
+										居住证办理地点
+										<textbox mold="rounded"
+											hflex="1" value="@bind(vm.m.cori_rp_t_address)">
+										</textbox>
+										联系电话
+										<cell colspan="3">
+											<textbox mold="rounded"
+												value="@bind(vm.m.cori_rp_t_tel)">
+											</textbox>
+										</cell>
+									</row>
+									<row>
+										立户地点
+										<cell colspan="5">
+											<textbox
+												value="@bind(vm.m.cori_oaa_place)" mold="rounded" hflex="1" />
+										</cell>
+									</row>
+									<row>
+										公司地址
+										<cell colspan="5">
+											<textbox
+												value="@bind(vm.m.cori_address)" mold="rounded" hflex="1" />
+										</cell>
+									</row>
+								</rows>
+							</grid>
+						</cell>
+					</row>
+					<row if="${vm.r.rebk_step_state == 4}">
+						<label value="责任书签订时间" />
+						<datebox mold="rounded" format="yyyy-MM-dd"
+							value="@bind(vm.cDate)">
+						</datebox>
+					</row>
+					<row if="${vm.r.rebk_step_state == 4}">
+						<label value="期限" />
+						<combobox mold="rounded" readonly="true"
+							value="@bind(vm.r.rebk_limit)">
+							<comboitem label="当年有效" value="当年有效" />
+							<comboitem label="一年有效" value="一年有效" />
+						</combobox>
+					</row>
+					<row>
+						<label value="@load(vm.datename)" />
+						<datebox mold="rounded" format="yyyy-MM-dd"
+							value="@bind(vm.date)">
+						</datebox>
+					</row>
+				</rows>
+			</grid>
+			<hbox width="100%" pack="center" align="center">
+				<button label="提交"
+					onClick="@command('submit',win=win,gd=docGrid)" />
+			</hbox>
+
+		</div>
+
+	</window>
+</zk>

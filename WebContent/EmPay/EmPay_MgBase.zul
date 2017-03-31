@@ -1,0 +1,49 @@
+<?page title="支付通知审核" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="支付通知" border="normal" id="w1" height="170px"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmPay.EmPay_BaseController')"
+		width="900px" closable="true">
+		<label id="espa_id" value="${arg.id}" visible="false" />
+		<label id="espa_tapr_id" value="${arg.espa_tapr_id}" visible="false" />
+		<groupbox title="支付信息" mold="3d" height="130px">
+			<grid vflex="1" hflex="1">
+				<rows>
+					<row>
+						<cell width="70px">所属月份：</cell>
+						<cell>
+							<label id="embase1" width="90px"
+								value="${arg.ownmonth}" />
+						</cell>
+						<cell width="70px">支付单号：</cell>
+						<cell>
+							<label id="embase2" width="90px"
+								value="${arg.paynum}" />
+						</cell>
+					</row>
+					<row>
+						<cell width="70px">所属类别：</cell>
+						<cell>
+							<label id="embase3" width="90px"
+								value="${arg.stype}" />
+						</cell>
+						<cell>实付金额：</cell>
+						<cell>
+							<label id="embase4" width="90px"
+								value="${arg.fee}" />
+						</cell>
+					</row>
+					<row>
+						<cell>支付单位：</cell>
+						<cell colspan="2">
+							<label id="embase5" width="200px" />
+						</cell>
+						<cell align="right">
+							<button label="审 核"  onClick="@command('mgaut_ok',espa_id=espa_id,espa_tapr_id=espa_tapr_id,embase2=embase2,embase3=embase3)"/>
+						</cell>
+					</row>
+				</rows>
+			</grid>
+		</groupbox>
+	</window>
+</zk>

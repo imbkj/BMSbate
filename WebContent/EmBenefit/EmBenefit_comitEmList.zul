@@ -1,0 +1,203 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window width="100%" height="100%" title="员工福利待确认名单" id="winEmpList"
+		border="normal" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmBenefit.EmBenefit_commitEmListController')">
+		<borderlayout>
+			<north title="查询条件" open="true" collapsible="true">
+				<grid>
+					<rows>
+						<row>
+							<cell width="100px">公司</cell>
+							<cell>
+								<combobox id="company" mold="rounded"
+									model="@load(vm.cobaseList)" instant="true" autodrop="true"
+									onChange="@command('updateCompany',a=self)">
+									<template name="model">
+										<comboitem
+											value="@load(each.cid)" label="@load(each.emwf_company)" />
+									</template>
+								</combobox>
+							</cell>
+							<cell width="100px">客服</cell>
+							<cell>
+								<combobox id="client" mold="rounded"
+									model="@load(vm.clientList)">
+									<template name="model">
+										<comboitem
+											label="@load(each.emwf_client)" />
+									</template>
+								</combobox>
+							</cell>
+							<cell width="100px">享受方式</cell>
+							<cell>
+								<combobox id="standard" mold="rounded"
+									model="@load(vm.standardList)">
+									<template name="model">
+										<comboitem
+											label="@load(each.emwf_standard)" />
+									</template>
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>姓名</cell>
+							<cell>
+								<combobox id="name" mold="rounded"
+									model="@load(vm.nameList)" instant="true" autodrop="true"
+									onChange="@command('updateNameList',a=self)">
+									<template name="model">
+										<comboitem
+											label="@load(each.emwf_name)" />
+									</template>
+								</combobox>
+							</cell>
+							<cell>福利项目</cell>
+							<cell>
+								<combobox id="item" mold="rounded"
+									model="@load(vm.itemList)">
+									<template name="model">
+										<comboitem
+											value="@load(each.embf_id)" label="@load(each.embf_name)" />
+									</template>
+								</combobox>
+							</cell>
+							<cell></cell>
+							<cell></cell>
+						</row>
+					</rows>
+					<foot>
+						<footer align="center">
+							<button label="查询"
+								onClick="@command('Search')">
+							</button>
+							<button label="批量修改"
+								onClick="@command('modAll')">
+							</button>
+							<button label="批量确认"
+								onClick="@command('commit')">
+							</button>
+							<button label="删除"
+								onClick="@command('delete')">
+							</button>
+							<button label="修改标准"
+								onClick="@command('edit')" visible="false">
+							</button>
+							<button label="新增名单"
+								onClick="@command('add')">
+							</button>
+						</footer>
+					</foot>
+				</grid>
+			</north>
+			<center>
+				<grid id="gdList" height="100%" model="@load(vm.list)" mold="paging" pageSize="200"
+					sizedByContent="true" span="true" emptyMessage="暂无数据">
+					<columns>
+						<column align="center">序号</column>
+						<column align="center">公司简称</column>
+						<column align="center" width="80px">姓名</column>
+						<column align="center">身份证号</column>
+						<column align="center">入职时间</column>
+						<column align="center">礼品内容</column>
+						<column align="center">项目</column>
+						<column align="center">何时需要</column>
+						<column align="center">享受方式</column>
+						<column align="center">标准</column>
+						<column align="center">部门</column>
+						<column align="center">客服</column>
+						<column align="center">付款性质</column>
+						<column align="center">寄送方式</column>
+						<column align="center" width="60px">状态</column>
+						<column align="center">
+							<checkbox
+								onClick="@command('checkall',a=self)" />
+							<label value="操作" />
+						</column>
+					</columns>
+					<template name="model">
+						<row>
+							<cell>${forEachStatus.index+1 }</cell>
+							<cell>
+								<label value="@load(each.coba_shortname)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emwf_name)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emwf_idcard)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emwf_intime)"
+									tooltiptext="员工生日：${each.emba_birth }" />
+							</cell>
+							<cell>
+								<label value="@load(each.emwf_producefo)" />
+							</cell>
+							<cell>
+								<label value="@load(each.embf_name)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emwf_need)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.emwf_standard)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emwf_charge)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emwf_dept)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emwf_client)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emwf_paykind)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.emwf_delivery)" />
+							</cell>
+							<cell>
+								<a if="${each.emwf_state==16}"
+									onClick="@command('backinfo',model=each)">
+									<label value="已退回" />
+								</a>
+								<label value="未确认"
+									if="${each.emwf_state==2}" />
+									<label value="报销中"
+									if="${each.emwf_state==17}" />
+									<label value="已报销"
+									if="${each.emwf_state==18}" />
+							</cell>
+							<cell>
+								<hlayout>
+									<checkbox if="${each.emwf_standard!='报销' }"
+										checked="@bind(each.checked)" />
+									<separator />
+									<menubar autodrop="true"
+										width="50px" sclass="mymb">
+										<menu
+											image="../images/pencil-small.png">
+											<menupopup>
+												<menuitem label="修改"
+													onClick="@command('mod',a=each)" />
+												<menuitem label="报销" if="${each.emwf_standard=='报销' }"
+													onClick="@command('bx',a=each)" />
+												<menuitem label="删除"
+													onClick="@command('del',a=each)" />
+											</menupopup></menu>
+									</menubar>
+								</hlayout>
+							</cell>
+						</row>
+					</template>
+
+				</grid>
+			</center>
+
+		</borderlayout>
+	</window>
+</zk>

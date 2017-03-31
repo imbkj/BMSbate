@@ -1,0 +1,288 @@
+<?page title="二次确认" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="委托单二次确认" border="normal"
+		apply="org.zkoss.bind.BindComposer" closable="true" width="50%"
+		viewModel="@id('vm') @init('Controller.EmCommissionOut.EmCommissionOutPayController')"
+		height="450px">
+		<label value="${arg.emco.ecop_id }" id="all_id" visible="false" />
+		<label value="${arg.emco.gid }" id="gid" visible="false" />
+		<label value="${arg.emco.cid }" id="cid" visible="false" />
+		<label value="${arg.emco.ownmonth }" id="ownmonth" visible="false" />
+		<label value="${arg.emco.ecop_cabc_id}" id="cabc_id" visible="false" />
+		<label value="${arg.emco.ecop_company }" id="company" visible="false" />
+		<label value="${arg.emco.ecop_name }" id="name" visible="false" />
+		<grid width="100%" id="g1" height="380px" mold="paging"
+			sizedByContent="true" span="true">
+			<columns>
+				<column label="项目" align="center" width="30px" />
+				<column label="费用" align="center" width="30px" />
+				<column label="企业实际起始日" align="center" width="30px" >
+				<image src="../images/130.gif"
+							onClick="all_cp()" />
+				</column>
+				<column label="个人实际起始日" align="center" width="30px" >
+				<image src="../images/130.gif"
+							onClick="all_op()" />
+				</column>
+			</columns>
+			<rows>
+				<row>
+					<cell>养老保险</cell>
+					<cell>
+						<label id="yl_di"
+							value="${arg.emco.ecop_yl_di}" />
+					</cell>
+					<cell align="left">
+						<datebox width="100px" readonly="true"
+							id="yl_cp" mold="rounded" format="yyyyMM" />
+						<image src="../images/130.gif"
+							onClick="sb_cp()" />
+					</cell>
+					<cell align="left">
+						<datebox width="100px" readonly="true"
+							id="yl_op" mold="rounded" format="yyyyMM" />
+							<image src="../images/130.gif"
+							onClick="sb_op()" />
+					</cell>
+				</row>
+				<row>
+					<cell>医疗保险</cell>
+					<cell>
+						<label id="jl_di"
+							value="${arg.emco.ecop_jl_di}" />
+					</cell>
+					<cell align="left">
+						<datebox width="100px" readonly="true"
+							id="jl_cp" mold="rounded" format="yyyyMM" />
+					</cell>
+					<cell align="left">
+						<datebox width="100px" readonly="true"
+							id="jl_op" mold="rounded" format="yyyyMM" />
+					</cell>
+				</row>
+				<row>
+					<cell>大病医疗</cell>
+					<cell>
+						<label id="djl_di" value="0.0" />
+					</cell>
+					<cell align="left">
+						<datebox width="100px" readonly="true"
+							id="djl_cp" mold="rounded" format="yyyyMM" />
+					</cell>
+					<cell align="left">
+						<datebox width="100px" readonly="true"
+							id="djl_op" mold="rounded" format="yyyyMM" />
+					</cell>
+				</row>
+				<row>
+					<cell>生育保险</cell>
+					<cell>
+						<label id="syu_di"
+							value="${arg.emco.ecop_syu_di}" />
+					</cell>
+					<cell align="left">
+						<datebox width="100px" readonly="true"
+							id="syu_cp" mold="rounded" format="yyyyMM" />
+					</cell>
+					<cell align="left">
+						<datebox width="100px" readonly="true"
+							id="syu_op" mold="rounded" format="yyyyMM" />
+					</cell>
+				</row>
+				<row>
+					<cell>工伤保险</cell>
+					<cell>
+						<label id="gs_di"
+							value="${arg.emco.ecop_gs_di}" />
+					</cell>
+					<cell align="left">
+						<datebox width="100px" readonly="true"
+							id="gs_cp" mold="rounded" format="yyyyMM" />
+					</cell>
+					<cell align="left">
+						<datebox width="100px" readonly="true"
+							id="gs_op" mold="rounded" format="yyyyMM" />
+					</cell>
+				</row>
+				<row>
+					<cell>失业保险</cell>
+					<cell>
+						<label id="sye_di"
+							value="${arg.emco.ecop_sye_di}" />
+					</cell>
+					<cell align="left">
+						<datebox width="100px" readonly="true"
+							id="sye_cp" mold="rounded" format="yyyyMM" />
+					</cell>
+					<cell align="left">
+						<datebox width="100px" readonly="true"
+							id="sye_op" mold="rounded" format="yyyyMM" />
+					</cell>
+				</row>
+				<row>
+					<cell>住房公积金</cell>
+					<cell>
+						<label id="house_di"
+							value="${arg.emco.ecop_house_di}" />
+					</cell>
+					<cell align="left">
+						<datebox width="100px" readonly="true"
+							id="house_cp" mold="rounded" format="yyyyMM" />
+					</cell>
+					<cell align="left">
+						<datebox width="100px" readonly="true"
+							id="house_op" mold="rounded" format="yyyyMM" />
+					</cell>
+				</row>
+				<row>
+					<cell>服务费</cell>
+					<cell>
+						<label id="fw_di"
+							value="${arg.emco.ecop_fw_di}" />
+					</cell>
+					<cell align="left">
+						<datebox width="100px" readonly="true"
+							id="fw_cp" mold="rounded" format="yyyyMM" />
+					</cell>
+					<cell align="left">
+						<datebox width="100px" readonly="true"
+							id="fw_op" mold="rounded" format="yyyyMM" />
+					</cell>
+				</row>
+				<row>
+					<cell>档案费</cell>
+					<cell>
+						<label id="file_di"
+							value="${arg.emco.ecop_file_di}" />
+					</cell>
+					<cell align="left">
+						<datebox width="100px" readonly="true"
+							id="file_cp" mold="rounded" format="yyyyMM" />
+					</cell>
+					<cell align="left">
+						<datebox width="100px" readonly="true"
+							id="file_op" mold="rounded" format="yyyyMM" />
+					</cell>
+				</row>
+				<row>
+					<cell>福利费</cell>
+					<cell>
+						<label id="other_di"
+							value="${arg.emco.ecop_other_di}" />
+					</cell>
+					<cell align="left">
+						<datebox width="100px" readonly="true"
+							id="fl_cp" mold="rounded" format="yyyyMM" />
+					</cell>
+					<cell align="left">
+						<datebox width="100px" readonly="true"
+							id="fl_op" mold="rounded" format="yyyyMM" />
+					</cell>
+				</row>
+			</rows>
+		</grid>
+		<div align="center">
+			<button id="submitButton3" label="确认"
+				onClick="@command('wt_autall', emco=each,gridco=g1,all_id=all_id,yl_cp=yl_cp,yl_op=yl_op,jl_cp=jl_cp,jl_op=jl_op,djl_cp=djl_cp,djl_op=djl_op,gs_cp=gs_cp,gs_op=gs_op,syu_cp=syu_cp,syu_op=syu_op,sye_cp=sye_cp,sye_op=sye_op,house_cp=house_cp,house_op=house_op,fw_cp=fw_cp,fw_op=fw_op,fl_cp=fl_cp,fl_op=fl_op,file_cp=file_cp,file_op=file_op,yl_di=yl_di,jl_di=jl_di,djl_di=djl_di,syu_di=syu_di,gs_di=gs_di,sye_di=sye_di,house_di=house_di,fw_di=fw_di,file_di=file_di,other_di=other_di,gid=gid,cid=cid,company=company,cabc_id=cabc_id,ownmonth=ownmonth,name=name)" />
+		</div>
+
+		<zscript><![CDATA[
+	/*判断有无固定劳动合同*/
+	void sb_cp() {
+		if (!jl_di.getValue().equals("0.0")) {
+			jl_cp.value = yl_cp.value;
+		}
+		if (!djl_di.getValue().equals("0.0")) {
+			djl_cp.value = yl_cp.value;
+		}
+		if (!syu_di.getValue().equals("0.0")) {
+			syu_cp.value = yl_cp.value;
+		}
+		if (!gs_di.getValue().equals("0.0")) {
+			gs_cp.value = yl_cp.value;
+		}
+		if (!sye_di.getValue().equals("0.0")) {
+			sye_cp.value = yl_cp.value;
+		}
+	}
+	
+	void sb_op() {
+		if (!jl_di.getValue().equals("0.0")) {
+			jl_op.value = yl_op.value;
+		}
+		if (!djl_di.getValue().equals("0.0")) {
+			djl_op.value = yl_op.value;
+		}
+		if (!syu_di.getValue().equals("0.0")) {
+			syu_op.value = yl_op.value;
+		}
+		if (!gs_di.getValue().equals("0.0")) {
+			gs_op.value = yl_op.value;
+		}
+		if (!sye_di.getValue().equals("0.0")) {
+			sye_op.value = yl_op.value;
+		}
+	}
+	
+	void all_cp() {
+		if (!jl_di.getValue().equals("0.0")) {
+			jl_cp.value = yl_cp.value;
+		}
+		if (!djl_di.getValue().equals("0.0")) {
+			djl_cp.value = yl_cp.value;
+		}
+		if (!syu_di.getValue().equals("0.0")) {
+			syu_cp.value = yl_cp.value;
+		}
+		if (!gs_di.getValue().equals("0.0")) {
+			gs_cp.value = yl_cp.value;
+		}
+		if (!sye_di.getValue().equals("0.0")) {
+			sye_cp.value = yl_cp.value;
+		}
+		if (!house_di.getValue().equals("0.0")) {
+			house_cp.value = yl_cp.value;
+		}
+		if (!fw_di.getValue().equals("0.0")) {
+			fw_cp.value = yl_cp.value;
+		}
+		if (!file_di.getValue().equals("0.0")) {
+			file_cp.value = yl_cp.value;
+		}
+		if (!other_di.getValue().equals("0.0")) {
+			fl_cp.value = yl_cp.value;
+		}
+	}
+		
+		void all_op() {
+			if (!jl_di.getValue().equals("0.0")) {
+				jl_op.value = yl_op.value;
+			}
+			if (!djl_di.getValue().equals("0.0")) {
+				djl_op.value = yl_op.value;
+			}
+			if (!syu_di.getValue().equals("0.0")) {
+				syu_op.value = yl_op.value;
+			}
+			if (!gs_di.getValue().equals("0.0")) {
+				gs_op.value = yl_op.value;
+			}
+			if (!sye_di.getValue().equals("0.0")) {
+				sye_op.value = yl_op.value;
+			}
+			if (!house_di.getValue().equals("0.0")) {
+				house_op.value = yl_op.value;
+			}
+			if (!fw_di.getValue().equals("0.0")) {
+				fw_op.value = yl_op.value;
+			}
+			if (!file_di.getValue().equals("0.0")) {
+				file_op.value = yl_op.value;
+			}
+			if (!other_di.getValue().equals("0.0")) {
+				fl_op.value = yl_op.value;
+			}
+	}
+]]></zscript>
+	</window>
+</zk>

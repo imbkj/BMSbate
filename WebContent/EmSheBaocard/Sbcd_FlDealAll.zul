@@ -1,0 +1,74 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<?component name="docDataList" macro-uri="../DocumentsInfo/DocumentsInfo_AddPageList.zul" inline="true"?>
+<zk>
+<window title="批量处理" border="normal" width="80%" height="80%" closable="true"
+	apply="org.zkoss.bind.BindComposer" id="flwin"
+    viewModel="@id('vm') @init('Controller.EmSheBaocard.Sbcd_FlDealAllController')"
+>
+<grid vflex="1">
+	<rows>
+			<row>
+				<cell width="100px">制卡状态</cell>
+				<cell>
+					<textbox value="@bind(vm.statename)" readonly="true"></textbox>
+				</cell>
+				<cell width="100px">办理类型</cell>
+				<cell>
+					<textbox value="@bind(vm.sbcd_content)" readonly="true"></textbox>
+				</cell>
+			</row>
+			<row visible="${vm.statename=='中心核收' }">
+				<cell>福利核收人</cell>
+				<cell>
+					<textbox value="@bind(vm.flname)"></textbox>
+				</cell>
+				<cell>核收资料时间</cell>
+				<cell>
+					<datebox value="@bind(vm.fltime)" readonly="true"></datebox>
+				</cell>
+			</row>
+			<row visible="${vm.statename=='福利核收' }">
+				<cell>提交银行人</cell>
+				<cell>
+					<textbox value="@bind(vm.flname)"></textbox>
+				</cell>
+				<cell>提交银行时间</cell>
+				<cell>
+					<datebox value="@bind(vm.fltime)" readonly="true"></datebox>
+				</cell>
+			</row>
+			<row visible="${vm.statename=='已交银行' }">
+				<cell>福利领卡人</cell>
+				<cell>
+					<textbox value="@bind(vm.flname)"></textbox>
+				</cell>
+				<cell>福利领卡时间</cell>
+				<cell>
+					<datebox value="@bind(vm.fltime)" readonly="true"></datebox>
+				</cell>
+			</row>
+			<row visible="${vm.statename=='待打单' }">
+				<cell>打单人</cell>
+				<cell>
+					<textbox value="@bind(vm.flname)" readonly="true"></textbox>
+				</cell>
+				<cell>打单时间</cell>
+				<cell>
+					<datebox value="@bind(vm.fltime)"></datebox>
+				</cell>
+			</row>
+			<row visible="false">
+				<cell>提交资料</cell>
+				<cell colspan="3">
+				<!-- 材料内联页 参数：puzu_id：模块页面id， doc_type：员工(g)还是公司(c)，gid：公司数据则插入空白 ，业务表id ，log_url：获取到页面路径的前部分-->
+				<docDataList id="docGrid" puzu_id="${vm.docid }" 
+						dWidth="100%" pUsername="陈耀家" pUserId="248" />
+				</cell>	
+		  	</row>
+		</rows>
+		<foot>
+			<footer align="center"><button onClick="@command('flsummit',win=flwin,gd=docGrid)">提交</button></footer>
+		</foot>
+	</grid>
+</window>
+</zk>

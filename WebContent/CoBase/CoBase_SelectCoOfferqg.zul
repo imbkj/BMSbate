@@ -1,0 +1,61 @@
+<?page title="报价单" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window border="normal" width="100%" height="@load(vm.h)"
+		closable="true" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoBase.CoBase_SelectCoOfferqgController')">
+
+		<grid model="@load(vm.coofferList)" width="100%" height="100%"
+			mold="paging" emptyMessage="暂无报价单数据" pageSize="5">
+			<columns>
+				<column width="40px"></column>
+				<column label="所属合同" />
+				<column label="报价单名称" />
+				<!-- <column label="报价金额" /> -->
+				<column label="合同类型" />
+				<column label="人数规模" />
+				<column label="添加人" />
+				<column label="添加时间" />
+				<column label="操作" width="60px" />
+			</columns>
+			<template name="model">
+				<row>
+					<custom-attributes daid="${each.coof_id }" />
+					<detail open="false" fulfill="onOpen"
+						onOpen="@command('test',a=self,b=each)">
+						<!-- 								<include -->
+						<!-- 									src="/CoBase/CoBase_SelectCoOffer_Detail.zul" -->
+						<!-- 									daid="${daid}"> -->
+						<!-- 								</include> -->
+
+						<include
+							src="/CoQuotation/CoQuotationInfoSelectqg.zul"
+							coofid="${daid}">
+						</include>
+					</detail>
+					<label value="@load(each.coco_compactid)" />
+					<label value="@load(each.coof_name)" />
+					<!-- <label value="@load(each.coof_sum)" /> -->
+					<label value="@load(each.cpct_name1)" />
+					<label value="@load(each.coof_gm)" />
+					<label value="@load(each.coof_addname)" />
+					<label value="@load(each.addtime)" />
+					<!-- 							<label value="修改项目" style="cursor:pointer" -->
+					<!-- 								onClick="@command('chakan',model=each)" /> -->
+
+					<menubar autodrop="true">
+						<menu image="../images/pencil-small.png">
+							<menupopup>
+
+								<menuitem label="修改项目报价单"
+									onClick="@command('chakan',model=each)" />
+								<menuitem label="删除报价单"
+									onClick="@command('del',model=each)" />
+							</menupopup>
+						</menu>
+					</menubar>
+				</row>
+			</template>
+		</grid>
+
+	</window>
+</zk>

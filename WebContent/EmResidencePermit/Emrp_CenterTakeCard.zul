@@ -1,0 +1,54 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window id="win" title="服务中心领取居住证" border="normal" width="60%"
+		closable="true" apply="org.zkoss.bind.BindComposer" height="60%"
+		viewModel="@id('vm') @init('Controller.EmResidencePermit.Emrp_OperateController')">
+		<grid vflex="1">
+			<columns>
+				<column width="20%"></column>
+				<column></column>
+				<column width="15%"></column>
+				<column></column>
+			</columns>
+			<rows>
+				<row>
+					公司编号
+					<label value="@load(vm.epm.cid)" />
+					公司名称
+					<label value="@load(vm.epm.coba_company)" />
+				</row>
+				<row>
+					员工姓名
+					<label value="@load(vm.epm.emba_name)" />
+					身份证号
+					<label value="@load(vm.epm.emba_idcard)" />
+				</row>
+				<row>
+					<label value="签收时间" />
+					<cell colspan="3">
+						<datebox mold="rounded" format="yyyy-MM-dd"
+							value="@bind(vm.statetime)">
+						</datebox>
+					</cell>
+				</row>
+				<row>
+					备注
+					<cell colspan="3">
+						<textbox rows="5" mold="rounded" hflex="1"
+							value="@bind(vm.epm.epsr_remark)">
+						</textbox>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center" span="4">
+					<button label="提交"
+						onClick="@command('centertakecard',win=win,gd=docGrid)" />
+					<button label="退回"
+						visible="${vm.epm.erpi_state!=9 and vm.epm.erpi_state!=10 }"
+						onClick="@command('back',win=win)" />
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

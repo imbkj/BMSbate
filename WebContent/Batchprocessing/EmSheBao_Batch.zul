@@ -1,0 +1,71 @@
+<?page title="社保批量导入" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winEmSBBatch" title="社保批量导入" border="normal"
+		width="100%" height="100%" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.Batchprocessing.EmSheBao_BatchController')">
+		<borderlayout>
+			<north title="数据导入" collapsible="true" open="@bind(vm.importOpen)"
+				border="none">
+				<grid width="100%" height="100%">
+					<rows>
+						<row>
+							<cell width="30%">模板类型:</cell>
+							<cell>
+								<combobox readonly="true" mold="rounded"
+									value="@bind(vm.templetType)">
+									<comboitem label="修改工资" />
+									<comboitem label="新增调入" />
+									<comboitem label="独立户接管" />
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>文件上传:</cell>
+							<cell>
+								<textbox mold="rounded" rows="1"
+									readonly="true" value="@load(vm.uploadFlieName)" width="280px" />
+								<button label="浏览..."
+									upload="true,multiple=true" onUpload="@command('browse')" />
+							</cell>
+						</row>
+						<row>
+							<cell colspan="2" align="center">
+								<label
+									value=" (注意：如果变更模板文件的格式，将无法正常导入数据，所属月份的格式为YYYYMM(如：201509)！)"
+									style="color:red" />
+							</cell>
+
+						</row>
+					</rows>
+					<foot>
+						<footer align="center">
+							<button label="下载导入模板"
+								onClick="@command('downloadTemplet')" />
+							<button label="导入数据" id="btSubmit"
+								onClick="@command('upload')" />
+						</footer>
+					</foot>
+				</grid>
+
+			</north>
+			<center border="none">
+				<tabbox width="100%" height="100%">
+					<tabs>
+						<tab id="tbSalUp" label="修改工资"/>
+						<tab id="tbAdd" label="社保新增" />
+					</tabs>
+					<tabpanels>
+						<tabpanel>
+							<include id="icSalUp"
+								src="../Batchprocessing/EmSheBao_SalaryUpdateList.zul" />
+						</tabpanel>
+						<tabpanel>
+							<include id="icAdd"
+								src="../Batchprocessing/EmSheBao_AddList.zul" />
+						</tabpanel>
+					</tabpanels>
+				</tabbox>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

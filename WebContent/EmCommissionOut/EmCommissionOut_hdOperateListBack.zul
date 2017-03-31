@@ -1,0 +1,24 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="批量退回" border="normal" closable="true" width="50%" apply="org.zkoss.bind.BindComposer" id="win"
+		viewModel="@id('vm') @init('Controller.EmCommissionOut.EmCommissionOut_hdOperateBackListController')">
+		<grid>
+			<rows>
+				<row>
+					<cell>
+						<label value="新备注/退回原因" style="color:#666" />
+					</cell>
+					<cell colspan="3">
+						<vlayout>
+							<textbox rows="3" hflex="1" value="" id="remark" />
+							<checkbox id="msg" label="需跟进，发送系统短信至客服"></checkbox>
+						</vlayout>
+					</cell>
+				</row>
+			</rows>
+		</grid>
+		<hbox width="100%" align="center" pack="center">
+			<button label="退回" onClick="@command('all_back',remark=remark,msg=msg,win=win)" />
+		</hbox>
+	</window>
+</zk>

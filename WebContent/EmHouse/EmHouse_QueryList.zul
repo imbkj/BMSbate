@@ -1,0 +1,112 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="员工公积金 - 参保信息" id="winSearch" border="normal"
+		width="100%" height="100%" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmHouse.EmHouse_QueryListController')"
+		closable="true">
+
+		<borderlayout>
+			<north id="north" collapsible="true" title="高级查询"
+				open="false">
+				<grid>
+					<rows>
+						<row>
+							<cell width="100px">公司名称</cell>
+							<cell>
+								<textbox id="company" mold="rounded" />
+							</cell>
+							<cell width="100px">员工姓名</cell>
+							<cell>
+								<textbox id="emp" mold="rounded" />
+							</cell>
+						</row>
+
+					</rows>
+					<foot>
+						<footer align="center">
+							<button label="查询"
+								onClick="@command('search')" />
+						</footer>
+					</foot>
+				</grid>
+			</north>
+			<center>
+				<grid height="100%" model="@load(vm.eclist)" sizedByContent="true" span="true"
+					mold="paging" pageSize="100" emptyMessage="暂时没有数据记录">
+					<columns>
+
+						<column align="center">序号</column>
+						<column align="center">公司名称</column>
+						<column align="center">所属月份</column>
+						<column align="center">姓名</column>
+						<column align="center">公积金号</column>
+						<column align="center">身份证</column>
+						<column align="center">基数</column>
+						<column align="center">户籍</column>
+						<column align="center">比例</column>
+						<column align="center">变动情况</column>
+						<column align="center">状态</column>
+						<column align="center">添加时间</column>
+						<column align="center">添加人</column>
+						<column align="center">短信</column>
+					</columns>
+					<template name="model">
+						<row>
+
+							<cell>${forEachStatus.index+1 }</cell>
+							<cell>
+								<label
+									tooltiptext="@load(each.emhc_company)"
+									value="@load(each.emhc_company)" />
+							</cell>
+							<cell>
+								<label value="@load(each.ownmonth)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emhc_name)" />
+							</cell>
+							<cell>
+								<label
+									tooltiptext="@load(each.emhc_houseid)"
+									value="@load(each.emhc_houseid)" />
+							</cell>
+							<cell>
+								<label
+									tooltiptext="@load(each.emhc_idcard)"
+									value="@load(each.emhc_idcard)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emhc_radix)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emhc_hj)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emhc_cpp)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emhc_change)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.emhc_statename)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emhc_addtime)" />
+							</cell>
+							<cell>
+								<vbox>
+									<label
+										value="@load(each.emhc_addname)" />
+								</vbox>
+								<vbox>(${each.emhc_client})</vbox>
+							</cell>
+
+							<cell></cell>
+						</row>
+					</template>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

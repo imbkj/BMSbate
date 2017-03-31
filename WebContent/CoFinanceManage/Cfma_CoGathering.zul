@@ -1,0 +1,377 @@
+<?page title="账单收款" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winCollectToBill" title="财务收款" border="normal"
+		width="800px" height="650px" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoFinanceManage.Cfma_CoGatheringController')"
+		closable="true" sizable="true" maximizable="true">
+		<borderlayout>
+			<north splittable="true" border="0">
+				<grid width="100%" height="100%">
+					<rows>
+						<row>
+							<cell width="30%">
+								<label value="公司编号：" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.cobasemodel.cid)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="公司名称：" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.cobasemodel.coba_company)" />
+							</cell>
+						</row>
+							<row>
+							<cell>
+								<label value="客服：" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.cobasemodel.coba_client)" />
+							</cell>
+						</row>
+							<row>
+							<cell>
+								<label value="合同类别：" />
+							</cell>
+							<cell>
+								<combobox readonly="true"
+									value="@bind(vm.cfss_type)">
+									<comboitem label="非派遣" />
+									<comboitem label="派遣" />
+									<comboitem label="全外包" />
+									 
+								</combobox>
+									<label
+									value="*" style="color:red;" />
+							</cell>
+						</row>
+
+						<row>
+							<cell>
+								<label value="是否提前开票：" />
+							</cell>
+							<cell>
+								 <label value="是" />
+								 <checkbox  checked="@bind(vm.kpfrist)" value="是"></checkbox>
+							 
+									
+							</cell>
+						</row>
+						<row><cell><label value="是否全额开服务费"/></cell><cell><checkbox checked="@bind(vm.allin)" value="是"/></cell></row>
+						<row>
+							<cell>
+								<label value="总收款：" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.amount)" style="color:red;" />
+							</cell>
+						</row>
+<!-- 						<row> -->
+<!-- 							<cell> -->
+<!-- 								<label value="未分配额度：" /> -->
+<!-- 							</cell> -->
+<!-- 							<cell> -->
+<!-- 								 	<label -->
+<!-- 									value="@load(vm.sumEx)" style="color:red;" /> -->
+<!-- 							</cell> -->
+<!-- 						</row> -->
+						<row>
+							<cell>
+								<label value="本次收款合计：" />
+							</cell>
+							<cell>
+								 	<label
+									value="@load(vm.sumEx1)" style="color:blue;" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="所属月份" />
+							</cell>
+							<cell>
+							<combobox value="@bind(vm.ownmonth)"
+										mold="rounded" readonly="true">
+										 
+										<comboitem label="${each}"
+											forEach="${vm.ownmonthList}" />
+									</combobox>
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</north>
+			<center border="0">
+				<grid width="100%" height="100%">
+	
+					<rows>
+						<row>
+						<cell>
+								<label
+									value="服务费：" />
+									 
+										
+								<decimalbox value="@bind(vm.cfss_Receivable1)"
+								width="50%" 
+									 mold="rounded" format="###.##"
+									constraint="no empty"
+									
+									 	onChange="@command('checksum')"
+									instant="true" />
+									
+						</cell>
+						
+							<cell>
+								<label
+									value="档案保管费：" />
+								<decimalbox value="@bind(vm.cfss_Receivable2)"
+								width="50%" 
+									 mold="rounded" format="###.##"
+									constraint="no empty"
+									 	onChange="@command('checksum')"
+									instant="true" />
+									
+						</cell>
+							
+							</row>
+							<row>
+								<cell>
+								<label
+									value="社保费：" />
+								<decimalbox value="@bind(vm.cfss_Receivable3)"
+									width="50%" mold="rounded" format="###.##"
+									constraint="no empty"
+									 	onChange="@command('checksum')"
+									instant="true" />
+									
+						</cell>
+						
+							<cell>
+								<label
+									value="活动费：" />
+								<decimalbox value="@bind(vm.cfss_Receivable4)"
+									width="50%" mold="rounded" format="###.##"
+									constraint="no empty"
+									 	onChange="@command('checksum')"
+									instant="true" />
+									
+						</cell>
+							
+							</row>
+							<row>
+						
+						
+							<cell>
+								<label
+									value="住房公积金：" />
+								<decimalbox value="@bind(vm.cfss_Receivable18)"
+									width="50%" mold="rounded" format="###.##"
+									constraint="no empty"
+									 	onChange="@command('checksum')"
+									instant="true" />
+									
+						</cell>
+						
+							<cell>
+								<label
+									value="商保费：" />
+								<decimalbox value="@bind(vm.cfss_Receivable6)"
+									width="50%" mold="rounded" format="###.##"
+									constraint="no empty"
+									 	onChange="@command('checksum')"
+									instant="true" />
+									
+						</cell>
+							
+							</row>
+							<row>
+								<cell>
+								<label
+									value="书报费：" />
+								<decimalbox value="@bind(vm.cfss_Receivable7)"
+									width="50%" mold="rounded" format="###.##"
+									constraint="no empty"
+									 	onChange="@command('checksum')"
+									instant="true" />
+									
+						</cell>
+						
+							<cell>
+								<label
+									value="税后工资：" />
+								<decimalbox value="@bind(vm.cfss_Receivable8)"
+									width="50%" mold="rounded" format="###.##"
+									constraint="no empty"
+									 	onChange="@command('checksum')"
+									instant="true" />
+									
+						</cell>
+							
+							</row>
+							<row>
+							
+								<cell>
+								<label
+									value="户口：" />
+								<decimalbox value="@bind(vm.cfss_Receivable10)"
+									width="50%" mold="rounded" format="###.##"
+									constraint="no empty"
+									 	onChange="@command('checksum')"
+									instant="true" />
+									
+						</cell>
+								<cell>
+								<label
+									value="个调税：" />
+								<decimalbox value="@bind(vm.cfss_Receivable9)"
+									width="50%" mold="rounded" format="###.##"
+									constraint="no empty"
+									 	onChange="@command('checksum')"
+									instant="true" />
+									
+						</cell>
+						
+						
+							
+							</row>
+							
+								<row>
+								<cell>
+								<label
+									value="财务服务费：" />
+								<decimalbox value="@bind(vm.cfss_Receivable11)"
+									width="50%" mold="rounded" format="###.##"
+									constraint="no empty"
+									 	onChange="@command('checksum')"
+									instant="true" />
+									
+						</cell>
+						
+							<cell>
+								<label
+									value="商务服务费：" />
+								<decimalbox value="@bind(vm.cfss_Receivable12)"
+									width="50%" mold="rounded" format="###.##"
+									constraint="no empty"
+									 	onChange="@command('checksum')"
+									instant="true" />
+									
+						</cell>
+							
+							</row>
+								<row>
+								<cell>
+								<label
+									value="招聘服务费：" />
+								<decimalbox value="@bind(vm.cfss_Receivable13)"
+									width="50%" mold="rounded" format="###.##"
+									constraint="no empty"
+									 	onChange="@command('checksum')"
+									instant="true" />
+									
+						</cell>
+						
+							<cell>
+								<label
+									value="居住证：" />
+								<decimalbox value="@bind(vm.cfss_Receivable14)"
+									width="50%" mold="rounded" format="###.##"
+									constraint="no empty"
+									 	onChange="@command('checksum')"
+									instant="true" />
+									
+						</cell>
+							
+							</row>
+								<row>
+								<cell>
+								<label
+									value="劳动保障卡：" />
+								<decimalbox value="@bind(vm.cfss_Receivable15)"
+									width="50%" mold="rounded" format="###.##"
+									constraint="no empty"
+									 	onChange="@command('checksum')"
+									instant="true" />
+									
+						</cell>
+						
+							<cell>
+								<label
+									value="残保金：" />
+								<decimalbox value="@bind(vm.cfss_Receivable16)"
+									width="50%" mold="rounded" format="###.##"
+									constraint="no empty"
+									 	onChange="@command('checksum')"
+									instant="true" />
+									
+						</cell>
+							
+							</row>
+							
+							
+							
+									<row>
+									
+											<cell>
+								<label
+									value="体检费：" />
+								<decimalbox value="@bind(vm.cfss_Receivable5)"
+									width="50%" mold="rounded" format="###.##"
+									constraint="no empty"
+									 	onChange="@command('checksum')"
+									instant="true" />
+									
+						</cell>
+								<cell>
+								<label
+									value="其它：" />
+								<decimalbox value="@bind(vm.cfss_Receivable17)"
+									width="50%" mold="rounded" format="###.##"
+									constraint="no empty"
+									 	onChange="@command('checksum')"
+									instant="true" />
+									
+						</cell>
+						
+						
+							
+						 </row>
+					 
+					 <row>
+										
+								<cell  colspan="2" >
+								<label value="备注：" />
+								 <textbox value="@bind(vm.remark)"
+									width="80%" mold="rounded" />
+									
+								</cell>
+						 </row>	
+					</rows>
+				</grid>
+			</center>
+			<south splittable="true" border="0">
+				<grid width="100%" height="100%">
+				 
+					<foot>
+						<footer align="center">
+							<button label="提交"
+								onClick="@command('SubmitCollectDis',win=winCollectToBill)" />
+						</footer>
+					</foot>
+				</grid>
+			</south>
+		</borderlayout>
+		<popup id="popMessage">
+			<groupbox closable="false">
+				<caption>提示</caption>
+				<label value="@load(vm.message)" style="color:blue" />
+			</groupbox>
+		</popup>
+	</window>
+</zk>

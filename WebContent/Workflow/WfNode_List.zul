@@ -1,0 +1,77 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.Workflow.WfNode_ListController')"
+		title="@load(vm.titleName)" border="normal" sizable="true" height="98%"
+		width="98%" closable="true">
+		<borderlayout height="100%">
+			<north border="0" title="操作" collapsible="true" flex="true"
+				open="false">
+				<vlayout width="100%">
+					<panel border="0">
+						<panelchildren style="padding:5px;">
+							<vbox width="100%">
+								<grid width="100%">
+									<rows>
+										<row>
+										    <cell align="center">
+											<button id="btnAddNode"
+												label="新增节点" onClick="@command('addNode')" />
+											<button id="btnCheck"
+												label="查看流程图" onClick="@command('checkNode')" />
+											</cell>
+										</row>
+									</rows>
+
+								</grid>
+							</vbox>
+						</panelchildren>
+					</panel>
+				</vlayout>
+			</north>
+			<center>
+				<grid id="gdlist" height="100%" emptyMessage="暂无数据"
+					model="@load(vm.nodeList)" width="100%" mold="paging"
+					pageSize="15">
+					<columns>
+						<column hflex="2" label="步骤" align="center" sort="auto(1)"/>
+						<column hflex="5" label="名称" align="center"/>
+						<column hflex="5" label="执行类型" align="center"/>
+						<column hflex="3" label="预期天数" align="center"/>
+						<column hflex="3" label="可操作人数" align="center"/>
+						<column hflex="3" label="添加人" align="center"/>
+						<column hflex="4" label="添加时间" align="center" />
+						<column hflex="6" label="备注" align="center"/>
+						<column hflex="3" label="状态" align="center" sort="auto(8)"/>
+						<column hflex="2" label="操作" align="center" />
+					</columns>
+					<template name="model">
+						<row>
+							<label value="@load(each[1])" />
+							<label value="@load(each[2])" />
+							<label value="@load(each[3])" />
+							<label value="@load(each[4])" />
+							<label value="@load(each[5])" />
+							<label value="@load(each[6])" />
+							<label value="@load(each[7])" />
+							<label value="@load(each[8])" />
+							<label value="@load(each[9])" />
+							<menubar autodrop="true" width="50px">
+								<menu
+									image="../images/pencil-small.png">
+									<menupopup>
+										<menuitem label="修改节点"
+											onClick="@command('updateNode',id=each[0],name=each[2])" />
+										<menuseparator />
+										<menuitem label="分配操作人"
+											onClick="@command('disUser',id=each[0],name=each[2])" />
+									</menupopup>
+								</menu>
+							</menubar>
+						</row>
+					</template>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

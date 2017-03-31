@@ -1,0 +1,252 @@
+<?page title="社保补缴申报" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winDeclareBjList" title="社会保险 -- 补缴数据申报页面"
+		border="normal" width="100%" height="100%"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmSheBao.Emsc_DeclareBj_ListController')"
+		closable="false" sizable="true">
+		<borderlayout vflex="1">
+			<north border="0" title="数据查询" collapsible="true"
+				flex="true" open="true">
+				<panel border="1">
+					<panelchildren style="padding:5px;">
+						<grid width="100%">
+							<rows>
+								<row>
+									<cell align="left">
+										<button label="返回"
+											onClick="@command('pageback',win=winDeclareBjList)" />
+									</cell>
+									<cell align="right">
+										<label value="共 有" />
+										<label value="@load(vm.count)" />
+										<label value=" 条数据。" />
+										<!-- 	<button label="批量打印"
+											onClick="@command('declareSingleExcel',gdBj=gdBj)"
+											disabled="${vm.ifExecl==0?false:true}" /> -->
+										<!-- <button label="Execl申报"
+											onClick="@command('declareSingle',gdBj=gdBj)"
+											disabled="${vm.ifExecl==0?false:true}" /> -->
+										<button label="批量上传" onClick="@command('uploadAll',gdBj=gdBj)"
+											disabled="${vm.ifUpload==1?false:true}" />
+										<button label="申报补缴"
+											onClick="@command('declareSingle',gdBj=gdBj)" />
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</panelchildren>
+				</panel>
+			</north>
+			<center>
+				<grid id="gdBj" span="true" model="@load(vm.bjList)"
+					mold="paging" pageSize="1000" emptyMessage="无数据"
+					sizedByContent="true" hflex="1" vflex="1">
+					<columns sizable="true">
+						<column label="序号" align="center" />
+						<column label="公司名称" align="center"
+							sort="auto(emsb_company)" />
+						<column label="员工姓名" align="center"
+							sort="auto(emsb_name)" />
+						<column label="所属月份" align="center"
+							sort="auto(ownmonth)" />
+						<column label="电脑号" align="center" />
+						<column label="身份证" align="center" />
+						<column label="补缴月份" align="center"
+							sort="auto(emsb_startmonth)" />
+						<column label="补缴基数" align="center"
+							sort="auto(emsb_radix)" />
+						<column label="确认时间" align="center"
+							sort="auto(emsb_confirmtime)" width="70px" />
+						<column label="添加人" align="center"
+							sort="auto(emsb_addname)" />
+						<column label="状态" align="center"
+							sort="auto(emsb_ifdeclare)" />
+						<column label="打单时间" align="center"
+							sort="auto(emsb_printtime)" width="70px" />
+						<column label="交单时间" align="center"
+							sort="auto(emsb_dptime)" />
+						<column label="申报时间" align="center"
+							sort="auto(emsb_declaretime)" width="70px" />
+						<column label="申报人" align="center"
+							sort="auto(emsb_declarename)" />
+						<column label="操作" align="center" />
+						<column align="center">
+							<checkbox checked="@load(vm.all_chkTF)"
+								onClick="@command('gdallselect',grid=gdBj,check=self.checked)" />
+						</column>
+						<column label="提示" align="center" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<cell>
+									<label
+										value="${forEachStatus.index + 1}" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emsb_company)" style="color:#00F"
+										if="${each.emsb_single==1}" />
+									<label
+										value="@load(each.emsb_company)" style="color:#F00"
+										if="${each.emsb_single==2}" />
+									<label
+										value="@load(each.emsb_company)" if="${each.emsb_single==0}" />
+									<label
+										value="(${each.coco_shebaoid})" if="${each.coco_shebaoid!=0}" />
+									<label value="(167120)"
+										if="${each.emsb_single==2}" />
+									<label value="(391055)"
+										if="${each.emsb_single==0}" />
+									<label value="(464780)"
+										if="${each.emsb_single==3}" />
+									<label value="(464781)"
+										if="${each.emsb_single==4}" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emsb_name)" />
+								</cell>
+								<cell>
+									<label value="@load(each.ownmonth)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emsb_computerid)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emsb_idcard)" />
+								</cell>
+								<cell>
+									<hbox>
+										<label
+											value="@load(each.emsb_startmonth)" />
+										<label value="(养老)"
+											if="${each.type eq 'EmShebaoBJ'}" />
+										<label value="("/>
+										<label value="医疗"
+											if="${each.type eq 'EmShebaoBJJL'}" />
+										<label value="@load(each.emsb_yltype)" 
+											if="${each.type eq 'EmShebaoBJJL'}" />
+										<label value=")"/>
+									</hbox>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emsb_radix)" />
+								</cell>
+								<cell
+									tooltiptext="添加时间：${each.emsb_addtime }">
+									<label
+										value="@load(each.emsb_confirmtime)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emsb_addname)" />
+								</cell>
+								<cell>
+									<label value="未申报"
+										if="${each.emsb_ifdeclare==0}" />
+									<label value="中心待核收"
+										if="${each.emsb_ifdeclare==7}" />
+									<label value="已申报"
+										if="${each.emsb_ifdeclare==1}" style="color:blue" />
+									<label value="已上单"
+										if="${each.emsb_ifdeclare==2}" style="color:green" />
+									<label value="已交单"
+										if="${each.emsb_ifdeclare==6}" style="color:red" />
+									<label value="退回"
+										if="${each.emsb_ifdeclare==3 or each.emsb_ifdeclare==9}"
+										style="color:red" />
+									<label value="待申报"
+										if="${each.emsb_ifdeclare==8}" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emsb_printtime)" />
+								</cell>
+								<cell>
+									<hbox>
+										<datebox
+											value="@load(each.emsb_dptime)" format="yyyy-MM-dd"
+											readonly="true"
+											if="${each.emsb_ifdeclare==8 and each.type eq 'EmShebaoBJ'}"
+											sclass="dptime" />
+										<image src="../images/130.gif"
+											style="cursor:pointer;" width="10" height="11" border="0"
+											if="${each.emsb_ifdeclare==8 and each.type eq 'EmShebaoBJ'}"
+											onClick="@command('allSame',a=gdBj,rowIndex=forEachStatus.index)" />
+										<label
+											value="@load(each.emsb_dptime)"
+											if="${each.emsb_ifdeclare !=8}" />
+									</hbox>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emsb_declaretime)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emsb_declarename)" />
+								</cell>
+								<cell>
+									<menubar autodrop="true">
+										<menu
+											image="../images/pencil-small.png">
+											<menupopup>
+												<menuitem label="编辑"
+													if="${each.type eq 'EmShebaoBJ'}"
+													onClick="@command('Detail',id=each.id)" />
+												<menuitem label="编辑"
+													if="${each.emsb_ifdeclare==6 and each.type eq 'EmShebaoBJJL'}"
+													onClick="@command('DetailJL',id=each.id)" />
+												<menuitem label="上传单子"
+													onClick="@command('upload',id=each.id)"
+													if="${each.emsb_ifdeclare==0 and each.type eq 'EmShebaoBJ'}"
+													visible="${(each.cfCou>0 or each.ecCou>0 or each.emsb_computeridlength lt 7) and each.emsb_ifdeclare!=1?false:true}" />
+												<menuitem label="小信封"
+													if="${each.type eq 'EmShebaoBJ'}"
+													onClick="@command('msg',model=each)" />
+												<menuitem label="小信封"
+													if="${each.type eq 'EmShebaoBJJL'}"
+													onClick="@command('msgJL',model=each)" />
+											</menupopup>
+										</menu>
+									</menubar>
+								</cell>
+								<cell align="center">
+									<checkbox
+										if="${each.type eq 'EmShebaoBJ' and each.cfCou==0 and each.ecCou==0 and each.emsb_ifdeclare!=1 and each.emsb_ifdeclare!=3 and each.emsb_ifdeclare!=9 and each.emsb_computeridlength ge 7}" />
+									<image src="../images/gif-0293.gif"
+										border="0" style="cursor:help"
+										if="${(each.cfCou>0 or each.ecCou>0 or each.emsb_computeridlength lt 7) and each.emsb_ifdeclare!=1}"
+										tooltiptext="该补缴不能申报，因为当月社保变更中有调入或者新增的变更被退回或未申报或待确认。" />
+								</cell>
+								<cell>
+									<image src="../images/hongqi.gif"
+										if="${each.emsb_flag!=null}"
+										tooltiptext="@load(each.emsb_flag)" />
+									<!-- 重复功能，暂时取消onClick="@command('flag',id=each.id)"  -->
+									<image src="../images/noread.gif"
+										style="cursor:pointer;" tooltiptext="存在未读小信封。"
+										if="${each.msg_a=='0'}" onClick="@command('msg',model=each)" />
+									<image src="../images/return.gif"
+										style="cursor:pointer;" tooltiptext="已回复。"
+										if="${each.msg_a=='2'}" onClick="@command('msg',model=each)" />
+									<image src="../images/readed.gif"
+										style="cursor:pointer;" tooltiptext="已读。"
+										if="${each.msg_a=='1'}" onClick="@command('msg',model=each)" />
+									<label
+										value="@load(each.emsb_remark)"
+										if="${each.emsb_remark!=null}" />
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

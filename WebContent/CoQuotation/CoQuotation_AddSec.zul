@@ -1,0 +1,706 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="win" title="1报价单新增(${arg.colacompany})" border="normal"
+		width="1000px" height="100%" closable="true"
+		onClose="@command('close')" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoQuotation.CoQuotation_AddSecController')">
+		<radiogroup id="ifselect"
+			onCheck="@command('divchange',ifselect=ifselect,emjoy=emjoy)">
+		</radiogroup>
+		<borderlayout>
+			<north title="已选择的产品列表" height="60%" splittable="true">
+				<grid height="100%" width="100%" emptyMessage="暂无数据"
+					model="@load(vm.coltList)" span="true">
+					<columns>
+						<column align="center" width="40px"></column>
+						<column align="left">
+							<hbox height="100%" width="100%"
+								align="center" pack="start">
+								<label value="项目"
+									style="font-weight:bold" />
+								<space width="30px" />
+								<button label="全部展开"
+									onClick="@command('AllDetailOpen',isopen=true)">
+								</button>
+								<space width="2px" />
+								<button label="全部折叠"
+									onClick="@command('AllDetailOpen',isopen=false)">
+								</button>
+							</hbox>
+						</column>
+						<column align="right" label="合计"
+							style="color:red">
+						</column>
+					</columns>
+					<template name="model">
+						<row>
+							<detail open="@bind(each.detailOpen)"
+								onOpen="@command('DetailOpenOne',each=each)">
+								<grid emptyMessage="暂无数据"
+									model="@load(each.infoList)">
+									<columns>
+										<column width="40px"
+											align="center">
+											<checkbox
+												onCheck="@command('allcheck',grid=self.parent.parent.parent,
+														allcheck=self.checked)">
+											</checkbox>
+										</column>
+										<column align="center">
+											<label value="产品名称"
+												style="color:#666" />
+										</column>
+										<column align="center">
+											<label value="城市/机构"
+												style="color:#666" />
+										</column>
+										<column align="center">
+											<label value="收费金额/收费单位"
+												style="color:#666" />
+										</column>
+									</columns>
+									<template name="model" var="info">
+										<row
+											onClick="@command('gridSelect',info=info,ifselect=ifselect,emjoy=emjoy)"
+											style="border:1px dotted #cad9ea;background-color:#f5fafe;cursor:pointer">
+											<cell
+												if="${info.coli_group_count ne 0 }"
+												rowspan="${info.coli_group_count }">
+												<checkbox
+													if="${info.coli_isfwf ne 1 }">
+												</checkbox>
+											</cell>
+											<cell>
+												<label
+													if="${info.coli_copr_id ne 0 }"
+													value="@load(info.coli_name)" />
+												<label
+													if="${info.coli_copr_id eq 0 }" style="color:blue"
+													value="@load(info.coli_name)"
+													tooltiptext="系统自动添加的项目，如报价单无需此项，金额为0即可" />
+											</cell>
+											<cell>
+												<hlayout
+													if="${info.coli_isfwf ne 1 }">
+													<label
+														value="@load(info.city)" />
+													/
+													<label
+														value="@load(info.coab_name)" />
+												</hlayout>
+											</cell>
+											<cell
+												if="${info.coli_group_count ne 0 }"
+												rowspan="${info.coli_group_count }">
+												<hlayout>
+													<label
+														value="@bind(info.coli_fee)" />
+													<space />
+													<label
+														value="@load(info.coli_cpfc_name)" />
+												</hlayout>
+											</cell>
+										</row>
+									</template>
+									<foot>
+										<footer span="4" align="left">
+											<button label="合并/拆分"
+												onClick="@command('span',gd=self.parent.parent.parent)" />
+										</footer>
+									</foot>
+								</grid>
+							</detail>
+							<cell>
+								<label value="@load(each.coli_name)" />
+							</cell>
+							<cell>
+								<label value="@load(each.sumInfo)"
+									style="color:red" />
+							</cell>
+						</row>
+					</template>
+				</grid>
+			</north>
+			<center title="产品详情编辑" autoscroll="true">
+				<vlayout>
+					<grid visible="@load(vm.fwinvis)">
+						<columns>
+							<column width="15%" />
+							<column />
+							<column width="15%" />
+							<column />
+						</columns>
+						<rows>
+							<row>
+								<cell colspan="4">
+									<label
+										value="@bind(vm.clModel.coli_name)"
+										style="color:#666;font-weight:bold">
+									</label>
+									：
+								</cell>
+							</row>
+							<row visible="@load(vm.feevis)">
+								<cell>收费单位</cell>
+								<cell>
+									<combobox readonly="true"
+										value="@bind(vm.clModel.coli_cpfc_name)"
+										selectedItem="@bind(vm.cpfcModel)" model="@load(vm.cpfList)"
+										onSelect="@command('cpfcchange')">
+										<template name="model">
+											<comboitem
+												label="@load(each.cpfc_name)" />
+										</template>
+									</combobox>
+								</cell>
+								<cell>收费金额</cell>
+								<cell>
+									<doublebox format=",###.##"
+										value="@bind(vm.clModel.coli_fee)" instant="true"
+										readonly="@load(vm.feeReadonly)" onFocus="self.select()" />
+								</cell>
+							</row>
+							<row>
+								<cell>备注</cell>
+								<cell colspan="3">
+									<textbox rows="4" hflex="1"
+										value="@bind(vm.clModel.coli_remark)" />
+								</cell>
+							</row>
+							<row>
+								<cell>描述</cell>
+								<cell colspan="3">
+									<textbox hflex="1" rows="4"
+										value="@bind(vm.clModel.coli_content)" />
+								</cell>
+							</row>
+						</rows>
+					</grid>
+					<grid visible="@load(vm.fwvis)">
+						<columns>
+							<column width="15%" />
+							<column />
+							<column width="15%" />
+							<column />
+						</columns>
+						<rows>
+							<row>
+								<cell colspan="4">
+									<hbox>
+										<label
+											value="@bind(vm.clModel.coli_name)"
+											style="color:#666;font-weight:bold">
+										</label>
+										：
+									</hbox>
+								</cell>
+							</row>
+							<row>
+								<cell>收费单位</cell>
+								<cell>
+									<combobox readonly="true"
+										value="@bind(vm.clModel.coli_cpfc_name)"
+										model="@load(vm.cpfList)">
+										<template name="model">
+											<comboitem
+												label="@load(each.cpfc_name)" />
+										</template>
+									</combobox>
+								</cell>
+								<cell>收费金额</cell>
+								<cell>
+									<doublebox format=",###.##"
+										instant="true" value="@bind(vm.clModel.coli_fee)"
+										readonly="@load(vm.feeReadonly)" onFocus="self.select()" />
+								</cell>
+							</row>
+							<row>
+								<cell>备注</cell>
+								<cell colspan="3">
+									<textbox rows="4" hflex="1"
+										value="@bind(vm.clModel.coli_remark)" />
+								</cell>
+							</row>
+						</rows>
+					</grid>
+					<grid visible="@load(vm.flvis)" width="100%"
+						height="100%">
+						<columns>
+							<column width="15%" />
+							<column />
+							<column width="15%" />
+							<column />
+						</columns>
+						<rows>
+							<row>
+								<cell colspan="4">
+									<hbox>
+										<label
+											value="@bind(vm.clModel.coli_name)"
+											style="color:#666;font-weight:bold">
+										</label>
+										：
+									</hbox>
+								</cell>
+							</row>
+							<row visible="@load(vm.feevis)">
+								<cell>收费单位</cell>
+								<cell>
+									<combobox readonly="true"
+										value="@bind(vm.clModel.coli_cpfc_name)"
+										selectedItem="@bind(vm.cpfcModel)" model="@load(vm.cpfList)"
+										onSelect="@command('cpfcchange')">
+										<template name="model">
+											<comboitem
+												label="@load(each.cpfc_name)" />
+										</template>
+									</combobox>
+								</cell>
+								<cell>收费金额</cell>
+								<cell>
+									<doublebox format=",###.##"
+										value="@bind(vm.clModel.coli_fee)" instant="true"
+										readonly="@load(vm.feeReadonly)" onFocus="self.select()" />
+								</cell>
+							</row>
+							<row>
+								<cell>收费方式</cell>
+								<cell>
+									<combobox readonly="true"
+										model="@load(vm.feetypeList)"
+										disabled="@load(vm.feetypeDisable)"
+										onSelect="@command('feetypechange')"
+										onChange="@command('loaddata',a=self)"
+										selectedItem="@bind(vm.feetype)" value="@load(vm.feetype)">
+										<template name="model">
+											<comboitem
+												label="@load(each)" />
+										</template>
+									</combobox>
+								</cell>
+								<cell>份数</cell>
+								<cell>
+									<hbox>
+										<combobox readonly="true"
+											value="@bind(vm.clModel.coli_amount)" width="50px"
+											model="@load(vm.amountList)"
+											disabled="@load(vm.amountDisable)">
+											<template name="model">
+												<comboitem
+													label="@load(each)" />
+											</template>
+										</combobox>
+										份
+									</hbox>
+								</cell>
+							</row>
+							<row visible="@load(vm.flpkvis)">
+								<cell>付款方式</cell>
+								<cell>
+									<combobox
+										value="@bind(vm.clModel.coli_flpaykind)">
+										<comboitem label="公司按月支付" />
+										<comboitem label="服务费中包含" />
+										<comboitem label="公司一次性支付" />
+										<comboitem label="个人付" />
+									</combobox>
+								</cell>
+								发放时间
+								</cell>
+								<cell></cell>
+							</row>
+							<row visible="@load(vm.rspkvis)">
+								<cell>档案费用付款方式</cell>
+								<cell>
+									<combobox
+										value="@bind(vm.clModel.coli_rspaykind)">
+										<comboitem label="公司按月支付" />
+										<comboitem label="服务费中包含" />
+										<comboitem label="公司一次性支付" />
+										<comboitem label="个人付" />
+									</combobox>
+								</cell>
+								<cell>档案开票</cell>
+								<cell>
+									<combobox
+										value="@bind(vm.clModel.coli_rsinvoice)">
+										<comboitem label="政府发票" />
+										<comboitem label="财务确定" />
+										<comboitem label="其他" />
+									</combobox>
+								</cell>
+							</row>
+							<row visible="@load(vm.hjpkvis)">
+								<cell>户口费用付款方式</cell>
+								<cell>
+									<combobox
+										value="@bind(vm.clModel.coli_hjpaykind)">
+										<comboitem label="公司按月支付" />
+										<comboitem label="服务费中包含" />
+										<comboitem label="公司一次性支付" />
+										<comboitem label="个人付" />
+									</combobox>
+								</cell>
+								<cell>户口发票</cell>
+								<cell>
+									<combobox
+										value="@bind(vm.clModel.coli_hjinvoice)">
+										<comboitem label="政府发票" />
+										<comboitem label="财务确定" />
+										<comboitem label="其他" />
+									</combobox>
+								</cell>
+							</row>
+							<row>
+								<cell>享受方式</cell>
+								<cell colspan="3">
+									<combobox readonly="true"
+										instant="true" onChange="@command('updateStand')"
+										model="@load(vm.standardList)"
+										disabled="@load(vm.standardDisable)"
+										value="@bind(vm.clModel.coli_standard)">
+										<template name="model">
+											<comboitem
+												label="@load(each.coli_standard)" />
+										</template>
+									</combobox>
+								</cell>
+							</row>
+							<row visible="@load(vm.xstjvis)">
+								<cell>发放时间</cell>
+								<cell>
+									<hbox>
+										每年
+										<combobox width="50px"
+											value="@bind(vm.clModel.coli_sendmonth)">
+											<comboitem label="1" />
+											<comboitem label="2" />
+											<comboitem label="3" />
+											<comboitem label="4" />
+											<comboitem label="5" />
+											<comboitem label="6" />
+											<comboitem label="7" />
+											<comboitem label="8" />
+											<comboitem label="9" />
+											<comboitem label="10" />
+											<comboitem label="11" />
+											<comboitem label="12" />
+										</combobox>
+										月发放给员工
+									</hbox>
+								</cell>
+								<cell>循环启动</cell>
+								<cell>
+									<hbox>
+										每
+										<combobox width="50px"
+											value="@bind(vm.clModel.coli_around)">
+											<comboitem label="1" />
+											<comboitem label="2" />
+											<comboitem label="3" />
+											<comboitem label="4" />
+											<comboitem label="5" />
+											<comboitem label="6" />
+											<comboitem label="7" />
+											<comboitem label="8" />
+											<comboitem label="9" />
+											<comboitem label="10" />
+											<comboitem label="11" />
+											<comboitem label="12" />
+										</combobox>
+										个月启动一次
+									</hbox>
+								</cell>
+							</row>
+							<row visible="@load(vm.xstjvis)">
+								<cell>是否按月折算福利标准</cell>
+								<cell colspan="3">
+									<combobox
+										value="@bind(vm.clModel.coli_feeDiscount)">
+										<comboitem label="是" />
+										<comboitem label="否" />
+									</combobox>
+								</cell>
+							</row>
+							<row visible="@load(vm.xstjvis)">
+								<cell>享受条件</cell>
+								<cell colspan="3">
+									<grid>
+										<columns>
+											<column width="150px" />
+											<column />
+										</columns>
+										<rows>
+											<row visible="false">
+												<cell width="120px">
+													实际享受
+												</cell>
+												<cell>
+													<combobox
+														readonly="true" id="emjoy"
+														value="@bind(vm.clModel.coolmodel.colm_enjoytype)"
+														onChange="@command('divchange',ifselect=ifselect,emjoy=emjoy,int21=int21)">
+														<comboitem
+															label="常规享受" value="1" />
+														<comboitem
+															label="电影券" value="2" />
+													</combobox>
+												</cell>
+											</row>
+											<row
+												visible="@load(vm.xstjvis1)">
+												<cell colspan="2">
+													<hlayout>
+														<radio
+															label="在职即享受" radiogroup="ifselect" value="1" />
+														<div id="dv1"
+															visible="@bind(vm.divvi1)">
+															，
+															<intbox
+																width="50px" value="@bind(vm.clModel.coolmodel.int11)"
+																id="int11">
+															</intbox>
+															月开始发放，循环周期
+															<intbox
+																width="50px" value="@bind(vm.clModel.coolmodel.int12)"
+																id="int12">
+															</intbox>
+															个月
+														</div>
+													</hlayout>
+												</cell>
+											</row>
+											<row
+												visible="@load(vm.xstjvis2)">
+												<cell>
+													<radio
+														label="在职，发放标准：" radiogroup="ifselect" value="2" />
+												</cell>
+												<cell>
+													<hlayout>
+														<intbox
+															style="margin-right:10px;" width="50px" id="int21"
+															value="@bind(vm.clModel.coolmodel.int21)">
+														</intbox>
+														<combobox
+															width="50px"
+															value="@bind(vm.clModel.coolmodel.colm_type)">
+															<comboitem
+																label="元" />
+															<comboitem
+																label="张" />
+														</combobox>
+														<div
+															visible="@bind(vm.divvi2)" id="dv2">
+															，
+															<intbox
+																width="50px" value="@bind(vm.clModel.coolmodel.int22)"
+																id="int22">
+															</intbox>
+															月开始发放，循环周期
+															<intbox
+																width="50px" value="@bind(vm.clModel.coolmodel.int23)"
+																id="int23">
+															</intbox>
+															个月
+														</div>
+													</hlayout>
+												</cell>
+											</row>
+											<row
+												visible="@load(vm.xstjvis1)">
+												<cell>
+													<radio label="在职，满"
+														radiogroup="ifselect" value="3" />
+												</cell>
+												<cell>
+													<hlayout>
+														<intbox
+															width="50px" value="@bind(vm.clModel.coolmodel.int31)"
+															id="int31">
+														</intbox>
+														个月即可享受
+														<div id="dv3"
+															visible="@bind(vm.divvi3)">
+															，
+															<intbox
+																width="50px" value="@bind(vm.clModel.coolmodel.int32)"
+																id="int32">
+															</intbox>
+															月开始发放，循环周期
+															<intbox
+																width="50px" value="@bind(vm.clModel.coolmodel.int33)"
+																id="int33">
+															</intbox>
+															个月
+														</div>
+													</hlayout>
+												</cell>
+											</row>
+											<row
+												visible="@load(vm.xstjvis2)">
+												<cell>
+													<radio label="在职，满"
+														radiogroup="ifselect" value="4" />
+												</cell>
+												<cell>
+													<hlayout>
+														<intbox
+															width="50px" value="@bind(vm.clModel.coolmodel.int41)"
+															id="int41">
+														</intbox>
+														个月,发放标准：
+														<intbox
+															style="margin-right:10px;" width="50px" id="int42"
+															value="@bind(vm.clModel.coolmodel.int42)">
+														</intbox>
+														<combobox
+															width="50px"
+															value="@bind(vm.clModel.coolmodel.colm_type)">
+															<comboitem
+																label="元" />
+															<comboitem
+																label="张" />
+														</combobox>
+														<div
+															visible="@bind(vm.divvi4)" id="dv4">
+															，
+															<intbox
+																width="50px" value="@bind(vm.clModel.coolmodel.int43)"
+																id="int43">
+															</intbox>
+															月开始发放，循环周期
+															<intbox
+																width="50px" value="@bind(vm.clModel.coolmodel.int44)"
+																id="int44">
+															</intbox>
+															个月
+														</div>
+													</hlayout>
+												</cell>
+											</row>
+											<row
+												visible="@load(vm.xstjvis2)"
+												style="border:1px dotted #cad9ea;background-color:#f5fafe;">
+												<cell>
+													<radio label="在职，满"
+														radiogroup="ifselect" value="5" />
+												</cell>
+												<cell>
+													<vlayout>
+														<hlayout>
+															<intbox
+																width="50px" value="@bind(vm.clModel.coolmodel.int51)"
+																id="int51">
+															</intbox>
+															个月以下,发放标准：
+															<intbox
+																style="margin-right:10px;" width="50px"
+																value="@bind(vm.clModel.coolmodel.int52)" id="int52">
+															</intbox>
+															<combobox
+																width="50px"
+																value="@bind(vm.clModel.coolmodel.colm_type)">
+																<comboitem
+																	label="元" />
+																<comboitem
+																	label="张" />
+															</combobox>
+															<div
+																id="dv5" visible="@bind(vm.divvi5)">
+																，
+																<intbox
+																	width="50px" value="@bind(vm.clModel.coolmodel.int53)"
+																	id="int53">
+																</intbox>
+																月开始发放，循环周期
+																<intbox
+																	width="50px" value="@bind(vm.clModel.coolmodel.int54)"
+																	id="int54">
+																</intbox>
+																个月
+															</div>
+														</hlayout>
+														<hlayout>
+															<intbox
+																width="50px" value="@bind(vm.clModel.coolmodel1.int55)"
+																id="int55">
+															</intbox>
+															个月以上,发放标准：
+															<intbox
+																style="margin-right:10px;" width="50px" id="int56"
+																value="@bind(vm.clModel.coolmodel1.int56)">
+															</intbox>
+															<combobox
+																width="50px"
+																value="@bind(vm.clModel.coolmodel.colm_type)">
+																<comboitem
+																	label="元" />
+																<comboitem
+																	label="张" />
+															</combobox>
+															<div
+																id="dv6" visible="@bind(vm.divvi6)">
+																，
+																<intbox
+																	width="50px" id="int57"
+																	value="@bind(vm.clModel.coolmodel1.int57)">
+																</intbox>
+																月开始发放，循环周期
+																<intbox
+																	width="50px" id="int58"
+																	value="@bind(vm.clModel.coolmodel1.int58)">
+																</intbox>
+																个月
+															</div>
+														</hlayout>
+													</vlayout>
+												</cell>
+											</row>
+										</rows>
+									</grid>
+								</cell>
+							</row>
+							<row>
+								<cell>备注</cell>
+								<cell colspan="3">
+									<textbox rows="4" hflex="1"
+										value="@bind(vm.clModel.coli_remark)" />
+								</cell>
+							</row>
+							<row>
+								<cell>描述</cell>
+								<cell colspan="3">
+									<textbox hflex="1" rows="4"
+										value="@bind(vm.clModel.coli_content)" />
+								</cell>
+							</row>
+						</rows>
+					</grid>
+				</vlayout>
+			</center>
+			<south>
+				<div>
+					<hbox height="100%" width="100%" pack="center"
+						align="center">
+						<label value="合计：" style="color:red" />
+						<label value="@load(vm.cfModel.coof_sumInfo)"
+							style="color:red" />
+					</hbox>
+					<hbox height="100%" width="100%" pack="center"
+						align="center">
+						<button label="上一步"
+							onClick="@command('back',win=win)">
+						</button>
+						<button label="计算合计"
+							onClick="@command('CalcSum')">
+						</button>
+						<button label="提交"
+							onClick="@command('submit',win=win)">
+						</button>
+					</hbox>
+				</div>
+			</south>
+		</borderlayout>
+	</window>
+</zk>

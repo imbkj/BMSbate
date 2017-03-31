@@ -1,0 +1,353 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winbc" width="100%" height="100%" border="normal"
+		closable="true" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.Embase.EmBase_BcListController')"
+		onCreate="@command('winD',a=self)">
+		<borderlayout>
+			<north title="搜索条件" collapsible="true" open="true">
+				<grid width="100%" height="100%">
+					<columns visible="false">
+						<column width="120px" />
+						<column />
+						<column width="120px" />
+						<column />
+						<column width="120px" />
+						<column />
+						<column width="120px" />
+						<column />
+					</columns>
+					<rows>
+						<row>
+							<cell>所属月份</cell>
+							<cell>
+								<combobox id="ownmonth"
+									model="@load(vm.ownmonthlist)" value="@bind(vm.em.ownmonth)"
+									mold="rounded">
+									<template name="model">
+										<comboitem
+											label="@load(each.ownmonth)" />
+									</template>
+								</combobox>
+							</cell>
+							<cell>客服</cell>
+							<cell>
+								<combobox id="client" mold="rounded"
+									model="@load(vm.clientlist)" value="@bind(vm.em.client)">
+									<template name="model">
+										<comboitem
+											label="@load(each.client)" />
+									</template>
+								</combobox>
+							</cell>
+							<cell>公司</cell>
+							<cell>
+								<textbox mold="rounded"
+									value="@bind(vm.em.company)" />
+							</cell>
+							<cell>姓名</cell>
+							<cell>
+								<textbox mold="rounded"
+									value="@bind(vm.em.name)" />
+							</cell>
+						</row>
+						<row>
+							<cell>体检医院</cell>
+							<cell>
+								<combobox id="hospital"
+									onChange="@command('updateAddress',a=self)"
+									model="@load(vm.hospitallist)" value="@bind(vm.em.hospital)"
+									mold="rounded">
+									<template name="model">
+										<comboitem value="@load(each)"
+											label="@load(each.ebcs_hospital)" />
+									</template>
+								</combobox>
+							</cell>
+							<cell>体检地址</cell>
+							<cell>
+								<combobox id="address" mold="rounded"
+									model="@load(vm.addresslist)" value="@bind(vm.em.address)">
+									<template name="model">
+										<comboitem
+											label="@load(each.ebsa_address)" />
+									</template>
+								</combobox>
+							</cell>
+							<cell>预约时间</cell>
+							<cell>
+								<datebox mold="rounded"
+									value="@bind(vm.em.bookdate2)" />
+							</cell>
+							<cell>体检状态</cell>
+							<cell>
+								<combobox
+									value="@bind(vm.em.declareName)" mold="rounded"
+									readonly="true">
+									<comboitem label="" />
+									<comboitem label="待确认" />
+									<comboitem label="重新预约" />
+									<comboitem label="待申报" />
+									<comboitem label="预约中" />
+									<comboitem label="体检中" />
+									<comboitem label="已体检" />
+									<comboitem label="已报销" />
+									<comboitem label="已签收报告" />
+									<comboitem label="已结算" />
+									<comboitem label="报销处理" />
+									<comboitem label="已退回" />
+									<comboitem label="取消中" />
+									<comboitem label="已取消" />
+									<comboitem label="已删除" />
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>联系方式</cell>
+							<cell>
+								<combobox id="link" mold="rounded"
+									value="@bind(vm.em.linktype)" readonly="true">
+									<comboitem label="" />
+									<comboitem label="员工本人" />
+									<comboitem label="指定联系人" />
+									<comboitem label="客服" />
+									<comboitem label="无需联系" />
+								</combobox>
+							</cell>
+							<cell>操作状态</cell>
+							<cell>
+								<combobox id="control" mold="rounded"
+									value="@bind(vm.em.declaretype)" readonly="true">
+									<comboitem label="" />
+									<comboitem label="未处理" />
+									<comboitem label="已联系" />
+									<comboitem label="已签收" />
+									<comboitem label="已发放" />
+									<comboitem label="退回" />
+								</combobox>
+							</cell>
+							<cell>报告签收方式</cell>
+							<cell>
+								<combobox id="receve" mold="rounded"
+									value="@bind(vm.em.datatype)" readonly="true">
+									<comboitem label="" />
+									<comboitem label="员工本人" />
+									<comboitem label="指定联系人" />
+									<comboitem label="客服" />
+								</combobox>
+							</cell>
+							<cell>体检类型</cell>
+							<cell>
+								<combobox id="bctype" mold="rounded"
+									value="@bind(vm.em.type)" readonly="true">
+									<comboitem label="" />
+									<comboitem label="年度体检" />
+									<comboitem label="入职体检" />
+									<comboitem label="单次体检" />
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>体检地址是否填写</cell>
+							<cell>
+								<combobox id="adconfirm" mold="rounded"
+									value="@bind(vm.em.ifAddress2)" readonly="true">
+									<comboitem label="" />
+									<comboitem label="是" />
+									<comboitem label="否" />
+								</combobox>
+							</cell>
+							<cell>体检时间是否填写</cell>
+							<cell>
+								<combobox id="dateconfirm"
+									value="@bind(vm.em.ifbookdate2)" mold="rounded"
+									readonly="true">
+									<comboitem label="" />
+									<comboitem label="是" />
+									<comboitem label="否" />
+								</combobox>
+							</cell>
+							<cell>体检须知是否需发送</cell>
+							<cell>
+								<combobox id="fileconfirm"
+									value="@bind(vm.em.ifFile2)" mold="rounded" readonly="true">
+									<comboitem label="" />
+									<comboitem label="是" />
+									<comboitem label="否" />
+								</combobox>
+							</cell>
+							<cell>任务单提交日期</cell>
+							<cell>
+								<datebox mold="rounded"
+									value="@bind(vm.em.addtime2)" />
+							</cell>
+						</row>
+						<row>
+							<cell>服务中心文员</cell>
+							<cell>
+								<combobox
+									model="@load(vm.assistantlist)"
+									value="@bind(vm.em.assistant)">
+									<template name="model">
+										<comboitem
+											label="@load(each.log_name)" />
+									</template>
+								</combobox>
+							</cell>
+							<cell />
+							<cell />
+							<cell />
+							<cell />
+							<cell />
+							<cell />
+						</row>
+					</rows>
+					<foot>
+						<footer align="center" span="8">
+							<button label="查詢"
+								onClick="@command('search')" />
+							<button
+								onClick="@command('signAll',gd=gd)">
+								批量签收报告
+							</button>
+							<button onClick="@command('doDoc',gd=gd)">
+								导出介绍信
+							</button>
+						</footer>
+					</foot>
+				</grid>
+			</north>
+			<center>
+				<grid id="gd" width="100%" height="100%" mold="paging"
+					pageSize="100" model="@load(vm.gdlist)" sizedByContent="true"
+					span="true" emptyMessage="暂无数据">
+					<columns>
+						<column align="center" label="序号" />
+						<column align="center" label="所属月份" />
+						<column align="center" label="客服" />
+						<column align="center" label="公司简称" />
+						<column align="center" label="体检类型" />
+						<column align="center" label="姓名" />
+						<column align="center" label="身份证" />
+						<column align="center" label="性别" />
+						<column align="center" label="任务单提交日期" />
+						<column align="center" label="中心文员" />
+						<column align="center" label="体检医院" />
+						<column align="center" label="体检地址" />
+						<column align="center" label="预约时间" />
+						<column align="center" label="联系方式" />
+						<column align="center" label="操作状态" />
+						<column align="center" label="报告签收方式" />
+						<column align="center" label="体检状态" />
+						<column align="center" label="婚否" />
+						<column align="center" label="备注" />
+						<column align="center" label="" />
+						<column align="center" label="" />
+						<column align="center">
+							<checkbox id="cka"
+								onClick="@command('checkAll',a=self)" />
+						</column>
+					</columns>
+					<template name="model">
+						<row>
+							<cell>
+								<label
+									value="${forEachStatus.index+1 }">
+								</label>
+							</cell>
+							<cell>
+								<label value="@load(each.ownmonth)" />
+							</cell>
+							<cell>
+								<label value="@load(each.client)" />
+							</cell>
+							<cell>
+								<label value="@load(each.shortname)"
+									tooltiptext="@load(each.cid)" />
+							</cell>
+							<cell>
+								<label value="@load(each.type)" />
+							</cell>
+							<cell>
+								<label value="@load(each.name)" />
+							</cell>
+							<cell>
+								<label value="@load(each.embc_idcard)" />
+							</cell>
+							<cell>
+								<label value="@load(each.embc_sex)" />
+							</cell>
+							<cell>
+								<label value="@load(each.addtime)" />
+							</cell>
+							<cell>
+								<label value="@load(each.assistant)" />
+							</cell>
+							<cell>
+								<label value="@load(each.hospital)" />
+							</cell>
+							<cell>
+								<label value="@load(each.address)" />
+							</cell>
+							<cell>
+								<label value="@load(each.bookdate)" />
+							</cell>
+
+							<label style="cursor:pointer;"
+								onClick="@command('lookinfo',model=each)"
+								value="@bind(each.cosp_bcrp_bclinkname)" />
+
+							<cell>
+								<combobox readonly="true" width="80px"
+									onSelect="@command('mod',a=each)"
+									value="@bind(each.declaretype)">
+									<comboitem label="" />
+									<comboitem label="未处理" />
+									<comboitem label="已联系" />
+									<comboitem label="已签收" />
+									<comboitem label="已发放" />
+									<comboitem label="退回客服" />
+								</combobox>
+							</cell>
+							<label style="cursor:pointer;"
+								onClick="@command('lookinfos',model=each)"
+								value="@bind(each.cosp_bcrp_caliname)" />
+							<cell>
+								<label value="@load(each.declareName)" />
+							</cell>
+							<cell>
+								<image src="../images/ask.gif"
+									visible="${(each.embc_marry=='' or (each.n>0 and each.embc_marry=='未婚'))?true:false  }" />
+							</cell>
+							<cell>
+								<a
+									onClick="@command('addreamrk',model=each)">
+									备注
+								</a>
+							</cell>
+							<cell>
+								<image src="../images/mobile.gif"
+									if="${each.emba_mobile!=null and each.emba_mobile!='' }"
+									style="cursor:pointer" onClick="@command('openmobile',a=each)" />
+							</cell>
+							<cell>
+								<button
+									if="${each.ebcl_state==1 or each.ebcl_state==9}" label="申报"
+									onClick="@command('checkInfo',a=each)" />
+								<button if="${each.ebcl_state==7}"
+									label="重新提交" onClick="@command('checkInfo',a=each)" />
+								<button if="${each.ebcl_state==4}"
+									label="签收报告" onClick="@command('checkreport',a=each)" />
+							</cell>
+							<cell>
+								<checkbox checked="@bind(each.checked)"
+									value="@load(each)" />
+							</cell>
+						</row>
+					</template>
+				</grid>
+			</center>
+		</borderlayout>
+
+	</window>
+</zk>

@@ -1,0 +1,122 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="win" title="一次性费用 - 状态变更" border="normal" height="580px"
+		width="950px" closable="true" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmCommissionOut.EmCommissionOut_OneTimeFeeOperateController')">
+		<borderlayout>
+			<center border="none" autoscroll="true">
+				<grid>
+					<columns>
+						<column width="15%"></column>
+						<column></column>
+						<column width="15%"></column>
+						<column></column>
+					</columns>
+					<rows>
+						<row>
+							<cell colspan="4">
+								<label value="委托单信息"
+									style="font-weight:bold" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="员工编号" style="color:#666" />
+							</cell>
+							<cell>
+								<label value="@load(vm.m.gid)" />
+							</cell>
+							<cell>
+								<label value="员工姓名" style="color:#666" />
+							</cell>
+							<cell>
+								<label value="@load(vm.m.emba_name)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="委托地/委托机构"
+									style="color:#666" />
+							</cell>
+							<cell>
+								<hlayout>
+									<label value="@load(vm.m.city)" />
+									<space />
+									/
+									<label
+										value="@load(vm.m.coab_name)" />
+								</hlayout>
+							</cell>
+							<cell>
+								<label value="起始时间" style="color:#666" />
+							</cell>
+							<cell>
+								<label
+									value="@bind(vm.m.ecoc_title_date)" />
+							</cell>
+						</row>
+						<row>
+							<cell colspan="4">
+								<grid model="@load(vm.feeList)"
+									sizedByContent="true" span="true">
+									<columns>
+										<column hflex="1"></column>
+										<column hflex="6"></column>
+									</columns>
+									<template name="model">
+										<row>
+											<cell>
+												<label
+													value="@bind(each.eofc_name)" />
+											</cell>
+											<cell>
+												<doublebox
+													onFocus="self.select()" format=",###.##"
+													value="@bind(each.eofc_month_sum)"
+													onChange="@command('calcsum')" />
+											</cell>
+										</row>
+									</template>
+								</grid>
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="总计" style="color:#666" />
+							</cell>
+							<cell colspan="3">
+								<label value="@load(vm.m.ecoc_sum)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="备注" style="color:#666" />
+							</cell>
+							<cell colspan="3">
+								<label value="@bind(vm.m.ecoc_remark)"
+									style="color:blue" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="新备注" style="color:#666" />
+							</cell>
+							<cell colspan="3">
+								<textbox rows="3" hflex="1"
+									value="@bind(vm.m.ecoc_remark1)" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</center>
+			<south>
+				<hbox width="100%" align="center" pack="center">
+					<hlayout>
+						<button label="提交"
+							onClick="@command('submit',win=win)" />
+					</hlayout>
+				</hbox>
+			</south>
+		</borderlayout>
+	</window>
+</zk>

@@ -1,0 +1,30 @@
+<?page title="员工非标信息" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<grid height="100%" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoFinanceManage.Cfma_EmDisposableListController')"
+		emptyMessage="暫未找到数据" mold="paging" pageSize="10"
+		model="@load(vm.emDisposableList)" width="100%">
+		<columns sizable="true">
+			<column label="序号" width="50px" align="center" />
+			<column label="员工编号" width="100px" align="center"
+				sort="auto(gid)" />
+			<column label="员工姓名" width="150px" align="center"
+				sort="auto(emba_name)" />
+			<column label="调整说明" align="center"
+				sort="auto(efdi_Reason)" />
+			<column label="应收" width="180px" align="center"
+				sort="auto(efdi_Receivable)" />
+		</columns>
+		<rows>
+			<template name="model">
+				<row>
+					<label value="${forEachStatus.index + 1}" />
+					<label value="@load(each.gid)" />
+					<label value="@load(each.emba_name)" />
+					<label value="@load(each.efdi_Reason)" />
+					<label value="@load(each.efdi_Receivable)" />
+				</row>
+			</template>
+		</rows>
+	</grid>
+</zk>

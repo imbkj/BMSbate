@@ -1,0 +1,305 @@
+<?page title="社保补缴详情" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winBjDetail" title="社保补缴详情" border="normal"
+		width="800px" height="580px" apply="org.zkoss.bind.BindComposer"
+		closable="true" sizable="true"
+		viewModel="@id('vm') @init('Controller.EmSheBao.Emsc_DeclareBj_ChangeStateController')">
+		<div height="98%" style="overflow-y:scroll">
+			<groupbox>
+				<caption label="申报状态更改/备注" />
+				<grid style="border:0px">
+					<rows>
+						<row>
+							<cell width="20%">
+								<label value="申报状态：" />
+							</cell>
+							<cell>
+								<image src="../images/gif-0293.gif"
+									border="0" style="cursor:help" if="${!vm.canOp}"
+									tooltiptext="该补缴不能申报，因为当月社保变更中有调入或者新增的变更被退回或未申报或待确认。" />
+								<radiogroup id="rgState">
+									<radio label="未申报" value="0"
+										disabled="true" if="${vm.canOp}"
+										selected="${vm.bjModel.emsb_ifdeclare==0?true:false}" />
+									<radio label="已上单"
+										style="color:green" value="2"
+										disabled="${vm.bjModel.emsb_ifdeclare==0?false:true}" if="${vm.canOp}"
+										selected="${vm.bjModel.emsb_ifdeclare==2?true:false}" />
+									<radio label="已交单" style="color:red"
+										value="6" disabled="${vm.bjModel.emsb_ifdeclare!=8}" if="${vm.canOp}"
+										selected="${vm.bjModel.emsb_ifdeclare==6?true:false}" />
+									<radio label="已申报"
+										style="color:blue" value="1"
+										disabled="${vm.bjModel.emsb_ifdeclare!=6}" if="${vm.canOp}"
+										selected="${vm.bjModel.emsb_ifdeclare==1?true:false}" />
+									<radio label="退回" style="color:red"
+										value="3" disabled="${vm.bjModel.emsb_ifdeclare==1}" 
+										selected="${vm.bjModel.emsb_ifdeclare==3 or vm.bjModel.emsb_ifdeclare==9?true:false}" />
+								</radiogroup>
+								<button label="修改状态" if="${vm.canOp}"
+									onClick="@command('upState',state=rgState,win=winBjDetail,cb=cb)" />
+								<button label="修改状态" if="${!vm.canOp}"
+									onClick="@command('upState',state=rgState,win=winBjDetail,cb=cb)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="交单时间" />
+							</cell>
+							<cell>
+								<datebox
+									value="@bind(vm.bjModel.emsb_dptime)" format="yyyy-MM-dd" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="退回短信收件人：" />
+							</cell>
+							<cell>
+								<bandbox id="bd" mold="rounded"
+									autodrop="true" readonly="true" width="95%"
+									value="@bind(vm.selectedname)">
+									<bandpopup>
+										<grid width="370px"
+											model="@load(vm.deptlist)">
+											<columns>
+												<column width="40px" />
+											</columns>
+											<rows>
+												<template
+													name="model">
+													<row>
+														<detail
+															open="false" fulfill="onOpen">
+															<listbox
+																width="170px" model="@load(each.loginlist)"
+																checkmark="true" multiple="true">
+																<template
+																	name="model">
+																	<listitem
+																		label="@load(each.log_name)" value="@load(each)"
+																		onClick="@command('checkname',model=each,bd=bd,lbitem=self)" />
+																</template>
+															</listbox>
+														</detail>
+														<cell>
+															<label
+																value="@load(each.dep_name)">
+															</label>
+														</cell>
+													</row>
+												</template>
+											</rows>
+										</grid>
+									</bandpopup>
+								</bandbox>
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="退回原因模板：" />
+							</cell>
+							<cell>
+								<combobox model="@load(vm.temList)"
+									readonly="true" onChange="@command('temselect',temcb=self)">
+									<template name="model">
+										<comboitem
+											label="@load(each.pmte_model)" value="@load(each)" />
+									</template>
+								</combobox>
+								<checkbox label="发邮件" checked="true"
+									style="border:0;margin-left:10px;" id="cb">
+								</checkbox>
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="退回原因：" />
+							</cell>
+							<cell>
+								<textbox id="epms_content"  value="@bind(vm.reason)"
+									readonly="false" width="70%" mold="rounded" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="历史小信封和退回原因：" />
+							</cell>
+							<cell>
+								<grid model="@load(vm.list)"
+									emptyMessage="没有联系记录">
+									<columns>
+										<column align="center">
+											<label>发件人</label>
+										</column>
+										<column align="center">
+											<label>收件人</label>
+										</column>
+										<column align="center">
+											<label>发件时间</label>
+										</column>
+										<column align="center">
+											<label>短信内容</label>
+										</column>
+										<column align="center">
+											<label>状态</label>
+										</column>
+									</columns>
+									<rows>
+										<template name="model">
+											<row
+												style="border:1px dotted #cad9ea;background-color:#f5fafe;">
+												<cell>
+													<label
+														value="@load(each.syme_addname)">
+													</label>
+												</cell>
+												<cell>
+													<label
+														value="@load(each.symr_name)">
+													</label>
+												</cell>
+												<cell>
+													<label
+														value="@load(each.syme_addtime)">
+													</label>
+												</cell>
+												<cell>
+													<label
+														value="@load(each.syme_content)">
+													</label>
+												</cell>
+												<cell>
+													<label
+														value="@load(each.statename)">
+													</label>
+												</cell>
+											</row>
+										</template>
+									</rows>
+								</grid>
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="备忘：" />
+							</cell>
+							<cell>
+								<textbox id="txtFlag" mold="rounded"
+									value="@load(vm.bjModel.emsb_flag)" />
+								<button label="添加备忘"
+									onClick="@command('addFlag',flag=txtFlag)" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox>
+				<caption label="个人信息" />
+				<grid style="border:0px">
+					<rows>
+						<row>
+							<cell width="20%">
+								<label value="公司编号" />
+							</cell>
+							<cell>
+								<label value="@load(vm.bjModel.cid)" />
+							</cell>
+							<cell width="20%">
+								<label value="员工编号" />
+							</cell>
+							<cell>
+								<label value="@load(vm.bjModel.gid)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="所属公司" />
+							</cell>
+							<cell colspan="3">
+								<label
+									value="@load(vm.bjModel.emsb_company)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="所属月份" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.bjModel.ownmonth)" />
+							</cell>
+							<cell>
+								<label value="个人电脑号" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.bjModel.emsb_computerid)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="姓名" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.bjModel.emsb_name)" />
+							</cell>
+							<cell>
+								<label value="身份证号" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.bjModel.emsb_idcard)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="补缴月份" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.bjModel.emsb_startmonth)" />
+							</cell>
+							<cell>
+								<label value="补缴基数" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.bjModel.emsb_radix)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="添加人" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.bjModel.emsb_addname)" />
+							</cell>
+							<cell>
+								<label value="添加时间" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.bjModel.emsb_addtime)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="备注" />
+							</cell>
+							<cell colspan="3">
+								<textbox rows="4"
+									value="@load(vm.bjModel.emsb_remark)" width="70%" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox>
+				<caption label="系统日志" />
+			</groupbox>
+		</div>
+	</window>
+</zk>

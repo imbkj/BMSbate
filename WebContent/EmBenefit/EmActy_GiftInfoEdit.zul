@@ -1,0 +1,73 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="礼品信息修改" border="normal" width="65%" height="65%" closable="true"
+	apply="org.zkoss.bind.BindComposer" id="editwin"
+	viewModel="@id('vm') @init('Controller.EmBenefit.EmActy_GiftInfoEditController')"
+>
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell width="100px">名称</cell>
+			<cell>
+				<combobox model="@load(vm.prolist)" id="giftname" value="${arg.model.gift_name }">
+					<template name="model">
+						<comboitem label="@load(each.prod_name)" value="@load(each.prod_id)"/>
+					</template>
+				</combobox>
+			</cell>
+			<cell width="100px">供应商</cell>
+			<cell>
+				<combobox model="@load(vm.suplist)" id="supname" value="${arg.model.supp_name }" onChange="@command('updatelist',val=self.value)">
+					<template name="model">
+						<comboitem label="@load(each.supp_name)" value="@load(each.supp_id)"/>
+					</template>
+				</combobox>
+			</cell>
+		</row>
+		<row>
+			<cell>类型</cell>
+			<cell><textbox id="gifttype" value="${arg.model.gift_class }"></textbox></cell>
+			<cell>品牌</cell>
+			<cell><textbox id="giftband" value="${arg.model.gift_brand}"></textbox></cell>
+		</row>
+		<row>
+			<cell>颜色</cell>
+			<cell><textbox id="giftcolor" value="${arg.model.gift_color }"></textbox></cell>
+			<cell>生产地</cell>
+			<cell><textbox id="giftaddress" value="${arg.model.gift_production }"></textbox></cell>
+		</row>
+		<row>
+			<cell>购买数量</cell>
+			<cell><textbox id="innum" value="${arg.model.gift_totalnum }"></textbox></cell>
+			<cell>现存数量</cell>
+			<cell colspan="3"><textbox id="nownum" value="${arg.model.gift_nownum }"></textbox></cell>
+		</row>
+		<row>
+			<cell>入库时间</cell>
+			<cell><textbox id="intime" value="${arg.model.gift_intime }"></textbox></cell>
+			<cell>总金额</cell>
+			<cell><textbox id="totalprice" value="${arg.model.gift_totalprice }"></textbox></cell>
+		</row>
+		<row>
+			<cell>原价</cell>
+			<cell><textbox id="price" value="${arg.model.gift_price }"></textbox></cell>
+			<cell>折扣价</cell>
+			<cell><textbox id="nowprice"  value="${arg.model.gift_nowprice }"></textbox></cell>
+		</row>
+		<row>
+			<cell>进货地址</cell>
+			<cell colspan="3"><textbox id="address" width="80%" rows="3" value="${arg.model.gift_inaddress }"></textbox></cell>
+		</row>
+		<row>
+			<cell>备注</cell>
+			<cell colspan="3"><textbox id="remark" width="80%" rows="3" value="${arg.model.gift_remark }"></textbox></cell>
+		</row>
+	</rows>
+	<foot>
+		<footer align="center"><button onClick="@command('editgiftinfo',giftname=giftname.value,giftband=giftband.value,gifttype=gifttype.value,
+		supname=supname.value,giftcolor=giftcolor.value,innum=innum.value,nownum=nownum.value,giftaddress=giftaddress.value,intime=intime.value,
+		win=editwin,remark=remark.value,address=address.value,price=price.value,nowprice=nowprice.value,totalprice=totalprice.value)">提交</button></footer>
+	</foot>
+</grid>
+</window>
+</zk>

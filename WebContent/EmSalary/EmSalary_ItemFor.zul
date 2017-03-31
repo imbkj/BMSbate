@@ -1,0 +1,66 @@
+<!--
+	创建人：林少斌
+	创建时间：2014-4-2
+	用途：工资项目算法设置页面
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winIF" title="薪酬管理 -- 工资项目算法设置页面" border="normal"
+		width="40%" height="30%" closable="true"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmSalary.EmSalary_ItemForController')">
+		<grid width="100%" height="100%">
+			<rows>
+				<row>
+					<cell align="center">
+						<button label="设置工资项目算法"
+							onClick="@command('openZUL',url='../EmSalary/EmSalary_Item.zul')"
+							if="${vm.csii_edit_state==1}" />
+						<button label="完成并结束任务单"
+							onClick="@command('finish',win=winIF)" />
+					</cell>
+				</row>
+			</rows>
+		</grid>
+		<!-- <borderlayout vflex="1">
+			<north border="0" title="操作" flex="true" open="true">
+			<panel border="1">
+			<panelchildren style="padding:5px;">
+			<grid width="100%">
+			<rows>
+			<row>
+			<cell>
+			<button label="设置工资项目算法"
+			onClick="@command('openZUL',url='../EmSalary/EmSalary_Item.zul')"
+			if="${vm.csii_edit_state==1}" />
+			<button label="定义项目算法" visible="false"
+			onClick="@command('openZUL',url='../EmSalary/EmSalary_ForInfo.zul')"
+			if="${vm.csii_edit_state==1}" />
+			<button label="完成并结束任务单"
+			onClick="@command('finish',win=winIF)" />
+			</cell>
+			</row>
+			</rows>
+			</grid>
+			</panelchildren>
+			</panel>
+			</north>
+			<center title="未涉及工资计算的项目">
+			<grid width="100%" height="100%" model="@load(vm.itemFormulaList)" emptyMessage="无数据">
+			<columns sizable="true">
+			<column label="序号" align="center" width="60px" />
+			<column label="项目名称" align="center" />
+			</columns>
+			<rows>
+			<template name="model">
+			<row>
+			<label value="${forEachStatus.index + 1}" />
+			<label value="@load(each.csii_item_name)" />
+			</row>
+			</template>
+			</rows>
+			</grid>
+			</center> 
+			</borderlayout>-->
+	</window>
+</zk>

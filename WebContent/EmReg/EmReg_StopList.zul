@@ -1,0 +1,106 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="就业登记终止列表" border="normal" vflex="1"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoReg.EmReg_StopListController')">
+		<borderlayout>
+			<north title="操作" collapsible="true" open="true"
+				style="padding-bottom:10px;">
+				<grid>
+					<rows>
+						<row>
+							<cell width="80px">单位名称</cell>
+							<cell>
+								<textbox value="@bind(vm.company)"></textbox>
+							</cell>
+							<cell width="80px">员工姓名</cell>
+							<cell>
+								<textbox value="@bind(vm.emba_name)"></textbox>
+							</cell>
+							<cell width="80px">户籍类型</cell>
+							<cell>
+								<combobox mold="rounded" value="@bind(vm.hj)" model="@load(vm.hjList)">
+									<template name="model">
+										<comboitem
+											label="@load(each.pcco_cn)" />
+									</template>
+								</combobox>
+							</cell>
+							<cell width="80px">状态</cell>
+							<cell>
+								<combobox mold="rounded" value="@bind(vm.state)" readonly="true">
+									<comboitem label="" />
+									<comboitem label="待终止" />
+									<comboitem label="已终止" />
+								</combobox>
+							</cell>
+						</row>
+					</rows>
+					<foot>
+						<footer align="center">
+							<button onClick="@command('search')">查询</button>
+							<button onClick="@command('Export',gd=gd)">导出数据</button>
+						</footer>
+					</foot>
+				</grid>
+			</north>
+			<center>
+				<grid vflex="1" model="@load(vm.list)" id="gd"
+					emptyMessage="没有数据">
+					<columns>
+						<column label="序号" width="60px" align="center" />
+						<column label="单位编号" align="center" />
+						<column label="单位名称" align="center" />
+						<column label="员工编号" align="center" />
+						<column label="姓名" align="center" />
+						<column label="交接人" align="center" />
+						<column label="户籍类型" align="center" />
+						<column label="终止原因" align="center" />
+						<column label="终止日期" align="center" />
+						<column label="终止申请人" align="center" />
+						<column label="操作终止日期" align="center" />
+						<column label="状态" align="center" />
+						<column align="center" width="60px"><checkbox onCheck="@command('checkall',gd=gd,ck=self)"></checkbox></column>
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<label
+									value="@load(forEachStatus.index + 1)">
+								</label>
+								<label value="@load(each.cid)"></label>
+								<label
+									value="@load(each.coba_shortname)">
+								</label>
+								<label value="@load(each.gid)"></label>
+								<label value="@load(each.emba_name)"></label>
+								<label
+									value="@load(each.erin_handover_people)">
+								</label>
+								<label
+									value="@load(each.erin_hjtype)">
+								</label>
+								<label
+									value="@load(each.erin_stop_reason)">
+								</label>
+								<label
+									value="@load(each.erin_stop_date)">
+								</label>
+								<label
+									value="@load(each.erin_stop_people)">
+								</label>
+								<label
+									value="@load(each.erin_p_stop_date)">
+								</label>
+								<label
+									value="@load(each.stop_statename)">
+								</label>
+								<cell><checkbox value="@load(each)"></checkbox></cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

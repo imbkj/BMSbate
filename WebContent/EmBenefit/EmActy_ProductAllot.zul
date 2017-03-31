@@ -1,0 +1,55 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window width="800px" height="500px" title="福利项目关联产品" id="win"
+		border="normal" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmBenefit.EmActy_ProductAllotController')"
+		closable="true">
+		<groupbox height="100%" title="${vm.model.embf_name } - 产品关联">
+			<grid height="100%">
+				<rows>
+					<row>
+						<cell>
+							<grid height="400px"
+								model="@load(vm.prodList)">
+								<columns>
+									<column>
+										产品名称
+										<textbox id="copr"
+											onChange="@command('searchprod',prodname=self.value)" instant="true"
+										/>
+									</column>
+								</columns>
+								<template name="model">
+									<row>
+										<cell style="cursor:pointer"
+											onClick="@command('selectesprod',model=each,a='1')">
+											<label
+												value="@load(each.prod_name)" />
+										</cell>
+									</row>
+								</template>
+							</grid>
+						</cell>
+						<cell>
+							<grid height="400px" emptyMessage="暂无数据"
+								model="@load(vm.selectedList)">
+								<columns>
+									<column>已选列表</column>
+								</columns>
+								<template name="model">
+									<row>
+										<cell style="cursor:pointer"
+											onClick="@command('selectesprod',model=each,a='2')">
+											<label
+												value="@load(each.prod_name)" />
+										</cell>
+									</row>
+								</template>
+							</grid>
+						</cell>
+					</row>
+				</rows>
+			</grid>
+		</groupbox>
+	</window>
+</zk>

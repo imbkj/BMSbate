@@ -1,0 +1,23 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<?component name="docDataList" macro-uri="../DocumentsInfo/DocumentsInfo_AddPageList.zul" inline="true"?>
+<zk>
+<window title="档案调出" border="normal" closable="true" id="win" width="80%" height="80%"
+apply="org.zkoss.bind.BindComposer"
+viewModel="@id('vm') @init('Controller.Archives.Archive_FileCheckOutController')"
+>
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell width="80px">交接材料内容</cell>
+			<cell>
+				<docDataList id="docGrid" puzu_id="11" gid="10001"
+						dWidth="100%" pUsername="陈耀家" pUserId="248" />
+			</cell>
+		</row>
+	</rows>
+	<foot>
+		<footer align="center"><button id="summit" onClick="@command('summitdata',docGrid=docGrid,win=win)">提交</button></footer>
+	</foot>
+</grid>
+</window>
+</zk>

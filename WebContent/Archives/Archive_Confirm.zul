@@ -1,0 +1,502 @@
+<?page title="档案业务信息" contentType="text/html;charset=UTF-8"?>
+<?component name="docDataList" macro-uri="../DocumentsInfo/DocumentsInfo_UpPageList.zul" inline="true"?>
+
+<zk>
+	<window title="档案业务信息" border="normal" closable="true"
+		id="winConfirm" width="800px" height="600px"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.Archives.Archive_ConfirmController')">
+		<scrollview vflex="1">
+			<groupbox closable="false">
+				<caption>
+					<label>档案信息</label>
+				</caption>
+				<grid>
+					<columns visible="false">
+						<column width="120px"></column>
+						<column></column>
+						<column width="120px"></column>
+						<column></column>
+					</columns>
+					<rows>
+						<!-- 公共显示信息 -->
+						<row>
+							<cell>公司名称</cell>
+							<cell>
+								<label
+									value="@load(vm.edm.coba_company)" />
+							</cell>
+							<cell>客服</cell>
+							<cell>
+								<label
+									value="@load(vm.edm.coba_client)" />
+							</cell>
+						</row>
+						<row>
+							<cell>员工姓名</cell>
+							<cell>
+								<label value="@load(vm.edm.eada_name)" />
+							</cell>
+							<cell>身份证号码</cell>
+							<cell>
+								<label if="${vm.edm.eada_type!=0 }"
+									value="@load(vm.edm.emar_idcard)" />
+								<textbox if="${vm.edm.eada_type==0 }"
+									mold="rounded" value="@bind(vm.edm.eada_idcard)" />
+							</cell>
+						</row>
+
+						<row>
+							<cell>档案类型</cell>
+							<cell>
+								<label
+									value="@load(vm.edm.eada_filetype)" />
+							</cell>
+							<cell>档案编号</cell>
+							<cell>
+								<label value="@load(vm.edm.eada_fid)" />
+							</cell>
+						</row>
+
+						<row>
+							<cell>入职中智时间</cell>
+							<cell>
+								<label
+									value="@load(vm.edm.emba_indate)" />
+							</cell>
+							<cell>存档协议到期日</cell>
+							<cell>
+								<label
+									value="${vm.edm.eada_deadline}" />
+							</cell>
+						</row>
+						<row>
+							<cell>手机</cell>
+							<cell>
+								<label width="80%"
+									value="${vm.edm.emba_mobile}" />
+							</cell>
+							<cell>邮箱</cell>
+							<cell>
+								<label width="80%"
+									value="${vm.edm.emba_email}" />
+							</cell>
+						</row>
+						<row>
+							<cell>户籍性质</cell>
+							<cell colspan="3">
+								<label width="80%"
+									value="${vm.edm.eada_hj}" />
+							</cell>
+						</row>
+						<row visible="${vm.edm.eada_type!='0'}">
+							<cell>档案所在地</cell>
+							<cell colspan="3">
+								<label
+									value="@load(vm.edm.emar_archiveplace)" />
+							</cell>
+						</row>
+						
+						<row>
+							<cell><label style="color:red" value="退回原因"/></cell>
+							<cell colspan="3">
+								<label
+									value="@load(vm.edm.eada_backcase)" />
+							</cell>
+						</row>
+					</rows>
+					<!-- 公共显示信息End -->
+				</grid>
+			</groupbox>
+			<groupbox closable="false" if="${vm.edm.eada_type==0 }">
+				<caption>
+					<label>档案调入信息</label>
+				</caption>
+				<!-- 调入显示信息 -->
+				<grid>
+					<columns visible="false">
+						<column width="120px"></column>
+						<column></column>
+						<column width="120px"></column>
+						<column></column>
+					</columns>
+					<rows>
+						<row>
+							<cell>现存档机构全称</cell>
+							<cell>
+								<!--<label
+									value="@load(vm.edm.eada_fileplace)" />-->
+								 <combobox id="fileplace"
+									model="@load(vm.setuplist)"
+									value="@bind(vm.edm.eada_fileplace)" mold="rounded"
+									onChange="@command('setPlace',a=self.selectedItem.value,b=fileaddress)">
+									<template name="model">
+									<comboitem
+									label="@load(each.ease_name)" />
+									</template>
+									</combobox>
+									<textbox id="fileaddress" mold="rounded"
+									style="display:none;" />
+								
+							</cell>
+							<cell>存档起始日期:</cell>
+							<cell align="left">
+								<label value="@load(vm.savefiledate2)" />
+								<!--<datebox readonly="true"
+									value="@bind(vm.savefiledate)" id="savefiledate"
+									mold="rounded" />
+								-->
+							</cell>
+						</row>
+						<row>
+							<cell>费用结清情况</cell>
+							<cell colspan="3">
+								<label
+									value="@load(vm.edm.eada_charge)" />
+								<!--<textbox rows="5" width="50%"
+									mold="rounded" value="@load(vm.edm.eada_charge)" />
+								-->
+							</cell>
+						</row>
+						<row>
+							<cell>客服备注:</cell>
+							<cell colspan="3">
+								<label
+									value="@load(vm.edm.eada_remark)" />
+								<!--<textbox id="remark" mold="rounded"
+									value="@bind(vm.edm.eada_remark)" rows="5" width="50%" />-->
+								
+							</cell>
+
+						</row>
+						<row>
+							<cell>备注:</cell>
+							<cell colspan="3">
+								<textbox id="remark" mold="rounded"
+									value="@bind(vm.edm.remark)" rows="5" width="50%" />
+							</cell>
+
+						</row>
+					</rows>
+					<!-- 调入显示信息End -->
+				</grid>
+			</groupbox>
+			<groupbox closable="false" if="${vm.edm.eada_type==1 }">
+				<caption>
+					<label>查借材料信息</label>
+				</caption>
+				<grid>
+					<rows>
+						<!-- 查借材料End -->
+						<row>
+							<cell>申请借阅材料</cell>
+							<cell colspan="3">
+
+							</cell>
+						</row>
+						<row>
+							<cell>实际借出材料</cell>
+							<cell colspan="3">
+
+							</cell>
+						</row>
+						<row>
+							<cell>借用事由</cell>
+							<cell colspan="3">
+
+							</cell>
+						</row>
+						<row>
+							<cell>借出日期</cell>
+							<cell>
+
+							</cell>
+							<cell>交接人</cell>
+							<cell>
+
+							</cell>
+						</row>
+						<row>
+							<cell>归还日期</cell>
+							<cell colspan="3">
+
+							</cell>
+						</row>
+					</rows>
+					<!-- 查借材料End -->
+				</grid>
+			</groupbox>
+
+			<!-- 出具证明-->
+			<groupbox closable="false" if="${vm.edm.eada_type==2 }">
+				<caption>
+					<label>出具证明信息</label>
+				</caption>
+				<grid>
+					<rows>
+						<row>
+							<cell>申请出具证明</cell>
+							<cell colspan="3">
+
+							</cell>
+
+						</row>
+						<row>
+							<cell>实际出具证明</cell>
+							<cell colspan="3">
+
+							</cell>
+						</row>
+						<row>
+							<cell>出具证明事由</cell>
+							<cell colspan="3">
+
+							</cell>
+						</row>
+						<row>
+							<cell>发出证明日期</cell>
+							<cell>
+
+							</cell>
+							<cell>交接人</cell>
+							<cell>
+
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<!-- 出具证明End -->
+
+			<!-- 材料归档-->
+			<groupbox closable="false" if="${vm.edm.eada_type==3 }">
+				<caption>
+					<label>材料归档信息</label>
+				</caption>
+				<grid>
+					<rows>
+						<row>
+							<cell>拟归档材料名称</cell>
+							<cell>
+
+							</cell>
+							<cell>材料归档时间</cell>
+							<cell>
+
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<!-- 材料归档End-->
+
+			<!-- 转正定级-->
+			<groupbox closable="false" if="${vm.edm.eada_type==4 }">
+				<caption>
+					<label>转正定级信息</label>
+				</caption>
+				<grid>
+					<rows>
+						<row>
+							<cell>是否需要协助确认转正资格</cell>
+							<cell>
+
+							</cell>
+							<cell>发出表格日期</cell>
+							<cell>
+
+							</cell>
+						</row>
+						<row>
+							<cell>是否代购表格</cell>
+							<cell>
+
+							</cell>
+							<cell>交接人</cell>
+							<cell>
+
+							</cell>
+						</row>
+						<row>
+							<cell>后续事宜是否雇员自行办理</cell>
+							<cell>
+
+							</cell>
+							<cell>回收表格日期</cell>
+							<cell>
+
+							</cell>
+						</row>
+						<row>
+							<cell>毕业生接收单位</cell>
+							<cell>
+
+							</cell>
+							<cell>毕业生接收时间</cell>
+							<cell>
+
+							</cell>
+						</row>
+						<row>
+							<cell>办理转正日期</cell>
+							<cell colspan="3">
+
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<!-- 转正定级End -->
+			<groupbox closable="false" if="${vm.edm.eada_type==5 }">
+				<caption>
+					<label>档案调出信息</label>
+				</caption>
+				<grid>
+					<rows>
+						<!-- 档案调出 -->
+						<row>
+							<cell>员工欠费情况</cell>
+							<cell>
+
+							</cell>
+							<cell>员工欠费时间</cell>
+							<cell>
+
+							</cell>
+						</row>
+						<row>
+							<cell>离职时间</cell>
+							<cell>
+
+							</cell>
+							<cell>调出日期</cell>
+							<cell>
+
+							</cell>
+						</row>
+						<row>
+							<cell>调出方式</cell>
+							<cell>
+
+							</cell>
+							<cell>是否委托代办</cell>
+							<cell>
+
+							</cell>
+						</row>
+						<row>
+							<cell>调出单位</cell>
+							<cell>
+
+							</cell>
+							<cell>调出原因</cell>
+							<cell>
+
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<!-- 档案调出End -->
+
+			<!-- 欠费查询 -->
+			<groupbox closable="false" if="${vm.edm.eada_type==6 }">
+				<caption>
+					<label>欠费信息</label>
+				</caption>
+				<grid>
+					<rows>
+						<row>
+							<cell>现缴费日期</cell>
+							<cell>
+
+							</cell>
+							<cell>档案存放单位全称</cell>
+							<cell>
+
+							</cell>
+						</row>
+						<row>
+							<cell>员工档案欠费情况</cell>
+							<cell colspan="3">
+
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<!-- 欠费查询End -->
+			<groupbox>
+				<caption>联系记录</caption>
+				<grid emptyMessage="暂无记录" model="@load(vm.ealist)">
+					<columns>
+						<column width="90px" align="center">
+							联系时间
+						</column>
+						<column width="120px" align="center">
+							联系人
+						</column>
+						<column width="120px" align="center">
+							联系方式
+						</column>
+						<column align="center">联系内容</column>
+					</columns>
+					<template name="model">
+						<row>
+							<cell>
+								<label
+									value="@load(each.eali_linktime)" />
+							</cell>
+							<cell>
+								<label value="@load(each.eali_addname)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.eali_linkmode)" />
+							</cell>
+							<cell align="left">
+								<label
+									value="@load(each.eali_linkcontent)" />
+							</cell>
+						</row>
+					</template>
+
+				</grid>
+			</groupbox>
+			<groupbox style="mvmin-top:10px;" closable="false" visible="${vm.edm.eada_type!=0 }">
+				<caption>
+					<label>递交材料</label>
+				</caption>
+				<grid height="100%">
+					<rows>
+						<row>
+							<cell colspan="4">
+								<!-- 材料内联页 参数：puzu_id：模块页面id， doc_type：员工(g)还是公司(c)，gid：公司数据则插入空白 ，业务表id ，log_url：获取到页面路径的前部分-->
+								<docDataList id="docGrid" puzu_id="5"
+									doc_type="g" gid="${vm.edm.gid}" tid="${vm.edm.eada_id }"
+									log_url="/DocumentsInfo/" dWidth="100%" dHeight="100%" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+		</scrollview>
+		<grid>
+			<rows>
+				<row>
+					<cell align="center">
+						<button label="联系客服"
+							onClick="@command('linkclient')" />
+						<button label="添加联系记录"
+							onClick="@command('addlink')" />
+						<button
+							onClick="@command('submit',a=hj,win=winConfirm,grid=docGrid)">
+							提交
+						</button>
+					</cell>
+				</row>
+			</rows>
+		</grid>
+
+	</window>
+</zk>

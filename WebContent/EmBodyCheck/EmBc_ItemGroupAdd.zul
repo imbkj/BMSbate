@@ -1,0 +1,144 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window height="100%" width="100%" id="winItemAdd" title="体检项目组合新增"
+		border="normal" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmBodyCheck.EmBc_ItemGroupAddController')">
+		<style src="/css/style.css" />
+		<grid height="100%">
+			<columns visible="false">
+				<column width="120px" />
+				<column />
+				<column width="120px" />
+				<column />
+			</columns>
+			<rows>
+				<row>
+					<cell>组合名称</cell>
+					<cell colspan="3">
+						<textbox width="400px" id="groupname"
+							mold="rounded" />
+					</cell>
+				</row>
+				<row>
+					<cell>客服</cell>
+					<cell>
+						<combobox model="@load(vm.clientList)"
+							readonly="true" id="client" mold="rounded"
+							onChange="@command('changecobase',client=self.value)">
+							<template name="model">
+								<comboitem label="@load(each)" />
+							</template>
+						</combobox>
+					</cell>
+					<cell>公司名称</cell>
+					<cell>
+						<combobox model="@load(vm.companyList)"
+							width="80%" readonly="true" id="cobase" mold="rounded">
+							<template name="model">
+								<comboitem value="@load(each.cid)"
+									label="@load(each.coba_company)" />
+							</template>
+						</combobox>
+					</cell>
+				</row>
+				<row>
+					<cell>体检机构</cell>
+					<cell>
+						<combobox model="@load(vm.setupList)"
+							readonly="true" onChange="@command('changeitem')" mold="rounded"
+							id="setup">
+							<template name="model">
+								<comboitem
+									label="@load(each.ebcs_hospital)" value="@load(each.ebcs_id)" />
+							</template>
+						</combobox>
+					</cell>
+					<cell>所选项目</cell>
+					<cell>
+						<combobox model="@load(vm.itemList)" width="80%"
+							readonly="true" mold="rounded">
+							<template name="model">
+								<comboitem value="@load(each.ebit_id)"
+									label="@load(each.ebit_name)" />
+							</template>
+						</combobox>
+					</cell>
+				</row>
+				<row>
+					<cell>备注</cell>
+					<cell colspan="3">
+						<textbox id="remark" rows="3" width="80%"
+							mold="rounded" />
+					</cell>
+				</row>
+				<row>
+					<cell>搜索项目</cell>
+					<cell colspan="3">
+						<textbox id="searchName" mold="rounded"
+							onChange="@command('searchitem')" instant="true" />
+					</cell>
+				</row>
+				<row>
+					<cell>体检项目</cell>
+					<cell colspan="3">
+						<grid width="100%" sizedByContent="true"
+							span="true" emptyMessage="没有数据,请重新选择体检机构" model="@load(vm.list)"
+							height="350px" id="itemgd">
+							<columns>
+								<column width="60px" label="序号"
+									align="center" />
+								<column align="center" label="项目名称" />
+								<column align="center" label="项目内容" />
+								<column label="备注" align="center" />
+								<column align="center" label="适用范围" />
+								<column width="60px" align="center" />
+							</columns>
+							<rows>
+								<template name="model">
+									<row>
+										<cell>
+											<label
+												value="${forEachStatus.index+1 }">
+											</label>
+										</cell>
+										<cell align="left">
+											<label
+												value="@load(each.ebit_name)">
+											</label>
+										</cell>
+										<cell>
+											<label
+												value="@load(each.ebit_info)">
+											</label>
+										</cell>
+										<cell>
+											<label
+												value="@load(each.ebit_remark)">
+											</label>
+										</cell>
+										<cell>
+											<label
+												value="@load(each.sex)">
+											</label>
+										</cell>
+										<cell>
+											<checkbox
+												value="@load(each.ebit_id)"
+												onClick="@command('getSelectItem',a=each,b=self)">
+											</checkbox>
+										</cell>
+									</row>
+								</template>
+							</rows>
+						</grid>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer span="4" align="center">
+					<button onClick="@command('addgroup')">提交</button>
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

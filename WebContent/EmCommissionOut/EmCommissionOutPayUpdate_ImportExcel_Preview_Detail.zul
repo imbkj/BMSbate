@@ -1,0 +1,53 @@
+<grid width="800px" apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('vm') @init('Controller.EmCommissionOut.EmCommissionOutPayUpdate_ImportExcel_Preview_DetailController')"
+	model="@load(vm.feeList)" emptyMessage="暂无数据">
+	<columns sizable="true">
+		<column align="center">
+			<label value="项目名称" />
+		</column>
+		<column align="center">
+			<label value="基数" />
+		</column>
+		<column align="center">
+			<label value="企业比例" />
+		</column>
+		<column align="center">
+			<label value="个人比例" />
+		</column>
+		<column align="center">
+			<label value="企业缴费" />
+		</column>
+		<column align="center">
+			<label value="个人缴费" />
+		</column>
+		<column align="center">
+			<label value="月缴费" />
+		</column>
+	</columns>
+	<template name="model" var="feeList">
+		<row
+			style="border:1px dotted #cad9ea;background-color:white;">
+			<cell>
+				<label value="@load(feeList.epfd_name)" />
+			</cell>
+			<cell>
+				<label value="@load(feeList.epfd_base)" />
+			</cell>
+			<cell>
+				<label value="@load(feeList.epfd_cp)" />
+			</cell>
+			<cell>
+				<label value="@load(feeList.epfd_op)" />
+			</cell>
+			<cell>
+				<label value="@load(feeList.epfd_co_sum)" />
+			</cell>
+			<cell>
+				<label value="@load(feeList.epfd_em_sum)" />
+			</cell>
+			<cell>
+				<label value="@load(feeList.epfd_month_sum)" />
+			</cell>
+		</row>
+	</template>
+</grid>

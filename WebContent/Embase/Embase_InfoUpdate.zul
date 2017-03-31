@@ -1,0 +1,1129 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="new page title" border="normal" >
+<grid>
+		<rows>
+			<row>
+			 <cell style="overflow-y:scroll;height:95%">
+			<groupbox mold="3d" title="基本信息">
+				<grid>
+					<columns>
+						<column width="9%" />
+						<column />
+						<column width="9%" />
+						<column />
+						<column width="10%" />
+						<column />
+						<column width="10%" />
+						<column />
+					</columns>
+					<rows>
+						<row>
+							<cell>
+								<label value="*" id="emba_name"
+									style="color:red" visible="false"
+									onCreate="@command('LabelInit',self=self)" />
+								<label value="姓名" />
+							</cell>
+							<textbox mold="rounded" width="120px"
+								value="@bind(vm.emmodel.emba_name)" />
+							<cell>
+								<label value="*" id="emba_sex"
+									style="color:red" visible="false"
+									onCreate="@command('LabelInit',self=self)" />
+								<label value="性别" />
+							</cell>
+							<combobox mold="rounded" readonly="true"
+								width="120px" value="@bind(vm.emmodel.emba_sex)">
+								<comboitem />
+								<comboitem label="男" />
+								<comboitem label="女" />
+							</combobox>
+							<cell>
+								<label value="*" id="emba_folk"
+									style="color:red" visible="false"
+									onCreate="@command('LabelInit',self=self)" />
+								<label value="民族" />
+							</cell>
+							<combobox mold="rounded" readonly="true"
+								width="120px" model="@load(vm.folkList)"
+								value="@bind(vm.emmodel.emba_folk)">
+								<template name="model">
+									<comboitem label="@load(each)" />
+								</template>
+							</combobox>
+							<cell>
+								<label value="*" id="emba_native"
+									style="color:red" visible="false"
+									onCreate="@command('LabelInit',self=self)" />
+								<label value="户口所在地" />
+							</cell>
+							<textbox mold="rounded" width="120px"
+								value="@bind(vm.emmodel.emba_native)" />
+						</row>
+						<row>
+							<cell>
+								<label value="*" id="emba_idcard"
+									style="color:red" visible="false"
+									onCreate="@command('LabelInit',self=self)" />
+								<label value="身份证号" />
+							</cell>
+							<cell colspan="3">
+								<textbox mold="rounded" width="330px"
+									value="@bind(vm.emmodel.emba_idcard)" maxlength="18" />
+							</cell>
+							<cell>
+								<label value="*" id="emba_birth"
+									style="color:red" visible="false"
+									onCreate="@command('LabelInit',self=self)" />
+								<label value="出生日期" />
+							</cell>
+							<datebox format="yyyy-MM-dd" mold="rounded"
+								value="@bind(vm.birth)" />
+							<cell>
+								<label value="*" id="emba_marital"
+									style="color:red" visible="false"
+									onCreate="@command('LabelInit',self=self)" />
+								<label value="婚姻状况" />
+							</cell>
+							<textbox mold="rounded" width="120px"
+								value="@bind(vm.emmodel.emba_marital)" />
+						</row>
+						<row>
+							<cell>
+								<label value="*" id="emba_school"
+									style="color:red" visible="false"
+									onCreate="@command('LabelInit',self=self)" />
+								<label value="毕业院校" />
+							</cell>
+							<cell colspan="3">
+								<textbox mold="rounded" width="330px"
+									value="@bind(vm.emmodel.emba_school)" />
+							</cell>
+							<cell>
+								<label value="*" id="emba_specialty"
+									style="color:red" visible="false"
+									onCreate="@command('LabelInit',self=self)" />
+								<label value="专业" />
+							</cell>
+							<cell>
+								<textbox mold="rounded" width="120px"
+									value="@bind(vm.emmodel.emba_specialty)" />
+							</cell>
+							<cell>
+								<label value="*" id="emba_graduation"
+									style="color:red" visible="false"
+									onCreate="@command('LabelInit',self=self)" />
+								<label value="毕业时间" />
+							</cell>
+							<datebox format="yyyy-MM-dd" mold="rounded"
+								value="@bind(vm.graduation)" />
+						</row>
+						<row>
+							<cell>
+								<label value="*" id="emba_degree"
+									style="color:red" visible="false"
+									onCreate="@command('LabelInit',self=self)" />
+								<label value="文化程度" />
+							</cell>
+							<cell colspan="7">
+								<combobox mold="rounded"
+									model="@load(vm.degreeList)" readonly="true"
+									selectedItem="@bind(vm.dgModel)">
+									<template name="model">
+										<comboitem
+											label="@load(each.name)" />
+									</template>
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="*" id="emba_hjadd"
+									style="color:red" visible="false"
+									onCreate="@command('LabelInit',self=self)" />
+								<label value="户籍地址" />
+							</cell>
+							<cell colspan="5">
+								<textbox mold="rounded" width="580px"
+									value="@bind(vm.emmodel.emba_hjadd)" />
+							</cell>
+							<cell>
+								<label value="*" id="emba_hjtype"
+									style="color:red" visible="false"
+									onCreate="@command('LabelInit',self=self)" />
+								<label value="户口类型" />
+							</cell>
+							<combobox mold="rounded" readonly="true"
+								width="120px" value="@bind(vm.emmodel.emba_hjtype)">
+
+								<comboitem label="城镇" />
+								<comboitem label="农村" />
+							</combobox>
+						</row>
+						<row>
+							<cell>
+								<label value="*" id="emba_address"
+									style="color:red" visible="false"
+									onCreate="@command('LabelInit',self=self)" />
+								<label value="现居住地" />
+							</cell>
+							<cell colspan="7">
+								<textbox mold="rounded" width="580px"
+									value="@bind(vm.emmodel.emba_address)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="*" id="emba_phone"
+									style="color:red" visible="false"
+									onCreate="@command('LabelInit',self=self)" />
+								<label value="家庭电话" />
+							</cell>
+							<textbox mold="rounded" width="120px"
+								value="@bind(vm.emmodel.emba_phone)" />
+							<cell>
+								<label value="*" id="emba_mobile"
+									style="color:red" visible="false"
+									onCreate="@command('LabelInit',self=self)" />
+								<label value="手机号码" />
+							</cell>
+							<textbox mold="rounded" width="120px"
+								value="@bind(vm.emmodel.emba_mobile)" />
+							<cell >
+								<label value="*" id="emba_ep"
+									style="color:red" visible="false"
+									onCreate="@command('LabelInit',self=self)" />
+								<label value="紧急联系人及联系方式" />
+								<textbox mold="rounded" width="100px"
+									value="@bind(vm.emmodel.emba_epname)" />
+							</cell>
+							<cell colspan="2">
+								<label value="紧急联系人电话" />
+								<textbox mold="rounded" width="100px"
+									value="@bind(vm.emmodel.emba_epmobile)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="*" id="emba_email"
+									style="color:red" visible="false"
+									onCreate="@command('LabelInit',self=self)" />
+								<label value="E-mail" />
+							</cell>
+							<cell>
+								<textbox mold="rounded" width="120px"
+									value="@bind(vm.emmodel.emba_email)" />
+							</cell>
+							<cell>
+								<label value="*" id="emba_party"
+									style="color:red" visible="false"
+									onCreate="@command('LabelInit',self=self)" />
+								<label value="政治面貌" />
+							</cell>
+							<cell>
+								<combobox mold="rounded" readonly="true"
+									width="120px" value="@bind(vm.emmodel.emba_party)"
+									model="@load(vm.partyList)">
+									<template name="model">
+										<comboitem
+											label="@load(each.pcco_cn)" />
+									</template>
+								</combobox>
+							</cell>
+							<cell>
+								<label value="*" id="emba_status"
+									style="color:red" visible="false"
+									onCreate="@command('LabelInit',self=self)" />
+								<label value="身份" />
+							</cell>
+							<cell colspan="3">
+								<combobox mold="rounded" readonly="true"
+									width="120px" value="@bind(vm.emmodel.emba_status)">
+
+									<comboitem label="干部" />
+									<comboitem label="工人" />
+								</combobox>
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox title="档案信息" mold="3d">
+				<grid>
+					<columns>
+						<column width="20%" />
+						<column />
+						<column width="17%" />
+						<column />
+					</columns>
+					<rows>
+						<row>
+							<cell>
+								<label value="*" id="emba_fileplace"
+									style="color:red" visible="false"
+									onCreate="@command('LabelInit',self=self)" />
+								<label value="档案存放单位" />
+							</cell>
+							<textbox mold="rounded" width="200px"
+								value="@bind(vm.emmodel.emba_fileplace)" />
+							<cell>
+								<label value="*" id="emba_fileinclass"
+									style="color:red" visible="false"
+									onCreate="@command('LabelInit',self=self)" />
+								<label value="是否愿意转入中智托管" />
+							</cell>
+							<combobox mold="rounded" readonly="true"
+								width="80px" value="@bind(vm.fileinclass)">
+
+								<comboitem label="是" />
+								<comboitem label="否" />
+							</combobox>
+						</row>
+						<row>
+							<cell>
+								<label value="*" id="emba_filereason"
+									style="color:red" visible="false"
+									onCreate="@command('LabelInit',self=self)" />
+								<label value="不转入中智托管原因" />
+							</cell>
+							<cell colspan="3">
+								<textbox mold="rounded" width="600px"
+									value="@bind(vm.emmodel.emba_filereason)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="档案如果托管在深圳市人才" />
+							</cell>
+							<cell colspan="3">
+								<grid>
+									<columns>
+										<column width="20%" />
+										<column />
+										<column width="22%" />
+										<column />
+									</columns>
+									<rows>
+										<row>
+											<cell>
+												<label value="*"
+													id="emba_filedebts" style="color:red" visible="false"
+													onCreate="@command('LabelInit',self=self)" />
+												<label value="是否有欠费" />
+											</cell>
+											<combobox mold="rounded"
+												readonly="true" width="80px" value="@bind(vm.filedebts)">
+
+												<comboitem label="是" />
+												<comboitem label="否" />
+											</combobox>
+											<cell>
+												<label value="*"
+													id="emba_filedebtsmonth" style="color:red" visible="false"
+													onCreate="@command('LabelInit',self=self)" />
+												<label
+													value="档案费用缴至哪个月份" />
+											</cell>
+											<textbox mold="rounded"
+												width="120px" value="@bind(vm.emmodel.emba_filedebtsmonth)" />
+										</row>
+										<row>
+											<cell>
+												<label value="*"
+													id="emba_filehj" style="color:red" visible="false"
+													onCreate="@command('LabelInit',self=self)" />
+												<label
+													value="户口是否托管在人才" />
+											</cell>
+											<cell colspan="3">
+												<combobox mold="rounded"
+													readonly="true" width="80px" value="@bind(vm.filehj)">
+
+													<comboitem
+														label="是" />
+													<comboitem
+														label="否" />
+												</combobox>
+											</cell>
+										</row>
+									</rows>
+								</grid>
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox title="社保信息" mold="3d">
+				<grid>
+					<columns>
+						<column width="10%" />
+						<column />
+						<column width="20%" />
+						<column />
+						<column width="18%" />
+						<column />
+					</columns>
+					<rows>
+						<row>
+							<cell>
+								<label value="*" id="emba_computerid"
+									style="color:red" visible="false"
+									onCreate="@command('LabelInit',self=self)" />
+								<label value="社保电脑号" />
+							</cell>
+							<textbox mold="rounded" width="120px"
+								value="@bind(vm.emmodel.emba_computerid)" />
+							<cell>
+								<label value="*" id="emba_hand"
+									style="color:red" visible="false"
+									onCreate="@command('LabelInit',self=self)" />
+								<label value="利手 （习惯使用哪只手）" />
+							</cell>
+							<combobox mold="rounded" readonly="true"
+								width="120px">
+
+								<comboitem label="左手" />
+								<comboitem label="右手" />
+							</combobox>
+							<cell>
+								<label value="*" id="emba_sbcard"
+									style="color:red" visible="false"
+									onCreate="@command('LabelInit',self=self)" />
+								<label value="是否需要办理社保卡" />
+							</cell>
+							<combobox mold="rounded" readonly="true"
+								width="80px" value="@bind(vm.sbcard)">
+
+								<comboitem label="是" />
+								<comboitem label="否" />
+							</combobox>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox title="住房公积金信息" mold="3d">
+				<grid>
+					<columns>
+						<column width="17%" />
+						<column />
+						<column width="20%" />
+						<column />
+						<column width="20%" />
+						<column />
+					</columns>
+					<rows>
+						<row>
+							<cell>
+								<label value="*" id="emba_houseid"
+									style="color:red" visible="false"
+									onCreate="@command('LabelInit',self=self)" />
+								<label value="个人公积金编号" />
+							</cell>
+							<textbox mold="rounded" width="120px"
+								value="@bind(vm.emmodel.emba_houseid)" />
+							<cell>
+								<label value="*"
+									id="emba_excompanystate" style="color:red" visible="false"
+									onCreate="@command('LabelInit',self=self)" />
+								<label value="原单位是否已封存" />
+							</cell>
+							<cell colspan="3">
+								<combobox mold="rounded" readonly="true"
+									width="80px" value="@bind(vm.excompanystate)">
+
+									<comboitem label="是" />
+									<comboitem label="否" />
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="*" id="emba_excompanyid"
+									style="color:red" visible="false"
+									onCreate="@command('LabelInit',self=self)" />
+								<label value="封存单位公积金号" />
+							</cell>
+							<textbox mold="rounded" width="120px"
+								value="@bind(vm.emmodel.emba_excompanyid)" />
+							<cell>
+								<label value="*" id="emba_excompany"
+									style="color:red" visible="false"
+									onCreate="@command('LabelInit',self=self)" />
+								<label value="封存单位账户名称" />
+							</cell>
+							<cell colspan="3">
+								<textbox mold="rounded" width="120px"
+									value="@bind(vm.emmodel.emba_excompany)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="*" id="emba_wifename"
+									style="color:red" visible="false"
+									onCreate="@command('LabelInit',self=self)" />
+								<label value="配偶姓名(未婚者不填)" />
+							</cell>
+							<textbox mold="rounded" width="120px"
+								value="@bind(vm.emmodel.emba_wifename)" />
+							<cell>
+								<label value="*" id="emba_wifeidcard"
+									style="color:red" visible="false"
+									onCreate="@command('LabelInit',self=self)" />
+								<label value="配偶身份证号码(未婚者不填)" />
+							</cell>
+							<cell colspan="3">
+								<textbox mold="rounded" width="145px"
+									value="@bind(vm.emmodel.emba_wifeidcard)" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox title="工资信息" mold="3d">
+				<grid>
+					<columns>
+						<column width="17%" />
+						<column />
+					</columns>
+					<rows>
+						<row>
+							<cell>
+								<label value="*" id="emba_gz_email"
+									style="color:red" visible="false"
+									onCreate="@command('LabelInit',self=self)" />
+								<label value="工资单email" />
+							</cell>
+							<textbox hflex="1" mold="rounded"
+								value="@bind(vm.emmodel.emba_gz_email)" />
+						</row>
+						<row>
+							<cell>
+								<label value="*" id="emba_gz_cemail"
+									style="color:red" visible="false"
+									onCreate="@command('LabelInit',self=self)" />
+								<label value="工资单抄送email" />
+							</cell>
+							<textbox hflex="1" mold="rounded"
+								value="@bind(vm.emmodel.emba_gz_cemail)" />
+						</row>
+						<row>
+							<cell>
+								<label value="*" id="emba_gzbank"
+									style="color:red" visible="false"
+									onCreate="@command('LabelInit',self=self)" />
+								<label value="个人银行信息" />
+							</cell>
+							<cell>
+								<grid>
+									<columns>
+										<column width="25%" />
+										<column />
+									</columns>
+									<rows>
+										<row>
+											<label value="工资银行帐号" />
+											<textbox mold="rounded"
+												hflex="1" value="@bind(vm.emmodel.emba_gz_account)" />
+										</row>
+										<row>
+											<label
+												value="工资开户行信息(详细到支行)" />
+											<textbox mold="rounded"
+												hflex="1" value="@bind(vm.emmodel.emba_gz_bank)" />
+										</row>
+										<row>
+											<label value="报销银行帐号" />
+											<textbox mold="rounded"
+												hflex="1" value="@bind(vm.emmodel.emba_writeoff_account)" />
+										</row>
+										<row>
+											<label
+												value="报销开户行信息(详细到支行)" />
+											<textbox mold="rounded"
+												hflex="1" value="@bind(vm.emmodel.emba_writeoff_bank)" />
+										</row>
+									</rows>
+								</grid>
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox title="就业信息" mold="3d">
+				<grid>
+					<columns>
+						<column width="21%" />
+						<column />
+						<column width="15%" />
+						<column width="17%" />
+						<column width="18%" />
+						<column />
+					</columns>
+					<rows>
+						<row>
+							<cell>
+								<label value="*" id="emba_housecode"
+									style="color:red" visible="false"
+									onCreate="@command('LabelInit',self=self)" />
+								<label value="房屋地址编码(非深户必填项)" />
+							</cell>
+							<cell colspan="3">
+								<textbox mold="rounded" width="300px"
+									value="@bind(vm.emmodel.emba_housecode)" />
+							</cell>
+							<cell>
+								<label value="*" id="emba_housetime"
+									style="color:red" visible="false"
+									onCreate="@command('LabelInit',self=self)" />
+								<label value="入住时间" />
+							</cell>
+							<datebox mold="rounded" format="yyyy年MM月dd日"
+								width="120px" value="@bind(vm.housetime)" />
+						</row>
+						<row>
+							<cell>
+								<label value="*" id="emba_housetype"
+									style="color:red" visible="false"
+									onCreate="@command('LabelInit',self=self)" />
+								<label value="住所类别" />
+							</cell>
+							<cell colspan="2">
+								<combobox mold="rounded" readonly="true"
+									width="120px" model="@load(vm.housetypeList)"
+									value="@bind(vm.emmodel.emba_housetype)">
+									<template name="model">
+										<comboitem
+											label="@load(each.pcco_cn)" />
+									</template>
+								</combobox>
+							</cell>
+							<cell>
+								<label value="*" id="emba_houseclass"
+									style="color:red" visible="false"
+									onCreate="@command('LabelInit',self=self)" />
+								<label value="居住方式" />
+							</cell>
+							<cell colspan="2">
+								<combobox mold="rounded" readonly="true"
+									width="120px" model="@load(vm.houseclassList)"
+									value="@bind(vm.emmodel.emba_houseclass)">
+									<template name="model">
+										<comboitem
+											label="@load(each.pcco_cn)" />
+									</template>
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="*" id="emba_title"
+									style="color:red" visible="false"
+									onCreate="@command('LabelInit',self=self)" />
+								<label value="职称" />
+							</cell>
+							<cell colspan="2">
+								<combobox mold="rounded" readonly="true"
+									width="120px" model="@load(vm.titleList)"
+									value="@bind(vm.emmodel.emba_title)">
+									<template name="model">
+										<comboitem
+											label="@load(each.pcco_cn)" />
+									</template>
+								</combobox>
+							</cell>
+							<cell>
+								<label value="*" id="emba_skilllevel"
+									style="color:red" visible="false"
+									onCreate="@command('LabelInit',self=self)" />
+								<label value="职业技能等级" />
+							</cell>
+							<cell colspan="2">
+								<combobox mold="rounded" readonly="true"
+									width="150px" model="@load(vm.skilllevelList)"
+									value="@bind(vm.emmodel.emba_skilllevel)">
+									<template name="model">
+										<comboitem
+											label="@load(each.pcco_cn)" />
+									</template>
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="*" id="emba_worktime"
+									style="color:red" visible="false"
+									onCreate="@command('LabelInit',self=self)" />
+								<label value="参加工作时间" />
+							</cell>
+							<datebox mold="rounded" format="yyyy年MM月dd日"
+								width="120px" value="@bind(vm.worktime)" />
+							<cell>
+								<label value="*" id="emba_sztime"
+									style="color:red" visible="false"
+									onCreate="@command('LabelInit',self=self)" />
+								<label value="来深日期" />
+							</cell>
+							<datebox mold="rounded" format="yyyy年MM月dd日"
+								width="120px" value="@bind(vm.sztime)" />
+							<cell>
+								<label value="*" id="emba_hjtime"
+									style="color:red" visible="false"
+									onCreate="@command('LabelInit',self=self)" />
+								<label value="户口进入深圳时间(深户)" />
+							</cell>
+							<datebox mold="rounded" format="yyyy年MM月dd日"
+								width="120px" value="@bind(vm.hjtime)" />
+						</row>
+						<row>
+							<cell>
+								<label value="*" id="emba_regtype"
+									style="color:red" visible="false"
+									onCreate="@command('LabelInit',self=self)" />
+								<label value="就业类型" />
+							</cell>
+							<cell colspan="5">
+								<combobox mold="rounded" readonly="true"
+									width="180px" model="@load(vm.regtypeList)"
+									value="@bind(vm.emmodel.emba_regtype)">
+									<template name="model">
+										<comboitem
+											label="@load(each.pcco_cn)" />
+									</template>
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="*" id="emba_compactlimit"
+									style="color:red" visible="false"
+									onCreate="@command('LabelInit',self=self)" />
+								<label value="劳动合同年限" />
+							</cell>
+							<textbox mold="rounded" width="60px"
+								value="@bind(vm.emmodel.emba_compactlimit)" />
+							<cell>
+								<label value="*" id="emba_compactstart"
+									style="color:red" visible="false"
+									onCreate="@command('LabelInit',self=self)" />
+								<label value="劳动合同开始日期" />
+							</cell>
+							<datebox mold="rounded" format="yyyy年MM月dd日"
+								width="120px" value="@bind(vm.compactstart)" />
+							<cell>
+								<label value="*" id="emba_compactend"
+									style="color:red" visible="false"
+									onCreate="@command('LabelInit',self=self)" />
+								<label value="劳动合同结束日期" />
+							</cell>
+							<datebox mold="rounded" format="yyyy年MM月dd日"
+								width="120px" value="@bind(vm.compactend)" />
+						</row>
+						<row>
+							<cell>
+								<label value="*" id="emba_companystart"
+									style="color:red" visible="false"
+									onCreate="@command('LabelInit',self=self)" />
+								<label value="本单位工作起始日期" />
+							</cell>
+							<cell colspan="2">
+								<datebox mold="rounded"
+									format="yyyy年MM月dd日" width="120px"
+									value="@bind(vm.companystart)" />
+							</cell>
+							<cell>
+								<label value="*" id="emba_station"
+									style="color:red" visible="false"
+									onCreate="@command('LabelInit',self=self)" />
+								<label value="工作岗位(中文)" />
+							</cell>
+							<cell colspan="2">
+								<textbox mold="rounded" width="250px"
+									value="@bind(vm.emmodel.emba_station)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="*" id="emba_birthcontrol"
+									style="color:red" visible="false"
+									onCreate="@command('LabelInit',self=self)" />
+								<label
+									value="广东省流动人口避孕节育情况报告单 编号(非深户已婚育龄女性)" />
+							</cell>
+							<cell colspan="2">
+								<textbox mold="rounded" width="250px"
+									value="@bind(vm.emmodel.emba_birthcontrol)" />
+							</cell>
+							<cell>
+								<label value="*" id="emba_photonum"
+									style="color:red" visible="false"
+									onCreate="@command('LabelInit',self=self)" />
+								<label value="相片图像号(非深户必填)" />
+							</cell>
+							<cell colspan="2">
+								<textbox mold="rounded" width="250px"
+									value="@bind(vm.emmodel.emba_photonum)" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox title="商保信息" mold="3d">
+				<grid>
+					<columns>
+						<column width="17%" />
+						<column />
+					</columns>
+					<rows>
+						<row>
+							<cell>
+								<label value="*" id="emba_sbinfor"
+									style="color:red" visible="false"
+									onCreate="@command('LabelInit',self=self)" />
+								<label value="子女、配偶信息" />
+							</cell>
+							<cell>
+								<grid>
+									<columns>
+										<column align="center" />
+										<column align="center" />
+										<column align="center"
+											width="50%" />
+										<column align="center" />
+									</columns>
+									<rows>
+										<row>
+											<label value="姓名" />
+											<label value="年龄" />
+											<label
+												value="身份证号码(无身份证号码者提供准确的出生日期)" />
+											<label value="关系" />
+										</row>
+										<row>
+											<textbox mold="rounded"
+												width="100px" value="@bind(vm.emmodel.emba_sbname1)" />
+											<textbox mold="rounded"
+												width="100px" value="@bind(vm.emmodel.emba_sbage1)" />
+											<textbox mold="rounded"
+												width="250px" value="@bind(vm.emmodel.emba_sbidcard1)" />
+											<textbox mold="rounded"
+												width="100px" value="@bind(vm.emmodel.emba_sbrelation1)" />
+										</row>
+										<row>
+											<textbox mold="rounded"
+												width="100px" value="@bind(vm.emmodel.emba_sbname2)" />
+											<textbox mold="rounded"
+												width="100px" value="@bind(vm.emmodel.emba_sbage2)" />
+											<textbox mold="rounded"
+												width="250px" value="@bind(vm.emmodel.emba_sbidcard2)" />
+											<textbox mold="rounded"
+												width="100px" value="@bind(vm.emmodel.emba_sbrelation2)" />
+										</row>
+										<row>
+											<textbox mold="rounded"
+												width="100px" value="@bind(vm.emmodel.emba_sbname3)" />
+											<textbox mold="rounded"
+												width="100px" value="@bind(vm.emmodel.emba_sbage3)" />
+											<textbox mold="rounded"
+												width="250px" value="@bind(vm.emmodel.emba_sbidcard3)" />
+											<textbox mold="rounded"
+												width="100px" value="@bind(vm.emmodel.emba_sbrelation3)" />
+										</row>
+										<row>
+											<textbox mold="rounded"
+												width="100px" value="@bind(vm.emmodel.emba_sbname4)" />
+											<textbox mold="rounded"
+												width="100px" value="@bind(vm.emmodel.emba_sbage4)" />
+											<textbox mold="rounded"
+												width="250px" value="@bind(vm.emmodel.emba_sbidcard4)" />
+											<textbox mold="rounded"
+												width="100px" value="@bind(vm.emmodel.emba_sbrelation4)" />
+										</row>
+									</rows>
+								</grid>
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="*" id="emba_sbbank"
+									style="color:red" visible="false"
+									onCreate="@command('LabelInit',self=self)" />
+								<label value="个人银行信息(商保索赔)" />
+							</cell>
+							<cell>
+								<grid>
+									<columns>
+										<column width="20%" />
+										<column />
+									</columns>
+									<rows>
+										<row>
+											<label value="中国银行帐号" />
+											<textbox mold="rounded"
+												width="350px" value="@bind(vm.emmodel.emba_sy_account)" />
+										</row>
+										<row>
+											<label value="开户行信息(详细到支行)" />
+											<textbox mold="rounded"
+												width="350px" value="@bind(vm.emmodel.emba_sy_bank)" />
+										</row>
+									</rows>
+								</grid>
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox title="入职体检信息" mold="3d">
+				<grid>
+					<columns>
+						<column width="12%" />
+						<column />
+						<column width="10%" />
+						<column />
+					</columns>
+					<rows>
+						<row>
+							<cell>
+								<label value="*" id="emba_hospital"
+									style="color:red" visible="false"
+									onCreate="@command('LabelInit',self=self)" />
+								<label value="体检医院" />
+							</cell>
+							<combobox mold="rounded" width="220px"
+								instant="true" readonly="true"
+								selectedItem="@bind(vm.bcsetupModel)"
+								model="@load(vm.bcsetupList)" onChange="@command('getbcadd')">
+								<template name="model">
+									<comboitem
+										label="@load(each.ebcs_hospital)" />
+								</template>
+							</combobox>
+							<cell>
+								<label value="*" id="emba_bctime"
+									style="color:red" visible="false"
+									onCreate="@command('LabelInit',self=self)" />
+								<label value="体检时间" />
+							</cell>
+							<cell>
+								<datebox mold="rounded"
+									format="yyyy-MM-dd" value="@bind(vm.bctime)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="*" id="emba_bcaddress"
+									style="color:red" visible="false"
+									onCreate="@command('LabelInit',self=self)" />
+								<label value="体检地址" />
+							</cell>
+							<cell colspan="3">
+								<combobox mold="rounded" width="600px"
+									readonly="true" value="@bind(vm.emmodel.emba_bcaddress)"
+									model="@load(vm.bcsetupaddList1)">
+									<template name="model">
+										<comboitem
+											label="@load(each.ebsa_address)" />
+									</template>
+								</combobox>
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox title="其他信息" mold="3d">
+				<grid>
+					<columns>
+						<column width="15%" />
+						<column />
+					</columns>
+					<rows>
+						<row>
+							<cell>
+								<label value="*" id="emba_workinfor"
+									style="color:red" visible="false"
+									onCreate="@command('LabelInit',self=self)" />
+								<label value="工作简历" />
+							</cell>
+							<cell>
+								<grid>
+									<columns>
+										<column align="center" />
+										<column align="center" />
+										<column align="center" />
+									</columns>
+									<rows>
+										<row>
+											<label value="期间" />
+											<label value="单位" />
+											<label value="职位" />
+										</row>
+										<row>
+											<textbox mold="rounded"
+												width="200px" value="@bind(vm.emmodel.emba_worktime1)" />
+											<textbox mold="rounded"
+												width="200px" value="@bind(vm.emmodel.emba_workcompany1)" />
+											<textbox mold="rounded"
+												width="200px" value="@bind(vm.emmodel.emba_workjob1)" />
+										</row>
+										<row>
+											<textbox mold="rounded"
+												width="200px" value="@bind(vm.emmodel.emba_worktime2)" />
+											<textbox mold="rounded"
+												width="200px" value="@bind(vm.emmodel.emba_workcompany2)" />
+											<textbox mold="rounded"
+												width="200px" value="@bind(vm.emmodel.emba_workjob2)" />
+										</row>
+										<row>
+											<textbox mold="rounded"
+												width="200px" value="@bind(vm.emmodel.emba_worktime3)" />
+											<textbox mold="rounded"
+												width="200px" value="@bind(vm.emmodel.emba_workcompany3)" />
+											<textbox mold="rounded"
+												width="200px" value="@bind(vm.emmodel.emba_workjob3)" />
+										</row>
+										<row>
+											<textbox mold="rounded"
+												width="200px" value="@bind(vm.emmodel.emba_worktime4)" />
+											<textbox mold="rounded"
+												width="200px" value="@bind(vm.emmodel.emba_workcompany4)" />
+											<textbox mold="rounded"
+												width="200px" value="@bind(vm.emmodel.emba_workjob4)" />
+										</row>
+										<row>
+											<textbox mold="rounded"
+												width="200px" value="@bind(vm.emmodel.emba_worktime5)" />
+											<textbox mold="rounded"
+												width="200px" value="@bind(vm.emmodel.emba_workcompany5)" />
+											<textbox mold="rounded"
+												width="200px" value="@bind(vm.emmodel.emba_workjob5)" />
+										</row>
+										<row>
+											<textbox mold="rounded"
+												width="200px" value="@bind(vm.emmodel.emba_worktime6)" />
+											<textbox mold="rounded"
+												width="200px" value="@bind(vm.emmodel.emba_workcompany6)" />
+											<textbox mold="rounded"
+												width="200px" value="@bind(vm.emmodel.emba_workjob6)" />
+										</row>
+									</rows>
+								</grid>
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="*" id="emba_family"
+									style="color:red" visible="false"
+									onCreate="@command('LabelInit',self=self)" />
+								<label value="家庭主要成员" />
+							</cell>
+							<cell>
+								<grid>
+									<columns>
+										<column align="center" />
+										<column align="center" />
+										<column align="center" />
+										<column align="center"
+											width="30%" />
+										<column align="center" />
+									</columns>
+									<rows>
+										<row>
+											<label value="称谓" />
+											<label value="姓名" />
+											<label value="年龄" />
+											<label value="工作单位及职务" />
+											<label value="备注" />
+										</row>
+										<row>
+											<textbox mold="rounded"
+												width="100px" value="@bind(vm.emmodel.emba_f1)" />
+											<textbox mold="rounded"
+												width="100px" value="@bind(vm.emmodel.emba_fn1)" />
+											<textbox mold="rounded"
+												width="100px" value="@bind(vm.emmodel.emba_fag1)" />
+											<textbox mold="rounded"
+												width="200px" value="@bind(vm.emmodel.emba_fw1)" />
+											<textbox mold="rounded"
+												width="100px" value="@bind(vm.emmodel.emba_fr1)" />
+										</row>
+										<row>
+											<textbox mold="rounded"
+												width="100px" value="@bind(vm.emmodel.emba_f2)" />
+											<textbox mold="rounded"
+												width="100px" value="@bind(vm.emmodel.emba_fn2)" />
+											<textbox mold="rounded"
+												width="100px" value="@bind(vm.emmodel.emba_fag2)" />
+											<textbox mold="rounded"
+												width="200px" value="@bind(vm.emmodel.emba_fw2)" />
+											<textbox mold="rounded"
+												width="100px" value="@bind(vm.emmodel.emba_fr2)" />
+										</row>
+										<row>
+											<textbox mold="rounded"
+												width="100px" value="@bind(vm.emmodel.emba_f3)" />
+											<textbox mold="rounded"
+												width="100px" value="@bind(vm.emmodel.emba_fn3)" />
+											<textbox mold="rounded"
+												width="100px" value="@bind(vm.emmodel.emba_fag3)" />
+											<textbox mold="rounded"
+												width="200px" value="@bind(vm.emmodel.emba_fw3)" />
+											<textbox mold="rounded"
+												width="100px" value="@bind(vm.emmodel.emba_fr3)" />
+										</row>
+										<row>
+											<textbox mold="rounded"
+												width="100px" value="@bind(vm.emmodel.emba_f4)" />
+											<textbox mold="rounded"
+												width="100px" value="@bind(vm.emmodel.emba_fn4)" />
+											<textbox mold="rounded"
+												width="100px" value="@bind(vm.emmodel.emba_fag4)" />
+											<textbox mold="rounded"
+												width="200px" value="@bind(vm.emmodel.emba_fw4)" />
+											<textbox mold="rounded"
+												width="100px" value="@bind(vm.emmodel.emba_fr4)" />
+										</row>
+										<row>
+											<textbox mold="rounded"
+												width="100px" value="@bind(vm.emmodel.emba_f5)" />
+											<textbox mold="rounded"
+												width="100px" value="@bind(vm.emmodel.emba_fn5)" />
+											<textbox mold="rounded"
+												width="100px" value="@bind(vm.emmodel.emba_fag5)" />
+											<textbox mold="rounded"
+												width="200px" value="@bind(vm.emmodel.emba_fw5)" />
+											<textbox mold="rounded"
+												width="100px" value="@bind(vm.emmodel.emba_fr5)" />
+										</row>
+										<row>
+											<textbox mold="rounded"
+												width="100px" value="@bind(vm.emmodel.emba_f6)" />
+											<textbox mold="rounded"
+												width="100px" value="@bind(vm.emmodel.emba_fn6)" />
+											<textbox mold="rounded"
+												width="100px" value="@bind(vm.emmodel.emba_fag6)" />
+											<textbox mold="rounded"
+												width="200px" value="@bind(vm.emmodel.emba_fw6)" />
+											<textbox mold="rounded"
+												width="100px" value="@bind(vm.emmodel.emba_fr6)" />
+										</row>
+									</rows>
+								</grid>
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="备注" />
+							</cell>
+							<textbox rows="5" mold="rounded" hflex="1"
+								value="@bind(vm.emmodel.emba_remark)" />
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+		</cell>	
+			</row>
+		</rows>
+	</grid>
+</window>
+</zk>

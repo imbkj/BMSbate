@@ -1,0 +1,81 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="${arg.model.coab_name}——服务政策信息新增" border="normal"
+		width="80%" height="90%" closable="true"
+		apply="org.zkoss.bind.BindComposer" id="editwin"
+		viewModel="@id('vm') @init('Controller.CoServicePolicy.SePy_PolicyInfoController')">
+		<hlayout style="margin:10px;">
+			<label>请选择类型</label>
+			<bandbox id="bd" mold="rounded" autodrop="true"
+				tooltiptext="@load(vm.tiptxt)">
+				<bandpopup>
+					<listbox width="170px" model="@load(vm.typelist)"
+						id="typelb" onSelect="@command('checktype',lb=self,bd=bd)"
+						checkmark="true" multiple="true">
+						<template name="model">
+							<listitem label="${each.note_type}"
+								value="@load(each)" />
+						</template>
+					</listbox>
+				</bandpopup>
+			</bandbox>
+			<button onClick="@command('Export')">导出数据</button>
+			<label style="margin-left:30px;" visible="false">
+				请选择问题
+			</label>
+			<bandbox id="title" mold="rounded" autodrop="true"
+				width="300px" visible="false">
+				<bandpopup>
+					<listbox width="300px" model="@load(vm.titlelist)"
+						id="titlelb" onSelect="@command('checktitle',lb=self,bd=title)"
+						checkmark="true" multiple="true">
+						<template name="model">
+							<listitem label="${each.item_title}"
+								value="@load(each)" />
+						</template>
+					</listbox>
+				</bandpopup>
+			</bandbox>
+		</hlayout>
+		<grid model="@load(vm.list)" vflex="1">
+			<rows>
+				<template name="model">
+					<row
+						style="border:1px solid #CCCCCC;background-color:#f5fafe">
+						<cell width="150px">
+							<label value="@load(each.note_type)"></label>
+						</cell>
+						<cell>
+							<grid vflex="1"
+								model="@bind(each.titlelist)">
+								<rows>
+									<template name="model">
+										<row
+											style="border:1px solid #CCCCCC;background-color:#f5fafe;cursor:pointer">
+											<cell width="40px"
+												align="center">
+												<label
+													value="${forEachStatus.index+1 }">
+												</label>
+											</cell>
+											<cell width="250px">
+												<label
+													value="@load(each.item_title)">
+												</label>
+											</cell>
+											<cell>
+												<textbox width="90%"
+													value="@bind(each.item_content)">
+												</textbox>
+											</cell>
+										</row>
+									</template>
+								</rows>
+							</grid>
+						</cell>
+					</row>
+				</template>
+			</rows>
+		</grid>
+	</window>
+</zk>

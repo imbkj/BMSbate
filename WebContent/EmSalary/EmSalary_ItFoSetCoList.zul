@@ -1,0 +1,105 @@
+<!--
+	创建人：林少斌
+	创建时间：2013-12-4
+	用途：工资项目算法设置列表页面
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="工资项目算法设置 -- 公司列表页面" border="normal" width="100%"
+		height="100%" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmSalary.EmSalary_ItFoSetCoListController')">
+		<borderlayout vflex="1">
+			<north border="0" title="数据查询" collapsible="true"
+				flex="true" open="true">
+				<panel border="1">
+					<panelchildren style="padding:5px;">
+						<grid id="searchGird" width="100%">
+							<rows>
+								<row>
+									<cell width="10%"
+										style="color:#666;">
+										公司编号
+									</cell>
+									<intbox id="cid" width="40%"
+										value="@bind(vm.cid)" mold="rounded" />
+									<cell width="10%"
+										style="color:#666;">
+										公司名称
+									</cell>
+									<textbox id="coba_company"
+										width="40%" value="@bind(vm.coba_company)" mold="rounded" />
+								</row>
+								<row>
+									<cell style="color:#666;">
+										客服代表
+									</cell>
+									<combobox id="coba_client"
+										model="@load(vm.cobaClientList)" value="@bind(vm.coba_client)"
+										width="40%" autodrop="true" mold="rounded">
+										<template name="model">
+											<comboitem
+												label="@load(each.coba_client)" />
+										</template>
+									</combobox>
+									<cell></cell>
+									<cell></cell>
+								</row>
+							</rows>
+							<foot>
+								<footer align="center">
+									<button id="btSearch" label="查询"
+										onClick="@command('search')" />
+								</footer>
+							</foot>
+						</grid>
+					</panelchildren>
+				</panel>
+			</north>
+			<center>
+				<grid width="100%" height="100%"
+					model="@load(vm.cobaBaseList)" emptyMessage="无数据" mold="paging"
+					pageSize="20">
+					<columns sizable="true">
+						<column label="序号" align="center" width="60px" />
+						<column label="公司编号" align="center"
+							sort="auto(cid)" />
+						<column label="公司名称" align="center"
+							sort="auto(coba_company)" />
+						<column label="客服代表" align="center"
+							sort="auto(coba_client)" />
+						<column label="薪酬负责人" align="center"
+							sort="auto(coba_gzaddname)" />
+						<column label="操作" align="center" width="60px" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<label
+									value="${forEachStatus.index + 1}" />
+								<label value="@load(each.cid)" />
+								<label value="@load(each.coba_company)" />
+								<label value="@load(each.coba_client)" />
+								<label value="@load(each.coba_gzaddname)" />
+								<menubar autodrop="true">
+									<menu
+										image="../images/pencil-small.png">
+										<menupopup>
+											<menuitem label="设置工资项目"
+												onClick="@command('openZUL',url='EmSalary_Item.zul',cid=each.cid)" />
+											<menuitem label="设置工资算法" visible="false"
+												onClick="@command('openZUL',url='EmSalary_ForInfo.zul',cid=each.cid)" />
+											<menuitem label="员工算法分配"
+												onClick="@command('openZUL',url='EmSalary_ForAssign.zul',cid=each.cid)" />
+											<menuitem label="个税申报地分配"
+												onClick="@command('assign',cid=each.cid)" />
+										</menupopup>
+									</menu>
+								</menubar>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

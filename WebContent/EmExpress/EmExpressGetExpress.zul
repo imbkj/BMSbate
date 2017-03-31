@@ -1,0 +1,63 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="前台核收快递" border="normal" width="70%" height="70%" closable="true"
+	apply="org.zkoss.bind.BindComposer" id="win"
+    viewModel="@id('vm') @init('Controller.EmExpress.EmExpressGetExpressController')"
+>
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell width="80px">快件内容</cell>
+			<cell><textbox readonly="true" value="@load(vm.model.expr_content)"></textbox></cell>
+			<cell width="80px">收件人</cell>
+			<cell><textbox readonly="true" value="@load(vm.model.exct_receivename)"></textbox></cell>
+		</row>
+		<row>
+			<cell>快件等级</cell>
+			<cell><textbox readonly="true" value="@load(vm.model.expr_rank)"></textbox></cell>
+			<cell>快件类型</cell>
+			<cell><textbox readonly="true" value="@load(vm.model.expr_class)"></textbox></cell>
+		</row>
+		<row>
+			<cell>添加人</cell>
+			<cell><textbox readonly="true" value="@load(vm.model.expr_addname)"></textbox></cell>
+			<cell>添加时间</cell>
+			<cell><textbox readonly="true" value="@load(vm.model.expr_addtime)"></textbox></cell>
+		</row>
+		<row>
+			<cell>快递核收人</cell>
+			<cell><textbox readonly="${vm.model.expr_state==1?'true':'false' }" value="@bind(vm.name)"></textbox></cell>
+			<cell>快递核收时间</cell>
+			<cell><datebox buttonVisible="${vm.model.expr_state==1?'true':'false' }" value="@bind(vm.model.expr_accepttime)"></datebox></cell>
+		</row>
+		<row visible="${vm.model.expr_state==2?'true':'false' }">
+			<cell>快递公司</cell>
+			<cell>
+				<combobox value="@bind(vm.model.expr_company)">
+					<comboitem label="顺丰快递"/>
+					<comboitem label="天天快递"/>
+					<comboitem label="韵达快递"/>
+					<comboitem label="中通快递"/>
+					<comboitem label="圆通快递"/>
+					<comboitem label="申通快递"/>
+					<comboitem label="EMS快递"/>
+				</combobox>
+			</cell>
+			<cell>运单号</cell>
+			<cell><textbox value="@bind(vm.model.expr_waynumber)"></textbox></cell>
+		</row>
+		<row visible="${vm.model.expr_state==2?'true':'false' }">
+			<cell>发件人</cell>
+			<cell><textbox value="@bind(vm.model.expr_sendname)"></textbox></cell>
+			<cell>发件时间</cell>
+			<cell><datebox value="@bind(vm.sendtime)"></datebox></cell>
+		</row>
+		<row visible="${vm.model.expr_state==2?'true':'false' }">
+			<cell>快递费</cell>
+			<cell colspan="3"><textbox value="@bind(vm.model.expr_fee)"></textbox>元（人民币）</cell>
+		</row>
+	</rows>
+	<foot><footer align="center"><button onClick="@command('submit',win=win)">提交</button></footer></foot>
+</grid>
+</window>
+</zk>

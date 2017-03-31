@@ -1,0 +1,405 @@
+<?page title="支付通知审核" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="支付通知" border="normal" id="winadd" height="730px"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmPay.EmPay_BaseController')"
+		width="900px" closable="true">
+		<label id="espa_id" value="${arg.id}" visible="false" />
+		<label id="espa_tapr_id" value="${arg.espa_tapr_id}" visible="false" />
+		<groupbox title="公司支付信息" mold="3d" height="130px">
+			<grid vflex="1" hflex="1">
+				<rows>
+					<row>
+						<cell width="70px">所属月份：</cell>
+						<cell>
+							<label id="embase1" width="90px"
+								value="${arg.ownmonth}" />
+						</cell>
+						<cell width="70px">支付单号：</cell>
+						<cell>
+							<label id="embase2" width="90px"
+								value="${arg.paynum}" />
+						</cell>
+					</row>
+					<row>
+						<cell width="70px">所属类别：</cell>
+						<cell>
+							<label id="embase3" width="90px"
+								value="${arg.stype}" />
+						</cell>
+						<cell>实付金额：</cell>
+						<cell>
+							<label id="embase4" width="90px"
+								value="${arg.fee}" />
+						</cell>
+					</row>
+					<row>
+						<cell>支付单位：</cell>
+						<cell colspan="2">
+							<label id="embase5" width="200px" />
+						</cell>
+						<cell align="right">
+							<button label="审 核"  onClick="@command('aut_ok',embase1=embase1,embase2=embase2,espa_id=espa_id,espa_tapr_id=espa_tapr_id)"/>
+						</cell>
+					</row>
+				</rows>
+			</grid>
+		</groupbox>
+		<groupbox title="支付明细" mold="3d">
+			<grid vflex="1" hflex="1">
+				<rows>
+					<row>
+						<cell>
+							<button label="员工明细"  onClick="@command('ebase_index',winadd=winadd,em1=embase1,em2=embase2,em3=embase3,em4=embase4,espa_id=espa_id,espa_tapr_id=espa_tapr_id)"/>　<button label="客户明细" onClick="@command('cbase_index',winadd=winadd,em1=embase1,em2=embase2,em3=embase3,em4=embase4,espa_id=espa_id,espa_tapr_id=espa_tapr_id)" />
+							<div
+								style="width:380px;height:490px;overflow-y:scroll;overflow-x:hidden;border:1px solid #bcbdbf;">
+								<grid width="99%" id="g1"
+									model="@load(vm.copay_baselist)">
+									<columns>
+										<column label="公司编号"
+											align="center" width="72px" />
+										<column label="公司名称"
+											align="center" width="72px" />
+										<column label="实收金额"
+											align="center" width="72px" />
+										<column label="实付金额"
+											align="center" width="72px" />
+										<column label="差额"
+											align="center" width="72px" />
+									</columns>
+									<rows>
+										<template name="model">
+											<row>
+												<cell>
+													<label
+														value="@load(each.cid)"
+														onClick="@command('cfeelist', emco=each)" />
+												</cell>
+												<cell>
+													<label
+														style="cursor:pointer" value="@load(each.coba_company)"
+														onClick="@command('cfeelist', emco=each)" />
+												</cell>
+												<cell>
+													<label
+														style="cursor:pointer" value="@load(each.espa_ss_fee)"
+														onClick="@command('cfeelist', emco=each)" />
+												</cell>
+												<cell>
+													<label
+														style="cursor:pointer" value="@load(each.espa_sf_fee)"
+														onClick="@command('cfeelist', emco=each)" />
+												</cell>
+												<cell>
+													<label
+														style="cursor:pointer" value="@load(each.espa_dis_fee)"
+														onClick="@command('cfeelist', emco=each)" />
+												</cell>
+											</row>
+										</template>
+									</rows>
+								</grid>
+							</div>
+						</cell>
+						<cell width="55%">
+							<grid vflex="1" hflex="1"
+								model="@load(vm.copay_feelist)">
+								<rows>
+									<template name="model">
+										<row>
+											<cell>
+												<grid>
+													<rows>
+														<row>
+															<cell>
+																公司编号：
+															</cell>
+															<cell>
+																<label
+																	value="@load(each.cid)" width="90px" />
+															</cell>
+															<cell>
+																员工姓名：
+															</cell>
+														</row>
+														<row>
+															<cell>
+																公司名称：
+															</cell>
+															<cell>
+																<label
+																	value="@load(each.coba_company)" width="290px" />
+															</cell>
+														</row>
+														<row>
+															<cell
+																colspan="6">
+																<grid
+																	width="95%">
+																	<columns>
+																		<column
+																			label="项目" align="center" />
+																		<column
+																			label="公司缴费" align="center" />
+																		<column
+																			label="个人缴费" align="center" />
+																		<column
+																			label="合计" align="center" />
+																	</columns>
+																	<rows>
+																		<row>
+																			<cell>
+																				<label
+																					value="养老金" />
+																			</cell>
+																			<cell>
+																				<label
+																					value="@load(each.ylcp)" />
+																			</cell>
+																			<cell>
+																				<label
+																					value="@load(each.ylop)" />
+																			</cell>
+																			<cell>
+																				<label
+																					value="@load(each.ylcp+each.ylop)" />
+																			</cell>
+																		</row>
+																		<row>
+																			<cell>
+																				<label
+																					value="失业金" />
+																			</cell>
+																			<cell>
+																				<label
+																					value="@load(each.syecp)" />
+																			</cell>
+																			<cell>
+																				<label
+																					value="@load(each.syeop)" />
+																			</cell>
+																			<cell>
+																				<label
+																					value="@load(each.syecp+each.syeop)" />
+																			</cell>
+																		</row>
+																		<row>
+																			<cell>
+																				<label
+																					value="工伤金" />
+																			</cell>
+																			<cell>
+																				<label
+																					value="@load(each.gscp)" />
+																			</cell>
+																			<cell>
+																				<label
+																					value="@load(each.gsop)" />
+																			</cell>
+																			<cell>
+																				<label
+																					value="@load(each.gscp+each.gsop)" />
+																			</cell>
+																		</row>
+																		<row>
+																			<cell>
+																				<label
+																					value="医疗金" />
+																			</cell>
+																			<cell>
+																				<label
+																					value="@load(each.jlcp)" />
+																			</cell>
+																			<cell>
+																				<label
+																					value="@load(each.jlop)" />
+																			</cell>
+																			<cell>
+																				<label
+																					value="@load(each.jlcp+each.jlop)" />
+																			</cell>
+																		</row>
+																		<row>
+																			<cell>
+																				<label
+																					value="生育金" />
+																			</cell>
+																			<cell>
+																				<label
+																					value="@load(each.syucp)" />
+																			</cell>
+																			<cell>
+																				<label
+																					value="@load(each.syuop)" />
+																			</cell>
+																			<cell>
+																				<label
+																					value="@load(each.syucp+each.syuop)" />
+																			</cell>
+																		</row>
+																		<row>
+																			<cell>
+																				<label
+																					value="公积金" />
+																			</cell>
+																			<cell>
+																				<label
+																					value="@load(each.housecp)" />
+																			</cell>
+																			<cell>
+																				<label
+																					value="@load(each.houseop)" />
+																			</cell>
+																			<cell>
+																				<label
+																					value="@load(each.housecp+each.houseop)" />
+																			</cell>
+																		</row>
+																		<row>
+																			<cell>
+																				<label
+																					value="补充公积金" />
+																			</cell>
+																			<cell>
+																				<label
+																					value="0.00" />
+																			</cell>
+																			<cell>
+																				<label
+																					value="0.00" />
+																			</cell>
+																			<cell>
+																				<label
+																					value="0.00" />
+																			</cell>
+																		</row>
+																		<row>
+																			<cell>
+																				<label
+																					value="其它福利" />
+																			</cell>
+																			<cell
+																				colspan="3" align="left">
+																				<label
+																					value="" />
+																			</cell>
+																		</row>
+																		<row>
+																			<cell>
+																				<label
+																					value="档案管理" />
+																			</cell>
+																			<cell>
+																				<label
+																					value="@load(each.da_fee)" />
+																			</cell>
+																			<cell>
+																				<label
+																					value="员工体检" />
+																			</cell>
+																			<cell>
+																				<label
+																					value="@load(each.hd_fee)" />
+																			</cell>
+																		</row>
+																		<row>
+																			<cell>
+																				<label
+																					value="商业保险" />
+																			</cell>
+																			<cell>
+																				<label
+																					value="@load(each.sb_fee)" />
+																			</cell>
+																			<cell>
+																				<label
+																					value="代发工资" />
+																			</cell>
+																			<cell>
+																				<label
+																					value="@load(each.gz_fee)" />
+																			</cell>
+																		</row>
+																		<row>
+																			<cell>
+																				<label
+																					value="代报个税" />
+																			</cell>
+																			<cell>
+																				<label
+																					value="@load(each.gs_fee)" />
+																			</cell>
+																			<cell>
+																				<label
+																					value="户籍管理" />
+																			</cell>
+																			<cell>
+																				<label
+																					value="@load(each.hj_fee)" />
+																			</cell>
+																		</row>
+																		<row>
+																			<cell>
+																				<label
+																					value="证件办理" />
+																			</cell>
+																			<cell>
+																				<label
+																					value="@load(each.zj_fee)" />
+																			</cell>
+																			<cell>
+																				<label
+																					value="员工活动" />
+																			</cell>
+																			<cell>
+																				<label
+																					value="@load(each.hd_fee)" />
+																			</cell>
+																		</row>
+																		<row>
+																			<cell>
+																				<label
+																					value="其他" />
+																			</cell>
+																			<cell>
+																				<label
+																					value="@load(each.other_fee)" />
+																			</cell>
+																			<cell>
+																				<label
+																					value="服务费" />
+																			</cell>
+																			<cell>
+																				<label
+																					value="@load(each.fw_fee)" />
+																			</cell>
+																		</row>
+																		<row>
+																			<cell>
+																				<label
+																					value="备注" />
+																			</cell>
+																			<cell
+																				align="left" colspan="3">
+																				<label
+																					value="" />
+																			</cell>
+																		</row>
+																	</rows>
+																</grid>
+															</cell>
+														</row>
+													</rows>
+												</grid>
+											</cell>
+										</row>
+									</template>
+								</rows>
+							</grid>
+						</cell>
+					</row>
+				</rows>
+			</grid>
+		</groupbox>
+	</window>
+</zk>

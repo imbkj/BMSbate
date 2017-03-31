@@ -1,0 +1,47 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="快递信息新增" border="normal" width="700px" height="400px" closable="true"
+	apply="org.zkoss.bind.BindComposer" id="wins"
+    viewModel="@id('vm') @init('Controller.EmExpress.EmExpressInfoAddController')"
+>
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell width="80px">邮寄物品</cell>
+			<cell><textbox value="@bind(vm.model.expr_content)"></textbox></cell>
+			<cell width="80px">快件等级</cell>
+			<cell>
+				<combobox value="@bind(vm.model.expr_rank)">
+					<comboitem label="普通"/>
+					<comboitem label="紧急"/>
+				</combobox>
+			</cell>
+		</row>
+		<row>
+			<cell>邮寄地址</cell>
+			<cell colspan="3">
+				<combobox model="@load(vm.list)" width="80%" readonly="true" selectedItem="@bind(vm.m)">
+					<template name="model">
+						<comboitem label="@load(each.exct_address)" value="@load(each.exct_id)"/>
+					</template>
+				</combobox>
+			</cell>
+			
+		</row>
+		<row>
+			<cell>收件人</cell>
+			<cell><textbox value="@bind(vm.m.exct_receivename)" readonly="true"></textbox></cell>
+			<cell>手机号码</cell>
+			<cell><textbox value="@bind(vm.m.exct_mobile)" readonly="true"></textbox></cell>
+		</row>
+		<row>
+			<cell>电话号码</cell>
+			<cell><textbox value="@bind(vm.m.exct_phone)" readonly="true"></textbox></cell>
+			<cell>邮政编码</cell>
+			<cell><textbox value="@bind(vm.m.exct_code)" readonly="true"></textbox></cell>
+		</row>
+	</rows>
+	<foot><footer align="center"><button onClick="@command('submit',win=wins)">提交</button></footer></foot>
+</grid>
+</window>
+</zk>

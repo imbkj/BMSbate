@@ -1,0 +1,35 @@
+<?page title="员工福利产品及服务费" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<grid height="100%" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoFinanceManage.Cfma_EmProductListController')"
+		emptyMessage="暫未找到数据" mold="paging" pageSize="10"
+		sizedByContent="true" model="@load(vm.emProductList)">
+		<frozen style="background: #DFDED8" columns="3">
+			<div style="padding: 0 10px;" />
+		</frozen>
+		<columns sizable="true">
+			<column label="序号" width="50px" align="center" />
+			<column label="员工编号" width="100px" align="center"
+				sort="auto(gid)" />
+			<column label="员工姓名" width="150px" align="center"
+				sort="auto(emba_name)" />
+			<column label="${each.name}" width="100px" align="center"
+				forEach="${vm.itemList}" />
+			<column label="应收合计" width="80px" align="center"
+				sort="auto(sumReceivable)" />
+		</columns>
+		<rows>
+			<template name="model">
+				<row>
+					<label value="${forEachStatus.index + 1}" />
+					<label value="@load(each.gid)" />
+					<label value="@load(each.emba_name)" />
+					<label value="${each.receivable}"
+						forEach="${each.itemList}"
+						style="${each.receivable>0?'color:blue':''}" />
+					<label value="@load(each.sumReceivable)" />
+				</row>
+			</template>
+		</rows>
+	</grid>
+</zk>

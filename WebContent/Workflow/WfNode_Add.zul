@@ -1,0 +1,119 @@
+<?page title="任务单流程管理-新增节点" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window apply="Controller.Workflow.WfNode_AddController" id="winNodeAdd"  border="normal"
+		 title="${arg.name}" width="70%" closable="true" sizable="true">
+		<grid width="100%">
+			<rows>
+				<row>
+					<cell width="10%" style="color:#666;" align="center">节点名称：</cell>
+					<cell colspan="3">
+						<textbox id="tbName" width="65%" />
+						<label style="color:red;">(*)</label>
+					</cell>
+					<cell width="10%" style="color:#666;" align="center">节点步骤：</cell>
+					<cell width="25%">
+					<intbox id="ibStep"/>
+					<label style="color:red;">(*)</label>
+					</cell>
+				</row>
+				<row>
+				    <cell width="10%" style="color:#666;" align="center">节点URL：</cell>
+					<cell colspan="3">
+					<textbox id="tbUrl" width="65%" />
+					</cell>
+					执行类型：
+					<cell width="25%">
+						<combobox id="cbRuntype" readonly="true"
+							mold="rounded" width="90%" value="人为操作">
+						<comboitem label="人为操作" />
+						<comboitem label="系统自动处理"/>
+						</combobox>
+					</cell>
+				</row>
+				<row>
+					
+					执行的存储过程
+					<cell colspan="3">
+					<textbox id="tbRunprocedure" width="65%" />
+					</cell>
+					预期天数：
+					<cell>
+					<intbox id="ibMaxday"/>
+					</cell>
+				</row>
+				<row>
+					节点是否可视：
+					<cell>
+					<radiogroup id="rdIfview">
+					<radio value="1" label="是" checked="true"/>
+					<radio value="0" label="否"/>
+					</radiogroup>
+					</cell>
+					是否有子任务：
+					<cell>
+					<radiogroup id="rdIfhavechild">
+					<radio value="1" label="是" />
+					<radio value="0" label="否" checked="true"/>
+					</radiogroup>
+					</cell>
+					是否可跳过：
+					<cell>
+					<radiogroup id="rdIfskip">
+					<radio value="1" label="是" />
+					<radio value="0" label="否" checked="true"/>
+					</radiogroup>
+					</cell>
+				</row>
+				<row>
+					是否可回退：
+					<cell>
+					<radiogroup id="rdIfreturn">
+					<radio value="1" label="是" />
+					<radio value="0" label="否" checked="true"/>
+					</radiogroup>
+					</cell>
+					是否可被上一步撤销：
+					<cell>
+					<radiogroup id="rdIfrevoke">
+					<radio value="1" label="是" />
+					<radio value="0" label="否" checked="true"/>
+					</radiogroup>
+					</cell>
+					是否可终止流程：
+					<cell>
+					<radiogroup id="rdIfstop">
+					<radio value="1" label="是" />
+					<radio value="0" label="否" checked="true"/>
+					</radiogroup>
+					</cell>
+				</row>
+				<row>
+					使用状态：
+					<cell colspan="5">
+					<radiogroup id="rdState">
+					<radio value="1" label="启用" checked="true"/>
+					<radio value="0" label="禁用" />
+					</radiogroup>
+					</cell>
+				</row>
+				<row>
+					特定操作人：
+					<cell colspan="5">
+						<textbox id="tbSelectuser" rows="1" width="60%"  />
+					</cell>
+				</row>
+				<row>
+					备注：
+					<cell colspan="5">
+						<textbox id="tbRemark" rows="5" width="60%"  />
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button label="提交" id="btSubmit"/>
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

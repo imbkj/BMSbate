@@ -1,0 +1,56 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="审核" border="normal" width="90%" height="90%" closable="true"
+	apply="org.zkoss.bind.BindComposer" id="editwin"
+	viewModel="@id('vm') @init('Controller.EmBenefit.EmActy_AuditInfoController')"
+>
+<grid vflex="1" model="@load(vm.listss)">
+	<columns>
+		<column width="40px" align="center"><label>序号</label></column>
+		<column align="center"><label>公司编号</label></column>
+		<column align="center"><label>公司名称</label></column>
+		<column align="center"><label>所属月份</label></column>
+		<column align="center"><label>福利类型</label></column>
+		<column align="center"><label>福利项目</label></column>
+		<column align="center"><label>福利内容</label></column>
+		<column align="center"><label>费用</label></column>
+		<column align="center"><label>公司收款</label></column>
+	</columns>
+	<rows>
+		<template name="model">
+		<row>
+			<cell><label value="${forEachStatus.index+1 }"></label></cell>
+			<cell><label value="@load(each.cid)"></label></cell>
+			<cell><label value="@load(each.emwf_company)"></label></cell>
+			<cell><label value="@load(each.ownmonth)"></label></cell>
+			<cell><label value="@load(each.embf_mold)"></label></cell>
+			<cell><label value="@load(each.embf_name)"></label></cell>
+			<cell><label value="@load(each.emwf_producefo)"></label></cell>
+			<cell><label value="@load(each.prod_discountprice)"></label></cell>
+			<cell><a onClick="@command('lookbill',model=each)"><label value="查看收款"></label></a></cell>
+		</row>
+		</template>
+	</rows>
+	<foot>
+		<footer align="center" span="9">
+		<vlayout>
+		<hlayout style="padding-bottom:30px;">
+		<label value="总金额"></label>
+		<textbox readonly="true" mold="rounded" value="@load(vm.allpri)"></textbox>
+		<label value="审核人" style="padding-left:50px;"></label>
+		<textbox value="@load(vm.username)" readonly="true" mold="rounded"></textbox>
+		<label value="审核时间" style="padding-left:50px;"></label>
+		<datebox focus="true" id="datetxt" mold="rounded"></datebox>
+		<label value="备注" style="padding-left:50px;"></label>
+		<textbox width="250px" id="remark" value="@load(vm.model.gift_remark)" mold="rounded"></textbox>
+		</hlayout>
+		<hlayout>
+		<button onClick="@command('AuditGift',win=editwin,dateval=datetxt.value,remark=remark.value)">提交</button>
+			<button onClick="@command('back',win=editwin)">退回</button>
+			</hlayout>
+			</vlayout>
+		</footer>
+	</foot>
+</grid>
+</window>
+</zk>

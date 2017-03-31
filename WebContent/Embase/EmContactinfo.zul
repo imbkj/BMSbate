@@ -1,0 +1,627 @@
+<!-- 员工联系记录 -->
+<!-- 赵敏捷 -->
+<?component name="docDataList" macro-uri="../DocumentsInfo/DocumentsInfo_AUPageList.zul" inline="true"?>
+<?page title="员工联系" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="win" title="联系员工页面" border="normal" width="100%"
+		closable="true" height="100%" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.Embase.EmContactController')">
+		<div style="overflow-y:scroll;overflow-x:hidden;height:90%">
+			<groupbox mold="3d" open="true" title="个人基本信息">
+				<grid width="100%">
+					<rows>
+						<row>
+							<cell width="15%">姓名</cell>
+							<cell width="35%">
+								<textbox id="emzt_name" readonly="true"
+									value="@load(vm.emmodel.emba_name)" width="80%" mold="rounded" />
+							</cell>
+							<cell width="15%">正确姓名</cell>
+							<cell width="35%">
+								<textbox id="emzt_t_name" onChange="@command('ckeckstrname')"
+									value="@bind(vm.emztM.emzt_t_name)" width="80%" mold="rounded" />
+							</cell>
+						</row>
+						<row>
+							<cell>身份证号</cell>
+							<cell>
+								<textbox id="emzt_idcard"  
+									readonly="true" value="@load(vm.emmodel.emba_idcard)"
+									width="80%" mold="rounded" />
+							</cell>
+							<cell>正确身份证号</cell>
+							<cell>
+								<textbox id="emzt_t_idcard" onChange="@command('ckeckstridcard')"
+									value="@bind(vm.emztM.emzt_t_idcard)" width="80%"
+									mold="rounded" />
+							</cell>
+						</row>
+						<row>
+							<cell>户籍</cell>
+							<cell>
+								<textbox id="emzt_hjadd"
+									value="@load(vm.emmodel.emba_sb_hj)" width="80%"
+									mold="rounded" />
+							</cell>
+							<cell>正确户籍</cell>
+							<cell>
+								<textbox id="emzt_t_hjadd" onChange="@command('ckeckstrhj')"
+									value="@bind(vm.emztM.emzt_hjadd)" width="80%" mold="rounded" />
+							</cell>
+						</row>
+						<row>
+							<cell>民族</cell>
+							<cell>
+								<combobox id="emzt_folk" mold="rounded"
+									width="80%" model="@load(vm.folkList)" readonly="true"
+									value="@bind(vm.emztM.emzt_folk)">
+									<template name="model">
+										<comboitem label="@load(each)" />
+									</template>
+								</combobox>
+							</cell>
+							<cell>学历</cell>
+							<cell>
+								<combobox id="emzt_education"
+									width="80%" mold="rounded" model="@load(vm.educationList)"
+									readonly="true" value="@bind(vm.emztM.emzt_education)">
+									<template name="model">
+										<comboitem
+											label="@load(each.pcco_cn)" />
+									</template>
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>Email</cell>
+							<cell>
+								<textbox id="emzt_email"
+									value="@bind(vm.emztM.emzt_email)" width="80%" mold="rounded" />
+							</cell>
+							<cell>手机</cell>
+							<cell colspan="3">
+								<textbox
+									value="@bind(vm.emmodel.emba_mobile)" mold="rounded" />
+								<image src="../images/mobile.gif"
+									tooltiptext="短信" style="cursor:pointer"
+									onClick="@command('openmobile')" />
+								<image src="../images/in_pic.gif"
+									tooltiptext="图像" style="cursor:pointer"
+									onClick="@command('openempic')" />
+								<a onClick="@command('sendmsg',table='Emcontactinfo')">
+									<image src="../images/mail_new.gif" />
+								</a>
+							</cell>
+						</row>
+						<row>
+
+
+							<cell>国籍</cell>
+							<cell colspan="3">
+								<label
+									value="@bind(vm.emmodel.emba_nationality)" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox mold="3d" open="true" title="社保信息">
+				<grid width="100%">
+					<rows>
+						<row>
+							<cell width="15%">原是否购买过社保</cell>
+							<cell width="35%">
+								<combobox id="emzt_ifshebao" width="80%"
+									mold="rounded" readonly="true"
+									value="@bind(vm.emztM.emzt_ifshebao)">
+									<comboitem label="是" />
+									<comboitem label="否" />
+								</combobox>
+							</cell>
+							<cell width="15%">电脑号</cell>
+							<cell width="40%">
+								<hbox>
+									<textbox id="emzt_computerid"
+										value="@bind(vm.emztM.emzt_computerid)" width="80%" />
+									<button label="查询电脑号"
+										onClick="@command('computerid_search')" />
+								</hbox>
+							</cell>
+						</row>
+						<row>
+							<cell>利手</cell>
+							<cell>
+								<combobox id="emzt_hand" mold="rounded"
+									width="80%" readonly="true"
+									value="@bind(vm.emztM.emzt_hand)">
+									<comboitem label="右" />
+									<comboitem label="左" />
+								</combobox>
+							</cell>
+							<cell>是否有深圳社保卡</cell>
+							<cell>
+								<combobox id="emzt_ifsbcard" width="80%"
+									mold="rounded" readonly="true"
+									value="@bind(vm.emztM.emzt_ifsbcard)">
+									<comboitem label="是" />
+									<comboitem label="否" />
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>是否通知员工办理社保卡</cell>
+							<cell>
+								<combobox id="emzt_sbc_notice"
+									width="80%" mold="rounded" readonly="true"
+									value="@bind(vm.emztM.emzt_sbc_notice)">
+									<comboitem label="是" />
+									<comboitem label="否" />
+								</combobox>
+							</cell>
+							<cell></cell>
+							<cell></cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox mold="3d" open="true" title="公积金信息">
+				<grid width="100%">
+					<rows>
+						<row>
+							<cell width="15%">原是否购买过公积金</cell>
+							<cell width="35%">
+								<combobox id="emzt_ifhouse" width="80%"
+									mold="rounded" readonly="true"
+									value="@bind(vm.emztM.emzt_ifhouse)">
+									<comboitem label="是" />
+									<comboitem label="否" />
+								</combobox>
+							</cell>
+							<cell width="15%">公积金帐号</cell>
+							<cell width="35%">
+								<textbox id="emzt_houseid"
+									value="@bind(vm.emztM.emzt_houseid)" width="80%"
+									mold="rounded" />
+							</cell>
+						</row>
+						<row>
+							<cell>是否通知员工完成公积金封存</cell>
+							<cell>
+								<combobox id="emzt_ifhouseseal"
+									width="80%" mold="rounded" readonly="true"
+									value="@bind(vm.emztM.emzt_ifhouseseal)">
+									<comboitem label="是" />
+									<comboitem label="否" />
+								</combobox>
+							</cell>
+							<cell>婚姻状况</cell>
+							<cell>
+								<combobox id="emzt_marital" width="80%"
+									mold="rounded" readonly="true"
+									value="@bind(vm.emztM.emzt_marital)">
+									<comboitem label="已婚" />
+									<comboitem label="未婚" />
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>配偶姓名</cell>
+							<cell>
+								<textbox id="emzt_m_name"
+									value="@bind(vm.emztM.emzt_m_name)" width="80%" mold="rounded" />
+							</cell>
+							<cell>配偶身份证号</cell>
+							<cell>
+								<textbox id="emzt_m_idcard"
+									value="@bind(vm.emztM.emzt_m_idcard)" width="80%"
+									mold="rounded" />
+							</cell>
+						</row>
+						<row>
+							<cell>职称</cell>
+							<cell>
+								<!-- 								<combobox id="emzt_title" mold="rounded" -->
+								<!-- 									width="80%" readonly="true" -->
+								<!-- 									value="@bind(vm.emztM.emzt_title)"> -->
+								<!-- 									<comboitem label="无" /> -->
+								<!-- 									<comboitem label="初级" /> -->
+								<!-- 									<comboitem label="中级" /> -->
+								<!-- 									<comboitem label="高级" /> -->
+								<!-- 								</combobox> -->
+
+								<combobox id="emzt_title"
+									readonly="true" model="@load(vm.emzt_titlelist)"
+									value="@bind(vm.emztM.emzt_title)">
+									<template name="model">
+										<comboitem label="@load(each)" />
+									</template>
+								</combobox>
+
+							</cell>
+							<cell></cell>
+							<cell>
+
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+
+<groupbox mold="3d" open="true" title="档案信息">
+				<grid width="100%">
+					<rows>
+						<row>
+							<cell width="15%">档案存放单位</cell>
+							<cell width="35%">
+								<combobox id="emzt_fileplace"
+									width="80%" mold="rounded" readonly="true"
+									value="@bind(vm.emztM.emzt_fileplace)">
+									<comboitem label="深圳市人才市场" />
+									<comboitem label="深圳人才高新部" />
+									<comboitem label="学生档案(在校" />
+									<comboitem label="自带" />
+									<comboitem label="不详" />
+									<comboitem label="无" />
+									<comboitem label="其它" />
+								</combobox>
+							</cell>
+							<cell width="15%">其它档案存放单位</cell>
+							<cell width="35%">
+								<textbox id="emzt_ofileplace"
+									value="@bind(vm.emztM.emzt_ofileplace)" width="80%"
+									mold="rounded" />
+							</cell>
+						</row>
+						<row>
+							<cell>是否有档案托管服务</cell>
+							<cell>
+								<combobox id="emzt_iffileservice"
+									width="80%" mold="rounded" readonly="true"
+									value="@bind(vm.emztM.emzt_iffileservice)">
+									<comboitem label="是" />
+									<comboitem label="否" />
+								</combobox>
+							</cell>
+							<cell visible="false">是否有原托管协议</cell>
+							<cell  visible="false">
+								<combobox id="emzt_ifda" mold="rounded"
+									width="80%" readonly="true"
+									value="@bind(vm.emztM.emzt_ifda)">
+									<comboitem label="有" />
+									<comboitem label="无" />
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>员工档案是否转移</cell>
+							<cell>
+								<combobox id="emzt_iffilechange"
+									width="80%" mold="rounded" readonly="true"
+									value="@bind(vm.emztM.emzt_iffilechange)">
+									<comboitem label="是" />
+									<comboitem label="否" />
+								</combobox>
+							</cell>
+							<cell>员工档案不可转移原因</cell>
+							<cell>
+								<textbox id="emzt_nifc_reason"
+									value="@bind(vm.emztM.emzt_nifc_reason)" width="80%"
+									mold="rounded" />
+							</cell>
+						</row>
+						<row>
+							<cell  visible="false">是否有欠费</cell>
+							<cell  visible="false">
+								<combobox id="emzt_ifowed" width="80%"
+									mold="rounded" readonly="true"
+									value="@bind(vm.emztM.emzt_ifowed)">
+									<comboitem label="是" />
+									<comboitem label="否" />
+								</combobox>
+							</cell>
+							<cell  visible="false">档案费用缴至哪个月份</cell>
+							<cell  visible="false">
+								<datebox id="emzt_fileendmonth"
+									value="@bind(vm.fileendmonth)" width="80%"
+									sclass="datebox-month-only" readonly="true" format="yyyyMM"
+									mold="rounded" />
+							</cell>
+						</row>
+						<row>
+							<cell  visible="false">户口是否托管在人才</cell>
+							<cell  visible="false">
+								<combobox id="emzt_ifrc" mold="rounded"
+									width="80%" readonly="true"
+									value="@bind(vm.emztM.emzt_ifrc)">
+									<comboitem label="是" />
+									<comboitem label="否" />
+								</combobox>
+							</cell>
+							<cell></cell>
+							<cell>
+
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			
+			<groupbox title="商保信息" mold="3d" >
+						<grid>
+							<columns>
+								<column width="17%" />
+								<column />
+							</columns>
+							<rows>
+								<row>
+									<cell>
+										<label value="*"
+											id="emba_sbinfor" style="color:red" visible="false"
+											  />
+										<label value="子女、配偶信息" />
+									</cell>
+									<cell>
+										<grid>
+											<columns>
+												<column align="center" />
+												<column align="center" />
+												<column align="center"
+													width="50%" />
+												<column align="center" />
+											</columns>
+											<rows>
+												<row>
+													<label value="姓名" />
+													<label value="年龄" />
+													<label
+														value="身份证号码(无身份证号码者提供准确的出生日期)" />
+													<label value="关系" />
+												</row>
+												<row>
+														<textbox
+															width="100px" value="@bind(vm.emmodel.emba_sbname1)" />
+														<textbox
+															width="100px" value="@bind(vm.emmodel.emba_sbage1)" />
+														<textbox
+															width="250px" value="@bind(vm.emmodel.emba_sbidcard1)" />
+
+														<combobox
+															readonly="true" width="120px"
+															model="@load(vm.sbrelationList)"
+															value="@bind(vm.emmodel.emba_sbrelation1)">
+															<template
+																name="model">
+																<comboitem
+																	label="@load(each)" />
+															</template>
+														</combobox>
+														<!-- 													<textbox -->
+														<!-- 														width="100px" value="@bind(vm.emmodel.emba_sbrelation1)" /> -->
+													</row>
+													<row>
+														<textbox
+															width="100px" value="@bind(vm.emmodel.emba_sbname2)" />
+														<textbox
+															width="100px" value="@bind(vm.emmodel.emba_sbage2)" />
+														<textbox
+															width="250px" value="@bind(vm.emmodel.emba_sbidcard2)" />
+														<combobox
+															readonly="true" width="120px"
+															model="@load(vm.sbrelationList)"
+															value="@bind(vm.emmodel.emba_sbrelation2)">
+															<template
+																name="model">
+																<comboitem
+																	label="@load(each)" />
+															</template>
+														</combobox>
+													</row>
+													<row>
+														<textbox
+															width="100px" value="@bind(vm.emmodel.emba_sbname3)" />
+														<textbox
+															width="100px" value="@bind(vm.emmodel.emba_sbage3)" />
+														<textbox
+															width="250px" value="@bind(vm.emmodel.emba_sbidcard3)" />
+														<combobox
+															readonly="true" width="120px"
+															model="@load(vm.sbrelationList)"
+															value="@bind(vm.emmodel.emba_sbrelation3)">
+															<template
+																name="model">
+																<comboitem
+																	label="@load(each)" />
+															</template>
+														</combobox>
+													</row>
+													<row>
+
+
+														<textbox
+															width="100px" value="@bind(vm.emmodel.emba_sbname4)" />
+														<textbox
+															width="100px" value="@bind(vm.emmodel.emba_sbage4)" />
+														<textbox
+															width="250px" value="@bind(vm.emmodel.emba_sbidcard4)" />
+														<combobox
+															readonly="true" width="120px"
+															model="@load(vm.sbrelationList)"
+															value="@bind(vm.emmodel.emba_sbrelation4)">
+															<template
+																name="model">
+																<comboitem
+																	label="@load(each)" />
+															</template>
+														</combobox>
+													</row>
+											</rows>
+										</grid>
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<label value="*"
+											id="emba_sbbank" style="color:red" visible="false"
+											  />
+										<label value="个人银行信息(商保索赔)" />
+									</cell>
+									<cell>
+										<grid>
+											<columns>
+												<column width="20%" />
+												<column />
+											</columns>
+											<rows>
+												<row>
+													<label
+														value="中国银行帐号" />
+													<textbox
+														width="350px" value="@bind(vm.emmodel.emba_sy_account)" />
+												</row>
+												<row>
+													<label
+														value="开户行信息(详细到支行)" />
+													<textbox
+														width="350px" value="@bind(vm.emmodel.emba_sy_bank)" />
+												</row>
+											</rows>
+										</grid>
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+					
+	
+			<groupbox mold="3d" open="true" title="员工资料提交情况">
+				<grid width="100%">
+					<rows>
+						<row>
+							<cell width="15%">材料收集状态</cell>
+							<cell width="35%">
+								<combobox id="emzt_datastate"
+									width="80%" mold="rounded" readonly="true" value="">
+									<comboitem label="未处理" />
+									<comboitem label="未提交" />
+									<comboitem label="部分提交" />
+									<comboitem label="资料齐全" />
+								</combobox>
+							</cell>
+							<cell width="15%">是否通知员工提交相关材料</cell>
+							<cell width="35%">
+								<combobox id="emzt_data_notice"
+									width="80%" mold="rounded" readonly="true"
+									value="@bind(vm.emztM.emzt_data_notice)">
+									<comboitem label="是" />
+									<comboitem label="否" />
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>资料提交记录备注</cell>
+							<cell>
+
+							</cell>
+							<cell></cell>
+							<cell>
+
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<grid id="gd" width="100%">
+				<rows>
+
+					<row>
+						<cell width="10%">
+							<label value="入职所需材料" />
+						</cell>
+						<cell>
+
+							<!-- 材料内联页 参数：puzu_id：模块页面id，doType：新增(a)还是修改(u)，doc_type：员工(g)还是公司(c)，gid：公司数据则插入空白 ，业务表id，
+								log_url：获取到页面路径的前部分，lh_people：上一手交接人默认值-->
+							<docDataList id="docGrid" puzu_id="137"
+								f_puzu_id="" doType="${vm.doType}" doc_type="g"
+								gid="${vm.emztM.gid}" tid="${vm.emztM.id}"
+								 log_url=""
+									dHeight="200px" dWidth="100%" lh_people="" pUsername="林少斌"
+									pUserId="42" />
+
+						</cell>
+					</row>
+				</rows>
+			</grid>
+			<grid width="100%">
+				<rows>
+					<row>
+						<cell width="15%">历史联系记录</cell>
+						<cell>
+							<textbox id="r_record" readonly="true"
+								value="@load(vm.emztM.emzt_r_record)" width="50%" rows="4"
+								mold="rounded" />
+						</cell>
+					</row>
+					<row>
+						<cell>新增联系记录</cell>
+						<cell>
+							<textbox id="emzt_r_record"
+								value="@bind(vm.recordsd)" width="50%" mold="rounded" />
+						</cell>
+					</row>
+				</rows>
+			</grid>
+		</div>
+		<hbox width="100%" pack="center" align="center">
+			<button label="保存"
+				onClick="@command('btnSubmit',gd=docGrid)" />
+
+		</hbox>
+	</window>
+	<script>
+
+
+
+
+
+
+
+
+
+		
+		<![CDATA[ zk.afterLoad("zul.db", function () { var _Cwgt = {};
+		zk.override(zul.db.CalendarPop.prototype, _Cwgt, { redraw:
+		function (out) { _Cwgt.redraw.apply(this, arguments);
+		this._customChangeView (); }, open: function (silent) {
+		_Cwgt.open.apply(this, arguments); this._customChangeView (); },
+		_customChangeView: function () { if
+		(jq(this.parent.$n()).hasClass('datebox-year-only')) { var view
+		= this._view; if (view == 'month' || view == 'day')
+		this._setView("year"); } else if
+		(jq(this.parent.$n()).hasClass('datebox-month-only')) { if
+		(this._view == 'day') this._setView("month"); } }, _chooseDate:
+		function (target, val) { var view = this._view; if
+		(jq(this.parent.$n()).hasClass('datebox-month-only') ||
+		jq(this.parent.$n()).hasClass('datebox-year-only')) { var date =
+		this.getTime(), year = (view == 'decade' || view == 'year')? val
+		: date.getFullYear(), month = view == 'month'? val : 0, date =
+		1; this._setTime(year, month, 1); if (view == 'decade') {
+		this._setView("year"); } else if
+		(jq(this.parent.$n()).hasClass('datebox-month-only') && view ==
+		'year') { this._setView("month"); } else if
+		(jq(this.parent.$n()).hasClass('datebox-month-only') && view ==
+		'month' || jq(this.parent.$n()).hasClass('datebox-year-only') &&
+		view == 'year') { this.close(); this.parent.updateChange_(); } }
+		else { _Cwgt._chooseDate.apply(this, arguments); } } }); }); ]]>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+
+	</script>
+</zk>

@@ -1,0 +1,140 @@
+<?page title="账单收款" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winCollectToBill" title="账单收款" border="normal"
+		width="800px" height="600px" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoFinanceManage.Cfma_CollectToBillsController')"
+		closable="true" sizable="true" maximizable="true">
+		<borderlayout>
+			<north splittable="true" border="0">
+				<grid width="100%" height="100%">
+					<rows>
+						<row>
+							<cell width="30%">
+								<label value="账单编号：" />
+							</cell>
+							<cell>
+								<combobox model="@load(vm.billNoList)"
+									onSelect="@command('selectBillNo',billNo=self.selectedItem.value)">
+									<template name="model">
+										<comboitem
+											label="@bind(each.cfmb_number)"
+											value="@bind(each.cfmb_number)" />
+									</template>
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="公司名称：" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.billModel.company)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="账单差额：" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.billModel.imbalance)" style="color:red;" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="收款金额：" />
+							</cell>
+							<cell>
+								<hlayout>
+									<decimalbox id="dbPaidin"
+										value="@bind(vm.amount)" width="150px" mold="rounded"
+										format="###.##" disabled="@load(vm.amountDisabled)"
+										constraint="no empty" onChange="@command('formatAmount')" />
+									<checkbox label="确认"
+										checked="@bind(vm.amountCheck)"
+										onCheck="@command('confirmEx',pop=popMessage,com=self)" />
+									<button label="自动分配财务科目"
+										onClick="@command('autoDisSort')"
+										disabled="@load(vm.autoSortDisabled)" />
+								</hlayout>
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</north>
+			<center border="0">
+				<grid span="true" model="@load(vm.sortList)"
+					emptyMessage="无数据" sizedByContent="true" width="100%"
+					height="100%">
+					<columns>
+						<column label="内容" align="center" />
+						<column label="应收款" align="center" />
+						<column label="已收款" align="center" />
+						<column label="差额" align="center" />
+						<column label="分配科目" align="center" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<label
+									value="@load(each.cfsa_cpac_name)" />
+								<label
+									value="@load(each.cfsa_Receivable)" />
+								<label value="@load(each.cfsa_PaidIn)" />
+								<label value="@load(each.imbalance)" />
+								<decimalbox value="@bind(each.collect)"
+									width="50%" mold="rounded" format="###.##"
+									constraint="no empty,no negative"
+									onChange="@command('checkEx',m=each,pop=popMessage,com=self)" />
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</center>
+			<south splittable="true" border="0">
+				<grid width="100%" height="100%">
+					<rows>
+						<row>
+							<cell width="30%">
+								<label value="分配科目合计：" />
+							</cell>
+							<cell>
+								<label value="@load(vm.sumEx)" />
+							</cell>
+						</row>
+						<row>
+							<cell width="30%">
+								<label value="添加人：" />
+							</cell>
+							<cell>
+								<label value="@load(vm.username)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="备注：" />
+							</cell>
+							<cell>
+								<textbox id="txtRemark" rows="3"
+									width="75%" mold="rounded" />
+							</cell>
+						</row>
+					</rows>
+					<foot>
+						<footer align="center">
+							<button label="提交"
+								onClick="@command('SubmitCollectDis',win=winCollectToBill,remark=txtRemark.value)" />
+						</footer>
+					</foot>
+				</grid>
+			</south>
+		</borderlayout>
+		<popup id="popMessage">
+			<groupbox closable="false">
+				<caption>提示</caption>
+				<label value="@load(vm.message)" style="color:blue" />
+			</groupbox>
+		</popup>
+	</window>
+</zk>

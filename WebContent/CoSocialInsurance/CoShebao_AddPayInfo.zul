@@ -1,0 +1,131 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="添加社保缴交信息" border="normal" closable="true"
+		id="addPaywin" apply="org.zkoss.bind.BindComposer" width="40%"
+		height="60%"
+		onCreate="@command('init',btn=btn,bc=bc,ac=ac,com=com,date=date,lb=lb)"
+		viewModel="@id('vm') @init('Controller.CoSocialInsurance.CoShebao_AddPayInfoController')">
+
+		<borderlayout>
+			<north>
+				<grid>
+					<rows>
+						<row>
+							<cell width="20%">
+								<label value="社保编号" />
+							</cell>
+							<cell>
+								<label value="@load(vm.m.coirdcard)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="公司全称" />
+							</cell>
+							<cell>
+								<label value="@load(vm.m.companyname)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="所属月份" />
+							</cell>
+							<cell>
+								<label value="@load(vm.m.ownmonth)" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+
+			</north>
+			<center>
+				<grid>
+
+					<rows>
+						<row>
+							<groupbox width="100%" open="true"
+								title="填写缴交信息">
+								<grid width="100%" height="100%">
+									<rows>
+										<row>
+											<cell width="30%">
+												<label value="缴交人数" />
+											</cell>
+											<cell>
+												<doublebox id="bc"
+													value="@bind(vm.m.bodycount)"
+													onChange="@command('isChange')" />
+											</cell>
+										</row>
+										<row>
+											<cell>
+												<label value="缴交金额" />
+											</cell>
+											<cell>
+												<doublebox id="ac"
+													value="@bind(vm.m.acount)" onChange="@command('isChange')" />
+											</cell>
+										</row>
+									</rows>
+								</grid>
+							</groupbox>
+						</row>
+						<row>
+							<groupbox width="100%" open="true"
+								title="填写到帐信息">
+								<grid width="100%" height="100%">
+									<rows>
+										<row>
+											<cell width="30%">
+												<label value="查询日期" />
+											</cell>
+											<cell>
+												<datebox id="date"
+													if="${vm.m.isaccount!='已到账' }" format="yyyy-MM-dd"
+													value="@bind(vm.m.queryDate)" />
+												<label
+													if="${vm.m.isaccount=='已到账' }" value="@bind(vm.d)" />
+											</cell>
+										</row>
+										<row>
+											<cell>
+												<label value="是否到账" />
+											</cell>
+											<cell>
+												<combobox id="com"
+													readonly="true" if="${vm.m.isaccount!='已到账' }"
+													value="@bind(vm.m.isaccount)">
+													<comboitem
+														value="无台账" label="无台账" />
+													<comboitem
+														value="未处理" label="未处理" />
+													<comboitem
+														value="财务账" label="财务账" />
+													<comboitem
+														value="已到账" label="已到账" />
+													<comboitem
+														value="未到账" label="未到账" />
+												</combobox>
+												<label
+													if="${vm.m.isaccount=='已到账' }"
+													value="@bind(vm.m.isaccount)" style="color:green" />
+											</cell>
+										</row>
+									</rows>
+								</grid>
+							</groupbox>
+						</row>
+					</rows>
+				</grid>
+			</center>
+			<south>
+				<div align="center">
+					<button label="保存" id="btn"
+						onClick="@command('save',addPaywin=addPaywin)" />
+					<label value="最终到账状态为已到账，无法再进行修改" visible="false"
+						id="lb" />
+				</div>
+			</south>
+		</borderlayout>
+	</window>
+</zk>

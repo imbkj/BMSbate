@@ -1,0 +1,81 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="'商业保险-体记录查询" border="normal" vflex="1"
+		apply="org.zkoss.bind.BindComposer" closable="false"
+		viewModel="@id('vm') @init('Controller.CoBase.CoBaseSocial_SecurityController')">
+		<borderlayout>
+			<north border="0" title="检索" collapsible="false"
+				style="padding-bottom:10px;">
+				<grid>
+					<rows>
+						<row>
+							<cell width="80px">公司编号</cell>
+							<cell>
+								<textbox width="200px"   value="@bind(vm.cid)"></textbox>
+							</cell>
+							<cell width="80px">所属公司</cell>
+							<cell>
+							   <textbox width="200px"  value="@bind(vm.coba_company)"></textbox>
+							</cell>
+						</row>
+						<row>
+						   <cell width="80px">客服</cell>
+							<cell>
+								 <combobox width="200px" 
+									model="@load(vm.listcoba_assistant)" readonly="true" value="@bind(vm.coba_client)">
+									<template name="model">
+										<comboitem label="@load(each)" width="300px"></comboitem>
+									</template>
+								</combobox>
+							</cell>
+							<cell width="80px">员服人员</cell>
+							<cell>
+							   <textbox width="200px"  value="@bind(vm.coba_assistant)"></textbox>
+							  
+							</cell>
+						</row>
+					</rows>
+					<foot>
+						<footer align="center">
+						   <button onClick="@command('findAuditCore')">查询</button>
+						</footer>
+					</foot>
+				</grid>
+			</north>
+		    <center>
+	          <grid vflex="1" model="@load(vm.coBaseSocialList)" emptyMessage="无数据" mold="paging" id="lmtGrid"
+					pageSize="25">
+					<columns sizable="true">
+						<column label="序号" align="center" width="60px"/>
+						<column label="公司编号" align="center"/>
+						<column label="所属公司" align="center"/>
+						<column label="客服" align="center"/>
+						<column label="员服人员" align="center"/>
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+							    <cell >
+								<label value="${forEachStatus.index + 1}" />
+								</cell>
+								<cell>
+                                  <label value="@load(each.cid)" />
+                                </cell>
+								<cell>
+                                  <label value="@load(each.coba_company)" />
+                                </cell>
+								<cell>
+								<label value="@load(each.coba_client)" />
+								</cell>
+                                <cell onClick="@command('editAssistant',m=each)">
+                                  <label style="cursor:pointer;color:#00F;" value="@load(each.coba_assistant)"/>
+                                </cell>
+                                
+							</row>
+						</template>
+					</rows>
+				</grid>
+	        </center>
+	  </borderlayout>	
+</window>
+</zk>

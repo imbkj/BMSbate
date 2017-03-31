@@ -1,0 +1,311 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="新增发票" border="normal" width="950px" height="650px"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoFinanceManage.CoInvoice.InvoiceAddController')"
+		closable="true" sizable="true">
+		<borderlayout>
+			<east width="50%" open="false" title="收款记录">
+				<borderlayout>
+					<north height="50%">
+						<grid height="100%" model="@load(vm.list)"
+							sizedByContent="true" span="true">
+							<columns>
+								<column width="60px" align="center">
+									序号
+								</column>
+								<column align="center">所属月份</column>
+								<column align="center">账单号</column>
+								<column align="center">收款金额</column>
+								
+								<column width="30px" align="center">
+								</column>
+							</columns>
+							<template name="model">
+								<row>
+									<cell>
+										${forEachStatus.index+1 }
+									</cell>
+									<cell><label value="@load(each.ownmonth)" /></cell>
+									<cell>
+										<label
+											value="@load(each.cfco_cfmb_number)" />
+									</cell>
+									<cell>
+										<label
+											value="@load(each.cfco_TotalPaidIn)" />
+									</cell>
+									
+									<cell>
+										<checkbox
+											checked="@bind(each.check)" onClick="@command('checkfee')" />
+									</cell>
+								</row>
+							</template>
+						</grid>
+					</north>
+					<center title="发票记录">
+						<grid height="100%" model="@load(vm.ciList)"
+							sizedByContent="true" span="true">
+							<columns>
+								<column align="center">序号</column>
+								<column align="center">发票编号</column>
+								<column align="center">金额</column>
+								<column align="center">添加时间</column>
+								<column align="center">添加人</column>
+								<column align="center">操作</column>
+							</columns>
+							<template name="model">
+								<row>
+									<cell>
+										${forEachStatus.index+1 }
+									</cell>
+									<cell>
+										<label
+											value="@load(each.coin_invoiceid)" />
+									</cell>
+									<cell>
+										<label
+											value="@load(each.coin_total)" />
+									</cell>
+									<cell>
+										<label
+											value="@load(each.coin_addtime)" />
+									</cell>
+									<cell>
+										<label
+											value="@load(each.coin_addname)" />
+									</cell>
+									<cell>
+										<menubar autodrop="true"
+											width="50px" sclass="mymb">
+											<menu
+												image="../images/pencil-small.png">
+												<menupopup>
+													<menuitem label="读取"
+														onClick="@command('readInvoice',a=each)" />
+													<menuitem label="打印"
+														onClick="@command('print',a=each)" />
+													<menuitem label="删除"
+														onClick="@command('del',a=each)" />
+												</menupopup>
+											</menu>
+										</menubar>
+									</cell>
+								</row>
+							</template>
+						</grid>
+					</center>
+				</borderlayout>
+			</east>
+			<center>
+				<grid height="100%" width="100%">
+					<rows>
+						<row>
+							<cell>
+								<groupbox title="公司信息">
+									<grid width="100%" height="100%">
+										<columns visible="false">
+											<column width="100px"></column>
+											<column></column>
+										</columns>
+										<rows>
+											<row>
+												<cell>公司名称</cell>
+												<cell>
+													<label
+														value="@load(vm.cid)" />
+													<label value=" - " />
+													<label
+														value="@load(vm.company)" />
+												</cell>
+											</row>
+											<row>
+												<cell>未开票金额</cell>
+												<cell>
+													<label
+														value="@load(vm.fee)" />
+
+												</cell>
+											</row>
+										</rows>
+									</grid>
+								</groupbox>
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<groupbox title="开票信息">
+									<grid>
+										<columns visible="false">
+											<column width="100px"></column>
+											<column></column>
+											<column width="100px"></column>
+											<column></column>
+											<column width="100px"></column>
+											<column></column>
+										</columns>
+										<rows>
+											<row>
+												<cell>开票规则</cell>
+												<cell colspan="3">
+													<textbox
+														width="100%" mold="rounded" value="@bind(vm.cim.rule)" />
+												</cell>
+												<cell>行业分类</cell>
+												<cell>
+													<textbox
+														mold="rounded" value="@bind(vm.cim.industytype)" />
+												</cell>
+											</row>
+											<row>
+												<cell>发票编号</cell>
+												<cell>
+													<textbox
+														onChange="@command('modremark')" instant="true"
+														mold="rounded" width="100%"
+														value="@bind(vm.cim.coin_invoiceid)" />
+												</cell>
+												<cell>收据编号</cell>
+												<cell>
+													<textbox
+														mold="rounded" width="100%"
+														value="@bind(vm.cim.coin_receiptid)" />
+												</cell>
+												<cell>发票类型</cell>
+												<cell>
+													<label
+														value="@load(vm.cim.coin_itype)" />
+												</cell>
+											</row>
+											<row>
+												<cell>开票日期</cell>
+												<cell>
+													<datebox id="idate"
+														value="@bind(vm.cim.coin_iDate2)" mold="rounded"
+														width="100%" />
+												</cell>
+												<cell>打印状态</cell>
+												<cell>
+													<combobox
+														value="@bind(vm.cim.coin_iprint)" mold="rounded">
+														<comboitem
+															label="已打印" />
+														<comboitem
+															label="未打印" />
+													</combobox>
+												</cell>
+												<cell>发票代码</cell>
+												<cell>
+													<textbox
+														onChange="@command('modremark')" instant="true"
+														value="@bind(vm.cim.coin_codeid)" mold="rounded" />
+												</cell>
+											</row>
+											<row>
+												<cell>发票抬头</cell>
+												<cell colspan="3">
+													<textbox
+														value="@bind(vm.cim.coin_title)" width="100%"
+														mold="rounded" />
+												</cell>
+												<cell>合计金额</cell>
+												<cell>
+													<label
+														value="@bind(vm.cim.coin_total)" />
+												</cell>
+											</row>
+											<row>
+												<cell colspan="6"
+													height="100%">
+													<grid width="100%"
+														height="100%" sizedByContent="true" span="true"
+														model="@load(vm.ciiList)">
+														<columns>
+															<column
+																align="center">
+																所属月份
+															</column>
+															<column
+																align="center">
+																内容
+															</column>
+															<column
+																align="center">
+																金额
+															</column>
+															<column
+																align="center">
+																费用类型
+															</column>
+														</columns>
+														<template
+															name="model">
+															<row>
+																<cell>
+																	<intbox
+																		onChange="@command('modItem',a=each,b=self)"
+																		instant="true" value="@bind(each.coii_owmonth)"
+																		mold="rounded" />
+																	<intbox
+																		onChange="@command('modItem',a=each,b=self)"
+																		instant="true" value="@bind(each.coii_owmonth2)"
+																		mold="rounded" />
+																</cell>
+																<cell>
+																	<textbox
+																		onChange="@command('modItem',a=each,b=self)"
+																		instant="true" value="@bind(each.coii_content)"
+																		mold="rounded" />
+																</cell>
+																<cell>
+																	<doublebox
+																		onChange="@command('modItem',a=each,b=self)"
+																		value="@bind(each.coii_fee)" mold="rounded" />
+																</cell>
+																<cell>
+																	<combobox
+																		readonly="true" mold="rounded"
+																		value="@bind(each.coii_feetype)"
+																		onChange="@command('modItem',a=each,b=self)"
+																		instant="true" model="@load(vm.plist)">
+																		<template
+																			name="model">
+																			<comboitem
+																				label="@load(each.pcco_cn) " />
+																		</template>
+																	</combobox>
+																</cell>
+															</row>
+														</template>
+													</grid>
+												</cell>
+											</row>
+											<row>
+												<cell>备注</cell>
+												<cell colspan="5">
+													<textbox
+														width="100%" mold="rounded"
+														value="@bind(vm.cim.coin_remark)" />
+												</cell>
+											</row>
+										</rows>
+									</grid>
+								</groupbox>
+							</cell>
+						</row>
+					</rows>
+					<foot>
+						<footer align="center">
+
+							<button label="新增"
+								onClick="@command('save')" />
+							<button label="保存"
+								visible="@load(vm.modinfo)" onClick="@command('modInvoice')" />
+						</footer>
+					</foot>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

@@ -1,0 +1,137 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="公积金密钥申报管理" border="normal" width="100%" height="100%"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoHousingFund.CoHousingFund_ResubmitPwdController')">
+		<borderlayout>
+			<!-- <north>
+				<grid height="100%">
+				<rows>
+				<row>
+				<cell>
+				<textbox
+				value="@bind(vm.queryCondition)" width="12%" />
+				<combobox width="10%" value="单位公积金号"
+				id="qcomid">
+				<comboitem value="1" label="单位公积金号" />
+				<comboitem value="2" label="公司编号" />
+				<comboitem value="3" label="公司名称" />
+				<comboitem value="4" label="申报状态" />
+				</combobox>
+				</cell>
+				</row>
+				</rows>
+				<foot>
+				<footer align="center">
+				<button label="查询"
+				onClick="@command('query',status=qcomid.selectedItem.value)" />
+				</footer>
+				</foot>
+				</grid>
+				
+				</north>-->
+			<center>
+				<grid height="100%" mold="paging" pageSize="15"
+					model="@load(vm.schfmList)" sizedByContent="true" span="true">
+					<columns>
+						<column label="公司编号" align="center">
+						<separator></separator>
+							<textbox mold="rounded" width="80%" 
+							value="@bind(vm.cid)" onChange="@command('search')"/>
+						</column>
+						<column label="公司名称" align="center">
+							<separator></separator>
+							<textbox mold="rounded" width="80%"
+								value="@bind(vm.coName)" onChange="@command('search')" />
+						</column>
+						<column label="单位公积金号" align="center"></column>
+						<column label="密钥专办员姓名" align="center"></column>
+						<column label="密钥专办员号" align="center"></column>
+						<column label="变动情况" align="center">
+							<separator></separator>
+							<textbox mold="rounded" width="80%"
+								value="@bind(vm.addtype)" onChange="@command('search')" />
+						</column>
+						<column label="添加时间" align="center"></column>
+						<column label="申报时间" align="center"></column>
+						<column label="添加人" align="center"></column>
+						<column label="状态 " align="center">
+
+						</column>
+						<column label="操作 " align="center"></column>
+					</columns>
+					<template name="model">
+						<row>
+							<cell align="center">
+								<label value="@bind(each.cid)" />
+							</cell>
+							<cell align="center">
+								<label
+									value="@bind(each.cfpc_cohf_company)" style="color:black" />
+							</cell>
+							<cell align="center">
+								<label
+									value="@bind(each.cfpc_cohf_houseid)" />
+							</cell>
+							<cell align="center">
+								<label value="@bind(each.cfpc_zb_name)" />
+							</cell>
+							<cell align="center">
+								<label
+									value="@bind(each.cfpc_zb_number)" />
+							</cell>
+							<cell align="center">
+								<label value="@bind(each.cfpc_addtype)" />
+							</cell>
+							<cell align="center">
+								<label
+									value="@bind(each.cfpc_addtimeString)" />
+							</cell>
+							<cell align="center">
+								<label
+									value="@bind(each.cfpc_completetime)" />
+							</cell>
+							<cell align="center">
+								<label value="@bind(each.cfpc_addname)" />
+							</cell>
+							<cell align="center">
+								<label
+									value="@bind(each.cfpc_statusString)"
+									if="${each.cfpc_state==4}" style="color:red" />
+								<label
+									value="@bind(each.cfpc_statusString)"
+									if="${each.cfpc_state==1}" style="color:black" />
+								<label
+									value="@bind(each.cfpc_statusString)"
+									if="${each.cfpc_state==2}" style="color:green" />
+								<label
+									value="@bind(each.cfpc_statusString)"
+									if="${each.cfpc_state==3}" style="color:blue" />
+							</cell>
+							<cell align="center">
+								<menubar autodrop="true">
+									<menu
+										image="../images/pencil-small.png">
+										<menupopup>
+											<menuitem label="修改"
+												disabled="${each.cfpc_state!=1}"
+												onClick="@command('update',a=each)" />
+											<menuitem label="删除"
+												disabled="${each.cfpc_state!=1}"
+												onClick="@command('del',a=each)" />
+											<menuitem label="重新提交"
+												disabled="${each.cfpc_state!=4}"
+												onClick="@command('resubmit',efpc_id=each.cfpc_id)" />
+										</menupopup>
+									</menu>
+								</menubar>
+							</cell>
+						</row>
+					</template>
+				</grid>
+
+			</center>
+		</borderlayout>
+
+	</window>
+</zk>

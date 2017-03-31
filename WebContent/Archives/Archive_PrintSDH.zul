@@ -1,0 +1,24 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="档案调入" border="normal" height="100%" width="100%"
+		closable="true">
+		<zscript language="Java">
+	import Util.UserInfo;
+	String user = UserInfo.getUserid();
+	Integer eadaId = Integer.valueOf(Executions.getCurrent().getArg()
+			.get("daid").toString());
+	Integer m = 0;
+	if (Executions.getCurrent().getArg().get("m") != null) {
+		m = Integer.valueOf(Executions.getCurrent().getArg().get("m")
+				.toString());
+	}
+	
+</zscript>
+		<scrollview height="90%" vflex="1">
+			
+			<include height="100%" 
+				src="../Archives/EmArchiveDatum_OpenDoc.jsp?eada_id=${eadaId }&amp;mp=${m}">
+			</include>
+		</scrollview>
+	</window>
+</zk>

@@ -1,0 +1,79 @@
+<?page title="交接申请表格" contentType="text/html;charset=UTF-8"?>
+<?component name="docDataList" macro-uri="../DocumentsInfo/DocumentsInfo_AddPageList.zul" inline="true"?>
+<zk>
+	<window title="交接申请表格" border="normal" width="60%" height="60%"
+		closable="true" id="win" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.Archives.Archive_FilePassController')">
+		<grid vflex="1">
+			<rows>
+				<row>
+					<cell width="100px"></cell>
+					<cell></cell>
+					<cell width="100px"></cell>
+					<cell></cell>
+				</row>
+				<row>
+					<cell>交接表格</cell>
+					<cell colspan="3">
+						<docDataList id="docGrid" puzu_id="10"
+							gid="10001" dWidth="100%" pUsername="陈耀家" pUserId="248" />
+					</cell>
+				</row>
+				<row>
+					<cell>发出表格日期</cell>
+					<cell>
+						<datebox id="drawformdate"
+							value="${vm.models.eada_drawformdate }">
+						</datebox>
+					</cell>
+					<cell>交接人</cell>
+					<cell>
+						<combobox id="drawformpeople"
+							value="${vm.models.eada_drawformpeople}"
+							model="@load(vm.loginlist)" width="80px">
+							<template name="model">
+								<comboitem label="${each}" />
+							</template>
+						</combobox>
+					</cell>
+				</row>
+				<row>
+					<cell>毕业生接收单位</cell>
+					<cell>
+						<textbox id="rsetup"
+							value="${vm.amodel.emar_rsetup }" width="85%">
+						</textbox>
+					</cell>
+					<cell>毕业生接收时间</cell>
+					<cell>
+						<datebox id="rdate" value="${vm.rddate }"></datebox>
+					</cell>
+				</row>
+				<row visible="false">
+					<cell>回收表格日期</cell>
+					<cell>
+						<datebox id="receiveform"
+							value="${vm.models.eada_returnformdate }">
+						</datebox>
+					</cell>
+					<cell>办理转正日期</cell>
+					<cell>
+						<datebox id="finishdate"></datebox>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button
+						onClick="@command('summithand',docGrid=docGrid,win=win,drawformdate=drawformdate.value,drawformpeople=drawformpeople.value,rsetup=rsetup.value,rdate=rdate.value,receiveform=receiveform.value,finishdate=finishdate.value)">
+						提交
+					</button>
+					<button
+						onClick="@command('addremark',win=win)">
+						备注
+					</button>
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

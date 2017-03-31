@@ -1,0 +1,41 @@
+<?page title="劳动合同终止" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="雇员合同终止" border="normal" id="w3" height="210px"
+		apply="org.zkoss.bind.BindComposer,Controller.EmBaseCompact.EmBaseCompact_AddController"
+		viewModel="@id('vm') @init('Controller.EmBaseCompact.EmBaseCompact_AddController')"
+		width="450px" closable="true">
+		<label id="gid" value="${arg.gid}" visible="false" />
+		<groupbox title="终止信息" mold="3d">
+			<grid vflex="1" hflex="1">
+				<rows>
+					<row>
+						<cell width="130px">终止时间：</cell>
+						<cell colspan="3">
+						<hbox>
+							<datebox width="130px" id="embasex1"
+								readonly="true" mold="rounded" format="yyyy-MM-dd" />
+							<label style="color:red;">(*)</label>
+							</hbox>
+						</cell>
+					</row>
+					<row>
+						<cell width="130px">终止文件上传：</cell>
+						<cell colspan="3">
+						<hbox>
+							<textbox mold="rounded" rows="1"
+								readonly="true" value="@load(vm.filename)" />
+							<button label="浏览..."
+								upload="true,multiple=true" onUpload="@command('browse')" />
+								</hbox>
+						</cell>
+					</row>
+					<row>
+						<cell colspan="4" align="center">
+							<button label="提交" onClick="@command('endemcompact',w3=w3,embasex1=embasex1)" />
+						</cell>
+					</row>
+				</rows>
+			</grid>
+		</groupbox>
+	</window>
+</zk>

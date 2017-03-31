@@ -1,0 +1,90 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<?component name="docDataList" macro-uri="../DocumentsInfo/DocumentsInfo_UpPageList.zul" inline="true"?>
+<zk>
+	<window title="转正定级——收回表格" border="normal" closable="true"
+		width="60%" height="60%" apply="org.zkoss.bind.BindComposer"
+		id="bwin"
+		viewModel="@id('vm') @init('Controller.Archives.Archive_FilePassController')">
+		<grid vflex="1">
+			<rows>
+				<row>
+					<cell width="100px"></cell>
+					<cell></cell>
+					<cell width="100px"></cell>
+					<cell></cell>
+				</row>
+				<row>
+					<cell>交接表格</cell>
+					<cell colspan="3">
+						<docDataList id="docGrid" puzu_id="10"
+							doc_type="g" gid="${vm.models.gid}" tid="${vm.models.eada_id}"
+							log_url="../DocumentsInfo/" dHeight="100px" dWidth="100%" />
+					</cell>
+				</row>
+				<row visible="false">
+					<cell>发出表格日期</cell>
+					<cell>
+						<textbox id="drawformdate"
+							value="${vm.models.eada_drawformdate }" readonly="true">
+						</textbox>
+					</cell>
+					<cell>交接人</cell>
+					<cell>
+						<textbox id="drawformpeople" readonly="true"
+							value="${vm.models.eada_drawformpeople}">
+						</textbox>
+					</cell>
+				</row>
+				<row visible="false">
+					<cell>毕业生接收单位</cell>
+					<cell>
+						<textbox id="rsetup"
+							value="${vm.models.eada_rsetup }" width="85%" readonly="true">
+						</textbox>
+					</cell>
+					<cell>毕业生接收时间</cell>
+					<cell>
+						<textbox id="rdate"
+							value="@load(vm.models.eada_rdate)">
+						</textbox>
+					</cell>
+				</row>
+				<row>
+					<cell>回收表格日期</cell>
+					<cell>
+						<datebox id="receiveform"
+							value="${vm.models.eada_returnformdate }">
+						</datebox>
+					</cell>
+					<cell width="100px">是否需要结算费用</cell>
+					<cell>
+						<combobox value="@bind(vm.iffee)">
+							<comboitem label="否" />
+							<comboitem label="是" />
+						</combobox>
+					</cell>
+				</row>
+				<row>
+					<cell>收费情况</cell>
+					<cell colspan="3"><textbox width="80%" rows="3" value="@bind(vm.feeinfo)"></textbox></cell>
+				</row>
+				<row>
+					<cell>退回原因</cell>
+					<cell colspan="3"><textbox width="80%" rows="3" value="@bind(vm.models.eada_backcase)"></textbox></cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button
+						onClick="@command('summitback',docGrid=docGrid,win=bwin,receiveform=receiveform.value)">
+						提交
+					</button>
+					<button
+						onClick="@command('addremark',win=bwin)">
+						备注
+					</button>
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

@@ -1,0 +1,23 @@
+<!--
+	创建人：张志强
+	创建时间：2014-8-11
+	用途：公司合同盖章页面框架
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="合同盖章" border="normal" width="95%" closable="true"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoCompact.Compact_OfficeSelectController')">
+		<zscript language="Java">
+	import Util.UserInfo;
+	String user = UserInfo.getUserid();
+</zscript>
+		<label id="ebct_id" value="${arg.daid}" visible="false" />
+		<label id="userid" value="${user}" visible="false" />
+		<label id="ebct_tapr_id" value="${arg.id}" visible="false" />
+		<include id="incl_id"
+			src="../CoCompact/Compact_GZDoc.jsp?coco_tapr_id=${arg.id}&amp;coco_id=${arg.daid}&amp;user=${user}&amp;way=${arg.way}">
+		</include>
+	</window>
+
+</zk>

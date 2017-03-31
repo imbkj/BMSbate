@@ -1,0 +1,33 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="报价信息" border="normal" width="800px" height="400px" closable="true"
+	apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('vm') @init('Controller.EmBenefit.EmActy_SupAndLinkInfoController')">
+<grid emptyMessage="没有产品人信息" model="@load(vm.prolist)">
+	<columns>
+		<column label="序号" width="40px" align="center"/>
+		<column label="产品名称" align="center"/>
+		<column label="原价" align="center"/>
+		<column label="折扣价" align="center"/>
+		<column label="折扣" align="center"/>
+		<column label="添加人" align="center"/>
+		<column label="备注" align="center"/>
+		<column label="状态" align="center"/>
+	</columns>
+	<rows>
+	<template name="model">
+		<row>
+			<cell><label value="${forEachStatus.index+1 }"></label></cell>
+			<cell><label value="@load(each.prod_name)"></label></cell>
+			<cell><label value="@load(each.prod_price)"></label></cell>
+			<cell><label value="@load(each.prod_discountprice)"></label></cell>
+			<cell><label value="@load(each.prod_discount)"></label></cell>
+			<cell><label value="@load(each.prod_addname)"></label></cell>
+			<cell><label value="@load(each.prod_remark)"></label></cell>
+			<cell><label value="${each.prod_state==1?'有效':'无效' }"></label></cell>
+		</row>
+		</template>
+	</rows>
+</grid>
+</window>
+</zk>

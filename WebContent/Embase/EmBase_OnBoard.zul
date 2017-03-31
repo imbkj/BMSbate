@@ -1,0 +1,183 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="@load(vm.name)" id="win" border="normal" closable="true"
+		height="100%" width="98%" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.Embase.EmBase_OnBoardController')">
+		<borderlayout hflex="1" vflex="1">
+			<north border="0" height="20%">
+				<groupbox>
+					<grid>
+						<rows>
+							<row>
+								<cell width="120px">所属公司:</cell>
+								<cell>
+									<label id="company"
+										value="@load(vm.company)" />
+								</cell>
+								<cell width="120px">入职时间:</cell>
+								<cell>
+									<datebox readonly="true" id="intime"
+										value="@load(vm.indate)" />
+								</cell>
+							</row>
+							<row>
+								<cell>身份证号:</cell>
+								<cell>
+									<label id="idcard"
+										value="@load(vm.idcard)" />
+								</cell>
+								<cell>服务地区:</cell>
+								<cell>
+									<label id="wt" value="@load(vm.wt)" />
+								</cell>
+							</row>
+							<row>
+								<cell>户籍所在地:</cell>
+								<cell>
+									<label id="hjadd"
+										value="@load(vm.hjadd)" />
+								</cell>
+								<cell>国籍:</cell>
+								<cell>
+									<label id="nationality"
+										value="@load(vm.nationality)" />
+								</cell>
+							</row>
+						</rows>
+					</grid>
+				</groupbox>
+			</north>
+			<center border="0">
+				<groupbox title="报价单信息" width="100%" height="100%">
+					<columnlayout height="32%">
+						<columnchildren width="85%" height="100%">
+							<grid model="@load(vm.compactModel)"
+								height="100%">
+								<template name="model:group">
+									<group label="@load(each)" />
+								</template>
+								<template name="model">
+									<row>
+										<cell>
+											<checkbox
+												value="@load(each.coof_id)" disabled="@load(vm.emztTF)"
+												onClick="@command('ckbcoof',a=each,b=self)" />
+											<label value=" " />
+											<label
+												value="@load(each.coof_name)" />
+										</cell>
+									</row>
+								</template>
+							</grid>
+						</columnchildren>
+						<columnchildren width="15%" height="100%">
+							<grid id="gdck" model="@load(vm.cklist)"
+								height="100%">
+								<columns>
+									<column align="center">复选列表</column>
+								</columns>
+								<template name="model">
+									<row>
+										<cell align="left">
+											<checkbox name="ckm" disabled="@load(vm.emztTF)"
+												onClick="@command('checkall',a=self,b=gdck,c=coofferlist)" />
+											<label
+												value="@load(each.coli_pclass)" />
+
+										</cell>
+									</row>
+								</template>
+							</grid>
+						</columnchildren>
+					</columnlayout>
+					<scrollview height="66%">
+						<grid id="coofferlist" model="@load(vm.cflList)">
+							<columns>
+								<column align="center">报价单</column>
+								<column align="center">产品类型</column>
+								<column align="center">城市</column>
+								<column align="center">产品名称</column>
+								<column align="center">费用</column>
+								<column align="center">服务起始月</column>
+								<column align="center">收费起始月</column>
+								<column width="70px" align="center">
+									<checkbox id="cka"
+										onClick="@command('checklist',a=self)" />
+								</column>
+							</columns>
+							<rows>
+								<template name="model">
+									<row
+										style="border:1px dotted #cad9ea;background-color:#f5fafe;">
+										<cell>
+											<label
+												value="@load(each.coof_name)" />
+										</cell>
+										<cell>
+											<label
+												value="@load(each.coli_pclass)" />
+										</cell>
+										<cell>
+											<label
+												value="@load(each.city)" />
+										</cell>
+										<cell>
+											<label
+												value="@load(each.coli_name)" />
+										</cell>
+										<cell
+											if="${each.coli_group_count>0 }"
+											rowspan="${each.coli_group_count }">
+											<label
+												value="@load(each.coli_fee2)" />
+											${each.coli_cpfc_name }
+										</cell>
+										<cell
+											if="${each.coli_group_count>0 }"
+											rowspan="${each.coli_group_count }">
+											<hbox>
+												<monthbox
+													format="yyyyMM" readonly="true"
+													onChange="@command('setcheck',a=coofferlist,b=self)"
+													mold="rounded" />
+												<image
+													src="../images/130.gif" style="cursor:pointer;"
+													onClick="@command('copysd',a=coofferlist,b=5,rowIndex=forEachStatus.index)" />
+											</hbox>
+										</cell>
+										<cell
+											if="${each.coli_group_count>0 }"
+											rowspan="${each.coli_group_count }">
+											<hbox>
+												<monthbox
+													format="yyyyMM" readonly="true"
+													onChange="@command('setcheck',a=coofferlist,b=self)"
+													mold="rounded" />
+												<image
+													src="../images/130.gif" style="cursor:pointer;"
+													onClick="@command('copysd',a=coofferlist,b=6,rowIndex=forEachStatus.index)" />
+											</hbox>
+										</cell>
+										<cell
+											if="${each.coli_group_count>0 }"
+											rowspan="${each.coli_group_count }">
+											<checkbox name="ck"
+												value="@load(each.coli_id)" checked="@load(vm.emztTF)" disabled="@load(vm.emztTF)"
+												onClick="@command('setDateValue',a=coofferlist,b=self)" />
+										</cell>
+									</row>
+								</template>
+							</rows>
+						</grid>
+					</scrollview>
+				</groupbox>
+			</center>
+			<south>
+				<div align="center">
+					<button label="提交"
+						onClick="@command('btnSubmit',a=intime,b=coofferlist)" />
+				</div>
+			</south>
+		</borderlayout>
+	</window>
+</zk>

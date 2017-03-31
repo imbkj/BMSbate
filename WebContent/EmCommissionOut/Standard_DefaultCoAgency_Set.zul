@@ -1,0 +1,71 @@
+<?page title="默认委托机构设置" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="win" title="默认委托机构设置" border="normal" width="550px"
+		height="350px" closable="true" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmCommissionOut.Standard.Standard_DefaultCoAgency_SetController')">
+		<div height="100%">
+			<grid vflex="1">
+				<columns>
+					<column width="16%"></column>
+					<column width="30%"></column>
+					<column width="16%"></column>
+					<column></column>
+				</columns>
+				<rows>
+					<row>
+						<cell>
+							<label style="color:#666" value="公司编号" />
+						</cell>
+						<cell>
+							<label value="@load(vm.m.cid)" />
+						</cell>
+						<cell>
+							<label style="color:#666" value="公司名称" />
+						</cell>
+						<cell>
+							<label value="@load(vm.m.coba_company)" />
+						</cell>
+					</row>
+					<row>
+						<cell>
+							<label style="color:#666" value="城市" />
+						</cell>
+						<cell colspan="3">
+							<label value="@load(vm.m.city)" />
+						</cell>
+					</row>
+					<row>
+						<cell>
+							<label style="color:#666" value="选择默认机构" />
+						</cell>
+						<cell colspan="3">
+							<listbox checkmark="true" height="200px"
+								model="@load(vm.caList)" selectedItem="@bind(vm.caM)"
+								emptyMessage="此城市暂无机构，请先添加机构再进行此操作">
+								<listhead>
+									<listheader align="center"
+										width="40px" />
+									<listheader align="center">
+										<label value="机构名称" />
+									</listheader>
+								</listhead>
+								<template name="model">
+									<listitem>
+										<listcell></listcell>
+										<listcell>
+											<label
+												value="@load(each.coab_name)" />
+										</listcell>
+									</listitem>
+								</template>
+							</listbox>
+						</cell>
+					</row>
+				</rows>
+			</grid>
+			<hbox width="100%" pack="center" align="center">
+				<button label="提交" onClick="@command('submit',win=win)" />
+			</hbox>
+		</div>
+	</window>
+</zk>

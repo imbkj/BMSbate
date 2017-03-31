@@ -1,0 +1,181 @@
+<!--
+	创建人：林少斌
+	创建时间：2016-10-26
+	用途：生育津贴申请数据查询
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winDMAList" title="社会保险 -- 生育津贴申请查询页面" border="normal"
+		width="100%" height="100%" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmSheBao.Emsi_DeclareMA_ListController')">
+		<borderlayout vflex="1">
+			<north border="0" title="数据查询" collapsible="true"
+				flex="true" open="true">
+				<panel border="1">
+					<panelchildren style="padding:5px;">
+						<grid width="100%">
+							<rows>
+								<row>
+									<cell>
+										<button label="返回"
+											onClick="@command('pageback',win=winDMAList)" />
+											<button label="批量完结"
+											onClick="@command('finishAll',dataGrid=dataGrid)" />
+										<label value="共 " />
+										<label value="@load(vm.count)" />
+										<label value=" 条数据。" />
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</panelchildren>
+				</panel>
+			</north>
+			<center>
+				<grid id="dataGrid" width="100%" height="100%"
+					model="@load(vm.sbDataList)" emptyMessage="无数据">
+					<columns sizable="true">
+						<column label="序号" align="center" width="40px" />
+						<column label="公司名称" align="center"
+							sort="auto(escm_shortname)" />
+						<column label="所属月份" align="center"
+							sort="auto(ownmonth)" />
+						<column label="姓名" align="center"
+							sort="auto(escm_name)" />
+						<column label="电脑号" align="center" />
+						<column label="身份证或护照" align="center" />
+						<column label="金额" align="center" />
+						<column label="批次号" align="center"
+							sort="auto(emsc_batchnum)" />
+						<column label="申报时间" align="center" />
+						<column label="客服" align="center" />
+						<column label="提示" align="center" />
+						<column label="状态" align="center" />
+						<column align="center">
+							<checkbox checked="@load(vm.all_chkTF)"
+								onClick="@command('gdallselect',grid=dataGrid,check=self.checked)" />
+						</column>
+						<column label="操作" align="center" width="120px" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<cell>
+									<label
+										value="${forEachStatus.index + 1}" />
+								</cell>
+								<cell
+									tooltip="社保单位编码：${each.coco_shebaoid}">
+									<label
+										value="@load(each.escm_shortname)" style="color:#00F"
+										if="${each.escm_single==1}" />
+									<label
+										value="@load(each.escm_shortname)" style="color:#F00"
+										if="${each.escm_single==2}" />
+									<label
+										value="@load(each.escm_shortname)"
+										if="${each.escm_single==0}" />
+									<label
+										value="(${each.coco_shebaoid})" if="${each.escm_single==1}" />
+									<label value="(167120)"
+										if="${each.escm_single==2}" />
+									<label value="(391055)"
+										if="${each.escm_single==0}" />
+									<label value="(464780)"
+										if="${each.escm_single==3}" />
+									<label value="(464781)"
+										if="${each.escm_single==4}" />
+								</cell>
+								<cell>
+									<label value="@load(each.ownmonth)" />
+								</cell>
+								<cell>
+									<label value="@load(each.escm_name)"
+										style="color:#00F" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.escm_computerid)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.escm_idcard)" />
+								</cell>
+								<cell>
+									<label value="@load(each.escm_fee)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.escm_batchnum)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.escm_declaretime)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.escm_client)" />
+								</cell>
+								<cell>
+									<image src="../images/noread.gif"
+										style="cursor:pointer;" tooltiptext="存在未读小信封。"
+										if="${each.msg_a=='0'}" onClick="@command('msg',model=each)" />
+									<image src="../images/return.gif"
+										style="cursor:pointer;" tooltiptext="已回复。"
+										if="${each.msg_a=='2'}" onClick="@command('msg',model=each)" />
+									<image src="../images/readed.gif"
+										style="cursor:pointer;" tooltiptext="已读。"
+										if="${each.msg_a=='1'}" onClick="@command('msg',model=each)" />
+								</cell>
+								<cell>
+									<label value="未申报"
+										if="${each.escm_ifdeclare==0}" />
+									<label value="已申报"
+										if="${each.escm_ifdeclare==1}" style="color:#00F" />
+									<label value="申报中"
+										if="${each.escm_ifdeclare==2}" style="color:#090" />
+									<label value="退回"
+										if="${each.escm_ifdeclare==3}" style="color:#F00" />
+									<label value="已传决定书"
+										if="${each.escm_ifdeclare==11}" style="color:#00F" />
+									<label value="已确认收款"
+										if="${each.escm_ifdeclare==12}" style="color:#00F" />
+									<label value="已完结"
+										if="${each.escm_ifdeclare==13}" />
+								</cell>
+								<cell>
+									<checkbox
+										visible="${(each.escm_single!=1 and each.escm_ifdeclare ==12) or (each.escm_single==1 and each.escm_ifdeclare ==11)? true:false}"/>
+								</cell>
+								<cell>
+									<hlayout>
+										<button label="完结"
+											onClick="@command('finish',m=each)" visible="${(each.escm_single!=1 and each.escm_ifdeclare ==12) or (each.escm_single==1 and each.escm_ifdeclare ==11)? true:false}"/>
+										<menubar autodrop="true">
+											<menu
+												image="../images/pencil-small.png">
+												<menupopup>
+													<!-- <menuitem label="小信封"
+														onClick="@command('msg',model=each)" /> -->
+													<menuitem
+														label="下载申请表"
+														onClick="@command('download',m=each,type=1)" />
+													<menuitem
+														label="下载批量表"
+														onClick="@command('download',m=each,type=2)" />
+													<menuitem
+														label="下载决定书"
+														onClick="@command('download',m=each,type=3)" />
+												</menupopup>
+											</menu>
+										</menubar>
+									</hlayout>
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

@@ -1,0 +1,27 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="制作合同" border="normal" width="80%" height="80%"
+		closable="true" id="cwin" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoAgencies.CoAg_MakeCompactController')">
+		<grid vflex="1">
+			<rows>
+				<row
+					style="padding-bottom:10px;padding-top:20px;padding-left:20px;">
+					<cell width="80px">上传模版</cell>
+					<cell>
+						<textbox width="40%" value="@bind(vm.filepath)" id="filetext"></textbox>
+						<button id="attachBtn" upload="true" onUpload="@command('upload',filetxt=filetext)"
+							label="选择文件" style="padding-right:20px;" /><button onClick="@command('summit',win=cwin,filetxt=filetext)" label="上传" />
+					</cell>
+				</row>
+				<row>
+					<cell colspan="2">
+						<include
+							src="../CoAgencies/MakeCompact.jsp?coct_id=${arg.daid}&amp;coct_tarpid=${arg.id}&amp;userid=${vm.userid}">
+						</include>
+					</cell>
+				</row>
+			</rows>
+		</grid>
+	</window>
+</zk>

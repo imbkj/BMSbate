@@ -1,0 +1,32 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="选择供应商" border="normal" width="700px" height="400px"
+		closable="true" apply="org.zkoss.bind.BindComposer" id="swin"
+		viewModel="@id('vm') @init('Controller.EmBenefit.EmBenefit_selSupController')">
+		<grid vflex="1">
+			<rows>
+				<row>
+					<cell width="80px">供应商</cell>
+					<cell>
+						<combobox model="@load(vm.supList)" readonly="true" width="90%" onChange="@command('selSup',cb=self)">
+							<template name="model">
+								<comboitem label="@load(each.supp_name)" value="@load(each)"/>
+							</template>
+						</combobox>
+					</cell>
+					<cell width="80px">活动名称</cell>
+					<cell>
+						<combobox model="@load(vm.plist)" id="cb" readonly="true">
+							<template name="model">
+								<comboitem label="@load(each.prod_name)" value="@load(each)"/>
+							</template>
+						</combobox>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer span="4" align="center"><button onClick="@command('submit',cb=cb,win=swin)">提交</button></footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

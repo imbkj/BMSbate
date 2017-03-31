@@ -1,0 +1,37 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="${arg.classname }——服务政策信息新增"  border="normal" width="80%" height="90%" closable="true"
+	apply="org.zkoss.bind.BindComposer" id="editwin"
+	viewModel="@id('vm') @init('Controller.CoServicePolicy.SePy_CityPolicyInfoAddController')"
+>
+<hlayout valign="top" vflex="1" hflex="1">
+	<div vflex="1" align="center" style=" border-style:solid; border-width:1px; border-color:#CCCCCC;">
+		<vlayout width="200px" forEach="${vm.typelist }">
+			<custom-attributes model="${each}" />
+			<button width="90%" height="30px"
+				style="margin-top:2px;" onClick="@command('changetitle',model =model,btn=self)">${each.note_type}</button>
+		</vlayout>
+	</div>
+	<vlayout vflex="1" hflex="1">
+	<label value="@load(vm.typename)" style="margin-left:10px;color:#FF0000;"></label>
+	<grid vflex="1" model="@load(vm.titlelist)" id="gd">
+		<rows>
+			<template name="model">
+			<row style="border:1px solid #CCCCCC;background-color:#f5fafe;cursor:pointer">
+				<cell width="40px" align="center">
+					<label value="${forEachStatus.index+1 }"></label>
+					<label value="@load(each.item_id)" visible="false"></label>	
+				</cell>
+				<cell width="250px"><label value="@load(each.item_title)"></label></cell>
+				<cell onCreate="@command('crtxtbox',model=each,cl=self)"></cell>
+			</row>
+			</template>
+		</rows>
+		<foot>
+			<footer align="center"><button onClick="@command('summit',win =editwin,gd=gd)">提交</button></footer>
+		</foot>
+	</grid>
+	</vlayout>
+</hlayout>
+</window>
+</zk>

@@ -1,0 +1,40 @@
+<div width="95%" apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('vm') @init('Controller.EmCommissionOut.EmCommissionOut_SelectDetailController')">
+	<grid height="100%" width="100%" emptyMessage="暂无数据"
+		model="@load(vm.ecocList)" mold="paging">
+		<columns sizable="true">
+			<column align="center" label="委托类型"></column>
+			<column align="center" label="执行时间"
+				sort="auto(ecoc_title_date)">
+			</column>
+			<column align="center" label="添加人"></column>
+			<column align="center" label="添加时间"></column>
+			<column align="center" label="状态" sort="auto(statename)"></column>
+			<column align="center" label="操作" width="60px"></column>
+		</columns>
+		<template name="model">
+			<row
+				style="border:1px dotted #cad9ea;background-color:white;">
+				<label value="@load(each.ecoc_addtype)" />
+				<label value="@load(each.ecoc_title_date)" />
+				<label value="@load(each.ecoc_addname)" />
+				<label value="@load(each.ecoc_addtime1)" />
+				<cell>
+					<label value="@load(each.statename)"
+						if="${each.statename ne '退回' and each.statename ne '撤销'
+						and each.statename ne '取消' and each.statename ne '已完成' }" />
+					<label value="@load(each.statename)"
+						style="color:blue" if="${each.statename eq '已完成' }" />
+					<label value="@load(each.statename)"
+						style="color:red"
+						if="${each.statename eq '退回' or each.statename eq '撤销'
+						or each.statename eq '取消' }" />
+				</cell>
+				<cell>
+					<label value="详情" style="cursor:pointer;color:blue"
+						onClick="@command('openwin',each=each)" />
+				</cell>
+			</row>
+		</template>
+	</grid>
+</div>

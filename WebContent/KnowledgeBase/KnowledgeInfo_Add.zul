@@ -1,0 +1,39 @@
+<?page title="添加知识库信息" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window border="0" vflex="1" hflex="1" apply="Controller.KnowledgeBase.KnowledgeInfo_AddController">
+<panel vflex="1" hflex="1" title="知识库信息新增">
+<panelchildren>
+<grid vflex="1" hflex="1" >
+	<rows>
+		<row>
+			<cell width="120px">请选择问题类型：</cell>
+			<cell><combobox id="classname"></combobox></cell>
+		</row>
+		<row>
+			<cell>请填写问题：</cell>
+			<cell><textbox id="questions" width="50%" rows="3"/></cell>
+		</row>
+		<row>
+			<cell>请选择政策指引：</cell>
+			<cell>
+			<vlayout>
+				<vlayout id="filelist" />
+			 	<button id="attachBtn" upload="true" label="选择政策文件"/>
+			</vlayout>
+             </cell>
+		</row>
+		<row>
+			<cell>请填写答案：</cell>
+			<cell><ckeditor id="answer" toolbar="MyToolbar" hflex="3"
+			customConfigurationsPath="/js/ckeditor-config.js"
+			></ckeditor><label hflex="1"/></cell>
+		</row>
+	</rows>
+	<foot>
+	<footer align="center"><button id="summit">提交</button></footer>
+	</foot>
+	</grid>
+</panelchildren>
+</panel>
+</window>
+</zk>

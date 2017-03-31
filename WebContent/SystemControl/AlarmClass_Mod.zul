@@ -1,0 +1,36 @@
+<zk>
+	<window id="winAlarmClassMod" title="数据预警 - 修改类型" border="normal"
+		height="350px" width="60%" apply="org.zkoss.bind.BindComposer"
+		closable="true">
+		<div height="100%"
+			apply="Controller.SystemControl.AlarmClass_ModController">
+			<grid height="100%">
+				<rows>
+					<row>
+						<cell width="20%">类型名称:</cell>
+						<cell>
+							<textbox id="tb"
+								value="${$composer.getAmlist().get(0).alcl_name}" />
+						</cell>
+					</row>
+					<row>
+						<cell width="20%">状态:</cell>
+						<cell>
+							<combobox id="AlarmState" mold="rounded"
+								value="${$composer.getAmlist().get(0).alcl_stateName}">
+								<comboitem label="生效" value="1" />
+								<comboitem label="取消" value="0" />
+							</combobox>
+						</cell>
+					</row>
+				</rows>
+				<foot>
+					<footer align="center">
+						<button id="btnSubmit" label="提交" />
+					</footer>
+				</foot>
+			</grid>
+
+		</div>
+	</window>
+</zk>

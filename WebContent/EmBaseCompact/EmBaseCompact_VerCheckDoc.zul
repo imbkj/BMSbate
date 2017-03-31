@@ -1,0 +1,18 @@
+<!--
+	创建人：张志强
+	创建时间：2013-12-6
+	用途：劳动合同查看页面框架
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="合同查看" border="normal" width="95%"
+		closable="true">
+		<zscript language="Java">
+	import Util.UserInfo;
+	String user = UserInfo.getUserid();
+</zscript>
+		<include id="incl_id"
+			src="../EmBaseCompact/EmBaseCompact_VerCheckDoc.jsp?id=${arg.id}&amp;ver_temp=${arg.ver_temp}">
+		</include>
+	</window>
+</zk>

@@ -1,0 +1,71 @@
+<?page title="礼品信息新增" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="礼品信息新增" border="normal" vflex="1"
+	apply="org.zkoss.bind.BindComposer" id="giftaffwin"
+	viewModel="@id('vm') @init('Controller.EmBenefit.EmActy_GiftInfoAddController')"
+>
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell width="80px">供应商</cell>
+			<cell>
+				<combobox model="@load(vm.suplist)" id="supname" onChange="@command('updatelist',val=self.value)">
+					<template name="model">
+						<comboitem label="@load(each.supp_name)" value="@load(each.supp_id)"/>
+					</template>
+				</combobox>
+			</cell>
+			<cell width="80px">名称</cell>
+			<cell>
+				<combobox model="@load(vm.prolist)" id="giftname">
+					<template name="model">
+						<comboitem label="@load(each.prod_name)" value="@load(each.prod_id)"/>
+					</template>
+				</combobox>
+			</cell>
+		</row>
+		<row>
+			<cell>所属月份</cell>
+			<cell colspan="3"><monthbox readonly="true" format="yyyyMM" mold="rounded" id="ownmonth"/></cell>
+		</row>
+		<row visible="false">
+			<cell>类型</cell>
+			<cell><textbox id="gifttype"></textbox></cell>
+			<cell>品牌</cell>
+			<cell><textbox id="giftband"></textbox></cell>
+		</row>
+		<row visible="false">
+			<cell>颜色</cell>
+			<cell><textbox id="giftcolor"></textbox></cell>
+			<cell>生产地</cell>
+			<cell><textbox id="giftaddress"></textbox></cell>
+		</row>
+		<row>
+			<cell>进货数量</cell>
+			<cell><textbox id="innum" onChange="@command('gettotalprice',txt=totalrice,innum=innum.value,nowprice=nowprice.value)"></textbox></cell>
+			<cell>原价</cell>
+			<cell><textbox id="price"></textbox></cell>
+		</row>
+		<row>
+			<cell>折扣价</cell>
+			<cell><textbox id="nowprice" onChange="@command('gettotalprice',txt=totalrice,innum=innum.value,nowprice=nowprice.value)"></textbox></cell>
+			<cell>总价</cell>
+			<cell><textbox id="totalrice" readonly="true"></textbox></cell>
+		</row>
+		<row>
+			<cell>进货地址</cell>
+			<cell colspan="3"><textbox id="address" width="60%" rows="5"></textbox></cell>
+		</row>
+		<row>
+			<cell>备注</cell>
+			<cell colspan="3"><textbox id="remark" width="60%" rows="5"></textbox></cell>
+		</row>
+	</rows>
+	<foot>
+		<footer align="center"><button onClick="@command('addgift',giftname=giftname.value,giftband=giftband.value,gifttype=gifttype.value,
+		supname=supname.value,giftcolor=giftcolor.value,innum=innum.value,giftaddress=giftaddress.value,totalrice=totalrice.value,
+		win=giftaffwin,remark=remark.value,address=address.value,price=price.value,nowprice=nowprice.value,ownmonth=ownmonth.value)">提交</button></footer>
+	</foot>
+</grid>
+</window>
+</zk>

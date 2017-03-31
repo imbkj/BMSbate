@@ -1,0 +1,187 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winfeeAdd" width="100%" height="100%"
+		title="员工档案 - 添加续费名单" border="normal"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.Archives.Archive_addFeeController')"
+		closable="true">
+		<borderlayout>
+			<north title="高级查询" collapsible="true" open="true">
+				<grid>
+					<rows>
+						<row>
+							<cell width="120px">客服</cell>
+							<cell>
+								<combobox id="client"
+									model="@load(vm.clientList)" mold="rounded"
+									onChange="@command('updatecompany')">
+									<template name="model">
+										<comboitem
+											label="@load(each.coba_client)" />
+									</template>
+								</combobox>
+							</cell>
+							<cell width="120px">员工姓名</cell>
+							<cell>
+								<textbox id="emp" mold="rounded" />
+
+							</cell>
+						</row>
+						<row>
+							<cell>公司</cell>
+							<cell>
+								<combobox id="company"
+									model="@load(vm.companyList)" mold="rounded">
+									<template name="model">
+										<comboitem
+											value="@load(each.cid)" label="@load(each.coba_company)" />
+									</template>
+								</combobox>
+							</cell>
+							<cell>档案所在地</cell>
+							<cell>
+								<combobox id="setup" mold="rounded"
+									model="@load(vm.setupList)">
+									<template name="model">
+										<comboitem
+											value="@load(each.ease_id)" label="@load(each.ease_name)" />
+									</template>
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>协议到期日</cell>
+							<cell>
+								<datebox id="cd1" mold="rounded" />
+								<datebox id="cd2" mold="rounded" />
+							</cell>
+							<cell>户口挂靠</cell>
+							<cell>
+								<combobox id="colhj" mold="rounded">
+									<comboitem value="1" label="是" />
+									<comboitem value="0" label="否" />
+								</combobox>
+							</cell>
+						</row>
+					</rows>
+					<foot>
+						<footer align="center">
+							<button label="查询"
+								onClick="@command('Search')" />
+
+						</footer>
+					</foot>
+				</grid>
+			</north>
+			<center>
+				<grid id="gd" width="100%" height="100%"
+					model="@load(vm.list)" mold="paging" pageSize="50"
+					sizedByContent="true" span="true">
+					<columns>
+						<column/>
+						<column align="center" label="客服"></column>
+						<column align="center" label="公司名称"></column>
+						<column align="center" label="姓名"></column>
+						<column align="center" label="身份证"></column>
+						<column align="center" label="档案号"></column>
+						<column align="center" label="档案所在地"></column>
+						<column align="center" label="协议到期日"></column>
+						<column width="110px" align="center"
+							label="续费日期">
+						</column>
+						<column width="60px" align="center"
+							label="档案">
+						</column>
+						<column width="60px" align="center"
+							label="户口">
+						</column>
+						<column width="60px" align="center"
+							label="滞纳金">
+						</column>
+						<column align="center">
+							<checkbox id="cka"
+								onClick="@command('checkall',a=self)" />
+						</column>
+					</columns>
+					<template name="model">
+						<row>
+							<custom-attributes
+								emar_id="${each.emap_emar_id }" />
+							<detail open="false" fulfill="onOpen"
+								visible="${each.eare_trid>0?true:false }">
+								<include
+									src="/Archives/Archives_Remark.zul" emar_id="${emar_id}"
+									typeid='2' />
+							</detail>
+							<cell>
+								<label
+									value="${forEachStatus.index+1 }" />
+							</cell>
+							<cell>
+								<label value="@load(each.emap_company)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emap_name)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emap_idcard)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emap_fid2)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.emap_fileplace)" />
+							</cell>
+							<cell tooltiptext="入职时间:${each.intime }">
+								<label value="@load(each.emap_sdate)" />
+							</cell>
+							<cell>
+								<datebox mold="rounded" width="100%"
+									inplace="true" onChange="@command('getcharge',a=each,b=self)"
+									instant="true" />
+								<image src="../images/130.gif"
+									style="cursor:pointer;"
+									onClick="@command('copysd',a=each,b=self,c='date',rowIndex=forEachStatus.index)" />
+							</cell>
+							<cell>
+								<doublebox mold="rounded" width="100%"
+									constraint="no empty" value="@bind(each.emap_file)" />
+								<image src="../images/130.gif"
+									style="cursor:pointer;"
+									onClick="@command('copysd',a=each,b=self,c='file',rowIndex=forEachStatus.index)" />
+							</cell>
+							<cell>
+								<doublebox mold="rounded" width="100%"
+									constraint="no empty" value="@bind(each.emap_hj)" />
+								<image src="../images/130.gif"
+									style="cursor:pointer;"
+									onClick="@command('copysd',a=each,b=self,c='hj',rowIndex=forEachStatus.index)" />
+							</cell>
+							<cell>
+								<doublebox mold="rounded" width="100%"
+									constraint="no empty" value="@bind(each.emap_op)" />
+								<image src="../images/130.gif"
+									style="cursor:pointer;"
+									onClick="@command('copysd',a=each,b=self,c='op',rowIndex=forEachStatus.index)" />
+							</cell>
+
+							<cell>
+								<checkbox value="@load(each.emap_id)"
+									checked="@bind(each.checked)"
+									onClick="@command('getcharge',a=each,b=self)" />
+							</cell>
+						</row>
+					</template>
+					<foot>
+						<footer span="13" align="center">
+							<button label="提交"
+								onClick="@command('submit')" />
+						</footer>
+					</foot>
+				</grid>
+			</center>
+		</borderlayout>
+
+	</window>
+</zk>

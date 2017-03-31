@@ -1,0 +1,21 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="材料收回" border="normal" width="400px" height="300px" closable="true" id="retakewin"
+		apply="Controller.Archives.EmArchiveDatum_DataReTakeController">
+<grid vflex="1">
+	<rows>
+		<row height="30px">
+			<cell width="90px"></cell>
+			<cell></cell>
+		</row>
+		<row>
+			<cell>材料收回时间</cell>
+			<cell><datebox id="retaketime"/></cell>
+		</row>
+	</rows>
+	<foot>
+		<footer align="center"><button id="summit">提交</button></footer>
+	</foot>
+</grid>
+</window>
+</zk>

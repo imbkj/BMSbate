@@ -1,0 +1,27 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="公积金超时审核备注" id="winar" width="500px" height="200px"
+		closable="true" border="normal" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmHouse.EmHouse_AduitRemarkController')"
+		onCreate="@command('winC',a=self)">
+		
+			<grid>
+				<rows>
+					<row>
+						<cell align="center" width="120px">备注</cell>
+						<cell>
+							<textbox id="remark" width="70%" rows="5" value="@bind(vm.remark)"
+								mold="rounded" />
+						</cell>
+					</row>
+				</rows>
+				<foot>
+					<footer align="center">
+						<button label="退回" onClick="@command('turnback')" />
+						<button label="审核" onClick="@command('aduit')" />
+					</footer>
+				</foot>
+			</grid>
+		
+	</window>
+</zk>

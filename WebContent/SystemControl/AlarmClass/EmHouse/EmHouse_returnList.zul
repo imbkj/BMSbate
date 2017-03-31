@@ -1,0 +1,97 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="公积金退回信息" id="winHouseReturn" width="100%"
+		height="80%" closable="true" border="normal"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmHouse.EmHouse_returnListController')">
+		<borderlayout>
+			<north></north>
+			<center>
+				<grid width="100%" height="100%" sizedByContent="true"
+					span="true" model="@load(vm.changelist)">
+					<columns>
+						<column align="center" label="序号" />
+						<column align="center" label="系统短信" />
+						<column align="center" label="所属月份" />
+						<column align="center" label="单位编号" />
+						<column align="center" label="公司名称" />
+						<column align="center" label="姓名" />
+						<column align="center" label="身份证" />
+						<column align="center" label="个人公积金号" />
+						<column align="center" label="基数" />
+						<column align="center" label="比例" />
+						<column align="center" label="变更类型" />
+						<column align="center" label="办理状态" />
+						<column align="center" label="客服" />
+						<column align="center" label="添加人" />
+						<column align="center" label="添加时间" />
+						<column align="center" label="申报时间" />
+
+					</columns>
+					<template name="model">
+						<row>
+							<cell>${forEachStatus.index+1 }</cell>
+							<cell>
+								<image style="cursor:pointer"
+									src="./images/noread.gif" onClick="@command('message',a=each)"
+									if="${each.smwr_tid>0 and each.symr_readstate==0 }" />
+								<image style="cursor:pointer"
+									src="./images/readed.gif" onClick="@command('message',a=each)"
+									if="${each.smwr_tid>0 and each.symr_readstate==1 }" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.ownmonth)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.emhc_companyid)" />
+							</cell>
+							<cell align="left"
+								tooltiptext="@load(each.emhc_company)">
+								<label
+									value="@load(each.emhc_shortname)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emhc_name)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emhc_idcard)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emhc_houseid)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emhc_radix)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emhc_cpp)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emhc_change)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.emhc_ifdeclare3)" />
+							</cell>
+							<cell>
+								<label value="@load(each.coba_client)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emhc_addname)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emhc_addtime)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.emhc_declaretime)" />
+							</cell>
+
+						</row>
+					</template>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

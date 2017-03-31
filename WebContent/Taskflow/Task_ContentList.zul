@@ -1,0 +1,47 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="任务单信息" border="normal"
+		apply="org.zkoss.bind.BindComposer" width="100%" height="100%" id="taskWin"
+		viewModel="@id('vm') @init('Controller.Taskflow.Task_ContentListController')">
+		<hlayout vflex="1">
+			<listbox vflex="1" hflex="1" model="@load(vm.infolist)"
+				emptyMessage="请选择任务类型" mold="paging" pageSize="50"
+				onSelect="@command('selecttask',model=self.selectedItem.value,inclu=inclu,hb=hb)">
+				<listhead>
+					<listheader label="编号" sort="auto(tali_id)"
+						align="center" width="50px" />
+					<listheader sort="auto(tali_name)">
+						<vlayout>
+							<label value="任务名称"></label>
+							<textbox
+								onChange="@command('search',val=self.value)" instant="true">
+							</textbox>
+						</vlayout>
+					</listheader>
+				</listhead>
+				<template name="model">
+					<listitem>
+						<listcell label="@load(each.tali_id)" />
+						<listcell>
+							<label value="@load(each.tali_name)"
+								style="@load(each.tapr_urgentState eq 1?'color:#006600;':'')"
+								if="${each.tali_urgentState eq 1?'false':'true'}" />
+							<label value="@load(each.tali_name)"
+								style="@load(each.tali_urgentState eq 1?'color:red;':'')"
+								if="${each.tali_urgentState eq 1?'true':'false'}" />
+							<label value="(退回)"
+								style="color:#FF8800; font-weight:bold;"
+								if="${each.tapr_lastState eq 3?'true':'false'}" />
+							<label value="(撤回)"
+								style="color:#FF8800; font-weight:bold;"
+								if="${each.tapr_lastState eq 4?'true':'false'}" />
+						</listcell>
+					</listitem>
+				</template>
+			</listbox>
+			<include id="inclu" hflex="5" vflex="1"
+				src="@load(vm.url)">
+			</include>
+		</hlayout>
+	</window>
+</zk>

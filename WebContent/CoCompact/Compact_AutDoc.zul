@@ -1,0 +1,66 @@
+<!--
+	创建人：张志强
+	创建时间：2013-10-17
+	用途：公司合同审核页面框架
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="合同审核" border="normal" width="95%" closable="true"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoCompact.Compact_OfficeSelectController')">
+		<zscript language="Java">
+	import Util.UserInfo;
+	String user = UserInfo.getUserid();
+</zscript>
+		<label id="ebct_id" value="${arg.daid}" visible="false" />
+		<label id="userid" value="${user}" visible="false" />
+		<label id="ebct_tapr_id" value="${arg.id}" visible="false" />
+		<label id="way" value="${arg.way}" visible="false" />
+		<grid width="100%" height="100%" model="@load(vm.officeList)"
+			emptyMessage="无数据" mold="paging" pageSize="3">
+			<columns sizable="true">
+				<column label="序号" align="center" width="60px" />
+				<column label="合同类型" align="center" />
+				<column label="合同编号" align="center" />
+				<column label="添加时间" align="center" />
+				<column label="添加人" align="center" />
+				<column label="操作" align="center" width="150px" />
+			</columns>
+			<rows>
+				<template name="model">
+					<row>
+						<label value="${forEachStatus.index + 1}" />
+						<label value="@load(each.coco_compacttype)" />
+						<label value="@load(each.coco_compactid)" />
+						<label value="@load(each.puof_addtime)" />
+						<label value="@load(each.puof_addname)" />
+						<cell>
+							<label style="cursor:pointer; color:#666;"
+								onClick="@command('compact_down', coabM=each)" value="下载合同" />
+						</cell>
+					</row>
+				</template>
+			</rows>
+		</grid>
+
+		<radiogroup id="emco_class">
+			<radio label="标准版" value="0" onClick="getemcompact()" />
+			<radio label="一般非标" value="1" onClick="getemcompact()" />
+			<radio label="特殊非标" value="2" onClick="getemcompact()" />
+			<radio label="客户提供" value="3" onClick="getemcompact()" />
+		</radiogroup>
+		<include id="incl_id"
+			src="../CoCompact/Compact_AutDoc.jsp?coco_tapr_id=${arg.id}&amp;coco_id=${arg.daid}&amp;user=${user}&amp;emco_class=5&amp;way=${arg.way}">
+		</include>
+		<zscript><![CDATA[
+	void getemcompact() {
+		incl_id.setSrc("../CoCompact/Compact_AutDoc.jsp?coco_id="
+				+ ebct_id.getValue() + "&user=" + userid.getValue()
+				+ "&coco_tapr_id=" + ebct_tapr_id.getValue()
+				+ "&bz=0&emco_class=" + emco_class.getSelectedItem().getValue()
+				+ "&way=" + way.getValue());
+	}
+]]></zscript>
+	</window>
+
+</zk>

@@ -1,0 +1,75 @@
+<?page title="商业保险停缴" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="商业保险停缴" border="normal" width="100%" height="100%" id="sb_outw1"
+		apply="org.zkoss.bind.BindComposer" sizable="true"
+		viewModel="@id('vm') @init('Controller.EmCommercialInsurance.CI_Insurant_Controller')">
+		<div
+			style="width:100%;height:94%;overflow-y:scroll;overflow-x:hidden;border:1px solid #bcbdbf;">
+			<label id="gid" value="${arg.gid}" visible="false" />
+			<label id="cid" value="${arg.cid}"  visible="false"  />
+			<groupbox title="商保投保信息" mold="3d">
+				<grid width="100%" id="g1"
+					model="@load(vm.ci_insurant_castsortout)">
+					<columns>
+						<column label="序号" align="center" width="60px" />
+						<column label="被保险人" align="center" />
+						<column label="投保类型" align="center" />
+						<column label="投保份数" align="center" />
+						<column label="停缴时间" align="center" width="150px" />
+						<column label="" align="left" width="20px" />
+						<column label="ID" align="center"
+							visible="false" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<cell>
+									<label
+										value="${forEachStatus.index + 1}" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ecin_insurant)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ecin_castsort)" />
+								</cell>
+								<cell>
+											<label value="@load(each.ecin_buy_count)"  />
+								</cell>
+								<cell>
+									<datebox width="130px"
+										mold="rounded" format="yyyy-MM-dd" />
+										
+								</cell>
+								<cell>
+								<div style="cursor:pointer"
+												onClick="@command('dateAll',gridco=g1)">
+												<image
+													src="/images/130.gif">
+												</image>
+											</div>
+								</cell>
+								<cell>
+									<label value="@load(each.ecin_id)" />
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</groupbox>
+		</div>
+		<grid width="100%">
+			<rows>
+				<row>
+					<cell colspan="5" align="center">
+						<button label="提交"
+							onClick="@command('ci_insurant_out', emco=each,gridco=g1,gid=gid,cid=cid,sb_outw1=sb_outw1)" />
+					</cell>
+				</row>
+
+			</rows>
+		</grid>
+	</window>
+</zk>

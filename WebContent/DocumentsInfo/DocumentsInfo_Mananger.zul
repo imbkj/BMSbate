@@ -1,0 +1,124 @@
+<!--
+	创建人：张志强
+	创建时间：2013-9-17
+	用途：分配材料页面
+-->
+<?page title="分配材料" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="分配材料" id="wins" border="normal" closable="true"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.DocumentsInfo.DocumentsInfo_ManangerController')">
+		<grid width="100%">
+			<rows>
+				<row>
+					<cell>
+						所属模块:
+						<combobox readonly="true" id="zul_id"
+							width="30%" model="@load(vm.zullist)"
+							onChange="@command('zulsubmit',tb1=zul_id)">
+							<template name="model">
+								<comboitem
+									label="@load(each.puzu_pclass)" value="@load(each.puzu_id)">
+								</comboitem>
+							</template>
+						</combobox>
+					</cell>
+					<cell></cell>
+				</row>
+				<row>
+					<cell colspan="2">
+
+						<hlayout height="300px" style="padding:10px">
+							<listbox id="candidateLb" hflex="1"
+								vflex="true" multiple="true" model="@load(vm.documentslist)"
+								onSelect="move(candidateLb,chosenLb)">
+								<listhead>
+									<listheader label="" width="0px">
+									</listheader>
+									<listheader label="材料名称"
+										width="190px">
+									</listheader>
+									<listheader label="材料类型"
+										width="190px">
+									</listheader>
+								</listhead>
+								<template name="model">
+									<listitem>
+										<listcell label="" />
+										<listcell
+											label="@load(each.doin_content)" />
+										<listcell
+											label="@load(each.doin_type)" />
+									</listitem>
+								</template>
+							</listbox>
+							<zscript><![CDATA[
+	String imgPath = "/widgets/listbox/dual_listbox/img";
+]]></zscript>
+							<vbox spacing="10px" width="24px">
+
+								<image style="cursor:pointer"
+									id="chooseBtn" src="../images/rightarrow_g.png"
+									onClick="move(candidateLb,chosenLb)" />
+								<image style="cursor:pointer"
+									id="removeBtn" src="../images/leftarrow_g.png"
+									onClick="move(chosenLb,candidateLb)" />
+
+							</vbox>
+							<listbox id="chosenLb" hflex="1"
+								checkmark="true" vflex="true" multiple="true"
+								model="@load(vm.doclist)">
+								<listhead>
+
+									<listheader label="是否必填"
+										width="80px">
+									</listheader>
+									<listheader label="材料名称"
+										width="190px">
+									</listheader>
+									<listheader label="材料类型"
+										width="190px">
+									</listheader>
+									<listheader label="操作"
+										width="190px" />
+								</listhead>
+								<template name="model">
+									<listitem
+										selected="${each.doin_state==1? true:false }">
+										<listcell label="" />
+										<listcell
+											label="@load(each.doin_content)" />
+										<listcell
+											label="@load(each.doin_type)" />
+										<listcell>
+											<button label="取消"
+												onClick="@command('delete',tb1=zul_id,id=each.dire_id)" />
+										</listcell>
+
+									</listitem>
+								</template>
+							</listbox>
+
+						</hlayout>
+
+					</cell>
+					<zscript>
+	void move(Listbox src, Listbox dst) {
+		Listitem s = src.getSelectedItem();
+		if (s == null)
+			Messagebox.show("请选中需要分配的员工姓名");
+		else
+			s.setParent(dst);
+		//alert(src.getItemCount());
+	}
+</zscript>
+
+				</row>
+			</rows>
+		</grid>
+		<toolbar mold="panel" align="center">
+			<button id="submitButton" label="提 交"
+				onClick="@command('Submit',lb=chosenLb,tb1=zul_id)" />
+		</toolbar>
+	</window>
+</zk>

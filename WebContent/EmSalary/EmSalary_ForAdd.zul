@@ -1,0 +1,47 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window id="winForAdd" title="薪酬管理 -- 算法组合新增页面" border="normal" width="70%"
+		height="60%" closable="true" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmSalary.EmSalary_ForAddController')">
+<grid width="100%" height="100%">
+			<rows>
+				<row>
+					<cell align="left" width="15%">
+						<label value="算法名称：" />
+						<label style="color:red;">(*)</label>
+					</cell>
+					<cell align="left" width="80%">
+						<textbox id="cfin_name" width="50%"  mold="rounded" />
+					</cell>
+				</row>
+				<row>
+					<cell align="left">
+						<label value="备注：" />
+					</cell>
+					<cell align="left">
+						<textbox id="cfin_remark" width="50%"  rows="4" cols="8" mold="rounded" />
+					</cell>
+				</row>
+				<row>
+					<cell align="left">
+						<label value="被复制算法：" />
+					</cell>
+					<cell align="left">
+						<combobox id="cb_cfin_id"  width="50%" readonly="true"
+							model="@load(vm.formulaList)" 
+							autodrop="true" mold="rounded" >
+							<template name="model">
+								<comboitem label="@load(each.cfin_name)" value="@load(each.cfin_id)" />
+							</template>
+						</combobox>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button label="提交" id="btSubmit" onClick="@command('submit',winForAdd=winForAdd,cfin_name=cfin_name,cfin_remark=cfin_remark,cb_cfin_id=cb_cfin_id)"/>
+				</footer>
+			</foot>
+		</grid>
+</window>
+</zk>

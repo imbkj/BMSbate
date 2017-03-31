@@ -1,0 +1,61 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="报价单审核" border="normal" height="80%" width="98%" closable="true"
+	apply="org.zkoss.bind.BindComposer" id="auditwin"
+	viewModel="@id('vm') @init('Controller.CoQuotation.CoQuotation_AuditingController')"
+>
+<grid vflex="1">
+		<columns>
+			<column label="公司名称" align="center"/>
+			<column label="报价单名称" align="center"/>
+			<column label="报价金额" align="center"/>
+			<column label="报价方式" align="center"/>
+			<column label="和同类型" align="center"/>
+			<column label="客户规模" align="center"/>
+			<column label="阶梯人数规模" align="center"/>
+			<column label="添加人" align="center"/>
+			<column label="添加时间" align="center"/>
+			<column label="状态" align="center"/>
+			<column label="备注" align="center"/>
+			<column label="操作" align="center"/>
+		</columns>
+		<rows>
+			<row>
+				<cell><label value="@load(vm.colamodel.cola_company)"></label></cell>
+				<cell><label value="@load(vm.coofmodel.coof_name)"></label></cell>
+				<cell><label value="@load(vm.coofmodel.coof_sum)"></label></cell>
+				<cell><label value="@load(vm.coofmodel.coof_quotemode)"></label></cell>
+				<cell><label value="@load(vm.coofmodel.cpct_name1)"></label></cell>
+				<cell><label value="@load(vm.colamodel.cola_clientsize)"></label></cell>
+				<cell><label value="@load(vm.coofmodel.coof_gm)"></label></cell>
+				<cell><label value="@load(vm.coofmodel.coof_addname)"></label></cell>
+				<cell><label value="@load(vm.coofmodel.coof_addtime)"></label></cell>
+				<cell>
+					<label value="未审核" />
+				</cell>
+				<cell><label value="@load(vm.coofmodel.coof_remark)"></label></cell>
+				<cell>
+					<menubar autodrop="true">
+					<menu image="/images/pencil-small.png">
+						<menupopup>
+							<menuitem label="查看"
+								onClick="@command('chakan')" />
+							<menuitem label="预览"
+								onClick="@command('yulan')" />
+							<menuitem label="潜在客户信息"
+								onClick="@command('cola',model=each)" />
+						</menupopup>
+					</menu>
+				</menubar>
+				</cell>
+			</row>
+		</rows>
+		<foot>
+			<footer align="center" span="11">
+				<button onClick="@command('audit',win=auditwin)">审核</button>
+				<button onClick="@command('back',win=auditwin)">退回</button>
+			</footer>
+		</foot>
+	</grid>
+</window>
+</zk>

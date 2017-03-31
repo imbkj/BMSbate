@@ -1,0 +1,128 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="win" title="一次性费用 - 详情" border="normal" width="950px"
+		height="580px" closable="true" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmCommissionOut.EmCommissionOut_OneTimeFeeDetailController')">
+		<scrollview vflex="1">
+			<groupbox title="基本信息" mold="3d">
+				<grid>
+					<columns>
+						<column width="15%"></column>
+						<column></column>
+						<column width="15%"></column>
+						<column></column>
+					</columns>
+					<rows>
+						<row>
+							<cell colspan="4">
+								<label value="委托单信息"
+									style="font-weight:bold" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="员工编号" style="color:#666" />
+							</cell>
+							<cell>
+								<label value="@load(vm.m.gid)" />
+							</cell>
+							<cell>
+								<label value="员工姓名" style="color:#666" />
+							</cell>
+							<cell>
+								<label value="@load(vm.m.emba_name)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="委托地/委托机构"
+									style="color:#666" />
+							</cell>
+							<cell>
+								<hlayout>
+									<label value="@load(vm.m.city)" />
+									<space />
+									/
+									<label
+										value="@load(vm.m.coab_name)" />
+								</hlayout>
+							</cell>
+							<cell>
+								<label value="起始时间" style="color:#666" />
+							</cell>
+							<cell>
+								<label
+									value="@bind(vm.m.ecoc_title_date)" />
+							</cell>
+						</row>
+						<row>
+							<cell colspan="4">
+								<grid model="@load(vm.feeList)"
+									sizedByContent="true" span="true">
+									<columns>
+										<column hflex="1"></column>
+										<column hflex="6"></column>
+									</columns>
+									<template name="model">
+										<row>
+											<cell>
+												<label
+													value="@bind(each.eofc_name)" />
+											</cell>
+											<cell>
+												<label
+													value="@bind(each.eofc_month_sum)" />
+											</cell>
+										</row>
+									</template>
+								</grid>
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="总计" style="color:#666" />
+							</cell>
+							<cell colspan="3">
+								<label value="@load(vm.m.ecoc_sum)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="备注" style="color:#666" />
+							</cell>
+							<cell colspan="3">
+								<label value="@bind(vm.m.ecoc_remark)" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox title="状态变更记录" mold="3d">
+				<grid width="100%" emptyMessage="暂无数据"
+					model="@load(vm.hosList)" mold="paging" pageSize="5">
+					<columns>
+						<column align="center" label="状态" />
+						<column align="center" label="操作" />
+						<column align="center" label="添加人" />
+						<column align="center" label="添加时间" />
+						<column align="center" label="备注" />
+					</columns>
+					<template name="model">
+						<row>
+							<label value="@load(each.pbsr_statename)" />
+							<label value="@load(each.pbsr_content)" />
+							<label value="@load(each.pbsr_addname)" />
+							<label value="@load(each.pbsr_addtime)" />
+							<label value="@load(each.pbsr_remark)"
+								maxlength="20" tooltip="remark_${each.pbsr_id }"
+								style="cursor:pointer" />
+							<popup id="remark_${each.pbsr_id }">
+								<html>${each.pbsr_remark }</html>
+							</popup>
+						</row>
+					</template>
+				</grid>
+			</groupbox>
+		</scrollview>
+	</window>
+</zk>

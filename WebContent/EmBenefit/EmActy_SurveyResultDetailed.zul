@@ -1,0 +1,21 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="单个调查题目的详细信息" border="normal" width="80%" height="80%" closable="true">
+<vlayout>
+	<hlayout>
+		<label style="margin-left:20px;margin-bottom:10px;">题目：</label>
+		<label value="${arg.model.hitl_title }"></label>
+	</hlayout>
+	<hlayout>
+		<label style="margin-left:20px;margin-bottom:5px;">详细:</label>
+	</hlayout>
+</vlayout>
+<grid vflex="1">
+		<rows>
+			<row>
+				
+			</row>
+		</rows>
+	</grid>
+</window>
+</zk>

@@ -1,0 +1,122 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="公积金到帐查询" border="normal"
+		apply="org.zkoss.bind.BindComposer" width="100%" height="100%"
+		viewModel="@id('vm') @init('Controller.CoHousingFund.CoHousingFund_QueryBillController')">
+		<borderlayout>
+			<north>
+				<grid>
+					<rows>
+						<row>
+							<cell width="10%">
+								<label value="选取月份" />
+							</cell>
+							<cell>
+								<monthbox mold="rounded" id="ownmonth"
+									width="10%" format="yyyyMM"
+									onChange="@command('search',own=self.value)" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</north>
+			<center>
+				<grid span="true" mold="paging" pageSize="50"
+					model="@load(vm.squeryBillsList)" id="gridid" emptyMessage="无数据"
+					sizedByContent="true" hflex="1" vflex="1">
+					<columns sizable="true" id="colums">
+						<column width="40px" />
+						<column label="公积金编号" align="center" />
+						<column label="公司全称" align="center" />
+						<column label="客服" align="center" />
+						<column label="所属月份" align="center" />
+						<column label="缴存比例" align="center" />
+						<column label="专办员号" align="center" />
+						<column label="缴存日" align="center" />
+						<column label="补缴金额" align="center" />
+						<column label="补缴到账状态" align="center">
+							<separator></separator>
+							<combobox mold="rounded" instant="true"
+								value="@bind(vm.isPayment)" width="60%" readonly="true"
+								onChange="@command('search',isPayment=self.selectedItem.value)">
+								<comboitem value="" label="" />
+								<comboitem value="未到帐" label="未到帐" />
+								<comboitem value="已到帐" label="已到帐" />
+							</combobox>
+						</column>
+						<column label="缴交人数" align="center" />
+						<column label="缴交金额" align="center" />
+						<column label="最终到账状态" align="center">
+							<separator></separator>
+							<combobox mold="rounded" instant="true"
+								width="60%" readonly="true" value="@bind(vm.isAccount)"
+								onChange="@command('search')">
+								<comboitem value="" label="" />
+								<comboitem value="未到帐" label="未到帐" />
+								<comboitem value="已到帐" label="已到帐" />
+							</combobox>
+						</column>
+
+					</columns>
+					<template name="model">
+						<row>
+							<custom-attributes
+								cfpaid="${each.cfpa_id }" />
+							<detail open="false" fulfill="onOpen">
+								<include
+									src="/CoHousingFund/CoHousingFund_BillsList.zul"
+									cfpaid="${cfpaid }" />
+							</detail>
+							<cell>
+								<label value="@load(each.cohf_houseid)" />
+							</cell>
+							<cell>
+								<label value="@load(each.companyname)" />
+							</cell>
+							<cell>
+								<label value="@load(each.cilent)" />
+							</cell>
+							<cell>
+								<label value="@load(each.ownmonth)" />
+							</cell>
+							<cell>
+								<label value="@load(each.cohf_cpp)" />
+							</cell>
+							<cell>
+								<label value="@load(each.chfz_number)" />
+							</cell>
+							<cell>
+								<label value="@load(each.lastDay)" />
+							</cell>
+							<cell>
+								<label value="@load(each.payment)" />
+							</cell>
+							<cell>
+								<label
+									if="${each.cofp_isaccount=='已到帐'}" style="color:green"
+									value="@load(each.cofp_isaccount)" />
+								<label
+									if="${each.cofp_isaccount=='未到帐'}" style="color:red"
+									value="@load(each.cofp_isaccount)" />
+							</cell>
+							<cell>
+								<label value="@load(each.bodyCount)" />
+							</cell>
+							<cell>
+								<label value="@load(each.amount)" />
+							</cell>
+							<cell>
+								<label
+									if="${each.cqbc_isaccount=='已到帐'}" style="color:green"
+									value="@load(each.cqbc_isaccount)" />
+								<label
+									if="${each.cqbc_isaccount=='未到帐'}" style="color:red"
+									value="@load(each.cqbc_isaccount)" />
+							</cell>
+						</row>
+					</template>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

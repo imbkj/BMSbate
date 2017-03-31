@@ -1,0 +1,44 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="服务政策标题管理列表" border="normal" vflex="1"
+	apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('vm') @init('Controller.CoServicePolicy.SyPy_TypeListCtroller')"
+>
+<grid model="@load(vm.typelist)" vflex="1">
+	<columns>
+		<column width="50px" align="center">序号</column>
+		<column width="70px" align="center">序号</column>
+		<column align="center">政策类型</column>
+		<column align="center">排序</column>
+		<column align="center" width="170px">操作
+		</column>
+	</columns>
+	<rows>
+		<template name="model">
+		<row>
+			<custom-attributes typemodel="${each}" />
+			<detail open="false" fulfill="onOpen">
+			<include
+				src="/CoServicePolicy/SyPo_TitleList.zul" typemodel="${typemodel}" />
+			</detail>
+			<cell><label value="${forEachStatus.index + 1}" /></cell>
+			<cell><label value="@load(each.note_type)" /></cell>
+			<cell><label value="@load(each.note_order)" /></cell>
+			<cell>
+				<menubar autodrop="true">
+					<menu image="../images/pencil-small.png">
+						<menupopup>
+							<menuitem onClick="@command('typeupdate',model=each)" label="修改">
+							</menuitem>
+							<menuitem onClick="@command('titleAdd',model=each)" label="添加标题">
+							</menuitem>
+						</menupopup>
+					</menu>
+				</menubar>
+			</cell>
+		</row>
+		</template>
+	</rows>
+</grid>
+</window>
+</zk>

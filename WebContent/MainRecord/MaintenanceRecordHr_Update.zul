@@ -1,0 +1,24 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="维护结果添加/修改 " id="winMainUpdate" width="50%" height="50%" closable="true"
+	    border="normal" apply="org.zkoss.bind.BindComposer"  vflex="1" hflex="1"
+		viewModel="@id('vm') @init('Controller.MainRecord.MaintenanceRecordHr_UpdateController')">
+	   <grid hflex="1" vflex="1">
+			<rows>
+              <row>
+			   <cell width="5%">维护结果</cell>
+			   <cell >
+				  <textbox rows="16" width="90%" id="mainresult"
+				   value="@load(vm.mainModel.mainresult)" />
+				</cell>
+			 </row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button label="提交"
+						onClick="@command('Charge',mainresult=mainresult.value,win=winMainUpdate)" />
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

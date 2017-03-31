@@ -1,0 +1,155 @@
+<?page title="合同终止 - 状态变更" contentType="text/html;charset=UTF-8"?>
+<!-- 调用内联页的文件名 -->
+<?component name="docDataList" macro-uri="/DocumentsInfo/DocumentsInfo_UpPageList.zul" inline="true"?>
+<zk>
+	<window id="win" title="合同终止 - 状态变更" border="normal" width="800px"
+		height="80%" closable="true" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoHousingFund.CoHousingFund_SurrenderOperateController')">
+		<borderlayout vflex="1">
+			<center autoscroll="true" border="none">
+				<grid>
+					<columns>
+						<column width="20%"></column>
+						<column></column>
+						<column width="20%"></column>
+						<column></column>
+					</columns>
+					<rows>
+						<row>
+							<cell>
+								<label style="color:#666" value="当前状态" />
+							</cell>
+							<cell colspan="3">
+								<label
+									value="@load(vm.chfcModel.statename)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label style="color:#666" value="公司编号" />
+							</cell>
+							<cell>
+								<label value="@load(vm.chfcModel.cid)" />
+							</cell>
+							<cell>
+								<label style="color:#666" value="公司全称" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.chfcModel.coba_company)" />
+							</cell>
+						</row>
+						<row>
+							<cell colspan="4">
+								<groupbox title="注销的专办员列表" mold="3d">
+									<grid vflex="min" hflex="1"
+										model="@load(vm.zbList)">
+										<columns>
+											<column align="center"
+												width="60px">
+												序号
+											</column>
+											<column align="center">
+												专办员号
+											</column>
+											<column align="center">
+												姓名
+											</column>
+											<column align="center">
+												固定电话
+											</column>
+											<column align="center">
+												移动电话
+											</column>
+											<column align="center">
+												电子邮箱
+											</column>
+										</columns>
+										<template name="model">
+											<row>
+												<cell>
+													<label
+														value="专办员${forEachStatus.index+1 }" style="color:#666" />
+												</cell>
+												<cell>
+													<label
+														value="@load(each.cfzc_name)" />
+												</cell>
+												<cell>
+													<label
+														value="@load(each.cfzc_name)" />
+												</cell>
+												<cell>
+													<label
+														value="@load(each.cfzc_tel)" />
+												</cell>
+												<cell>
+													<label
+														value="@load(each.cfzc_mobile)" />
+												</cell>
+												<cell>
+													<label
+														value="@load(each.cfzc_mail)" />
+												</cell>
+											</row>
+										</template>
+									</grid>
+								</groupbox>
+							</cell>
+						</row>
+						<row
+							if="${vm.state eq 1 and vm.chfcModel.chfc_puzu_id ne 0 }">
+							<cell colspan="4">
+								<label style="color:#666" value="签收材料" />
+							</cell>
+						</row>
+						<row
+							if="${vm.state eq 1 and vm.chfcModel.chfc_puzu_id ne 0 }">
+							<cell colspan="4">
+								<docDataList id="docGrid"
+									puzu_id="${vm.chfcModel.chfc_puzu_id }" doc_type="c" gid=""
+									tid="${vm.chfcModel.chfc_id }" log_url="/DocumentsInfo/"
+									dHeight="" dWidth="" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label style="color:#666" value="操作月份" />
+							</cell>
+							<cell colspan="3">
+								<label
+									value="@bind(vm.chfcModel.ownmonth)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label style="color:#666" value="上条备注" />
+							</cell>
+							<cell colspan="3">
+								<label
+									value="@bind(vm.chfcModel.chfc_remark)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label style="color:#666" value="新备注" />
+							</cell>
+							<cell colspan="3">
+								<textbox rows="5" hflex="1" vflex="1"
+									value="@bind(vm.chfcModel.chfc_remark1)" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</center>
+			<south border="none">
+				<hbox width="100%" align="center" pack="center">
+					<button label="退回"
+						onClick="@command('back',win=win)" />
+					<button label="提交"
+						onClick="@command('submit',win=win,gd=docGrid)" />
+				</hbox>
+			</south>
+		</borderlayout>
+	</window>
+</zk>

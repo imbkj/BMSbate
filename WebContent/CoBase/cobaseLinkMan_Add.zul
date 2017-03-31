@@ -1,0 +1,543 @@
+<?page title="公司联系人信息新增" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winCoLinkAdd" title="公司联系人信息新增"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoBase.CoBaseLinkMan_AddController')"
+		width="99%" height="100%" closable="true" sizable="true">
+		<div style="overflow:auto" width="100%" height="100%">
+			<groupbox open="true" title="联系信息">
+				<grid>
+					<rows>
+						<row>
+							<cell width="10%" style="color:red;">
+								姓名：
+							</cell>
+							<cell>
+								<textbox value="@bind(vm.m.cali_name)"
+									mold="rounded" constraint="no empty:请输入联系人姓名" />
+							</cell>
+							<cell width="10%" style="color:#666;">
+								英文名：
+							</cell>
+							<cell>
+								<textbox value="@bind(vm.m.cali_ename)"
+									mold="rounded" />
+							</cell>
+							<cell width="10%" style="color:#666;">
+								性别：
+							</cell>
+							<cell>
+								<radiogroup
+									selectedItem="@bind(vm.m.cali_sex)">
+									<radio label="男" value="男" />
+									<radio label="女" value="女" />
+								</radiogroup>
+							</cell>
+						</row>
+						<row>
+							<cell style="color:#666;">职位：</cell>
+							<cell>
+								<textbox value="@bind(vm.m.cali_job)"
+									mold="rounded" />
+							</cell>
+							<cell style="color:#666;">职责：</cell>
+							<cell>
+								<chosenbox id="cbDuty" width="90%"
+									creatable="true" createMessage="新增选项： '{0}'"
+									model="@load(vm.dutyList)"
+									onSearch="@command('addDuty', contact=event.value)" />
+							</cell>
+							<cell width="15%" style="color:#666;">
+								是否重要联系人：
+							</cell>
+							<cell width="35%">
+								<checkbox
+									checked="@bind(vm.m.cali_vipBool)" />
+							</cell>
+						</row>
+						<row>
+							<cell style="color:#666;">工作电话：</cell>
+							<cell>
+								<textbox value="@bind(vm.m.cali_tel)"
+									mold="rounded" />
+							</cell>
+							<cell style="color:#666;">私人电话：</cell>
+							<cell>
+								<textbox value="@bind(vm.m.cali_tel1)"
+									mold="rounded" />
+							</cell>
+							<cell style="color:#666;">手机：</cell>
+							<cell>
+								<textbox value="@bind(vm.m.cali_mobile)"
+									mold="rounded" />
+							</cell>
+						</row>
+						<row>
+							<cell style="color:#666;">工作邮箱：</cell>
+							<cell>
+								<textbox value="@bind(vm.m.cali_email)"
+									mold="rounded" />
+							</cell>
+							<cell style="color:#666;">私人邮箱：</cell>
+							<cell>
+								<textbox value="@bind(vm.m.cali_email1)"
+									mold="rounded" />
+							</cell>
+							<cell style="color:#666;">传真：</cell>
+							<cell>
+								<textbox value="@bind(vm.m.cali_fax)"
+									mold="rounded" />
+							</cell>
+						</row>
+						<row>
+							<cell style="color:#666;">微博：</cell>
+							<cell>
+								<textbox value="@bind(vm.m.cali_weibo)"
+									mold="rounded" />
+							</cell>
+							<cell style="color:#666;">微信：</cell>
+							<cell>
+								<textbox value="@bind(vm.m.cali_weixin)"
+									mold="rounded" />
+							</cell>
+							<cell style="color:#666;">QQ：</cell>
+							<cell>
+								<textbox value="@bind(vm.m.cali_qq)"
+									mold="rounded" />
+							</cell>
+						</row>
+						<row>
+							<cell style="color:#666;">联系地址：</cell>
+							<cell colspan="5">
+								<textbox
+									value="@bind(vm.m.cali_address)" mold="rounded" width="50%" />
+							</cell>
+						</row>
+						<row>
+							<cell style="color:#666;">备注：</cell>
+							<cell colspan="5">
+								<textbox value="@bind(vm.m.cali_remark)"
+									mold="rounded" rows="3" width="90%" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox open="false" title="个人信息">
+				<grid>
+					<rows>
+						<row>
+							<cell width="10%" style="color:#666;">
+								昵称：
+							</cell>
+							<cell>
+								<textbox
+									value="@bind(vm.m.cali_nickname)" mold="rounded" />
+							</cell>
+							<cell style="color:#666;">出生年份:</cell>
+							<cell align="left">
+								<datebox
+									value="@bind(vm.m.cali_birthYear)" format="yyyy年"
+									mold="rounded" />
+							</cell>
+							<cell style="color:#666;">生日：</cell>
+							<cell align="left">
+								<datebox
+									value="@bind(vm.m.cali_birthMonthDay)" format="MM月dd日"
+									mold="rounded" />
+							</cell>
+						</row>
+						<row>
+							<cell style="color:#666;">身高：</cell>
+							<cell>
+								<textbox value="@bind(vm.m.cali_height)"
+									mold="rounded" />
+							</cell>
+							<cell style="color:#666;">体型：</cell>
+							<cell>
+								<combobox
+									value="@bind(vm.m.cali_figure)" mold="rounded">
+									<comboitem label="" />
+									<comboitem label="胖" />
+									<comboitem label="瘦高" />
+									<comboitem label="高挑" />
+								</combobox>
+							</cell>
+							<cell style="color:#666;">性格：</cell>
+							<cell>
+								<combobox
+									value="@bind(vm.m.cali_character)" mold="rounded">
+									<comboitem label="" />
+									<comboitem label="活泼" />
+									<comboitem label="严谨" />
+									<comboitem label="亲和" />
+									<comboitem label="强势" />
+									<comboitem label="热情" />
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell style="color:#666;">民族：</cell>
+							<cell>
+								<textbox value="@bind(vm.m.cali_folk)"
+									mold="rounded" />
+							</cell>
+							<cell style="color:#666;">籍贯：</cell>
+							<cell>
+								<textbox value="@bind(vm.m.cali_origo)"
+									mold="rounded" />
+							</cell>
+							<cell style="color:#666;">戶口所在地：</cell>
+							<cell>
+								<textbox
+									value="@bind(vm.m.cali_hjaddress)" mold="rounded" width="80%" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox open="false" title="教育背景">
+				<grid>
+					<rows>
+						<row>
+							<cell style="color:#666;">文化程度：</cell>
+							<cell>
+								<textbox value="@bind(vm.m.cali_degree)"
+									mold="rounded" />
+							</cell>
+							<cell style="color:#666;">毕业城市：</cell>
+							<cell>
+								<textbox
+									value="@bind(vm.m.cali_schoolcity)" mold="rounded" width="50%" />
+							</cell>
+							<cell style="color:#666;">专业：</cell>
+							<cell>
+								<textbox
+									value="@bind(vm.m.cali_specialty)" mold="rounded" width="50%" />
+							</cell>
+						</row>
+						<row>
+							<cell style="color:#666;">毕业学校：</cell>
+							<cell colspan="5">
+								<textbox value="@bind(vm.m.cali_school)"
+									mold="rounded" width="25%" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox open="false" title="家庭情况">
+				<grid>
+					<rows>
+						<row>
+							<cell style="color:#666;" width="10%">
+								婚姻状况：
+							</cell>
+							<cell colspan="5">
+								<combobox
+									value="@bind(vm.m.cali_marriage)" mold="rounded" width="15%">
+									<comboitem label="" />
+									<comboitem label="已婚" />
+									<comboitem label="未婚" />
+								</combobox>
+							</cell>
+
+						</row>
+						<row>
+							<cell style="color:#666;">家庭成员：</cell>
+							<cell colspan="5">
+								<button label="新增家庭成员"
+									onClick="@command('addFamily')" />
+							</cell>
+						</row>
+						<row>
+							<cell colspan="6">
+								<grid model="@load(vm.familyList)">
+									<rows>
+										<template name="model">
+											<row>
+												<grid>
+													<rows>
+														<row>
+															<cell
+																rowspan="5" width="10%">
+																<hlayout>
+																	家庭成员
+																	<label
+																		value="${forEachStatus.index + 1}" />
+																</hlayout>
+															</cell>
+															<cell
+																width="10%" align="left">
+																家庭成员关系:
+															</cell>
+															<cell
+																align="left">
+																<textbox
+																	value="@bind(each.cblf_relationship)" mold="rounded" />
+															</cell>
+															<cell
+																align="left" width="10%" style="color:#666;">
+																性别：
+															</cell>
+															<cell
+																align="left">
+																<radiogroup
+																	selectedItem="@bind(each.cblf_sex)">
+																	<radio
+																		label="男" value="男" />
+																	<radio
+																		label="女" value="女" />
+																</radiogroup>
+															</cell>
+														</row>
+														<row>
+															<cell
+																align="left" width="10%">
+																姓名:
+															</cell>
+															<cell
+																align="left">
+																<textbox
+																	value="@bind(each.cblf_name)" mold="rounded" />
+															</cell>
+															<cell
+																align="left" width="10%">
+																喜好：
+															</cell>
+															<cell
+																align="left">
+																<textbox
+																	value="@bind(each.cblf_hobby)" mold="rounded" />
+															</cell>
+														</row>
+														<row>
+															<cell
+																align="left" width="10%">
+																出生年份:
+															</cell>
+															<cell
+																align="left">
+																<datebox
+																	value="@bind(each.cblf_birthYear)" format="yyyy年"
+																	mold="rounded" />
+															</cell>
+															<cell
+																align="left" width="10%">
+																生日：
+															</cell>
+															<cell
+																align="left">
+																<datebox
+																	value="@bind(each.cblf_birthMonthDay)" format="MM月dd日"
+																	mold="rounded" />
+															</cell>
+														</row>
+														<row>
+															<cell
+																align="left" width="10%">
+																职业：
+															</cell>
+															<cell
+																align="left">
+																<textbox
+																	value="@bind(each.cblf_occupation)" mold="rounded"
+																	width="50%" />
+															</cell>
+															<cell
+																align="left" width="10%">
+																单位：
+															</cell>
+															<cell
+																align="left">
+																<textbox
+																	value="@bind(each.cblf_company)" mold="rounded"
+																	width="70%" />
+															</cell>
+														</row>
+														<row>
+															<cell
+																align="left" width="10%">
+																备注：
+															</cell>
+															<cell
+																align="left" colspan="2">
+																<textbox
+																	value="@bind(each.cblf_remark)" mold="rounded" rows="3"
+																	width="60%" />
+															</cell>
+															<cell
+																align="left">
+																<a
+																	onClick="@command('delFamily',m=each)" label="删除" />
+															</cell>
+														</row>
+													</rows>
+												</grid>
+											</row>
+										</template>
+									</rows>
+								</grid>
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox open="false" title="职业发展">
+				<grid>
+					<rows>
+						<row>
+							<cell rowspan="3" width="10%">上个工作信息</cell>
+							<cell width="10%">所属行业：</cell>
+							<cell>
+								<textbox
+									value="@bind(vm.m.cali_lastindustry)" mold="rounded"
+									width="70%" />
+							</cell>
+							<cell width="10%">在职时间：</cell>
+							<cell>
+								<textbox
+									value="@bind(vm.m.cali_lastworktime)" mold="rounded"
+									width="70%" />
+							</cell>
+						</row>
+						<row>
+							<cell width="10%">公司名称：</cell>
+							<cell>
+								<textbox
+									value="@bind(vm.m.cali_lastcompany)" mold="rounded"
+									width="70%" />
+							</cell>
+							<cell width="10%">所任职位：</cell>
+							<cell>
+								<textbox
+									value="@bind(vm.m.cali_lastjob)" mold="rounded" width="70%" />
+							</cell>
+						</row>
+						<row>
+							<cell width="10%">公司地址：</cell>
+							<cell colspan="3">
+								<textbox
+									value="@bind(vm.m.cali_lastcompanyAddress)" mold="rounded"
+									width="40%" />
+							</cell>
+						</row>
+						<row>
+							<cell width="10%">以后发展方向及规划：</cell>
+							<cell colspan="4">
+								<textbox
+									value="@bind(vm.m.cali_developmentPlan)" mold="rounded"
+									width="90%" rows="3" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox open="false" title="兴趣爱好">
+				<grid>
+					<rows>
+						<row>
+							<cell style="color:#666;">兴趣爱好：</cell>
+							<cell>
+								<textbox value="@bind(vm.m.cali_hobby)"
+									mold="rounded" />
+							</cell>
+							<cell style="color:#666;">业余活动：</cell>
+							<cell>
+								<textbox
+									value="@bind(vm.m.cali_hobbyActivities)" mold="rounded"
+									width="50%" />
+							</cell>
+							<cell style="color:#666;">宗教信仰：</cell>
+							<cell>
+								<textbox
+									value="@bind(vm.m.cali_religiousBelief)" mold="rounded"
+									width="50%" />
+							</cell>
+						</row>
+						<row>
+							<cell style="color:#666;">参加行业或私人俱乐部：</cell>
+							<cell>
+								<textbox
+									value="@bind(vm.m.cali_hobbyClub)" mold="rounded" />
+							</cell>
+							<cell style="color:#666;">社区活动：</cell>
+							<cell>
+								<textbox
+									value="@bind(vm.m.cali_communityActivities)" mold="rounded"
+									width="50%" />
+							</cell>
+							<cell style="color:#666;">兴趣话题：</cell>
+							<cell>
+								<textbox
+									value="@bind(vm.m.cali_conversationTopics)" mold="rounded"
+									width="50%" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox open="false" title="饮食爱好">
+				<grid>
+					<rows>
+						<row>
+							<cell style="color:#666;">饮食爱好：</cell>
+							<cell>
+								<textbox
+									value="@bind(vm.m.cali_hobbyFood)" mold="rounded" />
+							</cell>
+							<cell style="color:#666;">饮食忌口：</cell>
+							<cell>
+								<textbox value="@bind(vm.m.cali_diet)"
+									mold="rounded" width="50%" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox open="false" title="注意事项">
+				<grid>
+					<rows>
+						<row>
+							<cell style="color:#666;">是否反对请客：</cell>
+							<cell>
+								<radiogroup
+									selectedItem="@bind(vm.m.cali_ifOpInvitationMeals)">
+									<radio label="是" value="是" />
+									<radio label="否" value="否" />
+								</radiogroup>
+							</cell>
+							<cell style="color:#666;">是否反对送礼物：</cell>
+							<cell>
+								<radiogroup
+									selectedItem="@bind(vm.m.cali_ifOpSengGift)">
+									<radio label="是" value="是" />
+									<radio label="否" value="否" />
+								</radiogroup>
+							</cell>
+						</row>
+						<row>
+							<cell style="color:#666;">不宜谈论事件：</cell>
+							<cell>
+								<textbox
+									value="@bind(vm.m.cali_notTalkAbout)" mold="rounded" />
+							</cell>
+							<cell style="color:#666;">
+								最注重服务中的哪些问题：
+							</cell>
+							<cell>
+								<textbox
+									value="@bind(vm.m.cali_attentionProblem)" mold="rounded"
+									width="50%" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<div width="100%" align="center">
+				<button label="提交"
+					onClick="@command('addLinkman',win=winCoLinkAdd,cbDuty=cbDuty)" />
+			</div>
+		</div>
+	</window>
+</zk>

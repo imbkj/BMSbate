@@ -1,0 +1,193 @@
+<!--
+	创建人：张志强
+	创建时间：2013-12-5
+	用途：劳动合同补充协议制作页面框架
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="雇员合同补充协议制作" border="normal" width="95%" height="600px"
+		closable="true" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmBaseCompact.EmBaseCompactSA_MakeListController')">
+		<zscript language="Java">
+	import Util.UserInfo;
+	String user = UserInfo.getUserid();
+</zscript>
+		<grid width="100%" 
+			model="@load(vm.compactsabase)">
+			<rows>
+				<template name="model">
+					<row>
+						<cell>
+							<label id="ebcc_id" value="@load(each.ebco_id)"
+								visible="false" />
+							<label id="userid" value="${user}"
+								visible="false" />
+							<grid vflex="1" hflex="1">
+								<rows>
+									<row>
+										<cell width="130px">员工姓名：</cell>
+										<cell>
+											<textbox id="embasex"
+												mold="rounded" value="@load(each.name)" readonly="true" />
+										</cell>
+										<cell width="130px">生效时间：</cell>
+										<cell>
+											<datebox width="110px"
+												id="embase1" readonly="true" mold="rounded"
+												format="yyyy-MM-dd" />
+										</cell>
+									</row>
+									<row>
+										<cell width="130px">
+											原合同起始时间：
+										</cell>
+										<cell>
+											<textbox width="110px"  value="@load(each.ebco_incept_date)" 
+												id="embase2" readonly="true" mold="rounded" />
+										</cell>
+										<cell width="130px">
+											新合同起始时间：
+										</cell>
+										<cell>
+											<datebox width="110px"
+												id="embase3" readonly="true" mold="rounded"
+												format="yyyy-MM-dd" />
+										</cell>
+										
+									</row>
+
+									<row>
+										<cell width="130px">
+											原合同到期时间：
+										</cell>
+										<cell>
+											<textbox width="110px" value="@load(each.ebco_maturity_date)" 
+												id="embase4" readonly="true" mold="rounded" />
+										</cell>
+										<cell width="130px">
+											新合同到期时间：
+										</cell>
+										<cell>
+											<datebox width="110px"
+												id="embase5" readonly="true" mold="rounded"
+												format="yyyy-MM-dd" />
+										</cell>
+										
+									</row>
+
+									<row>
+										<cell width="130px">
+											原工作地点：
+										</cell>
+										<cell>
+											<textbox id="embase6" readonly="true" 
+												mold="rounded" value="@load(each.ebco_work_place)" />
+										</cell>
+										<cell width="130px">
+											新工作地点：
+										</cell>
+										<cell>
+											<textbox id="embase7"
+												mold="rounded" />
+										</cell>
+										
+									</row>
+
+									<row>
+										<cell width="130px">原月工资：</cell>
+										<cell>
+											<textbox id="embase8" readonly="true" 
+												mold="rounded" value="@load(each.ebco_wage)"  />
+										</cell>
+										<cell width="130px">新月工资：</cell>
+										<cell>
+											<textbox id="embase9"
+												mold="rounded" />
+										</cell>
+										
+									</row>
+
+									<row>
+										<cell width="130px">
+											原工作岗位：
+										</cell>
+										<cell>
+											<textbox id="embase10" readonly="true" 
+												mold="rounded" value="@load(each.ebco_working_station)"  />
+										</cell>
+										<cell width="130px">
+											新工作岗位：
+										</cell>
+										<cell>
+											<textbox id="embase11"
+												mold="rounded" />
+										</cell>
+										
+									</row>
+
+									<row>
+										<cell colspan="4"
+											align="center">
+											<button label="制作补充协议"
+												onClick="getemcompact()" />
+										</cell>
+									</row>
+								</rows>
+							</grid>
+						</cell>
+					</row>
+				</template>
+			</rows>
+		</grid>
+
+		<include id="incl_id" ></include>
+		<zscript><![CDATA[
+	void getemcompact() {
+		String str1 = "";
+		if (embase1.getValue() == null) {
+			str1 = "&emba1=0";
+		} else {
+			str1 = "&emba1=" + embase1.getValue().toString();
+		}
+		String str2 = "";
+		if (embase2.getValue() == null) {
+			str2 = "&emba2=0";
+		} else {
+			str2 = "&emba2=" + embase2.getValue().toString();
+		}
+		
+		String str3 = "0";
+		if (embase3.getValue() == null) {
+			str3 = "&emba3=0";
+		} else {
+			str3 = "&emba3=" + embase3.getValue().toString();
+		}
+		
+		String str4 = "";
+		if (embase4.getValue() == null) {
+			str4 = "&emba4=0";
+		} else {
+			str4 = "&emba4=" + embase4.getValue().toString();
+		}
+		
+		String str5 = "";
+		if (embase5.getValue() == null) {
+			str5 = "&emba5=0";
+		} else {
+			str5 = "&emba5=" + embase5.getValue().toString();
+		}
+		
+		incl_id.setHeight("100px");
+		incl_id.setSrc("../EmBaseCompact/EmBaseCompactSA_AddDoc.jsp?ebcc_id="
+				+ ebcc_id.getValue() + "&user=" + userid.getValue() + str1
+				+ str2 + str3 + str4 + str5
+				+ "&emba6=" + embase6.getValue().toString() + "&emba7="
+				+ embase7.getValue().toString() + "&emba8="
+				+ embase8.getValue().toString() + "&emba9="
+				+ embase9.getValue().toString() + "&emba10="
+				+ embase10.getValue().toString() + "&emba11="
+				+ embase11.getValue().toString());
+	}
+]]></zscript>
+	</window>
+</zk>

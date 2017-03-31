@@ -1,0 +1,66 @@
+<?page title="导入数据入账" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winRecorded" title="导入数据入账" border="normal" width="650px" height="450px"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoFinanceManage.Cfma_CollectImportRecordedController')"
+		closable="true" sizable="true">
+		<grid hflex="1" vflex="1">
+			<rows>
+				<row>
+					<cell width="30%">
+						<label value="交易流水号：" />
+					</cell>
+					<cell>
+						<label
+							value="@load(vm.ciModel.cfci_transactionNo)" />
+					</cell>
+				</row>
+				<row>
+					<cell>
+						<label value="收款金额：" />
+					</cell>
+					<cell>
+						<label value="@load(vm.ciModel.cfci_amount)"
+							style="color:blue;" />
+					</cell>
+				</row>
+				<row>
+					<cell>
+						<label value="收款类型：" />
+					</cell>
+					<cell>
+						<combobox value="@bind(vm.type)" width="70%"
+							mold="rounded" autodrop="true" readonly="true">
+							<comboitem label="公司" />
+							<comboitem label="机构" />
+						</combobox>
+					</cell>
+				</row>
+				<row>
+					<cell>
+						<label value="对方账户名称：" />
+					</cell>
+					<cell>
+						<textbox value="@bind(vm.company)"
+							mold="rounded" width="70%"/>
+					</cell>
+				</row>
+				<row>
+					<cell>
+						<label value="用途：" />
+					</cell>
+					<cell>
+						<textbox value="@bind(vm.usage)" rows="3" width="70%"
+							mold="rounded" />
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button label="提交"
+						onClick="@command('recorded',win=winRecorded)" />
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

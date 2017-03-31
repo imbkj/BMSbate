@@ -1,0 +1,152 @@
+<?page title="委托标准详情" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="win" title="委托标准详情" border="normal" width="680px"
+		closable="true" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmCommissionOut.Standard.Standard_ModController')">
+		<div height="100%">
+			<grid vflex="1">
+				<columns>
+					<column width="15%" />
+					<column />
+					<column width="15%" />
+					<column />
+				</columns>
+				<rows>
+					<row>
+						<cell>
+							<label value="公司名称" style="color:#666" />
+						</cell>
+						<cell>
+							<label value="@load(vm.m.coba_company)" />
+						</cell>
+						<cell>
+							<label value="公司编号" style="color:#666" />
+						</cell>
+						<cell>
+							<label value="@load(vm.m.cid)" />
+						</cell>
+					</row>
+					<row>
+						<cell>
+							<label value="标准名称" style="color:#666" />
+						</cell>
+						<cell colspan="3">
+							<label value="@bind(vm.m.ecos_name)" />
+						</cell>
+					</row>
+					<row>
+						<cell>
+							<label value="委托地区" style="color:#666" />
+						</cell>
+						<cell>
+							<label value="@bind(vm.m.city)" />
+						</cell>
+						<cell>
+							<label value="委托机构" style="color:#666" />
+						</cell>
+						<cell>
+							<label value="@bind(vm.m.coab_name)" />
+						</cell>
+					</row>
+					<row>
+						<cell>
+							<label value="勾选福利产品" style="color:#666" />
+						</cell>
+						<cell colspan="3">
+							<listbox id="ltb" height="150px"
+								emptyMessage="暂无数据" model="@load(vm.scolList)">
+								<listhead>
+									<listheader align="center">
+										<label value="产品名称" />
+									</listheader>
+									<listheader align="center">
+										<label value="收费金额/收费单位" />
+									</listheader>
+								</listhead>
+								<template name="model">
+									<listitem>
+										<listcell>
+											<label
+												value="@load(each.coli_name)" />
+										</listcell>
+										<listcell>
+											<hlayout>
+												<label
+													value="@load(each.coli_fee)" />
+												<space />
+												<label
+													value="@load(each.coli_cpfc_name)" />
+											</hlayout>
+										</listcell>
+									</listitem>
+								</template>
+							</listbox>
+						</cell>
+					</row>
+					<row>
+						<cell>
+							<label value="社保账户" style="color:#666" />
+						</cell>
+						<cell>
+							<label
+								value="@bind(vm.m.ecos_shebao_zhtype)" />
+						</cell>
+						<cell>
+							<label value="费用支付方式" style="color:#666" />
+						</cell>
+						<cell>
+							<label
+								value="@bind(vm.m.ecos_shebao_feetype)" />
+						</cell>
+					</row>
+					<row>
+						<cell>
+							<label value="公积金账户" style="color:#666" />
+						</cell>
+						<cell>
+							<label value="@bind(vm.m.ecos_gjj_zhtype)" />
+						</cell>
+						<cell>
+							<label value="费用支付方式" style="color:#666" />
+						</cell>
+						<cell>
+							<label value="@bind(vm.m.ecos_gjj_feetype)" />
+						</cell>
+					</row>
+					<row>
+						<cell>
+							<label value="服务费" style="color:#666" />
+						</cell>
+						<cell colspan="3">
+							<label value="@bind(vm.m.ecos_service_fee)" />
+						</cell>
+					</row>
+					<row>
+						<cell>
+							<label value="档案费" style="color:#666" />
+						</cell>
+						<cell>
+							<label value="@bind(vm.m.ecos_archvie_fee)" />
+						</cell>
+						<cell>
+							<label value="档案费支付方式" style="color:#666" />
+						</cell>
+						<cell>
+							<label
+								value="@bind(vm.m.ecos_archvie_feetype)" />
+						</cell>
+					</row>
+					<row>
+						<cell>
+							<label value="备注" style="color:#666" />
+						</cell>
+						<cell colspan="3">
+							<textbox rows="5" hflex="1" readonly="true"
+								value="@bind(vm.m.ecos_remark)" />
+						</cell>
+					</row>
+				</rows>
+			</grid>
+		</div>
+	</window>
+</zk>

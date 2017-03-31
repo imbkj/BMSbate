@@ -1,0 +1,338 @@
+<!--
+	创建人：林少斌
+	创建时间：2014-3-11
+	用途：委托单管理
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="智翼通接口 -- 委托单管理" border="normal" width="100%"
+		height="100%" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmZYT.EmZYT_ManageListController')">
+		<borderlayout vflex="1">
+			<north border="0" title="数据查询" collapsible="true"
+				flex="true" open="true">
+				<panel border="1">
+					<panelchildren style="padding:5px;">
+						<grid width="100%">
+							<rows>
+								<row>
+									<cell>
+										<label value="所属月份" />
+									</cell>
+									<cell>
+										<monthbox id="ownmonth"
+											width="90%" sclass="datebox-month-only" format="yyyyMM"
+											value="@load(vm.d_nowmonth)" />
+									</cell>
+									<cell>
+										<label value="委托地区" />
+									</cell>
+									<cell>
+										<combobox id="city" width="90%"
+											readonly="true" model="@load(vm.cityList)" mold="rounded">
+											<template name="model">
+												<comboitem
+													label="@load(each)" />
+											</template>
+										</combobox>
+									</cell>
+									<cell>
+										<label value="委托事件" />
+									</cell>
+									<cell>
+										<combobox id="sclass"
+											readonly="true" width="90%" model="@load(vm.sclassList)"
+											mold="rounded">
+											<template name="model">
+												<comboitem
+													label="@load(each)" />
+											</template>
+										</combobox>
+									</cell>
+									<cell>
+										<label value="处理状态" />
+									</cell>
+									<cell>
+										<combobox id="state" width="90%"
+											readonly="true" model="@load(vm.stateList)" mold="rounded">
+											<template name="model">
+												<comboitem
+													value="@load(each[0])" label="@load(each[1])" />
+											</template>
+										</combobox>
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<label value="委托单日期范围" />
+									</cell>
+									<cell>
+										<datebox id="uptime_s"
+											width="45%" format="yyyy-MM-dd" />
+										<datebox id="uptime_e"
+											width="45%" format="yyyy-MM-dd" />
+									</cell>
+									<cell>
+										<label value="员工查询" />
+									</cell>
+									<cell>
+										<textbox id="emkey" width="50%"
+											mold="rounded" />
+										<combobox id="emkeytype"
+											value="姓名" readonly="true" width="40%"
+											model="@load(vm.emkeyTypeList)" mold="rounded">
+											<template name="model">
+												<comboitem
+													label="@load(each)" />
+											</template>
+										</combobox>
+									</cell>
+									<cell>
+										<label value="公司查询" />
+									</cell>
+									<cell>
+										<textbox id="cokey" width="90%"
+											mold="rounded" />
+									</cell>
+									<cell>
+										<label value="客服代表" />
+									</cell>
+									<cell>
+										<combobox id="client"
+											width="90%" readonly="true" model="@load(vm.clientList)"
+											mold="rounded">
+											<template name="model">
+												<comboitem
+													label="@load(each)" />
+											</template>
+										</combobox>
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<label value="编号筛选" />
+									</cell>
+									<cell>
+										<combobox id="s_cidgid"
+											width="90%" readonly="true" mold="rounded">
+											<comboitem value="0"
+												label="全部" />
+											<comboitem value="1"
+												label="员工编号为空" />
+											<comboitem value="2"
+												label="公司编号为空" />
+											<comboitem value="3"
+												label="其中一项为空" />
+											<comboitem value="4"
+												label="两者都为空" />
+											<comboitem value="5"
+												label="两者不为空" />
+										</combobox>
+									</cell>
+									<cell>
+										<label value="同一月份同一员工多张委托单" />
+									</cell>
+									<cell>
+										<combobox id="ifsame"
+											width="90%" readonly="true" mold="rounded">
+											<comboitem label="全部" />
+											<comboitem label="是" />
+											<comboitem label="否" />
+										</combobox>
+									</cell>
+									<cell align="center" colspan="4"></cell>
+								</row>
+								<row>
+									<cell align="center" colspan="8">
+										<hbox>
+											<button label="查询"
+												onClick="@command('search',ownmonth=ownmonth,city=city,sclass=sclass,state=state,uptime_s=uptime_s,uptime_e=uptime_e,emkey=emkey,emkeytype=emkeytype,cokey=cokey,client=client,s_cidgid=s_cidgid,ifsame=ifsame)" />
+											<button label="生成反馈文件"
+												onClick="@command('downfile',dataGrid=dataGrid,ownmonth=ownmonth)" />
+											<button label="查询多条委托单"
+												onClick="@command('detailAll',dataGrid=dataGrid)" />
+										</hbox>
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</panelchildren>
+				</panel>
+			</north>
+			<center>
+				<grid id="dataGrid" width="100%" height="100%"
+					mold="paging" pageSize="200" model="@load(vm.dataList)"
+					emptyMessage="无数据">
+					<columns sizable="true">
+						<column label="序号" align="center" width="40px" />
+						<column label="所属月份" align="center"
+							sort="auto(ownmonth)" />
+						<column label="公司编号" align="center" />
+						<column label="公司名" align="center"
+							sort="auto(emzt_company)" />
+						<column label="客服" align="center"
+							sort="auto(emzt_client)" />
+						<column label="员工编号" align="center" />
+						<column label="智翼通编号" align="center" />
+						<column label="姓名" align="center" />
+						<column label="事件" align="center"
+							sort="auto(emzt_class)" />
+						<column label="委托地" align="center" />
+						<column label="委托单日期" align="center"
+							sort="auto(emzt_uptime)" />
+						<column label="状态" align="center"
+							sort="auto(state)" />
+						<column label="反馈状态" align="center" />
+						<column label="标识" align="center" />
+						<column align="center">
+							<checkbox id="cka"
+								onClick="@command('gdallselect',grid=dataGrid,check=self,a=cka)" />
+						</column>
+						<column label="操作" align="center" width="100px" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<label
+									value="@load(forEachStatus.index + 1)" />
+								<cell>
+									<label value="${each.ownmonth}" />
+								</cell>
+								<cell>
+									<label value="@load(each.cid)"
+										if="${each.cid!=0}" />
+									<label value="" if="${each.cid==0}" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emzt_company)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emzt_client)" />
+								</cell>
+								<cell>
+									<label value="@load(each.gid)"
+										if="${each.gid!=0}" />
+									<label value="" if="${each.gid==0}" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emzt_zgid)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emzt_name)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emzt_class)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emzt_scity)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emzt_uptime)" />
+								</cell>
+								<cell>
+									<label value="@load(each.state)"
+										style="color:${each.state_color};" />
+								</cell>
+								<cell>
+									<label value="@load(each.outstate)"
+										style="color:${each.outstate_color};" />
+								</cell>
+								<cell>
+									<image src="../images/ask.gif"
+										tooltiptext="该月份有多条委托单数据，请注意" if="${each.emzt_ifsame eq '1'}"
+										style="cursor:pointer;"
+										onClick="@command('searchIfsame',emztM=each)" />
+								</cell>
+								<cell align="center">
+									<checkbox value="@load(each.id)"
+										checked="@bind(each.emzt_ischecked)"
+										onClick="@command('gdallselect',grid=dataGrid,check=self,a=cka)" />
+								</cell>
+								<cell>
+									<menubar autodrop="true">
+										<menu
+											image="../images/pencil-small.png">
+											<menupopup>
+												<menuitem label="委托单明细"
+													onClick="@command('detail',emztM=each)" />
+												<menuitem label="新增"
+													if="${each.emzt_state=='10' and each.emzt_class eq'新增' and each.cid!=null and each.cid!=0}"
+													onClick="@command('addNew',emztM=each)" />
+												<menuitem label="补充编号"
+													if="${each.gid==0 or each.cid==0}"
+													onClick="@command('upCidGid',emztM=each)" />
+												<menuitem label="社保基数调整"
+													onClick="@command('addNew',emztM=each)"
+													if="${each.emzt_state=='10' and each.emzt_class eq'社保基数调整' and each.gid!=null and each.gid!=0 and each.cid!=null and each.cid!=0}" />
+												<menuitem label="户籍调整"
+													onClick="@command('addNew',emztM=each)"
+													if="${each.emzt_state=='10' and each.emzt_class eq'户籍调整' and each.gid!=null and each.gid!=0 and each.cid!=null and each.cid!=0}" />
+												<menuitem label="特殊调整"
+													onClick="@command('addNew',emztM=each)"
+													if="${each.emzt_state=='10' and each.emzt_class eq'特殊调整' and each.gid!=null and each.gid!=0 and each.cid!=null and each.cid!=0}" />
+												<menuitem label="服务项目调整"
+													onClick="@command('addNew',emztM=each)"
+													if="${each.emzt_state=='10' and each.emzt_class eq'服务项目调整' and each.gid!=null and each.gid!=0 and each.cid!=null and each.cid!=0}" />
+												<menuitem label="服务费调整"
+													onClick="@command('addNew',emztM=each)"
+													if="${each.emzt_state=='10' and each.emzt_class eq'服务费调整' and each.gid!=null and each.gid!=0 and each.cid!=null and each.cid!=0}" />
+												<menuitem label="年度调整"
+													onClick="@command('addNew',emztM=each)"
+													if="${each.emzt_state=='10' and each.emzt_class eq'年度调整' and each.gid!=null and each.gid!=0 and each.cid!=null and each.cid!=0}" />
+												<menuitem label="一次性费用"
+													onClick="@command('addNew',emztM=each)"
+													if="${each.emzt_state=='10' and each.emzt_class eq'一次性费用' and each.gid!=null and each.gid!=0 and each.cid!=null and each.cid!=0}" />
+												<menuitem label="终止"
+													if="${each.emzt_state=='10' and each.emzt_class eq'终止' and each.gid!=null and each.gid!=0 and each.cid!=null and each.cid!=0}"
+													onClick="@command('addNew',emztM=each)" />
+											</menupopup>
+										</menu>
+									</menubar>
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</center>
+			<south border="0" title="批量操作" collapsible="true"
+				flex="true" open="true">
+				<panel border="1">
+					<panelchildren style="padding:5px;">
+						<grid width="100%">
+							<rows>
+								<row>
+									<cell align="center">
+										<!-- <button label="选择报价单" disabled="true"
+											onClick="@command('addnewAll')" /> -->
+										<button id="btAdType"
+											label="修改事件或所属月份"
+											onClick="@command('adType')" />
+										<button label="已处理"
+											onClick="@command('declareState',state=1)" />
+										<button label="退单"
+											onClick="@command('declareState',state=3)" />
+										<button label="退单(待跟踪)"
+											onClick="@command('declareState',state=11)" />
+										<button label="社保基数调整处理"
+											onClick="@command('shebaoSalary',)" />
+										<button label="服务费调整"
+											onClick="@command('feeAdjust')" />
+										<button label="已反馈"
+											onClick="@command('feedbackState',state=1)" />
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</panelchildren>
+				</panel>
+			</south>
+		</borderlayout>
+	</window>
+</zk>

@@ -1,0 +1,21 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="账单备注信息" border="normal" width="600px" height="400px" closable="true"
+	apply="org.zkoss.bind.BindComposer" id="remarkwin"
+		viewModel="@id('vm') @init('Controller.EmFinance.Finance_AddRemarkController')"
+>
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell width="80px">备注</cell>
+			<cell><textbox width="80%" rows="5" value="@bind(vm.remark)"></textbox></cell>
+		</row>
+	</rows>
+	<foot>
+		<footer align="center">
+			<button onClick="@command('summit',win=remarkwin)">提交</button>
+		</footer>
+	</foot>
+</grid>
+</window>
+</zk>

@@ -1,0 +1,67 @@
+<!--
+	创建人：林少斌
+	创建时间：2014-2-20
+	用途：社保台账后文件上传
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winFinanceUpload" title="上传社保台账后文件" border="normal"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmSheBao.Emsc_SZSI_FinanceUploadController')"
+		closable="true" sizable="true" width="650px" height="300px">
+		<borderlayout>
+			<center>
+				<grid width="100%" height="100%">
+					<rows>
+						<row>
+							<cell align="left">
+								<label value=" 注意：社保局台帐文件不能作任何人为修改！"
+									style="color:red" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="请选择社保局档案文件:  " />
+								<textbox mold="rounded" rows="1" 
+									readonly="true" width="280px" value="@load(vm.uploadFlieName[0])"/>
+								<button label="浏览..."
+									upload="true,multiple=true"
+									onUpload="@command('browse',type=1)" />
+							</cell>
+						</row>
+						<row>
+							<cell align="left">
+								<label
+									value=" 文件格式例子：NormalPSList60022919_1261355881719.xls"
+									style="color:blue" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="请选择社保局扣款文件:  " />
+								<textbox mold="rounded" rows="1" value="@load(vm.uploadFlieName[1])"
+									readonly="true" width="280px" />
+								<button label="浏览..."
+									upload="true,multiple=true"
+									onUpload="@command('browse',type=2)" />
+							</cell>
+						</row>
+						<row>
+							<cell align="left">
+								<label
+									value=" 文件格式例子：UnitAccountList60022919_1261355905281.xls"
+									style="color:blue" />
+							</cell>
+						</row>
+					</rows>
+					<foot>
+						<footer align="center">
+							<button label="开始上传" id="btSubmit"
+								onClick="@command('submit',win=winFinanceUpload)" />
+						</footer>
+					</foot>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

@@ -1,0 +1,436 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="薪酬服务要求信息修改" border="normal" width="100%"
+		height="100%" closable="true" apply="org.zkoss.bind.BindComposer"
+		id="win" onCreate="@command('createwin',win=self)"
+		viewModel="@id('vm') @init('Controller.CoLatencyClient.ColaSalaryInfoEditController')">
+		<scrollview vflex="1" hflex="1">
+			<groupbox mold="3d" open="true" title="薪酬服务要求">
+				<groupbox open="true" title="薪酬计算事项">
+					<grid>
+						<rows>
+							<row>
+								<cell width="130px">公司名称</cell>
+								<cell colspan="3">
+									<textbox width="70%"
+										value="@load(vm.model.coba_company)" readonly="true">
+									</textbox>
+								</cell>
+							</row>
+							<row>
+								<cell width="130px">首月服务人数</cell>
+								<cell>
+									<intbox
+										value="@bind(vm.servicemodel.csqe_firstmonthservernumber)">
+									</intbox>
+								</cell>
+								<cell width="110px">预计达到人数</cell>
+								<cell>
+									<intbox
+										value="@bind(vm.servicemodel.csqe_forecastservernumber)">
+									</intbox>
+								</cell>
+							</row>
+							<row>
+								<cell width="130px">工资个税付款日</cell>
+								<cell>
+									<combobox id="gzfkd"
+										model="@load(vm.datelist)"
+										value="@bind(vm.servicemodel.emfics_backdate)"
+										readonly="true">
+										<template name="model">
+											<comboitem
+												label="@load(each)" />
+										</template>
+									</combobox>
+								</cell>
+								<cell width="110px">工资发放时间约定</cell>
+								<cell>
+									<combobox model="@load(vm.datelist)"
+										id="paydate" value="@bind(vm.servicemodel.paydate)"
+										readonly="true">
+										<template name="model">
+											<comboitem
+												label="@load(each)" />
+										</template>
+									</combobox>
+								</cell>
+							</row>
+
+							<row>
+								<cell width="130px">工资确认截止日</cell>
+								<cell>
+									<combobox model="@load(vm.datelist)"
+										value="@bind(vm.servicemodel.csqe_salaryconfirmenddate)"
+										readonly="true">
+										<template name="model">
+											<comboitem
+												label="@load(each)" />
+										</template>
+									</combobox>
+								</cell>
+								<cell width="110px">薪酬付款通知发放时间：</cell>
+								<cell colspan="3">
+									<combobox model="@load(vm.datelist)"
+										id="fktzffsj" value="@bind(vm.servicemodel.coba_fktzffsjstr)"
+										readonly="true">
+										<template name="model">
+											<comboitem
+												label="@load(each)" />
+										</template>
+									</combobox>
+								</cell>
+							</row>
+
+
+							<!-- 		<row> -->
+							<!-- 			<cell width="130px">薪酬回款时间</cell> -->
+							<!-- 			<cell colspan="3"> -->
+							<!-- 				<combobox id="xchksj" model="@load(vm.datelist)" value="@bind(vm.servicemodel.coba_xchksjstr)"  -->
+							<!-- 				readonly="true"> -->
+							<!-- 				<template name="model"> -->
+							<!-- 					<comboitem label="@load(each)"/> -->
+							<!-- 				</template> -->
+							<!-- 				</combobox> -->
+							<!-- 			</cell> -->
+
+							<!-- 		</row> -->
+
+							<row>
+								<cell>社保公积金扣缴约定</cell>
+								<cell>
+									<combobox
+										value="@bind(vm.servicemodel.csqe_sbhousetype)"
+										readonly="true">
+										<comboitem label="客服提供明细扣缴" />
+										<comboitem label="客户提供明细扣缴" />
+										<comboitem label="无扣缴社保公积金服务" />
+									</combobox>
+								</cell>
+								<cell>备注</cell>
+								<cell>
+									<textbox width="80%"
+										value="@bind(vm.servicemodel.csqe_sbhouse_remark)">
+									</textbox>
+								</cell>
+							</row>
+							<row>
+								<cell>社保公积金转账约定</cell>
+								<cell>
+									<combobox
+										value="@bind(vm.servicemodel.csqe_sbhouse_trans)"
+										readonly="true">
+										<comboitem
+											label="客户独立户扣社保无需我司代转" />
+										<comboitem
+											label="客户独立户扣社保需要我司代转" />
+										<comboitem label="中智大户扣缴" />
+										<comboitem label="无社保公积金服务" />
+									</combobox>
+
+								</cell>
+								<cell>备注</cell>
+								<cell>
+									<textbox width="80%"
+										value="@bind(vm.servicemodel.csqe_sbhouse_trans_renark)">
+									</textbox>
+								</cell>
+							</row>
+							<row>
+								<cell>公积金是否有超标员工</cell>
+								<cell>
+									<combobox
+										value="@bind(vm.servicemodel.houseover)" readonly="true"
+										id="houseover">
+										<comboitem label="有" value="1" />
+										<comboitem label="无" value="0" />
+										<comboitem label="不确定"
+											value="2" />
+									</combobox>
+								</cell>
+								<cell>备注</cell>
+								<cell>
+									<textbox width="80%"
+										value="@bind(vm.servicemodel.csqe_houseover_remark)">
+									</textbox>
+								</cell>
+							</row>
+							<row>
+								<cell>考勤计算约定</cell>
+								<cell>
+									<combobox
+										value="@bind(vm.servicemodel.actype)" readonly="true"
+										id="actype">
+										<comboitem label="需要计算考勤"
+											value="1" />
+										<comboitem label="无需计算考勤"
+											value="2" />
+										<comboitem label="审核客户计算"
+											value="3" />
+									</combobox>
+								</cell>
+								<cell>备注</cell>
+								<cell>
+									<textbox width="80%"
+										value="@bind(vm.servicemodel.csqe_actype_remark)">
+									</textbox>
+								</cell>
+							</row>
+							<row>
+								<cell>报表汇总约定</cell>
+								<cell>
+									<combobox
+										value="@bind(vm.servicemodel.report)" readonly="true"
+										id="report">
+										<comboitem label="需要按部门汇总"
+											value="1" />
+										<comboitem label="不需要"
+											value="2" />
+										<comboitem label="不确定"
+											value="3" />
+										<comboitem label="需要特殊报表"
+											value="4" />
+									</combobox>
+								</cell>
+								<cell>备注</cell>
+								<cell>
+									<textbox width="80%"
+										value="@bind(vm.servicemodel.csqe_report_remark)">
+									</textbox>
+								</cell>
+							</row>
+						</rows>
+					</grid>
+				</groupbox>
+				<groupbox open="true" title="个税计算事项">
+					<grid>
+						<rows>
+							<row>
+								<cell width="120px">个税计算约定</cell>
+								<cell>
+									<combobox
+										value="@bind(vm.servicemodel.taxctype)" readonly="true"
+										id="taxctype">
+										<comboitem label="我司计算明细扣缴"
+											value="1" />
+										<comboitem label="客户提供明细扣缴"
+											value="2" />
+										<comboitem label="仅发放税后金额"
+											value="3" />
+									</combobox>
+								</cell>
+								<cell width="120px">备注</cell>
+								<cell>
+									<textbox width="80%"
+										value="@bind(vm.servicemodel.csqe_taxctype_remark)">
+									</textbox>
+								</cell>
+							</row>
+							<row>
+								<cell width="120px">个税申报约定</cell>
+								<cell>
+									<combobox
+										value="@bind(vm.servicemodel.taxdetype)" readonly="true"
+										id="taxdetype">
+										<comboitem label="委托我司大户申报"
+											value="1" />
+										<comboitem label="委托我司客户独立户申报"
+											value="2" />
+										<comboitem label="不委托"
+											value="3" />
+									</combobox>
+								</cell>
+								<cell>备注</cell>
+								<cell>
+									<textbox width="80%"
+										value="@bind(vm.servicemodel.csqe_taxdetype_remark)">
+									</textbox>
+								</cell>
+							</row>
+							<row>
+								<cell>个税转账约定</cell>
+								<cell>
+									<combobox
+										value="@bind(vm.servicemodel.taxpay)" readonly="true"
+										id="taxpay">
+										<comboitem
+											label="客户独立户扣个税无需我司代转" value="1" />
+										<comboitem
+											label="客户独立户扣个税需要我司代转" value="2" />
+										<comboitem label="中智大户扣缴"
+											value="3" />
+										<comboitem label="无个税服务"
+											value="4" />
+									</combobox>
+								</cell>
+								<cell>备注</cell>
+								<cell>
+									<textbox width="80%"
+										value="@bind(vm.servicemodel.csqe_taxpay_remark)">
+									</textbox>
+								</cell>
+							</row>
+							<row>
+								<cell>委托外地申报约定</cell>
+								<cell>
+									<combobox
+										value="@bind(vm.servicemodel.taxwt)" readonly="true"
+										id="taxwt">
+										<comboitem label="有" value="1" />
+										<comboitem label="无" value="0" />
+										<comboitem label="不确定"
+											value="2" />
+									</combobox>
+								</cell>
+								<cell width="120px">委托地</cell>
+								<cell>
+									<textbox width="80%"
+										value="@bind(vm.servicemodel.csqe_taxwt_place)">
+									</textbox>
+								</cell>
+							</row>
+							<row>
+								<cell>个税申报时间</cell>
+								<cell colspan="3">
+									<combobox
+										value="@bind(vm.servicemodel.taxde_date)" readonly="true"
+										id="taxde_date">
+										<comboitem label="工资发放当月申报"
+											value="1" />
+										<comboitem label="工资发放次月申报"
+											value="2" />
+									</combobox>
+								</cell>
+							</row>
+						</rows>
+					</grid>
+				</groupbox>
+				<groupbox open="true" title="工资单事项">
+					<grid>
+						<rows>
+							<row>
+								<cell width="120px">工资单形式</cell>
+								<cell colspan="3">
+									<combobox
+										value="@bind(vm.cosalarysetm.coss_payrollpapertype)"
+										readonly="true" id="gzpayroll_type"
+										onChange="@command('setvisble',grid1=mf,grid2=emailgz,comb=self)"
+										onCreate="@command('setvisble',grid1=mf,grid2=emailgz,comb=self)">
+										<comboitem label="无需工资单"
+											value="1" />
+										<comboitem label="E-mail工资单"
+											value="2" />
+										<comboitem label="密封工资单"
+											value="3" />
+										<comboitem label="网上中智工资单"
+											value="4" />
+									</combobox>
+								</cell>
+
+							</row>
+
+						</rows>
+					</grid>
+
+					<grid id="mf" visible="false">
+						<rows>
+							<row>
+								<cell width="150px">密封工资单发送时间约定</cell>
+								<cell>
+									<combobox id="mfgzd"
+										model="@load(vm.datelist)"
+										value="@bind(vm.cosalarysetm.coss_mfdatestr)"
+										readonly="true">
+										<template name="model">
+											<comboitem
+												label="@load(each)" />
+										</template>
+									</combobox>
+								</cell>
+								<cell>密封工资单交接人</cell>
+								<cell>
+									<textbox
+										value="@bind(vm.cosalarysetm.coss_mfname)">
+									</textbox>
+								</cell>
+								<cell>密封工资单是否需要底单</cell>
+								<cell>
+									<combobox
+										value="@bind(vm.cosalarysetm.coss_ifmfddstr)" readonly="true"
+										id="gzpayroll_b">
+										<comboitem label="" value="0" />
+										<comboitem label="是" value="1" />
+										<comboitem label="否" value="0" />
+									</combobox>
+								</cell>
+							</row>
+						</rows>
+					</grid>
+
+					<grid id="emailgz" visible="false">
+						<rows>
+							<row>
+								<cell width="150px">Email工资单格式</cell>
+								<cell>
+									<combobox id="gzdgs"
+										value="@bind(vm.cosalarysetm.coss_emailtype)" onChange="@command('changeGZEmailtype',emailtype=self.value)"
+										readonly="true">
+										<comboitem label="Text" />
+										<comboitem label="Html" />
+										<comboitem label="附件pdf" />
+										<comboitem label="附件excel" />
+									</combobox>
+								</cell>
+								<cell>Email工资单是否自动发送</cell>
+								<cell>
+									<combobox
+										value="@bind(vm.cosalarysetm.coss_emailoutostr)"
+										readonly="true" id="zdfs">
+										<comboitem label="是" value="是"/>
+										<comboitem label="否" value="否"/>
+									</combobox>
+								</cell>
+								<cell colspan="2"><label style="color:red;" value="(注意：附件pdf 和 附件excel 类型的工资单暂时不能自动发送)"/></cell>
+							</row>
+							<row visible="false">
+								<cell>Email工资单暗送人</cell>
+								<cell>
+									<textbox
+										value="@bind(vm.cosalarysetm.coss_emailas)">
+									</textbox>
+								</cell>
+								<cell>Email工资单抄送人</cell>
+								<cell>
+									<textbox
+										value="@bind(vm.cosalarysetm.coss_emailcs)">
+									</textbox>
+								</cell>
+								<cell width="150px">Email工资单发送时间</cell>
+								<cell>
+
+									<combobox id="emailpaydate"
+										model="@load(vm.datelist)"
+										value="@bind(vm.cosalarysetm.coss_emailsenddatestr)"
+										readonly="true">
+										<template name="model">
+											<comboitem
+												label="@load(each)" />
+										</template>
+									</combobox>
+								</cell>
+
+							</row>
+						</rows>
+					</grid>
+
+				</groupbox>
+			</groupbox>
+			<div align="center">
+				<button id="changeclient"
+					onClick="@command('salaryEdit',win=win)">
+					提交
+				</button>
+			</div>
+		</scrollview>
+	</window>
+</zk>

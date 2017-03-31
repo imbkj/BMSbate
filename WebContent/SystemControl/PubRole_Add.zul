@@ -1,0 +1,29 @@
+<!--
+	创建人：张志强
+	创建时间：2013-9-16
+	用途：新增角色页面
+-->
+<?page title="新增角色" contentType="text/html;charset=UTF-8"?>
+<zk xmlns:c="client">
+			<window title="新增角色" id="wins" border="normal"
+				closable="true"
+				apply="Controller.SystemControl.PubRoleAddController">
+				<grid width="100%">
+					<rows>
+						<row>
+							角色名称:
+							<textbox id="name" width="160px"
+								constraint="no empty" />
+						</row>
+						<row>
+							角色首页:
+							<textbox id="index" width="160px"
+								constraint="no empty" />
+						</row>
+					</rows>
+				</grid>
+				<toolbar mold="panel" align="center">
+					<button id="submitButton" label="提 交" onClick="" />
+				</toolbar>
+			</window>
+</zk>

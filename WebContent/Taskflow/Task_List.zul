@@ -1,0 +1,30 @@
+
+<grid id="gd" model="@load(vm.tlgroupmodel)" emptyMessage="无数据" height="600px" >
+	<columns>
+		<column label="任务单名"></column>
+	
+
+	</columns>
+
+	<template name="model:group" >
+		<group label="@load(each)" spans="2" width="100%" height="100%"
+			style=""  >
+		</group>
+	</template>
+
+	<template name="model" >
+		<row>
+			<label  style="cursor:pointer;" value="@load(each.tali_name)" onClick="@command('newtab',tabs=tabs,tree=tree,tig_1=tig_1,
+			tig00=tig00,tbx1=tbx1,tali_id=each.tali_id)"></label>
+		</row>
+	</template>
+
+	 <template name="model:groupfoot">
+		<groupfoot style="">
+			<cell colspan="2"
+				style="text-align: right; padding-right: 15px">
+				<label value="@load(each)"  />
+			</cell>
+		</groupfoot>
+	</template>  
+</grid>

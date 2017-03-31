@@ -1,0 +1,23 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="借卡审核" border="normal" width="400px" height="300px" closable="true"
+apply="org.zkoss.bind.BindComposer" id="win"
+    viewModel="@id('vm') @init('Controller.EmCensus.EmCensus_BorrowCardAuditController')">
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell width="60px">员工状态</cell>
+			<cell>
+				<combobox id="ifstate">
+					<comboitem value="1" label="在职"/>
+					<comboitem value="0" label="离职"/>
+				</combobox>
+			</cell>
+		</row>
+	</rows>
+	<foot>
+		<footer align="center"><button onClick="@command('EmCensusPass',ifstate=ifstate.selectedItem.value,win=win)">审核通过</button></footer>
+	</foot>
+</grid>
+</window>
+</zk>

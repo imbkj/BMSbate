@@ -1,0 +1,50 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="发送短信" border="normal" width="650px" height="400px"
+		apply="org.zkoss.bind.BindComposer" id="smswin"
+		viewModel="@id('vm') @init('Controller.SmsMessage.Sms_AddController')"
+		closable="true">
+		<grid vflex="1">
+			<rows>
+				<row>
+					<cell width="80px">手机号码</cell>
+					<cell>
+						<textbox></textbox>
+					</cell>
+				</row>
+				<row>
+					<cell width="80px">短信模板</cell>
+					<cell>
+						<textbox></textbox>
+					</cell>
+				</row>
+				<row>
+					<cell>短信内容</cell>
+					<cell>
+						<textbox width="90%" rows="7"></textbox>
+					</cell>
+				</row>
+				<row>
+					<cell>注意事项</cell>
+					<cell>
+						<vlayout>
+							<label>
+								①
+								发出的短信特别是第一次发给对方的短信必须要有称谓，例如“张三您好...”，防止对方误认为垃圾短信。(极其重要)
+							</label>
+							<label>
+								②
+								短信平台使用受监管的移动10657网关，不允许发送垃圾短信，请不要发送私人短信。
+							</label>
+						</vlayout>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer span="2" align="center">
+					<button onClick="@command('send',win=smswin)">发送</button>
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

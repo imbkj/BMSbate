@@ -1,0 +1,491 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="单位公积金信息" border="normal" width="80%" closable="true"
+		height="80%" hflex="2" vflex="2" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoHousingFund.CoHouse_ZbInfoController')">
+
+		<grid height="100%">
+			<columns>
+				<column label="单位缴存信息" />
+			</columns>
+			<rows>
+				<row>
+					<grid>
+						<columns visible="false">
+							<column width="140px" />
+							<column />
+							<column width="140px" />
+							<column />
+							<column width="120px" />
+							<column />
+						</columns>
+						<rows>
+							<!-- 单位名称 -->
+							<row>
+								<cell>
+
+									<label value="单位名称(全称)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(vm.chfm.coba_company)" />
+								</cell>
+								<cell>
+
+									<label value="单位编号" />
+								</cell>
+								<cell colspan="3">
+									<label value="@load(vm.chfm.cid)" />
+								</cell>
+
+							</row>
+
+							<!-- 组织机构代码 -->
+							<row>
+								<cell>
+
+									<label value="组织机构代码" />
+								</cell>
+								<cell>
+									<label
+										value="@load(vm.chfm.cohf_comid)" />
+								</cell>
+								<cell>
+
+									<label value="资格类型" />
+								</cell>
+								<cell>
+									<label
+										value="@load(vm.chfm.cohf_zgtype)" />
+								</cell>
+								<cell>
+
+									<label value="单位公积金号" />
+								</cell>
+								<cell>
+									<label
+										value="@load(vm.chfm.cohf_houseid)" />
+								</cell>
+							</row>
+
+
+							<!-- 单位地址 -->
+							<row>
+								<cell>
+
+									<label value="单位地址" />
+								</cell>
+								<cell>
+									<label
+										value="@load(vm.chfm.cohf_address)" />
+								</cell>
+								<cell>
+
+									<label value="行业代码" />
+								</cell>
+								<cell colspan="3">
+									<label
+										value="@load(vm.chfm.cohf_industry)" />
+								</cell>
+							</row>
+
+							<!-- 所属行政区域 -->
+							<row>
+								<cell>
+
+									<label value="所属行政区域" />
+								</cell>
+								<cell>
+									<label
+										value="@load(vm.chfm.cohf_area)" />
+								</cell>
+								<cell>
+
+									<label value="邮政编码" />
+								</cell>
+								<cell>
+									<label
+										value="@load(vm.chfm.cohf_pastal)" />
+								</cell>
+								<cell>
+
+									<label value="业务经办部门" />
+								</cell>
+								<cell>
+									<label
+										value="@load(vm.chfm.cohf_jbdepartment)" />
+								</cell>
+							</row>
+							<!-- 性质分类 -->
+
+							<row>
+								<cell>
+
+									<label value="性质分类" />
+								</cell>
+								<cell>
+									<label
+										value="@load(vm.chfm.cohf_nature)" />
+								</cell>
+								<cell>
+
+									<label value="隶属关系" />
+								</cell>
+								<cell>
+									<label
+										value="@load(vm.chfm.cohf_attached)" />
+								</cell>
+								<cell>
+
+									<label value="企业经济类型" />
+								</cell>
+								<cell>
+									<label
+										value="@load(vm.chfm.cohf_ecoclass)" />
+								</cell>
+							</row>
+
+							<!-- 法定代表人或负责人 -->
+							<row>
+								<cell colspan="6">法定代表人或负责人</cell>
+							</row>
+							<row>
+								<cell>
+									<label value="姓名" />
+								</cell>
+								<cell>
+									<label
+										value="@load(vm.chfm.cohf_corname)" width="73%" />
+								</cell>
+								<cell width="120px">
+									<label value="证件类型" />
+								</cell>
+								<cell>
+									<label
+										value="@load(vm.chfm.cohf_coridtype)" />
+								</cell>
+								<cell colspan="2" />
+							</row>
+							<row>
+								<cell>
+									<label value="联系电话 " />
+								</cell>
+								<cell>
+
+									<label
+										value="@load(vm.chfm.cohf_cortel)" />
+								</cell>
+								<cell>
+									<label value="证件号码" />
+								</cell>
+								<cell>
+									<label
+										value="@load(vm.chfm.cohf_coridcard)" />
+								</cell>
+								<cell colspan="2" />
+							</row>
+
+
+							<!-- 联系人 -->
+							<row>
+								<cell colspan="6">联系人</cell>
+							</row>
+							<row>
+								<cell>
+
+									<label value="姓名 " />
+								</cell>
+								<cell>
+									<label
+										value="@load(vm.chfm.cohf_contactname)" />
+								</cell>
+								<cell>
+									<label value="电子邮箱 " />
+								</cell>
+								<cell>
+									<label
+										value="@load(vm.chfm.cohf_contactmail)" />
+								</cell>
+								<cell colspan="2" />
+							</row>
+							<row>
+								<cell>
+									<label value="固定电话 " />
+								</cell>
+								<cell>
+									<label
+										value="@load(vm.chfm.cohf_contacttel)" />
+								</cell>
+
+								<cell>
+									<label value="移动电话 " />
+								</cell>
+								<cell>
+									<label
+										value="@load(vm.chfm.cohf_contactmobile)" />
+								</cell>
+								<cell colspan="2" />
+							</row>
+
+							<!-- 上级主管部门 -->
+							<row>
+								<cell colspan="6">上级主管部门</cell>
+							</row>
+							<row>
+								<cell>
+									<label value="名称 " />
+									</cell>
+								<cell>
+									<label
+										value="@load(vm.chfm.cohf_department)"/>
+								</cell>
+								<cell>
+									<label value="联系电话 " /></cell>
+								<cell>
+									<label
+										value="@load(vm.chfm.cohf_departmenttel)" />
+								</cell>
+								<cell colspan="2" />
+							</row>
+
+							<!-- 单位成立时间 -->
+							<row>
+								<cell>
+
+									<label value="单位成立时间" />
+								</cell>
+								<cell>
+									<label
+										value="@load(vm.chfm.cohf_createtime)" />
+								</cell>
+								<cell>
+
+									<label value="社保单位编号" />
+								</cell>
+								<cell colspan="3">
+									<label
+										value="@load(vm.chfm.cohf_sorid)" />
+								</cell>
+							</row>
+
+							<!-- 工商注册号 -->
+							<row>
+								<cell>
+
+									<label value="工商注册号" />
+								</cell>
+								<cell>
+									<label
+										value="@load(vm.chfm.cohf_regid)" />
+								</cell>
+								<cell>
+
+									<label value="纳税人识别号" />
+								</cell>
+								<cell colspan="3">
+									<label
+										value="@load(vm.chfm.cohf_taxpayerid)" />
+								</cell>
+							</row>
+
+							<!-- 单位个人缴存比例 -->
+							<row>
+								<cell>
+
+									<label value="单位/个人缴存比例" />
+								</cell>
+								<cell colspan="5">
+									<label value="@load(vm.chfm.cpp)" />
+								</cell>
+							</row>
+
+							<!-- 归集银行 -->
+							<row>
+								<cell>
+
+									<label value="归集银行" />
+								</cell>
+								<cell>
+									<label
+										value="@load(vm.chfm.cohf_bankgj)" />
+								</cell>
+								<cell>
+
+									<label value="领卡银行" />
+								</cell>
+								<cell colspan="3">
+									<label
+										value="@load(vm.chfm.cohf_banklk)" />
+								</cell>
+							</row>
+
+							<!-- 公积金缴存银行 -->
+							<row>
+								<cell>
+
+									<label value="公积金缴存银行" />
+								</cell>
+								<cell>
+									<label
+										value="@load(vm.chfm.cohf_bankjc)" />
+								</cell>
+								<cell>
+
+									<label value="公积金首次托收月" />
+								</cell>
+								<cell>
+									<label
+										value="@load(vm.chfm.cohf_firmonth)" />
+								</cell>
+								<cell>
+
+									<label value="托收日" />
+								</cell>
+								<cell>
+									<label
+										value="@load(vm.chfm.cohf_tsday)" />
+								</cell>
+							</row>
+
+							<!-- 托收账户开户银行 -->
+							<row>
+								<cell>
+
+									<label value="托收账户开户银行" />
+								</cell>
+								<cell>
+									<label
+										value="@load(vm.chfm.cohf_bankts)" />
+								</cell>
+								<cell>
+
+									<label value="托收账户银行帐号" />
+								</cell>
+								<cell>
+									<label
+										value="@load(vm.chfm.cohf_banktsid)" />
+								</cell>
+								<cell>
+
+									<label value="托收账户名称" />
+								</cell>
+								<cell>
+									<label
+										value="@load(vm.chfm.cohf_banktsacc)" />
+								</cell>
+							</row>
+						</rows>
+					</grid>
+				</row>
+
+				<!-- 专办员信息 -->
+				<row>
+					<grid>
+						<rows>
+							<row>
+								<label value="专办员信息" />
+							</row>
+							<row>
+								<grid model="@load(vm.chfzList)">
+									<columns>
+										<column label="专办员号"
+											align="center" />
+										<column label="姓名"
+											align="center" />
+										<column label="固定电话"
+											align="center" />
+										<column label="移动电话"
+											align="center" />
+										<column label="电子邮箱"
+											align="center" />
+									</columns>
+									<template name="model">
+										<row>
+											<cell align="center">
+												<label
+													value="@load(each.chfz_number)" />
+												<label value="(密)"
+													if="${each.flag}" style="color:red" />
+											</cell>
+											<cell align="center">
+												<label
+													value="@load(each.chfz_name) " />
+											</cell>
+											<cell align="center">
+												<label
+													value="@load(each.chfz_tel) " />
+											</cell>
+											<cell align="center">
+												<label
+													value="@load(each.chfz_mobile) " />
+											</cell>
+											<cell align="center">
+												<label
+													value="@load(each.chfz_mail) " />
+											</cell>
+										</row>
+									</template>
+								</grid>
+							</row>
+						</rows>
+					</grid>
+
+				</row>
+
+
+				<!-- 密钥信息 -->
+				<row>
+					<grid>
+						<rows>
+							<row>
+								<label value="密钥信息" />
+							</row>
+							<row>
+								<grid height="100%"
+									model="@load(vm.chfpList)">
+									<columns>
+										<column label="密钥专办员号"
+											align="center" />
+										<column label="密钥专办员"
+											align="center" />
+										<column label="密钥办理年限"
+											align="center" />
+										<column label="密钥起始日期"
+											align="center" />
+										<column label="密钥到期日期"
+											align="center" />
+									</columns>
+									<template name="model">
+										<row>
+											<cell align="center">
+												<label
+													value="@load(each.chfp_zb_number)" />
+											</cell>
+											<cell align="center">
+												<label
+													value="@load(each.chfp_zb_name) " />
+											</cell>
+											<cell align="center">
+												<label
+													value="@load(each.chfp_yearlimit)" />
+											</cell>
+											<cell align="center">
+												<label
+													value="@load(each.chfp_startdate)" />
+											</cell>
+											<cell align="center">
+												<label
+													value="@load(each.chfp_enddate)" />
+											</cell>
+										</row>
+									</template>
+								</grid>
+							</row>
+						</rows>
+					</grid>
+				</row>
+			</rows>
+		</grid>
+
+	</window>
+</zk>

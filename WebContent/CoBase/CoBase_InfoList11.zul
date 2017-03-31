@@ -1,0 +1,138 @@
+<?page title="公司信息列表" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window apply="Controller.CoBase.CoBase_InfoListController"
+		vflex="1" hflex="1" id="win" xmlns:w="client">
+		<style src="/css/style.css"></style>
+		<script type="text/javascript">
+			<![CDATA[ function sendPointer(str){ zAu.send(new
+			zk.Event(zk.Widget.$('$win'),'cobaseinfo',str)); return
+			true;} ]]>		
+		</script>
+		<panel title="公司信息列表" border="0" hflex="1" vflex="1">
+			<panelchildren>
+				<borderlayout style="margin-bottom:3px;" vflex="1"
+					hflex="1">
+					<north border="0" title="检索" collapsible="true"
+						flex="true" style="padding-bottom:10px;">
+						<grid height="50px">
+							<rows>
+								<row>
+									<cell width="60px">公司名称:</cell>
+									<cell width="150px">
+										<textbox id="companyname" />
+									</cell>
+									<cell width="60px">公司编号:</cell>
+									<cell width="150px">
+										<textbox id="cid" />
+									</cell>
+									<cell width="60px">客服代表:</cell>
+									<cell width="170px">
+										<combobox id="client">
+											<template name="model">
+												<comboitem
+													label="${each}" />
+											</template>
+										</combobox>
+									</cell>
+									<cell>
+										<button id="search" label="查询" />
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</north>
+					<west width="220px" border="0">
+						<vlayout sclass="fn-panel1" vflex="1"
+							hflex="1">
+							<hlayout sclass="fn-subpanel" vflex="1"
+								hflex="1">
+								<tree id="tree" vflex="1"></tree>
+								<label id="fi" value="ii"></label>
+							</hlayout>
+						</vlayout>
+					</west>
+					<center sclass="nested-center" style="border:0;">
+						<grid emptyMessage="没有数据" vflex="1"
+							id="cobaseinfo" mold="paging" pageSize="40">
+							<columns>
+								<column label="编号" align="center"
+									width="60px" sort="auto(cid)" />
+								<column label="a~z" align="center"
+									width="60px" sort="auto(coba_spell)" />
+								<column label="公司名称"
+									sort="auto(coba_company)" />
+								<column label="vip" align="center"
+									width="60px" sort="auto(coba_vip)" />
+								<column label="员工数" align="center"
+									width="60px" sort="auto(peopnum)" />
+								<column label="合同数" align="center"
+									width="60px" sort="auto(coconum)" />
+								<column label="客服" align="center"
+									width="90px" sort="auto(coba_client)" />
+								<column label="操作" align="center"
+									width="60px" />
+							</columns>
+							<template name="model">
+								<row>
+									<label value="${each.cid}" />
+									<label value="${each.coba_spell}" />
+									<cell>
+										<hlayout>
+											<a style="cursor:pointer"
+												id="${each.cid}" onClick="sendcid(self.id)">
+												<label
+													value="${each.coba_company}" />
+											</a>
+											<label style="color:red;"
+												visible="${each.coba_servicestate==1?false:true}">
+												(已解约)
+											</label>
+										</hlayout>
+									</cell>
+									<label value="${each.coba_vip}"
+										style="color:red;" />
+									<label value="${each.peopnum}" />
+									<label value="${each.coconum}" />
+									<label value="${each.coba_client}" />
+									<cell>
+										<menubar autodrop="true">
+											<menu
+												image="../images/pencil-small.png">
+												<menupopup>
+													<menuitem
+														label="公司详情" value="${each.cid }" onClick="sendcid(self.getValue())" />
+													<menuitem
+														label="报价单详情" value="${each.cid }" onClick="openwin(self.getValue())" />
+												</menupopup>
+											</menu>
+										</menubar>
+									</cell>
+								</row>
+							</template>
+						</grid>
+					</center>
+					<south>
+						<grid>
+							<rows>
+								<row>
+									<cell>数据统计：</cell>
+								</row>
+							</rows>
+						</grid>
+					</south>
+				</borderlayout>
+			</panelchildren>
+		</panel>
+		<zscript><![CDATA[
+	//declare zscript methods
+	import Controller.CoBase.CoBase_InfoListController;
+	void sendcid(String cid) {
+		new Controller.CoBase.CoBase_InfoListController().cobasedetial(cid);
+	}
+	
+	void openwin(String cid) {
+		new Controller.CoBase.CoBase_InfoListController().opcooffer(cid);
+	}
+]]></zscript>
+	</window>
+</zk>

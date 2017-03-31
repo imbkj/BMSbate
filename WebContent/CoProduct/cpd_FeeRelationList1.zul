@@ -1,0 +1,43 @@
+<grid id="gd" model="@load(vm.feeRelationModel)" emptyMessage="无数据"
+	apply="org.zkoss.bind.BindComposer" hflex="1" vflex="1"
+	viewModel="@id('vm') @init('Controller.CoProduct.cpd_FeeRelationList1Controller')">
+	<columns>
+		<column label="收费单位"></column>
+		<column label="收费金额"></column>
+		<column width="10%" label="锁定状态"></column>
+		<column label="添加人"></column>
+		<column label="添加时间"></column>
+	</columns>
+
+	<template name="model:group">
+		<group label="@load(each)" spans="5" width="100%" height="100%"
+			style="">
+		</group>
+	</template>
+
+	<template name="model">
+		<row>
+			<label value="@load(each.cpfc_name)"></label>
+			<label value="@load(each.fee)"></label>
+			<cell align="center">
+				<image src="/images/lock1.png"
+					if="${each.cpfr_lock==1 }">
+				</image>
+				<image src="/images/unlock.png"
+					if="${each.cpfr_lock==0 }">
+				</image>
+			</cell>
+			<label value="@load(each.copr_addname)"></label>
+			<label value="@load(each.copr_addtime)"></label>
+		</row>
+	</template>
+
+	<!-- <template name="model:groupfoot">
+		<groupfoot style="background:#e9f2fb">
+			<cell colspan="5"
+				style="text-align: right; padding-right: 15px">
+				<label value="@load(each)" style="font-weight:bold;" />
+			</cell>
+		</groupfoot>
+	</template> -->
+</grid>

@@ -1,0 +1,28 @@
+<!--
+	创建人：林少斌
+	创建时间：2013-11-1
+	用途：材料交接记录页面
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="材料交接记录" border="normal" height="200px" closable="true"
+		width="500px" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.DocumentsInfo.DocumentsLogController')">
+		<grid id="g1" height="100%" width="100%" emptyMessage="无数据" model="@load(vm.docLogList)">
+			<columns sizable="true">
+				<column hflex="5" label="记录" align="center"/>
+				<column hflex="2" label="添加人" align="center"/>
+				<column hflex="2" label="添加时间" align="center"/>
+			</columns>
+			<rows>
+				<template name="model">
+					<row>
+						<label value="@load(each.dhlo_content)" />
+						<label value="@load(each.dhlo_addname)" />
+						<label value="@load(each.dhlo_addtime)" />
+					</row>
+				</template>
+			</rows>
+		</grid>
+	</window>
+</zk>

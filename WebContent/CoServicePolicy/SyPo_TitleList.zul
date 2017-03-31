@@ -1,0 +1,39 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<grid apply="org.zkoss.bind.BindComposer" model="@load(vm.list)"
+		viewModel="@id('vm') @init('Controller.CoServicePolicy.SyPo_TitleListController')">
+		<columns>
+			<column label="序号" width="70px" align="center" />
+			<column label="标题" />
+			<column label="排序" align="center" />
+			<column label="操作" align="center" />
+		</columns>
+		<rows>
+			<template name="model">
+				<row>
+					<cell>
+						<label value="${forEachStatus.index + 1}" />
+					</cell>
+					<cell>
+						<label value="@load(each.item_title)" />
+					</cell>
+					<cell>
+						<image src="../images/arrow_down_64.png" width="10" height="20"
+							style="cursor:pointer;"
+							onClick="@command('copylp',model=each)" />
+					</cell>
+					<cell>
+						<hlayout>
+							<a onClick="@command('edit',model=each)">
+								<label value="修改" visible="false" />
+							</a>
+							<a onClick="@command('del',model=each)">
+								<label value="删除" />
+							</a>
+						</hlayout>
+					</cell>
+				</row>
+			</template>
+		</rows>
+	</grid>
+</zk>

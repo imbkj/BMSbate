@@ -1,0 +1,47 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<?component name="docDataList" macro-uri="../DocumentsInfo/DocumentsInfo_AddPageList.zul" inline="true"?>
+<zk>
+	<window title="批量处理" border="normal" width="80%" height="80%"
+		apply="org.zkoss.bind.BindComposer" closable="true" id="dealwin"
+		viewModel="@id('vm') @init('Controller.EmHouseCard.HuCard_CenterUpdateAllController')">
+		<grid vflex="1">
+			<rows>
+				<row>
+					<cell width="100px">当前状态</cell>
+					<cell>
+						<label value="@load(vm.nowstatename)"></label>
+					</cell>
+					<cell width="100px"></cell>
+					<cell></cell>
+				</row>
+				<row>
+					<cell width="100px">下一步状态</cell>
+					<cell colspan="3">
+						<combobox value="@bind(vm.statename)" onChange="@command('changstate')">
+							<comboitem label="待收资料" />
+							<comboitem label="中心核收" />
+						</combobox>
+					</cell>
+				</row>
+				<row visible="@load(vm.visdatainfo)">
+					<cell width="100px">核收资料时间</cell>
+					<cell colspan="3">
+						<datebox value="@bind(vm.date)"></datebox>
+					</cell>
+				</row>
+			<row visible="@load(vm.visdatainfo)">
+			<cell>提交资料</cell>
+			<cell colspan="3">
+				<docDataList id="docGrid" puzu_id="${vm.dataId}" 
+						dWidth="100%" pUsername="陈耀家" pUserId="248" />
+			</cell>	
+		</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button onClick="@command('summit',win=dealwin,gd=docGrid)">提交</button>
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

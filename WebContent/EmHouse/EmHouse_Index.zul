@@ -1,0 +1,302 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="个人公积金信息" id="winInfo" width="100%" height="100%"
+		closable="true" border="normal" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmHouse.EmHouse_IndexController')">
+
+		<borderlayout height="100%">
+			<north collapsible="true" open="true">
+				<grid>
+					<rows>
+						<row>
+							<cell>
+								<hbox>
+									<button label="公积金中心参保记录"
+										onClick="@command('history')" />
+									<button label="智翼通委托单"
+										onClick="@command('zyt')" />
+								</hbox>
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</north>
+			<center title="公积金变更记录">
+				<grid id="gdchange" height="100%" width="100%"
+					model="@load(vm.clist)" sizedByContent="true" span="true">
+					<columns>
+						<column align="center" />
+						<column align="center" label="所属月份" />
+						<column align="center" label="公司简称" />
+						<column align="center" label="参保姓名" />
+						<column align="center" label="缴存银行" />
+						<column align="center" label="公积金账户" />
+						<column align="center" label="基数" />
+						<column align="center" label="变更类型" />
+						<column align="center" label="变更内容" />
+						<column align="center" label="添加时间" />
+						<column align="center" label="办理进度" />
+						<column align="center" label="申报状态" />
+						<column align="center" label="添加人" />
+						<column align="center" label="短信" />
+						<column align="center" label="备注" />
+					</columns>
+					<template name="model">
+						<row>
+							<custom-attributes tid="${each.emhc_id }" />
+							<detail open="false" fulfill="onOpen"
+								visible="${each.emhc_tid>0?true:false }">
+								<include
+									src="/Emhouse/EmHouse_QueryListDetail.zul" tid="${tid}" />
+							</detail>
+							<cell>
+								<label value="@load(each.ownmonth)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emhc_company)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emhc_name)" />
+							</cell>
+							<cell>
+								<label value="@load(each.jc)" />
+							</cell>
+							<cell>
+								<label value="@load(each.account)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emhc_radix)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emhc_change)" />
+							</cell>
+							<cell
+								tooltiptext="@load(each.emhc_content)">
+								<label maxlength="15"
+									value="@load(each.emhc_content)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emhc_addtime)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.emhc_ifprogress2)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.emhc_ifdeclare2)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emhc_addname)" />
+							</cell>
+							<cell>
+								<image style="cursor:pointer"
+									src="../images/noread.gif" onClick="@command('message',a=each)"
+									if="${each.message==true and each.readState==false }" />
+								<image style="cursor:pointer"
+									src="../images/readed.gif" onClick="@command('message',a=each)"
+									if="${each.message==true and each.readState==true }" />
+							</cell>
+							<cell>
+								<label value="@load(each.emhc_remark)" />
+							</cell>
+						</row>
+					</template>
+				</grid>
+
+			</center>
+			<south title="公积金信息在册信息" height="40%">
+				<scrollview height="100%">
+					<groupbox open="true" mold="3d">
+						<grid>
+							<columns visible="false">
+								<column width="120px"></column>
+								<column></column>
+								<column width="120px"></column>
+								<column></column>
+							</columns>
+							<rows>
+								<row>
+									<cell>所属月份</cell>
+									<cell>
+										<hbox>
+											<div align="center"
+												visible="@load(vm.stopdis)" style="color:red">
+												该员工在我司最后一次缴交月份是
+											</div>
+											<label
+												value="@load(vm.eum.ownmonth)" />
+											<div align="center"
+												visible="@load(vm.monthdis)" style="color:red">
+												该员工当月未参加住房公积金
+											</div>
+											<div align="center"
+												visible="@load(vm.returndis)" style="color:red">
+												该员工当月公积金数据被退回
+											</div>
+											<div align="center"
+												visible="@load(vm.errordis)" style="color:red">
+												该员工当月公积金数据联网核查失败
+											</div>
+											<div align="center"
+												visible="@load(vm.stopdis2)" style="color:red">
+												该员工当月公积金数据已停交
+											</div>
+											<div style="cursor:pointer;"
+												onClick="@command('update')">
+												<label
+													style="color:blue" value="刷新" />
+											</div>
+										</hbox>
+									</cell>
+									<cell>公积金帐号</cell>
+									<cell>
+										<label
+											value="@load(vm.eum.emhu_houseid)" />
+									</cell>
+								</row>
+								<row>
+									<cell>单位公积金编号</cell>
+									<cell>
+										<hbox>
+											<label
+												value="@load(vm.eum.emhu_companyid)" />
+											(
+											<label
+												value="@load(vm.eum.jc)" />
+											)
+										</hbox>
+
+									</cell>
+									<cell>现参保单位名称</cell>
+									<cell>
+										<label
+											if="${vm.eum.emhu_single==0 }" value="深圳中智经济技术合作有限公司" />
+										<label
+											if="${vm.eum.emhu_single==1 }"
+											value="@load(vm.eum.emhu_company)" />
+									</cell>
+								</row>
+								<row>
+									<cell>姓名</cell>
+									<cell>
+										<label
+											value="@load(vm.eum.emhu_name)" />
+									</cell>
+									<cell>户籍</cell>
+									<cell>
+										<label
+											value="@load(vm.eum.emhu_hj)" />
+									</cell>
+								</row>
+								<row>
+									<cell>证件类型</cell>
+									<cell>
+										<label
+											value="@load(vm.eum.emhu_idcardclass)" />
+									</cell>
+									<cell>证件号码</cell>
+									<cell>
+										<label
+											value="@load(vm.eum.emhu_idcard)" />
+									</cell>
+								</row>
+								<row>
+									<cell>缴费工资基数</cell>
+									<cell>
+										<label
+											value="@load(vm.eum.emhu_radix)" />
+									</cell>
+									<cell>参保人手机</cell>
+									<cell>
+										<label
+											value="@load(vm.eum.emhu_mobile)" />
+									</cell>
+								</row>
+								<row>
+									<cell>职称</cell>
+									<cell>
+										<label
+											value="@load(vm.eum.emhu_title)" />
+									</cell>
+									<cell>最高学历</cell>
+									<cell>
+										<label
+											value="@load(vm.eum.emhu_degree)" />
+									</cell>
+								</row>
+								<row>
+									<cell>配偶姓名</cell>
+									<cell>
+										<label
+											value="@load(vm.eum.emhu_wifename)" />
+									</cell>
+									<cell>配偶身份证</cell>
+									<cell>
+										<label
+											value="@load(vm.eum.emhu_wifeidcard)" />
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+					<groupbox open="true" title="公积金缴费比例" mold="3d">
+						<grid>
+							<columns visible="false">
+								<column width="120px"></column>
+								<column></column>
+								<column width="120px"></column>
+								<column></column>
+							</columns>
+							<rows>
+								<row>
+									<cell>单位交比例</cell>
+									<cell>
+										<label
+											value="@load(vm.eum.emhu_cpp2)" />
+									</cell>
+									<cell>个人交比例</cell>
+									<cell>
+										<label
+											value="@load(vm.eum.emhu_opp2)" />
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+					<groupbox open="true" title="金额计算" mold="3d">
+						<grid>
+							<columns visible="false">
+								<column width="120px"></column>
+								<column></column>
+								<column width="120px"></column>
+								<column></column>
+							</columns>
+							<rows>
+								<row>
+									<cell>单位交金额</cell>
+									<cell>
+										<label
+											value="@load(vm.eum.emhu_cp)" />
+									</cell>
+									<cell>个人交金额</cell>
+									<cell>
+										<label
+											value="@load(vm.eum.emhu_op)" />
+									</cell>
+								</row>
+								<row>
+									<cell>当月金额合计</cell>
+									<cell colspan="3">
+									<label
+											value="@load(vm.eum.total)" />
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+				</scrollview>
+			</south>
+		</borderlayout>
+	</window>
+</zk>

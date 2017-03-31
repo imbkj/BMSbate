@@ -1,0 +1,237 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="调入公积金" id="winMov" width="800px" height="515px"
+		closable="true" border="normal" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmHouse.EmHouse_MoveInController')"
+		onCreate="@command('winC',a=self)">
+		<scrollview height="100%">
+			<groupbox title="个人信息" mold="3d">
+				<grid>
+					<columns visible="false">
+						<column width="120px" />
+						<column />
+						<column width="120px" />
+						<column />
+					</columns>
+					<rows>
+						<row>
+							<cell>公司名称</cell>
+							<cell>
+								${vm.ecm.emhc_company}(${vm.ecm.cid})
+							</cell>
+							<cell>姓名</cell>
+							<cell>
+								${vm.ecm.emhc_name}(${vm.ecm.gid})
+
+								<label
+									style="color:blue;cursor:pointer;" value="(联系员工)"
+									onClick="@command('link')" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox title="参保信息" mold="3d">
+				<grid>
+					<rows>
+						<row>
+							<cell width="100px">
+								<hbox>
+									所属月份
+									<label style="color:red">*</label>
+								</hbox>
+							</cell>
+							<cell>
+								<combobox readonly="true" mold="rounded"
+									value="@bind(vm.ecm.ownmonth)"
+									model="@load(vm.ownmonthList)">
+									<template name="model">
+										<comboitem label="@load(each)" />
+									</template>
+								</combobox>
+							</cell>
+							<cell width="100px">单位公积金编号</cell>
+							<cell>
+								<hbox>
+									<label
+										value="@load(vm.ecm.emhc_companyid)" />
+									(<label value="@load(vm.ecm.jc)" />)
+								</hbox>
+							</cell>
+						</row>
+						<row>
+							<cell>封存单位账户名称</cell>
+							<cell>
+								<textbox mold="rounded"
+									value="@bind(vm.ecm.emhc_excompany)" />
+							</cell>
+							<cell>封存单位公积金号</cell>
+							<cell>
+								<textbox mold="rounded"
+									value="@bind(vm.ecm.emhc_excompanyid)" />
+							</cell>
+						</row>
+
+						<row>
+							<cell>
+								<hbox>
+									个人公积金编号
+									<label style="color:red">*</label>
+								</hbox>
+							</cell>
+							<cell>
+								<textbox
+									value="@bind(vm.ecm.emhc_houseid)" mold="rounded" />
+							</cell>
+
+							<cell>
+								<hbox>
+									缴存工资基数
+									<label style="color:red">*</label>
+								</hbox>
+							</cell>
+							<cell>
+								<doublebox id="radix" mold="rounded"
+									value="@bind(vm.ecm.emhc_radix)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<hbox>
+									户籍
+									<label style="color:red">*</label>
+								</hbox>
+							</cell>
+							<cell>
+								<combobox mold="rounded" readonly="true"
+									value="@bind(vm.ecm.emhc_hj)">
+									<comboitem label="深户" />
+									<comboitem label="非深户城镇" />
+									<comboitem label="非深户农村" />
+									<comboitem label="其他" />
+								</combobox>
+							</cell>
+							<cell>
+								<hbox>
+									参保人手机
+									<label style="color:red">*</label>
+								</hbox>
+							</cell>
+							<cell>
+								<textbox mold="rounded"
+									value="@bind(vm.ecm.emhc_mobile)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<hbox>
+									单位交比例
+									<label style="color:red">*</label>
+								</hbox>
+							</cell>
+							<cell>
+								<combobox id="cpp" mold="rounded"
+									value="@bind(vm.ecm.emhc_cpp2)" onChange="@command('setpp')"
+									model="@load(vm.cpList)" readonly="true">
+									<template name="model">
+										<comboitem
+											value="@load(each.cp)" label="@load(each.cpName)" />
+									</template>
+								</combobox>
+							</cell>
+							<cell>
+								<hbox>
+									个人交比例
+									<label style="color:red">*</label>
+								</hbox>
+							</cell>
+							<cell>
+								<combobox id="opp" mold="rounded"
+									value="@bind(vm.ecm.emhc_cpp2)" onChange="@command('setpp')"
+									model="@load(vm.cpList)" readonly="true">
+									<template name="model">
+										<comboitem
+											value="@load(each.cp)" label="@load(each.cpName)" />
+									</template>
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<hbox>
+									职称
+
+								</hbox>
+							</cell>
+							<cell>
+								<combobox model="@load(vm.listPC)"
+									value="@bind(vm.ecm.emhc_title)" mold="rounded"
+									readonly="true">
+									<template name="model">
+										<comboitem
+											label="@load(each.pcco_cn)" />
+									</template>
+								</combobox>
+							</cell>
+							<cell>
+								<hbox>
+									最高学历
+
+								</hbox>
+							</cell>
+							<cell>
+								<combobox readonly="true"
+									value="@bind(vm.ecm.emhc_degree)" mold="rounded">
+									<comboitem label="博士学位" />
+									<comboitem label="硕士学位" />
+									<comboitem label="学士学位" />
+									<comboitem label="其他" />
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>配偶姓名</cell>
+							<cell>
+								<textbox mold="rounded"
+									value="@bind(vm.ecm.emhc_wifename)" />
+							</cell>
+							<cell>配偶身份证</cell>
+							<cell>
+								<hbox>
+									<textbox mold="rounded"
+										value="@bind(vm.ecm.emhc_wifeidcard)" />
+									<checkbox
+										checked="${vm.ecm.emhc_wifeidcard.toString().length()>0 and vm.ecm.emhc_wifeidcard.toString().length()!=15 and vm.ecm.emhc_wifeidcard.toString().length()!=18}" />
+									<label>外籍人</label>
+								</hbox>
+							</cell>
+						</row>
+						<row>
+							<cell>社保电脑号</cell>
+							<cell>
+								<textbox mold="rounded"
+									value="@bind(vm.ecm.emhc_computerid)" />
+							</cell>
+							<cell></cell>
+							<cell></cell>
+						</row>
+						<row>
+							<cell>备注</cell>
+							<cell colspan="3">
+								<textbox width="80%" rows="3"
+									value="@bind(vm.ecm.emhc_remark)" mold="rounded" />
+							</cell>
+						</row>
+					</rows>
+					<foot>
+						<footer align="center">
+							<button label="提交"
+								onClick="@command('submit')" />
+						</footer>
+					</foot>
+				</grid>
+			</groupbox>
+		</scrollview>
+
+	</window>
+</zk>

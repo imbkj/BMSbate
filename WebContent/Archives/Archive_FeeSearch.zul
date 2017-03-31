@@ -1,0 +1,171 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winfee" width="100%" height="100%" title="员工档案 - 档案续费"
+		border="normal" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.Archives.Archive_FeeSearchController')">
+		<borderlayout>
+			<north title="高级查询" collapsible="true" open="true">
+				<grid>
+					<rows>
+						<row>
+							<cell width="120px">所属月份:</cell>
+							<cell>
+								<combobox id="ownmonth"  readonly="true"
+									mold="rounded" value="@bind(vm.epModel.ownmonth)" model="@load(vm.ownmonthList)">
+									<template name="model">
+										<comboitem label="@load(each.ownmonth)" />
+									</template>
+								</combobox>
+							</cell>
+							<cell width="120px">指定日期:</cell>
+							<cell>
+								<combobox id="datetype" readonly="true"
+									mold="rounded" onChange="@command('setDateType',a=self.selectedItem.label,b=date1,c=date2)">
+									<comboitem label="" />
+									<comboitem label="借款日期" />
+									<comboitem label="交发票日期" />
+									<comboitem label="缴费时段" />
+								</combobox>
+								<datebox id="date1" value="@bind(vm.epModel.emap_sdate)" style="display:none;" />
+								<datebox id="date2" value="@bind(vm.epModel.emap_cdate)" style="display:none;" />
+							</cell>
+						</row>
+						<row>
+							<cell>费用状态:</cell>
+							<cell>
+								<combobox id="feetype" mold="rounded"  readonly="true">
+									<comboitem value="" label=""></comboitem>
+									<comboitem value="1" label="未确认"></comboitem>
+									<comboitem value="2" label="待确认"></comboitem>
+									<comboitem value="3" label="可借款"></comboitem>
+									<comboitem value="4" label="待借款"></comboitem>
+									<comboitem value="5" label="已借款"></comboitem>
+									<comboitem value="6" label="已清帐"></comboitem>
+									<comboitem value="0" label="已撤回"></comboitem>
+								</combobox>
+							</cell>
+							<cell>借款申请人:</cell>
+							<cell>
+								<combobox id="loanman"  readonly="true" value="@bind(vm.epModel.emap_lname)" mold="rounded" model="@load(vm.loanManList)">
+									<template name="model">
+										<comboitem label="@load(each.emap_lname)"/>
+									</template>
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>公司名称:</cell>
+							<cell>
+								<textbox id="company" mold="rounded" value="@bind(vm.epModel.emap_company)" />
+							</cell>
+							<cell>员工姓名:</cell>
+							<cell>
+								<textbox id="emp" mold="rounded" value="@bind(vm.epModel.emap_name)" />
+							</cell>
+						</row>
+
+						<row>
+							<cell>档案所在地:</cell>
+							<cell>
+								<textbox id="fileplace" mold="rounded" value="@bind(vm.epModel.emap_fileplace)" />
+							</cell>
+							<cell>单号:</cell>
+							<cell>
+								<textbox id="filenum" mold="rounded" value="@bind(vm.epModel.emap_idlist)" />
+							</cell>
+						</row>
+						<row>
+							<cell colspan="4">
+								<div align="center">
+									<button label="查询" onClick="@command('SearchInfo',a=datetype,b=feetype)"/>
+								</div>
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</north>
+			<center>
+				<grid id="gdpay" height="100%" mold="paging" pageSize="15"
+					model="@load(vm.eaplist)">
+					<columns>
+						<column width="50px" align="center">序号</column>
+						<column width="120px" align="center">
+							缴费时段
+						</column>
+						<column align="center">客服</column>
+						<column width="200px" align="center">
+							公司名称
+						</column>
+						<column align="center">所属月份</column>
+						<column align="center">名称</column>
+						<column align="center">档案</column>
+						<column align="center">户口</column>
+						<column align="center">滞纳金</column>
+						<column align="center">借款申请人</column>
+						<column width="80px" align="center">交发票日期</column>
+						<column align="center">费用状态</column>
+						<column align="center">操作</column>
+						
+					</columns>
+					<template name="model">
+						<row>
+							<cell>
+								<label
+									value="${forEachStatus.index+1 }" />
+							</cell>
+							<cell>
+								<label value="@load(each.cddate)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emap_client)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emap_company)" />
+							</cell>
+							<cell>
+								<label value="@load(each.ownmonth)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emap_name)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emap_file)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emap_hj)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emap_op)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emap_lname)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emap_itime)" />
+							</cell>
+							<cell>
+								<label value="@load(each.lstatename)" />
+							</cell>
+							<cell>
+								<menubar width="50px" sclass="mymb" autodrop="true">
+									<menu
+										image="../images/pencil-small.png">
+										<menupopup>
+										<menuitem label="查看"
+												onClick="" />
+										
+												<menuitem label="备注"
+												onClick="" />
+										</menupopup>
+									</menu>
+								</menubar>
+							</cell>
+							
+						</row>
+					</template>
+				</grid>
+			</center>
+			<south></south>
+		</borderlayout>
+	</window>
+</zk>

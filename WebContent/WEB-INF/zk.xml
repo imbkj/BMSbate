@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Created by ZK Studio -->
+
+<zk>
+
+    <!--session设置-->
+	<session-config>     
+	<session-timeout>-1</session-timeout>
+	<device-type>ajax</device-type>       
+	<automatic-timeout>true</automatic-timeout> 
+	<timeout-uri>/login.zul</timeout-uri>     
+	
+	<!--页面地址栏不显示SessionId-->
+	<enable-url-rewriting>true</enable-url-rewriting>
+	</session-config> 
+
+	<!--线程程设置，等于false时，启用事件处理线程，等于true时禁用事件处理线程 ，主要用于弹出窗口的线程。 -->
+	<system-config>
+		<disable-event-thread>false</disable-event-thread>
+	</system-config>
+
+   <!-- 监听请求 -->
+	<listener>
+	<listener-class>Util.SessionListener</listener-class>
+	</listener>
+	
+	<!-- 监听Session超时 -->
+	<listener>
+	<listener-class>Util.SessionCleanUp</listener-class>
+	</listener>
+	
+	<!-- progressbox样式（居中显示）-->
+	<library-property>
+    <name>org.zkoss.zul.progressbox.position</name>
+    <value>center, center</value>
+	</library-property>
+	<library-property>
+    <name>org.zkoss.zul.progressbox.mask</name>
+    <value>true</value>
+	</library-property>
+	
+	<!-- 设置最大文件上传大小 -->
+	<system-config>
+		<max-upload-size>30000000</max-upload-size>
+	</system-config>
+	
+	<!-- 按钮样式-->
+	<library-property>
+    <name>org.zkoss.zul.Button.mold</name>
+    <value>trendy</value>
+	</library-property>
+	
+	<!--ZK组件属性默认设置 -->
+	<language-config>
+    <addon-uri>/WEB-INF/lang-addon.xml</addon-uri>
+	</language-config>
+	
+	<device-config>
+		 <device-type>ajax</device-type>
+		 <embed><![CDATA[
+       	 <style>
+			tr.z-row-over>td.z-row-inner{border-top:1px solid #e3f2ff;
+			border-bottom:1px solid #e3f2ff
+			}
+			tr.z-row-over>td.z-row-inner,tr.z-row-over>.z-cell,tr.z-listitem-seld,tr.z-listitem-over
+			{
+			background:#98BCCE;
+			}
+		</style>
+		]]></embed>
+	</device-config>
+</zk>

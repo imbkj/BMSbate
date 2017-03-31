@@ -1,0 +1,62 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="产品管理" border="normal" vflex="1" hflex="1"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoAgency.WtProduct_ManageController')">
+		<grid model="@load(vm.coproductlist)" id="gdCoProduct"
+			emptyMessage="无数据" height="100%" mold="paging">
+			<auxhead sclass="category-center">
+				<auxheader label="服务产品列表" colspan="7"></auxheader>
+			</auxhead>
+			<columns>
+				<column width="40px"></column>
+				<column label="产品名称" align="center"
+					sort="auto(copr_name)" />
+				<column label="产品类型" align="center"
+					sort="auto(copc_name)" />
+				<column label="添加人" align="center"
+					sort="auto(copr_addname)" />
+				<column label="添加时间" align="center"
+					sort="auto(copr_addtime)" />
+				<column label="状态" align="center" sort="auto(statename)"
+					width="8%" />
+				<column label="操作" align="center" width="8%" />
+			</columns>
+			<rows>
+				<template name="model">
+					<row height="35px">
+						<custom-attributes copr_id="${each.copr_id }" />
+						<detail open="false" fulfill="onOpen"
+							visible="${each.cpfrcount eq 0?false:true }">
+							<include
+								src="/CoProduct/cpd_FeeRelationList.zul" copr_id="${copr_id}" />
+						</detail>
+						<label value="@load(each.copr_name)"></label>
+						<label value="@load(each.copc_name)"></label>
+						<label value="@load(each.copr_addname)"></label>
+						<label value="@load(each.copr_addtime)"></label>
+						<label value="@load(each.statename)"></label>
+						<cell>
+							<hbox align="center" pack="center"
+								width="100%">
+								<label value="修改"
+									style="cursor:pointer;color:blue"
+									onClick="@command('mod',cop=each)">
+								</label>
+								<label value="删除"
+									style="cursor:pointer;color:blue"
+									onClick="@command('del',id=each.copr_id)">
+								</label>
+							</hbox>
+						</cell>
+					</row>
+				</template>
+			</rows>
+			<foot>
+				<footer align="center" span="12">
+					<button label="新增产品" onClick="@command('addProduct')" />
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

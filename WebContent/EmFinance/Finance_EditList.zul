@@ -1,0 +1,210 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="受托差额调整列表" border="normal" vflex="1"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmFinance.Finance_EditListController')">
+		<style src="/css/style.css"></style>
+		<borderlayout>
+			<north border="0" title="检索" collapsible="true"
+				style="padding-bottom:10px;" open="false">
+				<grid>
+					<rows>
+						<row>
+							<cell>
+								<label>单位编号</label>
+							</cell>
+							<cell>
+								<textbox id="cid"
+									value="@bind(vm.cid)">
+								</textbox>
+							</cell>
+							<cell>
+								<label>单位名称</label>
+							</cell>
+							<cell>
+								<textbox value="@bind(vm.company)"></textbox>
+							</cell>
+							<cell width="100px">
+								<label>所属月份</label>
+							</cell>
+							<cell>
+								<monthbox id="ownmonth" format="yyyyMM" />
+							</cell>
+							<cell width="60px">客服代表</cell>
+							<cell>
+								<combobox model="@load(vm.loginlist)"
+									value="@bind(vm.client)">
+									<template name="model">
+										<comboitem label="@load(each)" />
+									</template>
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label>员工编号</label>
+							</cell>
+							<cell>
+								<textbox id="gid"
+									value="@bind(vm.gid)">
+								</textbox>
+							</cell>
+							<cell>
+								<label>员工姓名</label>
+							</cell>
+							<cell>
+								<textbox id="company"
+									value="@bind(vm.emba_name)">
+								</textbox>
+							</cell>
+							<cell width="100px">
+								<label>身份证号</label>
+							</cell>
+							<cell>
+								<textbox value="@bind(vm.idcard)"></textbox>
+							</cell>
+							<cell width="100px">
+								<label>合计差额</label>
+							</cell>
+							<cell>
+								<combobox readonly="true"
+									value="@bind(vm.total)">
+									<comboitem label="" />
+									<comboitem label="有差额" />
+									<comboitem label="无差额" />
+									<comboitem label="差额大于0" />
+									<comboitem label="差额小于0" />
+								</combobox>
+							</cell>
+						</row>
+					</rows>
+					<foot>
+						<footer align="center">
+							<button
+								onClick="@command('search',ownmonth=ownmonth.value)">
+								查询
+							</button>
+						</footer>
+					</foot>
+				</grid>
+			</north>
+			<center>
+				<grid vflex="1" span="true" sizedByContent="true"
+					mold="paging" pageSize="300" model="@load(vm.model.efWtList)"
+					emptyMessage="该公司还没有台帐数据，请确认是否已同步台帐">
+					<columns>
+						<column align="center" width="40px"></column>
+						<column label="序号" width="60px" align="center" />
+						<column label="单位编号" align="center"
+							width="80px" />
+						<column label="公司名称" align="center"
+							width="190px" sort="auto(coba_company)" />
+						<column label="员工编号" align="center"
+							width="80px" />
+						<column label="姓名" align="center" width="90px" />
+						<column label="身份证号" align="center"
+							width="160px" />
+						<column label="所属月份" align="center" width="80px"
+							sort="auto(ownmonth)" />
+						<column label="差额合计" align="center"
+							sort="auto(fifztotal)" />
+						<column label="社保差额" align="center" />
+						<column label="养老费差额" align="center" />
+						<column label="公积金差额" align="center" />
+						<column label="服务费差额" align="center" />
+						<column label="档案费差额" align="center" />
+						<column label="其他费差额" align="center" />
+						<column label="系统非标" align="center" />
+						<column label="操作" align="center" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<custom-attributes model="${each}" />
+								<detail open="false" fulfill="onOpen">
+									<include
+										src="/EmFinance/Finance_Infos.zul" model="${model}" />
+								</detail>
+								<cell>
+									<label
+										value="${forEachStatus.index+1 }">
+									</label>
+								</cell>
+								<cell>
+									<label value="@load(each.cid)"></label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.coba_company)">
+									</label>
+								</cell>
+								<cell>
+									<label value="@load(each.gid)"></label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emfi_name)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emfi_idcard)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ownmonth)">
+									</label>
+								</cell>
+								<cell>
+									<label value="${each.fifztotal}"></label>
+								</cell>
+								<cell>
+									<label
+										value="${each.emfi_sbtotal-each.emfz_sbtotal }">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="${each.emfi_yltotal-each.emfz_yltotal }">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="${each.emfi_housetotal-each.emfz_housetotal }">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="${each.emfi_fee-each.emfz_fee }">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="${each.emfi_filefee-each.emfz_filefee }">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="${each.emfi_elsefee-each.emfz_elsefee }">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emfi_n_total)">
+									</label>
+								</cell>
+								<cell>
+									<a if="${each.emba_state==1}"
+										onClick="@command('openImprove',gid=each.gid,cid=each.cid,ownmonth=each.ownmonth)">
+										<label value="调整" />
+									</a>
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

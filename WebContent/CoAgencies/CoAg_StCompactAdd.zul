@@ -1,0 +1,49 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="受托合同信息新增" border="normal" width="80%" height="80%"
+	apply="org.zkoss.bind.BindComposer" id="editwin" closable="true"
+	viewModel="@id('vm') @init('Controller.CoAgencies.CoAg_StCompactAddController')"
+>
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell width="100px">受托机构</cell>
+			<cell colspan="3">
+				<textbox value="@bind(vm.model.coct_coagname)" width="80%" readonly="true"></textbox><label style="color:red;">(*)</label>
+			</cell>
+		</row>
+		<row>
+			<cell width="80px">合同编号</cell>
+			<cell><textbox value="@bind(vm.model.coct_compactid)"></textbox><label style="color:red;">(*)</label></cell>
+			<cell width="80px">合同类型</cell>
+			<cell><textbox value="@bind(vm.model.coct_category)" readonly="true"></textbox></cell>
+		</row>
+		<row>
+			<cell>签订时间</cell>
+			<cell><datebox value="@bind(vm.signdate)"></datebox><label style="color:red;">(*)</label></cell>
+			<cell>合同生效时间</cell>
+			<cell><datebox value="@bind(vm.effectdate)"></datebox><label style="color:red;">(*)</label></cell>
+		</row>
+		<row>
+			<cell>合同到期时间</cell>
+			<cell><datebox value="@bind(vm.expiredate)"></datebox><label style="color:red;">(*)</label></cell>
+			<cell>是否自动续约</cell>
+			<cell>
+				<combobox readonly="true" value="@bind(vm.autoextend)">
+					<comboitem label="是"/>
+					<comboitem label="否"/>
+				</combobox>
+				<label style="color:red;">(*)</label>
+			</cell>
+		</row>
+		<row>
+			<cell>备注</cell>
+			<cell colspan="3"><textbox value="@bind(vm.model.coct_remark)" rows="3" width="80%"></textbox></cell>
+		</row>
+	</rows>
+	<foot>
+		<footer align="center"><button onClick="@command('stsummit',win=editwin)">提交</button></footer>
+	</foot>
+</grid>
+</window>
+</zk>

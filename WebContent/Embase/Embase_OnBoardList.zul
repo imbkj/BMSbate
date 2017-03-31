@@ -1,0 +1,115 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="未入职员工列表" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.Embase.EmbaseNotin_ListController')"
+		border="normal" sizable="true" height="100%" width="100%" >
+<borderlayout>
+<north border="0" title="检索" collapsible="true" 
+				open="false">
+								<grid>
+								<rows>
+										<row>
+											<cell
+												style="color:#666;" align="center">
+												
+													<combobox id="combo"  width="50%"  autodrop="true" buttonVisible="false" onChange="@command('search')" onOK="@command('search')" value="@bind(vm.strwhere)" mold="rounded"/>
+													<zscript><![CDATA[
+													    /*Dictionary.getDictionary() returns a String[] containing the dictionary words*/
+														ListModel dictModel= new SimpleListModel(bll.Embase.EmbaseNotinListBll.searchembaselists());
+														combo.setModel(dictModel);
+													]]></zscript>
+											</cell>
+			
+											
+										</row>
+									</rows>
+									<foot>
+										<footer align="center" >
+											<button id="btSearch"
+												label="综合检索"
+												onClick="@command('search')" />
+										</footer>
+									</foot>
+								</grid>
+			</north>
+<center>
+
+<grid  model="@load(vm.embasenotinlist)" id="gridwin"
+	height="100%" width="100%" emptyMessage="暂无数据"  mold="paging" pageSize="30"
+	>
+	<columns>
+		<column label="序号" hflex="1"  align="center"/>
+		<column label="公司编号" hflex="2" align="center" sort=" "/>
+		<column label="公司名称" hflex="5" align="center" sort=" "/>
+		<column label="服务地区" hflex="2" align="center" sort=" "/>
+		<column label="员工编号" hflex="2" align="center" sort=" "/>
+		<column label="姓名" hflex="2" align="center" sort=" "/>
+		<column label="客服" hflex="2" align="center" sort=" "/>
+		<column label="状态" hflex="2" align="center" sort=" "/>
+		<column label="缤纷服务" hflex="6" align="center" sort=" "/>
+		<column label="图像" hflex="2" align="center" sort=" "/>
+		<column label="短信" hflex="1" align="center" sort=" "/>
+		<column label="操作" hflex="4" align="center" sort=" "/>
+	</columns>
+	<rows>
+		  <template name="model">
+			<row>
+				<label value="@load(forEachStatus.index + 1)" />
+				<label value="@load(each.cid)" />
+				<label value="@load(each.coba_name)" />
+				<label value="@load(each.emba_wt)" />
+				<label value="@load(each.gid)" />
+				<label value="@load(each.emba_name)" />
+				<label value="@load(each.coba_client)" />
+				<label value="@load(each.emba_state)" />
+				<label value="@load(each.emba_type)" />
+				<label value="1" />
+				
+				<label value="1" />
+				
+				<label  value="分配报价单" onClick="@command('onboard',emid=each.emba_id)" style="cursor:pointer"/>
+	
+			</row>
+		</template>
+	</rows>
+</grid>
+
+</center>
+<south>
+	<vlayout width="100%">
+					<panel border="0">
+						<panelchildren >
+							<vbox width="100%">
+								<grid width="100%">
+									<rows>
+										<row>
+											<cell width="20%"
+												style="color:#666;" align="center">
+											员工总数 [ - ] 
+											</cell>
+											<cell width="20%"
+												style="color:#666;" align="center">
+											在职员工数 [ - ] 
+											</cell>
+											<cell width="20%"
+												style="color:#666;" align="center">
+											 离职员工数 [ - ]
+											</cell>
+											<cell width="20%"
+												style="color:#666;" align="center">
+											 已转走人员 [ - ] 
+											</cell>
+											
+										
+										</row>
+									</rows>
+									
+								</grid>
+							</vbox>
+						</panelchildren>
+					</panel>
+				</vlayout>
+</south>
+</borderlayout>
+</window>
+</zk>

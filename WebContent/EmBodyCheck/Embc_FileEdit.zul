@@ -1,0 +1,58 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="介绍须知上传" border="normal" width="700px" height="500px"
+		apply="org.zkoss.bind.BindComposer" id="editwin" closable="true"
+		viewModel="@id('vm') @init('Controller.EmBodyCheck.Embc_FileEditController')">
+		<grid vflex="1">
+			<rows>
+				<row>
+					<cell width="120px">体检医院</cell>
+					<cell>
+						<label value="@load(vm.model.ebcs_hospital)"></label>
+					</cell>
+				</row>
+				<row>
+					<cell>体检医院地址</cell>
+					<cell>
+						<label value="@load(vm.model.ebsa_address)"></label>
+					</cell>
+				</row>
+				<row>
+					<cell>目前文件</cell>
+					<cell>
+						<label value="@load(vm.model.file_filename)"></label>
+					</cell>
+				</row>
+				<row>
+					<cell>上传文件</cell>
+					<cell>
+						<hlayout valign="middle">
+							<label value="@bind(vm.filename)" id="filelabel" visible="false"
+								style="margin-right:10px;color:red;">
+							</label>
+							<button id="attachBtn" upload="true"
+								onUpload="@command('upfile',btn=self,bel=filelabel)"
+								label="选择政策文件" />
+						</hlayout>
+					</cell>
+				</row>
+				<row>
+					<cell width="120px">备注</cell>
+					<cell>
+						<textbox width="90%" rows="5"
+							value="@bind(vm.model.file_remark)">
+						</textbox>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button
+						onClick="@command('summit',win=editwin)">
+						提交
+					</button>
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

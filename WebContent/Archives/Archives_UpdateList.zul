@@ -1,0 +1,167 @@
+<?page title="档案修改列表" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window border="0" height="100%" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('arch') @init('Controller.Archives.Archives_InfoListController')">
+		<style src="/css/style.css"></style>
+		<panel title="档案修改列表" height="100%">
+			<panelchildren>
+				<borderlayout height="100%">
+					<north border="0" title="检索" collapsible="true"
+						flex="true" style="padding-bottom:10px;">
+						<grid id="secrchgrid">
+							<rows>
+								<row>
+									<cell width="75px" align="right">
+										存档方式：
+									</cell>
+									<cell width="180px">
+										<hlayout hflex="1">
+											<combobox value="中智保管"
+												id="acclass"
+												onChange="@command('changecity',acclass=acclass.value,ifcity=ifiscity)"
+												instant="true" width="115px">
+												<comboitem label="中智保管" />
+												<comboitem label="委托人才"
+													id="wei" />
+											</combobox>
+											<combobox id="ifiscity"
+												visible="false" value="全部" width="60px">
+												<comboitem label="全部" />
+												<comboitem label="市内" />
+												<comboitem label="市外" />
+											</combobox>
+										</hlayout>
+									</cell>
+									<cell width="130px" align="right">
+										公司名称：
+									</cell>
+									<cell width="160px">
+										<textbox id="company" />
+									</cell>
+									<cell width="130px" align="right">
+										雇员姓名：
+									</cell>
+									<cell width="160px">
+										<textbox id="name" />
+									</cell>
+								</row>
+								<row>
+									<cell width="130px" align="right">
+										档案号：
+									</cell>
+									<cell width="160px">
+										<textbox id="acid" />
+									</cell>
+									<cell width="130px" align="right">
+										档案状态：
+									</cell>
+									<cell>
+										<combobox id="acstate">
+											<comboitem label="" />
+											<comboitem label="在册" />
+											<comboitem label="已调离" />
+										</combobox>
+									</cell>
+									<cell></cell>
+									<cell></cell>
+								</row>
+							</rows>
+							<foot>
+								<footer align="center">
+									<button id="btSearch" label="查询"
+										onClick="@command('search',acclass=acclass.value,company=company.value,name=name.value,acid=acid.value,acstate=acstate.value,ifcity=ifiscity)" />
+								</footer>
+							</foot>
+						</grid>
+					</north>
+					<center>
+						<grid vflex="1" hflex="1" emptyMessage="没有档案信息"
+							model="@load(arch.archivelist)" mold="paging" pageSize="40">
+							<columns>
+								<column width="40px" />
+								<column label="序号" align="center"
+									width="40px" />
+								<column label="公司名称" align="left"
+									sort="auto(emar_company)" />
+								<column label="姓名" align="center"
+									width="80px" sort="auto(emar_name)" />
+								<column label="存档方式" align="center"
+									width="80px" sort="auto(emar_archivetype)" />
+								<column label="档案号" align="center"
+									width="80px" sort="auto(emar_fid)" />
+								<column label="@bind(arch.title1)"
+									align="center" />
+								<column label="@bind(arch.title2)"
+									align="center" width="100px" />
+								<column label="@bind(arch.title3)"
+									align="center" width="100px" />
+								<column label="状态" align="center"
+									width="60px" />
+								<column label="操作" align="center"
+									width="60px" />
+							</columns>
+							<rows>
+								<template name="model">
+									<row>
+										<custom-attributes
+											emar_id="${each.emar_id }" gid="${each.gid }" />
+										<detail open="false"
+											fulfill="onOpen" visible="${each.num>0?true:false }">
+											<include
+												src="/Archives/Archives_Remark.zul" emar_id="${emar_id}"
+												 gid='${gid}' />
+										</detail>
+										<label
+											value="${forEachStatus.index+1 }">
+										</label>
+										<label
+											value="@load(each.emar_company)">
+										</label>
+										<label
+											value="@load(each.emar_name)">
+										</label>
+										<label
+											value="@load(each.emar_archivetype)">
+										</label>
+										<label
+											value="@load(each.emar_fid)">
+										</label>
+										<label
+											value="${each.emar_archivetype=='中智保管'?each.emar_archivesource:each.emar_archiveplace}">
+										</label>
+										<label
+											value="${each.emar_archivetype=='中智保管'?each.emar_promisesdate:each.emar_firstdeadline}">
+										</label>
+										<label
+											value="${each.emar_archivetype=='中智保管'?each.emar_prodate:each.emar_continuedeadline}">
+										</label>
+										<label value="@load(each.state)"
+											style="${each.emar_state==1?'color:#00f;':'color:#f00;'}">
+										</label>
+										<menubar autodrop="true">
+											<menu
+												image="../images/pencil-small.png">
+												<menupopup>
+													<menuitem
+														label="修改档案"
+														onClick="@command('openZUL',url='Archives_Update.zul',archivemodel=each,acclass=acclass.value)" />
+													<menuseparator />
+													<menuitem
+														label="添加备注"
+														onClick="@command('openZUL',url='Remark_AddList.zul',archivemodel=each,acclass=acclass.value)" />
+													<menuseparator />
+													<!--<menuitem label="档案转移"
+														onClick="@command('openZUL',url='',archivemodel=each,acclass=acclass.value)" />	-->
+												</menupopup>
+											</menu>
+										</menubar>
+									</row>
+								</template>
+							</rows>
+						</grid>
+					</center>
+				</borderlayout>
+			</panelchildren>
+		</panel>
+	</window>
+</zk>

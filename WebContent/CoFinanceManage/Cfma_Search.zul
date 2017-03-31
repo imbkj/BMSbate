@@ -1,0 +1,221 @@
+<?page title="公司电子台账检索" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winCofmSearch" title="公司电子台账检索" border="normal"
+		width="100%" height="100%" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoFinanceManage.Cfma_SearchController')">
+		<tablelayout columns="2" width="100%" height="100%">
+			<tablechildren height="70%" width="80%" rowspan="2">
+				<groupbox width="100%" height="100%" mold="3d">
+					<caption label="基本检索" />
+					<grid height="100%">
+						<rows>
+							<row>
+								<cell width="18%">
+									<label value="所属月份：" />
+								</cell>
+								<cell>
+									<combobox value="@bind(vm.ownmonth)"
+										mold="rounded" readonly="true">
+										<comboitem label="全部" />
+										<comboitem label="${each}"
+											forEach="${vm.ownmonthList}" />
+									</combobox>
+								</cell>
+								<cell>
+									<label value="客服代表：" />
+								</cell>
+								<cell>
+									<combobox value="@bind(vm.client)"
+										mold="rounded" readonly="true">
+										<comboitem label="全部" />
+										<comboitem
+											label="${each.log_name}" forEach="${vm.clientList}" />
+									</combobox>
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label value="公司检索：" />
+								</cell>
+								<cell>
+									<hbox>
+										<textbox
+											mold="rounded" value="@bind(vm.cocon)"
+											tooltiptext="可以输入 公司编号 或 公司简称 或 拼音简称 搜索" />
+										<button label="更新"
+											onClick="@command('update')" />
+									</hbox>
+								</cell>
+								<cell>
+									<label value="部门：" />
+								</cell>
+								<cell>
+									<combobox value="@bind(vm.dept)"
+										mold="rounded" readonly="true">
+										<comboitem label="全部" />
+										<comboitem label="客户服务部" />
+										<comboitem label="全国项目部" />
+									</combobox>
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label value="账单检索：" />
+								</cell>
+								<cell>
+									<textbox width="80%" mold="rounded"
+										value="@bind(vm.billNo)" tooltiptext="可以输入  账单编号 模糊搜索" />
+								</cell>
+								<cell>
+									<label value="总实收金额对比：" />
+								</cell>
+								<cell>
+									<combobox value="@bind(vm.ssdb)"
+										mold="rounded" readonly="true">
+										<comboitem label="全部" />
+										<comboitem label="等于0" />
+										<comboitem label="小于应收" />
+										<comboitem label="等于应收" />
+									</combobox>
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label value="销账情况：" />
+								</cell>
+								<cell>
+									<combobox
+										value="@bind(vm.writeOffs)" mold="rounded" readonly="true">
+										<comboitem label="全部" />
+										<comboitem label="已销账" />
+										<comboitem label="未销账" />
+										<comboitem label="已结转" />
+									</combobox>
+								</cell>
+								<cell>
+									<label value="销账人：" />
+								</cell>
+								<cell>
+									<combobox value="@bind(vm.cwUser)"
+										mold="rounded" readonly="true">
+										<comboitem label="全部" />
+										<comboitem label="${each}"
+											forEach="${vm.cwUserList}" />
+									</combobox>
+								</cell>
+							</row>
+
+							<row>
+								<cell>
+									<label value="人事应收确认情况：" />
+								</cell>
+								<cell>
+									<combobox
+										value="@bind(vm.personnelConfirm)" mold="rounded"
+										readonly="true">
+										<comboitem label="全部" />
+										<comboitem label="已确认" />
+										<comboitem label="未确认" />
+									</combobox>
+								</cell>
+								<cell>
+									<label value="财务应收确认情况：" />
+								</cell>
+								<cell>
+									<combobox
+										value="@bind(vm.financeConfirm)" mold="rounded"
+										readonly="true">
+										<comboitem label="全部" />
+										<comboitem label="已确认" />
+										<comboitem label="未确认" />
+									</combobox>
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label value="特殊检索：" />
+								</cell>
+								<cell colspan="3">
+									<!-- <checkbox label="有申请垫款" />
+										<label value="   " />
+										<checkbox label="人事应收实收差额为0"
+										checked="@bind(vm.perimbalance)" />
+										<label value="   " />
+										<checkbox label="财务应收实收差额为0"
+										checked="@bind(vm.finimbalance)" /> -->
+								</cell>
+
+							</row>
+						</rows>
+						<foot>
+							<footer align="center">
+								<button label="查询" id="btSubmit"
+									onClick="@command('search')" />
+							</footer>
+						</foot>
+					</grid>
+				</groupbox>
+
+			</tablechildren>
+			<tablechildren>
+				<groupbox>
+					<caption label="快速检索" />
+					<grid height="100%">
+						<rows>
+							<row>
+								<cell>
+									<vbox>
+										<label value="当月已销账" />
+										<label value="当月未销账" />
+										<label value="当月应收已确认" />
+										<label value="当月应收未确认" />
+									</vbox>
+								</cell>
+							</row>
+						</rows>
+					</grid>
+				</groupbox>
+				<groupbox>
+					<caption label="当月数据统计" />
+					<grid height="100%">
+						<rows>
+							<row>
+								<cell width="60%">
+									<label value="所属月份 ：" />
+								</cell>
+								<cell height="100%">
+									<label value="@load(vm.nowMonth)" />
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label value="本月账单数：" />
+								</cell>
+								<cell>
+									<label value="@load(vm.count[0])" />
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label value="未销账 ：" />
+								</cell>
+								<cell>
+									<label value="@load(vm.count[1])"
+										style="${vm.count[0]!=0?'color:red':''}" />
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label value="已销账 ：" />
+								</cell>
+								<cell>
+									<label value="@load(vm.count[2])" />
+								</cell>
+							</row>
+						</rows>
+					</grid>
+				</groupbox>
+			</tablechildren>
+		</tablelayout>
+	</window>
+</zk>

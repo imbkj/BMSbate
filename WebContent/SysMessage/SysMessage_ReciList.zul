@@ -1,0 +1,137 @@
+<?page contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="rclwin" title="收件箱" border="normal" width="750px" height="600px"
+		closable="true" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.SysMessage.SysMessage_ReciListController')"
+		style="background-color:white">
+		<borderlayout hflex="1" vflex="1">
+			<west width="200px">
+				<borderlayout>
+					<north collapsible="true" title="检索">
+						<vbox height="100%" width="100%" pack="center"
+							align="center">
+							<hbox height="100%" width="100%"
+								pack="center" align="center">
+								<label value="日期：" style="color#666" />
+								<datebox format="yyyy-MM-dd"
+									width="120px" mold="rounded" value="@bind(vm.time)"
+									instant="true" onChange="@command('search')" />
+							</hbox>
+							<hbox height="100%" width="100%"
+								pack="center" align="center">
+								<label value="内容：" style="color#666" />
+								<textbox width="120px" mold="rounded"
+									value="@bind(vm.searcontent)" instant="true"
+									onChange="@command('search')" />
+							</hbox>
+						</vbox>
+					</north>
+					<center>
+						<!-- <grid height="100%" width="100%"
+							model="@load(vm.reciList)" emptyMessage="暂无数据">
+							<columns>
+								<column sort="auto(syme_addtime)">
+									发送人 / 发送时间 / 类型
+								</column>
+							</columns>
+							<template name="model">
+								<row style="cursor:pointer">
+									<cell
+										onClick="@command('selectCon',each=each)">
+										<vbox width="100%">
+											<label
+												value="@load(each.syme_addname)" />
+											<label style="color:blue"
+												value="@load(each.syme_addtime)" />
+											<div height="15px">
+												<label
+													value="@load(each.syme_title)"
+													style="white-space: nowrap;text-overflow: 
+														ellipsis;overflow: hidden;color:#666;" />
+											</div>
+										</vbox>
+									</cell>
+								</row>
+							</template>
+						</grid> -->
+						<listbox hflex="1" vflex="1" selectedItem="@bind(vm.replyMd)"
+							model="@load(vm.reciList)" emptyMessage="暂无数据">
+							<listhead>
+								<listheader sort="auto(syme_addtime)">
+									发送人 / 发送时间 / 类型
+								</listheader>
+							</listhead>
+							<template name="model">
+								<listitem
+									style="background-color:white">
+									<listcell
+										onClick="@command('selectCon',each=each)">
+										<vbox width="100%">
+											<label
+												value="@load(each.syme_addname)" />
+											<hlayout>
+												<label
+													style="color:blue" value="@load(each.syme_addtime)" />
+												<space />
+												<label value="未阅"
+													style="font-weight:bold" if="${each.symr_readstate==0 }" />
+											</hlayout>
+											<div height="15px">
+												<label
+													value="@load(each.syme_title)"
+													style="white-space: nowrap;text-overflow: 
+													ellipsis;overflow: hidden;color:#666;
+													height:15px" />
+											</div>
+										</vbox>
+									</listcell>
+								</listitem>
+							</template>
+						</listbox>
+					</center>
+				</borderlayout>
+			</west>
+			<center>
+					<grid model="@load(vm.replyList)" vflex="1"
+						style="border:0px;" emptyMessage="暂无数据">
+						<template name="model">
+							<row
+								style="border-bottom:1px solid #cccccc;border-top:1px solid #cccccc;
+									height: 1px;overflow:hidden;background-color:white">
+								<vlayout>
+									<div height="15px" if="${each.syme_title!=null and each.syme_title!='' }">
+										<label 
+											value="@load(each.syme_title)"
+											style="color:black;font-size:10pt" />
+									</div>
+									<hlayout>
+										<label style="color:black"
+											value="@load(each.syme_addname)" />
+										<label style="color:black"
+											value="@load(each.syme_addtime)" />
+										<div align="right" hflex="1" if="${username==each.symr_name and each.symr_readstate==1 }">
+										<a onClick="@command('qureply',model=each,vl=self.parent.parent.parent,aa=self)"><label value="回复"/></a></div>
+									</hlayout>
+									<hlayout>
+										<label value="${each.syme_id==each.syme_reply_id?'接收人：':'回复：' }"
+											style="color:#666" />
+										<label style="color:black"
+											value="@load(each.symr_name)" />
+									</hlayout>
+									<separator />
+									<html
+										content="@load(each.syme_content)" if="${empty each.syme_url }" />
+									<a label="@load(each.syme_content)" if="${not empty each.syme_url }"
+										onClick="@command('opennew',win=rclwin,model=each)"></a>
+									<hlayout visible="false">
+										<textbox hflex="1" rows="2" style="border:2px solid #CCCCCC;background-color:#f5fafe"></textbox>
+										<button onClick="@command('sendmsg',model=each,hl=self.parent)">发送</button>
+									</hlayout>
+								</vlayout>
+							</row>
+						</template>
+					</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

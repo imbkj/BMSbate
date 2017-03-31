@@ -1,0 +1,22 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="取消办理调户" border="normal" width="500px" height="300px" closable="true" id="wincancel"
+	apply="org.zkoss.bind.BindComposer"
+    viewModel="@id('vm') @init('Controller.EmCensus.EmDh.Emdh_StateChangeController')">
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell width="60px">办理状态</cell>
+			<cell><textbox readonly="true" value="${arg.model.states }"></textbox></cell>
+		</row>
+		<row>
+			<cell>取消理由</cell>
+			<cell><textbox rows="5" width="90%" id="cancelreason"></textbox></cell>
+		</row>
+	</rows>
+	<foot>
+		<footer align="center"><button id="cancel" onClick="@command('cancel',wincancel=wincancel,cancelreason=cancelreason.value)">提交</button></footer>
+	</foot>
+</grid>
+</window>
+</zk>

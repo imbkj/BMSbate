@@ -1,0 +1,125 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winimport" width="98%" height="100%" title="员工档案 - 档案业务处理"
+		border="normal" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.Archives.Archive_addController')">
+		<borderlayout>
+			<north border="normal" title="查询员工信息" collapsible="true">
+				<grid>
+					<rows>
+						<row>
+							<cell>公司:</cell>
+							<cell>
+								<combobox id="company" autodrop="true"
+									onChange="@command('changeCompany',a=self.selectedItem.value,b=emp)"
+									onChanging="@command('editCompany',a=event,b=client)"
+									model="@load(vm.cobaselist)">
+									<template name="model">
+										<comboitem
+											label="@load(each.coba_shortname)">
+										</comboitem>
+									</template>
+								</combobox>
+							</cell>
+							<cell>客服:</cell>
+							<cell>
+								<combobox id="client"
+									model="@load(vm.clientlist)" readonly="true"
+									onChange="@command('updateCompany',a=self.selectedItem.value,b=company,c=emp)">
+									<template name="model">
+										<comboitem
+											label="@load(each.coba_client)">
+										</comboitem>
+									</template>
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>员工姓名:</cell>
+							<cell>
+								<combobox id="emp" autodrop="true"
+									model="@load(vm.namelist)"
+									onChange="@command('changeEmp',a=self.selectedItem.value)"
+									onChanging="@command('editEmp',a=event,b=client.selectedItem.value,c=company.selectedItem.value)">
+									<template name="model">
+										<comboitem
+											label="@load(each.emba_name)">
+										</comboitem>
+									</template>
+								</combobox>
+							</cell>
+							<cell></cell>
+							<cell></cell>
+						</row>
+					</rows>
+				</grid>
+			</north>
+			<center>
+				<grid emptyMessage="暂时没有员工数据" id="gdembase"
+					mold="paging" pageSize="15" model="@load(vm.embaselist)"
+					height="100%">
+					<columns>
+						<column width="40px" align="center">序号</column>
+						<column align="center">公司名称</column>
+						<column width="120px" align="center">姓名</column>
+						<column width="120px" align="center">身份证</column>
+						<column width="60px" align="center">性别</column>
+						<column width="150px" align="center">状态</column>
+						<column width="80px" align="center">操作</column>
+					</columns>
+					<template name="model">
+						<row>
+							<cell>
+								<label
+									value="${forEachStatus.index+1 }" />
+							</cell>
+							<cell>
+								<label value="@load(each.coba_company)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emba_name)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emba_idcard)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emba_sex)" />
+							</cell>
+							<cell>
+								<label value="@load(each.archive)"></label>
+								<label if="${each.emar_id>0 }" value=" - "></label>
+								<label value="@load(each.statename)"></label>
+							</cell>
+							<cell>
+								<div align="center">
+									<menubar autodrop="true"
+										width="50px" sclass="mymb">
+										<menu
+											image="../images/pencil-small.png">
+											<menupopup>
+												<menuitem label="调入档案" if="${each.emar_state==0}"
+													onClick="@command('filesplit',a=each,b=1)" />
+												<menuitem label="档案转出" if="${each.emar_state==1}"
+													onClick="@command('filesplit',a=each,b=2)" />
+												<menuitem label="查借材料" if="${each.emar_state==1}"
+													onClick="@command('filesplit',a=each,b=3)" />
+												<menuitem label="出具证明" if="${each.emar_state==1}"
+													onClick="@command('filesplit',a=each,b=4)" />
+												<menuitem label="材料鉴别归档" if="${each.emar_state==1}"
+													onClick="@command('filesplit',a=each,b=5)" />
+												<menuitem label="转正定级" if="${each.emar_state==1}"
+													onClick="@command('filesplit',a=each,b=6)" />
+												<menuitem label="欠费查询" visible="false"
+													onClick="@command('filesplit',a=each,b=7)" />
+											</menupopup>
+										</menu>
+									</menubar>
+								</div>
+							</cell>
+						</row>
+					</template>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

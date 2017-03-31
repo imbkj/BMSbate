@@ -1,0 +1,63 @@
+<!--
+	创建人：张志强
+	创建时间：2013-10-31
+	用途：材料列表页面
+-->
+<?page title="材料列表" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="角色列表" border="normal" width="100%"
+		apply="org.zkoss.bind.BindComposer" sizable="true" height="800px"
+		viewModel="@id('vm') @init('Controller.DocumentsInfo.DocumentsInfo_ListController')">
+		<borderlayout vflex="1">
+			<north border="0" title="数据查询" collapsible="true"
+				flex="true" open="true">
+				<panel border="1">
+					<panelchildren style="padding:5px;">
+						<grid id="searchGird" width="100%">
+							<rows>
+								<row>
+
+									<cell width="100px">材料名</cell>
+									<textbox id="role_name"
+										width="150px" value="" />
+									<cell></cell>
+								</row>
+							</rows>
+							<foot>
+								<footer align="center">
+									<button id="btSearch" label="查询"
+										onClick="@command('search',tb1=role_name)" />
+								</footer>
+							</foot>
+						</grid>
+					</panelchildren>
+				</panel>
+			</north>
+			<center>
+				<grid width="100%" mold="paging" pageSize="20"
+					model="@load(vm.documentslist)">
+					<columns>
+						<column label="序号" align="center" width="60px" />
+						<column label="材料名称" align="center" />
+						<column label="所属类型" align="center" />
+						<column label="状态" align="center" />
+						<column label="操作" align="center" width="100px" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<label value="${forEachStatus.index + 1}" />
+								<label value="@load(each.doin_content)" />
+								<label value="@load(each.doin_type)" />
+								<label value="@load(each.doin_state)" />
+								<label style="cursor:pointer"
+									onClick="@command('documents_edit', rol=each)"
+									value="修改" />
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

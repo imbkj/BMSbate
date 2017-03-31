@@ -1,0 +1,16 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window border="normal" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.SysMessage.SysMessage_DeptListController')">
+<grid model="@load(vm.deptlist)">
+		<columns>
+			<column label=""/>
+			<column label=""/>
+		</columns>
+		<rows>
+			<row>	
+			</row>
+		</rows>
+	</grid>
+</window>
+</zk>

@@ -1,0 +1,155 @@
+<!--
+	创建人：林少斌
+	创建时间：2014-3-13
+	用途：终止委托单查询
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="智翼通接口 -- 终止委托单详细" border="normal" width="800px"
+		height="600px" apply="org.zkoss.bind.BindComposer" closable="true"
+		viewModel="@id('vm') @init('Controller.EmZYT.EmZYT_DetailDimissionController')">
+		<grid width="100%" height="100%">
+			<rows>
+				<row>
+					<cell colspan="3" align="center">
+						<label value="委托单（${arg.emztM.emzt_class}）" />
+					</cell>
+				</row>
+				<row>
+					<cell colspan="3" align="left">
+						<label value="${arg.emztM.emzt_scompany}" />
+					</cell>
+				</row>
+				<row>
+					<cell></cell>
+					<cell></cell>
+					<cell align="left">
+						<label value="Phone： 021-54594545" />
+					</cell>
+				</row>
+				<row>
+					<cell></cell>
+					<cell></cell>
+					<cell align="left">
+						<label value="Fax： 021-64475785" />
+					</cell>
+				</row>
+				<row>
+					<cell></cell>
+					<cell></cell>
+					<cell></cell>
+				</row>
+				<row>
+					<cell>
+						<label value="To：" />
+					</cell>
+					<cell></cell>
+					<cell>
+						<label value="From： " />
+					</cell>
+				</row>
+				<row>
+					<cell>
+						<label value="FAX： 0755-83361044" />
+					</cell>
+					<cell></cell>
+					<cell>
+						<label
+							value="Date：${vm.nowString}" />
+					</cell>
+				</row>
+				<row>
+					<cell>
+						<label value="Phone： 0755-83323640" />
+					</cell>
+					<cell></cell>
+					<cell>
+						<label value="Pages： 1" />
+					</cell>
+				</row>
+				<row>
+					<cell>
+						<label value="Sub： 合同终止通知" />
+					</cell>
+					<cell></cell>
+					<cell>
+						<label value="CC：" />
+					</cell>
+				</row>
+				<row>
+					<cell colspan="3">
+						<checkbox label="Urgent" />
+						<checkbox label="For Review" />
+						<checkbox label="Please Comment" />
+						<checkbox label="Please Reply" />
+						<checkbox label="Please Recycle" />
+					</cell>
+				</row>
+				<row>
+					<cell colspan="3">
+						<label value="您      好！" />
+					</cell>
+				</row>
+				<row>
+					<cell colspan="3">
+						<label value="今接     ${arg.emztM.emzt_company}     通知：" />
+					</cell>
+				</row>
+				<row>
+					<cell colspan="3">
+						<label
+							value="       员工：${arg.emztM.emzt_name}    身份证号码：${arg.emztM.emzt_idcard}    ，于${arg.emztM.emzt_outdate}    终止合同" />
+					</cell>
+				</row>
+				<row>
+					<cell colspan="3">
+						<label
+							value="委托城市为：${arg.emztM.emzt_scity}     中止原因为：${arg.emztM.emzt_outreason}    。所以我公司与贵处签署的关于委托" />
+					</cell>
+				</row>
+				<row>
+					<cell colspan="3">
+						<label
+							value="管理上述员工的社会保险和档案管理的协议也于    ${vm.ylstopString}     底终止。公积金缴至    ${vm.housestopString}    底终止" />
+					</cell>
+				</row>
+				<row>
+					<cell colspan="3">
+						<label value="特此通知！" />
+					</cell>
+				</row>
+				<row>
+					<cell colspan="3">
+						<label
+							value="请贵司根据当地相关规定尽快办理上述员工的档案退转和社会保险（五险一金）的转出手续。" />
+					</cell>
+				</row>
+				<row>
+					<cell colspan="3" align="right">
+						<label value="${arg.emztM.emzt_scompany}" />
+					</cell>
+				</row>
+				<row>
+					<cell></cell>
+					<cell></cell>
+					<cell></cell>
+				</row>
+				<row>
+					<cell colspan="2">
+						<label value="委托单上传的日期：${arg.emztM.emzt_uptime}。${arg.emztM.emzt_remark}" />
+					</cell>
+					<cell></cell>
+				</row>
+				<row>
+					<cell colspan="3" align="left">
+						<hbox>
+							<label value="备注：" />
+							<textbox value="${arg.emztM.emzt_flag}"
+								readonly="true" mold="rounded" rows="5" cols="70" />
+						</hbox>
+					</cell>
+				</row>
+			</rows>
+		</grid>
+	</window>
+</zk>

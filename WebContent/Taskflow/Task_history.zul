@@ -1,0 +1,23 @@
+<grid apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('missionlist') @init('Controller.Taskflow.Task_historyController')" 
+	model="@load(missionlist.tplList)" emptyMessage="暂时没有联系人信息">
+	<columns>
+		<column align="center" label="节点名称"/>
+		<column align="center" label="操作内容"/>
+		<column align="center" label="操作人"/>
+		<column align="center" label="操作时间"/>
+		<column align="center" label="操作状态"/>
+	</columns>
+	<rows>
+		<template name="model">
+		<row align="center">
+			<label value="@load(each.wfno_name)"/>
+			<label value="@load(each.tapl_content)"/>
+			<label value="@load(each.tapl_username)"/>
+			<label value="@load(each.tapl_addtime)"/>
+			<label value="@load(each.tapr_statename)"/>
+
+		</row>
+	</template>
+	</rows>
+</grid>

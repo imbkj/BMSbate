@@ -1,0 +1,46 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="地址信息修改" border="normal" vflex="1" width="80%" height="80%" closable="true"
+	apply="org.zkoss.bind.BindComposer" id="winedit"
+    viewModel="@id('vm') @init('Controller.EmExpress.ExpressAddressInfoUpdateController')"
+>
+<style src="/css/style.css"></style>
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell width="80px"></cell>
+			<cell></cell>
+			<cell width="80px"></cell>
+			<cell></cell>	
+		</row>
+		<row>
+			<cell>邮寄地址</cell>
+			<cell colspan="3"><textbox width="80%" rows="3" id="address" value="@bind(vm.model.exct_address)"></textbox></cell>
+		</row>
+		<row>
+			<cell>邮寄类型</cell>
+			<cell>
+				<combobox value="@bind(vm.model.exct_type)">
+					<comboitem label="通用"/>
+					<comboitem label="公积金卡"/>
+					<comboitem label="社保卡"/>
+				</combobox>
+			</cell>
+			<cell>收件人</cell>
+			<cell><textbox  value="@bind(vm.model.exct_receivename)"/></cell>	
+		</row>
+		<row>
+			<cell>手机号码</cell>
+			<cell><textbox  value="@bind(vm.model.exct_mobile)"/></cell>
+			<cell>电话号码</cell>
+			<cell><textbox value="@bind(vm.model.exct_phone)"/></cell>
+		</row>
+		<row>
+			<cell>邮政编码</cell>
+			<cell colspan="3"><textbox value="@bind(vm.model.exct_code)"/></cell>
+		</row>
+	</rows>
+	<foot><footer align="center"><button onClick="@command('edit',win=winedit)">提交</button></footer></foot>
+</grid>
+</window>
+</zk>

@@ -1,0 +1,101 @@
+<?page title="礼品库存信息列表" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="礼品库存信息列表" border="normal" vflex="1"
+	apply="org.zkoss.bind.BindComposer" id="windeclare"
+	viewModel="@id('vm') @init('Controller.EmBenefit.EmActy_GiftInfoListController')"
+>
+<style src="/css/style.css"></style>
+<borderlayout>
+<north border="0" title="检索" collapsible="true" flex="true" style="padding-bottom:10px;" open="false">
+<grid>
+	<rows>
+		<row>
+			<cell width="60px">商品名称</cell>
+			<cell><textbox id="name"/></cell>
+			<cell width="60px">所属月份</cell>
+			<cell><monthbox id="ownmonth" format="yyyyMM"/></cell>
+			<cell width="60px">供应商</cell>
+			<cell>
+				<combobox model="@load(vm.suplist)" id="supname">
+				<template name="model">
+					<comboitem label="@load(each.supp_name)" value="@load(each.supp_id)"/>
+				</template>
+				</combobox>
+			</cell>
+			<cell width="60px">福利性质</cell>
+			<cell>
+				<combobox readonly="true" id="gifttype" value="礼品">
+					<comboitem label="礼品" value="1"/>
+					<comboitem label="活动" value="2"/>
+				</combobox>
+			</cell>
+			<cell width="60px">状态</cell>
+			<cell>
+				<combobox readonly="true" id="statetxt">
+					<comboitem label="" value="-1"/>
+					<comboitem label="未审核" value="0"/>
+					<comboitem label="已审核" value="1"/>
+					<comboitem label="已采购" value="2"/>
+					<comboitem label="已入库" value="3"/>
+					<comboitem label="退回" value="4"/>
+				</combobox>
+			</cell>
+		</row>
+	</rows>
+	<foot>
+		<footer align="center">
+			<button onClick="@command('seach',name=name.value,ownmonth=ownmonth.value,
+			supname=supname.value,statetxt=statetxt.selectedItem.value,gifttype=gifttype.value)">查询</button>
+		</footer>
+	</foot>
+</grid>
+</north>
+<center>
+<grid  model="@load(vm.list)" vflex="1" emptyMessage="没有数据" mold="paging" pageSize="500" >
+	<columns>
+		<column width="0px" align="center"/>
+		<column label="序号" width="40px" align="center"/>
+		<column label="名称" align="center"/>
+		<column label="福利性质" align="center"/>
+		<column label="供应商" align="center"/>
+		<column label="所属月份" align="center"/>
+		<column label="实付金额" align="center"/>
+		<column label="付款日期" align="center"/>
+		<column label="入库总量" align="center" visible="@bind(vm.visable)"/>
+		<column label="现存总量" align="center" visible="@bind(vm.visable)"/>
+		<column label="有效期" align="center"/>
+		<column label="发票日期" align="center"/>
+		<column label="发票号码" align="center"/>
+		<column label="状态" align="center"/>
+		<column label="详细" align="center" width="80px"/>
+	</columns>
+	<rows>
+	<template name="model">
+		<row>
+		<custom-attributes gift_id="${each.gift_id }" />
+			<detail open="false" fulfill="onOpen" visible="false">
+					<include src="/EmBenefit/EmActy_GiftOutLogList.zul" gift_id="${gift_id}" />
+					</detail>
+			<cell><label value="${forEachStatus.index+1 }"></label></cell>
+			<cell><label value="@load(each.gift_name)"></label></cell>
+			<cell><label value="@load(each.gift_type)"></label></cell>
+			<cell><label value="@load(each.supp_name)"></label></cell>
+			<cell><label value="@load(each.ownmonth)"></label></cell>
+			<cell><label value="@load(each.gift_realpay)"></label></cell>
+			<cell><label value="@load(each.gift_paydate)"></label></cell>
+			<cell visible="@bind(vm.visable)"><label value="@load(each.gift_totalnum)"></label></cell>
+			<cell visible="@bind(vm.visable)"><label value="@load(each.gift_nownum)"></label></cell>
+			<cell><label value="@load(each.gift_validdate)"></label></cell>
+			<cell><label value="@load(each.gift_invoicedate)"></label></cell>
+			<cell><label value="@load(each.gift_invoicenumber)"></label></cell>
+			<cell><label value="@load(each.statename)"></label></cell>
+			<cell><a  onClick="@command('openzul',model=each)"><label value="详细"></label></a></cell>
+		</row>
+		</template>
+	</rows>
+</grid>
+</center>
+</borderlayout>
+
+</window>
+</zk>

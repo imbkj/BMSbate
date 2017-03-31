@@ -1,0 +1,92 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="档案调出" border="normal" width="70%" height="80%"
+		closable="true" id="win" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.Archives.Archive_FileCheckOutController')">
+		<grid vflex="1">
+			<rows>
+				<row>
+					<cell width="75px">公司名称</cell>
+					<cell>
+						<label value="@load(vm.emmodel.coba_company)"></label>
+					</cell>
+					<cell width="60px">客服</cell>
+					<cell>
+						<label value="@load(vm.emmodel.coba_client)"></label>
+					</cell>
+					
+				</row>
+				<row>
+					<cell width="75px">身份证号</cell>
+					<cell>
+						<label value="@load(vm.emmodel.emba_idcard)"></label>
+					</cell>
+					<cell width="60px">员工姓名</cell>
+					<cell>
+						<label value="@load(vm.emmodel.emba_name)"></label>
+					</cell>
+				</row>
+				<row>
+					<cell width="75px">档案编号</cell>
+					<cell>
+						<textbox
+							value="${vm.models.eada_filetype}-${vm.models.eada_fid}"
+							id="fid" />
+					</cell>
+					<cell width="60px" visible="false">托管方式</cell>
+					<cell visible="false">
+						<combobox value="${vm.models.eada_wtmode}"
+							id="wtmode">
+							<comboitem label="个人托管" />
+							<comboitem label="中智托管" />
+						</combobox>
+					</cell>
+				</row>
+				<row>
+					<cell>调出日期</cell>
+					<cell>
+						<datebox value="${vm.models.eada_checkoutdate}"
+							id="outdate" />
+					</cell>
+					<cell if="${vm.models.eada_filetype=='中智保管' }">调出方式</cell>
+					<cell if="${vm.models.eada_filetype=='中智保管' }">
+						<combobox id="outtype"
+							value="@bind(vm.models.eada_checkoutmode)">
+							<comboitem label="凭函自带" />
+							<comboitem label="凭函代调" />
+							<comboitem label="凭函机要" />
+							<comboitem label="无函自带" />
+						</combobox>
+					</cell>
+				</row>
+				<row>
+					<cell>转往单位</cell>
+					<cell colspan="3">
+						<textbox value="${vm.models.eada_checkoutsetup}"
+							id="tocom" width="70%" />
+					</cell>
+				</row>
+				<row>
+					<cell>调出原因</cell>
+					<cell colspan="3">
+						<textbox readonly="true" width="95%" rows="5"
+							value="${vm.models.eada_checkoutreason}" id="outseasion" />
+					</cell>
+				</row>
+
+			</rows>
+			<foot>
+				<footer align="center">
+					<button id="summit"
+						onClick="@command('summitend',wtmode=wtmode.value,win=win,outtype=outtype.value,outdate=outdate.value,outseasion=outseasion.value,tocom=tocom.value)">
+						提交
+					</button>
+					<button
+						onClick="@command('addremark',win=win)">
+						备注
+					</button>
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

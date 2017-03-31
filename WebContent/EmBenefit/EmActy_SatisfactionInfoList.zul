@@ -1,0 +1,57 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="满意度信息列表" border="normal" vflex="1" 
+	apply="org.zkoss.bind.BindComposer" id="wins"
+	viewModel="@id('vm') @init('Controller.EmBenefit.EmActy_SatisfactionInfoListController')"
+>
+<style src="/css/style.css"></style>
+<borderlayout>
+<north>
+	<grid>
+		<rows>
+			<row><cell align="center"><button onClick="@command('edit',win=wins,gd=gd)">编辑调查内容</button></cell></row>
+		</rows>
+	</grid>
+</north>
+<center>
+<grid  vflex="1" model="@load(vm.list)" id="gd" mold="paging" pageSize="500">
+	<columns>
+	<column width="40px" align="center"/>
+		<column label="序号" width="40px" align="center"/>
+		<column label="题目" align="center"/>
+		<column label="回答类型" align="center"/>
+		<column label="排序" align="center"/>
+		<column label="操作" align="center" width="60px"/>
+		<column align="center" width="60px"><checkbox onClick="@command('checkall',ck=self,gd=gd)"></checkbox></column>
+	</columns>
+	<rows>
+		<template name="model">
+			<row>
+				<custom-attributes sury_id="${each.sury_id }" />
+			<detail open="false" fulfill="onOpen" visible="${each.sury_answertype!=3 }">
+					<include src="/EmBenefit/EmActy_SurveyContentInfoList.zul" sury_id="${sury_id}" />
+			</detail>
+				<cell><label value="${forEachStatus.index+1 }"></label></cell>
+				<cell><label value="@load(each.sury_title)"></label></cell>
+				<cell><label value="@load(each.answertype)"></label></cell>
+				<cell><label value="@load(each.sury_order)"></label></cell>
+				<cell>
+					<menubar autodrop="true">
+					<menu
+						image="../images/pencil-small.png">
+						<menupopup>
+							<menuitem label="修改"
+								onClick="@command('editinfo',model=each)" />
+						</menupopup>
+					</menu>
+					</menubar>
+				</cell>
+				<cell><checkbox value="@load(each)"></checkbox></cell>
+			</row>
+		</template>
+	</rows>
+</grid>
+</center>
+</borderlayout>
+</window>
+</zk>

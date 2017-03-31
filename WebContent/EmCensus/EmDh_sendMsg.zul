@@ -1,0 +1,21 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="联系员工——发送短信" border="normal" width="700px" height="500px" closable="true">
+<grid>
+		<rows>
+			<row>
+				<cell width="80px">手机号码</cell>	
+				<cell><textbox></textbox></cell>
+			</row>
+			<row>
+				<cell width="80px">短信模版</cell>	
+				<cell><textbox></textbox></cell>
+			</row>
+			<row>
+				<cell width="80px">短信内容</cell>	
+				<cell><textbox></textbox></cell>
+			</row>
+		</rows>
+	</grid>
+</window>
+</zk>

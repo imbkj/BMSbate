@@ -1,0 +1,92 @@
+<?page title="劳动合同制作列表" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="劳动合同制作列表" border="normal" width="100%"
+		apply="org.zkoss.bind.BindComposer" sizable="true" height="800px"
+		viewModel="@id('vm') @init('Controller.EmBaseCompact.EmBaseCompact_MakeListController')">
+		<borderlayout vflex="1">
+			<north border="0" title="数据查询" collapsible="true"
+				flex="true" open="true">
+				<panel border="1">
+					<panelchildren style="padding:5px;">
+						<grid id="searchGird" width="100%">
+							<rows>
+								<row>
+
+									<cell width="80px">员工姓名</cell>
+									<textbox id="role_name" mold="rounded"
+										width="100px" value="" />
+									<cell width="80px">员工编号</cell>
+									<textbox id="gid" mold="rounded"
+										width="100px" value="" />
+									<cell width="80px">公司名称</cell>
+									<textbox id="company" mold="rounded"
+										width="150px" value="" />
+									<cell width="80px">公司编号</cell>
+									<textbox id="cid" mold="rounded"
+										width="100px" value="" />
+									<cell width="80px">客服</cell>
+									<combobox mold="rounded"
+												width="100px" value="" id="client"
+												model="@load(vm.clientlist)">
+												<template
+													name="model">
+													<comboitem
+														label="@load(each.ebco_addname)"
+														value="@load(each.ebco_addname)">
+													</comboitem>
+												</template>
+											</combobox>
+								</row>
+							</rows>
+							<foot>
+								<footer align="center">
+									<button id="btSearch" label="查询"
+										onClick="@command('make_search',tb1=role_name,gid=gid,company=company,cid=cid,client=client)" />
+								</footer>
+							</foot>
+						</grid>
+					</panelchildren>
+				</panel>
+			</north>
+			<center>
+				<grid width="100%" mold="paging" pageSize="18"
+					model="@load(vm.emcompactlist)">
+					<columns>
+						<column label="序号" align="center" width="60px" />
+						<column label="公司编号" align="center" />
+						<column label="公司名称" align="center" />
+						<column label="员工编号" align="center" />
+						<column label="员工姓名" align="center" />
+						<column label="合同起始时间" align="center" />
+						<column label="合同到期时间" align="center" />
+						<column label="操作类型" align="center" />
+						<column label="客服" align="center" />
+						<column label="状态" align="center" />
+						<column label="操作" align="center" width="100px" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<label
+									value="${forEachStatus.index + 1}" />
+									<label value="@load(each.cid)" />
+								<label value="@load(each.company)" />
+								<label value="@load(each.gid)" />
+								<label value="@load(each.name)" />
+								<label
+									value="@load(each.ebco_incept_date)" />
+								<label
+									value="@load(each.ebco_maturity_date)" />
+								<label value="@load(each.ebco_change)" />
+								<label value="@load(each.ebco_addname)" />
+								<label value="@load(each.ebco_auditing_name)" />
+								<label style="cursor:pointer"
+									onClick="@command('emcompact_make', emco=each)" value="制作合同" />
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

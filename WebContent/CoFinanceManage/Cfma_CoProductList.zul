@@ -1,0 +1,24 @@
+<?page title="公司福利产品及服务费" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<grid height="100%" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoFinanceManage.Cfma_CoProductListController')"
+		emptyMessage="暫未找到数据" mold="paging" pageSize="10"
+		sizedByContent="true" model="@load(vm.coProductList)" span="true">
+		<columns sizable="true">
+			<column label="序号" width="80px" align="center" />
+			<column label="产品" align="center"
+				sort="auto(cfpr_copr_name)" />
+			<column label="应收合计" width="180px" align="center"
+				sort="auto(cfpr_Receivable)" />
+		</columns>
+		<rows>
+			<template name="model">
+				<row>
+					<label value="${forEachStatus.index + 1}" />
+					<label value="@load(each.cfpr_copr_name)" />
+					<label value="@load(each.cfpr_Receivable)" />
+				</row>
+			</template>
+		</rows>
+	</grid>
+</zk>

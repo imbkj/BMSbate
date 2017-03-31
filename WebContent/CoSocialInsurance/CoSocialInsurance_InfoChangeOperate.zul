@@ -1,0 +1,86 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<!-- 调用内联页的文件名 -->
+<?component name="docDataList" macro-uri="/DocumentsInfo/DocumentsInfo_UpPageList.zul" inline="true"?>
+<zk>
+	<window id="win" title="信息变更 - 状态变更" border="normal" width="700px"
+		closable="true" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoSocialInsurance.CoSocialInsurance_InfoChangeOperateController')">
+		<div height="100%" style="overflow-y:auto">
+			<grid>
+				<columns>
+					<column width="20%"></column>
+					<column width="15%"></column>
+					<column width="15%"></column>
+					<column></column>
+				</columns>
+				<rows>
+					<row>
+						公司编号
+						<cell>
+							<label value="@load(vm.m.cid)" />
+						</cell>
+						公司名称
+						<cell>
+							<hbox>
+								<label value="@load(vm.m.coba_company)" />
+								<label value="(" />
+								<label value="@load(vm.m.cosb_sorid)" />
+								<label value=")" />
+							</hbox>
+						</cell>
+					</row>
+					<row>
+						变更项
+						<cell colspan="3">
+							<label value="@load(vm.m.csbc_changestr)" />
+						</cell>
+					</row>
+					<row forEach="${vm.list }"
+						if="${vm.state eq 1 or vm.state eq 3 }">
+						${each.csic_changestyle }
+						<cell colspan="3">
+							"
+							<label value="${each.csic_changef }" />
+							"
+							<space />
+							<label value="修改为" style="color:red" />
+							<space />
+							"
+							<label value="${each.csic_changel }" />
+							"
+						</cell>
+					</row>
+					<row if="${vm.state==1 }">
+						深圳市企业参加社会保险信息变更申请表:
+						<cell colspan="3">
+							<textbox value="@load(vm.m.csbc_pdf)"
+								width="200px" readonly="true" />
+							<space></space>
+							<button label="浏览..."
+								upload="true,maxsize=1024"
+								onUpload="@command('browse',media=event.media)">
+							</button>
+						</cell>
+					</row>
+					<row if="${vm.state==2 }">
+						<cell colspan="4">
+							<label value="签收材料" style="color:#666" />
+						</cell>
+					</row>
+					<row if="${vm.state==2 }">
+						<cell colspan="4">
+							<docDataList id="docGrid" puzu_id="37"
+								doc_type="c" gid="" tid="${vm.m.csbc_id }"
+								log_url="/DocumentsInfo/" dHeight="230px" dWidth="100%"
+								lh_people="${vm.m.csbc_addname}" />
+						</cell>
+					</row>
+				</rows>
+			</grid>
+			<hbox width="100%" pack="center" align="center">
+				<button label="提交"
+					onClick="@command('submit',win=win,gd=docGrid)" />
+			</hbox>
+		</div>
+	</window>
+</zk>

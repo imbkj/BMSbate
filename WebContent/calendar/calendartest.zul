@@ -1,0 +1,14 @@
+<zk>
+<window apply="Controller.Canlendar.CalendarTest_Controller" vflex="1" hflex="1">
+<calendars id="calendars" firstDayOfWeek="Sunday" vflex="1" hflex="1" timeZone="Main=GMT+8" mold="month" >
+	<toolbar><hlayout sclass="z-valign-middle">
+                <button id="prev" image="../images/prev.png"/>
+                <button id="next" image="/images/next.png"/>
+                <button id="pageDay" label="天" width="55px" />
+                <button id="pageWeek" label="周" width="55px"/>
+                <button id="pageMonth" label="月" width="55px"/>
+                <datebox id="selectdate"></datebox>
+            </hlayout></toolbar>
+	</calendars>
+</window>
+</zk>

@@ -1,0 +1,18 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="退回" border="normal" width="600px" height="400px"
+		closable="true" apply="org.zkoss.bind.BindComposer" id="backwin"
+		viewModel="@id('vm') @init('Controller.EmReg.EmReg_BackController')">
+		<grid vflex="1">
+			<rows>
+				<row>
+					<cell width="80px">退回原因</cell>
+					<cell><textbox width="90%" rows="5" value="@bind(vm.back_case)"></textbox></cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center"><button onClick="@command('centerbvack',win=backwin)">提交</button></footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

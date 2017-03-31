@@ -1,0 +1,252 @@
+<?page title="员工信息导入" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="员工信息导入" border="normal" width="100%" height="100%"
+		apply="org.zkoss.bind.BindComposer" id="winembasebatch"
+		viewModel="@id('vm') @init('Controller.Batchprocessing.BatP_embaseController')">
+		<borderlayout>
+			<north title="导入模板" collapsible="true" open="true">
+				<grid width="100%" height="100%">
+					<rows>
+					<row>
+							<cell width="30%">操作介绍:</cell>
+							<cell>
+							 	<label
+									value="1、选择模板类型，下载导入模板，填充导入数据；2、导入临时数据，并核查；3、导入系统、分配报价单。" style="color:red" />
+
+							</cell>
+						</row>
+						<row>
+							<cell width="30%">模板类型:</cell>
+							<cell>
+								<combobox readonly="true" mold="rounded"
+									value="@bind(vm.templetType)">
+									<comboitem label="基本信息导入" />
+									<comboitem label="基本信息修改" />
+									 
+								</combobox>
+
+							</cell>
+						</row>
+						<row>
+							<cell width="30%">基数采集模板:</cell>
+							<cell>
+								<button label="下载导入模板"
+									onClick="@command('downloadTemplet')" />
+							</cell>
+						</row>
+						<row>
+							<cell>文件上传:</cell>
+							<cell>
+								<textbox mold="rounded" rows="1"
+									readonly="true" value="@load(vm.uploadFlieName)" width="280px" />
+								<!-- 									<textbox mold="rounded" rows="1" -->
+								<!-- 									readonly="true" value="" width="280px" /> -->
+
+
+								<button label="浏览..."
+									upload="true,multiple=true" onUpload="@command('browse')" />
+
+								<button label="导入临时数据" id="btSubmit"
+									onClick="@command('upload')" />
+							</cell>
+
+						</row>
+						<row>
+							<cell colspan="2" align="center">
+								<label
+									value="" style="color:red" />
+							</cell>
+
+						</row>
+						
+						<row>
+						
+							<cell colspan="2" align="center">
+							<textbox id="fpcid" instant="true"
+									value="@bind(vm.ccid)" width="10%" 
+									mold="rounded">
+								</textbox>
+								<label
+									value=" (请填写公司编号！)" style="color:red" />
+							 
+									<button label="员工报价单分配" id="btSubmitfp"
+									onClick="@command('btSubmitfp',win=winembasebatch)" />
+							</cell>
+
+						</row>
+					</rows>
+
+				</grid>
+
+			</north>
+			<center>
+				<grid id="gridwin" width="100%" emptyMessage="暂无数据" model="@load(vm.winUlList)"
+					mold="paging" pageSize="300" height="100%" hflex="1"
+					style="border:0;">
+
+					<columns>
+
+						<column align="center">
+							全选
+							<checkbox id="selectAll"
+								onCheck="@command('checkAll')" checked="@bind(vm.checkAll)" />
+						</column>
+
+
+
+						<column sort="auto(cid)">
+							<vlayout>
+								<label>公司编号</label>
+
+								<textbox id="cid" instant="true"
+									value="@bind(vm.cid)" width="80%" onChange="@command('search')"
+									mold="rounded">
+								</textbox>
+							</vlayout>
+						</column>
+						<column sort="auto(coname)">
+							<vlayout>
+								<label>公司名</label>
+
+								<textbox id="coname" instant="true"
+									value="@bind(vm.coname)" width="80%" onChange="@command('search')"
+									mold="rounded">
+								</textbox>
+							</vlayout>
+						</column>
+					
+						<column>
+							<vlayout>
+								<label>姓名</label>
+
+								<textbox id="emba_name" instant="true"
+									value="@bind(vm.name)" width="80%" onChange="@command('search')"
+									mold="rounded">
+								</textbox>
+							</vlayout>
+						</column>
+						<column>
+
+							<vlayout>
+								<label>身份证</label>
+
+								<textbox id="emba_idcard" instant="true"
+									value="@bind(vm.idcard)" width="80%" onChange="@command('search')"
+									mold="rounded">
+								</textbox>
+							</vlayout>
+						</column>
+
+						<column label="手机号码" align="center" />
+						<column label="邮箱" align="center" />
+						<column label="性别" align="center" />
+						<column label="民族" align="center" />
+						<column label="入职时间" align="center" />
+						<column label="国籍" align="center" />
+						<column label="户口所在地" align="center" />
+						<column label="英文名" align="center" />
+						<column label="客服" align="center" />
+
+						<column>
+							<vlayout>
+								<label>导入人</label>
+
+								<textbox id="addname" instant="true"
+									value="@bind(vm.addname)" width="80%" onChange="@command('search')"
+									mold="rounded">
+								</textbox>
+							</vlayout>
+						</column>
+						
+							<column>
+							<vlayout>
+								<label>状态</label>
+
+								<textbox id="state" instant="true"
+									value="@bind(vm.state)" width="80%" onChange="@command('search')"
+									mold="rounded">
+								</textbox>
+							</vlayout>
+						</column>
+					
+							<column label="备注" align="center" />
+						
+				<column align="center" sort="auto(emsu_addtime)"
+				width="100px">
+				<vlayout>
+					<label>导入时间</label>
+					<datebox id="dbAddtime" width="95%" mold="rounded"
+						format="yyyy-MM-dd"
+						onChange="@command('setAddtime', dbAddtime=dbAddtime)"
+						onOK="@command('setAddtime', dbAddtime=dbAddtime" />
+				</vlayout>
+			</column>
+
+					 
+
+
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+
+							<checkbox
+						disabled="${each.emba_state==0?false:true}"
+						checked="@bind(each.check)" />
+					<label value="@load(each.cid)" />
+					<label value="@load(each.coba_shortname)" />
+					<label value="@load(each.emba_name)" />
+					<label value="@load(each.emba_idcard)" />
+					<label value="@load(each.emba_mobile)" />
+					<label value="@load(each.emba_email)" />
+					<label value="@load(each.emba_sex)" />
+					<label value="@load(each.emba_folk)" />
+					<label value="@load(each.emba_indate)" />
+					<label value="@load(each.emba_nationality)" />
+					<label value="@load(each.emba_hjadd)" />
+					<label value="@load(each.emba_englishname)" />
+					<label value="@load(each.coba_client)" />
+					<label value="@load(each.emba_addname)" />
+					<label value="@load(each.emba_statebatchstr)"
+						style="${each.emba_state==0?'color:red;': 'color:#00F;'}" />
+					<cell align="center">
+						<label
+							style="color:red;white-space: nowrap;text-overflow: ellipsis;overflow: hidden；"
+							value="@load(each.emba_err)" tooltiptext="@load(each.emba_err)"
+							if="${each.emba_err!=null and each.emba_state==0?true:false}" />
+					</cell>
+							<label value="@load(each.emba_addtime)"/>
+							</row>
+						</template>
+					</rows>
+
+
+				</grid>
+
+
+
+			</center>
+
+			<south>
+				<grid width="100%" height="100%">
+					<rows>
+						<row>
+							<cell align="center">
+								<button label="导入系统中"
+									onClick="@command('submit')" />
+							 
+							
+							 
+								<button label="删除临时数据"
+									onClick="@command('delesubmit')" />
+							</cell>
+						</row>
+
+					</rows>
+				</grid>
+
+			</south>
+
+		</borderlayout>
+	</window>
+</zk>

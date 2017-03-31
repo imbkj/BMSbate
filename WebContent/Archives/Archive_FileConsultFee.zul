@@ -1,0 +1,103 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<?component name="docDataList" macro-uri="../DocumentsInfo/DocumentsInfo_UpPageList.zul" inline="true"?>
+<zk>
+	<window title="查借材料——财务结算" border="normal" width="80%" height="80%"
+		closable="true" apply="org.zkoss.bind.BindComposer" id="winfee"
+		viewModel="@id('vm') @init('Controller.Archives.Archive_FileConsultFeeController')">
+		<grid vflex="1">
+			<rows>
+				<row>
+					<cell width="80px">公司简称</cell>
+					<cell>
+						<textbox
+							value="@load(vm.model.coba_shortname)">
+						</textbox>
+					</cell>
+					<cell width="80px">员工姓名</cell>
+					<cell>
+						<textbox value="@load(vm.model.emba_name)"></textbox>
+					</cell>
+				</row>
+				<row>
+					<cell>员工编号</cell>
+					<cell>
+						<textbox value="@load(vm.model.gid)"></textbox>
+					</cell>
+					<cell>身份证号</cell>
+					<cell>
+						<textbox value="@load(vm.model.emba_idcard)"></textbox>
+					</cell>
+				</row>
+				<row>
+					<cell>档案类型</cell>
+					<cell>
+						<textbox
+							value="@load(vm.model.eada_filetype)">
+						</textbox>
+					</cell>
+					<cell>户口挂靠</cell>
+					<cell>
+						<textbox
+							value="${vm.model.eada_colhj==1?'是':'否'}">
+						</textbox>
+					</cell>
+				</row>
+				<row>
+					<cell>结算人</cell>
+					<cell>
+						<textbox id="fname" value="@load(vm.username)"
+							readonly="true">
+						</textbox>
+					</cell>
+					<cell>结算时间</cell>
+					<cell>
+						<datebox id="ftime"></datebox>
+					</cell>
+				</row>
+				<row>
+					<cell>收费情况</cell>
+					<cell colspan="3">
+						<textbox rows="3" width="80%"
+							value="@load(vm.model.eada_arrearageinfo)" readonly="true">
+						</textbox>
+					</cell>
+				</row>
+				<row>
+					<cell>借出材料</cell>
+					<cell colspan="3">
+						<grid>
+							<rows>
+								<row>
+									<cell>
+										<!-- 材料内联页 参数：puzu_id：模块页面id， doc_type：员工(g)还是公司(c)，gid：公司数据则插入空白 ，业务表id ，log_url：获取到页面路径的前部分-->
+										<docDataList id="docGrid"
+											puzu_id="${vm.model.eada_doc}" doc_type="g"
+											gid="${vm.model.gid}" tid="${vm.model.eada_id}"
+											log_url="../DocumentsInfo/" />
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button
+						onClick="@command('summitfee',win=winfee,ftime=ftime.value)">
+						提交
+					</button>
+					<button onClick="@command('addremark',win=winfee)">
+						备注
+					</button>
+					<button onClick="@command('back',win=winfee)">
+						退回
+					</button>
+					<button onClick="@command('emfinace',win=winfee)">
+						个人收款明细
+					</button>
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

@@ -1,0 +1,19 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<div width="100%" height="100%"
+		apply="org.zkoss.bind.BindComposer,Controller.SystemControl.AlarmMainItem_ListController">
+		<tablelayout columns="4" width="100%">
+			<tablechildren forEach="${$composer.getAlmList()}" hflex="1">
+
+				<label style="cursor:pointer;" 
+					tooltiptext="${each.alin_url }" value="${each.alin_name }" />
+				&#160;[
+				<span style="color:red;font-weight:bold;">
+					${each.alli_num }
+				</span>
+				]
+			</tablechildren>
+		</tablelayout>
+
+	</div>
+</zk>

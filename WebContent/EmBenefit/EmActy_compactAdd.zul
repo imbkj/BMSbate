@@ -1,0 +1,78 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window width="100%" height="100%" title="供应商合同 - 新增" id="wcadd"
+		border="normal" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmBenefit.EmActy_compactAddController')"
+		closable="true">
+
+		<grid>
+			<rows>
+				<row>
+					<cell>供应商</cell>
+					<cell>
+						<combobox id="supp" mold="rounded" autodrop="true"
+							value="@bind(vm.eacm.eaco_name)" model="@load(vm.companyList)"
+							onChange="@command('updatecompany',a=self.value,b=self.selectedItem)"
+							instant="true">
+							<template name="model">
+								<comboitem value="@load(each.supp_id)"
+									label="@load(each.supp_name)" />
+							</template>
+						</combobox>
+					</cell>
+					<cell>合同编号</cell>
+					<cell>
+						<combobox mold="rounded" autodrop="true"
+							value="@bind(vm.eacm.eaco_compactid)"
+							model="@load(vm.compactlist)"
+							onChange="@command('updatecompact',a=self.value)"
+							instant="true">
+							<template name="model">
+								<comboitem
+									label="@load(each.eaco_compactid)" />
+							</template>
+						</combobox>
+					</cell>
+				</row>
+				<row>
+					<cell>合同签订时间</cell>
+					<cell>
+						<datebox id="signdate" mold="rounded" />
+					</cell>
+					<cell>合同生效时间</cell>
+					<cell>
+						<datebox id="inuredate" mold="rounded" />
+					</cell>
+				</row>
+				<row>
+					<cell>合同到期日</cell>
+					<cell>
+						<datebox id="stopdate" mold="rounded" />
+					</cell>
+					<cell>是否自动续约</cell>
+					<cell>
+						<combobox mold="rounded"
+							value="@bind(vm.eacm.eaco_auto2)">
+							<comboitem value="1" label="是" />
+							<comboitem value="0" label="否" />
+						</combobox>
+					</cell>
+				</row>
+				<row>
+					<cell>备注</cell>
+					<cell colspan="3">
+						<textbox width="50%" rows="3" mold="rounded"
+							value="@bind(vm.eacm.eaco_remark)" />
+					</cell>
+
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button label="提交" onClick="@command('submit')" />
+				</footer>
+			</foot>
+		</grid>
+
+	</window>
+</zk>

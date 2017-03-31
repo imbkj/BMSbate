@@ -1,0 +1,88 @@
+<?page contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="win" title="预警类型" border="normal" height="100%"
+		width="100%"
+		apply="org.zkoss.bind.BindComposer,Controller.SystemControl.AlarmClass_ManagerController"
+		viewModel="@id('vm') @init('Controller.SystemControl.AlarmClass_ManagerController')">
+		<style src="/css/style.css"></style>
+		<borderlayout hflex="1" vflex="1">
+			<north id="north" collapsible="true" title="高级查询"
+				open="false">
+				<grid>
+					<rows>
+						<row>
+							<cell>预警类型：</cell>
+							<cell>
+								<textbox id="classType" mold="rounded" />
+							</cell>
+							<cell>添加人：</cell>
+							<cell>
+								<combobox id="addname" mold="rounded"
+									 model="@load(vm.addnamelist)">
+								<template name="model">
+									<comboitem
+										label="@load(each.alcl_addname)">
+									</comboitem>
+								</template>
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>状态:</cell>
+							<cell colspan="3">
+								<combobox id="AlarmState" mold="rounded"
+									readonly="true">
+									<comboitem label="全部" value="" />
+									<comboitem label="生效" value="1" />
+									<comboitem label="取消" value="0" />
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell colspan="4" align="center">
+								<button id="btnSearch" label="查询"
+									onClick="@command('SearchList',a=classType,b=addname,c=AlarmState,d=north)">
+								</button>
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</north>
+			<center>
+				<grid model="@load(vm.amlist)" id="gdAlarmClass"
+					emptyMessage="无数据" height="100%" mold="paging">
+					<columns style="height:30px">
+						<column width="40px">序号</column>
+						<column>预警类型</column>
+						<column>状态</column>
+						<column>添加人</column>
+						<column sort="auto(alcl_addtime)">添加时间</column>
+						<column hflex="1" label="操作" align="center" />
+					</columns>
+					<template name="model">
+						<row>
+							<label value="${forEachStatus.index+1 }"></label>
+							<label value="@load(each.alcl_name)"></label>
+							<label value="@load(each.alcl_stateName)"></label>
+							<label value="@load(each.alcl_addname)"></label>
+							<label value="@load(each.alcl_addtime)"></label>
+							<div align="center">
+								<menubar autodrop="true" width="50px"
+									sclass="mymb">
+									<menu
+										image="../images/pencil-small.png">
+										<menupopup>
+											<menuitem label="修改预警类型信息" onClick="@command('updateAlarmClass',id=each.alcl_id)" />
+											<menuseparator/>
+											<menuitem label="预警项目明细" onClick="@command('linkInfo',id=each.alcl_id)" />
+										</menupopup>
+									</menu>
+								</menubar>
+							</div>
+						</row>
+					</template>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

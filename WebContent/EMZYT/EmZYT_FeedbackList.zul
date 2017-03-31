@@ -1,0 +1,270 @@
+<!--
+	创建人：林少斌
+	创建时间：2014-5-4
+	用途：委托单反馈
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<script>
+
+
+		
+		<![CDATA[ zk.afterLoad("zul.db", function () { var _Cwgt = {};
+		zk.override(zul.db.CalendarPop.prototype, _Cwgt, { redraw:
+		function (out) { _Cwgt.redraw.apply(this, arguments);
+		this._customChangeView (); }, open: function (silent) {
+		_Cwgt.open.apply(this, arguments); this._customChangeView (); },
+		_customChangeView: function () { if
+		(jq(this.parent.$n()).hasClass('datebox-year-only')) { var view
+		= this._view; if (view == 'month' || view == 'day')
+		this._setView("year"); } else if
+		(jq(this.parent.$n()).hasClass('datebox-month-only')) { if
+		(this._view == 'day') this._setView("month"); } }, _chooseDate:
+		function (target, val) { var view = this._view; if
+		(jq(this.parent.$n()).hasClass('datebox-month-only') ||
+		jq(this.parent.$n()).hasClass('datebox-year-only')) { var date =
+		this.getTime(), year = (view == 'decade' || view == 'year')? val
+		: date.getFullYear(), month = view == 'month'? val : 0, date =
+		1; this._setTime(year, month, 1); if (view == 'decade') {
+		this._setView("year"); } else if
+		(jq(this.parent.$n()).hasClass('datebox-month-only') && view ==
+		'year') { this._setView("month"); } else if
+		(jq(this.parent.$n()).hasClass('datebox-month-only') && view ==
+		'month' || jq(this.parent.$n()).hasClass('datebox-year-only') &&
+		view == 'year') { this.close(); this.parent.updateChange_(); } }
+		else { _Cwgt._chooseDate.apply(this, arguments); } } }); }); ]]>
+		
+		
+		
+	</script>
+<window title="智翼通接口 -- 反馈页面" border="normal" width="100%"
+		height="100%" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmZYT.EmZYT_FeedbackListController')">
+		<borderlayout vflex="1">
+			<north border="0" title="数据查询" collapsible="true"
+				flex="true" open="false">
+				<panel border="1">
+					<panelchildren style="padding:5px;">
+						<grid width="100%">
+							<rows>
+								<row>
+									<cell>
+										<label value="所属月份" />
+									</cell>
+									<cell>
+										<datebox id="ownmonth"
+											width="90%" sclass="datebox-month-only" format="yyyyMM"
+											value="@load(vm.d_nowmonth)" />
+									</cell>
+									<cell>
+										<label value="委托地区" />
+									</cell>
+									<cell>
+										<combobox id="city" width="90%"
+											model="@load(vm.cityList)" mold="rounded">
+											<template name="model">
+												<comboitem
+													label="@load(each)" />
+											</template>
+										</combobox>
+									</cell>
+									<cell>
+										<label value="委托事件" />
+									</cell>
+									<cell>
+										<combobox id="sclass"
+											width="90%" model="@load(vm.sclassList)" mold="rounded">
+											<template name="model">
+												<comboitem
+													label="@load(each)" />
+											</template>
+										</combobox>
+									</cell>
+									<cell>
+										<label value="反馈状态" />
+									</cell>
+									<cell>
+										<combobox id="state" width="90%"
+											model="@load(vm.stateList)" mold="rounded">
+											<template name="model">
+												<comboitem
+													value="@load(each[0])" label="@load(each[1])" />
+											</template>
+										</combobox>
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<label value="委托单日期范围" />
+									</cell>
+									<cell>
+										<datebox id="uptime_s"
+											width="45%" format="yyyy-MM-dd" />
+										<datebox id="uptime_e"
+											width="45%" format="yyyy-MM-dd" />
+									</cell>
+									<cell>
+										<label value="员工查询" />
+									</cell>
+									<cell>
+										<textbox id="emkey" width="50%"
+											mold="rounded" />
+										<combobox id="emkeytype"
+											width="40%" model="@load(vm.emkeyTypeList)" mold="rounded">
+											<template name="model">
+												<comboitem
+													label="@load(each)" />
+											</template>
+										</combobox>
+									</cell>
+									<cell>
+										<label value="公司查询" />
+									</cell>
+									<cell>
+										<textbox id="cokey" width="90%"
+											mold="rounded" />
+									</cell>
+									<cell>
+										<label value="" />
+									</cell>
+									<cell>
+
+									</cell>
+								</row>
+								<row>
+									<cell align="center" colspan="8">
+										<button label="查询"
+											onClick="@command('search',ownmonth=ownmonth,city=city,sclass=sclass,state=state,uptime_s=uptime_s,uptime_e=uptime_e,emkey=emkey,emkeytype=emkeytype,cokey=cokey)" />
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</panelchildren>
+				</panel>
+			</north>
+			<center>
+				<grid id="dataGrid" width="100%" height="100%"
+					mold="paging" pageSize="200" model="@load(vm.dataList)"
+					emptyMessage="无数据">
+					<columns sizable="true">
+						<column label="所属月份" align="center"
+							sort="auto(ownmonth)" />
+						<column label="公司编号" align="center" />
+						<column label="公司名" align="center"
+							sort="auto(emzt_company)" />
+						<column label="客服" align="center"
+							sort="auto(emzt_client)" />
+						<column label="员工编号" align="center" />
+						<column label="智翼通编号" align="center" />
+						<column label="姓名" align="center" />
+						<column label="事件" align="center"
+							sort="auto(emzt_class)" />
+						<column label="调整类型" align="center" />
+						<column label="委托地" align="center" />
+						<column label="要求项目" align="center" />
+						<column label="实际项目" align="center" />
+						<column label="委托单日期" align="center"
+							sort="auto(emzt_uptime)" />
+						<column label="反馈状态" align="center"
+							sort="auto(state)" />
+						<column label="标识" align="center" />
+						<column align="center">
+							<checkbox
+								onClick="@command('gdallselect',grid=dataGrid,check=self.checked)" />
+						</column>
+						<column label="操作" align="center" width="100px" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<cell>
+									<label value="${each.ownmonth}" />
+								</cell>
+								<cell>
+									<label value="@load(each.cid)"
+										if="${each.cid!=0}" />
+									<label value="" if="${each.cid==0}" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emzt_company)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emzt_client)" />
+								</cell>
+								<cell>
+									<label value="@load(each.gid)"
+										if="${each.gid!=0}" />
+									<label value="" if="${each.gid==0}" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emzt_zgid)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emzt_name)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emzt_class)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emzt_adtype)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emzt_scity)" />
+								</cell>
+								<cell>
+									<label value="" />
+								</cell>
+								<cell>
+									<label value="" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emzt_uptime)" />
+								</cell>
+								<cell>
+									<label value="@load(each.outstate)" />
+								</cell>
+								<cell>
+									<image src="../images/ask.gif" />
+								</cell>
+								<cell align="center">
+									<checkbox value="1" />
+								</cell>
+								<cell>
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</center>
+			<south border="0" title="批量操作" collapsible="true"
+				flex="true" open="false">
+				<panel border="1">
+					<panelchildren style="padding:5px;">
+						<grid width="100%">
+							<rows>
+								<row>
+									<cell align="center">
+										<button label="更新反馈数据"
+											onClick="@command('upData',dataGrid=dataGrid)" />
+										<button label="生成反馈文件"
+											onClick="@command('downfile',dataGrid=dataGrid)" />
+										<button label="已反馈"
+											onClick="@command('feedbackState',state=1,dataGrid=dataGrid)" />
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</panelchildren>
+				</panel>
+			</south>
+		</borderlayout>
+	</window>
+</zk>

@@ -1,0 +1,153 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<?component name="docDataList" macro-uri="../DocumentsInfo/DocumentsInfo_AddPageList.zul" inline="true"?>
+<zk>
+	<window id="win" width="98%" height="100%" title="员工档案 - 档案调入"
+		closable="true" border="normal" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.Archives.Archive_FileImportController')"
+		onCreate="@command('winD',a=self)">
+		<scrollview>
+			<groupbox title="档案信息" height="100%">
+				<grid height="100%" width="100%">
+					<columns>
+						<column width="120px" />
+						<column />
+						<column width="120px" />
+						<column />
+					</columns>
+					<rows>
+						<row>
+							<cell align="center">公司名称:</cell>
+							<cell align="left">
+								<label value="@load(vm.company)"></label>
+							</cell>
+							<cell align="center">姓名:</cell>
+							<cell align="left">
+								<label value="@load(vm.name)"></label>
+							</cell>
+
+						</row>
+						<row>
+							<cell align="center">现存档机构全称:</cell>
+							<cell align="left">
+								<combobox id="setup"
+									value="@bind(vm.fileplace)" mold="rounded"
+									model="@load(vm.setuplist)">
+									<template name="model">
+										<comboitem
+											label="@load(each.ease_name)">
+										</comboitem>
+									</template>
+								</combobox>
+
+							</cell>
+							<cell align="center">身份证:</cell>
+							<cell align="left">
+								<textbox id="idcard" mold="rounded"
+									value="@load(vm.idcard)" />
+							</cell>
+						</row>
+						<row>
+							<cell align="center">户籍性质:</cell>
+							<cell align="left">
+								<combobox id="hj" readonly="true"
+									mold="rounded" value="@bind(vm.hj)">
+									<comboitem label="深户" />
+									<comboitem label="非深户" />
+								</combobox>
+							</cell>
+
+							<cell align="center">存档起始日期:</cell>
+							<cell align="left">
+								<datebox readonly="true"
+									value="@load(vm.sdDate)" id="savefiledate" mold="rounded"
+									constraint="after ${vm.sdDate2 }" />
+							</cell>
+						</row>
+						<row visible="@load(vm.save)">
+							<cell align="center">档案付款性质</cell>
+							<cell>
+								<combobox readonly="true" mold="rounded"
+									value="@bind(vm.rsp)">
+									<comboitem label="公司按月支付" />
+									<comboitem label="服务费中包含" />
+									<comboitem label="公司一次性支付" />
+									<comboitem label="个人付" />
+								</combobox>
+							</cell>
+							<cell align="center">档案发票</cell>
+							<cell>
+								<combobox readonly="true" mold="rounded"
+									value="@bind(vm.rsi)">
+									<comboitem label="政府发票" />
+									<comboitem label="财务确定" />
+									<comboitem label="其他" />
+								</combobox>
+							</cell>
+						</row>
+						<row visible="@load(vm.save)">
+							<cell align="center">户籍付款性质</cell>
+							<cell>
+								<combobox readonly="true" mold="rounded"
+									value="@bind(vm.hjp)">
+									<comboitem label="公司按月支付" />
+									<comboitem label="服务费中包含" />
+									<comboitem label="公司一次性支付" />
+									<comboitem label="个人付" />
+								</combobox>
+							</cell>
+							<cell align="center">户籍发票</cell>
+							<cell>
+								<combobox readonly="true" mold="rounded"
+									value="@bind(vm.hji)">
+									<comboitem label="政府发票" />
+									<comboitem label="财务确定" />
+									<comboitem label="其他" />
+								</combobox>
+							</cell>
+						</row>
+						<row visible="@load(vm.save)">
+							<cell align="center">退回原因</cell>
+							<cell colspan="3">
+								<label value="@bind(vm.backcase)" />
+							</cell>
+						</row>
+						<row>
+							<cell align="center">客服:</cell>
+							<cell align="left" colspan="3">
+								<label value="@load(vm.client)"></label>
+							</cell>
+						</row>
+						<row>
+							<cell align="center">费用结清情况:</cell>
+							<cell align="left" colspan="3">
+								<textbox id="charge" mold="rounded"
+									value="@bind(vm.charge)" rows="5" width="50%" />
+							</cell>
+
+						</row>
+						<row>
+							<cell align="center">备注:</cell>
+							<cell align="left" colspan="3">
+								<textbox id="remark" mold="rounded"
+									value="@bind(vm.remark)" rows="5" width="50%" />
+							</cell>
+
+						</row>
+
+					</rows>
+					<foot>
+						<footer align="center" span="4">
+							<button label="提交"
+								onClick="@command('btnSubmit',win=win,gd=docGrid,a=idcard,b=setup,j=charge,k=remark,l=savefiledate)" />
+						</footer>
+					</foot>
+				</grid>
+				<div visible="false">
+					<docDataList id="docGrid" puzu_id="5"
+						gid="@load(vm.gid)" dWidth="100%" dHeight="100%"
+						pUsername="@load(vm.username)" pUserId="@load(vm.userid)" />
+				</div>
+			</groupbox>
+		</scrollview>
+	</window>
+</zk>

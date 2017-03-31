@@ -1,0 +1,59 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="转正定级新增" border="normal" closable="true" width="80%" height="90%" id="win"
+apply="org.zkoss.bind.BindComposer"
+    viewModel="@id('vm') @init('Controller.Archives.Archive_FilePassController')">
+    <radiogroup id="yorn" onCheck=""/>
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell width="150px">是否需要协助确认转正资格</cell>
+			<cell>
+				<combobox id="ifhelp" value="${vm.models.eada_zg==1?'是':'否' }">
+					<comboitem value="1" label="是"/>
+					<comboitem value="0" label="否"/>
+				</combobox>
+			</cell>
+		</row>
+		<row>
+			<cell>是否代购表格</cell>
+			<cell>
+				<combobox id="ifbuy" value="${vm.models.eada_bf==1?'是':'否' }">
+					<comboitem value="1" label="是"/>
+					<comboitem value="0" label="否"/>
+				</combobox>
+			</cell>
+		</row>
+		<row>
+			<cell>后续事宜是否雇员自行办理</cell>
+			<cell>
+				<combobox id="ifown" value="${vm.models.eada_dms==1?'是':'否' }">
+					<comboitem value="1" label="是"/>
+					<comboitem value="0" label="否"/>
+				</combobox>
+			</cell>
+		</row>
+		<row visible="${vm.models.eada_final=='已退回' }">
+			<cell>退回原因</cell>
+			<cell><textbox rows="3" width="70%" value="@load(vm.models.eada_backcase)"></textbox></cell>
+		</row>
+		<row>
+			<cell>备注</cell>
+			<cell><textbox id="reamak" width="80%" rows="5" value="${am.remarks }"></textbox></cell>
+		</row>
+		<row>
+			<cell>是否待确定</cell>
+			<cell>
+				<hlayout>
+				 <radio id="yes" label="是" value="0" radiogroup="yorn" />
+                 <radio id="no" label="否" value="1" radiogroup="yorn" selected="true"/>
+                 </hlayout>
+			</cell>
+		</row>
+	</rows>
+	<foot>
+		<footer align="center"><button onClick="@command('summitconfirm',ifhelp=ifhelp.selectedItem.value,ifbuy=ifbuy.selectedItem.value,ifown=ifown.selectedItem.value,reamak=reamak.value,yorn=yorn.selectedItem.value,win=win)">提交</button></footer>	
+	</foot>
+</grid>
+</window>
+</zk>

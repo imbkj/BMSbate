@@ -1,0 +1,69 @@
+<!--
+	创建人：林少斌
+	创建时间：2013-12-18
+	用途：算法分配页面
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winEmForUp" title="薪酬管理 -- 员工算法分配页面" border="normal" width="70%"
+		height="60%" closable="true" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmSalary.EmSalary_ForEmAssignController')">
+		<grid width="100%" height="100%">
+			<rows>
+				<row>
+					<cell>
+						<hbox>
+							<label value="员工编号" />
+						</hbox>
+					</cell>
+					<cell>
+						<textbox id="gid" width="70%" mold="rounded" readonly="true" 
+							value="@load(vm.gid)" />
+					</cell>
+					<cell>
+						<hbox>
+							<label value="员工姓名" />
+						</hbox>
+					</cell>
+					<cell>
+						<textbox id="name" width="70%" mold="rounded" readonly="true" 
+							value="@load(vm.name)" />
+					</cell>
+				</row>
+				<row>
+					<cell>
+						<hbox>
+							<label value="公司名称" />
+						</hbox>
+					</cell>
+					<cell>
+						<textbox id="company" width="70%" mold="rounded" readonly="true" 
+							value="@load(vm.company)" />
+					</cell>
+					<cell>
+						<hbox>
+							<label value="算法名称" />
+							<label style="color:red;">*</label>
+						</hbox>
+					</cell>
+					<cell>
+						<combobox id="formula" width="70%"
+								readonly="true" model="@load(vm.formulaList)" autodrop="true"
+								mold="rounded">
+								<template name="model">
+									<comboitem
+										label="@load(each.cfin_name)" value="@load(each.cfin_id)" />
+								</template>
+							</combobox>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button label="提交" id="btSubmit"
+						onClick="@command('submit',w1=winEmForUp,formula=formula)" />
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

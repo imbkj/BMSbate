@@ -1,0 +1,1220 @@
+<?page title="转公司管理" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="转公司管理" border="normal" width="80%" closable="true"
+		height="80%" apply="org.zkoss.bind.BindComposer" id="win"
+		viewModel="@id('vm') @init('Controller.CoLatencyClient.CoLatencyClientChange_Controller')">
+		<scrollview vflex="1" hflex="1">
+			<groupbox mold="3d" open="true" title="基本信息">
+				<grid>
+					<columns>
+						<column width="15%" />
+						<column />
+						<column width="15%" />
+						<column />
+					</columns>
+					<rows>
+						<row>
+							<cell>公司全称</cell>
+							<cell>
+								<hlayout>
+									<textbox id="companyname" width="300px"
+										value="@bind(vm.frommodel.cola_company)" />
+									<label style="color:red;">
+										(*)
+									</label>
+								</hlayout>
+							</cell>
+							<cell>公司简称</cell>
+							<cell>
+								<hlayout>
+									<textbox id="shortname"
+										value="@bind(vm.cmodel.coba_shortname)" />
+									<label style="color:red;">
+										(*)
+									</label>
+								</hlayout>
+							</cell>
+						</row>
+						<row>
+							<cell>英文名称</cell>
+							<cell>
+								<textbox id="enname"
+									value="@bind(vm.cmodel.coba_englishname)" />
+							</cell>
+							<cell>客户来源</cell>
+							<cell>
+								<combobox id="clientsource"
+									value="@bind(vm.frommodel.cola_clientsource)">
+									<comboitem label="" />
+									<comboitem label="主动开发" />
+									<comboitem label="来电来访咨询" />
+									<comboitem label="客户及雇员介绍" />
+									<comboitem label="中智介绍" />
+									<comboitem label="合作伙伴介绍" />
+									<comboitem label="客户业务开拓" />
+									<comboitem label="中智注册" />
+									<comboitem label="公司系统介绍" />
+									<comboitem label="老客户变更" />
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>客户规模</cell>
+							<cell>
+								<combobox id="clientsize"
+									value="@bind(vm.frommodel.cola_clientsize)">
+									<comboitem label="" />
+									<comboitem label="小型(20人以下)" />
+									<comboitem label="中型(20-50人)" />
+									<comboitem label="大型(50人以上)" />
+								</combobox>
+							</cell>
+							<cell>所属行业</cell>
+							<cell>
+								<combobox id="trade"
+									value="@bind(vm.frommodel.cola_trade)"
+									model="@load(vm.tradelist)">
+									<template name="model">
+										<comboitem
+											label="@load(each.name)" />
+									</template>
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>客户类型</cell>
+							<cell>
+								<hlayout>
+									<combobox id="clientstyle"
+										value="@bind(vm.frommodel.cola_companytype)">
+										<comboitem label="" />
+										<comboitem label="公司" />
+										<comboitem label="分公司" />
+										<comboitem label="代表处" />
+										<comboitem label="办事处" />
+									</combobox>
+									<label style="color:red;">
+										(*)
+									</label>
+								</hlayout>
+							</cell>
+							<cell>客户企业性质</cell>
+							<cell>
+								<hlayout>
+									<combobox id="kind" readonly="true"
+										value="@bind(vm.frommodel.cola_kind)">
+										<comboitem label="" />
+										<comboitem label="央企或下属企业" />
+										<comboitem label="国企" />
+										<comboitem label="股份制企业" />
+										<comboitem label="民企" />
+										<comboitem label="外企" />
+										<comboitem label="中外合资或合作企业" />
+										<comboitem label="事业单位" />
+										<comboitem label="其他性质" />
+									</combobox>
+									<label style="color:red;">
+										(*)
+									</label>
+								</hlayout>
+							</cell>
+						</row>
+						<row>
+							<cell>所在区域</cell>
+							<cell>
+								<hlayout>
+									<combobox id="ClientArea"
+										value="@bind(vm.frommodel.cola_clientarea)">
+										<comboitem label="" />
+										<comboitem label="罗湖区" />
+										<comboitem label="福田区" />
+										<comboitem label="南山区" />
+										<comboitem label="龙岗区" />
+										<comboitem label="盐田区" />
+										<comboitem label="宝安区" />
+										<comboitem label="光明新区" />
+										<comboitem label="坪山区" />
+										<comboitem label="外地" />
+									</combobox>
+									<label style="color:red;">
+										(*)
+									</label>
+								</hlayout>
+							</cell>
+							<cell>是否签订反贿赂协议</cell>
+							<cell>
+								<hlayout>
+									<combobox id="bribery"
+										value="@bind(vm.frommodel.coba_ifhasbribery)">
+										<comboitem label="" />
+										<comboitem label="是" />
+										<comboitem label="否" />
+									</combobox>
+									<label style="color:red;">
+										(*)
+									</label>
+								</hlayout>
+							</cell>
+						</row>
+						<row>
+							<cell>注册资金</cell>
+							<cell>
+								<textbox id="registermoney"
+									value="@bind(vm.cmodel.coba_reg_fund)" />
+								<label style="color:red;">
+									(单位：万元；币种：人民币)
+								</label>
+							</cell>
+							<cell>国内注册</cell>
+							<cell>
+								<combobox id="ifsign" readonly="true"
+									value="@bind(vm.sign)">
+									<comboitem label="" value="-1" />
+									<comboitem label="是" value="1" />
+									<comboitem label="否" value="0" />
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>法定代表人</cell>
+							<cell colspan="3">
+								<textbox id="commanager"
+									value="@bind(vm.cmodel.coba_companymanager)" />
+							</cell>
+						</row>
+						<row>
+							<cell>代表人地址</cell>
+							<cell colspan="3">
+								<textbox width="90%" id="manageraddress"
+									value="@bind(vm.cmodel.coba_manageraddress)" />
+							</cell>
+						</row>
+						<row>
+							<cell>注册地址</cell>
+							<cell colspan="3">
+								<textbox id="registeaddress" width="90%"
+									value="@bind(vm.cmodel.coba_address)" />
+							</cell>
+						</row>
+						<row>
+							<cell>发票寄送地址</cell>
+							<cell colspan="3">
+								<textbox width="90%" id="invoiceaddress"
+									value="@bind(vm.cmodel.coba_invoiceaddress)" />
+							</cell>
+						</row>
+						<row visible="false">
+							<cell>客服代表</cell>
+							<cell>
+								<hlayout>
+									<combobox id="clientdb"
+										readonly="true" model="@load(vm.loginlist)">
+										<template name="model">
+											<comboitem label="${each}" />
+										</template>
+									</combobox>
+									<label style="color:red;">
+										(*)
+									</label>
+								</hlayout>
+							</cell>
+							<cell>客服经理</cell>
+							<cell>
+								<hlayout>
+									<combobox id="clientmanager"
+										readonly="true" model="@load(vm.loginlist)">
+										<template name="model">
+											<comboitem label="${each}" />
+										</template>
+									</combobox>
+									<label style="color:red;">
+										(*)
+									</label>
+								</hlayout>
+							</cell>
+						</row>
+						<row>
+							<cell>部门经理</cell>
+							<cell colspan="3">
+								<hlayout>
+									<combobox id="deptmanager"
+										readonly="true" model="@load(vm.managerlist)"
+										value="@bind(vm.cmodel.coba_manager)">
+										<template name="model">
+											<comboitem label="${each}" />
+										</template>
+									</combobox>
+									<label style="color:red;">
+										(*)
+									</label>
+								</hlayout>
+							</cell>
+						</row>
+						<row>
+							<cell>备注</cell>
+							<cell colspan="3">
+								<textbox rows="4" id="remark"
+									width="90%" value="@bind(vm.cmodel.coba_remark)" />
+							</cell>
+						</row>
+						<row>
+							<cell >发票抬头</cell>
+							<cell colspan="3">
+								<hlayout >
+									<textbox id="cfva_title" width="300px" 
+										value="@bind(vm.coFinanceVATModel.cfva_title)" />
+									<label style="color:red;">
+										(*)
+									</label>
+								</hlayout>
+							</cell>						
+						</row>
+						<row>
+							<cell>增值税一般纳税人</cell>
+							<cell>
+								<hlayout>
+									<combobox id="cfva_taxpayers" onChange="@command('modInvoice')"
+										value="@bind(vm.coFinanceVATModel.cfva_taxpayers)">
+										<comboitem label="" />
+										<comboitem label="是" />
+										<comboitem label="否" />
+									</combobox>
+								</hlayout>
+							</cell>
+							<cell>发票类型</cell>
+							<cell>
+								<checkbox label="专票" disabled="@load(vm.only)"
+									checked="@bind(vm.coFinanceVATModel.cfva_only)" />
+								<checkbox label="普票" disabled="@load(vm.simple)"
+									checked="@bind(vm.coFinanceVATModel.cfva_simple)" />
+							</cell>
+						</row>
+						<row>
+							<cell >纳税人识别号（开票用编码）</cell>
+							<cell >
+								<hlayout>
+									<textbox id="cfva_number1"
+										value="@bind(vm.coFinanceVATModel.cfva_number1)" />
+								</hlayout>
+							</cell>
+							<cell >电话</cell>
+							<cell>
+								<hlayout>
+									<textbox id="cfva_tel"
+										value="@bind(vm.coFinanceVATModel.cfva_tel)" />
+								</hlayout>
+							</cell>
+							<!--  
+								<cell width="60px">三证合一号</cell>
+								<cell>
+								<hlayout>
+								<textbox id="cfva_number2"
+								value="@bind(vm.coFinanceVATModel.cfva_number2)" />
+								</hlayout>
+								</cell>
+							-->
+						</row>
+						<row>
+							<cell >银行账号</cell>
+							<cell>
+								<hlayout>
+									<textbox width="100%"
+										id="cfva_bank_acc"
+										value="@bind(vm.coFinanceVATModel.cfva_bank_acc)" />
+								</hlayout>
+							</cell>
+							<cell>开户银行名称</cell>
+							<cell>
+								<hlayout>
+									<textbox width="100%" id="cfva_bank"
+										value="@bind(vm.coFinanceVATModel.cfva_bank)" />
+								</hlayout>
+							</cell>
+						</row>
+						<row>
+							<cell>发票联系人</cell>
+							<cell>
+								<hlayout>
+									<textbox width="100%"
+										id="cfva_contact"
+										value="@bind(vm.coFinanceVATModel.cfva_contact)" />
+									<label style="color:red;">
+										(*)
+									</label>
+								</hlayout>
+							</cell>
+							<cell>发票联系人电话</cell>
+							<cell>
+								<hlayout>
+									<textbox width="100%"
+										id="cfva_contact_tel"
+										value="@bind(vm.coFinanceVATModel.cfva_contact_tel)" />
+									<label style="color:red;">
+										(*)
+									</label>
+								</hlayout>
+							</cell>
+						</row>
+						<row>
+							<cell>发票接收地址</cell>
+							<cell colspan="3">
+								<hlayout>
+									<textbox width="300px"
+										id="cfva_vat_add"
+										value="@bind(vm.coFinanceVATModel.cfva_vat_add)" />
+									<label style="color:red;">
+										(*)
+									</label>
+								</hlayout>
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox mold="3d" open="true" title="人事服务要求">
+				<grid>
+					<rows>
+						<row>
+							<cell width="160px">发票寄送时间</cell>
+							<cell colspan="3">
+								<combobox model="@load(vm.datelistt)"
+									value="@bind(vm.servicemodel.isenddate)" readonly="true"
+									id="senddate">
+									<template name="model">
+										<comboitem label="@load(each)" />
+									</template>
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell width="160px">社会保险缴纳</cell>
+							<cell>
+								<combobox readonly="true"
+									value="@bind(vm.servicemodel.sbtype)" id="sbtype">
+									<comboitem label="非深户一档医保"
+										value="1" />
+									<comboitem label="非深户二档医保"
+										value="2" />
+									<comboitem label="委托外地缴纳" value="3" />
+								</combobox>
+							</cell>
+							<cell width="80px">社保备注</cell>
+							<cell>
+								<textbox width="80%"
+									value="@bind(vm.servicemodel.csqe_sbtype_remark)">
+								</textbox>
+							</cell>
+						</row>
+						<row>
+							<cell width="160px">住房公积金缴纳</cell>
+							<cell>
+								<combobox
+									value="@bind(vm.servicemodel.csqe_house)" readonly="true"
+									id="csqe_house">
+									<comboitem label="有" />
+									<comboitem label="无" />
+								</combobox>
+							</cell>
+							<cell>公积金备注</cell>
+							<cell>
+								<textbox width="80%"
+									value="@bind(vm.servicemodel.csqe_house_remark)">
+								</textbox>
+							</cell>
+						</row>
+						<row>
+							<cell>劳动就业登记手续办理</cell>
+							<cell>
+								<combobox
+									value="@bind(vm.servicemodel.csqe_regist)" readonly="true">
+									<comboitem label="有" />
+									<comboitem label="无" />
+								</combobox>
+							</cell>
+							<cell>备注</cell>
+							<cell>
+								<textbox width="80%"
+									value="@bind(vm.servicemodel.csqe_regist_remark)">
+								</textbox>
+							</cell>
+						</row>
+						<row>
+							<cell>各种证件的办理和费用收取</cell>
+							<cell>
+								<combobox
+									value="@bind(vm.servicemodel.cardpay)" readonly="true"
+									id="cardpay">
+									<comboitem label="个人付" value="1" />
+									<comboitem label="随付款" value="2" />
+									<comboitem label="公司付" value="3" />
+								</combobox>
+							</cell>
+							<cell>备注</cell>
+							<cell>
+								<textbox width="80%"
+									value="@bind(vm.servicemodel.csqe_cardpay_remark)">
+								</textbox>
+							</cell>
+						</row>
+						<row>
+							<cell>上门服务</cell>
+							<cell>
+								<combobox
+									value="@bind(vm.servicemodel.dtdservice)" readonly="true"
+									id="dtdservice">
+									<comboitem label="有" value="1" />
+									<comboitem label="无" value="0" />
+								</combobox>
+							</cell>
+							<cell>备注</cell>
+							<cell>
+								<textbox width="80%"
+									value="@bind(vm.servicemodel.csqe_dtdservice_remark)">
+								</textbox>
+							</cell>
+						</row>
+						<row>
+							<cell>委托外地</cell>
+							<cell>
+								<combobox
+									value="@bind(vm.servicemodel.wt)" readonly="true" id="wt">
+									<comboitem label="有" value="1" />
+									<comboitem label="无" value="2" />
+								</combobox>
+							</cell>
+							<cell>备注</cell>
+							<cell>
+								<textbox width="80%"
+									value="@bind(vm.servicemodel.csqe_wt_remark)">
+								</textbox>
+							</cell>
+						</row>
+						<row>
+							<cell>外籍人服务</cell>
+							<cell>
+								<combobox
+									value="@bind(vm.servicemodel.fservice)" readonly="true"
+									id="fservice">
+									<comboitem label="有" value="1" />
+									<comboitem label="无" value="0" />
+								</combobox>
+							</cell>
+							<cell>备注</cell>
+							<cell>
+								<textbox width="80%"
+									value="@bind(vm.servicemodel.csqe_fservice_remark)">
+								</textbox>
+							</cell>
+						</row>
+						<row>
+							<cell>每月付款时间</cell>
+							<cell>
+								<combobox model="@load(vm.datelistt)"
+									value="@bind(vm.servicemodel.emfi_backdate)" readonly="true"
+									id="emfi_backdate">
+									<template name="model">
+										<comboitem label="@load(each)" />
+									</template>
+								</combobox>
+							</cell>
+
+							<cell>付款通知发放时间</cell>
+							<cell>
+								<combobox model="@load(vm.datelistt)"
+									value="@bind(vm.servicemodel.coba_emfi_senddatestr)"
+									readonly="true" id="coba_emfi_senddate">
+									<template name="model">
+										<comboitem label="@load(each)" />
+									</template>
+								</combobox>
+							</cell>
+						</row>
+
+						<row>
+							<cell>其他</cell>
+							<cell colspan="3">
+								<textbox width="80%"
+									value="@bind(vm.servicemodel.csqe_other)">
+								</textbox>
+							</cell>
+						</row>
+
+						<row>
+							<cell>服务中需注意的事项</cell>
+							<cell colspan="3">
+								<textbox width="80%" rows="2"
+									value="@bind(vm.servicemodel.csqe_ispa)">
+								</textbox>
+							</cell>
+						</row>
+						<row>
+							<cell>工作中曾需解决过的事情</cell>
+							<cell colspan="3">
+								<textbox width="80%" rows="2"
+									value="@bind(vm.servicemodel.csqe_ws)">
+								</textbox>
+							</cell>
+						</row>
+						<row>
+							<cell>待办事宜</cell>
+							<cell colspan="3">
+								<textbox width="80%" rows="2"
+									value="@bind(vm.servicemodel.csqe_todo)">
+								</textbox>
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+
+			<groupbox mold="3d" open="true" title="薪酬服务要求">
+				<groupbox open="true" title="薪酬计算事项">
+					<grid>
+						<rows>
+							<row>
+								<cell width="130px">首月服务人数</cell>
+								<cell>
+									<hlayout>
+										<intbox
+											value="@bind(vm.servicemodel.csqe_firstmonthservernumber)">
+										</intbox>
+										<label style="color:red;"
+											visible="@load(vm.cs)">
+											(*)
+										</label>
+									</hlayout>
+								</cell>
+								<cell width="110px">预计达到人数</cell>
+								<cell>
+									<intbox
+										value="@bind(vm.servicemodel.csqe_forecastservernumber)">
+									</intbox>
+								</cell>
+							</row>
+							<row>
+								<cell width="130px">工资个税付款日</cell>
+								<cell>
+									<hlayout>
+										<combobox id="gzfkd"
+											model="@load(vm.datelistt)"
+											value="@bind(vm.servicemodel.emfics_backdate)"
+											readonly="true">
+											<template name="model">
+												<comboitem
+													label="@load(each)" />
+											</template>
+										</combobox>
+										<label style="color:red;"
+											visible="@load(vm.cs)">
+											(*)
+										</label>
+									</hlayout>
+								</cell>
+								<cell width="110px">工资发放时间约定</cell>
+								<cell>
+									<hlayout>
+										<combobox
+											model="@load(vm.datelistt)" id="paydate"
+											value="@bind(vm.servicemodel.paydate)" readonly="true">
+											<template name="model">
+												<comboitem
+													label="@load(each)" />
+											</template>
+										</combobox>
+										<label style="color:red;"
+											visible="@load(vm.cs)">
+											(*)
+										</label>
+									</hlayout>
+								</cell>
+							</row>
+							<row>
+								<cell width="130px">工资确认截止日</cell>
+								<cell>
+									<hlayout>
+										<combobox
+											model="@load(vm.datelistt)"
+											value="@bind(vm.servicemodel.csqe_salaryconfirmenddate)"
+											readonly="true">
+											<template name="model">
+												<comboitem
+													label="@load(each)" />
+											</template>
+										</combobox>
+										<label style="color:red;"
+											visible="@load(vm.cs)">
+											(*)
+										</label>
+									</hlayout>
+								</cell>
+								<cell width="110px">薪酬付款通知发放时间：</cell>
+								<cell>
+									<combobox
+										model="@load(vm.datelistt)" id="fktzffsj"
+										value="@bind(vm.servicemodel.coba_fktzffsjstr)"
+										readonly="true">
+										<template name="model">
+											<comboitem
+												label="@load(each)" />
+										</template>
+									</combobox>
+								</cell>
+							</row>
+							<row>
+								<cell>社保公积金扣缴约定</cell>
+								<cell>
+									<hlayout>
+										<combobox
+											value="@bind(vm.servicemodel.csqe_sbhousetype)"
+											readonly="true">
+											<comboitem label="客服提供明细扣缴" />
+											<comboitem label="客户提供明细扣缴" />
+											<comboitem
+												label="无扣缴社保公积金服务" />
+										</combobox>
+										<label style="color:red;"
+											visible="@load(vm.cs)">
+											(*)
+										</label>
+									</hlayout>
+								</cell>
+								<cell>备注</cell>
+								<cell>
+									<textbox width="80%"
+										value="@bind(vm.servicemodel.csqe_sbhouse_remark)">
+									</textbox>
+								</cell>
+							</row>
+							<row>
+								<cell>社保公积金转账约定</cell>
+								<cell>
+									<combobox
+										value="@bind(vm.servicemodel.csqe_sbhouse_trans)"
+										readonly="true">
+										<comboitem
+											label="客户独立户扣社保无需我司代转" />
+										<comboitem
+											label="客户独立户扣社保需要我司代转" />
+										<comboitem label="中智大户扣缴" />
+										<comboitem label="无社保公积金服务" />
+									</combobox>
+								</cell>
+								<cell>备注</cell>
+								<cell>
+									<textbox width="80%"
+										value="@bind(vm.servicemodel.csqe_sbhouse_trans_renark)">
+									</textbox>
+								</cell>
+							</row>
+							<row>
+								<cell>公积金是否有超标员工</cell>
+								<cell>
+									<combobox
+										value="@bind(vm.servicemodel.houseover)" readonly="true"
+										id="houseover">
+										<comboitem label="有" value="1" />
+										<comboitem label="无" value="0" />
+										<comboitem label="不确定"
+											value="2" />
+									</combobox>
+								</cell>
+								<cell>备注</cell>
+								<cell>
+									<textbox width="80%"
+										value="@bind(vm.servicemodel.csqe_houseover_remark)">
+									</textbox>
+								</cell>
+							</row>
+							<row>
+								<cell>考勤计算约定</cell>
+								<cell>
+									<hlayout>
+										<combobox
+											value="@bind(vm.servicemodel.actype)" readonly="true"
+											id="actype">
+											<comboitem label="需要计算考勤"
+												value="1" />
+											<comboitem label="无需计算考勤"
+												value="2" />
+											<comboitem label="审核客户计算"
+												value="3" />
+										</combobox>
+										<label style="color:red;"
+											visible="@load(vm.cs)">
+											(*)
+										</label>
+									</hlayout>
+								</cell>
+								<cell>备注</cell>
+								<cell>
+									<textbox width="80%"
+										value="@bind(vm.servicemodel.csqe_actype_remark)">
+									</textbox>
+								</cell>
+							</row>
+							<row>
+								<cell>报表汇总约定</cell>
+								<cell>
+									<combobox
+										value="@bind(vm.servicemodel.report)" readonly="true"
+										id="report">
+										<comboitem label="需要按部门汇总"
+											value="1" />
+										<comboitem label="不需要"
+											value="2" />
+										<comboitem label="不确定"
+											value="3" />
+										<comboitem label="需要特殊报表"
+											value="4" />
+									</combobox>
+								</cell>
+								<cell>备注</cell>
+								<cell>
+									<textbox width="80%"
+										value="@bind(vm.servicemodel.csqe_report_remark)">
+									</textbox>
+								</cell>
+							</row>
+						</rows>
+					</grid>
+				</groupbox>
+				<groupbox open="true" title="个税计算事项">
+					<grid>
+						<rows>
+							<row>
+								<cell width="120px">个税计算约定</cell>
+								<cell>
+									<hlayout>
+										<combobox
+											value="@bind(vm.servicemodel.taxctype)" readonly="true"
+											id="taxctype">
+											<comboitem label="我司计算明细扣缴"
+												value="1" />
+											<comboitem label="客户提供明细扣缴"
+												value="2" />
+											<comboitem label="仅发放税后金额"
+												value="3" />
+										</combobox>
+										<label style="color:red;"
+											visible="@load(vm.cs)">
+											(*)
+										</label>
+									</hlayout>
+								</cell>
+								<cell width="120px">备注</cell>
+								<cell>
+									<textbox width="80%"
+										value="@bind(vm.servicemodel.csqe_taxctype_remark)">
+									</textbox>
+								</cell>
+							</row>
+							<row>
+								<cell width="120px">个税申报约定</cell>
+								<cell>
+									<hlayout>
+										<combobox
+											value="@bind(vm.servicemodel.taxdetype)" readonly="true"
+											id="taxdetype">
+											<comboitem label="委托我司大户申报"
+												value="1" />
+											<comboitem
+												label="委托我司客户独立户申报" value="2" />
+											<comboitem label="不委托"
+												value="3" />
+										</combobox>
+										<label style="color:red;"
+											visible="@load(vm.cs)">
+											(*)
+										</label>
+									</hlayout>
+								</cell>
+								<cell>备注</cell>
+								<cell>
+									<textbox width="80%"
+										value="@bind(vm.servicemodel.csqe_taxdetype_remark)">
+									</textbox>
+								</cell>
+							</row>
+							<row>
+								<cell>个税转账约定</cell>
+								<cell>
+									<hlayout>
+										<combobox
+											value="@bind(vm.servicemodel.taxpay)" readonly="true"
+											id="taxpay">
+											<comboitem
+												label="客户独立户扣个税无需我司代转" value="1" />
+											<comboitem
+												label="客户独立户扣个税需要我司代转" value="2" />
+											<comboitem label="中智大户扣缴"
+												value="3" />
+											<comboitem label="无个税服务"
+												value="4" />
+										</combobox>
+										<label style="color:red;"
+											visible="@load(vm.cs)">
+											(*)
+										</label>
+									</hlayout>
+								</cell>
+								<cell>备注</cell>
+								<cell>
+									<textbox width="80%"
+										value="@bind(vm.servicemodel.csqe_taxpay_remark)">
+									</textbox>
+								</cell>
+							</row>
+							<row>
+								<cell>委托外地申报约定</cell>
+								<cell>
+									<hlayout>
+										<combobox
+											value="@bind(vm.servicemodel.taxwt)" readonly="true"
+											id="taxwt">
+											<comboitem label="有"
+												value="1" />
+											<comboitem label="无"
+												value="0" />
+											<comboitem label="不确定"
+												value="3" />
+										</combobox>
+										<label style="color:red;"
+											visible="@load(vm.cs)">
+											(*)
+										</label>
+									</hlayout>
+								</cell>
+								<cell width="120px">委托地</cell>
+								<cell>
+									<textbox width="80%"
+										value="@bind(vm.servicemodel.csqe_taxwt_place)">
+									</textbox>
+								</cell>
+							</row>
+							<row>
+								<cell>个税申报时间</cell>
+								<cell colspan="3">
+									<hlayout>
+										<combobox
+											value="@bind(vm.servicemodel.taxde_date)" readonly="true"
+											id="taxde_date">
+											<comboitem label="工资发放当月申报"
+												value="1" />
+											<comboitem label="工资发放次月申报"
+												value="2" />
+										</combobox>
+										<label style="color:red;"
+											visible="@load(vm.cs)">
+											(*)
+										</label>
+									</hlayout>
+								</cell>
+							</row>
+						</rows>
+					</grid>
+				</groupbox>
+				<groupbox open="true" title="工资单事项">
+					<grid>
+						<rows>
+							<row>
+								<cell width="120px">工资单形式</cell>
+								<cell colspan="3">
+									<hlayout>
+										<combobox
+											value="@bind(vm.cosalarysetm.coss_payrollpapertype)"
+											readonly="true" id="gzpayroll_type"
+											onChange="@command('setvisble',grid1=mf,grid2=emailgz,comb=self)">
+											<comboitem label="无需工资单"
+												value="1" />
+											<comboitem label="E-mail工资单"
+												value="2" />
+											<comboitem label="密封工资单"
+												value="3" />
+											<comboitem label="网上中智工资单"
+												value="4" />
+										</combobox>
+										<label style="color:red;"
+											visible="@load(vm.cs)">
+											(*)
+										</label>
+									</hlayout>
+								</cell>
+							</row>
+						</rows>
+					</grid>
+					<grid id="mf" visible="false">
+						<rows>
+							<row>
+								<cell width="150px">密封工资单发送时间约定</cell>
+								<cell>
+									<combobox id="mfgzd"
+										model="@load(vm.datelistt)"
+										value="@bind(vm.cosalarysetm.coss_mfdatestr)"
+										readonly="true">
+										<template name="model">
+											<comboitem
+												label="@load(each)" />
+										</template>
+									</combobox>
+								</cell>
+								<cell>密封工资单交接人</cell>
+								<cell>
+									<textbox
+										value="@bind(vm.cosalarysetm.coss_mfname)">
+									</textbox>
+								</cell>
+								<cell>密封工资单是否需要底单</cell>
+								<cell>
+									<combobox
+										value="@bind(vm.cosalarysetm.coss_ifmfddstr)" readonly="true"
+										id="gzpayroll_b">
+										<comboitem label="" value="0" />
+										<comboitem label="是" value="1" />
+										<comboitem label="否" value="0" />
+									</combobox>
+								</cell>
+							</row>
+						</rows>
+					</grid>
+
+					<grid id="emailgz" visible="false">
+						<rows>
+							<row>
+								<cell width="150px">Email工资单发送时间</cell>
+								<cell colspan="2">
+
+									<combobox id="emailpaydate"
+										model="@load(vm.datelistt)"
+										value="@bind(vm.cosalarysetm.coss_emailsenddatestr)"
+										readonly="true">
+										<template name="model">
+											<comboitem
+												label="@load(each)" />
+										</template>
+									</combobox>
+								</cell>
+								<cell width="150px">Email工资单格式</cell>
+								<cell colspan="2">
+									<combobox id="gzdgs"
+										value="@bind(vm.cosalarysetm.coss_emailtype)"
+										readonly="true">
+
+										<comboitem label="Text" />
+										<comboitem label="Html" />
+										<comboitem label="附件pdf" />
+										<comboitem label="附件excel" />
+
+									</combobox>
+								</cell>
+							</row>
+							<row>
+								<cell>Email工资单暗送人</cell>
+								<cell>
+									<textbox
+										value="@bind(vm.cosalarysetm.coss_emailas)">
+									</textbox>
+								</cell>
+								<cell>Email工资单抄送人</cell>
+								<cell>
+									<textbox
+										value="@bind(vm.cosalarysetm.coss_emailcs)">
+									</textbox>
+								</cell>
+								<cell>Email工资单是否自动发送</cell>
+								<cell>
+									<combobox
+										value="@bind(vm.cosalarysetm.coss_emailoutostr)"
+										readonly="true" id="zdfs">
+										<comboitem label="" value="0" />
+										<comboitem label="是" value="1" />
+										<comboitem label="否" value="0" />
+									</combobox>
+								</cell>
+
+							</row>
+						</rows>
+					</grid>
+
+				</groupbox>
+			</groupbox>
+			<groupbox mold="3d" open="true" title="联系人信息">
+				<grid>
+					<rows>
+						<row>
+							<cell style="color:#666;">
+								<hlayout>
+									联系人个数：
+									<label id="lbLinkmanNum"
+										value="@load(vm.linkmanNum)" />
+
+								</hlayout>
+							</cell>
+							<cell colspan="5">
+								<hlayout valign="middle">
+									<button label="新增联系人"
+										onClick="@command('addLinkman')" />
+									<label style="color:#666;"
+										value="（转成功客户，必须填写至少一个联系人以及联系电话。）" />
+								</hlayout>
+							</cell>
+						</row>
+						<row>
+							<cell colspan="6">
+								<grid id="gdLinkman"
+									model="@load(vm.linkmanList)"
+									emptyMessage="暂时没有联系人信息，请务必添加至少一个联系人以及联系电话。">
+									<rows>
+										<template name="model">
+											<row>
+												<grid>
+													<rows>
+														<row>
+															<cell
+																rowspan="6" width="10%" align="left">
+																<vlayout>
+																	<hlayout>
+																		联系人
+																		<label
+																			value="${forEachStatus.index + 1}" />
+																	</hlayout>
+																	<label
+																		value="@load(each.lbValue)"
+																		style="@load(each.lbStyle)" />
+																</vlayout>
+															</cell>
+															<cell
+																width="10%" style="color:red;" align="left">
+																联系人姓名：
+															</cell>
+															<cell
+																colspan="3" align="left">
+																<textbox
+																	value="@bind(each.cali_name)" mold="rounded" />
+															</cell>
+														</row>
+														<row>
+															<cell
+																align="left" width="10%">
+																职位：
+															</cell>
+															<cell
+																align="left">
+																<textbox
+																	value="@bind(each.cali_job)" mold="rounded" />
+															</cell>
+															<cell
+																align="left" width="10%">
+																职责：
+															</cell>
+															<cell
+																align="left">
+																<textbox
+																	value="@bind(each.cali_duty)" mold="rounded" />
+															</cell>
+														</row>
+														<row>
+															<cell
+																align="left" width="10%">
+																电话号码1：
+															</cell>
+															<cell
+																align="left">
+																<textbox
+																	value="@bind(each.cali_tel)" mold="rounded"
+																	width="50%" />
+															</cell>
+															<cell
+																align="left" width="10%">
+																电话号码2：
+															</cell>
+															<cell
+																align="left">
+																<textbox
+																	value="@bind(each.cali_tel1)" mold="rounded"
+																	width="70%" />
+															</cell>
+														</row>
+														<row>
+															<cell
+																align="left" width="10%">
+																手机号码：
+															</cell>
+															<cell
+																align="left">
+																<textbox
+																	value="@bind(each.cali_mobile)" mold="rounded"
+																	width="50%" />
+															</cell>
+															<cell
+																align="left" width="10%">
+																传真：
+															</cell>
+															<cell
+																align="left">
+																<textbox
+																	value="@bind(each.cali_fax)" mold="rounded"
+																	width="70%" />
+															</cell>
+														</row>
+														<row>
+															<cell
+																align="left" style="color:red;" width="10%">
+																电子邮箱1：
+															</cell>
+															<cell
+																align="left">
+																<textbox
+																	value="@bind(each.cali_email)" mold="rounded"
+																	width="50%" />
+															</cell>
+															<cell
+																align="left" width="10%">
+																电子邮箱2：
+															</cell>
+															<cell
+																align="left">
+																<textbox
+																	value="@bind(each.cali_email1)" mold="rounded"
+																	width="70%" />
+															</cell>
+														</row>
+														<row>
+															<cell
+																align="left" width="10%">
+																备注：
+															</cell>
+															<cell
+																align="left" colspan="2">
+																<textbox
+																	value="@bind(each.cali_remark)" mold="rounded" rows="3"
+																	width="70%" />
+															</cell>
+															<cell
+																align="left">
+																<a
+																	onClick="@command('delLinkman',m=each)"
+																	label="@load(each.lbType lt 0?'恢复':'删除')" />
+															</cell>
+														</row>
+
+													</rows>
+												</grid>
+											</row>
+										</template>
+									</rows>
+								</grid>
+
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<div align="center">
+				<button id="changeclient"
+					onClick="@command('changeclient',win=win,ifsign=ifsign)">
+					提交
+				</button>
+			</div>
+		</scrollview>
+	</window>
+</zk>

@@ -1,0 +1,83 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="条件审核更新" border="normal" width="60%" height="60%"
+		closable="true" id="dhwin" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmCensus.EmDh.EmDh_LxConditionAuditController')">
+		<grid vflex="1">
+			<rows>
+				<row>
+					<cell width="100px">公司编号</cell>
+					<cell>
+						<label value="@load(vm.dhmodel.cid)"></label>
+					</cell>
+					<cell width="100px">公司名称</cell>
+					<cell>
+						<label
+							value="@load(vm.dhmodel.coba_shortname)">
+						</label>
+					</cell>
+				</row>
+				<row>
+					<cell>员工姓名</cell>
+					<cell>
+						<label value="@load(vm.dhmodel.emdh_name)"></label>
+					</cell>
+					<cell>身份证号码</cell>
+					<cell>
+						<label value="@load(vm.dhmodel.emdh_idcard)"></label>
+					</cell>
+				</row>
+				<row>
+					<cell>当前状态</cell>
+					<cell colspan="3">
+						<textbox readonly="true"
+							value="${vm.dhmodel.states }">
+						</textbox>
+					</cell>
+				</row>
+				<row>
+					<cell>条件审查日期</cell>
+					<cell>
+						<datebox value="@bind(vm.dhmodel.emdh_time3)"
+							id="time3">
+						</datebox>
+					</cell>
+					<cell>账户类型</cell>
+					<cell>
+						<combobox value="@bind(vm.dhmodel.emdh_zhtype)"
+							id="zhtype" readonly="true">
+							<comboitem label="中智户" />
+							<comboitem label="独立户" />
+						</combobox>
+					</cell>
+				</row>
+				<row>
+					<cell>调户方式</cell>
+					<cell colspan="3">
+						<combobox value="@bind(vm.dhmodel.emdh_dhtype)"
+							id="dhtype" readonly="true">
+							<comboitem label="调干" />
+							<comboitem label="招调工" />
+							<comboitem label="毕业生接收" />
+							<comboitem label="留学生接收" />
+						</combobox>
+					</cell>
+				</row>
+				</rows>
+			<foot>
+				<footer align="center">
+					<button id="summit"
+						onClick="@command('submit',win=dhwin)">
+						提交
+					</button>
+					<button onClick="@command('openZul',openType='联系员工')">联系员工</button>
+					<button onClick="@command('openZul',openType='备注')">备注</button>
+					<button
+						onClick="@command('beginagain',win=dhwin)">
+						重置流程
+					</button>
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

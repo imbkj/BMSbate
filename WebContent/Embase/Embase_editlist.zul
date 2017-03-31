@@ -1,0 +1,238 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+
+<zk>
+	 <style src="/css/style.css"></style>
+	<window title="员工列表查询" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.Embase.Embase_editListController')"
+		border="normal" sizable="true" height="100%" width="100%">
+		<borderlayout>
+			<north border="0" title="检索" collapsible="true"
+				open="true">
+				<grid>
+					<rows>
+						<row>
+							<cell style="color:#666;" align="center">
+
+								<combobox id="combo" width="50%"
+									autodrop="true" buttonVisible="false" 
+									value="@bind(vm.strwhere)" mold="rounded" 
+									popup="pop_coof_name" />
+								<popup id="pop_coof_name">
+									可输入拼音/GID/CID/手机号码/员工拼音 公司拼音 查询
+								</popup>
+							</cell>
+                            
+						</row>
+					</rows>
+					<foot>
+						<footer align="center">
+							<button id="btSearch" label="综合检索"
+								onClick="@command('search')" />
+						</footer>
+					</foot>
+				</grid>
+				
+			</north>
+			<center>
+
+				<grid model="@load(vm.embaselist)" id="gridwin"
+					height="100%" width="100%" emptyMessage="暂无数据" mold="paging"
+					pageSize="20">
+					<columns style="cursor:pointer">
+						<column label="序号" hflex="1" align="center" />
+						<column label="公司编号" hflex="2" align="center"
+							style="cursor:pointer" sort="auto(cid)" />
+						<column label="公司名称" hflex="5" align="center"
+							sort="auto(coba_name)" />
+						<!-- 						<column label="服务地区" hflex="2" align="center" -->
+						<!-- 							sort="auto(emba_wt)" /> -->
+						<column label="员工编号" hflex="2" align="center"
+							sort="auto(gid)" />
+						<column label="姓名" hflex="2" align="center"
+							sort=" " />
+						<column label="客服" hflex="2" align="center"
+							sort=" " />
+							<column label="员服" hflex="2" align="center"
+							sort=" " />
+						<column label="状态" hflex="2" align="center"
+							sort=" " />
+						<column label="缤纷服务" hflex="3" align="center"
+							sort=" " />
+						<column label="图像" hflex="2" align="center"
+							sort=" " />
+						<column label="短信" hflex="1" align="center"
+							sort=" " />
+						<column label="操作" hflex="4" align="center"
+							sort=" " />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<label
+									value="@load(forEachStatus.index + 1)" />
+								<label value="@load(each.cid)" />
+								<label value="@load(each.coba_name)" />
+								<!-- 								<label value="@load(each.emba_wt)" /> -->
+								<label value="@load(each.gid)" />
+								<label value="@load(each.emba_name)" />
+								<label value="@load(each.coba_client)" />
+								<label value="@load(each.coba_assistant)" />
+								<label if="${each.emba_state==0}"
+									style="color:red;" value="@load(each.emba_statestr)" />
+								<label if="${each.emba_state>0}"
+									value="@load(each.emba_statestr)" />
+								<cell>
+									<hbox>
+
+										<div align="right" width="40px"
+											height="15px" if="${each.sein_wt!=null}"
+											style="background-image:url(../images/wtbj.jpg);">
+											<label
+												value="@load(each.sein_wt)"
+												style="color:#fff;font-size:12px;" />
+										</div>
+
+										<image align="left"
+											if="${each.sein_shebao!=null}"
+											sclass="complex-layout-header-img"
+											src="@load(each.sein_shebao)" />
+										<image
+											if="${each.sein_gjj!=null}"
+											sclass="complex-layout-header-img"
+											src="@load(each.sein_gjj)" />
+										<image
+											if="${each.sein_shangbao!=null}"
+											sclass="complex-layout-header-img"
+											src="@load(each.sein_shangbao)" />
+
+										<image
+											if="${each.sein_shebaob!=null}"
+											sclass="complex-layout-header-img"
+											src="@load(each.sein_shebaob)" />
+										<image
+											if="${each.sein_gjjb!=null}"
+											sclass="complex-layout-header-img"
+											src="@load(each.sein_gjjb)" />
+										<image align="left"
+											if="${each.sein_da!=null}" sclass="complex-layout-header-img"
+											src="@load(each.sein_da)" />
+										<image
+											if="${each.sein_zj!=null}" sclass="complex-layout-header-img"
+											src="@load(each.sein_zj)" />
+										<image
+											if="${each.sein_ldyg!=null}"
+											sclass="complex-layout-header-img"
+											src="@load(each.sein_ldyg)" />
+										<image
+											if="${each.sein_xc!=null}" sclass="complex-layout-header-img"
+											src="@load(each.sein_xc)" />
+									</hbox>
+								</cell>
+								<cell>
+									<image src="../images/in_pic.gif"
+										style="cursor:pointer" onClick="@command('openempic',a=each)" />
+								</cell>
+								<cell>
+									<image src="../images/mobile.gif"
+										style="cursor:pointer"
+										onClick="@command('openmobile',a=each)" />
+								</cell>
+								<cell>
+									<hlayout>
+										<a if="${each.emba_state==2}"
+											onClick="@command('openbucenter',a=each)">
+											<label value="入职" />
+										</a>
+										<label
+											if="${each.emba_state==3}" value="退回" />
+
+										<a if="${each.emba_state==5}"
+											onClick="@command('openbucenter',a=each)">
+											<label value="入职中" />
+										</a>
+
+
+
+										<a if="${each.emba_state==1}"
+											onClick="@command('openbucenter',a=each)">
+											<label value="业务中心" />
+										</a>
+										<a if="${each.emba_state==1}"
+											onClick="@command('openDimission',a=each)">
+											<label value="离职" />
+										</a>
+										<a if="${each.emba_state==0}"
+											onClick="@command('reentry',model=each,url='Embase_CancelDimission.zul')">
+											<label value="恢复入职" />
+										</a>
+<!-- 										<a if="${each.emba_state==0}" -->
+<!-- 											onClick="@command('openbucenter',a=each)"> -->
+<!-- 											<label value="重新入职" /> -->
+<!-- 										</a> -->
+										<a if="${each.emba_state==0}"
+											onClick="@command('openbucenteronly',a=each)">
+											<label value="业务中心" />
+										</a>
+
+
+									</hlayout>
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+
+			</center>
+			<south>
+				<vlayout width="100%">
+					<panel border="0">
+						<panelchildren>
+							<vbox width="100%">
+								<grid width="100%">
+									<rows>
+										<row>
+											<cell width="20%"
+												style="color:#666;" align="center">
+												<hlayout>
+													员工总数 [
+													<label
+														value="@load(vm.countdate[0])" />
+													]
+												</hlayout>
+											</cell>
+											<cell width="20%"
+												style="color:#666;" align="center">
+												<hlayout>
+													在职员工数 [
+													<label
+														value="@load(vm.countdate[1])" />
+													]
+												</hlayout>
+											</cell>
+											<cell width="20%"
+												style="color:#666;" align="center">
+												<hlayout>
+													离职员工数 [
+													<label
+														value="@load(vm.countdate[2])" />
+													]
+												</hlayout>
+											</cell>
+										</row>
+									</rows>
+
+								</grid>
+							</vbox>
+						</panelchildren>
+					</panel>
+				</vlayout>
+			</south>
+			<zscript><![CDATA[
+	                            /*Dictionary.getDictionary() returns a String[] containing the dictionary words*/
+	                           ListModel dictModel = new SimpleListModel(
+			                   bll.Embase.EmbaseListBll.searchembaselists());
+	                           combo.setModel(dictModel);
+                             ]]></zscript>
+		</borderlayout>
+	</window>
+</zk>

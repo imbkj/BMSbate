@@ -1,0 +1,167 @@
+<!--
+	创建人：陈耀家
+	创建时间：2015-1-15
+	用途：员工业务中心证件办理信息（包括社保卡、公积金卡、居住证）
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="证件信息" border="normal" vflex="1" hflex="1"
+	apply="org.zkoss.bind.BindComposer"
+    viewModel="@id('vm') @init('Controller.EmHouseCard.CardInfoListController')"
+>
+<scrollview vflex="1" hflex="1">
+<groupbox open="true" title="公积金手动制卡信息">
+<grid model="@load(vm.makecardlist)" height="100px" emptyMessage="没有档案信息">
+		<columns>
+			<column label="序号" align="center" width="50px"/>
+			<column label="所属月份" align="center"/>
+			<column label="单位公积金号" align="center"/>
+			<column label="个人公积金号" align="center"/>
+			<column label="缴存银行" align="center"/>
+			<column label="客服" align="center"/>
+			<column label="添加时间" align="center"/>
+			<column label="添加人" align="center"/>
+			<column label="状态" align="center"/>
+		</columns>
+		<rows>
+			<template name="model">
+			<row>
+				<cell><label value="${forEachStatus.index+1 }"></label></cell>
+				<cell><label value="@load(each.ownmonth)"></label></cell>
+				<cell><label value="@load(each.gjj_cno)"></label></cell>
+				<cell><label value="@load(each.gjj_no)"></label></cell>
+				<cell><label value="@load(each.gjj_insertblank)"></label></cell>
+				<cell><label value="@load(each.coba_client)"></label></cell>
+				<cell><label value="@load(each.addtime)"></label></cell>
+				<cell><label value="@load(each.gjj_addname)"></label></cell>
+				<cell><label value="@load(each.state_Name)"></label></cell>
+			</row>
+			</template>
+		</rows>
+	</grid>
+</groupbox>
+<groupbox open="true" title="公积金卡领卡信息">
+<grid model="@load(vm.takecardlist)" height="100px" emptyMessage="没有档案业务信息">
+		<columns>
+			<column label="序号" align="center" width="50px"/>
+			<column label="所属月份" align="center"/>
+			<column label="账户类型" align="center"/>
+			<column label="单位公积金号" align="center"/>
+			<column label="个人公积金号" align="center"/>
+			<column label="卡号" align="center"/>
+			<column label="客服" align="center"/>
+			<column label="领卡银行" align="center"/>
+			<column label="申报日期" align="center"/>
+			<column label="状态" align="center"/>
+		</columns>
+		<rows>
+			<template name="model">
+			<row>
+				<cell><label value="${forEachStatus.index+1 }"></label></cell>
+				<cell><label value="@load(each.ownmonth)"></label></cell>
+				<cell><label value="@load(each.re_accounttype)"></label></cell>
+				<cell><label value="@load(each.re_cgjjno)"></label></cell>
+				<cell><label value="@load(each.re_gjjno)"></label></cell>
+				<cell><label value="@load(each.re_cardid)"></label></cell>
+				<cell><label value="@load(each.coba_client)"></label></cell>
+				<cell><label value="@load(each.re_band)"></label></cell>
+				<cell><label value="@load(each.re_apptime)"></label></cell>
+				<cell><label value="@load(each.state_Name)"></label></cell>
+			</row>
+			</template>
+		</rows>
+	</grid>
+</groupbox>
+<groupbox open="true" title="社保卡信息">
+<grid model="@load(vm.sbcdblllist)" height="100px" emptyMessage="没有档案业务信息">
+		<columns>
+			<column label="序号" align="center" width="50px"/>
+			<column label="社保单位编码" align="center"/>
+			<column label="社保单位名称" align="center" width="220px"/>
+			<column label="社保电脑号" align="center"/>
+			<column label="户口性质" align="center"/>
+			<column label="办理类型" align="center"/>
+			<column label="制卡银行" align="center"/>
+			<column label="客服" align="center"/>
+			<column label="添加人" align="center"/>
+			<column label="添加时间" align="center"/>
+			<column label="状态" align="center"/>
+		</columns>
+		<rows>
+			<template name="model">
+			<row>
+				<cell><label value="${forEachStatus.index+1 }"></label></cell>
+				<cell><label value="@load(each.sbcd_sbnumber)"></label></cell>
+				<cell><label value="@load(each.sbcd_companyname)"></label></cell>
+				<cell><label value="@load(each.sbcd_computerid)"></label></cell>
+				<cell><label value="@load(each.sbcd_hj)"></label></cell>
+				<cell><label value="@load(each.sbcd_content)"></label></cell>
+				<cell><label value="@load(each.sbcd_upbankname)"></label></cell>
+				<cell><label value="@load(each.sbcd_addname)"></label></cell>
+				<cell><label value="@load(each.sbcd_addtime)"></label></cell>
+				<cell><label value="@load(each.coba_client)"></label></cell>
+				<cell><label value="@load(each.cdst_statename)"></label></cell>
+			</row>
+			</template>
+		</rows>
+	</grid>
+</groupbox>
+<groupbox open="true" title="居住证办理信息">
+<grid model="@load(vm.serplist)" height="100px" emptyMessage="没有档案业务信息">
+		<columns>
+			<column label="序号" align="center" width="50px"/>
+			<column label="姓名" align="center"/>
+			<column label="所属月份" align="center"/>
+			<column label="办理性质" align="center"/>
+			<column label="添加时间" align="center"/>
+			<column label="添加人" align="center"/>
+			<column label="状态" align="center"/>
+		</columns>
+		<rows>
+			<template name="model">
+			<row>
+				<cell><label value="${forEachStatus.index+1 }"></label></cell>
+				<cell><label value="@load(each.emba_name)"></label></cell>
+				<cell><label value="@load(each.ownmonth)"></label></cell>
+				<cell><label value="@load(each.erpi_t_kind)"></label></cell>
+				<cell><label value="@load(each.erpi_addtime)"></label></cell>
+				<cell><label value="@load(each.erpi_addname)"></label></cell>
+				<cell><label value="@load(each.statename)"></label></cell>
+			</row>
+			</template>
+		</rows>
+	</grid>
+</groupbox>
+<groupbox open="true" title="居住证转换信息">
+<grid model="@load(vm.chlist)" height="100px" emptyMessage="没有档案业务信息">
+		<columns>
+			<column label="序号" align="center" width="50px"/>
+			<column label="姓名" align="center"/>
+			<column label="客服" align="center"/>
+			<column label="申请转换日期" align="center"/>
+			<column label="操作转换日期" align="center"/>
+			<column label="添加时间" align="center"/>
+			<column label="添加人" align="center"/>
+			<column label="转换状态" align="center"/>
+			<column label="就业状态" align="center"/>
+		</columns>
+		<rows>
+			<template name="model">
+			<row>
+				<cell><label value="${forEachStatus.index+1 }"></label></cell>
+				<cell><label value="@load(each.emba_name)"></label></cell>
+				<cell><label value="@load(each.coba_client)"></label></cell>
+				<cell><label value="@load(each.erpc_csd_ac_date)"></label></cell>
+				<cell><label value="@load(each.erpc_wd_oc_date)"></label></cell>
+				<cell><label value="@load(each.erpc_addtime)"></label></cell>
+				<cell><label value="@load(each.erpc_addname)"></label></cell>
+				<cell><label value="@load(each.sname)"></label></cell>
+				<cell><label value="@load(each.statename)"></label></cell>
+			</row>
+			</template>
+		</rows>
+	</grid>
+</groupbox>
+</scrollview>
+</window>
+</zk>

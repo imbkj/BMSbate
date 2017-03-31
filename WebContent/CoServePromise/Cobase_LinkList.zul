@@ -1,0 +1,50 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="请选择联系人" border="normal" closable="true" id="lmdwin"
+		apply="org.zkoss.bind.BindComposer" width="70%" height="70%"
+		viewModel="@id('vm') @init('Controller.CoServePromise.Cobase_LinkListController')">
+		<radiogroup id="gp"></radiogroup>
+		<listbox emptyMessage="没有联系人信息" model="@load(vm.linklist)"
+			vflex="1" id="gd" mold="paging" pageSize="10" 
+			onClick="@command('selectlb',litem=self.selectedItem)">
+			<listhead>
+				<listheader width="40px">序号</listheader>
+				<listheader>姓名</listheader>
+				<listheader>职位</listheader>
+				<listheader>电话</listheader>
+				<listheader>手机</listheader>
+				<listheader>电子邮箱</listheader>
+				<listheader>职责</listheader>
+				<listheader width="60px" align="center">操作</listheader>
+			</listhead>
+			<template name="model">
+				<listitem>
+					<listcell><label value="${forEachStatus.index + 1}" /></listcell>
+					<listcell><label value="${each.cali_name}" /></listcell>
+					<listcell><label value="${each.cali_job}" /></listcell>
+					<listcell><label value="${each.cali_tel}" /></listcell>
+					<listcell><label value="${each.cali_mobile}" /></listcell>
+					<listcell><label value="${each.cali_email}" /></listcell>
+					<listcell><label value="${each.cali_duty}" /></listcell>
+					<listcell>
+						<radio value="@load(each)" radiogroup="gp"
+							checked="${each.cali_name==vm.name }">
+						</radio>
+					</listcell>
+				</listitem>
+			</template>
+			<listfoot>
+				<listfooter span="8" align="center">
+					<button onClick="@command('add',gd=gd,win=lmdwin)">
+						新增联系人
+					</button>
+					<button
+						onClick="@command('submit',win=lmdwin,gp=gp)">
+						确定
+					</button>
+				</listfooter>
+			</listfoot>
+
+		</listbox>
+	</window>
+</zk>

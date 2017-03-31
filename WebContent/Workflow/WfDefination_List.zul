@@ -1,0 +1,187 @@
+<?page contentType="text/html;charset=UTF-8"?>
+<zk>
+
+	<window id="win" title="任务单节点" border="normal" height="100%"
+		width="100%"
+		apply="org.zkoss.bind.BindComposer,Controller.Workflow.WfDefination_ListController"
+		viewModel="@id('vm') @init('Controller.Workflow.WfDefination_ListController')">
+		<style src="/css/style.css"></style>
+		<borderlayout hflex="1" vflex="1">
+			<north id="north" collapsible="true" title="高级查询"
+				open="false">
+				<grid>
+					<columns>
+						<column width="15%"></column>
+						<column></column>
+						<column width="15%"></column>
+						<column></column>
+					</columns>
+					<rows>
+						<row>
+							任务类型：
+							<cell>
+								<chosenbox hflex="1" id="missionType"
+									emptyMessage="全部类型" model="@load(vm.wfClassNameList2)">
+									<template name="model">
+										<label
+											value="@load(each.wfcl_name)">
+										</label>
+									</template>
+								</chosenbox>
+							</cell>
+							任务单标识码：
+							<cell>
+								<textbox id="codeName" />
+							</cell>
+						</row>
+						<row>
+							任务名称：
+							<cell>
+								<chosenbox hflex="1" id="missionName"
+									emptyMessage="全部类型" model="@load(vm.wfDefinationNameList2)">
+									<template name="model">
+										<label
+											value="@load(each.wfde_name)">
+										</label>
+									</template>
+								</chosenbox>
+							</cell>
+							节点状态:
+							<cell>
+								<combobox id="wfdestate" readonly="true"
+									mold="rounded">
+									<comboitem value="1" label="正常" />
+									<comboitem value="0" label="失效" />
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell colspan="4" align="center">
+								<button id="btnSearch" label="查询"
+									onClick="@command('SearchList',a=missionType,b=codeName,
+									c=missionName,d=wfdestate,e=north)">
+								</button>
+
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</north>
+			<center>
+				<grid model="@load(vm.wfDefinationList)"
+					id="gdWfDefination" emptyMessage="无数据" height="100%"
+					mold="paging">
+
+					<columns style="height:30px">
+
+						<column width="40px">序号</column>
+						<column>
+							任务类型
+							<combobox readonly="true" id="wfcl_name"
+								mold="rounded" width="60%" onChange="@command('tbSearch')"
+								model="@load(vm.wfClassNameList)" value="@bind(vm.wfcl_name)">
+								<template name="model">
+									<comboitem
+										label="@load(each.wfcl_name)">
+									</comboitem>
+								</template>
+							</combobox>
+						</column>
+						<column>
+							任务名称
+							<combobox readonly="true" id="copc_name"
+								mold="rounded" width="60%" onChange="@command('tbSearch')"
+								model="@load(vm.wfDefinationNameList)"
+								value="@bind(vm.wfde_name)">
+								<template name="model">
+									<comboitem
+										label="@load(each.wfde_name)">
+									</comboitem>
+								</template>
+							</combobox>
+						</column>
+						<column>
+							任务单标识码
+							<textbox id="wfde_code" instant="true"
+								mold="rounded" width="60%" onChange="@command('tbSearch')"
+								value="@bind(vm.wfde_code)">
+
+							</textbox>
+						</column>
+						<column>
+							添加人
+							<combobox id="wfde_addname" readonly="true"
+								mold="rounded" width="60%" onChange="@command('tbSearch')"
+								model="@load(vm.wfDefinationAddNameList)"
+								value="@bind(vm.wfde_addname)">
+								<template name="model">
+									<comboitem
+										label="@load(each.wfde_addname)">
+									</comboitem>
+								</template>
+							</combobox>
+						</column>
+						<column sort="auto(wfde_addtime)">
+							添加时间
+							<datebox id="wfde_addtime" instant="true"
+								mold="rounded" width="60%" onChange="@command('tbSearch')"
+								value="@bind(vm.wfde_addtime)" format="yyyy-MM-dd">
+							</datebox>
+						</column>
+						<column>
+							状态
+							<combobox id="wfde_state" readonly="true"
+								mold="rounded" width="60%" onChange="@command('tbSearch')"
+								value="@bind(vm.wfde_stateName)">
+								<comboitem label="生效" value="1" />
+								<comboitem label="取消" value="0" />
+							</combobox>
+						</column>
+						<column style="">备注</column>
+						<column hflex="1" label="操作" align="center" />
+					</columns>
+					<template name="model">
+						<row>
+
+							<label value="${forEachStatus.index+1 }"></label>
+							<label value="@load(each.wfcl_name)"></label>
+							<label value="@load(each.wfde_name)"></label>
+							<label value="@load(each.wfde_code)"></label>
+							<label value="@load(each.wfde_addname)"></label>
+							<label value="@load(each.wfde_addtime)"></label>
+							<label value="@load(each.wfde_stateName)"></label>
+							<div
+								tooltip="content_${each.wfde_id },position=start_before">
+								<label
+									style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden"
+									value="@load(each.wfde_remark)">
+								</label>
+								<popup id="content_${each.wfde_id}"
+									width="200px">
+									<label
+										value="@load(each.wfde_remark)">
+									</label>
+								</popup>
+							</div>
+							<div align="center">
+								<menubar autodrop="true" width="50px"
+									sclass="mymb">
+									<menu
+										image="../images/pencil-small.png">
+										<menupopup>
+											<menuitem label="修改任务信息"
+												onClick="@command('updateMission',id=each.wfde_id)" />
+											<menuseparator />
+											<menuitem label="查看任务节点"
+												onClick="@command('linkList',id=each.wfde_id)" />
+										</menupopup>
+									</menu>
+								</menubar>
+							</div>
+						</row>
+					</template>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

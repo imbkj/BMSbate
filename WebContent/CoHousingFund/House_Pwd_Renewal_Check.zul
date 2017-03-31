@@ -1,0 +1,228 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="密钥续期信息" border="normal" width="65%" closable="true"
+		height="60%">
+		<grid height="100%">
+			<rows>
+				<row>
+					<grid>
+						<rows>
+							<row>
+								<cell width="20%">
+									<label value="申报状态更改/备注" />
+								</cell>
+							</row>
+							<row>
+								<cell width="20%">
+									<label value="申报状态" />
+								</cell>
+								<cell>
+									<radiogroup>
+										<radio label="未申报"
+											checked="true" />
+										<radio label="申报中" />
+										<radio label="已申报" />
+										<radio label="退回" />
+									</radiogroup>
+									<button label="修改状态" />
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label value="退回原因" />
+								</cell>
+								<cell>
+									<textbox value="" />
+								</cell>
+							</row>
+						</rows>
+					</grid>
+				</row>
+				<row>
+					<cell width="15%">
+						<label value="数字证书续期信息 " style="font-size:15px" />
+					</cell>
+				</row>
+				<row>
+					<grid>
+						<rows>
+							<row>
+								<cell align="center" width="15%">
+									<label value="*" style="color:red" />
+									<label value="密钥续期年限" />
+								</cell>
+								<cell align="left">
+									<label value="客服录入" />
+								</cell>
+								<cell align="center" width="15%">
+									<label value="*" style="color:red" />
+									<label value="操作月份" />
+								</cell>
+								<cell align="left">
+									<label width="10%" value="2014-10" />
+								</cell>
+							</row>
+							<row>
+								<cell align="center" width="15%">
+									<label value="*" style="color:red" />
+									<label value="客服备注 " />
+								</cell>
+								<cell align="left" colspan="3">
+									<textbox value="" width="60%" />
+								</cell>
+							</row>
+							<row>
+								<cell align="center" width="15%">
+									<label value="*" style="color:red" />
+									<label value="密钥起始日期" />
+								</cell>
+								<cell align="left">
+									<datebox format="yyyyMMdd" />
+								</cell>
+								<cell align="center" width="15%">
+									<label value="*" style="color:red" />
+									<label value="密钥到期日期 " />
+								</cell>
+								<cell align="left">
+									<datebox format="yyyyMMdd" />
+								</cell>
+							</row>
+
+
+						</rows>
+					</grid>
+				</row>
+				<row>
+					<grid>
+
+						<rows>
+							<row>
+								<cell width="21%">
+									<label value="资料指纹签收" />
+									<label value="(*******)"
+										style="color:red" visible="false" />
+								</cell>
+							</row>
+
+							<row>
+								<cell>
+									<label value="资料名称" />
+								</cell>
+								<cell width="5%">
+									<label value="原件" />
+									<label value=" 复印件" />
+								</cell>
+								<cell>
+									<label value="收资料日期" />
+								</cell>
+								<cell>
+									<label value="客服交资料人" />
+								</cell>
+								<cell>
+									<label value="福利收资料人" />
+								</cell>
+								<cell>
+									<label value="退还资料日期" />
+								</cell>
+								<cell>
+									<label value="客服接资料人" />
+								</cell>
+								<cell>
+									<label value="福利退资料人" />
+								</cell>
+							</row>
+
+
+							<row>
+								<cell>
+									<label value="深圳市住房公积金数字证书申请表" />
+								</cell>
+								<cell>
+									<checkbox />
+									<label value=" " />
+									<checkbox />
+								</cell>
+								<cell>
+									<datebox format="yyyyMM"
+										width="65%" />
+								</cell>
+								<cell>
+									<textbox width="60%" />
+								</cell>
+								<cell>
+									<textbox width="60%" />
+								</cell>
+								<cell>
+									<datebox format="yyyyMM"
+										width="65%" />
+								</cell>
+								<cell>
+									<textbox width="60%" />
+								</cell>
+								<cell>
+									<textbox width="60%" />
+								</cell>
+							</row>
+
+
+							<row>
+								<cell>
+									<label value="数字证书介质" />
+								</cell>
+								<cell>
+									<checkbox />
+									<label value=" " />
+									<checkbox />
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label value="密钥专办员身份证复印件" />
+								</cell>
+								<cell>
+									<checkbox />
+									<label value=" " />
+									<checkbox />
+								</cell>
+							</row>
+						</rows>
+					</grid>
+				</row>
+				<row>
+					<cell>
+						<label value="系统日志" />
+					</cell>
+				</row>
+				<row>
+					<grid height="100%">
+						<columns>
+							<column label="时间" />
+							<column label="操作人" />
+							<column label="事件" />
+						</columns>
+						<rows>
+							<row>
+								<cell>
+									<label value="" />
+								</cell>
+								<cell>
+									<label value="" />
+								</cell>
+								<cell>
+									<label value="" />
+								</cell>
+							</row>
+						</rows>
+					</grid>
+				</row>
+
+			</rows>
+			<foot>
+				<footer align="center">
+					<button onClick="" label="提交资料" />
+				</footer>
+			</foot>
+		</grid>
+
+	</window>
+</zk>

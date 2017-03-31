@@ -1,0 +1,60 @@
+<?page title="员工就业登记材料分配" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="win" title="员工就业登记材料分配" border="normal" width="500px"
+		height="350px" closable="true" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoReg.CoReg_DocAllotController')">
+		<div height="90%">
+			<grid>
+				<columns>
+					<column width="15%"></column>
+					<column></column>
+				</columns>
+				<rows>
+					<row>
+						户籍类型
+						<combobox readonly="true" mold="rounded"
+							value="@bind(vm.hjtype)" onChange="@command('search')">
+							<comboitem label="深户" />
+							<comboitem label="非深户" />
+						</combobox>
+					</row>
+					<row>
+						<cell colspan="2">
+							<grid id="gd" height="220px"
+								model="@load(vm.docList)" emptyMessage="暂无数据">
+								<columns>
+									<column width="40px"
+										align="center">
+										<checkbox
+											checked="@bind(vm.allcheck)"
+											onCheck="@command('allcheck',gd=gd)">
+										</checkbox>
+									</column>
+									<column label="材料名称"></column>
+								</columns>
+								<template name="model">
+									<row>
+										<cell>
+											<checkbox
+												checked="${each.dire_state==1 }">
+											</checkbox>
+										</cell>
+										<cell>
+											<label
+												value="@load(each.doin_content)" />
+										</cell>
+									</row>
+								</template>
+							</grid>
+						</cell>
+					</row>
+				</rows>
+			</grid>
+		</div>
+		<hbox pack="center" align="center" width="100%">
+			<button label="保存"
+				onClick="@command('submit',win=win,gd=gd)">
+			</button>
+		</hbox>
+	</window>
+</zk>

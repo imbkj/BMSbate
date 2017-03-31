@@ -1,0 +1,35 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="图片信息" border="normal" closable="true"
+		apply="org.zkoss.bind.BindComposer" width="1000px" height="530px"
+		viewModel="@id('vm') @init('Controller.Embase.EmPic_CheckController')">
+		<div
+			style="width:100%;height:530px;overflow-y:scroll;overflow-x:hidden;border:1px solid #bcbdbf;">
+			<grid id="pic" model="@load(vm.empiclist)">
+				<columns>
+					<column align="center" width="50px">序号</column>
+					<column align="center">文件类型</column>
+					<column align="center">文件名</column>
+					<column align="center">上传时间</column>
+				</columns>
+				<template name="model">
+					<row>
+						<cell>
+							<label
+									value="${forEachStatus.index + 1}" />
+						</cell>
+						<cell>
+							<label value="@load(each.empic_type)" />
+						</cell>
+						<cell>
+							<label value="@load(each.empic_name)" style="cursor:pointer"  onClick="@command('openurl',a=each)" />
+						</cell>
+						<cell>
+							<label value="@load(each.empic_time)" />
+						</cell>
+					</row>
+				</template>
+			</grid>
+		</div>
+	</window>
+</zk>

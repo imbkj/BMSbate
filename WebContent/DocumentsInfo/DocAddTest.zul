@@ -1,0 +1,83 @@
+<!--
+	创建人：林少斌
+	创建时间：2013-10-30
+	用途：材料模块新增页面显示例子
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="w1" title="新增" border="normal"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.DocumentsInfo.DocAddTestController')">
+		<grid id="g1" height="100%" width="100%">
+			<rows>
+				<row>
+					<cell width="20%">材料</cell>
+					<cell>
+						<grid id="gd1" emptyMessage="无数据"
+							model="@load(vm.docList)" height="120px" width="60%px">
+							<columns>
+								<column width="35px">
+									<checkbox onClick="@command('gdallselect',grid=gd1,check=self.checked)" />
+								</column>
+								<column label=" 内容" align="center"
+									sort="auto(doin_content)" />
+								<column width="50px" label=" 份数"
+									align="center" />
+								<column label="是否有上传文件" align="center"
+									sort="auto(pupi_state)" />
+								<column label=" 上一手交接人" align="center" />
+							</columns>
+							<rows>
+								<template name="model">
+									<row style="color:#666;">
+										<cell>
+											<checkbox />
+										</cell>
+										<cell>
+											<label
+												value="@load(each.doin_content)" />
+											<label style="color:red;"
+												value="(*)" if="${each.dire_ifhaveto==1}" />
+										</cell>
+										<cell>
+											<intbox width="30px"
+												value="1" mold="rounded" />
+										</cell>
+										<cell>
+											<label
+												value="${each.pupi_state!=1? '无':''}" />
+											<label
+												value="${each.pupi_state==1? '已有上传文件':''}" style="cursor:pointer;" onClick="@command('ShowDoc',gid=1)"/>
+										</cell>
+										<cell>
+											<combobox
+												model="@load(vm.handoverList)"
+												visible="${each.pupi_state==1?  false:true}"
+												mold="rounded">
+												<template
+													name="model">
+													<comboitem
+														label="@load(each.log_name)" />
+												</template>
+											</combobox>
+										</cell>
+									</row>
+								</template>
+							</rows>
+						</grid>
+					</cell>
+				</row>
+				<row>
+					<cell>备注</cell>
+					<textbox id="content" rows="5" hflex="1" />
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button label="提交" id="btSubmit"
+						onClick="@command('Submit',gd=gd1,tb1=content)" />
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

@@ -1,0 +1,685 @@
+<?page title="信息变更" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="win" title="信息变更" border="normal" height="85%"
+		width="800px" apply="org.zkoss.bind.BindComposer" closable="true"
+		viewModel="@id('vm') @init('Controller.CoHousingFund.CoHousingFund_InforChangeController')">
+		<script type="text/javascript" src="/js/Datebox.js"></script>
+		<borderlayout>
+			<center border="none" autoscroll="true">
+				<grid>
+					<columns>
+						<column width="20%"></column>
+						<column></column>
+					</columns>
+					<rows>
+						<row>
+							<cell>
+								<label value="单位公积金号"
+									style="color:#666" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.cohfModel.cohf_houseid)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="公司全称" style="color:#666" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.cohfModel.cohf_company)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="操作月份" style="color:#666" />
+							</cell>
+							<cell>
+								<datebox readonly="true" format="yyyyMM"
+									sclass="datebox-month-only"
+									value="@bind(vm.chfcModel.ownmonthDate)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="备注" style="color:#666" />
+							</cell>
+							<cell>
+								<textbox hflex="1"
+									value="@bind(vm.chfcModel.chfc_remark)" rows="5" />
+							</cell>
+						</row>
+						<row>
+							<cell colspan="2">
+								<groupbox mold="3d" title="核准类信息">
+									<grid style="border:none">
+										<columns>
+											<column width="30%">
+											</column>
+											<column></column>
+										</columns>
+										<rows>
+											<row>
+												<cell>
+													<label
+														value="组织机构代码" style="color:#666" />
+												</cell>
+												<cell>
+													<hbox>
+														"
+														<label
+															value="@load(vm.cohfModel.cohf_comid)" />
+														"
+														<label
+															value="修改为" style="color:red" />
+														<textbox
+															value="@bind(vm.chfcModel.chfc_comid)" />
+													</hbox>
+												</cell>
+											</row>
+											<row>
+												<cell>
+													<label
+														value="单位名称(全称)" style="color:#666" />
+												</cell>
+												<cell>
+													<hbox>
+														"
+														<label
+															value="@load(vm.cohfModel.cohf_company)" />
+														"
+														<label
+															value="修改为" style="color:red" />
+														<textbox
+															value="@bind(vm.chfcModel.chfc_company)" />
+													</hbox>
+												</cell>
+											</row>
+											<row>
+												<cell>
+													<label value="性质分类"
+														style="color:#666" />
+												</cell>
+												<cell>
+													<hbox>
+														"
+														<label
+															value="@load(vm.cohfModel.cohf_nature)" />
+														"
+														<label
+															value="修改为" style="color:red" />
+														<combobox
+															model="@load(vm.conatureList)"
+															value="@bind(vm.chfcModel.chfc_nature)">
+															<template
+																name="model">
+																<comboitem
+																	label="@load(each.pcon_name)" />
+															</template>
+														</combobox>
+													</hbox>
+												</cell>
+											</row>
+											<row>
+												<cell>
+													<label
+														value="法人代表人(负责人)姓名" style="color:#666" />
+												</cell>
+												<cell>
+													<hbox>
+														"
+														<label
+															value="@load(vm.cohfModel.cohf_corname)" />
+														"
+														<label
+															value="修改为" style="color:red" />
+														<textbox
+															value="@bind(vm.chfcModel.chfc_corname)" />
+													</hbox>
+												</cell>
+											</row>
+											<row>
+												<cell>
+													<label
+														value="法人代表人(负责人)证件类型" style="color:#666" />
+												</cell>
+												<cell>
+													<hbox>
+														"
+														<label
+															value="@load(vm.cohfModel.cohf_coridtype)" />
+														"
+														<label
+															value="修改为" style="color:red" />
+														<combobox
+															readonly="true" model="@load(vm.idcardtypeList)"
+															value="@bind(vm.chfcModel.chfc_coridtype)">
+															<template
+																name="model">
+																<comboitem
+																	label="@load(each.name)" />
+															</template>
+														</combobox>
+													</hbox>
+												</cell>
+											</row>
+											<row>
+												<cell>
+													<label
+														value="法人代表人(负责人)证件号码" style="color:#666" />
+												</cell>
+												<cell>
+													<hbox>
+														"
+														<label
+															value="@load(vm.cohfModel.cohf_coridcard)" />
+														"
+														<label
+															value="修改为" style="color:red" />
+														<textbox
+															value="@bind(vm.chfcModel.chfc_coridcard)" />
+													</hbox>
+												</cell>
+											</row>
+											<row>
+												<cell>
+													<label
+														value="社保单位编号" style="color:#666" />
+												</cell>
+												<cell>
+													<hbox>
+														"
+														<label
+															value="@load(vm.cohfModel.cohf_sorid)" />
+														"
+														<label
+															value="修改为" style="color:red" />
+														<textbox
+															value="@bind(vm.chfcModel.chfc_sorid)" />
+													</hbox>
+												</cell>
+											</row>
+											<row>
+												<cell>
+													<label value="工商注册号"
+														style="color:#666" />
+												</cell>
+												<cell>
+													<hbox>
+														"
+														<label
+															value="@load(vm.cohfModel.cohf_regid)" />
+														"
+														<label
+															value="修改为" style="color:red" />
+														<textbox
+															value="@bind(vm.chfcModel.chfc_regid)" />
+													</hbox>
+												</cell>
+											</row>
+											<row>
+												<cell>
+													<label
+														value="纳税人识别号" style="color:#666" />
+												</cell>
+												<cell>
+													<hbox>
+														"
+														<label
+															value="@load(vm.cohfModel.cohf_taxpayerid)" />
+														"
+														<label
+															value="修改为" style="color:red" />
+														<textbox
+															value="@bind(vm.chfcModel.chfc_taxpayerid)" />
+													</hbox>
+												</cell>
+											</row>
+											<row>
+												<cell>
+													<label value="托收日"
+														style="color:#666" />
+												</cell>
+												<cell>
+													<hbox>
+														"
+														<label
+															value="@load(vm.cohfModel.cohf_tsday)" />
+														"
+														<label
+															value="修改为" style="color:red" />
+														<intbox
+															value="@bind(vm.chfcModel.chfc_tsday)" />
+													</hbox>
+												</cell>
+											</row>
+											<row>
+												<cell>
+													<label
+														value="公积金首次托收月" style="color:#666" />
+												</cell>
+												<cell>
+													<hbox>
+														"
+														<label
+															value="@load(vm.cohfModel.cohf_firmonth)" />
+														"
+														<label
+															value="修改为" style="color:red" />
+														<datebox
+															readonly="true" format="yyyyMM"
+															sclass="datebox-month-only"
+															value="@bind(vm.chfcModel.firmonth)" />
+													</hbox>
+												</cell>
+											</row>
+											<row>
+												<cell>
+													<label
+														value="托收账户开户银行" style="color:#666" />
+												</cell>
+												<cell>
+													<hbox>
+														"
+														<label
+															value="@load(vm.cohfModel.cohf_bankts)" />
+														"
+														<label
+															value="修改为" style="color:red" />
+														<combobox
+															readonly="true" model="@load(vm.tsbankList)"
+															value="@bind(vm.chfcModel.chfc_bankts)">
+															<template
+																name="model">
+																<comboitem
+																	label="@load(each.bank)" />
+															</template>
+														</combobox>
+													</hbox>
+												</cell>
+											</row>
+											<row>
+												<cell>
+													<label
+														value="托收账户银行账号" style="color:#666" />
+												</cell>
+												<cell>
+													<hbox>
+														"
+														<label
+															value="@load(vm.cohfModel.cohf_banktsid)" />
+														"
+														<label
+															value="修改为" style="color:red" />
+														<textbox
+															value="@bind(vm.chfcModel.chfc_banktsid)" />
+													</hbox>
+												</cell>
+											</row>
+											<row>
+												<cell>
+													<label
+														value="托收账户名称" style="color:#666" />
+												</cell>
+												<cell>
+													<hbox>
+														"
+														<label
+															value="@load(vm.cohfModel.cohf_banktsacc)" />
+														"
+														<label
+															value="修改为" style="color:red" />
+														<textbox
+															width="300px" value="@bind(vm.chfcModel.chfc_banktsacc)" />
+													</hbox>
+												</cell>
+											</row>
+										</rows>
+									</grid>
+								</groupbox>
+							</cell>
+						</row>
+						<row>
+							<cell colspan="2">
+								<groupbox mold="3d" title="备案类信息">
+									<grid style="border:none">
+										<columns>
+											<column width="30%">
+											</column>
+											<column></column>
+										</columns>
+										<rows>
+											<row>
+												<cell>
+													<label value="行业代码"
+														style="color:#666" />
+												</cell>
+												<cell>
+													<hbox>
+														"
+														<label
+															value="@load(vm.cohfModel.cohf_industry)" />
+														"
+														<label
+															value="修改为" style="color:red" />
+														<textbox
+															value="@bind(vm.chfcModel.chfc_industry)" />
+													</hbox>
+												</cell>
+											</row>
+											<row>
+												<cell>
+													<label value="资格类型"
+														style="color:#666" />
+												</cell>
+												<cell>
+													<hbox>
+														"
+														<label
+															value="@load(vm.cohfModel.cohf_zgtype)" />
+														"
+														<label
+															value="修改为" style="color:red" />
+														<combobox
+															readonly="true" width="70px"
+															value="@bind(vm.chfcModel.chfc_zgtype)">
+															<comboitem></comboitem>
+															<comboitem
+																label="法人" if="${vm.cohfModel.cohf_zgtype ne '法人' }" />
+															<comboitem
+																label="非法人" if="${vm.cohfModel.cohf_zgtype ne '非法人' }" />
+														</combobox>
+													</hbox>
+												</cell>
+											</row>
+											<row>
+												<cell>
+													<label value="单位地址"
+														style="color:#666" />
+												</cell>
+												<cell>
+													<hbox>
+														"
+														<label
+															value="@load(vm.cohfModel.cohf_address)" />
+														"
+														<label
+															value="修改为" style="color:red" />
+														<textbox
+															width="300px" value="@bind(vm.chfcModel.chfc_address)" />
+													</hbox>
+												</cell>
+											</row>
+											<row>
+												<cell>
+													<label
+														value="所属行政区域" style="color:#666" />
+												</cell>
+												<cell>
+													<hbox>
+														"
+														<label
+															value="@load(vm.cohfModel.cohf_area)" />
+														"
+														<label
+															value="修改为" style="color:red" />
+														<combobox
+															readonly="true" model="@load(vm.areaszList)"
+															value="@bind(vm.chfcModel.chfc_area)">
+															<template
+																name="model">
+																<comboitem
+																	label="@load(each.area)" />
+															</template>
+														</combobox>
+													</hbox>
+												</cell>
+											</row>
+											<row>
+												<cell>
+													<label value="邮政编码"
+														style="color:#666" />
+												</cell>
+												<cell>
+													<hbox>
+														"
+														<label
+															value="@load(vm.cohfModel.cohf_pastal)" />
+														"
+														<label
+															value="修改为" style="color:red" />
+														<textbox
+															value="@bind(vm.chfcModel.chfc_pastal)" />
+													</hbox>
+												</cell>
+											</row>
+											<row>
+												<cell>
+													<label value="隶属关系"
+														style="color:#666" />
+												</cell>
+												<cell>
+													<hbox>
+														"
+														<label
+															value="@load(vm.cohfModel.cohf_attached)" />
+														"
+														<label
+															value="修改为" style="color:red" />
+														<combobox
+															model="@load(vm.membershipList)"
+															value="@bind(vm.chfcModel.chfc_attached)">
+															<template
+																name="model">
+																<comboitem
+																	label="@load(each.name)" />
+															</template>
+														</combobox>
+													</hbox>
+												</cell>
+											</row>
+											<row>
+												<cell>
+													<label
+														value="企业经济类型" style="color:#666" />
+												</cell>
+												<cell>
+													<hbox>
+														"
+														<label
+															value="@load(vm.cohfModel.cohf_ecoclass)" />
+														"
+														<label
+															value="修改为" style="color:red" />
+														<combobox
+															model="@load(vm.coecoclassList)"
+															value="@bind(vm.chfcModel.chfc_ecoclass)">
+															<template
+																name="model">
+																<comboitem
+																	label="@load(each.pcoe_name)" />
+															</template>
+														</combobox>
+													</hbox>
+												</cell>
+											</row>
+											<row>
+												<cell>
+													<label
+														value="法人代表人(负责人)联系电话" style="color:#666" />
+												</cell>
+												<cell>
+													<hbox>
+														"
+														<label
+															value="@load(vm.cohfModel.cohf_cortel)" />
+														"
+														<label
+															value="修改为" style="color:red" />
+														<textbox
+															value="@bind(vm.chfcModel.chfc_cortel)" />
+													</hbox>
+												</cell>
+											</row>
+											<row>
+												<cell>
+													<label
+														value="上级主管部门名称" style="color:#666" />
+												</cell>
+												<cell>
+													<hbox>
+														"
+														<label
+															value="@load(vm.cohfModel.cohf_department)" />
+														"
+														<label
+															value="修改为" style="color:red" />
+														<textbox
+															value="@bind(vm.chfcModel.chfc_department)" />
+													</hbox>
+												</cell>
+											</row>
+											<row>
+												<cell>
+													<label
+														value="上级主管部门联系电话" style="color:#666" />
+												</cell>
+												<cell>
+													<hbox>
+														"
+														<label
+															value="@load(vm.cohfModel.cohf_departmenttel)" />
+														"
+														<label
+															value="修改为" style="color:red" />
+														<textbox
+															value="@bind(vm.chfcModel.chfc_departmenttel)" />
+													</hbox>
+												</cell>
+											</row>
+											<row>
+												<cell>
+													<label
+														value="单位成立时间" style="color:#666" />
+												</cell>
+												<cell>
+													<hbox>
+														"
+														<label
+															value="@load(vm.cohfModel.cohf_createtime)" />
+														"
+														<label
+															value="修改为" style="color:red" />
+														<textbox
+															value="@bind(vm.chfcModel.chfc_createtime)" />
+													</hbox>
+												</cell>
+											</row>
+											<row>
+												<cell>
+													<label
+														value="公积金业务经办部门" style="color:#666" />
+												</cell>
+												<cell>
+													<hbox>
+														"
+														<label
+															value="@load(vm.cohfModel.cohf_jbdepartment)" />
+														"
+														<label
+															value="修改为" style="color:red" />
+														<textbox
+															value="@bind(vm.chfcModel.chfc_jbdepartment)" />
+													</hbox>
+												</cell>
+											</row>
+											<row>
+												<cell>
+													<label value="联系人姓名"
+														style="color:#666" />
+												</cell>
+												<cell>
+													<hbox>
+														"
+														<label
+															value="@load(vm.cohfModel.cohf_contactname)" />
+														"
+														<label
+															value="修改为" style="color:red" />
+														<textbox
+															value="@bind(vm.chfcModel.chfc_contactname)" />
+													</hbox>
+												</cell>
+											</row>
+											<row>
+												<cell>
+													<label
+														value="联系人固定电话" style="color:#666" />
+												</cell>
+												<cell>
+													<hbox>
+														"
+														<label
+															value="@load(vm.cohfModel.cohf_contacttel)" />
+														"
+														<label
+															value="修改为" style="color:red" />
+														<textbox
+															value="@bind(vm.chfcModel.chfc_contacttel)" />
+													</hbox>
+												</cell>
+											</row>
+											<row>
+												<cell>
+													<label
+														value="联系人电子邮箱" style="color:#666" />
+												</cell>
+												<cell>
+													<hbox>
+														"
+														<label
+															value="@load(vm.cohfModel.cohf_contactmail)" />
+														"
+														<label
+															value="修改为" style="color:red" />
+														<textbox
+															value="@bind(vm.chfcModel.chfc_contactmail)" />
+													</hbox>
+												</cell>
+											</row>
+											<row>
+												<cell>
+													<label
+														value="联系人移动电话" style="color:#666" />
+												</cell>
+												<cell>
+													<hbox>
+														"
+														<label
+															value="@load(vm.cohfModel.cohf_contactmobile)" />
+														"
+														<label
+															value="修改为" style="color:red" />
+														<textbox
+															value="@bind(vm.chfcModel.chfc_contactmobile)" />
+													</hbox>
+												</cell>
+											</row>
+										</rows>
+									</grid>
+								</groupbox>
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</center>
+			<south>
+				<hbox width="100%" align="center" pack="center">
+					<button label="提交"
+						onClick="@command('submit',win=win)" />
+				</hbox>
+			</south>
+		</borderlayout>
+	</window>
+</zk>

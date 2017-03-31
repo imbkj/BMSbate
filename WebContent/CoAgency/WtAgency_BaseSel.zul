@@ -1,0 +1,63 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="委托机构查询" border="normal" width="100%" height="100%"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoAgency.WtAgency_BaseSelController')">
+		<borderlayout vflex="1">
+			<north border="0">
+				<grid>
+					<rows>
+						<row>
+							<cell width="40%" align="right">机构检索：</cell>
+							<cell>
+								<textbox mold="rounded"
+									tooltiptext="可以输入 机构编号 或 机构名称  或 机构拼音 或 客服名称 搜索" width="40%"
+									onChange="@command('searchAgency',agency=self.value)" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</north>
+			<center border="0">
+				<grid width="100%" model="@load(vm.wincabaList)"
+					height="100%" emptyMessage="无数据" mold="paging" pageSize="20">
+					<columns sizable="true">
+						<column align="center" width="40px" />
+						<column label="序号" align="center" width="60px" />
+						<column label="机构编号" align="center"
+							sort="auto(coab_id)" width="80px" />
+						<column label="机构名称" align="center"
+							sort="auto(coab_name)" />
+						<column label="服务城市" align="center"
+							sort="auto(serCount)" />
+						<column label="机构性质" align="center"
+							sort="auto(coab_setuptype)" />
+						<column label="客服" align="center"
+							sort="auto(cabsModel.coas_client)" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<custom-attributes
+									coab_id="${each.coab_id}" />
+								<detail open="false" fulfill="onOpen">
+									<include
+										src="/CoAgency/WtAgency_ServiceCity.zul" coab_id="${coab_id}" />
+								</detail>
+								<label
+									value="${forEachStatus.index + 1}" />
+								<label value="@load(each.coab_id)" />
+								<label value="@load(each.coab_name)" />
+								<label value="@load(each.serCount)" />
+								<label
+									value="@load(each.coab_setuptype)" />
+								<label
+									value="@load(each.cabsModel.coas_client)" />
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

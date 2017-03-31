@@ -1,0 +1,28 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window  border="0" apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('vm') @init('Controller.EmBenefit.EmActy_WarehouseHistoryController')">
+<grid model="@load(vm.list)">
+		<columns>
+			<column label="序号" align="center"/>
+			<column label="价格" align="center"/>
+			<column label="数量" align="center"/>
+			<column label="采购时间" align="center"/>
+			<column label="采购人" align="center"/>
+			<!-- <column label="操作" align="center"/> -->
+		</columns>
+		<rows>
+			<template name="model">
+			<row>
+				<cell>${forEachStatus.index+1 }</cell>
+				<cell><label value="@load(each.hsry_price)"></label></cell>
+				<cell><label value="@load(each.hsry_num)"></label></cell>
+				<cell><label value="@load(each.hsry_addtime)"></label></cell>
+				<cell><label value="@load(each.hsry_addname)"></label></cell>
+				<!-- <cell><a onClick="@command('edit',model=each)"><label value="修改"></label></a></cell> -->
+			</row>
+			</template>
+		</rows>
+	</grid>
+</window>
+</zk>

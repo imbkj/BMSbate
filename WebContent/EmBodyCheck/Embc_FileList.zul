@@ -1,0 +1,30 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="体检须知列表" border="normal" vflex="1"
+	apply="org.zkoss.bind.BindComposer" 
+    viewModel="@id('vm') @init('Controller.EmBodyCheck.Embc_FileListController')"
+>
+<grid model="@load(vm.list)" vflex="1" mold="paging" pageSize="50">
+		<columns>
+			<column label="序号" width="60px" align="center"/>
+			<column label="体检医院" align="center"/>
+			<column label="医院地址" align="center"/>
+			<column label="状态" align="center" width="80px"/>
+			<column label="修改" align="center" width="80px"/>
+			<column label="下载" align="center" width="80px"/>
+		</columns>
+		<rows>
+			<template name="model">
+			<row>
+				<cell><label value="${forEachStatus.index+1 }"></label></cell>
+				<cell><label value="@load(each.ebcs_hospital)"></label></cell>
+				<cell><label value="@load(each.ebsa_address)"></label></cell>
+				<cell><label value="${each.file_state==1?'有效':'无效' }"></label></cell>
+				<cell><a onClick="@command('edit',model=each)"><label value="修改"></label></a></cell>
+				<cell><a onClick="@command('downloadfile',model=each)"><label value="下载"></label></a></cell>
+			</row>
+			</template>
+		</rows>
+	</grid>
+</window>
+</zk>

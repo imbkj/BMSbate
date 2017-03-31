@@ -1,0 +1,82 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winRsPay" title="档案个人收款" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.Archives.EmarchiveDatum_payController')"
+		border="normal" sizable="true" height="320px" width="800px"
+		closable="true" onCreate="@command('winD',a=self)">
+		<grid>
+			<columns visible="false">
+				<column width="120px" />
+				<column />
+				<column width="120px" />
+				<column />
+			</columns>
+			<rows>
+				<row>
+					<cell>所属月份</cell>
+					<cell colspan="3">
+						<monthbox readonly="true" mold="rounded"
+							format="yyyyMM" value="@bind(vm.ownmonth)" />
+					</cell>
+				</row>
+				<row>
+					<cell>公司名称</cell>
+					<cell colspan="3">
+						<label value="@load(vm.eam.coba_company)" />
+					</cell>
+				</row>
+				<row>
+					<cell>员工姓名</cell>
+					<cell>
+						<label value="@load(vm.eam.emba_name)" />
+					</cell>
+					<cell>档案类型</cell>
+					<cell>
+						<label value="@load(vm.eam.eada_filetype)" />
+					</cell>
+				</row>
+				<row>
+					<cell>档案所在地</cell>
+					<cell colspan="3">
+						<label value="@load(vm.eam.eada_fileplace)" />
+					</cell>
+				</row>
+				<row>
+					<cell>欠费情况</cell>
+					<cell colspan="3">
+						<label value="@load(vm.eam.eada_charge)" />
+					</cell>
+				</row>
+				<row>
+					<cell>收费方式</cell>
+					<cell>
+						<combobox value="@bind(vm.egm.emgt_paytype)"  mold="rounded"
+							readonly="true">
+							<comboitem label="现金交款" />
+							<comboitem label="银行存款" />
+							<comboitem label="POS机" />
+						</combobox>
+					</cell>
+					<cell>金额</cell>
+					<cell>
+						<decimalbox value="@bind(vm.egm.emgt_fee)"  mold="rounded"
+							format="#.##" />
+					</cell>
+				</row>
+
+				<row>
+					<cell>备注</cell>
+					<cell colspan="3">
+						<textbox width="80%" rows="3"  mold="rounded"
+							value="@bind(vm.egm.emgt_remark)" />
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer span="4" align="center">
+					<button label="提交" onClick="@command('submit')" />
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

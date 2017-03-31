@@ -1,0 +1,156 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window width="100%" height="100%" title="员工福利已确认名单" id="winEmp"
+		border="normal" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmBenefit.EmBenefit_commitListController')">
+		<borderlayout>
+			<north title="查询条件" open="false" >
+				<grid>
+					<rows>
+						<row>
+							<cell width="100px">公司</cell>
+							<cell>
+								<combobox id="company" mold="rounded"
+									model="@load(vm.cobaseList)"
+									onChange="@command('updateCompany',a=self)">
+									<template name="model">
+										<comboitem
+											value="@load(each.cid)" label="@load(each.emwf_company)" />
+									</template>
+								</combobox>
+							</cell>
+							<cell  width="100px">客服</cell>
+							<cell>
+								<combobox id="client" mold="rounded"
+									readonly="true" model="@load(vm.clientList)">
+									<template name="model">
+										<comboitem
+											label="@load(each.emwf_client)" />
+									</template>
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>姓名</cell>
+							<cell>
+								<combobox id="name" mold="rounded"
+									model="@load(vm.nameList)">
+									<template name="model">
+										<comboitem
+											label="@load(each.emwf_name)" />
+									</template>
+								</combobox>
+							</cell>
+							<cell>福利项目</cell>
+							<cell>
+								<combobox id="item" mold="rounded"
+									readonly="true" model="@load(vm.itemList)">
+									<template name="model">
+										<comboitem
+											value="@load(each.embf_id)" label="@load(each.embf_name)" />
+									</template>
+								</combobox>
+							</cell>
+						</row>
+					</rows>
+					<foot>
+						<footer align="center">
+							<button label="查询"
+								onClick="@command('submit')">
+							</button>
+							<button label="福利申请"
+								onClick="@command('addgift',gd=gdList,url='EmActy_GiftAdd.zul')">
+							</button>
+						</footer>
+					</foot>
+				</grid>
+			</north>
+			<center>
+				<grid id="gdList" height="100%" model="@load(vm.list)"
+					sizedByContent="true" span="true" mold="paging" pageSize="200"
+					emptyMessage="暂无数据">
+					<columns>
+						<column align="center">序号</column>
+						<column align="center">公司名称</column>
+						<column align="center">姓名</column>
+						<column align="center">身份证号</column>
+						<column align="center">入职时间</column>
+						<column align="center">礼品内容</column>
+						<column align="center">用途</column>
+						<column align="center">何时需要</column>
+						<column align="center">份数</column>
+						<column align="center">标准</column>
+						<column align="center">部门</column>
+						<column align="center">客服</column>
+						<column align="center">付款性质</column>
+						<column align="center">寄送方式</column>
+						<column align="center" ><checkbox onClick="@command('checkall',a=self)" /><label value="操作"/></column>
+					</columns>
+					<template name="model">
+						<row>
+							<cell>${forEachStatus.index+1 }</cell>
+							<cell>
+								<label value="@load(each.emwf_company)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emwf_name)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emwf_idcard)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emwf_intime)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emwf_content)" />
+							</cell>
+							<cell>
+								<label value="@load(each.embf_name)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emwf_need)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emwf_amount)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emwf_charge)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emwf_dept)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emwf_client)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emwf_paykind)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.emwf_delivery)" />
+							</cell>
+							
+							<cell>
+								<hlayout>
+								<checkbox value="@load(each)"/>
+								<separator />
+									<menubar autodrop="true" visible="true"
+										width="50px" sclass="mymb">
+										<menu
+											image="../images/pencil-small.png">
+											<menupopup>
+												<menuitem label="修改" onClick="@command('mod',a=each)" />
+											</menupopup>
+										</menu>
+									</menubar>
+								</hlayout>
+							</cell>
+						</row>
+					</template>
+					
+				</grid>
+			</center>
+
+		</borderlayout>
+	</window>
+</zk>

@@ -1,0 +1,49 @@
+<?page contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="win" title="系统短信模板修改" border="normal" height="350px" closable="true"
+		width="400px" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.SysMessage.SysMessageTem_ModController')">
+		<div height="100%">
+			<grid height="90%">
+				<columns>
+					<column width="25%" />
+					<column />
+				</columns>
+				<rows>
+					<row>
+						模板名称：
+						<textbox mold="rounded" width="35%"
+							value="@bind(vm.pmte_model)" />
+					</row>
+					<row>
+						业务类型：
+						<combobox readonly="true" mold="rounded"
+							model="@load(vm.wfclassList)" value="@bind(vm.pmte_class)">
+							<template name="model">
+								<comboitem
+									label="@load(each.wfcl_name)" />
+							</template>
+						</combobox>
+					</row>
+					<row>
+						模板类型:
+						<combobox readonly="true" mold="rounded" value="@bind(vm.pmte_type)">
+							<comboitem label="" />
+							<comboitem label="手机短信" />
+							<comboitem label="email" />
+							<comboitem label="系统短信" />
+						</combobox>
+					</row>
+					<row>
+						内容：
+						<textbox rows="6" hflex="1" value="@bind(vm.pmte_content)" />
+					</row>
+				</rows>
+			</grid>
+			<hbox width="100%" pack="center">
+				<button type="submit" label="保存"
+					onClick="@command('submit',win=win)" />
+			</hbox>
+		</div>
+	</window>
+</zk>

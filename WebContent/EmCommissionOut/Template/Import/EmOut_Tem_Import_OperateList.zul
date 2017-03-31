@@ -1,0 +1,82 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="委托确认" border="normal" width="100%" height="100%"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmCommissionOut.Template.Import.EmOut_Tem_Import_OperateListController')">
+		<borderlayout>
+			<north title="综合操作" collapsible="true" open="true">
+				<hbox width="100%" height="100%" pack="center"
+					align="center">
+					<button label="新增导入模板"
+						onClick="@command('openwin',url='/EmCommissionOut/Template/Import/EmOut_Tem_Import_add.zul')">
+					</button>
+				</hbox>
+			</north>
+			<center>
+				<grid hflex="1" vflex="1" emptyMessage="暂无数据"
+					model="@load(vm.sectList)" mold="paging">
+					<columns sizable="true">
+						<column align="center" label="模板名称">
+							<separator></separator>
+							<textbox width="80%" mold="rounded"
+								onFocus="self.select()" value="@bind(vm.ecut_name)"
+								onChange="@command('search')" />
+						</column>
+						<column align="center" label="导入的excel文件名">
+							<separator></separator>
+						</column>
+						<column align="center" label="状态">
+							<separator></separator>
+							<combobox value="@bind(vm.statename)"
+								readonly="true" width="50%" onChange="@command('search')">
+								<comboitem />
+								<comboitem label="可用" />
+								<comboitem label="禁用" />
+							</combobox>
+						</column>
+						<column align="center" label="添加人">
+							<separator></separator>
+						</column>
+						<column align="center" label="添加时间"
+							sort="auto(ecut_addtime)">
+
+						</column>
+						<column align="center" label="操作"
+							width="60px">
+						</column>
+					</columns>
+					<template name="model">
+						<row>
+							<label value="@load(each.ecut_name)" />
+							<label value="@load(each.ecut_excelname)" />
+							<cell>
+								<label value="@load(each.statename)"
+									style="color:blue" if="${each.ecut_state eq 1}" />
+								<label value="@load(each.statename)"
+									style="color:red" if="${each.ecut_state eq 0}" />
+							</cell>
+							<label value="@load(each.ecut_addname)" />
+							<label value="@load(each.addtime1)" />
+							<cell>
+								<menubar autodrop="true">
+									<menu
+										image="../../../images/pencil-small.png">
+										<menupopup>
+											<menuitem label="查看详情 "
+												onClick="@command('openwin',each=each,
+												url='/EmCommissionOut/Template/Import/EmOut_Tem_Import_Detail.zul')" />
+											<menuitem label="编辑详情"
+												onClick="@command('openwin',
+													url='/EmCommissionOut/Template/Import/EmOut_Tem_Import_Mod.zul',
+													each=each)" />
+										</menupopup>
+									</menu>
+								</menubar>
+							</cell>
+						</row>
+					</template>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

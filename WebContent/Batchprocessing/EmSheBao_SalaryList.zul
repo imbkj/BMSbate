@@ -1,0 +1,162 @@
+<!--
+	创建人：林少斌
+	创建时间：2015-7-29
+	用途：社保修改工资批量操作页面
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window id="winEmSBSalaryUp" title="员工信息导入" border="normal" width="100%" height="100%"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.Batchprocessing.EmSheBao_SalaryListController')">
+		<borderlayout>
+			<north title="导入模板" collapsible="true" open="true">
+				<grid width="100%" height="100%">
+					<rows>
+						<row>
+							<cell width="30%">修改工资模板:</cell>
+							<cell>
+								<button label="下载导入模板"
+									onClick="@command('downloadTemplet')" />
+							</cell>
+						</row>
+						<row>
+							<cell>文件上传:</cell>
+							<cell>
+								<textbox mold="rounded" rows="1"
+									readonly="true" value="@load(vm.uploadFlieName)" width="280px" />
+								<button label="浏览..."
+									upload="true,multiple=true" onUpload="@command('browse')" />
+								<button label="提交" id="btSubmit"
+									onClick="@command('upload',win=winEmSBSalaryUp)" />
+							</cell>
+						</row>
+						<row>
+							<cell colspan="2" align="center">
+								<label
+									value=" (注意：如果变更“修改工资”模板文件的格式，将无法正常导入数据！)" style="color:red" />
+							</cell>
+
+						</row>
+					</rows>
+
+				</grid>
+
+			</north>
+			<center>
+				<grid id="gridwin" width="100%" emptyMessage="暂无数据"
+					mold="paging" pageSize="300" height="100%" hflex="1"
+					style="border:0;">
+					<columns>
+						<column align="center">
+							全选
+							<checkbox id="selectAll"
+								onCheck="@command('selectall',ifchecked=self.checked)" />
+						</column>
+						<column sort="auto(cid)">
+							<vlayout>
+								<label>公司编号</label>
+								<textbox id="cocid" instant="true"
+									value=" " width="80%" onChange="@command('search')"
+									mold="rounded">
+								</textbox>
+							</vlayout>
+						</column>
+						<column sort="auto(cid)">
+							<vlayout>
+								<label>公司简称</label>
+								<textbox id="company" instant="true"
+									value=" " width="80%" onChange="@command('search')"
+									mold="rounded">
+								</textbox>
+							</vlayout>
+						</column>
+						<column>
+							<vlayout>
+								<label>员工编号</label>
+								<textbox id="gid" instant="true"
+									value=" " width="80%" onChange="@command('search')"
+									mold="rounded">
+								</textbox>
+							</vlayout>
+						</column>
+						<column>
+							<vlayout>
+								<label>姓名</label>
+								<textbox id="esiu_name" instant="true"
+									value=" " width="80%" onChange="@command('search')"
+									mold="rounded">
+								</textbox>
+							</vlayout>
+						</column>
+						<column>
+							<vlayout>
+								<label>身份证</label>
+								<textbox id="idcard" instant="true"
+									value=" " width="80%" onChange="@command('search')"
+									mold="rounded">
+								</textbox>
+							</vlayout>
+						</column>
+						<column>
+							<vlayout>
+								<label>电脑号</label>
+								<textbox id="computerid" instant="true"
+									value=" " width="80%" onChange="@command('search')"
+									mold="rounded">
+								</textbox>
+							</vlayout>
+						</column>
+						<column label="旧基数" align="center" />
+						<column label="新基数" align="center" />
+						<column label="客服" align="center" />
+						<column>
+							<vlayout>
+								<label>导入人</label>
+								<textbox id="addname" instant="true"
+									value=" " width="80%" onChange="@command('search')"
+									mold="rounded">
+								</textbox>
+							</vlayout>
+						</column>
+						<column label="导入时间" align="center" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<checkbox checked=" " value="1" />
+								<label value=" " />
+								<label value=" " />
+								<label value=" " />
+								<label value=" " />
+								<label value=" )" />
+								<label value=" )" />
+								<label value=" " />
+								<label value=" " />
+								<label value=" " />
+								<label value=" " />
+								<label value=" " />
+								<label value=" " />
+								<label value=" " />
+								<label value=" " />
+								<label value=" " />
+								<label value=" " />
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</center>
+			<south>
+				<grid width="100%" height="100%">
+					<rows>
+						<row>
+							<cell align="center">
+								<button label="提交"
+									onClick="@command('submit')" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</south>
+		</borderlayout>
+	</window>
+</zk>

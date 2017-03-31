@@ -1,0 +1,70 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winDocCompany" title="补充协议上传" border="normal"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoCompact.CoCompactSA.Compact_BcUploadController')"
+		closable="true" sizable="true" width="600px" height="240px">
+		<label value="${arg.cocoM.coli_coco_id}" id="coco_id"
+			visible="false" />
+		<borderlayout>
+			<north border="0" title="产品调整" collapsible="true"
+				flex="true">
+				<grid width="100%">
+					<rows>
+					<row>
+							<cell>
+								<label value="产品名称：" />
+							</cell>
+							<cell>
+								<label value="${arg.cocoM.coli_name}" />
+							</cell>
+						</row>
+					
+						<row>
+							<cell width="20%">
+								<label value="变更类型：" />
+							</cell>
+							<cell>
+								<combobox mold="rounded"
+									id="co_type" readonly="true" width="80px" onChange="">
+									<comboitem label="费用调整" />
+									<comboitem label="产品终止" />
+								</combobox>
+							</cell>
+						</row>
+
+						<row>
+							<cell>
+								<label value="生效时间：" />
+							</cell>
+							<cell>
+								<datebox width="120px" id="intime"
+									readonly="true" mold="rounded" constraint="no empty"
+									format="yyyyMM" />
+								<label style="color:red;">(*)</label>
+							</cell>
+						</row>
+
+						<row>
+							<cell>
+								<label value="文件目录：" />
+							</cell>
+							<cell>
+								<textbox mold="rounded" rows="1" width="200px"
+									readonly="true" value="@load(vm.filename)" />
+								<button label="浏览..."
+									upload="true,multiple=true" onUpload="@command('browse')" />
+							</cell>
+						</row>
+					</rows>
+					<foot>
+						<footer align="center">
+							<button label="提交" id="btSubmit"
+								onClick="@command('upload',class=intime,cocoid=coco_id,coli_id=coli_id,co_type=co_type)" />
+						</footer>
+					</foot>
+				</grid>
+			</north>
+		</borderlayout>
+	</window>
+</zk>

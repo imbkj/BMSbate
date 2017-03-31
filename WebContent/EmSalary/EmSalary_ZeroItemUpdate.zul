@@ -1,0 +1,163 @@
+<!--
+	创建人：林少斌
+	创建时间：2014-4-14
+	用途：非清零工资项目数据更新列表页面
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winUpIZ" title="非清零工资项目 -- 修改页面" border="normal"
+		width="100%" height="100%" closable="true"
+		apply="org.zkoss.bind.BindComposer"
+		onCreate="@command('createWin',win=self)"
+		viewModel="@id('vm') @init('Controller.EmSalary.EmSalary_ZeroItemUpdateController')">
+		<borderlayout>
+			<north title="非清零项目" border="none">
+				<grid width="100%" height="100%">
+					<rows>
+						<row>
+							<cell align="left" width="15%">
+								<label value="所属月份：" />
+							</cell>
+							<cell align="left">
+								<combobox id="ownmonthCb" width="25%"
+									readonly="true" model="@load(vm.ownmonthList)"
+									selectedItem="@load(vm.ownmonth)" autodrop="true"
+									mold="rounded"
+									onChange="@command('seach',ownmonthCb=ownmonthCb)">
+									<template name="model">
+										<comboitem label="@load(each)" />
+									</template>
+								</combobox>
+								<combobox id="cfin_id" width="25%"
+									readonly="true" model="@load(vm.formulaList)" autodrop="true"
+									mold="rounded" selectedItem="@load(vm.fModel)"
+									onChange="@command('seachFormula',ownmonthCb=ownmonthCb,cfin_id=cfin_id)">
+									<template name="model">
+										<comboitem
+											label="@load(each.cfin_name)" value="@load(each.cfin_id)" />
+									</template>
+								</combobox>
+							</cell>
+							<cell></cell>
+						</row>
+						<row>
+							<cell align="left" colspan="3">
+								<grid width="100%" height="100%">
+									<rows>
+										<row>
+											<cell width="80%">
+												<listbox id="itemList"
+													checkmark="true" multiple="true" width="100%"
+													height="180px" model="@load(vm.itemFormulaList)"
+													emptyMessage="无数据">
+													<listhead>
+														<listheader
+															width="10%" />
+														<listheader
+															label="项目名称" width="50%" />
+														<listheader
+															label="对应固定项目名" width="40%" />
+													</listhead>
+													<template
+														name="model">
+														<listitem>
+															<listcell></listcell>
+															<listcell>
+																<label
+																	value="@load(each.csii_item_name)" />
+															</listcell>
+															<listcell>
+																<label
+																	value="@load(each.csgi_content)" />
+															</listcell>
+														</listitem>
+													</template>
+												</listbox>
+											</cell>
+										</row>
+									</rows>
+								</grid>
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</north>
+			<center title="数据生成" border="none">
+				<hlayout height="95%" style="padding:10px">
+					<listbox id="lbEm" hflex="1" vflex="true"
+						model="@load(vm.emList)" emptyMessage="无工资数据">
+						<auxhead>
+							<auxheader label="员工列表" colspan="2" />
+						</auxhead>
+						<listhead>
+							<listheader label="员工姓名"
+								sort="auto(emba_name)" align="center" />
+							<listheader label="用途"
+								sort="auto(esda_usage_typestr)" align="center" />
+							<listheader label="算法名称"
+								sort="auto(esda_usage_typestr)" align="center" />
+						</listhead>
+						<template name="model">
+							<listitem
+								onDoubleClick="@command('choose',select = self)">
+								<listcell label="@load(each.emba_name)" />
+								<listcell
+									label="@load(each.esda_usage_typestr)" />
+								<listcell label="@load(each.cfin_name)" />
+							</listitem>
+						</template>
+					</listbox>
+					<vbox spacing="10px" width="24px">
+						<image style="cursor:pointer" id="chooseAllBtn"
+							src="../images/rightrightarrow_g.png"
+							onClick="@command('chooseAll')" />
+						<image style="cursor:pointer" id="chooseBtn"
+							src="../images/rightarrow_g.png"
+							onClick="@command('choose',select = lbEm.selectedItem)" />
+						<image style="cursor:pointer" id="removeBtn"
+							src="../images/leftarrow_g.png"
+							onClick="@command('remove',select = lbCreate.selectedItem)" />
+						<image style="cursor:pointer" id="removeAllBtn"
+							src="../images/leftleftarrow_g.png"
+							onClick="@command('removeAll')" />
+					</vbox>
+					<listbox id="lbCreate" hflex="1" vflex="true"
+						model="@load(vm.createList)" emptyMessage="请选择需要生成的数据">
+						<auxhead>
+							<auxheader label="分配列表" colspan="2" />
+						</auxhead>
+						<listhead>
+							<listheader label="员工姓名"
+								sort="auto(emba_name)" align="center" />
+							<listheader label="用途"
+								sort="auto(esda_usage_typestr)" align="center" />
+							<listheader label="算法名称"
+								sort="auto(cfin_name)" align="center" />
+						</listhead>
+						<template name="model">
+							<listitem
+								onDoubleClick="@command('remove',select = self)">
+								<listcell label="@load(each.emba_name)" />
+								<listcell
+									label="@load(each.esda_usage_typestr)" />
+								<listcell label="@load(each.cfin_name)" />
+							</listitem>
+						</template>
+					</listbox>
+				</hlayout>
+			</center>
+			<south border="none">
+				<grid>
+					<rows>
+						<row>
+							<cell align="center">
+								<button label="提交" id="btSubmit"
+									onClick="@command('submit',win=winUpIZ,itemList=itemList)" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</south>
+		</borderlayout>
+	</window>
+</zk>

@@ -1,0 +1,480 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="win" title="委托外地调整-修改" border="normal" width="950px"
+		height="580px" closable="true">
+		<div height="100%" width="100%"
+			apply="org.zkoss.bind.BindComposer"
+			viewModel="@id('vm') @init('Controller.EmCommissionOutNew.EmCommissionOut_ChangeReController')">
+			<script type="text/javascript" src="/js/Datebox.js"></script>
+			<borderlayout>
+				<center border="none" autoscroll="true">
+					<div>
+						<grid>
+							<columns>
+								<column width="15%" />
+								<column />
+								<column width="15%" />
+								<column />
+							</columns>
+							<rows>
+								<row>
+									<cell colspan="4">
+										<label value="委托单信息"
+											style="font-weight:bold" />
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<label value="员工编号"
+											style="color:#666" />
+									</cell>
+									<cell>
+										<label
+											value="@load(vm.wt_list.gid)" />
+									</cell>
+									<cell>
+										<label value="员工姓名"
+											style="color:#666" />
+									</cell>
+									<cell>
+										<label
+											value="@load(vm.wt_list.emba_name)" />
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<label value="服务费标准"
+											style="color:#666" />
+									</cell>
+									<cell>
+										<textbox
+											value="@load(vm.wt_list.type)" />
+										<combobox
+											model="@load(vm.wtout_stand)" readonly="true"
+											value="@load(vm.wt_list.type)"
+											onChange="@command('stardChange')" visible="false">
+											<template name="model">
+												<comboitem
+													label="@load(each.typename)"
+													value="@load(each.wtot_feeid)" />
+											</template>
+										</combobox>
+									</cell>
+									<cell>
+										<label value="当地标准"
+											style="color:#666" />
+									</cell>
+									<cell>
+										<combobox
+											model="@load(vm.wtout_title)" width="150px" readonly="true"
+											id="sb_title" value="@bind(vm.wt_list.soin_title)"
+											selectedItem="@bind(vm.wt_list.soin_title)"
+											onChange="@command('titleChange',sb_title=sb_title,sb_base=sb_base,house_base=house_base)">
+											<template name="model">
+												<comboitem
+													label="@load(each.typename)"
+													value="@load(each.wtot_feeid)" />
+											</template>
+										</combobox>
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<label value="社保账户"
+											style="color:#666" />
+									</cell>
+									<cell>
+										<label
+											value="@load(vm.wt_list.wtss_shebaoco)" />
+									</cell>
+									<cell>
+										<label value="费用支付方式"
+											style="color:#666" />
+									</cell>
+									<cell>
+										<label
+											value="@load(vm.wt_list.wtss_shebaopayty)" />
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<label value="公积金账户"
+											style="color:#666" />
+									</cell>
+									<cell>
+										<label
+											value="@load(vm.wt_list.wtss_gjjco)" />
+									</cell>
+									<cell>
+										<label value="费用支付方式"
+											style="color:#666" />
+									</cell>
+									<cell>
+										<label
+											value="@load(vm.wt_list.wtss_gjjpayty)" />
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<label value="档案"
+											style="color:#666" />
+									</cell>
+									<cell>
+										<label
+											value="@load(vm.wt_list.wtss_archives)" />
+
+									</cell>
+									<cell>
+										<label value="该员工是否保管档案"
+											style="color:#666" />
+									</cell>
+									<cell>
+										<combobox width="90px"
+											readonly="true" disabled="@load(vm.file_state)" id="ch1"
+											onChange="@command('fileChange',ch1=ch1)">
+											<comboitem label="是" />
+											<comboitem label="否" />
+										</combobox>
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<label value="合同签定方"
+											style="color:#666" />
+									</cell>
+									<cell>
+										<combobox width="90px"
+											readonly="true" id="wtss_la"
+											value="@load(vm.wt_list.wtss_laborcontract)">
+											<comboitem label="委托方" />
+											<comboitem label="受托方" />
+											<comboitem label="客户自签" />
+										</combobox>
+									</cell>
+									<cell>
+										<label value="工作电话"
+											style="color:#666" />
+									</cell>
+									<cell>
+										<label
+											value="@bind(vm.wt_list.ecoc_phone)" />
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<label value="个人手机"
+											style="color:#666" />
+									</cell>
+									<cell>
+										<label
+											value="@bind(vm.wt_list.ecoc_mobile)" />
+									</cell>
+									<cell>
+										<label value="户籍"
+											style="color:#666" />
+									</cell>
+									<cell>
+										<label
+											value="@load(vm.wt_list.ecoc_domicile)" />
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<label value="合同起始时间"
+											style="color:#666" />
+									</cell>
+									<cell>
+										<datebox width="130px"
+											value="@bind(vm.compact_f)" id="compact_f"
+											format="yyyy-MM-dd" onFocus="self.select()" />
+									</cell>
+									<cell>
+										<label value="合同结束时间"
+											style="color:#666" />
+									</cell>
+									<cell>
+										<combobox width="130px"
+											readonly="true" value="@bind(vm.compact_l_str)"
+											onChange="@command('compact_l_change')">
+											<comboitem label="有固定期限" />
+											<comboitem label="无固定期限" />
+										</combobox>
+										<datebox width="130px"
+											id="compact_l" visible="@load(vm.compact_l_vis)"
+											value="@bind(vm.compact_l)" format="yyyy-MM-dd"
+											onFocus="self.select()" />
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<label value="电子邮件"
+											style="color:#666" />
+									</cell>
+									<cell>
+										<label
+											value="@load(vm.wt_list.ecoc_email)" />
+									</cell>
+									<cell>
+										<label value="实际工资"
+											style="color:#666" />
+									</cell>
+									<cell>
+										<doublebox format=",###.##"
+											id="ecoc_salary" value="@bind(vm.wt_list.ecoc_salary)"
+											onFocus="self.select()" />
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<hbox>
+											<label value="备注"
+												style="color:#666" />
+											<label value="(*)"
+												style="color:red" />
+										</hbox>
+									</cell>
+									<cell colspan="3">
+										<textbox rows="3" hflex="1"
+											id="remark" value="@bind(vm.wt_list.ecoc_remark)" />
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<label value="社保基数"
+											style="color:#666" />
+									</cell>
+									<cell>
+										<doublebox format=",###.##"
+											id="sb_base" value="@bind(vm.wt_list.ecoc_sb_base)"
+											onChange="@command('sb_baseChange',sb_base=sb_base,house_base=house_base,sb_title=sb_title)"
+											onFocus="self.select()" constraint="no empty" />
+									</cell>
+									<cell>
+										<label value="公积金基数"
+											style="color:#666" />
+									</cell>
+									<cell>
+										<doublebox format=",###.##"
+											id="house_base" value="@bind(vm.wt_list.ecoc_house_base)"
+											onChange="@command('sb_baseChange',sb_base=sb_base,house_base=house_base)"
+											onFocus="self.select()" constraint="no empty" />
+									</cell>
+								</row>
+								<row>
+									<cell colspan="4">
+										<label value="项目明细"
+											style="font-weight:bold" />
+									</cell>
+								</row>
+								<row>
+									<cell colspan="4">
+										<grid width="100%" id="g2"
+											model="@load(vm.wtout_feedetail)">
+											<columns>
+												<column label="项目"
+													align="center" />
+												<column label="企业基数"
+													align="center" />
+												<column label="个人基数"
+													align="center" />
+												<column label="企业比例"
+													align="center" />
+												<column label="个人比例"
+													align="center" />
+												<column label="企业缴费"
+													align="center" />
+												<column label="个人缴费"
+													align="center" />
+												<column label="月缴费"
+													align="center" />
+												<column label="起始日"
+													align="center" />
+												<column label=""
+													width="20px">
+													<hlayout
+														style="cursor:pointer"
+														onClick="@command('dateAll',g2=g2)">
+														<image
+															src="/images/130.gif">
+														</image>
+													</hlayout>
+												</column>
+											</columns>
+											<rows>
+												<template
+													name="model">
+													<row>
+														<cell>
+															<label
+																value="@load(each.eofc_name)" />
+														</cell>
+														<cell>
+															<textbox
+																value="@bind(each.eofc_co_base)"
+																onChange="@command('base_per_change',abase=each,sb_base=sb_base,house_base=house_base,cop_st=1)"
+																width="70px" />
+
+														</cell>
+														<cell>
+															<textbox
+																value="@bind(each.eofc_em_base)"
+																onChange="@command('base_per_change',abase=each,sb_base=sb_base,house_base=house_base,cop_st=2)"
+																width="70px" />
+														</cell>
+														<cell>
+															<label
+																if="${each.eofc_name!='住房公积金' and each.eofc_name!='补充公积金' ?true:false}"
+																value="@load(each.eofc_cp)" />
+															<combobox
+																model="@load(vm.housecp_de)"
+																if="${each.eofc_name=='住房公积金'?true:false}"
+																readonly="true" hflex="1" value="@bind(each.eofc_cp)"
+																width="20px" selectedItem="@bind(each.eofc_cp)"
+																onChange="@command('base_per_change',abase=each,sb_base=sb_base,house_base=house_base,cop_st=1)">
+																<template
+																	name="model">
+																	<comboitem
+																		label="@load(each.eofc_content)"
+																		value="@load(each.eofc_content)" />
+																</template>
+															</combobox>
+
+															<combobox
+																model="@load(vm.bchousecp_de)"
+																if="${each.eofc_name=='补充公积金'?true:false}"
+																readonly="true" hflex="1" value="@bind(each.eofc_cp)"
+																width="20px" selectedItem="@bind(each.eofc_cp)"
+																onChange="@command('base_per_change',abase=each,sb_base=sb_base,house_base=house_base,cop_st=1)">
+																<template
+																	name="model">
+																	<comboitem
+																		label="@load(each.eofc_content)"
+																		value="@load(each.eofc_content)" />
+																</template>
+															</combobox>
+														</cell>
+														<cell>
+															<label
+																if="${each.eofc_name!='住房公积金' and each.eofc_name!='补充公积金' ?true:false}"
+																value="@load(each.eofc_op)" />
+															<combobox
+																model="@load(vm.housecp_de)"
+																if="${each.eofc_name=='住房公积金'?true:false}"
+																readonly="true" hflex="1" value="@bind(each.eofc_op)"
+																width="20px" selectedItem="@bind(each.eofc_op)"
+																onChange="@command('base_per_change',abase=each,sb_base=sb_base,house_base=house_base,cop_st=2)">
+																<template
+																	name="model">
+																	<comboitem
+																		label="@load(each.eofc_content)"
+																		value="@load(each.eofc_content)" />
+																</template>
+															</combobox>
+
+															<combobox
+																model="@load(vm.bchousecp_de)"
+																if="${each.eofc_name=='补充公积金'?true:false}"
+																readonly="true" hflex="1" value="@bind(each.eofc_op)"
+																width="20px" selectedItem="@bind(each.eofc_op)"
+																onChange="@command('base_per_change',abase=each,sb_base=sb_base,house_base=house_base,cop_st=2)">
+																<template
+																	name="model">
+																	<comboitem
+																		label="@load(each.eofc_content)"
+																		value="@load(each.eofc_content)" />
+																</template>
+															</combobox>
+														</cell>
+														<cell>
+															<label
+																value="@load(each.eofc_co_sum)" />
+														</cell>
+														<cell>
+															<label
+																value="@load(each.eofc_em_sum)" />
+														</cell>
+														<cell>
+															<label
+																value="@load(each.eofc_month_sum)" />
+														</cell>
+														<cell>
+															<monthbox
+																width="80px" value="@bind(each.eofc_addtime)"
+																format="yyyy-MM-dd" mold="rounded"
+																onFocus="self.select()" sclass="datebox-month-only" />
+														</cell>
+														<cell>
+															<label
+																value="" />
+														</cell>
+													</row>
+												</template>
+
+											</rows>
+										</grid>
+									</cell>
+								</row>
+							</rows>
+							<foot>
+								<footer span="9" align="center">
+									<vlayout>
+										<hlayout>
+											社保企业合计:
+											<label
+												value="@load(vm.wt_list.ecoc_sb_co_sum)" />
+											<space bar="true"
+												orient="vertical" />
+											社保个人合计:
+											<label
+												value="@load(vm.wt_list.ecoc_sb_em_sum)" />
+											<space bar="true"
+												orient="vertical" />
+											社保合计:
+											<label
+												value="@load(vm.wt_list.ecoc_sb_sum)" />
+											<space bar="true"
+												orient="vertical" />
+											公积金企业合计:
+											<label
+												value="@load(vm.wt_list.ecoc_gjj_co_sum)" />
+											<space bar="true"
+												orient="vertical" />
+											公积金个人合计:
+											<label
+												value="@load(vm.wt_list.ecoc_gjj_em_sum)" />
+											<space bar="true"
+												orient="vertical" />
+											公积金合计:
+											<label
+												value="@load(vm.wt_list.ecoc_gjj_sum)" />
+										</hlayout>
+										<hlayout>
+											福利项目合计:
+											<label
+												value="@load(vm.wt_list.ecoc_welfare_sum)" />
+											<space bar="true"
+												orient="vertical" />
+											合同总额:
+											<label style="color:red"
+												value="@load(vm.wt_list.ecoc_sum)" />
+										</hlayout>
+									</vlayout>
+								</footer>
+							</foot>
+						</grid>
+					</div>
+				</center>
+				<south>
+					<hbox width="100%" align="center" pack="center">
+						<hlayout>
+							<button label="提交"
+								onClick="@command('submit',ecoc_salary=ecoc_salary,sb_base=sb_base,house_base=house_base,sb_title=sb_title,remark=remark,g2=g2,ch1=ch1,wtss_la=wtss_la,compact_f=compact_f,compact_l=compact_l,win=win)" />
+							<button label="终止任务单"
+								onClick="@command('over',win=win)" />
+						</hlayout>
+					</hbox>
+				</south>
+			</borderlayout>
+		</div>
+	</window>
+</zk>

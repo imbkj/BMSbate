@@ -1,0 +1,76 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="档案变更(交单)" id="windata" width="100%" height="220px"
+		closable="true" border="normal" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmHouse.EmHouse_ChangeGjjSubController')"
+		onCreate="@command('winC',a=self)">
+
+		<groupbox title="档案交单变更列表" height="100%">
+			<grid model="@load(vm.gjjlist)" height="100%"
+				emptyMessage="暂无数据">
+				<columns>
+					<column align="center">所属月份</column>
+					<column align="center">变更类型</column>
+					<column align="center">变更内容</column>
+					<column align="center">申报状态</column>
+					<column align="center">添加时间</column>
+					<column align="center">添加人</column>
+					<column align="center">短信</column>
+					<column align="center">操作</column>
+				</columns>
+				<template name="model">
+					<row>
+						<cell>
+							<label value="@load(each.ownmonth)" />
+						</cell>
+						<cell>
+							<label value="@load(each.ehcg_change)" />
+						</cell>
+						<cell tooltiptext="@load(each.ehcg_content)">
+							<label maxlength="12"
+								value="@load(each.ehcg_content)" />
+						</cell>
+						<cell>
+							<label value="@load(each.statename)" />
+						</cell>
+						<cell>
+							<label value="@load(each.ehcg_addtime)" />
+						</cell>
+						<cell>
+							<label value="@load(each.ehcg_addname)" />
+						</cell>
+						<cell>
+							<image style="cursor:pointer"
+								src="../images/noread.gif" onClick="@command('message',a=each)"
+								if="${each.message==true and each.readState==false }" />
+							<image src="../images/readed.gif"
+								style="cursor:pointer" onClick="@command('message',a=each)"
+								if="${each.message==true and each.readState==true }" />
+						</cell>
+						<cell>
+							<div align="center">
+								<menubar autodrop="true" width="50px"
+									sclass="mymb">
+									<menu
+										image="../images/pencil-small.png">
+										<menupopup>
+											<menuitem label="修改"
+												onClick="@command('info',a=each)" />
+											<menuitem label="重新发送"
+												onClick="@command('send',a=each)" />
+											<menuitem label="删除"
+												if="${each.ehcg_ifdeclare==0 or each.ehcg_ifdeclare==3 or each.ehcg_ifdeclare==4 }"
+												onClick="@command('gjjDel',a=each)" />
+										</menupopup>
+									</menu>
+								</menubar>
+							</div>
+						</cell>
+					</row>
+				</template>
+
+			</grid>
+		</groupbox>
+
+	</window>
+</zk>

@@ -1,0 +1,166 @@
+<!--
+	创建人：林少斌
+	创建时间：2013-10-16
+	用途：公司合同查询页面
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="公司合同 -- 查询页面" border="normal" width="100%"
+		height="100%" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoCompact.BaseInfo_SelectListController')">
+		<borderlayout vflex="1">
+			<north border="0" title="数据查询" collapsible="true"
+				flex="true" open="true">
+				<panel border="1">
+					<panelchildren style="padding:5px;">
+						<grid id="searchGird" width="100%">
+							<rows>
+								<row>
+									<cell width="100px"
+										style="color:#666;">
+										公司名称
+									</cell>
+									<textbox id="coco_company"
+										width="150px" value="@bind(vm.coco_company)" mold="rounded" />
+									<cell width="100px"
+										style="color:#666;">
+										合同编号
+									</cell>
+									<textbox id="coco_compactid"
+										width="150px" value="@bind(vm.coco_compactid)" mold="rounded" />
+								</row>
+								<row>
+									<cell width="100px"
+										style="color:#666;">
+										合同标准
+									</cell>
+									<combobox id="coco_type" 	value="@bind(vm.coco_type)" width="50%" autodrop="true"
+										mold="rounded">
+											<comboitem
+												label="标准版" />
+												<comboitem
+												label="一般非标" />
+												<comboitem
+												label="特殊非标" />
+												<comboitem
+												label="客户提供" />
+									</combobox>
+									
+									<cell width="100px"
+										style="color:#666;">
+										客服
+									</cell>
+									<combobox id="coco_client"
+										model="@load(vm.cocoAddnameList)"
+										value="@bind(vm.coco_client)" width="50%" autodrop="true"
+										mold="rounded">
+										<template name="model">
+											<comboitem
+												label="@load(each.coco_addname)" />
+										</template>
+									</combobox>
+								</row>
+								<row>
+									<cell width="100px"
+										style="color:#666;">
+										开发人员
+									</cell>
+									<combobox id="coco_addname"
+										model="@load(vm.cocoAddnameList)"
+										value="@bind(vm.coco_addname)" width="50%" autodrop="true"
+										mold="rounded">
+										<template name="model">
+											<comboitem
+												label="@load(each.coco_addname)" />
+										</template>
+									</combobox>
+									<cell width="100px"
+										style="color:#666;">
+										状态
+									</cell>
+									<combobox id="coco_state"
+										width="50%" selectedItem="@bind(vm.coco_state)"
+										autodrop="true" mold="rounded">
+										<comboitem label="待制作合同"
+											value="0" />
+										<comboitem label="已制作合同"
+											value="1" />
+										<comboitem label="已审核"
+											value="2" />
+										<comboitem label="已打印"
+											value="3" />
+										<comboitem label="已签回"
+											value="4" />
+										<comboitem label="已归档"
+											value="5" />
+									</combobox>
+								</row>
+							</rows>
+							<foot>
+								<footer align="center">
+									<button id="btSearch" label="查询"
+										onClick="@command('search')" />
+								</footer>
+							</foot>
+						</grid>
+					</panelchildren>
+				</panel>
+			</north>
+			<center>
+				<grid width="100%" height="100%"
+					model="@load(vm.cocoBaseList)" emptyMessage="无数据" mold="paging"
+					pageSize="20">
+					<columns sizable="true">
+						<column label="序号" align="center" width="60px" />
+						<column label="公司名称" align="center"
+							sort="auto(company)" />
+						<column label="合同编号" align="center"
+							sort="auto(coco_compactid)" />
+						<column label="合同类型" align="center"
+							sort="auto(coco_compacttype)" />
+						<column label="合同标准" align="center"
+							sort="auto(coco_class)" />
+						<column label="金额" align="center"
+							sort="auto(coof_fee)" />
+						<column label="开发人" align="center"
+							sort="auto(coco_addname)" />
+						<column label="客服" align="center"
+							sort="auto(coba_shortname)" />
+						<column label="备注" align="center"
+							sort="auto(coco_remark)" />
+						<column label="状态" align="center"
+							sort="auto(state)" />
+						<column label="操作" align="center" width="100px" />
+						<column label="预览" align="center" width="100px" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<label
+									value="${forEachStatus.index + 1}" />
+								<label value="@load(each.company)" />
+								<label
+									value="@load(each.coco_compactid)" />
+								<label
+									value="@load(each.coco_compacttype)" />
+								<label value="@load(each.coco_class)" />
+								<label value="@load(each.coof_fee)" />
+								<label value="@load(each.coco_addname)" />
+								<label
+									value="@load(each.coba_shortname)" />
+								<label value="@load(each.coco_remark)" />
+								<label value="@load(each.state)" />
+								<label
+									style="cursor:pointer; color:#666;" value="详细"
+									onClick="@command('openCoCompact_Detail', cocoM=each)" />
+									<label
+									style="cursor:pointer; color:#666;" value="文档预览"
+									onClick="@command('openCoCompact_word', cocoM=each)" />
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

@@ -1,0 +1,50 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="员工社保卡新增列表" border="normal"
+		apply="org.zkoss.bind.BindComposer" height="100%" width="100%"
+		viewModel="@id('vm') @init('Controller.EmSocialinPaper.EmSocialinPaper_AddListController')">
+		<grid height="100%" width="100%" mold="paging"
+			emptyMessage="暂无数据" model="@load(vm.sembaseList)">
+			<columns>
+				<column align="center" label="公司编号" width="80px">
+					<separator></separator>
+					<textbox mold="rounded" width="80%" instant="true"
+						value="@bind(vm.cid)" onChange="@command('search')" />
+				</column>
+				<column align="center" label="公司简称">
+					<separator></separator>
+					<textbox mold="rounded" width="80%" instant="true"
+						value="@bind(vm.company)" onChange="@command('search')" />
+				</column>
+				<column align="center" label="员工编号" width="80px">
+					<separator></separator>
+					<textbox mold="rounded" width="80%" instant="true"
+						value="@bind(vm.gid)" onChange="@command('search')" />
+				</column>
+				<column align="center" label="姓名">
+					<separator></separator>
+					<textbox mold="rounded" width="80%" instant="true"
+						value="@bind(vm.name)" onChange="@command('search')" />
+				</column>
+				<column align="center" label="身份证号"></column>
+				<column align="center" label="电脑号"></column>
+				<column align="center" label="社保状态"></column>
+				<column align="center" label="操作" width="60px"></column>
+			</columns>
+			<template name="model">
+				<row>
+					<label value="@load(each.cid)" />
+					<label value="@load(each.coba_company)" />
+					<label value="@load(each.gid)" />
+					<label value="@load(each.emba_name)" />
+					<label value="@load(each.emba_idcard)" />
+					<label value="@load(each.emba_computerid)" />
+					<label value="已参加社保" />
+					<toolbarbutton label="办卡"
+						style="color:blue;font-size:8pt"
+						onClick="@command('add',daid=each.emba_id)" />
+				</row>
+			</template>
+		</grid>
+	</window>
+</zk>

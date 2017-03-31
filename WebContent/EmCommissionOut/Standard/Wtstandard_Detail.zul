@@ -1,0 +1,264 @@
+<?page title="委托标准新增" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winwtdetial" title="委托标准详情" border="normal" width="680px"
+		closable="true" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmCommissionOut.Standard.Wtstandard_DetailController')">
+		<div height="100%">
+			<grid vflex="1">
+				<columns>
+					<column width="15%" />
+					<column />
+					<column width="15%" />
+					<column />
+				</columns>
+				<rows>
+					<row>
+						<cell>
+							<label value="公司名称" style="color:#666" />
+						</cell>
+						<cell>
+							<label value="@bind(vm.com.coba_company)" />
+						</cell>
+						<cell>
+							<label value="公司编号" style="color:#666" />
+						</cell>
+						<cell>
+							<label value="@bind(vm.com.cid)" />
+						</cell>
+					</row>
+					<row>
+						<cell>
+							<label value="标准名称" style="color:#666" />
+						</cell>
+						<cell colspan="3">
+							<textbox value="@bind(vm.m.wtss_title)" />
+						</cell>
+					</row>
+					<row>
+						<cell>
+							<label value="合同性质" style="color:#666" />
+						</cell>
+						<cell>
+							<combobox readonly="true"
+								model="@load(vm.htxztypeList)"
+								value="@bind(vm.m.wtss_compacttype)">
+								<template name="model">
+									<comboitem label="@load(each)" />
+								</template>
+							</combobox>
+						</cell>
+						<cell>
+							<label value="办理用工" style="color:#666" />
+						</cell>
+						<cell>
+								<combobox readonly="true"
+								model="@load(vm.ygtypeList)"
+								value="@bind(vm.m.wtss_employment)">
+								<template name="model">
+									<comboitem label="@load(each)" />
+								</template>
+							</combobox>
+						</cell>
+					</row>
+				
+					<row>
+						<cell>
+							<label value="劳动合同签订方" style="color:#666" />
+						</cell>
+						<cell>
+							<combobox readonly="true"
+								model="@load(vm.ldhtqdtypeList)"
+								value="@bind(vm.m.wtss_laborcontract)">
+								<template name="model">
+									<comboitem label="@load(each)" />
+								</template>
+							</combobox>
+						</cell>
+						<cell>
+							<label value="劳动合同版本" style="color:#666" />
+						</cell>
+						<cell>
+							<combobox readonly="true"
+								model="@load(vm.ldhtbbtypeList)"
+								value="@bind(vm.m.wtss_laborcontractbb)">
+								<template name="model">
+									<comboitem label="@load(each)" />
+								</template>
+							</combobox>
+						</cell>
+					</row>
+					<row>
+						<cell>
+							<label value="社保缴纳" style="color:#666" />
+						</cell>
+						<cell>
+							<combobox readonly="true"
+								model="@load(vm.sbzhtypeList)"
+								value="@bind(vm.m.wtss_shebaoco)">
+								<template name="model">
+									<comboitem label="@load(each)" />
+								</template>
+							</combobox>
+						</cell>
+						<cell>
+							<label value="公积金缴纳" style="color:#666" />
+						</cell>
+						<cell>
+							<combobox readonly="true"
+								model="@load(vm.gjjzhtypeList)"
+								value="@bind(vm.m.wtss_gjjco)">
+								<template name="model">
+									<comboitem label="@load(each)" />
+								</template>
+							</combobox>
+						</cell>
+					</row>
+					<row>
+					<cell>
+							<label value="补充公积金缴纳" style="color:#666" />
+						</cell>
+						<cell>
+							<combobox readonly="true"
+								model="@load(vm.bcgjjtypeList)"
+								value="@bind(vm.m.wtss_vcgjjco)">
+								<template name="model">
+									<comboitem label="@load(each)" />
+								</template>
+							</combobox>
+						</cell>
+						<cell>
+							<label value="档案" style="color:#666" />
+						</cell>
+						<cell>
+								<combobox readonly="true"
+								model="@load(vm.dafeetypeList)"
+								value="@bind(vm.m.wtss_archives)">
+								<template name="model">
+									<comboitem label="@load(each)" />
+								</template>
+							</combobox>
+						</cell>
+					</row>
+					<row>
+						<cell>
+							<label value="社保支付方式" style="color:#666" />
+						</cell>
+						<cell>
+								<combobox readonly="true"
+								model="@load(vm.sbfeetypeList)"
+								value="@bind(vm.m.wtss_shebaopayty)">
+								<template name="model">
+									<comboitem label="@load(each)" />
+								</template>
+							</combobox>
+						</cell>
+						<cell>
+							<label value="公积金支付方式" style="color:#666" />
+						</cell>
+						<cell>
+							<combobox readonly="true"
+								model="@load(vm.gjjfeetypeList)"
+								value="@bind(vm.m.wtss_gjjpayty)">
+								<template name="model">
+									<comboitem label="@load(each)" />
+								</template>
+							</combobox>
+						</cell>
+					</row>
+					
+					<row>
+						<cell>
+							<label value="商业医疗保险服务方" style="color:#666" />
+						</cell>
+						<cell>
+								<combobox readonly="true"
+								model="@load(vm.sybxfwtypeList)"
+								value="@bind(vm.m.wtss_commercial)">
+								<template name="model">
+									<comboitem label="@load(each)" />
+								</template>
+							</combobox>
+						</cell>
+						<cell>
+							<label value="补充福利服务方" style="color:#666" />
+						</cell>
+						<cell>
+						
+								<combobox readonly="true"
+								model="@load(vm.bcfltypeList)"
+								value="@bind(vm.m.wtss_bcwelfare)">
+								<template name="model">
+									<comboitem label="@load(each)" />
+								</template>
+							</combobox>
+						</cell>
+					</row>
+					
+		
+						<row>
+						<cell>
+							<label value="商业医疗保险服务方说明" style="color:#666" />
+						</cell>
+						<cell colspan="3">
+							<textbox rows="5" hflex="1"
+								value="@bind(vm.m.wtss_commercialramark)" />
+						</cell>
+					</row>
+						<row>
+						<cell>
+							<label value="补充福利服务方说明" style="color:#666" />
+						</cell>
+						<cell colspan="3">
+							<textbox rows="5" hflex="1"
+								value="@bind(vm.m.wtss_bcwelfareremark)" />
+						</cell>
+					</row>
+						
+					
+									
+										<row>
+						<cell>
+							<label value="代发工资服务方" style="color:#666" />
+						</cell>
+						<cell>
+							
+								<combobox readonly="true"
+								model="@load(vm.dfgztypeList)"
+								value="@bind(vm.m.wtss_payroll)">
+								<template name="model">
+									<comboitem label="@load(each)" />
+								</template>
+							</combobox>
+						</cell>
+						<cell>
+							<label value="代交个税服务方" style="color:#666" />
+						</cell>
+						<cell>
+								<combobox readonly="true"
+								model="@load(vm.dbgstyptList)"
+								value="@bind(vm.m.wtss_tax)">
+								<template name="model">
+									<comboitem label="@load(each)" />
+								</template>
+							</combobox>
+						</cell>
+					</row>
+					
+					<row>
+						<cell>
+							<label value="服务要求" style="color:#666" />
+						</cell>
+						<cell colspan="3">
+							<textbox rows="5" hflex="1"
+								value="@bind(vm.m.wtss_remark)" />
+						</cell>
+					</row>
+				</rows>
+			</grid>
+			<hbox width="100%" pack="center" align="center">
+				<button label="提交" 
+					onClick="@command('submit',win=winwtdetial)" visible="false"/>
+			</hbox>
+		</div>
+	</window>
+</zk>

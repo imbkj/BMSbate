@@ -1,0 +1,56 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="生成报盘" border="normal" width="76%" height="80%"
+		closable="true" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmFinanceManage.Finance_GatherInfoListController')">
+		<div style="margin-bottom:10px;margin-top:10px">
+			<label style="margin-left:50px">制表时间：</label><datebox value="@bind(vm.makeDate)"></datebox>
+			<label style="margin-left:50px">起始凭单号：</label><intbox value="@bind(vm.firstNumber)"></intbox>
+			<label style="margin-left:50px">总金额：</label><label value="@load(vm.total)"></label>
+		</div>
+		<grid vflex="1" model="@load(vm.colist)" id="gd" mold="paging" emptyMessage="没有数据"
+			pageSize="100">
+			<columns>
+				<column align="center" width="60px"><checkbox></checkbox></column>
+				<column label="序号" align="center" width="40px" />
+				<column label="公司编号" align="center" width="120px" />
+				<column label="公司简称" align="center" />
+				<column label="客服" align="center" width="100px" />
+				<column label="用友编号" align="center" />
+				<column label="客户类型" align="center" width="250px" />
+				<column label="账单类型" align="center" width="250px" />
+				<column label="操作" align="center" width="60px" />
+			</columns>
+			<rows>
+				<template name="model">
+					<row style="border:1px dotted #cad9ea;background-color:#f5fafe;cursor:pointer">
+						<cell if="${each.group_firstrow eq 1 }" rowspan="${each.group_count }"><checkbox value="@load(each)"></checkbox></cell>
+						<cell if="${each.group_firstrow eq 1 }" rowspan="${each.group_count }">
+							<label value="${forEachStatus.index+1}">
+							</label>
+						</cell>
+						<cell>
+							<label value="@load(each.cid)"></label>
+						</cell>
+						<cell>
+							<label value="@load(each.coba_shortname)"></label>
+						</cell>
+						<cell>
+							<label value="@load(each.coba_client)"></label>
+						</cell>
+						<cell><label value="@load(each.coba_ufid)"></label></cell>
+						<cell><label value="@load(each.coba_clientclass)"></label></cell>
+						<cell><label value="@load(each.cfss_type)"></label></cell>
+						<cell><a onClick="@command('editUfid',model=each)"><label>修改</label></a></cell>
+					</row>
+				</template>
+			</rows>
+			<foot>
+				<footer span="22" align="center">
+					<button onClick="@command('downfile')">导出文件</button>
+					<button onClick="@command('merge',gd=gd)" visible="false">合并</button>
+				</footer>
+			</foot>
+		</grid>
+	</window>
+	</zk>

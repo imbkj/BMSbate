@@ -1,0 +1,145 @@
+<!--
+	创建人：林少斌
+	创建时间：2015-4-23
+	用途：独立户补交数据下载PDF页面
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winBJDownload" title="社会保险 -- 独立户补交数据下载PDF页面"
+		border="normal" width="800px" height="80%"
+		apply="org.zkoss.bind.BindComposer" closable="true"
+		viewModel="@id('vm') @init('Controller.EmSheBao.Emsc_BJFileDownloadController')">
+		<div height="98%" style="overflow-y:scroll">
+			<groupbox>
+				<caption label="下载文件" />
+				<grid style="border:0px">
+					<rows>
+						<row>
+							<cell width="20%">
+								<label value="文件名称：" />
+							</cell>
+							<cell>
+								<textbox mold="rounded" rows="1"
+									readonly="true" width="280px"
+									value="@load(vm.bjModel.emsb_uploadfile)" />
+							</cell>
+						</row>
+						<row>
+							<cell colspan="2" align="center">
+								<button label="下载"
+									onClick="@command('download')" />
+								<button label="转下一步"
+									onClick="@command('submit',win=winBJDownload)" />
+								<button label="退回"
+									onClick="@command('bjReturn',win=winBJDownload,remark=remark)" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox>
+				<caption label="个人信息" />
+				<grid style="border:0px">
+					<rows>
+						<row>
+							<cell width="20%">
+								<label value="公司编号" />
+							</cell>
+							<cell>
+								<label value="@load(vm.bjModel.cid)" />
+							</cell>
+							<cell width="20%">
+								<label value="员工编号" />
+							</cell>
+							<cell>
+								<label value="@load(vm.bjModel.gid)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="所属公司" />
+							</cell>
+							<cell colspan="3">
+								<label
+									value="@load(vm.bjModel.emsb_company)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="所属月份" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.bjModel.ownmonth)" />
+							</cell>
+							<cell>
+								<label value="个人电脑号" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.bjModel.emsb_computerid)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="姓名" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.bjModel.emsb_name)" />
+							</cell>
+							<cell>
+								<label value="身份证号" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.bjModel.emsb_idcard)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="补缴月份" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.bjModel.emsb_startmonth)" />
+							</cell>
+							<cell>
+								<label value="补缴基数" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.bjModel.emsb_radix)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="添加人" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.bjModel.emsb_addname)" />
+							</cell>
+							<cell>
+								<label value="添加时间" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.bjModel.emsb_addtime)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="备注" />
+							</cell>
+							<cell colspan="3">
+								<textbox rows="4" id="remark"
+									value="@load(vm.bjModel.emsb_remark)" width="70%" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+		</div>
+	</window>
+</zk>

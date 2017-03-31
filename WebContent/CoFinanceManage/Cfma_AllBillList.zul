@@ -1,0 +1,75 @@
+<?page title="账单列表" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="账单列表" border="normal" width="99%" height="99%"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoFinanceManage.Cfma_AllBillListController')"
+		closable="true" sizable="true">
+		<grid span="true" mold="paging" model="@load(vm.mbList)"
+			pageSize="30" emptyMessage="无数据" sizedByContent="true" hflex="1"
+			vflex="1">
+			<columns sizable="true">
+				<column label="所属月份" sort="auto(ownmonth)"
+					align="center" />
+				<column label="公司名称" sort="auto(company)"
+					align="center" />
+				<column label="账单号" sort="auto(cfmb_number)"
+					align="center" />
+				<column label="账单描述" sort="auto(cfmb_name)"
+					align="center" />
+				<column label="人事应收"
+					sort="auto(cfmb_PersonnelReceivable)" align="center" />
+				<column label="财务应收" sort="auto(cfmb_FinanceReceivable)"
+					align="center" />
+				<column label="实收金额" sort="auto(cfmb_TotalPaidIn)"
+					align="center" />
+				<column label="垫款金额" sort="auto(cfmb_LoanBalance)"
+					align="center" />
+				<column label="结转金额" sort="auto(cfmb_CarryForwardEx)"
+					align="center" />
+				<column label="差额" sort="auto(imbalance)"
+					align="center" />
+				<column label="人事应收确认"
+					sort="auto(cfmb_PersonnelConfirm)" align="center" />
+				<column label="财务应收确认" sort="auto(cfmb_FinanceConfirm)"
+					align="center" />
+				<column label="销账情况" sort="auto(cfmb_WriteOffs)"
+					align="center" />
+			</columns>
+			<rows>
+				<template name="model">
+					<row>
+						<label value="@load(each.ownmonth)" />
+						<label value="@load(each.company)" />
+						<label value="@load(each.cfmb_number)"
+							style="cursor:pointer;color:#00F;"
+							onClick="@command('viewBill',billNo=self.value)" />
+						<label value="@load(each.cfmb_name)" />
+						<label
+							value="@load(each.cfmb_PersonnelReceivable)" />
+						<label
+							value="@load(each.cfmb_FinanceReceivable)" />
+						<label value="@load(each.cfmb_TotalPaidIn)" />
+						<label value="@load(each.cfmb_LoanBalance)" />
+						<label value="@load(each.cfmb_CarryForwardEx)" />
+						<label value="@load(each.imbalance)"
+							style="color:red;" />
+						<cell style="color:#666;">
+							<label value="已确认"
+								if="${each.cfmb_PersonnelConfirm==1?true:false}" />
+							<label value="待确认" style="color:#00F;"
+								if="${each.cfmb_PersonnelConfirm==0?true:false}" />
+						</cell>
+						<cell style="color:#666;">
+							<label value="已确认"
+								if="${each.cfmb_FinanceConfirm==1?true:false}" />
+							<label value="待确认" style="color:#00F;"
+								if="${each.cfmb_FinanceConfirm==0?true:false}" />
+						</cell>
+						<label value="@load(each.cfmb_WriteOffsStr)"
+							style="${each.cfmb_WriteOffs==1?'color:#00F;':'color:red;' }" />
+					</row>
+				</template>
+			</rows>
+		</grid>
+	</window>
+</zk>

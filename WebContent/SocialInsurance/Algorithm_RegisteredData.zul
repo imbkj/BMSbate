@@ -1,0 +1,89 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winRegData" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.SocialInsurance.Algorithm_RegisteredDataController')"
+		title="社保算法在册数据" border="normal" height="99%" width="99%"
+		closable="true">
+		<borderlayout>
+			<north border="none">
+				<grid width="100%">
+					<rows>
+						<row>
+							<cell width="8%" style="color:#666;">
+								城市：
+							</cell>
+							<cell width="10%" style="color:#666;">
+								<label
+									value="@load(vm.saModel.getCity())" />
+							</cell>
+							<cell width="8%" style="color:#666;">
+								机构名称：
+							</cell>
+							<cell width="10%" style="color:#666;">
+								<label
+									value="@load(vm.saModel.getCoab_name())" />
+							</cell>
+							<cell width="8%" style="color:#666;">
+								算法描述：
+							</cell>
+							<cell width="10%" style="color:#666;">
+								<label
+									value="@load(vm.saModel.getSoin_title())" />
+							</cell>
+							<cell width="8%" style="color:#666;">
+								开始执行年月：
+							</cell>
+							<cell width="10%" style="color:#666;">
+								<datebox format="yyyy年MM月"
+									mold="rounded" readonly="true"
+									value="@load(vm.saModel.getSial_execdate())" inplace="true"
+									buttonVisible="false" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</north>
+			<center border="none">
+				<grid height="100%" width="100%" vflex="1" hflex="1"
+					emptyMessage="暂无员工在册数据" model="@load(vm.ecouList)">
+					<columns sizable="true">
+						<column label="序号" align="center" width="40px" />
+						<column label="公司编号" align="center"
+							sort="auto(cid)" />
+						<column label="公司简称" align="center"
+							sort="auto(coba_shortname)" />
+						<column label="雇员编号" align="center"
+							sort="auto(gid)" />
+						<column label="雇员姓名" align="center"
+							sort="auto(emba_name)" />
+						<column label="证件号码" align="center"
+							sort="auto(ecou_idcard)" />
+						<column label="客服" align="center"
+							sort="auto(ecou_client)" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<label value="${forEachStatus.index+1}" />
+								<label value="@load(each.cid)" />
+								<label
+									value="@load(each.coba_shortname)" />
+								<label value="@load(each.gid)" />
+								<label value="@load(each.emba_name)" />
+								<label value="@load(each.ecou_idcard)" />
+								<label value="@load(each.ecou_client)" />
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</center>
+			<south border="none">
+				<div align="center" vflex="1" hflex="1">
+					<button label="更新在册数据"
+						onClick="@command('upRegData')" if="${vm.admin==1}"/>
+				</div>
+
+			</south>
+		</borderlayout>
+	</window>
+</zk>

@@ -1,0 +1,20 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window width="850px" height="650px" title="new page title" border="normal" closable="true">
+
+<scrollview width="100%" height="100%" vflex="1">
+			<zscript language="Java">
+	
+	Integer id = 0;
+	if (Executions.getCurrent().getArg().get("id") != null) {
+		id = Integer.valueOf(Executions.getCurrent().getArg().get("id")
+				.toString());
+	}
+	
+</zscript>
+			<include height="90%"
+				src="../CoFinanceManage/CoInvoice/Invoice.jsp?id=${id}">
+			</include>
+		</scrollview>
+</window>
+</zk>

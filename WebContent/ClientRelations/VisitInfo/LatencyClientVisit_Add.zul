@@ -1,0 +1,179 @@
+<!--
+	创建人：林少斌
+	创建时间：2013-10-11
+	用途：潜在客户拜访计划新增页面
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="潜在客户拜访计划 -- 新增页面" border="normal" width="60%" closable="true"
+		height="100%"
+		apply="org.zkoss.bind.BindComposer,Controller.ClientRelations.VisitInfo.LatencyClientVisit_AddController"
+		viewModel="@id('vm') @init('Controller.ClientRelations.VisitInfo.LatencyClientVisit_AddController')">
+		<scrollview width="100%" height="100%">
+			<groupbox width="100%">
+				<caption>拜访计划信息</caption>
+				<grid width="100%">
+					<rows>
+					<row>
+						<cell width="15%" style="color:#666;">
+								    开始时间:
+							</cell>
+					<cell>
+                
+                    <div>
+                        <datebox format="yyyy-MM-dd HH:mm:ss" hflex="true" id="begindate" value="${arg.model.cale_begindate}"/>
+                    </div>
+               </cell>
+                    	
+                    	<cell width="15%" style="color:#666;">
+								    结束时间:
+							</cell>
+					<cell>		
+                    <div>
+                        <datebox format="yyyy-MM-dd HH:mm:ss" hflex="true" id="enddate" value="${arg.model.cale_enddate}"/>
+                    </div>
+                    </cell>
+					</row>
+						<row>
+						
+							<cell width="15%" style="color:#666;">
+								主执行人：
+							</cell>
+							<cell>
+								<combobox id="viin_person"
+									readonly="true" model="@load(vm.personList)"  value="@bind(vm.cola_fllower)"  onChange="@command('searchColaInfo')"  mold="rounded">
+									<template name="model">
+										<comboitem
+											label="@load(each.log_name)" />
+									</template>
+								</combobox>
+								<label style="color:red;">(*)</label>
+							</cell>
+							<cell width="15%" style="color:#666;">
+								次执行人：
+							</cell>
+							<chosenbox id="viin_subordinate" width="100%"
+								model="@load(vm.personList)">
+								<template name="model">
+									<label value="@load(each.log_name)" />
+								</template>
+							</chosenbox>
+						</row>
+						<row>
+							<cell style="color:#666;">拜访方式：</cell>
+							<cell>
+								<combobox id="viin_type" mold="rounded"
+									readonly="true">
+									<comboitem label="上门" />
+									<comboitem label="电话" />
+									<comboitem label="邮件" />
+								</combobox>
+								<label style="color:red;">(*)</label>
+							</cell>
+							<cell style="color:#666;">拜访类型：</cell>
+							<cell>
+								<combobox id="viin_class" mold="rounded"
+									readonly="true">
+									<comboitem label="初次回访" />
+									<comboitem label="定期回访" />
+									<comboitem label="年度回访" />
+									<comboitem label="临时回访" />
+								</combobox>
+								<label style="color:red;">(*)</label>
+							</cell>
+						</row>
+						
+					<row>
+					
+                 
+                </row>
+                	<row>
+                	<cell colspan="4">
+						
+								 备注:
+						
+                       <textbox multiline="true" id="viin_remark"  rows="3" width="97%"/>
+                   </cell>
+                </row>
+                
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox width="100%">
+				<caption>拜访计划客户</caption>
+				<grid height="100%" width="100%">
+					<rows>
+						<row>
+							<listbox id="lbCoLa" checkmark="true"
+								emptyMessage="无数据" model="@load(vm.colaBaseList)"
+								multiple="true" height="100%" width="100%" mold="paging"
+								pageSize="12">
+								<listhead>
+									<listheader width="30px"
+										align="center" />
+									<listheader label="序号"
+										align="center" width="60px" />
+									<listheader label="公司名称"
+										align="center" sort="auto(cola_company)">
+										<textbox id="cola_company"
+											value="@bind(vm.cola_company)"
+											onChange="@command('searchColaInfo')" instant="true"
+											mold="rounded" />
+									</listheader>
+									<listheader label="报价人"
+										align="center" sort="auto(cola_addname)">
+										<combobox id="cola_addname"
+											width="80px" value="@bind(vm.cola_addname)"
+											onChange="@command('searchColaInfo')"
+											model="@load(vm.personList)" mold="rounded">
+											<template name="model">
+												<comboitem
+													label="@load(each.log_name)" />
+											</template>
+										</combobox>
+									</listheader>
+									<listheader label="签约成功率"
+										align="center" sort="auto(cola_successlevel)">
+										<combobox id="cola_successlevel"
+											visible="false" mold="rounded"
+											value="@bind(vm.cola_successlevel)"
+											onChange="@command('searchColaInfo')">
+											<comboitem value="5"
+												label="较高(短期签约可能性比较大)" />
+											<comboitem value="4"
+												label="较高(可能性较大)" />
+											<comboitem value="3"
+												label="一般(可能性一般)" />
+											<comboitem value="2"
+												label="较低(短期可能性较小)" />
+											<comboitem value="1"
+												label="较低(可能性较小)" />
+										</combobox>
+									</listheader>
+								</listhead>
+								<template name="model">
+									<listitem>
+										<listcell></listcell>
+										<listcell
+											label="${forEachStatus.index+1 }" />
+										<listcell
+											label="@load(each.cola_company)" />
+										<listcell
+											label="@load(each.cola_addname)" />
+										<listcell
+											label="@load(each.cola_successlevel)" />
+									</listitem>
+								</template>
+							</listbox>
+						</row>
+					</rows>
+					<foot>
+						<footer align="center">
+							<button label="提交" id="btSubmit" />
+						</footer>
+					</foot>
+				</grid>
+			</groupbox>
+		</scrollview>
+	</window>
+</zk>

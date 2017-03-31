@@ -1,0 +1,141 @@
+<?page title="机构帐单列表" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="机构帐单列表" border="normal"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmCommissionOut.EmCommissionOutPay_AutController')"
+		closable="true" width="100%">
+		<label id="dep_company" visible="false"
+			value="${arg.ecop_dep_company }" />
+		<grid id="searchGird" width="100%">
+			<rows>
+				<row>
+					<cell width="100px">所属月份</cell>
+					<cell>
+						<combobox mold="rounded" 
+							model="@load(vm.ownmonthlist)" width="120px" value=""
+							id="wt_ownmonth">
+							<comboitem label="" value=""/>
+							<template name="model">
+								<comboitem label="@load(each.ownmonth)" />
+							</template>
+						</combobox>
+					</cell>
+
+					<cell width="100px">委托城市</cell>
+					<cell>
+						<combobox mold="rounded"
+							model="@load(vm.citylist)" width="120px" value="" id="wt_city"
+							onChange="@command('cityChange',wt_city=wt_city)">
+							<template name="model">
+								<comboitem
+									label="@load(each.ecop_company)" />
+							</template>
+						</combobox>
+					</cell>
+
+					<cell width="100px">委托机构</cell>
+					<cell>
+						<combobox mold="rounded" 
+							model="@load(vm.depcompanylist)" width="120px" value=""
+							id="wt_depcompany">
+							<comboitem label="" value=""/>
+							<template name="model">
+								<comboitem
+									label="@load(each.ecop_dep_company)" />
+							</template>
+						</combobox>
+					</cell>
+					<cell></cell>
+					<cell></cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+				<button label="导入外地帐单"
+						onClick="@command('importExcel')">
+					</button>
+					<button label="导入未办反馈"
+						onClick="@command('imporex',imdate=each)" visible="false">
+					</button>
+					<button label="导出未办反馈" visible="false" onClick="@command('exportAll',exdate=each,wt_depcompany=wt_depcompany,wt_ownmonth=wt_ownmonth)">
+					</button>
+					<button id="btSearch" label="查询"
+						onClick="@command('aut_search',wt_city=wt_city,wt_depcompany=wt_depcompany,wt_ownmonth=wt_ownmonth)" />
+				</footer>
+			</foot>
+		</grid>
+		
+			<grid width="100%" id="g1" model="@load(vm.autpaylist)" mold="paging" pageSize="13">
+				<columns>
+					<column label="序号" align="center" width="60px" />
+					<column label="帐单月份" align="center" />
+					<column label="城市" align="center" />
+					<column label="委托机构" align="center" />
+					<column label="系统帐单总计" align="center" />
+					<column label="外地帐单总计" align="center" />
+					<column label="差额" align="center" />
+					<column label="系统帐单人数" align="center" />
+					<column label="外地帐单人数" align="center" />
+					<column label="未办反馈" align="center" />
+					<column label="状态" align="center" />
+				</columns>
+				<rows>
+					<template name="model">
+						<row>
+							<cell>
+								<label
+									value="${forEachStatus.index + 1}" />
+							</cell>
+							<cell>
+								<label value="@load(each.ownmonth)" />
+							</cell>
+							<cell>
+								<label value="@load(each.ecop_yl_di)" />
+							</cell>
+							<cell style="color:#00f">
+								<label
+									value="@load(each.ecop_dep_company)" style="cursor:pointer"
+									onClick="@command('copay_base', emco=each)" />
+							</cell>
+							
+							<cell>
+								<label value="@load(each.ecop_yf_fee)" />
+							</cell>
+							<cell>
+								<label value="@load(each.ecop_sf_fee)" />
+							</cell>
+							<cell  style="color:#f00">
+								<label
+									value="@load(each.ecop_yfsf_dis_fee)" style="cursor:pointer"
+									onClick="@command('wt_cpay', emco=each)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.ecop_ch_st)" onClick="@command('yf_sf',emco=each)" style="cursor:pointer; color:#666;"/>
+							</cell>
+							<cell>
+								<label
+									value="@load(each.ecop_paycount)" onClick="@command('sf_yf',emco=each)" style="cursor:pointer; color:#666;"/>
+							</cell>
+							<cell style="color:#00f">
+								<label value="生成未办反馈" onClick="@command('export',exdate=each)" style="cursor:pointer; color:#666;"/>
+								<label	value="  " />
+								<label value="导入未办反馈" onClick="@command('imporex',imdate=each)" style="cursor:pointer; color:#666;"/>
+							</cell>
+							<cell>
+								<label value="帐单已确认"
+									if="${each.ecop_state==0}" />
+								<label value="未确认"
+									if="${each.ecop_state!=0}" />
+								<label value="确认帐单"
+									if="${each.ecop_state!=0 and each.ecop_cabc_id==0}"
+									onClick="@command('zd_pass',emco=each)"
+									style="cursor:pointer; color:#666;" />
+							</cell>
+						</row>
+					</template>
+				</rows>
+			</grid>
+		
+	</window>
+</zk>

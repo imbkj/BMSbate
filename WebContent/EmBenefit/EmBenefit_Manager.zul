@@ -1,0 +1,102 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window width="100%" height="100%" title="福利项目管理" id="winEW"
+		border="normal" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmBenefit.EmBenefit_ManagerController')"
+		closable="true">
+		<borderlayout>
+			<north title="查询条件" collapsible="true" open="true">
+				<grid>
+					<columns>
+						<column width="100px" />
+						<column />
+					</columns>
+
+					<rows>
+						<row>
+							<cell>福利项目</cell>
+							<cell>
+								<textbox id="item" mold="rounded" />
+
+							</cell>
+						</row>
+					</rows>
+					<foot>
+						<footer span="2" align="center">
+							<button label="查询"
+								onClick="@command('Search')" />
+						</footer>
+					</foot>
+				</grid>
+			</north>
+			<center>
+				<grid model="@load(vm.beList)" sizedByContent="true"
+					span="true" emptyMessage="暂无数据" height="100%">
+					<columns>
+						<column align="center">序号</column>
+						<column align="center">项目名称</column>
+						<column align="center">任务启动时间</column>
+						<column align="center">提醒时间</column>
+						<column align="center">循环启动</column>
+						<column align="center">福利性质</column>
+						<column align="center">添加时间</column>
+						<column align="center">添加人</column>
+						<column align="center">操作</column>
+					</columns>
+					<template name="model">
+						<row>
+							<cell>${forEachStatus.index+1 }</cell>
+							<cell>
+								<label value="@load(each.embf_name)" />
+							</cell>
+							<cell>
+								<label value="@load(each.embf_start)" />
+							</cell>
+							<cell>
+								<label value="@load(each.embf_notice)" />
+							</cell>
+							<cell>
+								<label value="@load(each.embf_type2)" />
+							</cell>
+							<cell>
+								<label value="@load(each.embf_mold)" />
+							</cell>
+							<cell>
+								<label value="@load(each.embf_addtime)" />
+							</cell>
+							<cell>
+								<label value="@load(each.embf_addname)" />
+							</cell>
+							<cell>
+								<div align="center">
+									<menubar autodrop="true"
+										width="50px" sclass="mymb">
+										<menu
+											image="../images/pencil-small.png">
+											<menupopup>
+												<menuitem label="启动任务"
+													onClick="@command('start',a=each)" />
+												<menuitem label="修改"
+													onClick="@command('mod',a=each)" />
+												<menuitem label="删除"
+													onClick="@command('Del',a=each)" />
+											</menupopup>
+										</menu>
+									</menubar>
+								</div>
+							</cell>
+
+						</row>
+					</template>
+				</grid>
+			</center>
+			<south>
+				<div>
+					未关联福利产品:
+					<label style="color:red" value="@load(vm.num)" />
+					个
+				</div>
+			</south>
+		</borderlayout>
+	</window>
+</zk>

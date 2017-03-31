@@ -1,0 +1,78 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="判断缴费情况" border="normal" closable="true" width="60%"
+		height="60%" id="win" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.Archives.Archive_FileCheckOutController')">
+		<grid vflex="1">
+			<rows>
+				<row>
+					<cell width="100px"></cell>
+					<cell></cell>
+					<cell width="100px"></cell>
+					<cell></cell>
+				</row>
+				<row>
+					<cell width="80px">是否欠费</cell>
+					<cell colspan="3">
+						<combobox id="ifArrears">
+							<comboitem value="0" label="是" />
+							<comboitem value="1" label="否" />
+						</combobox>
+					</cell>
+				</row>
+				<row visible="false">
+					<cell>费用情况</cell>
+					<cell colspan="3">
+						<textbox rows="3" value="@bind(vm.feeinfo)"
+							width="80%" />
+					</cell>
+				</row>
+
+				<row>
+					<cell>收费开始时间</cell>
+					<cell>
+						<datebox id="starddate" />
+					</cell>
+					<cell>收费终止日期</cell>
+					<cell>
+						<datebox id="enddate" />
+					</cell>
+				</row>
+				<row>
+					<cell>档案费</cell>
+					<cell>
+						<textbox value="@bind(vm.models.eada_dnfee)" />
+					</cell>
+					<cell>户口费</cell>
+					<cell>
+						<textbox value="@bind(vm.models.eada_hkfee)" />
+					</cell>
+				</row>
+				<row>
+					<cell>违约金</cell>
+					<cell colspan="3">
+						<textbox
+							value="@bind(vm.models.eada_promisefee)" />
+					</cell>
+				</row>
+				<row>
+					<cell>备注</cell>
+					<cell colspan="3">
+						<textbox rows="5" width="80%" id="remark"></textbox>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button id="summit"
+						onClick="@command('summitifarrears',win=win,starddate=starddate.value,enddate=enddate.value,remark=remark.value,ifArrears=ifArrears.value)">
+						提交
+					</button>
+					<button onClick="@command('addremark',win=win)">
+						备注
+					</button>
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

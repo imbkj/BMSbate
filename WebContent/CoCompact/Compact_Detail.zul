@@ -1,0 +1,141 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="合同详情" border="normal" width="85%" height="90%"
+		closable="true" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoCompact.Compact_DetailController')">
+		<scrollview width="100%" height="95%">
+			<groupbox title="合同基本信息" mold="3d">
+				<grid width="100%">
+					<rows>
+						<row>公司基本信息</row>
+						<row>
+							<cell>公司名称:</cell>
+							<cell>
+								<textbox id="company" width="160px"
+									value="${arg.cocoM.company}" />
+							</cell>
+							<cell>合同编号:</cell>
+							<cell>
+								<textbox id="compact_cid" width="160px"
+									value="${arg.cocoM.coco_compactid}" />
+							</cell>
+						</row>
+						<row>
+							<cell>合同类型:</cell>
+							<cell>
+								<textbox id="type" width="160px"
+									value="${arg.cocoM.coco_compacttype}" />
+							</cell>
+							<cell>合同履行地:</cell>
+							<cell>
+								<textbox id="compactid" width="160px"
+									value="${arg.cocoM.coco_servicearea}" />
+							</cell>
+						</row>
+						<row>
+							<cell>备注：</cell>
+							<cell colspan="1">
+								<textbox id="copr_content" rows="6"
+									hflex="1">
+								</textbox>
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox title="服务产品信息" mold="3d">
+				<grid model="@load(vm.coofferinfoList)"
+					emptyMessage="暂无数据" height="100%" width="100%" span="true">
+					<columns sizable="true">
+						<column label="序号" width="40px"></column>
+						<column label="产品名称"></column>
+						<column label="收费金额/收费单位"></column>
+						<column label="产品类型"></column>
+						<column label="城市/机构"></column>
+						<column label="享受方式" width="80px"></column>
+						<column label="份数" width="50px"></column>
+						<column label="描述" width="20%"></column>
+						<column label="备注"></column>
+						<column label="操作" width="60px"></column>
+					</columns>
+					<template name="model">
+						<row>
+							<label value="${forEachStatus.index+1 }" />
+							<cell>
+								<label value="@load(each.coli_name)" />
+							</cell>
+							<cell if="${each.coli_group_count ne 0 }"
+								rowspan="${each.coli_group_count }">
+								<label value="@load(each.coli_fee)" />
+								<space />
+								<label
+									value="@load(each.coli_cpfc_name)" />
+							</cell>
+							<cell>
+								<label value="@load(each.coli_pclass)" />
+							</cell>
+							<cell>
+								<div if="${not empty each.city }">
+									<label value="@load(each.city)" />
+									/
+									<label
+										value="@load(each.coab_name)" />
+								</div>
+							</cell>
+							<label value="@load(each.coli_standard)" />
+							<cell>
+								<div
+									if="${each.coli_pclass=='商业保险' }">
+									<label
+										value="@load(each.coli_amount)" />
+									份
+								</div>
+							</cell>
+							<div
+								style="cursor:pointer;overflow:hidden;-ms-text-overflow: ellipsis;-o-text-overflow: ellipsis;"
+								tooltip="content_${each.coli_id },position=after_end">
+								<label
+									style="white-space: nowrap;text-overflow:ellipsis;cursor:pointer"
+									value="@load(each.coli_content)">
+								</label>
+								<popup id="content_${each.coli_id }"
+									width="200px">
+									<label
+										value="@load(each.coli_content)">
+									</label>
+								</popup>
+							</div>
+							<div
+								tooltip="remark_${each.coli_id },position=after_pointer">
+								<label
+									style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;
+									cursor:pointer"
+									value="@load(each.coli_remark)">
+								</label>
+								<popup id="remark_${each.coli_id }"
+									width="200px">
+									<label
+										value="@load(each.coli_remark)">
+									</label>
+								</popup>
+							</div>
+							<div>
+								<menubar autodrop="true">
+									<menu
+										image="../images/pencil-small.png">
+										<menupopup>
+											<menuitem label="费用调整"
+												onClick="@command('co_change',a=each)" />
+											<menuitem label="产品终止"
+												onClick="@command('co_del',a=each)" />
+										</menupopup>
+									</menu>
+								</menubar>
+							</div>
+						</row>
+					</template>
+				</grid>
+			</groupbox>
+		</scrollview>
+	</window>
+</zk>

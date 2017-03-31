@@ -1,0 +1,154 @@
+<?page title="机构帐单列表" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="机构帐单列表1" border="normal"
+		apply="org.zkoss.bind.BindComposer" closable="true"
+		viewModel="@id('vm') @init('Controller.EmCommissionOut.EmCommissionOutPayController')">
+			<grid width="100%" id="g1"
+				model="@load(vm.embasepaylist)" height="400px" hflex="1" vflex="1" mold="paging" sizedByContent="true"
+					span="true">
+				<columns>
+					<column label="序号" align="center" width="60px" />
+					<column label="帐单月份" align="center" />
+					<column label="公司名称" align="center" />
+					<column label="员工姓名" align="center" />
+					<column label="养老应付" align="center" />
+					<column label="养老实付" align="center" />
+					<column label="养老差额" align="center" />
+					<column label="失业应付" align="center" />
+					<column label="失业实付" align="center" />
+					<column label="失业差额" align="center" />
+					<column label="医疗应付" align="center" />
+					<column label="医疗实付" align="center" />
+					<column label="医疗差额" align="center" />
+					<column label="工伤应付" align="center" />
+					<column label="工伤实付" align="center" />
+					<column label="工作差额" align="center" />
+					<column label="生育应付" align="center" />
+					<column label="生育实付" align="center" />
+					<column label="生育差额" align="center" />
+					<column label="住房应付" align="center" />
+					<column label="住房实付" align="center" />
+					<column label="住房差额" align="center" />
+					<column label="其它应付" align="center" />
+					<column label="其它实付" align="center" />
+					<column label="其它差额" align="center" />
+					<column label="档案应付" align="center" />
+					<column label="档案实付" align="center" />
+					<column label="档案差额" align="center" />
+					<column label="服务费应付" align="center" />
+					<column label="服务费实付" align="center" />
+					<column label="服务费差额" align="center" />
+					<column label="操作" align="center" />
+				</columns>
+				<rows>
+					<template name="model">
+						<row>
+							<cell>
+								<label
+									value="${forEachStatus.index + 1}" />
+							</cell>
+							<cell>
+								<label value="@load(each.ownmonth)" />
+							</cell>
+							<cell>
+								<label value="@load(each.ecop_company)" />
+							</cell>
+							<cell>
+								<label value="@load(each.ecop_name)" />
+							</cell>
+							<cell>
+								<label value="@load(each.ecop_yl_yf)" />
+							</cell>
+							<cell>
+								<label value="@load(each.ecop_yl_sf)" />
+							</cell>
+							<cell>
+								<label value="@load(each.ecop_yl_di)" />
+							</cell>
+							<cell>
+								<label value="@load(each.ecop_sye_yf)" />
+							</cell>
+							<cell>
+								<label value="@load(each.ecop_sye_sf)" />
+							</cell>
+							<cell>
+								<label value="@load(each.ecop_sye_di)" />
+							</cell>
+							<cell>
+								<label value="@load(each.ecop_jl_yf)" />
+							</cell>
+							<cell>
+								<label value="@load(each.ecop_jl_sf)" />
+							</cell>
+							<cell>
+								<label value="@load(each.ecop_jl_di)" />
+							</cell>
+							<cell>
+								<label value="@load(each.ecop_gs_yf)" />
+							</cell>
+							<cell>
+								<label value="@load(each.ecop_gs_sf)" />
+							</cell>
+							<cell>
+								<label value="@load(each.ecop_gs_di)" />
+							</cell>
+							<cell>
+								<label value="@load(each.ecop_syu_yf)" />
+							</cell>
+							<cell>
+								<label value="@load(each.ecop_syu_sf)" />
+							</cell>
+							<cell>
+								<label value="@load(each.ecop_syu_di)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.ecop_house_yf)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.ecop_house_sf)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.ecop_house_di)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.ecop_other_yf)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.ecop_other_sf)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.ecop_other_di)" />
+							</cell>
+							<cell>
+								<label value="@load(each.ecop_file_yf)" />
+							</cell>
+							<cell>
+								<label value="@load(each.ecop_file_sf)" />
+							</cell>
+							<cell>
+								<label value="@load(each.ecop_file_di)" />
+							</cell>
+							<cell>
+								<label value="@load(each.ecop_fw_yf)" />
+							</cell>
+							<cell>
+								<label value="@load(each.ecop_fw_sf)" />
+							</cell>
+							<cell>
+								<label value="@load(each.ecop_fw_di)" />
+							</cell>
+							<cell>
+								<label value="添加" />
+							</cell>
+						</row>
+					</template>
+				</rows>
+			</grid>
+	</window>
+</zk>

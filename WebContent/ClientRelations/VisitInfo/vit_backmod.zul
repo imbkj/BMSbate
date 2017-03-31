@@ -1,0 +1,193 @@
+<!--
+	创建人：潘浪宇
+	创建时间：2013-10-12
+	用途：潜在客户拜访计划执行情况记录修改页面
+-->
+<?page contentType="text/html;charset=UTF-8"?>
+<zk>
+<window id="win" title="拜访/回访情况" border="normal" width="700px"
+		height="500px" closable="true" 
+		apply="org.zkoss.bind.BindComposer,Controller.ClientRelations.VisitInfo.vit_backmodController"
+		viewModel="@id('vm') @init('Controller.ClientRelations.VisitInfo.vit_backmodController')">
+		<div height="95%" style="overflow-y:scroll">
+			<groupbox title="维护成本" mold="3d">
+				<grid style="border:0px">
+					<columns>
+						<column width="20%"></column>
+						<column></column>
+					</columns>
+					<rows>
+						<row>
+							成本类型
+							<cell>
+								<chosenbox id="cost" model="@load(vm.costList)" hflex="1"
+								emptyMessage="点击选择一个或多个成本类型" creatable="true"
+								createMessage="新的成本类型'{0}'"
+								onSearch="@command('newcost',cost=event.value)"
+								onCreate="@command('costinit')" />
+							</cell>
+						</row>
+						<row>
+							具体说明
+							<textbox id="costremark" rows="5" hflex="1"
+							value="@load(vm.vim1.viin_costremark)"></textbox>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox title="拜访/回访情况" mold="3d">
+				<grid style="border:0px">
+					<columns>
+						<column width="20%"></column>
+						<column></column>
+					</columns>
+					<rows>
+						<row>
+							被访人员
+							<cell>
+								<chosenbox id="personed" emptyMessage="点击选择被访人员(可输入新被访人员)"
+								hflex="1" creatable="true"
+								createMessage="新的被访人员'{0}'" model="@load(vm.lintmanList)"
+								onSearch="@command('newpersoned',person=event.value)"
+								onCreate="@command('personedinit')" />
+							</cell>
+						</row>
+						<row>
+							被访人职位
+							<textbox id="job" hflex="1" value="@load(vm.vim1.viin_job)" />
+						</row>
+						<row>
+							本次拜访/回访主要目的
+							<cell>
+								<chosenbox id="aim" emptyMessage="点击选择一个或多个主要目的" hflex="1"
+								model="@load(vm.aimList)" onCreate="@command('aiminit')"></chosenbox>
+							</cell>
+						</row>
+						<row>
+							实际拜访/回访日期
+							<cell>
+								<datebox id="truetime" format="yyyy-MM-dd" 
+								value="@load(vm.vim1.viin_truetime)"
+								constraint="no future" />
+							</cell>
+						</row>
+						<row>
+							纪要
+							<textbox id="summary" rows="5" hflex="1"
+							value="@load(vm.vim1.viin_summary)"></textbox>
+						</row>
+						<row>
+							客户反馈
+							<textbox id="feedback" rows="5" hflex="1"
+							value="@load(vm.vim1.viin_feedback)"></textbox>
+						</row>
+						<row>
+							是否有后续跟进事项
+							<cell>
+								<radiogroup id="iffollow" 
+								onCheck="@command('iffollow',radio=self.selectedItem,gbgj=gbgj)">
+									<radio label="是" selected="@load(vm.vim1.viin_iffolow)"></radio>
+									<radio label="否" selected="@load(not vm.vim1.viin_iffolow)"></radio>
+								</radiogroup>
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox id="gbgj" title="待跟进事项" visible="@load(vm.vim1.viin_iffolow)" mold="3d">
+				<grid style="border:0px">
+					<columns>
+						<column width="20%"></column>
+						<column></column>
+					</columns>
+					<rows>
+						<row>
+							事项数
+							<cell>
+								<spinner value="@bind(vm.a)" instant="true" 
+								onChange="@command('followchange',a=self.value,gdfollows=gdfollows)" />
+							</cell>
+						</row>
+						<row>
+							<cell colspan="2">
+								<grid id="gdfollows" style="border:0px" model="@load(vm.followList)">
+									<columns>
+										<column />
+									</columns>
+									<template name="model">
+										<row>
+											<cell>
+												<grid>
+													<columns>
+														<column width="20%" />
+														<column />
+														<column width="20%" />
+														<column />
+													</columns>
+													<rows>
+														<row>
+															<cell colspan="4">
+																<span style="color:blue">
+																	跟进事项${each.vifo_order }
+																</span>
+															</cell>
+														</row>
+														<row>
+															待跟进事项
+															<cell colspan="3">
+																<label value="@load(each.vifo_order)"
+																visible="false" />
+																<textbox hflex="1" 
+																 value="@load(each.vifo_content)" />
+															</cell>
+														</row>
+														<row>
+															待跟进人
+															<cell colspan="3">
+																<textbox value="@load(each.vifo_name)" />
+															</cell>
+														</row>
+														<row>
+															涉及跟进部门
+															<cell>
+																<combobox readonly="true" 
+																model="@load(vm.deptList)"
+																value="@load(each.deptname)"
+																mold="rounded">
+																	<template name="model">
+																		<comboitem label="@load(each.deptname)" />
+																	</template>
+																</combobox>
+															</cell>
+															处理时间
+															<cell>
+																<datebox format="yyyy-MM-dd"
+																value="@load(each.vifo_disposetime)"
+																constraint="no future" />
+															</cell>
+														</row>
+														<row>
+															处理过程及结果
+															<cell colspan="3">
+																<textbox rows="5" hflex="1"
+																value="@load(each.vifo_disposecontent)" />
+															</cell>
+														</row>
+													</rows>
+												</grid>
+											</cell>
+										</row>
+									</template>
+								</grid>
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+		</div>
+		<hbox width="100%" pack="center" align="center">
+			<button id="submit" label="保存" />
+			<button id="complete" label="完结" />
+		</hbox>
+	</window>
+</zk>

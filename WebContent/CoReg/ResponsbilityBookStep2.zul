@@ -1,0 +1,43 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<?component name="docDataList" macro-uri="/DocumentsInfo/DocumentsInfo_UpPageList.zul" inline="true"?>
+<zk>
+	<window title="客服领取材料与表格" border="normal" height="80%" width="80%"
+		closable="true" apply="org.zkoss.bind.BindComposer" id="win"
+		viewModel="@id('vm') @init('Controller.CoReg.ResponsbilityBookStep2Controller')">
+		<grid>
+			<columns>
+				<column width="20%"></column>
+				<column></column>
+			</columns>
+			<rows>
+
+				<row>
+					<cell colspan="2">
+						<label value="材料签收" style="color:#666" />
+					</cell>
+				</row>
+				<row>
+					<cell colspan="2">
+						<docDataList id="docGrid" puzu_id="13"
+							doc_type="c" gid="" tid="${arg.daid }" log_url="/DocumentsInfo/"
+							dHeight="180px" dWidth="100%" />
+					</cell>
+				</row>
+				<row>
+					<cell>
+						<label>客服签收材料日期</label>
+					</cell>
+					<cell>
+						<datebox mold="rounded" format="yyyy-MM-dd"
+							value="@bind(vm.date)">
+						</datebox>
+					</cell>
+				</row>
+			</rows>
+		</grid>
+		<hbox width="100%" pack="center" align="center">
+			<button label="提交"
+				onClick="@command('submit',win=win,gd=docGrid)" />
+		</hbox>
+	</window>
+</zk>

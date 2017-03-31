@@ -1,0 +1,83 @@
+<?page title="状态变更" contentType="text/html;charset=UTF-8"?>
+<!-- 调用内联页的文件名 -->
+<?component name="docDataList" macro-uri="/DocumentsInfo/DocumentsInfo_UpPageList.zul" inline="true"?>
+<zk>
+	<window id="win" title="员工就业登记 - 状态变更" border="normal" width="80%"
+		closable="true" apply="org.zkoss.bind.BindComposer" height="80%"
+		viewModel="@id('vm') @init('Controller.EmReg.EmReg_OperateController')">
+		<div height="95%" style="overflow-y:auto">
+			<grid>
+				<columns>
+					<column width="15%"></column>
+					<column></column>
+					<column width="15%"></column>
+					<column></column>
+				</columns>
+				<rows>
+					<row>
+						公司编号
+						<label value="@load(vm.erm.cid)" />
+						公司名称
+						<label value="@load(vm.erm.coba_company)" />
+					</row>
+					<row>
+						员工编号
+						<label value="@load(vm.erm.gid)" />
+						姓名
+						<label value="@load(vm.erm.emba_name)" />
+					</row>
+					<row>
+						身份证号
+						<label value="@load(vm.erm.erin_idcard)" />
+						户籍
+						<label value="@load(vm.erm.erin_hjtype)" />
+					</row>
+					<row if="${vm.state==2 }">
+						<cell colspan="4">
+							<label value="签收材料" style="color:#666" />
+						</cell>
+					</row>
+					<row if="${vm.state==2 }">
+						<cell colspan="4">
+							<docDataList id="docGrid"
+								puzu_id="${vm.puzu_id }" doc_type="g" gid="${vm.erm.gid }"
+								tid="${vm.daid }" log_url="/DocumentsInfo/" dHeight="230px"
+								dWidth="100%" />
+						</cell>
+					</row>
+					<row if="${vm.state==7 }">
+						领取人
+						<cell colspan="3">
+							<textbox mold="rounded"
+								value="@bind(vm.erm.erin_get_people)" />
+								<label style="color:red;">(*)</label>
+						</cell>
+					</row>
+					<row>
+						<label value="@load(vm.timestr)" />
+						<cell>
+							<datebox mold="rounded" format="yyyy-MM-dd"
+								value="@bind(vm.statetime)">
+							</datebox>
+							<label style="color:red;">(*)</label>
+						</cell>
+						<cell if="${vm.state==6 or (vm.state==4 and vm.erm.zhtype!=1)}">是否需要退回材料</cell>
+						<cell if="${vm.state==6 or (vm.state==4 and vm.erm.zhtype!=1)}">
+							<combobox value="@bind(vm.ifbackdata)">
+								<comboitem label=""/>
+								<comboitem label="是"/>
+								<comboitem label="否"/>
+							</combobox>
+						</cell>
+					</row>
+				</rows>
+			</grid>
+		</div>
+		<hbox width="100%" pack="center" align="center">
+			<button label="提交"
+				onClick="@command('submit',win=win,gd=docGrid)" />
+			<button label="退回" onClick="@command('back',win=win)">
+			</button>
+		</hbox>
+	</window>
+</zk>

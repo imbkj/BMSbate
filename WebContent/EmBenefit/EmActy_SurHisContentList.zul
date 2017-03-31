@@ -1,0 +1,28 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window border="0"
+	apply="org.zkoss.bind.BindComposer" id="windeclare"
+	viewModel="@id('vm') @init('Controller.EmBenefit.EmActy_SurHisContentListController')"
+>
+<grid  vflex="1" model="@load(vm.clist)">
+		<columns>
+			
+			<column label="序号" width="40px" align="center"/>
+			<column label="调查内容" align="center"/>
+			<column label="分数" align="center"/>
+			<column label="排序" align="center"/>
+		</columns>
+		<rows>
+			<template name="model">
+			<row>
+		
+				<cell><label value="${forEachStatus.index+1 }"></label></cell>
+				<cell><label value="@load(each.hicn_content)"></label></cell>
+				<cell><label value="@load(each.hicn_score)"></label></cell>
+				<cell><label value="@load(each.hicn_order)"></label></cell>
+			</row>
+			</template>
+		</rows>
+	</grid>	
+</window>
+</zk>

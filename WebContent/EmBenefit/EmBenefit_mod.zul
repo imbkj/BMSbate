@@ -1,0 +1,135 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window width="1000px" height="254px" title="福利项目 - 修改"
+		id="winEwMod" border="normal" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmBenefit.EmBenefit_ModController')"
+		closable="true">
+		<borderlayout>
+			<west border="none">
+				<grid width="700px">
+					<columns>
+						<column width="120px" />
+						<column />
+						<column width="120px" />
+						<column />
+					</columns>
+					<rows>
+						<row>
+							<cell>项目名称</cell>
+							<cell colspan="3">
+								<combobox id="name"
+									model="@load(vm.nameList)" mold="rounded"
+									value="@load(vm.ebm.embf_name)">
+									<template name="model">
+										<comboitem
+											label="@load(each.embf_name)" />
+									</template>
+								</combobox>
+							</cell>
+
+						</row>
+						<row>
+							<cell>任务启动时间</cell>
+							<cell>
+								<datebox id="start" mold="rounded"
+									value="@load(vm.startdate)" />
+							</cell>
+							<cell>任务提醒时间</cell>
+							<cell>
+								<datebox id="notice" mold="rounded"
+									value="@load(vm.noticedate)" />
+							</cell>
+						</row>
+						<row>
+							<cell>是否循环启动</cell>
+							<cell>
+								<combobox id="aroundType"
+									readonly="true" onChange="@command('updateRound')"
+									instant="true" value="@bind(vm.ebm.embf_type2)"
+									mold="rounded">
+									<comboitem label="否" />
+									<comboitem label="是" />
+								</combobox>
+							</cell>
+							<cell>循环周期</cell>
+							<cell>
+								<intbox id="cycle" width="50px"
+									mold="rounded" visible="@load(vm.dis)"
+									value="@load(vm.ebm.embf_cycle)" />
+								<combobox id="unit" width="50px"
+									visible="@load(vm.dis)" value="@load(vm.ebm.embf_unit)"
+									readonly="true" mold="rounded">
+									<comboitem label="年" />
+									<comboitem label="月" />
+									<comboitem label="日" />
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>生成次月数据</cell>
+							<cell>
+								<combobox readonly="true" mold="rounded"
+									value="@bind(vm.ebm.embf_month)">
+									<comboitem label="是" />
+									<comboitem label="否" />
+								</combobox>
+							</cell>
+							<cell>生效字段</cell>
+							<cell>
+								<combobox readonly="true" mold="rounded"
+									value="@bind(vm.ebm.embf_field)">
+									<comboitem label="生日" />
+									<comboitem label="非生日" />
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>福利性质</cell>
+							<cell>
+								<combobox id="mold" mold="rounded"
+									readonly="true" value="@bind(vm.ebm.embf_mold)">
+
+									<comboitem label="礼品" />
+									<comboitem label="活动" />
+								</combobox>
+							</cell>
+							<cell></cell>
+							<cell>
+
+							</cell>
+						</row>
+					</rows>
+					<foot>
+						<footer span="4" align="center">
+							<button label="提交"
+								onClick="@command('submit')" />
+							<button label="选择供应商"
+								onClick="@command('supply')" />
+						</footer>
+					</foot>
+				</grid>
+			</west>
+			<center title="供应商列表" border="normal">
+				<grid width="100%" height="100%"
+					model="@load(vm.supList)" emptyMessage="暂无选择供应商">
+					<columns visible="false">
+						<column align="left" />
+						<column align="right" />
+					</columns>
+					<template name="model">
+						<row>
+							<cell>
+								<label value="@load(each.supp_name)" />
+							</cell>
+							<cell>
+								<button label="删除"
+									onClick="@command('del',a=each)" />
+							</cell>
+						</row>
+					</template>
+				</grid>
+
+			</center>
+		</borderlayout>
+	</window>
+</zk>

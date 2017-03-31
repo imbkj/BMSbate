@@ -1,0 +1,54 @@
+<grid vflex="min" width="85%" emptyMessage="暂无数据"
+	model="@load(vm.schfcList)" mold="paging" pageSize="10"
+	apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('vm') @init('Controller.CoHousingFund.CoHousingFund_SelectList_DetailController')">
+	<columns sizable="true">
+		<column align="center" label="变动情况"></column>
+		<column align="center" label="所属月份" sort="auto(ownmonth)">
+		</column>
+		<column align="center" label="添加人"></column>
+		<column align="center" label="添加时间" sort="auto(chfc_addtime)"></column>
+		<column align="center" label="申报时间"
+			sort="auto(chfc_completetime)">
+		</column>
+		<column align="center" label="状态"></column>
+		<column align="center" label="提示" width="60px"></column>
+		<column align="center" label="操作" width="60px"></column>
+	</columns>
+	<template name="model">
+		<row>
+			<label value="@load(each.chfc_addtype)" />
+			<label value="@load(each.ownmonth)" />
+			<label value="@load(each.chfc_addname)" />
+			<label value="@load(each.chfc_addtimeStr)" />
+			<label value="@load(each.chfc_completetime)" />
+			<cell>
+				<label value="@load(each.statename)" style="color:#666"
+					if="${each.statename eq '未申报' or each.statename eq '申报中' }" />
+				<label value="@load(each.statename)" style="color:blue"
+					if="${each.statename eq '已申报' }" />
+				<label value="@load(each.statename)" style="color:red"
+					if="${each.statename eq '退回' or each.statename eq '撤销' }" />
+			</cell>
+			<cell>
+				<image src="/images/20070708132244928.gif"
+					tooltiptext="还未退还材料"
+					if="${each.chfc_state eq 3 and each.chfc_tzlstate eq 0 }"
+					style="cursor:pointer">
+				</image>
+			</cell>
+			<cell>
+				<menubar autodrop="true" orient="vertical">
+					<menu image="../images/pencil-small.png">
+						<menupopup>
+							<menuitem label="申报详情 "
+								onClick="@command('openwin',label=self.label,each=each)" />
+							<menuitem label="材料详情 "
+								onClick="@command('openwin',label=self.label,each=each)" />
+						</menupopup>
+					</menu>
+				</menubar>
+			</cell>
+		</row>
+	</template>
+</grid>

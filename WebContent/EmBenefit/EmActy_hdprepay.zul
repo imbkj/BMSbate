@@ -1,0 +1,47 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window width="90%" height="90%" title="预付款" id="winEmp" closable="true"
+		border="normal" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmBenefit.EmActy_hdprepayController')">
+<div style="margin-top:10px;margin-bottom:10px;">
+	<hlayout>
+		<label style="margin-right:10px;margin-left:20px;margin-top:10px;
+			margin-bottom:20px;color:#FF0000;">预付款金额</label>
+			<doublebox value="@bind(vm.prepay)"></doublebox>
+	</hlayout>
+</div>
+<grid vflex="1" model="@load(vm.listss)">
+	<columns>
+		<column width="40px" align="center"><label>序号</label></column>
+		<column align="center"><label>公司名称</label></column>
+		<column align="center" width="80px"><label>员工编号</label></column>
+		<column align="center"><label>员工姓名</label></column>
+		<column align="center"><label>福利类型</label></column>
+		<column align="center"><label>福利项目</label></column>
+		<column align="center"><label>福利内容</label></column>
+		<column align="center" width="50px"><label>份数</label></column>
+		<column align="center" width="80px"><label>费用</label></column>
+	</columns>
+	<rows>
+		<template name="model">
+		<row>
+			<cell><label value="${forEachStatus.index+1 }"></label></cell>
+			<cell><label value="@load(each.emwf_company)"></label></cell>
+			<cell><label value="@load(each.gid)"></label></cell>
+			<cell><label value="@load(each.emwf_name)"></label></cell>
+			<cell><label value="@load(each.embf_mold)"></label></cell>
+			<cell><label value="@load(each.embf_name)"></label></cell>
+			<cell><label value="@load(each.productName)"></label></cell>
+			<cell><label value="@load(each.emwf_amount)"></label></cell>
+			<cell><label value="${each.prod_discountprice*each.emwf_amount}"></label></cell>
+		</row>
+		</template>
+	</rows>
+	<foot>
+		<footer align="center" span="9">
+		<button onClick="@command('addpayinfo',win=winEmp)">提交</button>
+		</footer>
+	</foot>
+</grid>
+</window>
+</zk>

@@ -1,0 +1,49 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="上传文件" id="winUpload" width="800px" height="300px"
+		closable="true" border="normal" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoHousingFund.CoHousingFund_hdUploadController')">
+		<borderlayout>
+			<center>
+				<grid height="100%" id="grid">
+					<columns visible="false">
+						<column width="150px" />
+						<column />
+						<column />
+					</columns>
+					<rows>
+						<row>
+							<cell>
+								<label>公司编号:</label>
+							</cell>
+							<cell colspan="2"><label value="@load(vm.fm.cid)"/></cell>
+
+						</row>
+						<row>
+							<cell>
+								<label>公司名称:</label>
+							</cell>
+							<cell colspan="2"><label value="@load(vm.fm.chfc_company)"/></cell>
+						</row>
+						<row>
+							<cell>
+								<label>请选择缴存登记申请表:</label>
+							</cell>
+							<cell colspan="2">
+								<button label="浏览..."
+									upload="true,multiple=true,maxsize=-1"
+									onUpload="@command('browse')" />
+							</cell>
+						</row>
+					</rows>
+					<foot>
+						<footer span="3" align="center">
+							<button label="提交" id="btSubmit"
+								onClick="@command('upload')" />
+						</footer>
+					</foot>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

@@ -1,0 +1,88 @@
+<?page title="机构帐单列表" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="机构帐单列表" border="normal"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmCommissionOut.EmCommissionOutPayController')"
+		width="99%">
+		<label id="dep_company" visible="false"
+			value="${arg.ecop_dep_company }" />
+		<grid id="searchGird" width="100%">
+			<rows>
+				<row>
+					<cell width="100px">委托城市</cell>
+					<cell>
+						<combobox mold="rounded" readonly="true"
+							model="@load(vm.yfcitylist)" width="120px" value="" id="wt_city"
+							onChange="@command('yfcityChange',wt_city=wt_city)">
+							<template name="model">
+								<comboitem
+									label="@load(each.ecop_company)" />
+							</template>
+						</combobox>
+					</cell>
+
+					<cell width="100px">委托机构</cell>
+					<cell>
+						<combobox mold="rounded" readonly="true"
+							model="@load(vm.yfdepcompanylist)" width="120px" value=""
+							id="wt_depcompany">
+							<template name="model">
+								<comboitem
+									label="@load(each.ecop_dep_company)" />
+							</template>
+						</combobox>
+					</cell>
+					<cell>
+
+					</cell>
+					<cell></cell>
+					<cell></cell>
+					<cell></cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button id="btSearch" label="查询"
+						onClick="@command('yf_search',wt_city=wt_city,wt_depcompany=wt_depcompany)" />
+				</footer>
+			</foot>
+		</grid>
+		<div
+			style="width:100%;height:630px;overflow-y:scroll;overflow-x:hidden;border:1px solid #bcbdbf;">
+			<grid width="100%" id="g1"
+				model="@load(vm.yfemmonthpaylist)">
+				<columns>
+					<column label="序号" align="center" width="60px" />
+					<column label="帐单月份" align="center" />
+					<column label="委托机构" align="center" />
+					<column label="应付总计" align="center" />
+					<column label="预览" align="center" />
+				</columns>
+				<rows>
+					<template name="model">
+						<row>
+							<cell>
+								<label
+									value="${forEachStatus.index + 1}" />
+							</cell>
+							<cell>
+								<label value="@load(each.ownmonth)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.ecop_dep_company)" style="cursor:pointer"
+									onClick="@command('yfempay_base', emco=each)" />
+							</cell>
+							<cell>
+								<label value="@load(each.ecop_yf_fee)" />
+							</cell>
+							<cell><label
+									value="查看" style="cursor:pointer" 
+									onClick="@command('yfempay_base', emco=each)" /></cell>
+						</row>
+					</template>
+				</rows>
+			</grid>
+		</div>
+	</window>
+</zk>

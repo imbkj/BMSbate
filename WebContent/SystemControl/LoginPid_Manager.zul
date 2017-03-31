@@ -1,0 +1,67 @@
+<?page title="公司架构设置" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="公司架构设置" border="normal" vflex="1" hflex="1"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.SystemControl.LoginPid_ManagerController')">
+		<div width="100%" align="center">
+			<label>上级</label>
+			<combobox model="@load(vm.loginlist)" id="cb"
+				onChange="@command('selects',cb=self)">
+				<template name="model">
+					<comboitem label="@load(each.log_name)"
+						value="@load(each)" />
+				</template>
+			</combobox>
+		</div>
+		<hlayout style="padding:10px">
+			<listbox hflex="1" height="500px"
+				onSelect="@command('selectlog',lb=self,flag='1')"
+				model="@load(vm.notlist)" autopaging="">
+				<listhead>
+					<listheader align="center">
+						<vlayout>
+							<label>为选人员</label>
+							<hlayout>
+								<combobox instant="true" id="dep" readonly="true" value="@bind(vm.department)"
+								 model="@load(vm.deplist)" onChange="@command('search',cb=self,txt=name)">
+									<template name="model">
+										<comboitem label="@load(each.dep_name)" value="@load(each)"></comboitem>
+									</template>
+								</combobox>
+								<textbox instant="true" id="name"
+									onChange="@command('search',cb=dep,txt=self)">
+								</textbox>
+							</hlayout>
+						</vlayout>
+					</listheader>
+				</listhead>
+				<template name="model">
+					<listitem>
+						<listcell label="@load(each.log_name)" />
+					</listitem>
+				</template>
+			</listbox>
+			<vbox spacing="10px" width="34px" height="500px">
+				<image style="cursor:pointer" id="chooseBtn"
+					src="../images/rightarrow_g.png" />
+				<image style="cursor:pointer" id="removeBtn"
+					src="../images/leftarrow_g.png" />
+			</vbox>
+			<listbox hflex="1" height="500px"
+				onSelect="@command('selectlog',lb=self,flag='2')"
+				model="@load(vm.selist)">
+				<listhead>
+					<listheader align="center" label="已选" />
+				</listhead>
+				<template name="model">
+					<listitem>
+						<listcell label="@load(each.log_name)" />
+					</listitem>
+				</template>
+			</listbox>
+		</hlayout>
+		<div width="100%" align="center" style="margin-top:20px;">
+			<button onClick="@command('submit',cb=cb)">提交</button>
+		</div>
+	</window>
+</zk>

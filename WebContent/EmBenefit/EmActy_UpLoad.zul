@@ -1,0 +1,35 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="上传文件" id="winUpload" width="600px" height="300px"
+		closable="true" border="normal" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmBenefit.EmActy_UpLoadController')">
+		<borderlayout>
+			<center title="上传的合同文件名请勿使用中文">
+				<grid height="100%" id="grid">
+					<columns visible="false">
+						<column width="150px" />
+						<column />
+						<column />
+					</columns>
+					<rows>
+						<row>
+							<cell>
+								<label>请选择合同文件:</label>
+							</cell>
+							<cell colspan="2">
+								<button label="浏览..."
+									upload="true,multiple=true,maxsize=-1" onUpload="@command('browse')" />
+							</cell>
+						</row>
+					</rows>
+					<foot>
+						<footer span="3" align="center">
+							<button label="提交" id="btSubmit"
+								onClick="@command('upload')" />
+						</footer>
+					</foot>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

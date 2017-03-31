@@ -1,0 +1,109 @@
+<!--
+	创建人：林少斌
+	创建时间：2015-7-14
+	用途：分配外地个税页面
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winTPAss" title="个税管理 -- 个税申报地分配页面" border="normal"
+		width="70%" height="70%" apply="org.zkoss.bind.BindComposer"
+		closable="true"
+		viewModel="@id('vm') @init('Controller.EmTax.EmTax_TaxPlaceAssignController')">
+		<borderlayout vflex="1">
+			<north border="0" title="数据查询" collapsible="true"
+				flex="true" open="true">
+				<panel border="1">
+					<panelchildren style="padding:5px;">
+						<grid id="searchGird" width="100%">
+							<rows>
+								<row>
+									<cell width="100px"
+										style="color:#666;">
+										是否已分配
+									</cell>
+									<cell>
+										<combobox id="state"
+											readonly="true" mold="rounded"
+											onChange="@command('search',state=self.value)">
+											<comboitem label="全部" />
+											<comboitem label="未分配" />
+											<comboitem label="已分配" />
+										</combobox>
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</panelchildren>
+				</panel>
+			</north>
+			<center>
+				<grid>
+					<rows>
+						<row>
+							<cell width="50%" valign="top">
+								<listbox id="emlist" checkmark="true"
+									height="300px" model="@load(vm.emList)" emptyMessage="无数据"
+									multiple="true">
+									<listhead>
+										<listheader width="30px" />
+										<listheader label="员工编号"
+											width="65px" align="left" />
+										<listheader label="姓名"
+											align="left" />
+										<listheader label="当前地区"
+											align="left" />
+										<listheader label="生效月份"
+											align="left" />
+									</listhead>
+									<template name="model">
+										<listitem>
+											<listcell />
+											<listcell
+												label="@load(each.gid)" />
+											<listcell
+												label="@load(each.etin_name)" />
+											<listcell
+												label="@load(each.esin_taxplace)" />
+											<listcell
+												if="${each.esin_nexttaxplace_smonth !=0}"
+												label="@load(each.esin_nexttaxplace_smonth)" />
+											<listcell
+												if="${each.esin_nexttaxplace_smonth ==0}" label="" />
+										</listitem>
+									</template>
+								</listbox>
+							</cell>
+							<cell valign="top">
+								<listbox id="place" height="300px"
+									model="@load(vm.placeList)" emptyMessage="无数据"
+									multiple="true">
+									<listhead>
+										<listheader label="个税申报地"
+											align="left" />
+									</listhead>
+									<template name="model">
+										<listitem>
+											<listcell
+												label="@load(each)" />
+										</listitem>
+									</template>
+								</listbox>
+							</cell>
+						</row>
+						<row>
+							<cell colspan="2" align="center">
+								<label value="生效月份：" />
+								<monthbox id="n_ownmonth"
+									readonly="true" format="yyyyMM" mold="rounded" />
+								<space/>
+								<space/>
+								<button label="提交" id="btSubmit"
+									onClick="@command('submit',emlist=emlist,place=place,win=winTPAss,n_ownmonth=n_ownmonth)" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

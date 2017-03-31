@@ -1,0 +1,47 @@
+<!--
+	创建人：林少斌
+	创建时间：2014-12-1
+	用途：员工就业登记终止
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window id="win" title="员工就业登记终止" width="500px" closable="true"
+		border="normal" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmReg.EmReg_StopController')">
+		<div height="100%">
+			<grid width="100%">
+				<columns>
+					<column width="20%" />
+					<column />
+					<column width="20%" />
+					<column />
+				</columns>
+				<rows>
+					<row>
+						姓名
+						<cell colspan="3"><label value="@load(vm.erm.emba_name)" /></cell>
+					</row>
+					<row>
+						身份证号
+						<label value="@load(vm.erm.erin_idcard)" />
+						户籍
+						<label value="@load(vm.erm.erin_hjtype)" />
+					</row>
+					<row>
+						终止原因
+						<cell colspan="3"><textbox value="@load(vm.erm.erin_stop_reason)"  mold="rounded" readonly="true"/>
+						</cell>
+					</row>
+					<row>
+						终止日期
+						<cell colspan="3"><textbox value="@load(vm.erm.erin_stop_date)"  mold="rounded" readonly="true"/>
+						</cell>
+					</row>
+				</rows>
+			</grid>
+			<hbox width="100%" pack="center" align="center">
+				<button label="终止" onClick="@command('submit',win=win)" />
+			</hbox>
+		</div>
+	</window>
+</zk>

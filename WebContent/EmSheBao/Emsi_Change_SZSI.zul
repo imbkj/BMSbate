@@ -1,0 +1,89 @@
+<?page title="特殊(交单)变更" contentType="text/html;charset=UTF-8"?>
+<?component name="embase" macro-uri="Emsi_EmBase.zul" inline="true"?>
+<zk>
+	<window id="winChangeSZSI" title="特殊(交单)变更" border="normal"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmSheBao.Emsi_Change_SZSIController')"
+		height="80%" width="80%" closable="true" sizable="true"
+		maximizable="true">
+		<div width="100%" height="100%" if="${vm.existsShebao}"
+			align="center">
+			<label value="${vm.existsMessage}" />
+		</div>
+		<borderlayout if="${!vm.existsShebao}">
+			<north title="个人信息" border="none">
+				<embase gid="${vm.gid}" name="${vm.sbModel.esiu_name}" />
+			</north>
+			<center title="参保信息" border="none">
+				<grid width="100%" height="100%">
+					<rows>
+						<row>
+							<cell width="25%" style="color:#666;"
+								align="center">
+								变更类型
+							</cell>
+							<cell width="75%" colspan="3">
+								<vlayout>
+									<combobox mold="rounded"
+										readonly="true" value="@bind(vm.changetype)"
+										onChange="@command('changetype')">
+										<comboitem label="变更户籍" />
+										<comboitem label="变更姓名" />
+										<comboitem label="变更身份证号码" />
+										<comboitem label="恢复医疗卡号" />
+										<comboitem label="合并电脑号" />
+										<comboitem label="变更职别" />
+									</combobox>
+								</vlayout>
+							</cell>
+						</row>
+						<row>
+							所属月份
+							<cell colspan="3">
+								<vlayout>
+									<combobox mold="rounded"
+										readonly="true" value="@bind(vm.ownmonth)"
+										model="@load(vm.ownmonthList)">
+										<template name="model">
+											<comboitem
+												label="@load(each)" />
+										</template>
+									</combobox>
+									<label value="已过申报截止日，当月已不能变更"
+										if="${vm.isIfStop()}" style="color:red;" />
+								</vlayout>
+							</cell>
+						</row>
+						<row>
+							<label value="@load(vm.change)" />
+							<cell>
+								<textbox value="@bind(vm.changecon)"
+									width="180px" mold="rounded" visible="@load(vm.ifchange)" />
+							</cell>
+							<label value="@load(vm.changebefore)" />
+							<cell>
+								<textbox
+									value="@bind(vm.changebeforeCon)" width="180px"
+									visible="@load(vm.ifchange)"
+									readonly="@load(vm.changebeforeConRendonly)" />
+							</cell>
+						</row>
+						<row>
+							备注（必填）
+							<cell colspan="3">
+								<textbox mold="rounded" rows="3"
+									width="30%" value="@bind(vm.remark)" />
+							</cell>
+						</row>
+					</rows>
+					<foot>
+						<footer align="center">
+							<button label="提交" id="btSubmit"
+								onClick="@command('changeSZSI',win=winChangeSZSI)" />
+						</footer>
+					</foot>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

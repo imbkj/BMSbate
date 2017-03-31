@@ -1,0 +1,141 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="win" title="服务产品列表" border="normal" height="100%"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoProduct.cpd_List2Controller')">
+		<style src="/css/style.css"></style>
+		<grid model="@load(vm.coproductlist)" id="gdCoProduct"
+			emptyMessage="无数据" height="100%" mold="paging">
+			<auxhead sclass="category-center">
+				<auxheader label="服务产品列表" colspan="7"></auxheader>
+			</auxhead>
+			<columns>
+				<column width="40px"></column>
+				<column>
+					产品名称
+					<image src="/images/SearchM.png" height="15px"
+						width="15px">
+					</image>
+					<textbox id="copr_name" instant="true"
+						mold="rounded" width="60%" onChange="@command('search')"
+						value="@bind(vm.copr_name)">
+					</textbox>
+				</column>
+				<column>
+					产品类型
+					<combobox readonly="true" id="copc_name"
+						mold="rounded" width="50%" onChange="@command('search')"
+						model="@load(vm.classlist)" value="@bind(vm.copc_name)">
+						<template name="model">
+							<comboitem label="@load(each.copc_name)">
+							</comboitem>
+						</template>
+					</combobox>
+				</column>
+				<column>
+					所属科目
+					<combobox readonly="true" id="cpac_name"
+						mold="rounded" width="50%" onChange="@command('search')"
+						model="@load(vm.accountlist)" value="@bind(vm.cpac_name)">
+						<template name="model">
+							<comboitem label="@load(each.cpac_name)">
+							</comboitem>
+						</template>
+					</combobox>
+				</column>
+				<column>
+					城市
+					<combobox readonly="true" mold="rounded" width="60%"
+						onChange="@command('search')" model="@load(vm.cityList)"
+						selectedItem="@bind(vm.cityModel)">
+						<template name="model">
+							<comboitem label="@load(each.name)">
+							</comboitem>
+						</template>
+					</combobox>
+				</column>
+				<column>
+					委托机构
+					<!-- <combobox readonly="true"
+						mold="rounded" width="60%" onChange="@command('search')"
+						model="@load(vm.accountlist)" value="@bind(vm.cpac_name)">
+						<template name="model">
+						<comboitem
+						label="@load(each.cpac_name)">
+						</comboitem>
+						</template>
+						</combobox> -->
+				</column>
+				<column>
+					添加人
+					<combobox id="copr_addname" readonly="true"
+						mold="rounded" width="50%" onChange="@command('search')"
+						model="@load(vm.addnamelist)" value="@bind(vm.copr_addname)">
+						<template name="model">
+							<comboitem label="@load(each)"></comboitem>
+						</template>
+					</combobox>
+				</column>
+				<column sort="auto(copr_addtime)">
+					添加时间
+					<datebox id="copr_addtime" instant="true"
+						width="50%" mold="rounded" onChange="@command('search')"
+						value="@bind(vm.copr_addtime)" format="yyyy-MM-dd">
+					</datebox>
+				</column>
+				
+				<column  sort="auto(statename)">
+				状态
+				<combobox readonly="true" id="statename"
+						mold="rounded" width="50%" onChange="@command('search')"
+						model="@load(vm.statenamelist)" value="@bind(vm.statename)">
+						<template name="model">
+							<comboitem label="@load(each)">
+							</comboitem>
+						</template>
+					</combobox>
+				</column>
+				<column width="8%">操作</column>
+			</columns>
+			<template name="model">
+				<row height="35px">
+					<custom-attributes copr_id="${each.copr_id }" />
+
+					<detail open="false" fulfill="onOpen"
+						visible="${each.cpfrcount eq 0?false:true }">
+						<include
+							src="/CoProduct/cpd_FeeRelationList.zul" copr_id="${copr_id}" />
+					</detail>
+					<label value="@load(each.copr_name)"></label>
+					<label value="@load(each.copc_name)"></label>
+					<label value="@load(each.cpac_name)"></label>
+					<label value="@load(each.name)"></label>
+					<label value="@load(each.coab_name)"></label>
+					<label value="@load(each.copr_addname)"></label>
+					<label value="@load(each.copr_addtime)"></label>
+					<label value="@load(each.statename)"></label>
+					<cell>
+						<hbox align="center" pack="center"
+							width="100%">
+							<label value="修改"
+								style="cursor:pointer;color:blue"
+								onClick="@command('mod',cop=each)">
+							</label>
+							
+							<label value="禁用" visible="${each.copr_state==2}"
+								style="cursor:pointer;color:blue"
+								onClick="@command('del',id=each.copr_id)">
+							</label>
+							
+							<label value="启用" visible="${each.copr_state==0}"
+								style="cursor:pointer;color:blue"
+								onClick="@command('redel',id=each.copr_id)">
+							</label>
+							
+						</hbox>
+					</cell>
+				</row>
+			</template>
+		</grid>
+	</window>
+</zk>

@@ -1,0 +1,186 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="社保字典库" border="normal" vflex="1" hflex="1"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.SocialInsurance.Algorithm_EditListController')">
+		<borderlayout height="100%">
+			<west collapsible="true" splittable="true" width="50%">
+				<listbox model="@load(vm.mainList)" hflex="1" vflex="1"
+					emptyMessage="暂无数据" width="100%" rows="21"
+					onSelect="@command('selectByBaseCity',selectitem=self.selectedItem)">
+					<listhead sizable="true">
+						<listheader width="40px">序号</listheader>
+						<listheader align="center" sort="auto(province)"
+							width="15%">
+							<vlayout>
+								<label value="省份"></label>
+								<combobox id="cbProvince" width="90%"
+									value="@bind(vm.province)" mold="rounded" autodrop="true"
+									model="@load(vm.proList)" instant="true"
+									onChange="@command('searchProvince',agid=ibAgid)">
+									<template name="model">
+										<comboitem label="@load(each)" />
+									</template>
+								</combobox>
+							</vlayout>
+						</listheader>
+						<listheader align="center" sort="auto(city)"
+							width="23%">
+							<vlayout>
+								<label value="城市"></label>
+								<combobox id="cbCity" width="90%"
+									value="@bind(vm.city)" mold="rounded" autodrop="true"
+									model="@load(vm.maincityList)" instant="true"
+									onChange="@command('searchCity',agid=ibAgid)">
+									<template name="model">
+										<comboitem label="@load(each)" />
+									</template>
+								</combobox>
+							</vlayout>
+						</listheader>
+						<listheader align="center" width="10%"
+							sort="auto(cabc_id)">
+							<vlayout>
+								<label value="机构编号"></label>
+								<intbox width="90%" id="ibAgid"
+									mold="rounded" onChange="@command('search',agid=ibAgid)" />
+							</vlayout>
+						</listheader>
+						<listheader align="center"
+							sort="auto(coab_name)" width="35%">
+							<vlayout>
+								<label value="机构名称"></label>
+								<combobox id="cbDasename" width="90%"
+									value="@bind(vm.agname)" mold="rounded" autodrop="true"
+									model="@load(vm.mainbaseList)" instant="true"
+									autocomplete="false"
+									onChange="@command('search',agid=ibAgid)">
+									<template name="model">
+										<comboitem label="@load(each)" />
+									</template>
+								</combobox>
+							</vlayout>
+						</listheader>
+						<listheader align="center"
+							sort="auto(coab_setuptype)" width="15%">
+							<vlayout>
+								<label value="机构性质"></label>
+								<combobox id="cbSetuptype" width="90%"
+									value="@bind(vm.setuptype)" mold="rounded" autodrop="true"
+									model="@load(vm.setuptypeList)" instant="true"
+									onChange="@command('search',agid=ibAgid)">
+									<template name="model">
+										<comboitem label="@load(each)" />
+									</template>
+								</combobox>
+							</vlayout>
+						</listheader>
+						<listheader align="center"
+							sort="auto(cabc_state)" width="15%">
+							<vlayout>
+								<label value="合作状态"></label>
+							</vlayout>
+						</listheader>
+					</listhead>
+					<template name="model">
+						<listitem>
+							<listcell label="${forEachStatus.index+1 }" />
+							<listcell label="@load(each.province)" />
+							<listcell label="@load(each.city)" />
+							<listcell label="@load(each.cabc_id)" />
+							<listcell label="@load(each.coab_name)" />
+							<listcell
+								label="@load(each.coab_setuptype)" />
+							<listcell
+								label="@load(each.cabc_state eq '1'?'合作':'取消合作')"
+								style="${each.cabc_state==0?'color:red;':''}" />
+						</listitem>
+					</template>
+				</listbox>
+			</west>
+
+			<center>
+				<caption>
+					<div align="center">社保算法</div>
+				</caption>
+				<borderlayout height="100%" width="100%">
+					<center border="none" title="现用算法">
+						<grid width="100%" vflex="1" hflex="1"
+							emptyMessage="暂无算法" model="@load(vm.nowSiList)">
+							<columns sizable="true">
+								<column label="序号" align="center"
+									width="40px" />
+								<column label="算法描述" align="center"
+									sort="auto(soin_title)" />
+								<column label="开始执行时间" align="center"
+									sort="auto(sial_execdatestr)" />
+								<column label="状态" align="center"
+									sort="auto(soin_state)" />
+								<column label="操作人" align="center"
+									sort="auto(sial_addname)" />
+							</columns>
+							<rows>
+								<template name="model">
+									<row>
+										<label
+											value="${forEachStatus.index+1}" />
+										<label
+											value="@load(each.soin_title)"
+											style="cursor:pointer;color:#00F;"
+											onClick="@command('searAlg',sial_id=each.sial_id)" />
+										<label
+											value="@load(each.sial_execdatestr)" />
+										<label
+											value="@load(each.soin_state)" />
+										<label
+											value="@load(each.sial_addname)" />
+									</row>
+								</template>
+							</rows>
+						</grid>
+
+					</center>
+					<south height="50%" splittable="true" border="none"
+						collapsible="true" title="历史算法">
+						<grid height="100%" width="100%" vflex="1"
+							hflex="1" emptyMessage="暂无历史算法" model="@load(vm.hisSiList)">
+							<columns sizable="true">
+								<column label="序号" align="center"
+									width="40px" />
+								<column label="算法描述" align="center"
+									sort="auto(soin_title)" />
+								<column label="开始执行时间" align="center"
+									sort="auto(sial_execdatestr)" />
+								<column label="状态" align="center"
+									sort="auto(soin_state)" />
+								<column label="操作人" align="center"
+									sort="auto(sial_addname)" />
+							</columns>
+							<rows>
+								<template name="model">
+									<row>
+										<label
+											value="${forEachStatus.index+1}" />
+										<label
+											value="@load(each.soin_title)"
+											style="cursor:pointer;color:#00F;"
+											onClick="@command('searAlg',sial_id=each.sial_id)" />
+										<label
+											value="@load(each.sial_execdatestr)" />
+										<label
+											value="@load(each.soin_state)" />
+										<label
+											value="@load(each.sial_addname)" />
+
+									</row>
+								</template>
+							</rows>
+						</grid>
+					</south>
+
+				</borderlayout>
+
+			</center>
+		</borderlayout>
+	</window>
+</zk>

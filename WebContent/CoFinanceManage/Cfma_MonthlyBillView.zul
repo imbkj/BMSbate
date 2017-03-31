@@ -1,0 +1,235 @@
+<?page title="账单明细" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="账单明细" border="normal" width="99%" height="99%"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoFinanceManage.Cfma_MothlyBillViewController')"
+		closable="true" sizable="true">
+		<div>
+			<grid>
+				<rows>
+					<row>
+						<cell width="10%">
+							<label value="账单编号：" />
+						</cell>
+						<cell width="15%">
+							<label
+								value="@load(vm.billModel.cfmb_number)" style="color:blue;" />
+						</cell>
+						<cell width="10%">
+							<label value="所属月份：" />
+						</cell>
+						<cell width="10%">
+							<label value="@load(vm.billModel.ownmonth)"
+								style="color:blue;font-size:20px;" />
+						</cell>
+						<cell width="10%">
+							<label value="公司名称：" />
+						</cell>
+						<cell>
+							<hlayout>
+								<label value="(" style="color:blue;" />
+								<label value="@load(vm.billModel.cid)"
+									style="color:blue;" />
+								<label value=")" style="color:blue;" />
+
+								<label
+									value="@load(vm.billModel.company)" style="color:blue;" />
+							</hlayout>
+						</cell>
+						<cell width="10%">
+							<label value="客服代表：" />
+						</cell>
+						<cell width="10%">
+							<label value="@load(vm.billModel.client)"
+								style="color:blue;" />
+						</cell>
+					</row>
+				</rows>
+			</grid>
+		</div>
+		<borderlayout>
+			<north collapsible="true" splittable="true" height="50%"
+				border="none">
+				<borderlayout>
+					<center title="账单信息" border="none">
+						<grid height="99%" width="99%">
+							<rows>
+								<row>
+									<cell>
+										<label value="账单描述：" />
+									</cell>
+									<cell colspan="5">
+										<label
+											value="@load(vm.billModel.cfmb_name)" />
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<label value="人事应收：" />
+									</cell>
+									<cell>
+										<label
+											value="@load(vm.billModel.cfmb_PersonnelReceivable)" />
+									</cell>
+									<cell>
+										<label value="财务应收：" />
+									</cell>
+									<cell>
+										<label
+											value="@load(vm.billModel.cfmb_FinanceReceivable)" />
+									</cell>
+									<cell>
+										<label value="总应收：" />
+									</cell>
+									<cell>
+										<label
+											value="@load(vm.billModel.totalReceivable)" />
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<label value="人事实收：" />
+									</cell>
+									<cell>
+										<label
+											value="@load(vm.billModel.cfmb_PersonnelPaidIn)" />
+									</cell>
+									<cell>
+										<label value="财务实收：" />
+									</cell>
+									<cell>
+										<label
+											value="@load(vm.billModel.cfmb_FinancePaidIn)" />
+									</cell>
+									<cell>
+										<label value="总实收：" />
+									</cell>
+									<cell>
+										<label
+											value="@load(vm.billModel.cfmb_TotalPaidIn)" />
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<label value="垫付金额：" />
+									</cell>
+									<cell>
+										<label
+											value="@load(vm.billModel.cfmb_LoanBalance)" />
+									</cell>
+									<cell>
+										<label value="差额：" />
+									</cell>
+									<cell colspan="3">
+										<label
+											value="@load(vm.billModel.imbalance)"
+											style="color:red;font-size:20px;" />
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<label value="人事应收确认：" />
+									</cell>
+									<cell>
+										<label value="已确认"
+											if="${vm.billModel.cfmb_PersonnelConfirm==1?true:false}" />
+										<label value="待确认"
+											style="color:#00F;"
+											if="${vm.billModel.cfmb_PersonnelConfirm==0?true:false}" />
+									</cell>
+									<cell>
+										<label value="财务应收确认：" />
+									</cell>
+									<cell>
+										<label value="已确认"
+											if="${vm.billModel.cfmb_FinanceConfirm==1?true:false}" />
+										<label value="待确认"
+											style="color:#00F;"
+											if="${vm.billModel.cfmb_FinanceConfirm==0?true:false}" />
+									</cell>
+									<cell>
+										<label value="销账情况：" />
+									</cell>
+									<cell>
+										<label
+											value="@load(vm.billModel.cfmb_WriteOffsStr)"
+											style="${vm.billModel.cfmb_WriteOffs==1?'color:#00F;':'color:red;' }" />
+									</cell>
+
+								</row>
+								<row>
+									<cell>
+										<label value="账单添加人：" />
+									</cell>
+									<cell>
+										<label
+											value="@load(vm.billModel.cfmb_addname)" />
+									</cell>
+									<cell>
+										<label value="账单添加时间：" />
+									</cell>
+									<cell>
+										<label
+											value="@load(vm.billModel.cfmb_addtime)" />
+									</cell>
+									<cell>
+										<label value="付款通知：" />
+									</cell>
+									<cell>
+										<image src="../images/xls.gif"
+											style="cursor:pointer;" width="10" height="11" border="0"
+											onClick="@command('report')" />
+										<!-- <button
+											onClick="@command('chart')" label="图表" /> -->
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<label value="备注：" />
+									</cell>
+									<cell colspan="5">
+										<textbox
+											value="@load(vm.billModel.cfmb_remark)" width="80%" rows="8" />
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</center>
+					<east title="财务科目" border="none" collapsible="true"
+						splittable="true" width="40%">
+						<grid span="true" model="@load(vm.sortList)"
+							emptyMessage="无数据" sizedByContent="true" vflex="1">
+							<columns>
+								<column label="内容" align="center"
+									sort="auto(cfsa_cpac_name)" />
+								<column label="应收款" align="center"
+									sort="auto(cfsa_Receivable)" />
+								<column label="实收款" align="center"
+									sort="auto(cfsa_PaidIn)" />
+								<column label="差额" align="center"
+									sort="auto(imbalance)" />
+							</columns>
+							<rows>
+								<template name="model">
+									<row>
+										<label
+											value="@load(each.cfsa_cpac_name)" />
+										<label
+											value="@load(each.cfsa_Receivable)" />
+										<label
+											value="@load(each.cfsa_PaidIn)" />
+										<label
+											value="@load(each.imbalance)" />
+									</row>
+								</template>
+							</rows>
+						</grid>
+					</east>
+				</borderlayout>
+			</north>
+			<center title="业务收费明细" autoscroll="true">
+				<include src="@load(vm.listSrc)" />
+			</center>
+		</borderlayout>
+	</window>
+</zk>

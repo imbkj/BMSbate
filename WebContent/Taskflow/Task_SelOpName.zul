@@ -1,0 +1,127 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="查看可操作人" border="normal"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.Taskflow.Task_SelOpNameController')"
+		width="80%" sizable="true" closable="true" height="650px">
+		<style>
+			.section{ width:95%; margin:0px 20px; padding:25px 0px 35px;
+			} .section .node { float:left; position:relative;
+			width:13px;height:13px;
+			background-image:url(../images/bg_state.jpg);
+			background-repeat:no-repeat; font-size:12px; } .section
+			.proce { float:left; position:relative;
+			width:123px;height:13px;
+			background-image:url(../images/bg_state.jpg);
+			background-repeat:no-repeat; font-size:12px; border:solid
+			#ffffff; border-width:0px 5px; } .section .space{
+			height:16px!important;height:18px; } .proce.wait {
+			background-position:-0px -30px; } .node.wait2 {
+			background-position:-113px -30px; } .proce.doing {
+			background-position:0px -15px; color:#000066; } .proce.ready
+			{ background-position:-0px 0px; } .node.ready2
+			{background-position:-113px 0px; } .node.singular {
+			background-position:-113px -45px; }
+		</style>
+		<div>
+			<grid>
+				<rows>
+					<row>
+						<cell width="100px">
+							<label value="任务单编号：" />
+						</cell>
+						<cell>
+							<label value="@load(vm.tali_id)" />
+						</cell>
+						<cell width="100px">
+							<label value="任务单名称：" />
+						</cell>
+						<cell>
+							<label value="@load(vm.tali_name)" />
+						</cell>
+					</row>
+				</rows>
+			</grid>
+		</div>
+		<borderlayout>
+			<north border="0" collapsible="true"
+				splittable="true">
+				<scrollview hflex="1">
+					<vbox>
+						<hbox sclass="section" style="overflow:auto">
+							<div forEach="${vm.listView }">
+								<hbox>
+									<vbox sclass="space">
+										${each.wfno_name}
+									</vbox>
+								</hbox>
+								<hbox style="cursor:pointer;">
+									<custom-attributes model="${each}" />
+									<vbox
+										style="background-image:url(../images/bg_state.jpg);"
+										sclass="${each.processname}">
+									</vbox>
+								</hbox>
+
+								<hbox>
+									<vbox style="color:red"
+										if="${each.tapr_state==6 }">
+										挂起
+									</vbox>
+									<vbox>${each.tapr_endname}</vbox>
+								</hbox>
+								<hbox>
+									<vbox>${each.tapr_endtime}</vbox>
+								</hbox>
+							</div>
+						</hbox>
+					</vbox>
+				</scrollview>
+			</north>
+			<center border="0">
+				<grid model="@load(vm.userList)" 
+					emptyMessage="暂无数据" width="100%" mold="paging" pageSize="10">
+					<columns>
+						<column label="编号" sort="log_id" align="center" />
+						<column label="用户" sort="log_name"
+							align="center" />
+					</columns>
+					<template name="model">
+						<row>
+							<label value="@load(each.log_id)" />
+							<label value="@load(each.log_name)" />
+						</row>
+					</template>
+				</grid>
+			</center>
+			<east border="0" open="false" collapsible="true"
+				splittable="true" width="40%">
+				<grid>
+					<rows>
+						<row>
+							<cell>
+								<label value="指定操作人：" />
+							</cell>
+							<cell>
+								<combobox id="cbUser" readonly="true"
+									mold="rounded" width="200px" model="@load(vm.selUserList)">
+									<template name="model">
+										<comboitem
+											label="@load(each.log_name)">
+										</comboitem>
+									</template>
+								</combobox>
+							</cell>
+						</row>
+					</rows>
+					<foot>
+						<footer align="center">
+							<button label="提交"
+								onClick="@command('setOpName',name=cbUser.selectedItem.label)" />
+						</footer>
+					</foot>
+				</grid>
+			</east>
+		</borderlayout>
+	</window>
+</zk>

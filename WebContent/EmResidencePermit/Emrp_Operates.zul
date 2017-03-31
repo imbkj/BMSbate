@@ -1,0 +1,32 @@
+<?page title="批量状态变更" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="win" title="员工居住证 - 批量状态变更" border="normal"
+		width="750px" closable="true" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmResidencePermit.Emrp_OperatesController')">
+		<div height="95%" style="overflow-y:auto">
+			<grid>
+				<columns>
+					<column width="20%"></column>
+					<column></column>
+				</columns>
+				<rows>
+					<row>
+						选中姓名
+						<label value="@load(vm.names)" />
+					</row>
+					<row>
+						<label value="@load(vm.timestr)" />
+						<cell colspan="3">
+							<datebox mold="rounded" format="yyyy-MM-dd"
+								value="@bind(vm.statetime)">
+							</datebox>
+						</cell>
+					</row>
+				</rows>
+			</grid>
+		</div>
+		<hbox width="100%" pack="center" align="center">
+			<button label="提交" onClick="@command('submit',win=win)" />
+		</hbox>
+	</window>
+</zk>

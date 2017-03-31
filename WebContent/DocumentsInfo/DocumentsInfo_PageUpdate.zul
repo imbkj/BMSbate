@@ -1,0 +1,30 @@
+<!--
+	创建人：陈耀家
+	创建时间：2014-8-27
+	用途：修改选择材料（只有勾选和内容信息）
+-->
+<grid id="${arg.id}" apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('vm') @init('Controller.DocumentsInfo.DocumentsInfo_UpPageListController')"
+	emptyMessage="无数据" model="@load(vm.docList)" height="${arg.dHeight}"
+	width="${arg.dWidth}">
+	<columns>
+		<column width="35px">
+			<checkbox
+				onClick="@command('gdallselect',grid=self.parent.parent.parent,check=self.checked)" />
+		</column>
+		<column label="材料名称" sort="auto(doin_content)" />
+	</columns>
+	<rows>
+		<template name="model">
+			<row style="color:#666;">
+				<cell>
+					<checkbox
+						checked="${each.dsin_ifsubmit==0?  false:true}" />
+				</cell>
+				<cell>
+					<label value="@load(each.doin_content)" />
+				</cell>
+			</row>
+		</template>
+	</rows>
+</grid>

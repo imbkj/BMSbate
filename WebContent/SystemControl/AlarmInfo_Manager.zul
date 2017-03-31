@@ -1,0 +1,107 @@
+<?page contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winInfo" title="预警项目" border="normal" height="95%"
+		width="95%" closable="true"
+		apply="org.zkoss.bind.BindComposer,Controller.SystemControl.AlarmInfo_ManagerController"
+		viewModel="@id('vm') @init('Controller.SystemControl.AlarmInfo_ManagerController')">
+		<style src="/css/style.css"></style>
+		<borderlayout hflex="1" vflex="1">
+			<north id="north" collapsible="true" title="高级查询"
+				open="false">
+				<grid>
+					<rows>
+						<row>
+							<cell>预警项目：</cell>
+							<cell>
+								<combobox id="name" mold="rounded"
+									readonly="true" model="@load(vm.nameList)">
+									<template name="model">
+										<comboitem
+											value="@load(each.alin_name)"
+											label="@load(each.alin_name)">
+										</comboitem>
+									</template>
+								</combobox>
+							</cell>
+							<cell>状态:</cell>
+							<cell>
+								<combobox id="AlarmState" mold="rounded"
+									readonly="true">
+									<comboitem label="全部" value="" />
+									<comboitem label="生效" value="1" />
+									<comboitem label="取消" value="0" />
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>内容描述：</cell>
+							<cell>
+								<textbox id="content" mold="rounded" />
+							</cell>
+							<cell>是否需要提醒:</cell>
+							<cell>
+								<combobox id="warning" mold="rounded"
+									readonly="true">
+									<comboitem label="" value="" />
+									<comboitem label="是" value="1" />
+									<comboitem label="否" value="0" />
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell colspan="4" align="center">
+								<button id="btnSearch" label="查询"
+									onClick="@command('SearchInfo',a=name,b=AlarmState,c=content,d=warning,e=north)">
+								</button>
+								
+								<button id="btnCancel" label="重置"
+									onClick="@command('resetInfo',a=name,b=AlarmState,c=content,d=warning)">
+								</button>
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</north>
+			<center>
+				<grid model="@load(vm.amlist)" id="gdAlarmInfo"
+					emptyMessage="无数据" height="100%" mold="paging">
+					<columns style="height:30px">
+						<column width="40px">序号</column>
+						<column>预警类型</column>
+						<column>项目名称</column>
+						<column>链接路径</column>
+						<column>是否提醒</column>
+						<column>状态</column>
+						<column>添加人</column>
+						<column sort="auto(alin_addtime)">添加时间</column>
+						<column hflex="1" label="操作" align="center" />
+					</columns>
+					<template name="model">
+						<row>
+							<label value="${forEachStatus.index+1 }"></label>
+							<label value="@load(each.alcl_name)"></label>
+							<label value="@load(each.alin_name)"></label>
+							<label value="@load(each.alin_url)"></label>
+							<label value="@load(each.alin_warningName)"></label>
+							<label value="@load(each.alin_stateName)"></label>
+							<label value="@load(each.alin_addname)"></label>
+							<label value="@load(each.alin_addtime)"></label>
+							<div align="center">
+								<menubar autodrop="true" width="50px"
+									sclass="mymb">
+									<menu
+										image="../images/pencil-small.png">
+										<menupopup>
+											<menuitem label="修改预警项目信息"
+												onClick="@command('updateAlarmInfo',id=each.alin_id)" />
+										</menupopup>
+									</menu>
+								</menubar>
+							</div>
+						</row>
+					</template>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

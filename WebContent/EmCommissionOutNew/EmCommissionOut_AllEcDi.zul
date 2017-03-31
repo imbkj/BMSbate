@@ -1,0 +1,209 @@
+<?page title="批量二次确认" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="批量二次确认" border="normal" width="40%"
+		apply="org.zkoss.bind.BindComposer" closable="true" id="win"
+		viewModel="@id('vm') @init('Controller.EmCommissionOutNew.EmCommissionOut_AllEcDiController')">
+		<label value="${arg.ecoc_id}" id="ecoc_id" />
+		<grid width="100%" id="g1" height="380px" mold="paging"
+			sizedByContent="true" span="true">
+			<columns>
+				<column label="项目" align="center" width="30px" />
+				<column label="企业实际停缴日" align="center" width="30px">
+					<image src="../images/130.gif" onClick="all_cp()"
+						style="cursor:pointer" />
+				</column>
+				<column label="个人实际停缴日" align="center" width="30px">
+					<image src="../images/130.gif" onClick="all_op()"
+						style="cursor:pointer" />
+				</column>
+			</columns>
+			<rows>
+				<row>
+					<cell>养老保险</cell>
+					<cell align="left">
+						<monthbox width="100px" id="yl_cp" mold="rounded"
+							format="yyyy-MM" />
+					</cell>
+					<cell align="left">
+						<monthbox width="100px" id="yl_op" mold="rounded"
+							format="yyyy-MM" />
+					</cell>
+				</row>
+				<row>
+					<cell>医疗保险</cell>
+					<cell align="left">
+						<monthbox width="100px" id="jl_cp" mold="rounded"
+							format="yyyy-MM" />
+					</cell>
+					<cell align="left">
+						<monthbox width="100px" id="jl_op" mold="rounded"
+							format="yyyy-MM" />
+					</cell>
+				</row>
+				<row>
+					<cell>大病医疗</cell>
+					<cell align="left">
+						<monthbox width="100px" id="djl_cp"
+							mold="rounded" format="yyyy-MM" />
+					</cell>
+					<cell align="left">
+						<monthbox width="100px" id="djl_op"
+							mold="rounded" format="yyyy-MM" />
+					</cell>
+				</row>
+				<row>
+					<cell>生育保险</cell>
+					<cell align="left">
+						<monthbox width="100px" id="syu_cp"
+							mold="rounded" format="yyyy-MM" />
+					</cell>
+					<cell align="left">
+						<monthbox width="100px" id="syu_op"
+							mold="rounded" format="yyyy-MM" />
+					</cell>
+				</row>
+				<row>
+					<cell>工伤保险</cell>
+					<cell align="left">
+						<monthbox width="100px" id="gs_cp" mold="rounded"
+							format="yyyy-MM" />
+					</cell>
+					<cell align="left">
+						<monthbox width="100px" id="gs_op" mold="rounded"
+							format="yyyy-MM" />
+					</cell>
+				</row>
+				<row>
+					<cell>失业保险</cell>
+					<cell align="left">
+						<monthbox width="100px" id="sye_cp"
+							mold="rounded" format="yyyy-MM" />
+					</cell>
+					<cell align="left">
+						<monthbox width="100px" id="sye_op"
+							mold="rounded" format="yyyy-MM" />
+					</cell>
+				</row>
+				<row>
+					<cell>住房公积金</cell>
+					<cell align="left">
+						<monthbox width="100px" id="house_cp"
+							mold="rounded" format="yyyy-MM" />
+					</cell>
+					<cell align="left">
+						<monthbox width="100px" id="house_op"
+							mold="rounded" format="yyyy-MM" />
+					</cell>
+				</row>
+				<row>
+					<cell>服务费</cell>
+					<cell align="left">
+						<monthbox width="100px" id="fw_cp" mold="rounded"
+							format="yyyy-MM" />
+					</cell>
+					<cell align="left">
+						<monthbox width="100px" id="fw_op" mold="rounded"
+							format="yyyy-MM" />
+					</cell>
+				</row>
+				<row>
+					<cell>档案费</cell>
+					<cell align="left">
+						<monthbox width="100px" id="file_cp"
+							mold="rounded" format="yyyy-MM" />
+					</cell>
+					<cell align="left">
+						<monthbox width="100px" id="file_op"
+							mold="rounded" format="yyyy-MM" />
+					</cell>
+				</row>
+				<row>
+					<cell>福利费</cell>
+					<cell align="left">
+						<monthbox width="100px" id="fl_cp" mold="rounded"
+							format="yyyy-MM" />
+					</cell>
+					<cell align="left">
+						<monthbox width="100px" id="fl_op" mold="rounded"
+							format="yyyy-MM" />
+					</cell>
+				</row>
+			</rows>
+		</grid>
+		<div align="center">
+			<button id="submitButton3" label="确认"
+				onClick="@command('wt_autall', gridco=g1,win=win,ecoc_id=ecoc_id,yl_cp=yl_cp,yl_op=yl_op,jl_cp=jl_cp,jl_op=jl_op,djl_cp=djl_cp,djl_op=djl_op,gs_cp=gs_cp,gs_op=gs_op,syu_cp=syu_cp,syu_op=syu_op,sye_cp=sye_cp,sye_op=sye_op,house_cp=house_cp,house_op=house_op,fw_cp=fw_cp,fw_op=fw_op,fl_cp=fl_cp,fl_op=fl_op,file_cp=file_cp,file_op=file_op,yl_di=yl_di,jl_di=jl_di,djl_di=djl_di,syu_di=syu_di,gs_di=gs_di,sye_di=sye_di,house_di=house_di,fw_di=fw_di,file_di=file_di,other_di=other_di,gid=gid,cid=cid,company=company,cabc_id=cabc_id,ownmonth=ownmonth,name=name)" />
+		</div>
+
+		<zscript><![CDATA[
+	/*判断有无固定劳动合同*/
+	void sb_cp() {
+
+		jl_cp.value = yl_cp.value;
+
+		djl_cp.value = yl_cp.value;
+
+		syu_cp.value = yl_cp.value;
+
+		gs_cp.value = yl_cp.value;
+
+		sye_cp.value = yl_cp.value;
+
+	}
+	void sb_op() {
+
+		jl_op.value = yl_op.value;
+
+		djl_op.value = yl_op.value;
+
+		syu_op.value = yl_op.value;
+
+		gs_op.value = yl_op.value;
+
+		sye_op.value = yl_op.value;
+
+	}
+	void all_cp() {
+
+		jl_cp.value = yl_cp.value;
+
+		djl_cp.value = yl_cp.value;
+
+		syu_cp.value = yl_cp.value;
+
+		gs_cp.value = yl_cp.value;
+
+		sye_cp.value = yl_cp.value;
+
+		house_cp.value = yl_cp.value;
+
+		fw_cp.value = yl_cp.value;
+
+		file_cp.value = yl_cp.value;
+
+		fl_cp.value = yl_cp.value;
+
+	}
+	void all_op() {
+
+		jl_op.value = yl_op.value;
+
+		djl_op.value = yl_op.value;
+
+		syu_op.value = yl_op.value;
+
+		gs_op.value = yl_op.value;
+
+		sye_op.value = yl_op.value;
+
+		house_op.value = yl_op.value;
+
+		fw_op.value = yl_op.value;
+
+		file_op.value = yl_op.value;
+
+		fl_op.value = yl_op.value;
+	}
+]]></zscript>
+	</window>
+</zk>

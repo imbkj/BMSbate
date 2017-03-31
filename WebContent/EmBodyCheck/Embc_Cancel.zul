@@ -1,0 +1,19 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="取消预约" border="normal" closable="true" width="600px" height="400px"
+	apply="org.zkoss.bind.BindComposer" id="cancelwin"
+    viewModel="@id('vm') @init('Controller.EmBodyCheck.Embc_CancelController')"
+>
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell width="80px">取消理由</cell>
+			<cell><textbox rows="5" width="95%" value="@bind(vm.ml.emca_content)"></textbox></cell>
+		</row>
+	</rows>
+	<foot>
+		<footer align="center"><button onClick="@command('cancel',win=cancelwin)">提交</button></footer>
+	</foot>
+</grid>
+</window>
+</zk>

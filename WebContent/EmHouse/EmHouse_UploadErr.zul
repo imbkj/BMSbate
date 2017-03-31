@@ -1,0 +1,123 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="上传文件" id="wue" width="80%" height="100%"
+		closable="true" border="normal" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmHouse.EmHouse_UploadErrController')">
+		<borderlayout width="100%" height="100%">
+			<north height="40%" title="批量退回变更数据">
+				<grid width="100%" height="100%" id="grid">
+					<columns visible="false">
+						<column width="150px" />
+						<column />
+						<column width="120px" />
+						<column />
+					</columns>
+					<rows>
+						<row>
+							<cell>
+								<label>所属月份:</label>
+							</cell>
+							<cell>
+								<combobox id="ownmonth" onChange="@command('search')"
+									value="@bind(vm.nowmonth)" mold="rounded"
+									model="@load(vm.s_ownmonth)" readonly="true">
+									<template name="model">
+										<comboitem label="@load(each)" />
+									</template>
+								</combobox>
+							</cell>
+							<cell>类型</cell>
+							<cell>
+								<combobox readonly="true"
+									value="@bind(vm.change)" onChange="@command('search')">
+									<comboitem label="新增" />
+									<comboitem label="调入" />
+									<comboitem label="基数调整" />
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label>请选择公积金台帐文件:</label>
+							</cell>
+							<cell colspan="3">
+								<button label="浏览..."
+									upload="true,multiple=true,maxsize=-1"
+									onUpload="@command('browse')" />
+								<button label="导入" id="upf"
+									onClick="@command('UpLoadFile')" />
+							</cell>
+						</row>
+					</rows>
+
+				</grid>
+			</north>
+			<center>
+				<grid width="100%" height="100%"
+					model="@load(vm.errlist)" emptyMessage="暂无数据" sizedByContent="true"
+					span="true">
+					<columns>
+						<column width="60px" label="序号" align="center" />
+						<column label="公司名称" align="center" />
+						<column label="公积金号" align="center" />
+						<column label="身份证" align="center" />
+						<column label="退回信息" align="center" />
+						
+						<column label="姓名" align="center" />
+						<column label="基数" align="center" />
+						<column label="比例" align="center" />
+						<column label="类型" align="center" />
+						<column label="状态" align="center" />
+						<column width="55px" align="center">
+							<checkbox onClick="@command('checkAll')"
+								checked="@bind(vm.checkall)" />
+						</column>
+					</columns>
+					<template name="model">
+						<row>
+							<cell>${forEachStatus.index+1 }</cell>
+							<cell>
+								<label value="@load(each.company)" />
+							</cell>
+							<cell>
+								<label value="@load(each.ehle_houseid)" />
+							</cell>
+							<cell>
+								<label value="@load(each.ehle_idcard)" />
+							</cell>
+							<cell>
+								<label value="@load(each.ehle_errMessage)" />
+							</cell>
+							
+							<cell>
+								<label value="@load(each.name)" />
+							</cell>
+							<cell>
+								<label value="@load(each.radix)" />
+							</cell>
+							<cell>
+								<label value="@load(each.cpp)" />
+							</cell>
+							<cell>
+								<label value="@load(each.change)" />
+							</cell>
+							<cell>
+								<label value="@load(each.declareName)" />
+							</cell>
+							<cell>
+								<checkbox checked="@bind(each.checked)"/>
+							</cell>
+						</row>
+					</template>
+				</grid>
+			</center>
+			<south>
+				<div align="center">
+					<button label="退回数据" id="btSubmit"
+						disabled="@load(vm.btnSubmit)" onClick="@command('submit')" />
+					<button label="删除" onClick="@command('del')" />
+				</div>
+			</south>
+		</borderlayout>
+	</window>
+</zk>

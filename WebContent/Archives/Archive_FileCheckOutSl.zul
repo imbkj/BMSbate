@@ -1,0 +1,237 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="受理" border="normal" closable="true" id="detail"
+		width="80%" height="80%" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.Archives.Archive_FileCheckOutSlController')">
+		<grid vflex="1">
+			<rows>
+				<!-- 公共显示信息 -->
+				<row>
+					<cell width="85px">公司名称</cell>
+					<cell>
+						<label value="${vm.model.coba_shortname}" />
+					</cell>
+					<cell width="85px">员工姓名</cell>
+					<cell>
+						<label value="${vm.model.emba_name}" />
+					</cell>
+				</row>
+				<row>
+					<cell width="80px">身份证号码</cell>
+					<cell colspan="3">
+						<label width="50%"
+							value="${vm.model.eada_idcard}" />
+					</cell>
+				</row>
+				<row visible="${vm.model.eada_type!='档案调入'}">
+					<cell>档案类型</cell>
+					<cell>
+						<label value="${vm.model.eada_filetype}" />
+					</cell>
+					<cell>档案编号</cell>
+					<cell>
+						<label value="${vm.model.eada_fid}" />
+					</cell>
+				</row>
+				<row>
+					<cell>托管方式</cell>
+					<cell>
+						<label value="${vm.model.eada_wtmode}" />
+					</cell>
+					<cell>户籍挂靠</cell>
+					<cell>
+						<label
+							value="${vm.model.eada_colhj==1?'是': vm.model.eada_colhj==0?'否':'无此服务'}" />
+					</cell>
+				</row>
+				<row>
+					<cell>入职中智时间</cell>
+					<cell>
+						<label value="${vm.model.emba_indate}" />
+					</cell>
+					<cell>收费起始日期</cell>
+					<cell>
+						<label />
+					</cell>
+				</row>
+				<row>
+					<cell>存档协议到期日</cell>
+					<cell>
+						<label value="${vm.model.eada_deadline}" />
+					</cell>
+					<cell>存档起始日期</cell>
+					<cell>
+						<label value="${vm.model.eada_savefiledate}" />
+					</cell>
+				</row>
+				<row visible="${vm.model.eada_type!='档案调入'}">
+					<cell>档案所在地</cell>
+					<cell colspan="3">
+						<label width="80%"
+							value="${vm.model.eada_fileplace}" />
+					</cell>
+				</row>
+				<row>
+					<cell>户口详细地址</cell>
+					<cell colspan="3">
+						<label width="80%"
+							value="${vm.amodel.emar_address}" />
+					</cell>
+				</row>
+				<row>
+					<cell width="100px">员工欠费起始日</cell>
+					<cell>
+						<datebox value="@bind(vm.model.eada_chargedate)"
+							readonly="true" />
+					</cell>
+					<cell>员工欠费终止日</cell>
+					<cell>
+						<datebox value="@bind(vm.feeenddate)"
+							onChange="@command('changeendmoetd',enddate=self.value)" />
+						<label style="color:red;">(*)</label>
+					</cell>
+				</row>
+				<row>
+					<cell>离职时间</cell>
+					<cell>
+						<textbox value="${vm.model.emba_outdate}"
+							readonly="true" />
+					</cell>
+					<cell>是否委托代办</cell>
+					<cell>
+						<textbox
+							value="${vm.model.eada_deputy==1?'是':'否'}" readonly="true" />
+					</cell>
+				</row>
+				<row>
+					<cell>调出方式</cell>
+					<cell>
+						<combobox
+							onChange="@command('changetype',outtype=self.value)"
+							value="@bind(vm.model.eada_checkoutmode)">
+							<comboitem label="凭函自带" />
+							<comboitem label="凭函代调" />
+							<comboitem label="凭函机要" />
+							<comboitem label="无函自带" />
+						</combobox>
+						<label style="color:red;">(*)</label>
+					</cell>
+					<cell visible="@load(vm.jyfeevis)">机要费用</cell>
+					<cell visible="@load(vm.jyfeevis)">
+						<doublebox value="@bind(vm.jyfee)" />
+						<label style="color:red;">(*)</label>
+					</cell>
+				</row>
+				<row>
+					<cell>档案费用</cell>
+					<cell>
+						<doublebox value="@bind(vm.dafee)"></doublebox>
+						<label style="color:red;">
+							(*欠费起始日—收费终止日相差月份数*10)
+						</label>
+					</cell>
+					<cell>户口费用</cell>
+					<cell>
+						<doublebox value="@bind(vm.hkfee)" />
+						<label style="color:red;">
+							(*欠费起始日—收费终止日相差月份数*30)
+						</label>
+					</cell>
+				</row>
+				<row>
+					<cell>调出原因</cell>
+					<cell colspan="3">
+						<textbox width="80%" rows="4"
+							value="${vm.model.eada_checkoutreason}" />
+					</cell>
+				</row>
+				<row>
+					<cell>收费记录</cell>
+					<cell colspan="3">
+						<grid model="@load(vm.gtlist)"
+							emptyMessage="没有收费记录">
+							<columns>
+								<column label="序号" width="40px"
+									align="center" />
+								<column label="所属月份" align="center"
+									hflex="1" />
+								<column label="收费项目" align="center"
+									hflex="1" />
+								<column label="收费方式" align="center"
+									hflex="1" />
+								<column label="收费金额" align="center"
+									hflex="1" />
+								<column label="添加人" align="center"
+									hflex="1" />
+								<column label="添加时间" align="center"
+									hflex="1" />
+								<column label="备注" align="center"
+									hflex="4" />
+							</columns>
+							<rows>
+								<template name="model">
+									<row>
+										<cell>
+											<label
+												value="${forEachStatus.index+1 }">
+											</label>
+										</cell>
+										<cell>
+											<label
+												value="@load(each.ownmonth)">
+											</label>
+										</cell>
+										<cell>
+											<label
+												value="@load(each.emgt_type)">
+											</label>
+										</cell>
+										<cell>
+											<label
+												value="@load(each.emgt_paytype)">
+											</label>
+										</cell>
+										<cell>
+											<label
+												value="@load(each.emgt_fee)">
+											</label>
+										</cell>
+										<cell>
+											<label
+												value="@load(each.emgt_addname)">
+											</label>
+										</cell>
+										<cell>
+											<label
+												value="@load(each.emgt_addtime)">
+											</label>
+										</cell>
+										<cell>
+											<label
+												value="@load(each.emgt_remark)">
+											</label>
+										</cell>
+									</row>
+								</template>
+							</rows>
+						</grid>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button
+						onClick="@command('summitupdate',detail=detail)">
+						提交
+					</button>
+					<button onClick="@command('addremark',win=win)">
+						备注
+					</button>
+					<button onClick="@command('back',win=detail)">
+						退回
+					</button>
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

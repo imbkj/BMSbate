@@ -1,0 +1,28 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="测试" id="winD" border="normal"
+		height="100%" width="98%" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.Embase.EmBase_DistributeController')"
+		closable="true">
+		<scrollview>
+			<panel>
+				<panelchildren>
+					<grid>
+						<rows>
+							<row>
+								<cell></cell>
+								<cell></cell>
+								<cell></cell>
+							</row>
+						</rows>
+						<foot>
+							<footer>
+								<button label="提交" onClick="@command('submit')"></button>
+							</footer>
+						</foot>
+					</grid>
+				</panelchildren>
+			</panel>
+		</scrollview>
+	</window>
+</zk>

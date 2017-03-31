@@ -1,0 +1,45 @@
+<?page title="导入工资变动数据" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winEmSalaryUpChange" title="导入工资变动数据" border="normal"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmSalary.EmSalaryBase_UploadChangeController')"
+		closable="true" sizable="true" width="650px" height="300px">
+		<borderlayout>
+			<center title="导入工资变动数据">
+				<grid width="100%" height="100%" >
+					<rows>
+						<row>
+							<cell width="30%">工资变动模板:</cell>
+							<cell>
+								<button label="下载导入模板"
+									onClick="@command('downloadTemplet')" />
+							</cell>
+						</row>
+						<row>
+							<cell>文件上传:</cell>
+							<cell>
+								<textbox mold="rounded" rows="1"
+									readonly="true" value="@load(vm.uploadFlieName)" width="280px" />
+								<button label="浏览..."
+									upload="true,multiple=true" onUpload="@command('browse')" />
+							</cell>
+						</row>
+						<row>
+							<cell colspan="2" align="center">
+								<label
+									value=" (注意：如果修改工资变动模板文件的格式，将无法正常导入工资数据！)" style="color:red" />
+							</cell>
+
+						</row>
+					</rows>
+					<foot>
+						<footer align="center">
+							<button label="提交" id="btSubmit"
+								onClick="@command('upload',win=winEmSalaryUpChange)" />
+						</footer>
+					</foot>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

@@ -1,0 +1,16 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="库存信息列表" border="normal">
+<grid>
+		<columns>
+			<column label="序号"/>
+			<column label="礼品名称"/>
+			<column label="数量"/>
+		</columns>
+		<rows>
+			<row>
+			</row>
+		</rows>
+	</grid>
+</window>
+</zk>

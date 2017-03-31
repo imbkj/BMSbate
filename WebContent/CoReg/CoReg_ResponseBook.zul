@@ -1,0 +1,40 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="计划生育责任书签订信息补充" border="normal" width="70%"
+		apply="org.zkoss.bind.BindComposer" id="bookwin"
+		viewModel="@id('vm') @init('Controller.CoReg.CoReg_ResponseBookController')"
+		height="70%" closable="true">
+		<grid vflex="1">
+			<rows>
+				<row>
+					<cell width="120px">公司编号</cell>
+					<cell>
+						<label value="@load(vm.m.cid)"></label>
+					</cell>
+					<cell width="120px">公司简称</cell>
+					<cell>
+						<label value="@load(vm.m.coba_shortname)"></label>
+					</cell>
+				</row>
+				<row>
+					<cell width="120px">计划生育责任书签订时间</cell>
+					<cell>
+						<datebox value="@bind(vm.rebkdate)"></datebox>
+					</cell>
+					<cell width="120px">计划生育责任书有效期</cell>
+					<cell>
+						<combobox value="@bind(vm.rebkenddate)"
+							width="60%">
+							<comboitem label="" />
+							<comboitem label="当年有效" />
+							<comboitem label="一年有效" />
+						</combobox>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center"><button onClick="@command('summit',win=bookwin)">提交</button></footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

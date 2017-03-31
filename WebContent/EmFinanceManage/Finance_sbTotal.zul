@@ -1,0 +1,73 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="商保数据导入" border="normal" width="100%" height="100%"
+		closable="true" apply="org.zkoss.bind.BindComposer" id="wind"
+		viewModel="@id('vm') @init('Controller.EmFinanceManage.Finance_sbTotalController')">
+		<borderlayout width="100%" height="100%">
+			<north>
+				<grid width="100%" height="100%">
+					<columns visible="false">
+						<column width="15%" />
+						<column />
+					</columns>
+					<rows>
+						<row>
+							<cell>文件上传</cell>
+							<cell>
+								<textbox mold="rounded" readonly="true"
+									value="" width="280px" />
+								<button label="浏览..."
+									upload="true,multiple=true" onUpload="@command('browse')" />
+
+								<button label="导出"
+									onClick="@command('export')" />
+								<label style="color:red"
+									value="@load(vm.uploadState)" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</north>
+			<center>
+				<grid width="100%" height="100%" emptyMessage="暂无数据"
+					model="@load(vm.flist)">
+					<columns>
+						<column width="80px" align="center" label="序号" />
+						<column width="120px"  align="center" label="公司编号" />
+						<column width="80px"  align="center" label="客服" />
+						<column align="center" label="公司名称" />
+						<column width="180px"  align="center" label="金额" />
+						<column align="center" label="用友编号" />
+						<column align="center" label="合同类型" />
+					</columns>
+					<template name="model">
+						<row>
+							<cell>
+								<label
+									value="${forEachStatus.index+1 }" />
+							</cell>
+							<cell>
+								<label value="@load(each.cid)" />
+							</cell>
+							<cell>
+								<label value="@load(each.client)" />
+							</cell>
+							<cell>
+								<label value="@load(each.company)" />
+							</cell>
+							<cell>
+								<label value="@load(each.fee)" />
+							</cell>
+							<cell>
+								<label value="@load(each.uid)" />
+							</cell>
+							<cell>
+								<label value="@load(each.compacttype)" />
+							</cell>
+						</row>
+					</template>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

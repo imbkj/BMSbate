@@ -1,0 +1,11 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="社保缴纳证明" border="normal" width="95%" id="win1" apply="org.zkoss.bind.BindComposer" closable="true">
+<zscript language="Java">
+	import Util.UserInfo;
+	String user = UserInfo.getUserid();
+</zscript>
+<include  id="incl_id"  src="../ClassPrint/DocumentInfo_Class19Doc.jsp?gid=${arg.gid}">
+</include>
+</window>
+</zk>

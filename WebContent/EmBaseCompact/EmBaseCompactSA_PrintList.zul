@@ -1,0 +1,64 @@
+<?page title="劳动合同打印列表" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="劳动合同打印列表" border="normal" width="100%"
+		apply="org.zkoss.bind.BindComposer" sizable="true" height="800px"
+		viewModel="@id('vm') @init('Controller.EmBaseCompact.EmBaseCompactSA_MakeListController')">
+		<borderlayout vflex="1">
+			<north border="0" title="数据查询" collapsible="true"
+				flex="true" open="true">
+				<panel border="1">
+					<panelchildren style="padding:5px;">
+						<grid id="searchGird" width="100%">
+							<rows>
+								<row>
+
+									<cell width="100px">员工姓名</cell>
+									<textbox id="role_name"
+										width="150px" value="" />
+									<cell></cell>
+								</row>
+							</rows>
+							<foot>
+								<footer align="center">
+									<button id="btSearch" label="查询"
+										onClick="@command('search',tb1=role_name)" />
+								</footer>
+							</foot>
+						</grid>
+					</panelchildren>
+				</panel>
+			</north>
+			<center>
+				<grid width="100%" mold="paging" pageSize="19"
+					model="@load(vm.premcompactsalist)">
+					<columns>
+						<column label="序号" align="center" width="60px" />
+						<column label="公司名称" align="center" />
+						<column label="员工姓名" align="center" />
+						<column label="合同起始时间" align="center" />
+						<column label="合同到期时间" align="center" />
+						<column label="操作类型" align="center" />
+						<column label="操作" align="center" width="100px" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<label
+									value="${forEachStatus.index + 1}" />
+								<label value="@load(each.company)" />
+								<label value="@load(each.name)" />
+								<label
+									value="@load(each.ebco_incept_date)" />
+								<label
+									value="@load(each.ebco_maturity_date)" />
+								<label value="@load(each.ebco_change)" />
+								<label style="cursor:pointer"
+									onClick="@command('emcompact_print', emco=each)" value="打印合同" />
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

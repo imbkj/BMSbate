@@ -1,0 +1,83 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="导出信息" border="normal" width="80%"
+		height="80%" closable="true" apply="org.zkoss.bind.BindComposer"
+		id="upwin"
+		viewModel="@id('vm') @init('Controller.EmSheBaocard.Emba_InfoOutController')">
+		<grid>
+			<rows>
+
+				<row>
+					<cell width="80px">文件</cell>
+					<cell>
+						<textbox width="60%" value="@bind(vm.filename)"></textbox>
+						<button id="attachBtn" upload="true"
+							label="选择文件"
+							onUpload="@command('uploadfile',win=upwin)" />
+						<button onClick="@command('loadfile')">下载模版</button>
+					</cell>
+				</row>
+			</rows>
+		</grid>
+		<grid model="@load(vm.list)" vflex="1" mold="paging" pageSize="500">
+			<columns>
+				<column label="序号" width="40px" align="center" />
+				<column label="公司编号" align="center" width="80px" />
+				<column label="公司名称" align="center" />
+				<column label="员工姓名" align="center" width="80px" />
+				<column label="性别" align="center" width="70px" />
+				<column label="身份证号" align="center" width="150px" />
+				<column label="手机号" align="center" width="100px" />
+				<column label="社保电脑号" align="center" width="100px" />
+				<column label="客服" align="center" width="80px" />
+			</columns>
+			<rows>
+				<template name="model">
+					<row>
+						<cell>
+							<label value="${forEachStatus.index+1 }">
+							</label>
+						</cell>
+						<cell>
+							<label value="@load(each.cid)">
+							</label>
+						</cell>
+						<cell>
+							<label value="@load(each.coba_company)"></label>
+						</cell>
+						<cell>
+							<label value="@load(each.emba_name)">
+							</label>
+						</cell>
+						<cell>
+							<label value="@load(each.emba_sex)">
+							</label>
+						</cell><cell>
+							<label value="@load(each.emba_idcard)">
+							</label>
+						</cell>
+						<cell>
+							<label value="@load(each.emba_mobile)">
+							</label>
+						</cell>
+						<cell>
+							<label value="@load(each.esiu_computerid)">
+							</label>
+						</cell>
+							<cell>
+							<label value="@load(each.coba_client)">
+							</label>
+						</cell>
+					</row>
+				</template>
+			</rows>
+			<foot>
+				<footer align="center" span="9">
+					<button onClick="@command('downExcel')">
+						下载
+					</button>
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

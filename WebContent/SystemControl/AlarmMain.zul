@@ -1,0 +1,15 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<scrollview vflex="1" hflex="1">
+		<div width="100%" height="100%"
+			apply="org.zkoss.bind.BindComposer,Controller.SystemControl.AlarmMainClass_ListController">
+			<groupbox title="${each.alcl_name }" mold="3d" open="true"
+				forEach="${$composer.getAlmList()}">
+				<custom-attributes alcl_id="${each.alcl_id }" />
+				<include src="/SystemControl/AlarmMain_List.zul"
+					alcl_id="${alcl_id }">
+				</include>
+			</groupbox>
+		</div>
+	</scrollview>
+</zk>

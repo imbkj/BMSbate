@@ -1,0 +1,91 @@
+<?page title="知识库信息" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window  border="0" vflex="1" hflex="1" apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('kwde') @init('Controller.KnowledgeBase.KnowledgeBaseInfoList_Controller')">
+	<panel title="知识库" vflex="1" hflex="1">
+<panelchildren>
+<borderlayout height="100%">
+<north border="0" title="检索" collapsible="true" flex="true" style="padding-bottom:10px;">
+<grid id="secrchgrid" height="50px">
+	<rows>
+		<row>
+		<cell width="75px" align="right">添加时间：</cell>
+		<cell width="130px"><datebox id="nametime" width="80%"/></cell>
+		<cell width="75px" align="right">更新时间：</cell>
+		<cell width="130px"><datebox id="uptime" width="80%"/></cell>
+		<cell><button id="btSearch" label="查询"
+			onClick="@command('search',uptime=uptime.value,nametime=nametime.value)" /></cell>
+		</row>
+	</rows>
+</grid>
+</north>
+<center>
+<hlayout vflex="1" hflex="1">
+
+<listbox vflex="1" hflex="2" model="@load(kwde.kwdgeinfolist)" selectedItem="@bind(kwde.kwdebasecontent)" emptyMessage="没有数据">
+	<listhead>
+	<listheader width="40px">序号</listheader>
+	<listheader sort="auto(kbco_classname)" width="120px"><vlayout><label value="知识类型"></label>
+	<combobox id="nametitle" width="90%" autodrop="true" model="@load(kwde.kwdechlist)" 
+			onChange="@command('fastsearch')" value="@bind(kwde.nametitle)" instant="true">
+				<template name="model">
+				<comboitem label="@load(each.kbco_classname)"/>
+				</template>
+	</combobox></vlayout></listheader>
+		<listheader sort="auto(kbco_title)"><vlayout><label value="知识标题"></label></vlayout>
+		<textbox onChange="@command('fastsearch')" value="@bind(kwde.question)" instant="true"/></listheader>
+		<listheader sort="auto(kbco_addname)" width="70px">
+			<vlayout>
+				<label value="添加人"></label>
+				<combobox onChange="@command('fastsearch')" value="@bind(kwde.upquestion)" instant="true" width="99%" model="@load(kwde.addnamelist)">
+					<template name="model">
+						<comboitem label="@load(each.kbco_addname)"/>
+					</template>	
+				</combobox>
+			</vlayout>
+		</listheader>
+	</listhead>
+	<template name="model">
+	<listitem>
+		<listcell label="${forEachStatus.index+1 }" />
+		<listcell label="@load(each.kbco_classname)" />
+		<listcell label="@load(each.kbco_title)" />
+		<listcell label="@load(each.kbco_addname)" />
+	</listitem>
+	</template>
+</listbox>
+<grid vflex="1" hflex="1">
+		<columns>
+			<column align="center" label="知识描述"/>
+		</columns>
+		<rows visible="@bind(not empty kwde.kwdebasecontent)">
+			<row>
+				<cell align="left" style="color:#0000FF;"><label>详细：</label><label value="@bind(kwde.kwdebasecontent.kbco_title)"/></cell>
+			</row>
+			<row>
+				<cell align="left" style="font-size:14px;">
+					<hlayout><html content="@bind(kwde.kwdebasecontent.kbco_content)"></html></hlayout>
+				</cell>
+			</row>
+			<row>
+				<cell align="right">
+				<label>———</label>
+				<label value="@bind(kwde.kwdebasecontent.kbco_addname)" style="margin-right:20px;"/>
+				<label value="@bind(kwde.kwdebasecontent.kbco_addtime)"/></cell>
+			</row>
+			<row visible="@bind(not empty kwde.kwdebasecontent.kbco_fileurl)">
+				<cell align="left"><label>政策指引:</label>
+					<a onClick="@command('openfile',url=furl.value)"><label width="95%" id="url" value="@bind(kwde.kwdebasecontent.kbco_remark)"/></a>
+					<label id="furl" value="@bind(kwde.kwdebasecontent.kbco_fileurl)" visible="false"/>
+				</cell>
+			</row>
+		</rows>
+	</grid>
+
+</hlayout>
+</center>
+</borderlayout>
+</panelchildren>
+</panel>
+</window>
+</zk>

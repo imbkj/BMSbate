@@ -1,0 +1,269 @@
+<?page title="商业保险审核" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="商业保险审核" border="normal"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmCommercialInsurance.CI_InsurantClaim_Controller')"
+		width="98%" closable="true" id="w1">
+		<label id="eccl_id" value="${arg.daid}" visible="false" />
+		<label id="eccv_id" value="${arg.eccv_id}" visible="false" />
+		<label id="eccl_castsort" value="${arg.eccl_castsort}"
+			visible="false" />
+		<div
+			style="width:100%;height:550px;overflow-y:scroll;overflow-x:hidden;border:1px solid #bcbdbf;">
+			<grid width="100%" id="g1"
+				model="@load(vm.ci_claim_vistlist)">
+				<rows>
+					<template name="model">
+						<row>
+
+							<grid>
+								<rows>
+									<row>
+										<cell>索赔金额</cell>
+										<cell>
+											<label
+												value="@load(each.eccv_pay_money)" />
+										</cell>
+										<cell>收据数量</cell>
+										<cell>
+											<label
+												value="@load(each.eccv_invoice_count)" />
+										</cell>
+										<cell>投保类型</cell>
+										<cell>
+											<label
+												value="@load(each.eccv_castsort)" />
+										</cell>
+										<cell>就诊日期</cell>
+										<cell>
+											<label
+												value="@load(each.eccv_visiting_date)" />
+										</cell>
+									</row>
+									<row>
+										<cell>就诊医院</cell>
+										<cell>
+											<label
+												value="@load(each.eccv_visiting_hospital)" />
+										</cell>
+										<cell>就诊原因</cell>
+										<cell>
+											<label
+												value="@load(each.eccv_visiting_cause)" />
+										</cell>
+										<cell>审核备注</cell>
+										<cell>
+											<label
+												value="@load(each.eccv_remark)" />
+										</cell>
+										<cell>索赔类型</cell>
+										<cell>
+											<label
+												value="@load(each.eccv_claim_bclass)" />
+										</cell>
+									</row>
+									<row>
+										<cell>
+											保险类别
+											<label
+												value="@load(each.eccv_id)" />
+										</cell>
+										<cell colspan="6">
+											<label
+												value="@load(each.eccv_claim_class)" />
+										</cell>
+										<cell>
+											<button label="提交"
+												onClick="@command('ci_pidup', emco=each,g1=g1,w1=w1,eccl_id=eccl_id,cl_castsort=cl_castsort)" />
+										</cell>
+									</row>
+									<row>
+										<cell colspan="8">
+											<grid width="100%"
+												model="@load(each.pid_list)">
+												<columns>
+													<column label="发票号"
+														align="center" width="60px" />
+													<column label="审核金额"
+														align="center" />
+													<column label="赔付金额"
+														align="center" />
+													<column label="赔付状态"
+														align="center" />
+													<column label="除外责任"
+														align="center" />
+													<column label="社保统筹"
+														align="center" />
+													<column label="自费药"
+														align="center" />
+													<column label="自费材料"
+														align="center" />
+													<column label="自费检查"
+														align="center" />
+													<column
+														label="非指定医院" align="center" />
+													<column label="其它费用"
+														align="center" />
+													<column label="免赔"
+														align="center" />
+													<column label="超限额"
+														align="center" />
+													<column label="病历"
+														align="center" />
+													<column
+														label="非正规发票" align="center" />
+													<column label="药品清单"
+														align="center" />
+													<column label="证件"
+														align="center" />
+													<column label="检查报告"
+														align="center" />
+													<column label="其它资料"
+														align="center" />
+													<column label="原因"
+														align="center" />
+													<column
+														visible="false" />
+													<column label="操作"
+														align="center" />
+												</columns>
+												<rows>
+													<template
+														name="model" var="pid_name">
+														<row>
+															<cell>
+																<label
+																	value="@load(pid_name.ecci_pid)" />
+															</cell>
+															<cell>
+																<textbox
+																	mold="rounded" width="50px"
+																	value="@load(pid_name.ecci_auditing_money)" />
+															</cell>
+															<cell>
+																<textbox
+																	mold="rounded" width="50px"
+																	value="@load(pid_name.ecci_claim_total)" />
+															</cell>
+															<cell>
+																<combobox
+																	mold="rounded" width="60px" readonly="true"
+																	value="@load(pid_name.ecci_state)">
+																	<comboitem
+																		label="赔付" />
+																	<comboitem
+																		label="拒赔" />
+																	<comboitem
+																		label="延陪" />
+																	<comboitem
+																		label="审核中" />
+																	<comboitem
+																		label="需补交资料" />
+																</combobox>
+															</cell>
+															<cell>
+																<textbox
+																	mold="rounded" width="50px"
+																	value="@load(pid_name.ecci_rejected_duty)" />
+															</cell>
+															<cell>
+																<textbox
+																	mold="rounded" width="50px"
+																	value="@load(pid_name.ecci_rejected_pdpaid)" />
+															</cell>
+															<cell>
+																<textbox
+																	mold="rounded" width="50px"
+																	value="@load(pid_name.ecci_rejected_medicine)" />
+															</cell>
+															<cell>
+																<textbox
+																	mold="rounded" width="50px"
+																	value="@load(pid_name.ecci_rejected_stuff)" />
+															</cell>
+															<cell>
+																<textbox
+																	mold="rounded" width="50px"
+																	value="@load(pid_name.ecci_rejected_check)" />
+															</cell>
+															<cell>
+																<textbox
+																	mold="rounded" width="50px"
+																	value="@load(pid_name.ecci_rejected_hospital)" />
+															</cell>
+															<cell>
+																<textbox
+																	mold="rounded" width="50px"
+																	value="@load(pid_name.ecci_rejected_other_fee)" />
+															</cell>
+															<cell>
+																<textbox
+																	mold="rounded" width="50px"
+																	value="@load(pid_name.ecci_rejected_no_fee)" />
+															</cell>
+															<cell>
+																<textbox
+																	mold="rounded" width="50px"
+																	value="@load(pid_name.ecci_rejected_up_fee)" />
+															</cell>
+															<cell>
+																<textbox
+																	mold="rounded" width="50px"
+																	value="@load(pid_name.ecci_delay_case_history)" />
+															</cell>
+															<cell>
+																<textbox
+																	mold="rounded" width="50px"
+																	value="@load(pid_name.ecci_delay_invoice)" />
+															</cell>
+															<cell>
+																<textbox
+																	mold="rounded" width="50px"
+																	value="@load(pid_name.ecci_delay_leechdom_list)" />
+															</cell>
+															<cell>
+																<textbox
+																	mold="rounded" width="50px"
+																	value="@load(pid_name.ecci_delay_paper)" />
+															</cell>
+															<cell>
+																<textbox
+																	mold="rounded" width="50px"
+																	value="@load(pid_name.ecci_delay_check_report)" />
+															</cell>
+															<cell>
+																<textbox
+																	mold="rounded" width="50px"
+																	value="@load(pid_name.ecci_delay_other)" />
+															</cell>
+															<cell>
+																<textbox
+																	mold="rounded" width="50px"
+																	value="@load(pid_name.ecci_rejected_case)" />
+															</cell>
+															<cell
+																visible="false">
+																<label
+																	value="@load(pid_name.ecci_id)" />
+															</cell>
+															<cell>
+																<button
+																	label="提交"
+																	onClick="@command('ci_pidoveradd', emco=pid_name,g1=self,w1=w1,eccl_id=eccl_id,cl_castsort=cl_castsort,eccv_id=eccv_id)" />
+															</cell>
+														</row>
+													</template>
+												</rows>
+											</grid>
+										</cell>
+									</row>
+								</rows>
+							</grid>
+
+						</row>
+					</template>
+				</rows>
+			</grid>
+		</div>
+	</window>
+</zk>

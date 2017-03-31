@@ -1,0 +1,274 @@
+<!--
+	创建人：赵敏捷
+	创建时间：2014-1-17
+	用途：添加基数采集
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<?component name="docDataList" macro-uri="../CoPolicyNotice/Pono_PubInfoAdd.zul" inline="true"?>
+<zk>
+	<style src="./css/style.css" />
+	<window title="委托外地 -- 年调生成" border="normal" width="100%"  vflex="1"
+		  apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmCommissionOut.EmcyearadjustController')">
+		<borderlayout vflex="1">
+		 
+			<north border="0" collapsible="true"
+				flex="true" open="true">
+			
+				<panel border="0">
+					
+					<panelchildren style="padding:5px;">
+				<groupbox  title="生成年调" >
+						<grid width="100%">
+							<rows>
+								<row>
+<!-- 									<cell width="10%" visible="false" -->
+<!-- 										style="color:#666;" align="center"> -->
+<!-- 										地区 -->
+<!-- 									</cell> -->
+<!-- 									<combobox id="cbregion"  visible="false" -->
+<!-- 										model="@load(vm.regionlist)" width="40%" autodrop="true" -->
+<!-- 										mold="rounded" -->
+<!-- 										onChange="@command('selProvince', contact=event.value,com=cbprovince)"> -->
+<!-- 										<template name="model"> -->
+<!-- 											<comboitem -->
+<!-- 												label="@load(each)" /> -->
+<!-- 										</template> -->
+<!-- 									</combobox> -->
+									<cell width="10%"
+										style="color:#666;" align="center">
+										省份
+									</cell>
+									<combobox id="cbprovince"
+										model="@load(vm.provincelist)" width="40%" autodrop="true"
+										mold="rounded"
+										onChange="@command('selCity', contact=event.value,com=cbcity)">
+										<template name="model">
+											<comboitem
+												label="@load(each)" />
+										</template>
+									</combobox>
+									<cell 
+										style="color:#666;" align="center">
+										城市
+									</cell>
+									<cell colspan="2">
+									<hbox>
+									<combobox id="cbcity"  
+										model="@load(vm.citylist)" value="@bind(vm.cityname)"  autodrop="true"
+										mold="rounded"
+										onChange="@command('selwtjg', contact=event.value,com=wtjg)">
+										
+										<template name="model">
+											<comboitem
+												label="@load(each)" />
+										</template>
+									</combobox>
+									<button style="margin-left:5px;" onClick="@command('addnote')">新增政策通知</button>
+									</hbox>
+									</cell>
+									
+										<cell width="10%"
+										style="color:#666;" align="center">
+										委托机构
+										
+									</cell>
+									<cell   colspan="2" >
+									<combobox id="wtjg" 
+										model="@load(vm.wtjglist)" width="50%" autodrop="true" selectedItem="@bind(vm.comm)"
+										mold="rounded">
+									<template name="model">
+											<comboitem
+												label="@load(each.coab_name)" />
+										</template>
+									</combobox>
+									</cell>
+								</row>
+								<row>
+<!-- 									<cell width="10%" -->
+<!-- 										style="color:#666;" align="center"> -->
+<!-- 										委托机构 -->
+										
+<!-- 									</cell> -->
+<!-- 									<cell colspan="3" > -->
+<!-- 									<combobox id="wtjg"  -->
+<!-- 										model="@load(vm.wtjglist)" width="50%" autodrop="true" selectedItem="@bind(vm.comm)" -->
+<!-- 										mold="rounded"> -->
+<!-- 									<template name="model"> -->
+<!-- 											<comboitem -->
+<!-- 												label="@load(each.coab_name)" /> -->
+<!-- 										</template> -->
+<!-- 									</combobox> -->
+<!-- 									</cell> -->
+
+
+								<cell width="10%"
+										style="color:#666;" align="center">
+										参与年调的对象:
+										
+									</cell>
+									<cell width="10%"  colspan="3"
+										style="color:#666;" align="left">
+										
+								<datebox id="ecytstartdate" ></datebox>
+						
+									</cell>
+									
+									<cell width="10%" 
+										style="color:#666;" align="center">
+										说明：
+										
+									</cell>
+									<cell colspan="3" >
+									<textbox id="remark" value="" width="80%">
+									
+									</textbox>	
+									</cell>								
+								
+								</row>
+								<row>
+									<cell width="10%"
+										style="color:#666;" align="center">
+										委托大户:
+										
+									</cell>
+									<checkbox id="cbdh" checked="false" >
+									</checkbox>
+									
+									<cell width="10%" 
+										style="color:#666;" align="center">
+										独立开户：
+										
+									</cell>
+												<checkbox id="cbdl" checked="false">
+									</checkbox>	
+									<cell  width="10%" 
+										style="color:#666;" align="center">
+									年调反馈截止时间：
+									</cell>	
+									<datebox id="datestart" ></datebox>
+									
+									<cell  width="10%" 
+										style="color:#666;" align="center">
+									约定执行时间：
+									
+									</cell>	
+									<datebox id="dateending"></datebox>
+								</row>
+								
+								
+									<row>
+								
+									<cell width="10%" 
+										style="color:#666;" align="center">
+										采集离职员工数据:
+										
+									</cell>
+									<cell width="10%"   colspan="3"
+										style="color:#666;" align="left">
+										
+									<checkbox id="lzygcj"   checked="false" >
+									</checkbox>
+						
+									</cell>
+											
+									<cell  width="10%" 
+										style="color:#666;" align="center">
+									采集离职起始时间：
+									</cell>	
+									<datebox id="lzdatestart" ></datebox>
+									
+<!-- 									<monthbox id="lzdatestart" readonly="true" format="yyyyMM" mold="rounded" /> -->
+									
+									
+									<cell  width="10%" 
+										style="color:#666;" align="center">
+									采集离职结束时间：
+									
+									</cell>	
+										<datebox id="lzdateending" ></datebox>
+<!-- 									<monthbox  id="lzdateending" readonly="true" format="yyyyMM" mold="rounded" /> -->
+									
+								</row>
+							</rows>
+						
+						</grid>
+					
+				
+					<grid>
+					<rows>
+						<row>
+						<cell width="10%"
+										style="color:#666;" align="center">
+										养老年调：
+						</cell>
+						<checkbox id="ylaont" label="是" checked="false" ></checkbox>
+					
+						<cell width="10%"
+										style="color:#666;" align="center">
+										医疗年调：
+						</cell>
+						<checkbox id="yliaont" label="是" checked="false" ></checkbox>
+						
+						<cell width="10%"
+										style="color:#666;" align="center">
+										失业年调：
+						</cell>
+						<checkbox id="syent" label="是"  checked="false"></checkbox>
+						</row>
+							<row>
+						<cell width="10%"
+										style="color:#666;" align="center">
+										生育年调：
+						</cell>
+						<checkbox id="syunt" label="是" checked="false" ></checkbox>
+					
+						<cell width="10%"
+										style="color:#666;" align="center">
+										工伤年调：
+						</cell>
+								<checkbox id="gshangnt" label="是" checked="false" ></checkbox>
+								<cell colspan="2"></cell>
+						</row>
+						<row>
+				
+					
+						<cell width="10%"
+										style="color:#666;" align="center">
+										公积金年调：
+						</cell>
+						<checkbox id="gjjnt" label="是" checked="false"></checkbox>
+							<cell width="10%"
+										style="color:#666;" align="center">
+										补充公积金年调：
+						</cell>
+						<checkbox id="bcgjjnt" label="是" checked="false"></checkbox>
+						<cell colspan="2">
+						</cell>
+						</row>
+					</rows>
+					
+				</grid>
+					</groupbox>
+					
+					<groupbox title="相关政策" height="400px" >
+				
+					<docDataList  id="docGrid" log_url="/CoPolicyNotice/"/>
+					</groupbox>
+					</panelchildren>
+				</panel>
+			</north>
+			<center>
+				<div  align="center">
+								 
+									<button id="btsubmit" label="提交"
+										onClick="@command('btsubmit',gd=docGrid,city=cbcity.value,remark=remark.value,cbdh=cbdh.checked,cbdl=cbdl.checked,datestart=datestart.value,dateending=dateending.value
+										,ylaont=ylaont.checked,yliaont=yliaont.checked,syent=syent.checked,syunt=syunt.checked,gshangnt=gshangnt.checked,gjjnt=gjjnt.checked,bcgjjnt=bcgjjnt.checked
+										,lzstate=lzygcj.checked,lzdatestart=lzdatestart.value,lzdateending=lzdateending.value,ecytstartdate=ecytstartdate.value)" />
+								 
+							</div>
+			</center>
+	 
+		</borderlayout>
+	</window>
+</zk>

@@ -1,0 +1,27 @@
+<grid id="gd" model="@load(vm.list)" emptyMessage="无数据"
+	apply="org.zkoss.bind.BindComposer,Controller.CoProduct.cpd_FeeRelationListController"
+	viewModel="@id('vm') @init('Controller.CoProduct.cpd_FeeRelationListController')">
+	<columns>
+		<column label="收费单位"></column>
+		<column label="收费金额"></column>
+		<column width="10%" label="锁定状态"></column>
+		<column label="添加人"></column>
+		<column label="添加时间"></column>
+	</columns>
+	<template name="model">
+		<row>
+			<label value="@load(each.cpfc_name)"></label>
+			<label value="@load(each.fee)"></label>
+			<cell align="center">
+				<image src="/images/lock1.png"
+					if="${each.cpfr_lock==1 }">
+				</image>
+				<image src="/images/unlock.png"
+					if="${each.cpfr_lock==0 }">
+				</image>
+			</cell>
+			<label value="@load(each.copr_addname)"></label>
+			<label value="@load(each.copr_addtime)"></label>
+		</row>
+	</template>
+</grid>

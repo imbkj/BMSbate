@@ -1,0 +1,535 @@
+<!--
+	创建人：林少斌
+	创建时间：2013-11-27
+	用途：公司注册信息修改页面
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<!-- 调用内联页的文件名 -->
+<?component name="docDataList" macro-uri="../DocumentsInfo/DocumentsInfo_UpPageList.zul" inline="true"?>
+<zk>
+	<window id="winCoBaseReg" title="公司注册信息 -- 修改页面" border="normal"
+		closable="false" width="100%" height="98%"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoBase.CoBaseReg_UpdateController')">
+		<div height="92%" style="overflow-y:scroll">
+			<groupbox>
+				<caption label="工商登记信息" />
+				<grid style="border:0px">
+					<rows>
+						<row>
+							<cell width="10%" style="color:#666;">
+								注册代理方：
+							</cell>
+							<cell width="20%">
+								<combobox id="coba_regagent"
+									mold="rounded" readonly="true"
+									value="@load(vm.model.coba_regagent)">
+									<comboitem label="中智" />
+									<comboitem label="非中智" />
+								</combobox>
+							</cell>
+							<cell width="10%" style="color:#666;">
+								法定代表人：
+							</cell>
+							<cell width="20%">
+								<textbox id="coba_companymanager"
+									mold="rounded" value="@load(vm.model.coba_companymanager)" />
+							</cell>
+							<cell width="10%" style="color:#666;">
+								注册地址：
+							</cell>
+							<cell width="20%">
+								<textbox id="coba_address"
+									mold="rounded" value="@load(vm.model.coba_address)" />
+							</cell>
+						</row>
+						<row>
+							<cell style="color:#666;">证件类型：</cell>
+							<cell>
+								<combobox id="coba_certificate"
+									mold="rounded" readonly="true"
+									value="@load(vm.model.coba_certificate)">
+									<comboitem label="营业执照" />
+									<comboitem label="登记证" />
+									<comboitem label="许可证" />
+								</combobox>
+							</cell>
+							<cell style="color:#666;">工商登记号：</cell>
+							<cell>
+								<textbox id="coba_bregid" mold="rounded"
+									value="@load(vm.model.coba_bregid)" />
+							</cell>
+							<cell style="color:#666;">驻在期限(代表处)：</cell>
+							<cell>
+								<datebox id="coba_regexpires"
+									value="@load(vm.s_regexpires)" readonly="true"
+									format="yyyy-MM-dd" mold="rounded" />
+							</cell>
+						</row>
+						<row>
+							<cell style="color:#666;">工商登记时间</cell>
+							<cell>
+								<datebox id="coba_regtime"
+									value="@load(vm.s_regtime)" readonly="true" format="yyyy-MM-dd"
+									mold="rounded" />
+							</cell>
+							<cell style="color:#666;">工商登记有效期</cell>
+							<cell>
+								<datebox id="coba_reglimit"
+									value="@load(vm.s_reglimit)" readonly="true"
+									format="yyyy-MM-dd" mold="rounded" />
+							</cell>
+							<cell></cell>
+							<cell></cell>
+						</row>
+						<row>
+							<cell style="color:#666;">组织机构代码</cell>
+							<cell>
+								<textbox id="coba_organcode"
+									value="@load(vm.model.coba_organcode)" mold="rounded" />
+							</cell>
+							<cell style="color:#666;">组织机构代码登记时间</cell>
+							<cell>
+								<datebox id="coba_orregtime"
+									value="@load(vm.s_orregtime)" readonly="true"
+									format="yyyy-MM-dd" mold="rounded" />
+							</cell>
+							<cell style="color:#666;">组织机构代码有效期</cell>
+							<cell>
+								<datebox id="coba_organdeadline"
+									value="@load(vm.s_organdeadline)" readonly="true"
+									format="yyyy-MM-dd" mold="rounded" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox>
+				<caption label="国税登记信息" />
+				<grid style="border:0px">
+					<rows>
+						<row>
+							<cell width="10%" style="color:#666;">
+								国税深字号 ：
+							</cell>
+							<cell width="20%">
+								<textbox id="coba_ntid" mold="rounded"
+									value="@load(vm.model.coba_ntid)" />
+							</cell>
+							<cell width="10%" style="color:#666;">
+								国税登记时间：
+							</cell>
+							<cell width="20%">
+								<datebox id="coba_ntregtime"
+									value="@load(vm.s_ntregtime)" readonly="true"
+									format="yyyy-MM-dd" mold="rounded" />
+							</cell>
+							<cell width="10%" style="color:#666;">
+								国税登记有效期：
+							</cell>
+							<cell width="20%">
+								<datebox id="coba_ntlimit"
+									value="@load(vm.s_ntlimit)" readonly="true" format="yyyy-MM-dd"
+									mold="rounded" />
+							</cell>
+						</row>
+						<row>
+							<cell style="color:#666;">国税开户行：</cell>
+							<cell>
+								<textbox id="coba_ntbank" mold="rounded"
+									value="@load(vm.model.coba_ntbank)" />
+							</cell>
+							<cell style="color:#666;">国税账号：</cell>
+							<cell>
+								<textbox id="coba_ntaccount"
+									mold="rounded" value="@load(vm.model.coba_ntaccount)" />
+							</cell>
+							<cell style="color:#666;">国税纳税期限：</cell>
+							<cell>
+								<datebox id="coba_ntdeadline"
+									value="@load(vm.s_ntdeadline)" readonly="true"
+									format="yyyy-MM-dd" mold="rounded" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox>
+				<caption label="地税登记信息" />
+				<grid style="border:0px">
+					<rows>
+						<row>
+							<cell width="10%" style="color:#666;">
+								地税登记号 ：
+							</cell>
+							<cell width="20%">
+								<textbox id="coba_ltregid"
+									value="@load(vm.model.coba_ltregid)" mold="rounded" />
+							</cell>
+							<cell width="10%" style="color:#666;">
+								地税登记时间：
+							</cell>
+							<cell width="20%">
+								<datebox id="coba_ltregtime"
+									value="@load(vm.s_ltregtime)" readonly="true"
+									format="yyyy-MM-dd" mold="rounded" />
+							</cell>
+							<cell width="10%" style="color:#666;">
+								地税登记有效期：
+							</cell>
+							<cell width="20%">
+								<datebox id="coba_ltlimit"
+									value="@load(vm.s_ltlimit)" readonly="true" format="yyyy-MM-dd"
+									mold="rounded" />
+							</cell>
+						</row>
+						<row>
+							<cell style="color:#666;" visible="false">地税开户状态：</cell>
+							<cell visible="false">
+								<combobox id="coba_ltstate" 
+									value="@load(vm.model.coba_ltstate)" mold="rounded"
+									readonly="true">
+									<comboitem label="中智开户" />
+									<comboitem label="独立开户" />
+								</combobox>
+							</cell>
+							<cell style="color:#666;">地税电脑编码：</cell>
+							<cell>
+								<textbox id="coba_ltid" mold="rounded"
+									value="@load(vm.model.coba_ltid)" />
+							</cell>
+							<cell style="color:#666;">地税纳税期限：</cell>
+							<cell>
+								<combobox id="coba_ltdeadline"
+									value="@load(vm.model.coba_ltdeadline)" mold="rounded"
+									readonly="true">
+									<comboitem label="10日" />
+									<comboitem label="15日" />
+									<comboitem label="20日" />
+									<comboitem label="25日" />
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell style="color:#666;">地税开户行：</cell>
+							<cell>
+								<textbox id="coba_ltbank"
+									value="@load(vm.model.coba_ltbank)" mold="rounded" />
+							</cell>
+							<cell style="color:#666;">地税账号：</cell>
+							<cell>
+								<textbox id="coba_ltaccount"
+									value="@load(vm.model.coba_ltaccount)" mold="rounded" />
+							</cell>
+							<cell></cell>
+							<cell></cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox>
+				<caption label="个税纳税账户信息" />
+				<grid style="border:0px">
+					<rows>
+						<row>
+							<cell width="10%" style="color:#666;" visible="false">
+								个税开户状态 ：
+							</cell>
+							<cell width="20%" visible="false">
+								<combobox id="coba_gtstate" 
+									value="@load(vm.model.coba_gtstate)" mold="rounded"
+									readonly="true">
+									<comboitem label="中智开户" />
+									<comboitem label="独立开户" />
+								</combobox>
+							</cell>
+							<cell width="10%" style="color:#666;">
+								个税开户行：
+							</cell>
+							<cell width="20%">
+								<textbox id="coba_gtbank"
+									value="@load(vm.model.coba_gtbank)" mold="rounded" />
+							</cell>
+							<cell width="10%" style="color:#666;">
+								纳税账户：
+							</cell>
+							<cell width="20%">
+								<textbox id="coba_gtacc" mold="rounded"
+									value="@load(vm.model.coba_gtacc)" />
+							</cell>
+						</row>
+						<row>
+							<cell style="color:#666;">所属税局：</cell>
+							<cell>
+								<textbox id="coba_gtto" mold="rounded"
+									value="@load(vm.model.coba_gtto)" />
+							</cell>
+							<cell style="color:#666;">个税纳税期限：</cell>
+							<cell>
+								<combobox id="coba_gtdeadline"
+									value="@load(vm.model.coba_gtdeadline)" mold="rounded"
+									readonly="true">
+									<comboitem label="10日" />
+									<comboitem label="15日" />
+									<comboitem label="20日" />
+									<comboitem label="25日" />
+								</combobox>
+							</cell>
+							<cell></cell>
+							<cell></cell>
+						</row>
+						<row>
+							<cell style="color:#666;">递交材料：</cell>
+							<cell colspan="5">
+								<!-- 材料内联页 参数：puzu_id：模块页面id， doc_type：员工(g)还是公司(c)，gid：公司数据则插入空白 ，业务表id ，log_url：获取到页面路径的前部分-->
+								<docDataList id="docGrid" puzu_id="4"
+									doc_type="c" gid="" tid="${vm.model.cid}"
+									log_url="../DocumentsInfo/" dHeight="120px" dWidth="100%" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox visible="false">
+				<caption label="薪酬设置信息" />
+				<grid style="border:0px">
+					<rows>
+						<row>
+							<cell width="10%" style="color:#666;">
+								Email工资单自动发送 ：
+							</cell>
+							<cell width="20%">
+								<combobox id="coba_gzautoemail"
+									value="@load(vm.s_gzautoemail)" mold="rounded"
+									readonly="true">
+									<comboitem label="是" />
+									<comboitem label="否" />
+								</combobox>
+							</cell>
+							<cell width="10%" style="color:#666;" visible="false">
+								工资发放后几天发Email工资单：
+							</cell>
+							<cell width="20%" visible="false">
+								<combobox id="coba_gzautoemaildays"
+									value="@load(vm.model.coba_gzautoemaildays)" mold="rounded"
+									readonly="true">
+									<comboitem label="1" />
+									<comboitem label="2" />
+									<comboitem label="3" />
+									<comboitem label="4" />
+									<comboitem label="5" />
+								</combobox>
+							</cell>
+							<cell width="10%" style="color:#666;">
+								Email工资单格式：
+							</cell>
+							<cell width="20%">
+								<combobox id="coba_gzemailtype"
+									value="@load(vm.s_gzemailtype)" mold="rounded"
+									readonly="true">
+									<comboitem label="纯文本" />
+									<comboitem label="HTML" />
+								</combobox>
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox>
+				<caption label="用友注册信息" />
+				<grid style="border:0px">
+					<rows>
+						<row>
+							<cell width="10%" style="color:#666;">
+								客户类型 ：
+							</cell>
+							<cell width="20%">
+								<combobox id="coba_ufclass"
+									value="@load(vm.coba_ufclassstr)" mold="rounded"
+									readonly="true">
+									<comboitem label="AF" />
+									<comboitem label="FS" />
+								</combobox>
+							</cell>
+							<cell width="10%" style="color:#666;">
+								收款分录编号：
+							</cell>
+							<cell width="20%">
+								<textbox id="coba_ufid" mold="rounded"
+									value="@load(vm.model.coba_ufid)" />
+							</cell>
+							<cell width="10%" style="color:#666;">
+								委托客户社保公积金分录编号：
+							</cell>
+							<cell width="20%">
+								<textbox id="coba_ufid2" mold="rounded"
+									value="@load(vm.model.coba_ufid2)" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox>
+				<caption label="社保资料信息" />
+				<grid style="border:0px">
+					<rows>
+						<row>
+							<cell width="10%" style="color:#666;">
+								社康绑定医疗机构名称 ：
+							</cell>
+							<cell width="20%">
+								<textbox id="coba_sihospital"
+									value="@load(vm.model.coba_sihospital)" mold="rounded" />
+							</cell>
+							<cell width="10%" style="color:#666;">
+								医疗机构联系电话：
+							</cell>
+							<cell width="20%">
+								<textbox id="coba_sihosphone"
+									value="@load(vm.model.coba_sihosphone)" mold="rounded" />
+							</cell>
+							<cell width="10%" style="color:#666;">
+								医疗机构地址：
+							</cell>
+							<cell width="20%">
+								<textbox id="coba_sihosadd"
+									mold="rounded" value="@load(vm.model.coba_sihosadd)" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox>
+				<caption label="社保单位信息" />
+				<grid width="100%" height="100%" emptyMessage="暂无数据"
+					model="@load(vm.scsbList)" mold="paging">
+					<columns>
+						<column align="center" width="40px" />
+						<column align="center" label="社保编号" />
+						<column align="center" label="社保分局" />
+						<column align="center" label="企业所在辖区" />
+						<column align="center" label="开户类型" />
+						<column align="center" label="状态" />
+						<column align="center" label="详细" width="60px" />
+					</columns>
+					<template name="model">
+						<row>
+							<custom-attributes cid="${each.cid }" />
+							<detail fulfill="onOpen" height="100%">
+								<include
+									src="/CoSocialInsurance/CoSocialInsurance_SelectListDetail.zul"
+									cid="${cid }" role="qd">
+								</include>
+							</detail>
+							<label value="@load(each.cosb_sorid)" />
+							<label value="@load(each.cosb_sbadd)" />
+							<label value="@load(each.cosb_sorarea)" />
+							<label value="@load(each.cosb_addtype)" />
+							<cell>
+								<label value="@load(each.statename)"
+									style="color:blue" if="${each.cosb_state eq 1 }" />
+								<label value="@load(each.statename)"
+									if="${each.cosb_state eq 2 }" />
+								<label value="@load(each.statename)"
+									style="color:red" if="${each.cosb_state eq 0 }" />
+							</cell>
+							<cell>
+								<menubar autodrop="true">
+									<menu
+										image="../images/pencil-small.png">
+										<menupopup>
+											<menuitem label="账户详情 "
+												onClick="@command('detail',each=each)" />
+										</menupopup>
+									</menu>
+								</menubar>
+							</cell>
+						</row>
+					</template>
+				</grid>
+			</groupbox>
+			<groupbox>
+				<grid width="100%" height="100%" emptyMessage="暂无数据"
+					model="@load(vm.scohfList)" mold="paging">
+					<columns sizable="true">
+						<column align="center" width="40px" />
+						<column align="center" label="公积金号" />
+						<column align="center" label="首次托收月" />
+						<column align="center" label="托收日"
+							sort="auto(cohf_tsday)" />
+						<column align="center" label="有无密钥" />
+						<column align="center" label="服务状态" />
+						<column align="center" label="添加人" />
+						<column align="center" label="添加时间"
+							sort="auto(cohf_addtime)" />
+						<column align="center" label="操作" width="60px" />
+					</columns>
+					<template name="model">
+						<row>
+							<custom-attributes cid="${each.cid }" />
+							<detail fulfill="onOpen" open="false">
+								<include
+									src="/CoHousingFund/CoHousingFund_SelectList_Detail.zul"
+									cid="${cid }">
+								</include>
+							</detail>
+							<label value="@load(each.cohf_houseid)"
+								if="${not empty each.cid }" />
+							<label value="@load(each.cohf_houseid)"
+								style="color:blue" if="${empty each.cid }" />
+							<label value="@load(each.cohf_firmonth)" />
+							<label value="@load(each.cohf_tsday)" />
+
+							<label value="@load(each.ispwd)" />
+							<cell>
+								<label value="@load(each.statename)"
+									if="${each.statename eq '服务中' }" style="color:blue" />
+								<label value="@load(each.statename)"
+									if="${each.statename eq '终止服务' }" style="color:red" />
+								<label value="@load(each.statename)"
+									if="${each.statename eq '申报中' }" />
+							</cell>
+							<label value="@load(each.cohf_addname)" />
+							<label
+								value="@load(each.cohf_addtimeString)" />
+							<cell>
+								<menubar autodrop="true"
+									orient="vertical">
+									<menu
+										image="../images/pencil-small.png">
+										<menupopup>
+											<menuitem label="账户详情 "
+												onClick="@command('openwin',each=each,
+												url='../CoHousingFund/CoHousingFund_Info.zul')" />
+										</menupopup>
+									</menu>
+								</menubar>
+							</cell>
+						</row>
+					</template>
+				</grid>
+			</groupbox>
+			<groupbox>
+				<caption label="公司注册信息" />
+				<grid style="border:0px">
+					<rows>
+						<row>
+							<cell width="10%" style="color:#666;">
+								备注 ：
+							</cell>
+							<cell colspan="5">
+								<textbox id="coba_regremark"
+									value="@load(vm.model.coba_regremark)" mold="rounded" rows="4"
+									width="80%" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+		</div>
+		<vbox width="100%" align="center">
+			<button label="提交" id="btSubmit"
+				onClick="@command('updateCoBaseReg',winCoBaseReg=winCoBaseReg,gd=docGrid,coba_regagent=coba_regagent,coba_companymanager=coba_companymanager,coba_address=coba_address,coba_certificate=coba_certificate,coba_bregid=coba_bregid,coba_regexpires=coba_regexpires,coba_regtime=coba_regtime,coba_reglimit=coba_reglimit,coba_organdeadline=coba_organdeadline,coba_orregtime=coba_orregtime,coba_organcode=coba_organcode,coba_ntbank=coba_ntbank,coba_ntaccount=coba_ntaccount,coba_ntid=coba_ntid,coba_ntregtime=coba_ntregtime,coba_ntlimit=coba_ntlimit,coba_ntdeadline=coba_ntdeadline,coba_ltregid=coba_ltregid,coba_ltregtime=coba_ltregtime,coba_ltlimit=coba_ltlimit,coba_ltstate=coba_ltstate,coba_ltid=coba_ltid,coba_ltdeadline=coba_ltdeadline,coba_ltbank=coba_ltbank,coba_ltaccount=coba_ltaccount,coba_gtstate=coba_gtstate,coba_gtbank=coba_gtbank,coba_gtacc=coba_gtacc,coba_gtto=coba_gtto,coba_gtdeadline=coba_gtdeadline,coba_gzemailtype=coba_gzemailtype,coba_gzautoemaildays=coba_gzautoemaildays,coba_gzautoemail=coba_gzautoemail,coba_ufid=coba_ufid,coba_ufid2=coba_ufid2,coba_ufclass=coba_ufclass,coba_sihospital=coba_sihospital,coba_sihosphone=coba_sihosphone,coba_sihosadd=coba_sihosadd,coba_regremark=coba_regremark)" />
+		</vbox>
+	</window>
+</zk>

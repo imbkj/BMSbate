@@ -1,0 +1,128 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="调户申请" border="normal" height="100%" width="100%" closable="true" id="win"
+	apply="org.zkoss.bind.BindComposer" onCreate="@command('createwin',win=self)"
+    viewModel="@id('vm') @init('Controller.EmCensus.EmDh.EmDh_AddController')"
+	>
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell width="80px">公司名称 </cell>
+			<cell><textbox readonly="true" id="coba_name" value="${vm.frommodel.coba_name }"></textbox></cell>
+			<cell width="80px">员工姓名</cell>
+			<cell><textbox id="emba_name" readonly="true" value="${vm.frommodel.emba_name}"></textbox></cell>
+		</row>
+		<row visible="false">
+			<cell>账户类型</cell>
+			<cell>
+				<hlayout>
+				<combobox id="emdh_zhtype" value="@bind(vm.model.emdh_zhtype)" readonly="true">
+					<comboitem label="中智集体户"/>
+					<comboitem label="客户公司集体户"/>
+					<comboitem label="人才集体户"/>
+				</combobox>
+				<label style="color:red;">(*)</label>
+				</hlayout>
+			</cell>
+			<cell width="60px">客服</cell>
+			<cell><textbox id="coba_client" value="${vm.frommodel.coba_client }" readonly="true"></textbox></cell>
+		</row>
+		<row>
+			<cell>联系电话</cell>
+			<cell><textbox id="emba_mobile" value="@bind(vm.model.emdh_tel)"></textbox></cell>
+			<cell>电子邮箱</cell>
+			<cell><textbox id="emba_email" value="@bind(vm.model.emdh_mail)"></textbox></cell>
+		</row>
+		<row>
+			<cell>调户方式</cell>
+			<cell>
+				<hlayout><combobox id="emdh_dhtype" value="@bind(vm.model.emdh_dhtype)" readonly="true">
+					<comboitem label="在职人才"/>
+					<comboitem label="毕业生接收"/>
+					<comboitem label="留学生接收"/>
+				</combobox>
+			<label style="color:red;">(*)</label></hlayout>
+			</cell>
+			<cell>社保所属账户</cell>
+			<cell>
+				<hlayout><combobox id="eshebaotype" value="@bind(vm.model.emdh_shebaotype)" readonly="true">
+					<comboitem label="中智户"/>
+					<comboitem label="独立户"/>
+				</combobox>
+			<label style="color:red;">(*)</label></hlayout>
+			</cell>
+		</row>
+		<row visible="false" id="rw">
+			<cell id="dncell" visible="@load(vm.dnvis)">档案托管</cell>
+			<cell id="ifdncell" visible="@load(vm.dnvis)">
+				<combobox id="ifdn" value="@bind(vm.ifdn)" readonly="true">
+					<comboitem label=""/>
+					<comboitem label="是"/>
+					<comboitem label="否"/>
+				</combobox>
+			</cell>
+			<cell id="hkcell" visible="@load(vm.hkcell)">户口挂靠</cell>
+			<cell id="ifhkcell" visible="@load(vm.hkcell)">
+				<combobox id="ifhk" value="@bind(vm.ifhk)" readonly="true">
+					<comboitem label=""/>
+					<comboitem label="是"/>
+					<comboitem label="否"/>
+				</combobox>
+			</cell>
+		</row>
+		<row>
+			<cell>收费对象</cell>
+			<cell>
+				<combobox readonly="true" width="80%" value="@bind(vm.model.emdh_feeer)">
+					<comboitem label=""/>
+					<comboitem label="客户承担全部费用"/>
+					<comboitem label="员工承担全部费用"/>
+					<comboitem label="员工承担政府费，公司承担服务费"/>
+					<comboitem label="个人承担政府费，中智承担服务费"/>
+					<comboitem label="中智承担全部费用"/>
+					<comboitem label="委托机构承担全部费用"/>
+				</combobox>
+			</cell>
+			<cell>费用收取时间</cell>
+			<cell>
+				<combobox id="feetime" readonly="true" width="80%" value="@bind(vm.model.emdh_feetime)">
+					<comboitem label=""/>
+					<comboitem label="交初审材料的同时，收取所有费用" value="1"/>
+					<comboitem label="初审通过收取所有费用" value="2"/>
+					<comboitem label="初审通过收政府代理费，调令下达收服务费" value="3"/>
+					<comboitem label="调令下达后收取所有费用" value="4"/>
+				</combobox>
+			</cell>
+		</row>
+		<row>
+			<cell>收费负责人</cell>
+			<cell>
+				<combobox readonly="true" width="80%" value="@bind(vm.model.emdh_feegeter)">
+					<comboitem label="客服收取"/>
+					<comboitem label="人事专员收取"/>
+					<comboitem label="人事专员收取政府费，客服收取服务费"/>
+				</combobox>
+			</cell>
+			<cell>是否签订调户咨询合同</cell>
+			<cell>
+				<combobox readonly="true" value="@bind(vm.model.emdh_ifcompact)">
+					<comboitem label="是"></comboitem>
+					<comboitem label="否"></comboitem>
+				</combobox>
+			</cell>
+		</row>
+		<row>
+			<cell>政府费用</cell>
+			<cell><decimalbox id="emdh_govefee" value="@bind(vm.model.emdh_govefee)"></decimalbox></cell>
+			<cell>服务费用</cell>
+			<cell><decimalbox id="emdh_servefee" value="@bind(vm.model.emdh_servefee)"></decimalbox></cell>
+		</row>
+		<row>
+			<cell>备注</cell>
+			<cell colspan="3"><textbox width="90%" rows="5" id="emdh_remark"  value="@bind(vm.model.emdh_remark)"></textbox></cell>
+		</row>
+	</rows>
+	<foot><footer align="center"><button id="summit" onClick="@command('summit',feetime=feetime)">提交</button></footer></foot>
+</grid>
+</window>
+</zk>

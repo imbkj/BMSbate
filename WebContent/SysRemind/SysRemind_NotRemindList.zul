@@ -1,0 +1,41 @@
+<?page contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="未提醒列表" border="normal" width="800px" height="400px" closable="true"
+	apply="org.zkoss.bind.BindComposer" 
+	viewModel="@id('vm') @init('Controller.SysRemind.SysRemind_NotRemindListController')">
+	<grid height="100%" mold="paging" model="@load(vm.notremindlist)"
+		emptyMessage="暂无数据">
+		<columns>
+			<column width="40px" align="center">序号</column>
+			<column align="left">内容</column>
+			<column align="center">提醒人</column>
+			<column align="center">提醒时间</column>
+			<column align="center">添加人</column>
+			<column align="center">添加时间</column>
+			<column align="center">提醒方式</column>
+			<column align="center" width="60px">状态</column>
+		</columns>
+		<template name="model">
+			<row>
+				<label value="${forEachStatus.index+1 }" />
+				<div
+					tooltip="content_${each.id },position=after_pointer"
+					style="cursor:pointer;overflow:hidden;-ms-text-overflow: ellipsis;
+					-o-text-overflow: ellipsis;">
+					<popup id="content_${each.id }" width="400px">
+						<label value="@load(each.content)"></label>
+					</popup>
+					<label value="@load(each.content)"
+						style="white-space: nowrap;text-overflow:ellipsis" />
+				</div>
+				<label value="@load(each.remindname)" />
+				<label value="@load(each.remindtime)" />
+				<label value="@load(each.addname)" />
+				<label value="@load(each.addtime)" />
+				<label value="@load(each.sendclass)" />
+				<label value="未提醒" />
+			</row>
+		</template>
+	</grid>	
+</window>
+</zk>

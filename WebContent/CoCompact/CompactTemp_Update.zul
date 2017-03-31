@@ -1,0 +1,149 @@
+<!--
+	创建人：林少斌
+	创建时间：2013-10-18
+	用途：公司合同模板修改页面
+-->
+<?page title="公司合同模板修改页面" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="w1" title="公司合同 -- 模板修改页面" border="normal"
+		closable="true" width="90%" height="85%"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoCompact.CompactTemp_UpdateController')">
+		<div height="90%" style="overflow-y:scroll">
+			<groupbox title="合同基本信息" mold="3d">
+				<grid height="95%" width="100%" style="border:0px">
+					<rows>
+						<row>
+							<!-- <cell width="10%" style="color:#666;">
+								合同履行地：
+								</cell>
+								<cell width="25%">
+								<combobox id="coco_servicearea"
+								width="70%" value="${arg.cocoM.coco_servicearea }"
+								mold="rounded" model="@load(vm.citylist)">
+								<comboitem label="深圳" />
+								<template name="model">
+								<comboitem label="@load(each)" />
+								</template>
+								</combobox>
+								<label style="color:red;">(*)</label>
+								</cell> -->
+							<cell width="15%" style="color:#666;">
+								合同生效日：
+							</cell>
+							<cell width="30%">
+								<datebox id="coco_inuredate"
+									value="@load(vm.inureDate)" readonly="true" format="yyyy-MM-dd"
+									mold="rounded" width="70%" />
+								<label style="color:red;">(*)</label>
+							</cell>
+							<cell width="15%" style="color:#666;">
+								合同类型：
+							</cell>
+							<cell width="30%">
+								<textbox id="coco_compacttype"
+									mold="rounded" value="${arg.cocoM.coco_compacttype }"
+									width="70%" readonly="true" />
+							</cell>
+						</row>
+						<row>
+							备注：
+							<cell colspan="3">
+								<textbox id="coco_remark" rows="5"
+									value="${arg.cocoM.coco_remark }" mold="rounded" hflex="1" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox title="服务产品信息" mold="3d">
+				<grid hflex="1" vflex="1"
+					model="@load(vm.coofferInfoGroupList)">
+					<columns sizable="true">
+						<column label="产品名称" align="center"></column>
+						<column label="描述" width="20%" align="center"></column>
+						<column label="产品类型" align="center"></column>
+						<column label="城市/机构" align="center"></column>
+						<column label="享受方式" width="80px"
+							align="center">
+						</column>
+						<column label="收费金额/收费单位" align="center"></column>
+						<column label="份数" width="50px"
+							align="center">
+						</column>
+						<column label="备注" align="center"></column>
+					</columns>
+					<template name="model:group">
+						<group label="@load(each)" spans="8"
+							align="left" width="100%" height="100%">
+						</group>
+					</template>
+					<rows>
+						<template name="model">
+							<row>
+								<label value="@load(each.coli_name)" />
+								<div
+									style="cursor:pointer;overflow:hidden;-ms-text-overflow: ellipsis;-o-text-overflow: ellipsis;"
+									tooltip="content_${each.coli_id },position=after_pointer">
+									<label
+										style="white-space: nowrap;text-overflow:ellipsis;cursor:pointer"
+										value="@load(each.coli_content)">
+									</label>
+									<popup id="content_${each.coli_id }"
+										width="200px">
+										<label
+											value="@load(each.coli_content)">
+										</label>
+									</popup>
+								</div>
+								<label value="@load(each.coli_pclass)" />
+								<cell>
+									<div if="${not empty each.city }">
+										<label value="@load(each.city)" />
+										/
+										<label
+											value="@load(each.coab_name)" />
+									</div>
+								</cell>
+								<label
+									value="@load(each.coli_standard)" />
+								<cell>
+									<label value="@load(each.coli_fee)" />
+									<space />
+									<label
+										value="@load(each.coli_cpfc_name)" />
+								</cell>
+								<cell>
+									<div
+										if="${each.coli_pclass=='商业保险' }">
+										<label
+											value="@load(each.coli_amount)" />
+										份
+									</div>
+								</cell>
+								<div
+									tooltip="remark_${each.coli_id },position=after_pointer">
+									<label
+										style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;
+									cursor:pointer"
+										value="@load(each.coli_remark)">
+									</label>
+									<popup id="remark_${each.coli_id }"
+										width="200px">
+										<label
+											value="@load(each.coli_remark)">
+										</label>
+									</popup>
+								</div>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</groupbox>
+		</div>
+		<vbox width="100%" align="center">
+			<button label="提交" id="btSubmit"
+				onClick="@command('updateCompactTemp',w1=w1,coco_servicearea=coco_servicearea,coco_inuredate=coco_inuredate,coco_compacttype=coco_compacttype,coco_remark=coco_remark)" />
+		</vbox>
+	</window>
+</zk>

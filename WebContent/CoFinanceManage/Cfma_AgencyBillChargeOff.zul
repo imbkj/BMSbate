@@ -1,0 +1,51 @@
+<?page title="账单核销" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winAgencyBillChargeOff" title="账单核销" border="normal"
+		width="500px" height="300px" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoFinanceManage.Cfma_AgencyBillChargeOffController')"
+		closable="true" sizable="true">
+		<grid hflex="1" vflex="1">
+			<rows>
+				<row>
+					<cell width="30%">
+						<label value="账单编号：" />
+					</cell>
+					<cell>
+						<label value="@load(vm.billModel.cfab_number)" />
+					</cell>
+				</row>
+				<row>
+					<cell>
+						<label value="核销金额：" />
+					</cell>
+					<cell>
+						<label value="@load(vm.imbalance)" />
+					</cell>
+				</row>
+				<row>
+					<cell>
+						<label value="操作人：" />
+					</cell>
+					<cell>
+						<label value="@load(vm.username)" />
+					</cell>
+				</row>
+				<row>
+					<cell>
+						<label value="核销原因：" />
+					</cell>
+					<cell>
+						<textbox id="txtReason" rows="3" width="75%"
+							mold="rounded" constraint="no empty:请填写核销原因"/>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button label="提交"
+						onClick="@command('ChargeOff',reason=txtReason.value,win=winAgencyBillChargeOff)" />
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

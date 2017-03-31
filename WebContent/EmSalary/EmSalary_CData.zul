@@ -1,0 +1,155 @@
+<?page title="公司工资历史数据查询" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window border="0" height="100%" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmSalary.EmSalary_CDataController')">
+		<style src="/css/style.css"></style>
+		<panel title="公司工资历史数据查询" vflex="1">
+			<panelchildren>
+				<borderlayout height="100%">
+					<north border="0" title="检索" collapsible="true"
+						flex="true" style="padding-bottom:10px;">
+						<grid id="secrchgrid">
+							<rows>
+								<row align="left">
+									<cell align="left">公司简称：</cell>
+									<cell>
+										<hlayout hflex="1">
+											<textbox id="txtcid"
+												onChange="@command('setownmonthlist')"
+												value="@bind(vm.cid)" />
+										</hlayout>
+									</cell>
+									<cell align="left">时间区间：</cell>
+									<cell>
+										<hlayout hflex="1">
+											<combobox
+												id="cstartownmonth" instant="true"
+												model="@load(vm.ownmonthlist)" width="115px">
+												<template
+													name="model">
+													<comboitem
+														label="@load(each)" />
+												</template>
+											</combobox>
+										</hlayout>
+									</cell>
+									<cell align="left"></cell>
+									<cell>
+										<combobox id="cendownmonth"
+											instant="true" model="@load(vm.ownmonthlist)"
+											width="115px">
+											<template name="model">
+												<comboitem
+													label="@load(each)" />
+											</template>
+										</combobox>
+									</cell>
+								</row>
+								<row>
+									<cell align="center" colspan="8">
+										<button id="btSearch" label="查询"
+											onClick="@command('search',cid=txtcid.value,startownmonth=cstartownmonth.selectedItem.value,endownmonth=cendownmonth.selectedItem.value)" />
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</north>
+					<center flex="true">
+						<grid height="100%" width="100%" vflex="1"
+							emptyMessage="暂无历史算法" model="@load(vm.emsdate)" mold="paging"
+							pageSize="16">
+							<columns>
+								<column label="序号" align="center"
+									width="40px" />
+								<column label="所属月份" align="center"
+									sort="auto(ownmonth)" />
+								<column label="员工编号" align="center"
+									sort="auto(gid)" />
+								<column label="员工姓名" align="center"
+									sort="auto(name)" />
+								<column label="用途" align="center"
+									sort="auto(esda_usage_typestr)" />
+								<column label="状态" align="center"
+									sort="auto(esda_payment_statestr)" />
+								<column label="发放时间" align="center"
+									sort="auto(esda_payment_date)" />
+								<column label="实发工资" align="center" />
+								<column label="社保个人部分" align="center"/>
+								<column label="住房公积金个人部分" align="center"/>
+								<column label="税前工资" align="center" />
+								<column label="纳税调整合计" align="center"/>
+								<column label="应税工资" align="center"/>
+								<column label="个人所得税" align="center"/>
+								<column label="年终奖金" align="center" />
+								<column label="年终奖金应纳税额" align="center"/>
+								<column label="年终奖金税" align="center" />
+								<column label="离职补偿金" align="center"/>
+								<column label="离职补偿金税" align="center" />
+								<column label="股票收入" align="center" />
+								<column label="股票税" align="center" />
+								<column label="报销费用" align="center"/>
+								<column label="劳务报酬应税所得" align="center" />
+								<column label="劳务报酬个人所得税" align="center" />
+								<column label="税后合计" align="center"/>
+							</columns>
+							<rows id="gridrows">
+								<template name="model">
+									<row>
+										<label
+											value="${forEachStatus.index+1}" />
+										<label
+											value="@load(each.ownmonth)" />
+										<label value="@load(each.gid)" />
+										<label value="@load(each.name)" />
+										<label
+											value="@load(each.esda_usage_typestr)" />
+										<label
+											value="@load(each.esda_payment_statestr)" />
+										<label
+											value="@load(each.esda_payment_date)" />
+										<label
+											value="@load(each.esda_pay)" />
+										<label
+											value="@load(each.esda_siop)" />
+										<label
+											value="@load(each.esda_hafop)" />
+										<label
+											value="@load(each.esda_total_pretax)" />
+										<label
+											value="@load(each.esda_total_adjtax)" />
+										<label
+											value="@load(each.esda_tax_base)" />
+										<label
+											value="@load(each.esda_tax)" />
+										<label
+											value="@load(each.esda_db)" />
+										<label
+											value="@load(each.esda_db_tax_base)" />
+										<label
+											value="@load(each.esda_db_tax)" />
+										<label
+											value="@load(each.esda_dc)" />
+										<label
+											value="@load(each.esda_dc_tax)" />
+										<label
+											value="@load(each.esda_stock)" />
+										<label
+											value="@load(each.esda_stock_tax)" />
+										<label
+											value="@load(each.esda_write_off)" />
+										<label
+											value="@load(each.esda_lw_tax_base)" />
+										<label
+											value="@load(each.esda_lw_tax)" />
+										<label
+											value="@load(each.esda_total_afttax)" />
+									</row>
+								</template>
+							</rows>
+						</grid>
+					</center>
+				</borderlayout>
+			</panelchildren>
+		</panel>
+	</window>
+</zk>

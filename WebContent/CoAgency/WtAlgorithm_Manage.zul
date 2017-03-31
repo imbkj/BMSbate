@@ -1,0 +1,147 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="社保字典库" border="normal" vflex="1" hflex="1"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoAgency.WtAlgorithm_ManageController')">
+		<borderlayout height="100%" width="100%">
+			<center border="none">
+				<borderlayout>
+					<center border="none" title="现用算法">
+						<grid width="100%" vflex="1" hflex="1"
+							emptyMessage="暂无算法" model="@load(vm.nowSiList)">
+							<columns sizable="true">
+								<column label="序号" align="center"
+									width="40px" />
+								<column label="算法描述" align="center"
+									sort="auto(soin_title)" />
+								<column label="开始执行时间" align="center"
+									sort="auto(sial_execdatestr)" />
+								<column label="状态" align="center"
+									sort="auto(soin_state)" width="160px" />
+								<column label="操作人" align="center"
+									sort="auto(sial_addname)" width="160px" />
+								<column label="操作" align="center"
+									width="60px" />
+							</columns>
+							<rows>
+								<template name="model">
+									<row>
+										<label
+											value="${forEachStatus.index+1}" />
+										<label
+											value="@load(each.soin_title)"
+											style="cursor:pointer;color:#00F;"
+											onClick="@command('searAlg',sial_id=each.sial_id)" />
+										<label
+											value="@load(each.sial_execdatestr)" />
+										<label
+											value="@load(each.soin_state)" />
+										<label
+											value="@load(each.sial_addname)" />
+										<menubar autodrop="true"
+											width="50px">
+											<menu
+												image="../images/pencil-small.png">
+												<menupopup>
+													<menuitem
+														label="在册数据"
+														onClick="@command('regData',sial_id=each.sial_id)"
+														if="${each.soin_state eq '现用'?true:false}" />
+													<menuitem
+														label="更新算法"
+														onClick="@command('upAlg',sial_id=each.sial_id)" />
+													<menuseparator />
+													<menuitem
+														label="停用标准"
+														onClick="@command('stopAlg',sial_id=each.sial_id)" />
+												</menupopup>
+											</menu>
+										</menubar>
+
+									</row>
+								</template>
+							</rows>
+						</grid>
+					</center>
+					<east visible="@load(vm.changeVis)" title="待审核列表"
+						splittable="true" border="none" collapsible="true"
+						width="300px">
+						<grid vflex="1" hflex="1"
+							model="@load(vm.changeList)">
+							<columns sizable="true">
+								<column label="算法描述" align="center"/>
+								<column label="更变类型" align="center"/>
+							</columns>
+							<rows>
+								<template name="model">
+									<row>
+										<label
+											value="@load(each.sich_title)"
+											style="cursor:pointer;color:#00F;"
+											onClick="@command('searAlgChange',sich_id=each.sich_id)" />
+										<label
+											value="@load(each.sich_change_typestr)" />
+									</row>
+								</template>
+							</rows>
+						</grid>
+					</east>
+				</borderlayout>
+			</center>
+			<south height="50%" splittable="true" border="none"
+				collapsible="true" title="历史算法">
+				<grid height="100%" width="100%" vflex="1" hflex="1"
+					emptyMessage="暂无历史算法" model="@load(vm.hisSiList)">
+					<columns sizable="true">
+						<column label="序号" align="center" width="40px" />
+						<column label="算法描述" align="center"
+							sort="auto(soin_title)" />
+						<column label="开始执行时间" align="center"
+							sort="auto(sial_execdatestr)" />
+						<column label="状态" align="center"
+							sort="auto(soin_state)" width="160px" />
+						<column label="操作人" align="center"
+							sort="auto(sial_addname)" width="160px" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<label value="${forEachStatus.index+1}" />
+								<label value="@load(each.soin_title)"
+									style="cursor:pointer;color:#00F;"
+									onClick="@command('searAlg',sial_id=each.sial_id)" />
+								<label
+									value="@load(each.sial_execdatestr)" />
+								<div
+									tooltip="content_${each.sial_id},position=start_before">
+									<label
+										value="@load(each.soin_state)">
+									</label>
+									<popup id="content_${each.sial_id }"
+										width="200px">
+										<label
+											value="@load(each.soin_delname)">
+										</label>
+										<label value="："></label>
+										<label
+											value="@load(each.soin_delreason)">
+										</label>
+									</popup>
+								</div>
+
+								<label value="@load(each.sial_addname)" />
+
+							</row>
+						</template>
+					</rows>
+					<foot>
+						<footer align="center" span="12">
+							<button label="新增算法"
+								onClick="@command('addAlg')" />
+						</footer>
+					</foot>
+				</grid>
+			</south>
+		</borderlayout>
+	</window>
+</zk>

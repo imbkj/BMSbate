@@ -1,0 +1,108 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<!-- 调用内联页的文件名 -->
+<?component name="docDataList" macro-uri="/DocumentsInfo/DocumentsInfo_UpPageList.zul" inline="true"?>
+<zk>
+	<window id="win" title="@load(vm.title)" border="normal"
+		width="600px" closable="true" height="400px"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmSocialinPaper.EmSocialinPaper_ModifyController')">
+		<div height="100%">
+			<!-- <grid height="150px">
+				<columns>
+				<column width="13%"></column>
+				<column></column>
+				<column width="18%"></column>
+				<column></column>
+				</columns>
+				<rows>
+				<row>
+				公司编号
+				<textbox mold="rounded" readonly="true"
+				value="@load(vm.epm.cid)" />
+				公司简称
+				<textbox mold="rounded" readonly="true"
+				value="@load(vm.epm.coba_shortname)" />
+				</row>
+				<row>
+				员工编号
+				<textbox mold="rounded" readonly="true"
+				value="@load(vm.epm.gid)" />
+				员工姓名
+				<textbox mold="rounded" readonly="true"
+				value="@bind(vm.epm.name)" />
+				</row>
+				<row>
+				身份证号
+				<textbox mold="rounded" readonly="true"
+				value="@bind(vm.epm.espa_idcard)" />
+				办理状态
+				<textbox mold="rounded" readonly="true"
+				value="@bind(vm.epm.espa_type)" />
+				</row>
+				<row>
+				付款情况
+				<textbox mold="rounded"
+				value="@bind(vm.epm.espa_feestate)" readonly="true" />
+				付款方式
+				<textbox mold="rounded"
+				value="@bind(vm.epm.espa_feetype)" readonly="true" />
+				</row>
+				<row>
+				所属月份
+				<textbox mold="rounded"
+				value="@bind(vm.epm.ownmonth)" readonly="true" />
+				雇员交资料日期
+				<textbox mold="rounded"
+				value="@bind(vm.epm.espa_filetime)" readonly="true" />
+				</row>
+				<row>
+				<cell colspan="4">材料</cell>
+				</row>
+				<row>
+				<cell colspan="4">
+				材料内联页 参数：puzu_id：模块页面id， doc_type：员工(g)还是公司(c)，gid：公司数据则插入空白 ，业务表id,log_url：获取到页面路径的前部分
+				<docDataList id="docGrid" puzu_id="6"
+				doc_type="g" gid="@load(vm.epm.gid)" tid="${arg.daid }"
+				log_url="" dHeight="115px" dWidth="100%" />
+				</cell>
+				</row>
+				</rows>
+				</grid> -->
+			<groupbox title="材料" mold="3d">
+				<grid width="100%">
+					<rows>
+						<row>
+							<!-- 材料内联页 参数：puzu_id：模块页面id，doc_type：员工(g)还是公司(c)，gid：公司数据则插入空白，业务表id,log_url：获取到页面路径的前部分 -->
+							<docDataList id="docGrid" puzu_id="6"
+								doc_type="g" gid="@load(vm.epm.gid)" tid="${arg.daid }"
+								log_url="/DocumentsInfo/" dHeight="105px" dWidth="100%" />
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox title="状态变更记录" mold="3d">
+				<grid height="130px" width="100%" emptyMessage="暂无数据"
+					model="@load(vm.hosList)">
+					<columns>
+						<column align="center" label="状态" />
+						<column align="center" label="状态完成时间" />
+						<column align="center" label="添加人" />
+						<column align="center" label="添加时间" />
+					</columns>
+					<template name="model">
+						<row>
+							<label value="@load(each.statename)" />
+							<label value="@load(each.epsr_statetime)" />
+							<label value="@load(each.epsr_addname)" />
+							<label value="@load(each.epsr_addtime)" />
+						</row>
+					</template>
+				</grid>
+			</groupbox>
+			<hbox width="100%" pack="center" align="center">
+				<button label="保存" visible="@load(vm.butVis)"
+					onClick="@command('submit',win=win,gd=docGrid)" />
+			</hbox>
+		</div>
+	</window>
+</zk>

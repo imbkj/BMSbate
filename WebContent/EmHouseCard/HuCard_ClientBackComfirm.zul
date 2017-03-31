@@ -1,0 +1,47 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<?component name="docDataList" macro-uri="../DocumentsInfo/DocumentsInfo_PageList.zul" inline="true"?>
+<zk>
+<window title="退回确认" border="normal" width="70%" height="70%" closable="true" id="backwin"
+	apply="org.zkoss.bind.BindComposer" 
+	viewModel="@id('vm') @init('Controller.EmHouseCard.HuCard_TakeCardSendBackController')"
+>
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell width="80px">员工姓名</cell>
+			<cell><label value="@load(vm.model.username)"></label></cell>
+			<cell width="80px">当前状态</cell>
+			<cell><label value="@load(vm.model.state_Name)"></label></cell>
+		</row>
+		<row>
+			<cell>退回原因</cell>
+			<cell colspan="3">
+				<grid>
+					<columns>
+						<column label="退回人" width="80px"/>
+						<column label="退回时间" width="80px"/>
+						<column label="退回原因"/>
+				</columns>
+				<rows>
+					<row>	
+					</row>
+				</rows>
+			</grid>
+			</cell>
+		</row>
+		<row>
+			<cell>退回资料</cell>
+			<cell colspan="3">
+				<docDataList id="docGrid"
+					puzu_id="${vm.model.re_docId }" doc_type="g" gid="${vm.model.gid}"
+					tid="${vm.model.re_id}"
+					log_url="../DocumentsInfo/" dHeight="100%" dWidth="100%"/>
+			</cell>	
+		</row>
+	</rows>
+	<foot>
+		<footer align="center"><button onClick="@command('backtbn',win=backwin,backcase=backcase.value)">提交</button></footer>
+	</foot>
+</grid>
+</window>
+</zk>

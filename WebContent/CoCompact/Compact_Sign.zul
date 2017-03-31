@@ -1,0 +1,135 @@
+<!--
+	创建人：林少斌
+	创建时间：2013-10-17
+	用途：公司合同签回页面
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<zscript>
+	//日期
+	day = new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10",
+			"11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21",
+			"22", "23", "24", "25", "26", "27", "28", "29", "30", "31" };
+</zscript>
+	<window id="w1" title="公司合同 -- 签回页面" border="normal" width="540px"
+		height="290px" closable="true"
+		apply="Controller.CoCompact.Compact_SignController">
+		<grid width="100%">
+			<rows>
+				<row>
+					<cell width="18%" style="color:#666;">合同签回日期：</cell>
+					<cell width="20%">
+						<datebox id="coco_returndate" readonly="true"
+							format="yyyy-MM-dd" mold="rounded" hflex="1" />
+						<label style="color:red;">*</label>
+					</cell>
+					<cell width="18%" style="color:#666;">合同签订日期：</cell>
+					<cell width="20%">
+						<datebox id="coco_signdate" readonly="true"
+							format="yyyy-MM-dd" mold="rounded" hflex="1" />
+					</cell>
+				</row>
+				<row>
+					<cell width="18%" style="color:#666;">合同生效日：</cell>
+					<cell width="20%">
+						<datebox id="coco_inuredate" readonly="true"
+							buttonVisible="false" mold="rounded" hflex="1"
+							value="${$composer.dateInuredate}" />
+					</cell>
+					<cell width="18%" style="color:#666;">合同签订场地：</cell>
+					<cell width="20%">
+						<combobox id="coco_signplace" hflex="1"
+							value="${$composer.cocoList.getCoco_signplace()}" mold="rounded"
+							readonly="true">
+							<comboitem label="现场" />
+							<comboitem label="非现场" />
+						</combobox>
+					</cell>
+				</row>
+				<row>
+					<cell width="18%" style="color:#666;">合同到期日：</cell>
+					<cell width="20%">
+						<datebox id="coco_indate" readonly="true"
+							format="yyyy-MM-dd" mold="rounded" hflex="1"
+							value="${$composer.dateIndate}" />
+					</cell>
+					<cell width="18%" style="color:#666;">合同自动延长：</cell>
+					<cell width="20%">
+						<combobox id="coco_delay" hflex="1"
+							readonly="true" value="${$composer.cocoList.getCoco_delay()}"
+							mold="rounded">
+							<comboitem label="是" />
+							<comboitem label="否" />
+						</combobox>
+						<label style="color:red;">*</label>
+					</cell>
+				</row>
+				<row>
+					<cell width="18%" style="color:#666;">合同币种：</cell>
+					<cell width="20%">
+						<textbox id="coco_money" mold="rounded"
+							hflex="1" value="${$composer.cocoList.getCoco_money()}" />
+					</cell>
+					<cell width="18%" style="color:#666;">发票类型：</cell>
+					<cell width="20%">
+						<combobox id="coco_invoice" hflex="1"
+							value="${$composer.cocoList.getCoco_invoice()}" mold="rounded"
+							readonly="true">
+							<comboitem label="代理发票" />
+							<comboitem label="全额发票" />
+						</combobox>
+					</cell>
+				</row>
+				<row>
+					<cell width="18%" style="color:#666;">每月付款日：</cell>
+					<cell>
+						<hbox>
+							<combobox id="coco_paydate" width="60%"
+								value="${$composer.cocoList.getCoco_paydate()}" readonly="true"
+								mold="rounded">
+								<comboitem label="${each}"
+									forEach="${day}" />
+							</combobox>
+							<label style="color:red;" value="*" />
+						</hbox>
+					</cell>
+					<cell width="18%" style="color:#666;">服务税金比例：</cell>
+					<cell width="20%">
+						<hbox>
+							<textbox mold="rounded" width="40px"
+								id="coco_fw_p" value="${$composer.fw_per}" />
+							<label value="%" />
+							<label style="color:red;" value="*" />
+						</hbox>
+					</cell>
+				</row>
+				<row>
+					<cell width="18%" style="color:#666;">福利税金比例：</cell>
+					<cell>
+						<hbox>
+							<textbox mold="rounded" width="40px"
+								id="coco_fl_p" value="${$composer.fl_per}" />
+							<label value="%" />
+							<label style="color:red;" value="*" />
+						</hbox>
+					</cell>
+					<cell width="18%" style="color:#666;">代扣代缴税金比例：</cell>
+					<cell width="20%">
+						<hbox>
+							<textbox mold="rounded" width="40px"
+								id="coco_dk_p" value="${$composer.dk_per}" />
+							<label value="%" />
+							<label style="color:red;" value="*" />
+						</hbox>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button label="提交" id="btSubmit" />
+					<button label="退回至第一步" id="btBack" />
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

@@ -1,0 +1,48 @@
+<?page title="任务单管理-节点分配操作权限" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winNodeDis" title="${arg.name}" 
+		apply="Controller.Workflow.WfNode_DisUserController" width="60%"
+		closable="true" sizable="true">
+		<grid width="100%">
+			<rows>
+				<row>
+					<cell width="10%">部门：</cell>
+					<chosenbox id="cbDep" width="90%"
+						emptyMessage="请选择部门" />
+				</row>
+				<row>
+					<cell width="10%">角色：</cell>
+					<chosenbox id="cbRole" width="90%"
+						emptyMessage="请选择角色" />
+				</row>
+				<row>
+					<cell width="10%">用户：</cell>
+					<chosenbox id="cbUser" width="90%"
+						emptyMessage="请选择用户" />
+				</row>
+				<row>
+					<cell colspan="2">
+						<grid id="gdUser" height="100%" 
+							emptyMessage="暂无数据" width="100%" mold="paging" pageSize="10">
+							<columns>
+								<column label="编号" sort="log_id"/>
+								<column label="用户" sort="log_name"/>
+							</columns>
+							<template name="model">
+								<row>
+									<label value="${each.log_id}" />
+									<label value="${each.log_name}" />
+								</row>
+							</template>
+						</grid>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button label="提交" id="btSubmit" />
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

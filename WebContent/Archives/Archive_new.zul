@@ -1,0 +1,391 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="档案归档" border="normal" closable="true" id="winfiles"
+		width="70%" height="600px" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.Archives.Archive_newController')">
+		<scrollview vflex="1">
+			<groupbox>
+
+				<caption>档案类型</caption>
+				<grid>
+					<rows>
+						<row>
+							<cell width="100px">
+								<label
+									value="@load(vm.eam.emar_archivetype)">
+								</label>
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.eam.emar_archivearea)">
+								</label>
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox>
+				<caption>基本信息</caption>
+				<grid>
+					<columns visible="false">
+						<column width="12%" />
+						<column />
+						<column width="12%" />
+						<column />
+						<column width="12%" />
+						<column />
+					</columns>
+					<rows>
+
+						<row>
+							<cell>公司编号</cell>
+							<cell>
+								<label value="@load(vm.eam.cid)" />
+							</cell>
+							<cell>公司名称</cell>
+							<cell colspan="3">
+								<label
+									value="@load(vm.eam.emar_company)" />
+							</cell>
+						</row>
+						<row>
+							<cell>员工编号</cell>
+							<cell>
+								<label value="@load(vm.eam.gid)" />
+							</cell>
+							<cell>员工名称</cell>
+							<cell>
+								<label value="@load(vm.eam.emar_name)" />
+							</cell>
+							<cell>性别</cell>
+							<cell>
+								<label value="@load(vm.eam.emar_sex)" />
+							</cell>
+						</row>
+						<row>
+							<cell>身份证号</cell>
+							<cell>
+								<label
+									value="@load(vm.eam.emar_idcard)" />
+							</cell>
+							<cell>户口挂靠</cell>
+							<cell>
+								<combobox mold="rounded" width="120px"
+									model="@load(vm.hkgk)"
+									value="@bind(vm.eam.emar_censusregister)">
+									<template name="model">
+										<comboitem
+											label="@load(each.pcco_cn)" value="@load(each.pcco_code)" />
+									</template>
+								</combobox>
+							</cell>
+							<cell>户籍性质</cell>
+							<cell>
+								<combobox id="hb" mold="rounded"
+									width="120px" model="@load(vm.hjBelongs)">
+									<template name="model">
+										<comboitem
+											value="@load(each.pcco_code)" label="@load(each.pcco_cn)">
+										</comboitem>
+									</template>
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>政治面貌</cell>
+							<cell>
+								<combobox mold="rounded" width="120px"
+									value="@bind(vm.eam.emar_party)" model="@load(vm.partyList)">
+									<template name="model">
+										<comboitem
+											value="@load(each.pcco_code)" label="@load(each.pcco_cn)">
+										</comboitem>
+									</template>
+								</combobox>
+							</cell>
+							<cell>入团/党时间</cell>
+							<cell>
+								<datebox id="partydate"
+									format="yyyy-MM-dd" mold="rounded" width="120px"
+									value="@load(vm.partydate)">
+								</datebox>
+							</cell>
+							<cell>党籍挂靠</cell>
+							<cell>
+								<combobox id="pb" mold="rounded"
+									width="120px" model="@load(vm.partyBelongs)">
+									<template name="model">
+										<comboitem
+											value="@load(each.pcco_code)" label="@load(each.pcco_cn)">
+										</comboitem>
+									</template>
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>学历</cell>
+							<cell>
+								<combobox mold="rounded" width="120px"
+									value="@bind(vm.eam.emar_degree)" model="@load(vm.dpList)">
+									<template name="model">
+										<comboitem
+											value="@load(each.pcco_code)" label="@load(each.pcco_cn)">
+										</comboitem>
+									</template>
+								</combobox>
+							</cell>
+							<cell>毕业院校</cell>
+							<cell>
+								<textbox mold="rounded" width="120px"
+									value="@bind(vm.eam.emar_school)" />
+							</cell>
+							<cell>所学专业</cell>
+							<cell>
+								<textbox width="120px"
+									value="@bind(vm.eam.emar_specialty)" mold="rounded" />
+							</cell>
+						</row>
+						<row>
+							<cell>毕业时间</cell>
+							<cell>
+								<datebox id="schooldate"
+									format="yyyy-MM-dd" mold="rounded" width="120px"
+									value="@load(vm.gradate)">
+								</datebox>
+							</cell>
+							<cell>婚姻状况</cell>
+							<cell>
+								<combobox width="120px"
+									value="@bind(vm.eam.emar_marrystate)" mold="rounded"
+									model="@load(vm.marrystates)">
+									<template name="model">
+										<comboitem
+											value="@load(each.pcco_code)" label="@load(each.pcco_cn)">
+										</comboitem>
+									</template>
+								</combobox>
+							</cell>
+							<cell>生育状况</cell>
+							<cell>
+								<combobox width="120px"
+									value="@bind(vm.eam.emar_fertilitystate)" mold="rounded"
+									model="@load(vm.syzz)">
+									<template name="model">
+										<comboitem
+											value="@load(each.pcco_code)" label="@load(each.pcco_cn)">
+										</comboitem>
+									</template>
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>参加工作时间</cell>
+							<cell>
+								<datebox id="workdate"
+									format="yyyy-MM-dd" mold="rounded" width="120px"
+									value="@load(vm.workdate)">
+								</datebox>
+							</cell>
+							<cell>职称</cell>
+							<cell>
+								<combobox width="120px"
+									value="@bind(vm.eam.emar_caste)" mold="rounded"
+									model="@load(vm.zc)">
+									<template name="model">
+										<comboitem
+											value="@load(each.pcco_code)" label="@load(each.pcco_cn)">
+										</comboitem>
+									</template>
+								</combobox>
+							</cell>
+							<cell>评定时间</cell>
+							<cell>
+								<datebox id="castedate"
+									format="yyyy-MM-dd" mold="rounded" width="120px"
+									value="@load(vm.casteassessdate)">
+								</datebox>
+							</cell>
+						</row>
+						<row>
+							<cell>入深方式</cell>
+							<cell>
+								<combobox mold="rounded" width="120px"
+									value="@bind(vm.eam.emar_peoplefoldmode)"
+									model="@load(vm.szincome)">
+									<template name="model">
+										<comboitem
+											value="@load(each.pcco_code)" label="@load(each.pcco_cn)">
+										</comboitem>
+									</template>
+								</combobox>
+							</cell>
+							<cell>联系方式</cell>
+							<cell>
+								<textbox value="@bind(vm.eam.emar_link)"
+									width="120px" mold="rounded" />
+							</cell>
+							<cell>入职中智日期</cell>
+							<cell>
+								<datebox id="inciicdate"
+									format="yyyy-MM-dd" mold="rounded" width="120px"
+									value="@load(vm.inciicdate)" />
+							</cell>
+						</row>
+						<row>
+							<cell>分组类别</cell>
+							<cell>
+								<label
+									value="@load(vm.eam.emar_grouptype)" />
+
+							</cell>
+							<cell>客服专员</cell>
+							<cell colspan="3">
+								<label width="120px"
+									value="@load(vm.eam.emar_client)" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox>
+				<caption>档案信息</caption>
+				<grid>
+					<rows id="rows">
+						<row>
+							<cell>档案类别</cell>
+							<cell>
+								<combobox id="archiveclass"
+									width="120px" mold="rounded"
+									value="@bind(vm.eam.emar_archiveclass)">
+									<comboitem label="" />
+									<comboitem label="干部档案" />
+									<comboitem label="工人档案" />
+									<comboitem label="学生档案" />
+									<comboitem label="其他" />
+								</combobox>
+							</cell>
+							<cell>档案转入缘由</cell>
+							<cell>
+								<combobox id="foldreason" width="120px"
+									model="@load(vm.dadryy)" mold="rounded"
+									value="@bind(vm.eam.emar_archivefoldreason)">
+									<template name="model">
+										<comboitem
+											value="@load(each.pcco_code)" label="@load(each.pcco_cn)" />
+									</template>
+								</combobox>
+
+							</cell>
+							<cell>人才机构代理号</cell>
+							<cell>
+								<textbox id="surrogate" mold="rounded"
+									readonly="${!vm.zzmanage }" width="120px"
+									value="@bind(vm.eam.emar_surrogateid)" />
+							</cell>
+						</row>
+						<row visible="${vm.rcwt }"><!-- visible="${vm.rcwt }" -->
+							<cell>档案何处转入</cell>
+							<cell>
+								<textbox id="archivesource"
+									width="120px" mold="rounded"
+									value="@bind(vm.eam.emar_archivesource)" />
+							</cell>
+							<cell>档案转入方式</cell>
+							<cell>
+								<combobox width="120px" id="foldmode"
+									mold="rounded" value="@bind(vm.eam.emar_archivefoldmode)">
+									<comboitem label="" />
+									<comboitem label="凭函邮寄" />
+									<comboitem label="凭函自带" />
+									<comboitem label="凭函机要" />
+									<comboitem label="无函自带" />
+									<comboitem label="其他" />
+								</combobox>
+							</cell>
+							<cell>档案转入时间</cell>
+							<cell>
+								<datebox id="folddate" width="120px"
+									mold="rounded" value="@load(vm.archivefolddate)" />
+							</cell>
+						</row>
+						<row visible="${vm.zzmanage }"><!--  -->
+							<cell>初次协议到期日</cell>
+							<cell>
+								<datebox id="firstdeadline"
+									mold="rounded" width="120px" value="@load(vm.firstdeadline)" />
+							</cell>
+							<cell>续签协议到期日</cell>
+							<cell>
+								<datebox id="continuedeadline"
+									mold="rounded" width="120px"
+									value="@load(vm.continuedeadline)" />
+							</cell>
+							<cell width="85px">现档案存放机构</cell>
+							<cell>
+								<combobox width="120px" mold="rounded"
+									model="@load(vm.eas)"
+									value="@bind(vm.eam.emar_archiveplace)">
+									<template name="model">
+										<comboitem
+											label="@load(each.ease_name)" value="@load(each.ease_name)" />
+									</template>
+								</combobox>
+							</cell>
+						</row>
+						<row visible="${vm.rcwt }"><!--  -->
+							<cell>
+								承诺书签订时间
+								<label value="（无函自带档案、非深户档案需签订）" />
+							</cell>
+							<cell>
+								<datebox id="promisesdate"
+									mold="rounded" width="120px" value="@load(vm.promisesdate)" />
+							</cell>
+							<cell>协议书签订时间</cell>
+							<cell>
+								<datebox id="prodate" mold="rounded"
+									width="120px" value="@load(vm.prodate)" />
+							</cell>
+							<cell>调令号</cell>
+							<cell>
+								<textbox id="transferorderid"
+									width="120px" mold="rounded"
+									value="@bind(vm.eam.emar_transferorderid)" style="" />
+							</cell>
+						</row>
+						<row>
+							<cell colspan="6">
+								<button label="+"
+									onClick="@command('createrow',rows=rows)" />
+							</cell>
+						</row>
+						<row>
+							<cell>在深工作简历</cell>
+							<cell colspan="5">
+								<datebox value="@bind(vm.stdate)"
+									format="yyyy-MM-dd" mold="rounded" />
+								至
+								<datebox value="@bind(vm.edate)"
+									format="yyyy-MM-dd" mold="rounded" />
+								工作单位
+								<textbox value="@bind(vm.workdw)"
+									mold="rounded" />
+								部门及职务
+								<textbox value="@bind(vm.workzw)"
+									mold="rounded" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+				<div align="center">
+					<button label="提交"
+						onClick="@command('submit',win=winfiles,a=hb,b=pb,c=spd,d=colhj,rows=rows)" />
+					<button
+						onClick="@command('addremark',win=winfiles)">
+						备注
+					</button>
+				</div>
+			</groupbox>
+		</scrollview>
+	</window>
+</zk>

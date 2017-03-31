@@ -1,0 +1,98 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window border="0" apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('colaclient') @init('Controller.CoLatencyClient.CoLatencyClientInfoController')" height="100%">
+	<style src="/css/style.css"></style>
+<panel title="潜在客户信息" height="100%">
+<panelchildren>
+<borderlayout height="100%">
+<north border="0" title="检索" collapsible="true" flex="true" style="padding-bottom:10px;">
+<grid id="secrchgrid" height="40px">
+	<rows>
+		<row>
+		<cell width="100px" align="right">联系人姓名</cell>
+		<cell width="180px"><textbox id="linkname"/></cell>
+		<cell width="150px" align="right">联系人电话/手机/邮箱</cell>
+		<cell width="160px"><textbox id="mobi"/></cell>
+		<cell><button id="btSearch" label="查询"
+			onClick="@command('search',lname=linkname.value,mo=mobi.value)" /></cell>
+		</row>
+	</rows>
+</grid>
+</north>
+<center>
+<grid emptyMessage="没有潜在客户信息" height="99%"  model="@load(colaclient.listmodel)" mold="paging" pageSize="40">
+<columns>
+<column align="center" width="40px"></column>
+<column align="center" width="50px">序号</column>
+<column align="center" sort="auto(cola_company)"><vlayout>公司名称<textbox value="@bind(colaclient.companyName)" onChange="@command('searchColaInfo')" instant="true" width="90%"/></vlayout></column>
+<column align="center" sort="auto(cola_clientsize)">客户规模</column>
+<column align="center" sort="auto(cola_addname)">报价人
+	<combobox onChange="@command('searchColaInfo')" value="@bind(colaclient.addname)" width="90%" 
+			  model="@load(colaclient.addnamelist)">
+		<template name="model">
+			<comboitem label="@load(each.cola_addname)"/>
+		</template>
+	</combobox>
+</column>
+<column align="center" sort="auto(cola_follower)">跟进人
+	<combobox onChange="@command('searchColaInfo')" value="@bind(colaclient.follower)" width="90%" 
+			  model="@load(colaclient.personList)">
+		<template name="model">
+			<comboitem label="@load(each)"/>
+		</template>
+	</combobox>
+</column>
+<column align="center" sort="auto(cola_addtime)">添加时间</column>
+<column align="center">客户要求服务内容</column>
+<column align="center" sort="auto(cola_successname)">成功率
+	<combobox id="slev" readonly="true" onChange="@command('searchColaInfo')" 
+			  selectedItem="@bind(colaclient.level)" width="90%">
+		<comboitem value="0" label=""/>
+		<comboitem value="5" label="较高(短期签约可能性比较大)"/>
+	
+		<comboitem value="3" label="一般(可能性一般)"/>
+		
+		<comboitem value="1" label="较低(可能性较小)"/>
+	</combobox>
+</column>
+<column sort="auto(coba_LTS)">状态</column>
+<column>详细</column>
+</columns>
+<rows>
+	<template name="model">
+		<row align="center">
+		<custom-attributes
+			cola_id="${each.cola_id }" />
+			<detail open="false" fulfill="onOpen" visible="${each.num>0}">
+					<include src="/CoLatencyClient/ColaClientLinkManInfoSearch.zul" cola_id="${cola_id}" />
+			</detail>
+			<label value="${forEachStatus.index+1 }"/>
+			<label value="@load(each.cola_company)"/>
+			<label value="@load(each.cola_clientsize)"/>
+			<label value="@load(each.cola_addname)"/>
+			<label value="@load(each.cola_follower)"/>
+			<label value="@load(each.cola_addtime)"/>
+			<label value="@load(each.cola_servicecontent)"/>
+			<label value="@load(each.cola_successname)"/>
+			<label value="${each.coba_LTS>0?'已转':'未转' }"></label>
+			<menubar autodrop="true">
+					<menu image="../images/pencil-small.png">
+						<menupopup>
+							<menuitem label="潜在客户详细信息" onClick="@command('colainfo',colainfo=each)"/>
+							<menuseparator />
+							<menuitem label="服务要求详细信息" onClick="@command('questinfo',model=each)" if="${each.coba_LTS>0 }"/>
+						</menupopup>
+					</menu>
+			</menubar>
+			<a onClick="" style="cursor:pointer"><label >详细</label></a>
+		</row>
+	</template>
+	</rows>
+</grid>
+</center>
+</borderlayout>
+</panelchildren>
+</panel>
+</window>
+</zk>

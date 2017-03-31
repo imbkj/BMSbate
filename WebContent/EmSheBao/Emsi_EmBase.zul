@@ -1,0 +1,14 @@
+<grid vflex="1" hflex="1">
+	<rows>
+		<row>
+			员工编号
+			<cell>
+				<label value="${arg.gid}" />
+			</cell>
+			员工姓名
+			<cell>
+				<label value="${arg.name}" />
+			</cell>
+		</row>
+	</rows>
+</grid>

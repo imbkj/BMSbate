@@ -1,0 +1,51 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="人事反馈材料" border="normal" height="80%" width="80%"
+		closable="true" apply="org.zkoss.bind.BindComposer" id="win"
+		viewModel="@id('vm') @init('Controller.CoReg.ResponsbilityBookStep3Controller')">
+		<grid>
+			<columns>
+				<column width="20%"></column>
+				<column></column>
+			</columns>
+			<rows>
+				<row>
+					公司名称
+					<label value="@load(vm.m.coba_company)" />
+				</row>
+				<row>
+					<cell colspan="2">
+						<label value="勾选所需材料" style="color:#666" />
+					</cell>
+				</row>
+				<row>
+					<cell colspan="2">
+						<listbox id="ltb" height="180px" width="100%"
+							checkmark="true" emptyMessage="暂无数据" model="@load(vm.docList)"
+							onCreate="@command('lbinit',lb=self)">
+							<listhead>
+								<listheader label="内容" />
+							</listhead>
+							<template name="model">
+								<listitem>
+									<listcell
+										label="@load(each.statename)" />
+								</listitem>
+							</template>
+						</listbox>
+					</cell>
+				</row>
+				<row>
+					<label value="@load(vm.timeStr)" />
+					<datebox mold="rounded" format="yyyy-MM-dd"
+						value="@bind(vm.date)">
+					</datebox>
+				</row>
+			</rows>
+		</grid>
+		<hbox width="100%" pack="center" align="center">
+			<button label="提交"
+				onClick="@command('submit',win=win,ltb=ltb)" />
+		</hbox>
+	</window>
+	</zk>

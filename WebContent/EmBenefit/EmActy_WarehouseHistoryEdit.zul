@@ -1,0 +1,37 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="库存修改" border="normal" width="60%" height="60%"
+	apply="org.zkoss.bind.BindComposer" id="editwin"
+		viewModel="@id('vm') @init('Controller.EmBenefit.EmActy_WarehouseHistoryEditController')"
+		closable="true">
+		<grid vflex="1">
+			<rows>
+				<row>
+					<cell width="80px"></cell>
+					<cell><label></label></cell>
+					<cell width="80px"></cell>
+					<cell><label></label></cell>
+				</row>
+				<row>
+					<cell width="80px">礼品名称</cell>
+					<cell colspan="3"><label value="@load(vm.m.wase_name)"></label></cell>
+				</row>
+				<row>
+					<cell width="80px">添加人</cell>
+					<cell><label value="@load(vm.model.hsry_addname)"></label></cell>
+					<cell width="80px">添加时间</cell>
+					<cell><label value="@load(vm.model.hsry_addtime)"></label></cell>
+				</row>
+				<row>
+					<cell width="80px">现有数量</cell>
+					<cell><label value="@load(vm.model.hsry_num)"></label></cell>
+					<cell width="80px">数量修改为</cell>
+					<cell><intbox value="@bind(vm.num)"></intbox></cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center"><button onClick="@command('summit',win=editwin)">提交</button></footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

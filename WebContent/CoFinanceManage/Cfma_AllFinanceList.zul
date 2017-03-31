@@ -1,0 +1,79 @@
+<?page title="电子台账" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winOwnmonthList" title="电子台账" border="normal"
+		width="99%" height="99%" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoFinanceManage.Cfma_AllFinanceListController')"
+		closable="true" sizable="true">
+		<grid span="true" model="@load(vm.totalAccountList)"
+			mold="paging" pageSize="30" emptyMessage="无数据" sizedByContent="true"
+			hflex="1" vflex="1">
+			<columns sizable="true">
+				<column width="26px" align="center" />
+				<column label="公司编号" align="center" sort="auto(cid)" />
+				<column label="公司名称" align="center"
+					sort="auto(coba_company)" />
+				<column label="人事应收" align="center"
+					sort="auto(personnelReceivable)" />
+				<column label="财务应收" align="center"
+					sort="auto(financeReceivable)" />
+				<column label="总应收" align="center"
+					sort="auto(totalReceivable)" />
+				<column label="总实收" align="center"
+					sort="auto(totalPaidIn)" />
+				<column label="结转金额" align="center"
+					sort="auto(carryForwardEx)" />
+				<column label="垫付金额" align="center"
+					sort="auto(loanBalance)" width="70px" />
+				<column label="差额" align="center"
+					sort="auto(imbalance)" />
+				<column label="客服" align="center"
+					sort="auto(coba_client)" width="70px" />
+			</columns>
+			<rows>
+				<template name="model">
+					<row>
+						<custom-attributes cid="${each.cid}" />
+						<detail open="false" fulfill="onOpen"
+							height="100%">
+							<include
+								src="/CoFinanceManage/Cfma_AllFinanceDetail.zul" cid="${cid}" />
+						</detail>
+						<cell>
+							<label value="@load(each.cid)" />
+						</cell>
+						<cell>
+							<label value="@load(each.coba_company)" />
+						</cell>
+						<cell>
+							<label
+								value="@load(each.personnelReceivable)" />
+						</cell>
+						<cell>
+							<label
+								value="@load(each.financeReceivable)" />
+						</cell>
+						<cell>
+							<label value="@load(each.totalReceivable)" />
+						</cell>
+							<cell>
+							<label value="@load(each.totalPaidIn)" />
+						</cell>
+						<cell>
+							<label value="@load(each.carryForwardEx)" />
+						</cell>
+						<cell>
+							<label value="@load(each.loanBalance)" />
+						</cell>
+						<cell>
+							<label value="@load(each.imbalance)"
+								style="${each.imbalance lt 0?'color:red;':''}" />
+						</cell>
+						<cell>
+							<label value="@load(each.coba_client)" />
+						</cell>
+					</row>
+				</template>
+			</rows>
+		</grid>
+	</window>
+</zk>

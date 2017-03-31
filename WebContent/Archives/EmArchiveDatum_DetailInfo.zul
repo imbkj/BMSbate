@@ -1,0 +1,300 @@
+<?page title="档案业务信息" contentType="text/html;charset=UTF-8"?>
+<?component name="docDataList" macro-uri="../DocumentsInfo/DocumentsInfo_UpPageList.zul" inline="true"?>
+<zk>
+<window title="档案业务信息" border="normal" closable="true" id="detail" width="80%" height="80%">
+<scrollview vflex="1">
+<groupbox closable="false" style="margin-bottom:10px;">
+	<caption>
+		<label>档案业务信息</label>
+	</caption>
+	<grid>
+	<rows>
+	<!-- 公共显示信息 -->
+		<row>
+			<cell width="85px">公司名称</cell>
+			<cell><textbox value="${arg.model.coba_shortname}(${arg.model.cid})" /></cell>
+			<cell width="85px">员工姓名</cell>
+			<cell><textbox value="${arg.model.eada_name}" /></cell>
+		</row>
+		<row>
+			<cell width="80px">身份证号码</cell>
+			<cell>
+				<textbox value="${arg.model.eada_idcard}"/>
+			</cell>
+			<cell width="80px">任务单进度</cell>
+			<cell>
+				<textbox value="${arg.tmodel.wfno_name}"/>
+			</cell>
+		</row>
+		<row>
+			<cell>档案类型</cell>
+			<cell><textbox value="${arg.model.eada_filetype}" /></cell>
+			<cell>档案编号</cell>
+			<cell><textbox value="${arg.model.eada_fid}" /></cell>
+		</row>
+		<row>
+			<!--  <cell>托管方式</cell>
+			<cell><textbox value="${arg.model.eada_wtmode}" /></cell>-->
+			<cell>户籍</cell>
+			<cell colspan="3"><textbox value="${arg.model.eada_hj}" /></cell>
+		</row>
+		<row>
+			
+			<cell>入职中智时间</cell>
+			<cell><datebox  value="${arg.model.emba_indate}" readonly="true" buttonVisible="false" /></cell>
+			<cell>续签协议到期日</cell>
+			<cell><textbox  value="${arg.amodel.emar_continuedeadline}"/></cell>
+		</row>
+		<row>
+			<cell>档案所在地</cell>
+			<cell colspan="3"><textbox width="80%" value="${arg.model.eada_fileplace}"/></cell>
+		</row>
+		<row>
+			<cell>户口详细地址</cell>
+			<cell colspan="3"><textbox width="80%" value="${arg.amodel.emar_address}"/></cell>
+		</row>
+		</rows>
+		<!-- 公共显示信息End -->
+		</grid>
+	</groupbox>
+<groupbox closable="false" visible="${arg.model.eada_type=='档案调入'}">
+	<caption>
+		<label>档案调入信息</label>
+		</caption>
+		<!-- 调入显示信息 -->
+		<grid>
+		<rows>
+		<row visible="${arg.model.eada_type=='档案调入'}">
+			<cell>毕业院校</cell>
+			<cell><textbox  value="${arg.amodel.emar_school}"/></cell>
+			<cell>学历</cell>
+			<cell><textbox value="${arg.amodel.emar_degree}" /></cell>
+		</row>
+		<row visible="${arg.model.eada_type=='档案调入'}">
+			<cell>学位</cell>
+			<cell><textbox  value="${arg.amodel.emar_degree}"/></cell>
+			<cell>入深方式</cell>
+			<cell><textbox value="${arg.amodel.emar_peoplefoldmode}" /></cell>
+		</row>
+		<row visible="${arg.model.eada_type=='档案调入'}">
+			<cell>婚姻状况</cell>
+			<cell><textbox  value="${arg.amodel.emar_marrystate}"/></cell>
+			<cell>生育状况</cell>
+			<cell><textbox value="${arg.amodel.emar_fertilitystate}" /></cell>
+		</row>
+		<row visible="${arg.model.eada_type=='档案调入'}">
+			<cell>现存档机构全称</cell>
+			<cell><textbox  value="${arg.model.eada_fileplace}"/></cell>
+			<cell>原托管方式</cell>
+			<cell><textbox value="${arg.model.eada_wtmode}" /></cell>
+		</row>
+		<row visible="${arg.model.eada_type=='档案调入'}">
+			<cell>存档协议到期日</cell>
+			<cell><textbox  value="${arg.model.eada_deadline}"/></cell>
+			<cell>商调函编号</cell>
+			<cell><textbox value="${arg.model.eada_sdh}" /></cell>
+		</row>
+		<row visible="${arg.model.eada_type=='档案调入'}">
+			<cell>费用结清情况</cell>
+			<cell colspan="3"><textbox  value="${arg.model.eada_charge}" width="85%"/></cell>	
+		</row>
+		</rows>
+		<!-- 调入显示信息End -->
+		</grid>
+</groupbox>
+<groupbox closable="false" visible="${arg.model.eada_type=='查借材料'}">
+	<caption>
+			<label>查借材料信息</label>
+	</caption>
+		<grid>
+		<rows>
+		<!-- 查借材料End -->
+		<row visible="${arg.model.eada_type=='查借材料'}">
+			<cell>借用事由</cell>
+			<cell colspan="3"><textbox  value="${arg.model.eada_lendcause}" width="95%"/></cell>
+		</row>
+		<row visible="${arg.model.eada_type=='查借材料'}">
+			<cell>借出日期</cell>
+			<cell><textbox  value="${arg.model.eada_lenddate}"/></cell>
+			<cell>交接人</cell>
+			<cell><textbox value="${arg.model.eada_lendpeople}" /></cell>
+		</row>
+		<row visible="${arg.model.eada_type=='查借材料'}">
+			<cell>归还日期</cell>
+			<cell colspan="3"><textbox  value="${arg.model.eada_returnarchivedate}"/></cell>	
+		</row>
+		</rows>
+		<!-- 查借材料End -->
+		</grid>
+</groupbox>
+
+<!-- 出具证明-->
+<groupbox closable="false" visible="${arg.model.eada_type=='出具证明'}">
+		<caption>
+			<label>出具证明信息</label>
+		</caption>
+		<grid>
+		<rows>
+		<row visible="${arg.model.eada_type=='出具证明'}">
+			<cell>申请证明类型</cell>
+			<cell colspan="3"><textbox width="95%" value="${arg.model.eada_orderdata }"/></cell>
+			
+		</row>
+		<row visible="${arg.model.eada_type=='出具证明'}">
+			<cell>实际出具证明</cell>
+			<cell colspan="3"><textbox  value="${arg.model.eada_prove}" width="95%"/></cell>
+		</row>
+		<row visible="${arg.model.eada_type=='出具证明'}">
+			<cell>出具证明事由</cell>
+			<cell colspan="3"><textbox  value="${arg.model.eada_cause}" width="95%"/></cell>
+		</row>
+		<row visible="${arg.model.eada_type=='出具证明'}">
+			<cell>发出证明日期</cell>
+			<cell><textbox  value="${arg.model.eada_drawprovedate}"/></cell>
+			<cell>交接人</cell>
+			<cell><textbox value="${arg.model.eada_drawprovepeople}" /></cell>
+		</row>
+		</rows>
+		</grid>
+</groupbox>
+<!-- 出具证明End -->
+		
+<!-- 材料归档-->
+<groupbox closable="false"  visible="${arg.model.eada_type=='材料归档'}">
+		<caption>
+			<label>材料归档信息</label>
+		</caption>
+		<grid>
+		<rows>
+		<row visible="${arg.model.eada_type=='材料归档'}">
+			<cell>拟归档材料名称</cell>
+			<cell><textbox  value="${arg.model.eada_file}" /></cell>
+			<cell>材料归档时间</cell>
+			<cell><textbox  value="${arg.model.eada_filedate}" /></cell>	
+		</row>
+		</rows>
+		</grid>
+</groupbox>
+		<!-- 材料归档End-->
+		
+		<!-- 转正定级-->
+<groupbox closable="false" visible="${arg.model.eada_type=='转正定级'}">
+		<caption>
+			<label>转正定级信息</label>
+		</caption>
+		<grid>
+		<rows>
+		<row visible="${arg.model.eada_type=='转正定级'}">
+			<cell>是否需要协助确认转正资格</cell>
+			<cell><textbox value="${arg.model.eada_zg==1?'是':'否'}"/></cell>
+			<cell>发出表格日期</cell>
+			<cell><textbox value="${arg.model.eada_drawformdate}"/></cell>
+		</row>
+		<row visible="${arg.model.eada_type=='转正定级'}">
+			<cell>是否代购表格</cell>
+			<cell><textbox value="${arg.model.eada_bf==1?'是':'否'}"/></cell>
+			<cell>交接人</cell>
+			<cell><textbox value="${arg.model.eada_drawformpeople}" /></cell>
+		</row>
+		<row visible="${arg.model.eada_type=='转正定级'}">
+			<cell>后续事宜是否雇员自行办理</cell>
+			<cell><textbox  value="${arg.model.eada_dms==1?'是':'否'}"/></cell>
+			<cell>回收表格日期</cell>
+			<cell><textbox value="${arg.model.eada_returnformdate}" /></cell>
+		</row>
+		<row visible="${arg.model.eada_type=='转正定级'}">
+			<cell>毕业生接收单位</cell>
+			<cell><textbox  value="${arg.model.eada_rsetup}"/></cell>
+			<cell>毕业生接收时间</cell>
+			<cell><textbox value="${arg.model.eada_rdate}" /></cell>
+		</row>
+		<row visible="${arg.model.eada_type=='转正定级'}">
+			<cell>办理转正日期</cell>
+			<cell colspan="3"><textbox  value="${arg.model.eada_transactdate}"/></cell>
+		</row>
+		</rows>
+		</grid>
+</groupbox>
+		<!-- 转正定级End -->
+<groupbox closable="false" visible="${arg.model.eada_type=='档案调出'}">
+	<caption>
+			<label>档案调出信息</label>
+	</caption>
+		<grid>
+		<rows>
+		<!-- 档案调出 -->
+		<row visible="${arg.model.eada_type=='档案调出'}">
+			<cell>员工欠费情况</cell>
+			<cell><textbox  value="${arg.model.eada_charge}"/></cell>
+			<cell>员工欠费时间</cell>
+			<cell><textbox value="${arg.model.eada_chargedate}" /></cell>
+		</row>
+		<row visible="${arg.model.eada_type=='档案调出'}">
+			<cell>终止收费日期</cell>
+			<cell colspan="3"><textbox value="${arg.model.cgli_stopdate}"/></cell>
+		</row>
+		<row visible="${arg.model.eada_type=='档案调出'}">
+			<cell>离职时间</cell>
+			<cell><textbox value="${arg.model.emba_outdate}"/></cell>
+			<cell>调出日期</cell>
+			<cell><textbox value="${arg.model.eada_checkoutdate}" /></cell>
+		</row>
+		<row visible="${arg.model.eada_type=='档案调出'}">
+			<cell>调出方式</cell>
+			<cell><textbox value="${arg.model.eada_checkoutmode}" /></cell>
+			<cell>是否委托代办</cell>
+			<cell><textbox value="${arg.model.eada_deputy==1?'是':'否'}" /></cell>
+		</row>
+		<row visible="${arg.model.eada_type=='档案调出'}">
+			<cell>调出单位</cell>
+			<cell><textbox value="${arg.model.eada_rsetup}" /></cell>
+			<cell>调出原因</cell>
+			<cell><textbox value="${arg.model.eada_checkoutreason}"/></cell>
+		</row>
+		</rows>
+		</grid>
+</groupbox>
+		<!-- 档案调出End -->
+		
+		<!-- 欠费查询 -->
+<groupbox closable="false" visible="${arg.model.eada_type=='欠费查询'}">
+		<caption>
+			<label>欠费信息</label>
+		</caption>
+		<grid>
+		<rows>
+		<row visible="${arg.model.eada_type=='欠费查询'}">
+			<cell>现缴费日期</cell>
+			<cell><textbox  value="${arg.model.eada_paydate}"/></cell>
+			<cell>档案存放单位全称</cell>
+			<cell><textbox value="${arg.model.eada_fileplacefull}" /></cell>
+		</row>
+		<row visible="${arg.model.eada_type=='欠费查询'}">
+			<cell>员工档案欠费情况</cell>
+			<cell colspan="3"><textbox value="${arg.model.eada_arrearageinfo}" width="95%" rows="3"/></cell>
+		</row>
+		</rows>
+		</grid>
+</groupbox>
+		<!-- 欠费查询End -->
+<groupbox if="${arg.model.eada_type!='欠费查询'}" style="margin-top:10px;">
+		<caption>
+			<label>递交材料</label>
+		</caption>
+	<grid>
+		<rows>
+			<row>
+				<cell colspan="4">
+					<!-- 材料内联页 参数：puzu_id：模块页面id， doc_type：员工(g)还是公司(c)，gid：公司数据则插入空白 ，业务表id ，log_url：获取到页面路径的前部分-->
+					<docDataList id="docGrid"
+					puzu_id="${arg.model.eada_doc}" doc_type="g" gid="${arg.model.gid}"
+					tid="${arg.model.eada_id}"
+					log_url="../DocumentsInfo/" dHeight="200px" dWidth="100%"/>
+				</cell>
+			</row>
+		</rows>
+	</grid>
+</groupbox>
+</scrollview>
+</window>
+</zk>

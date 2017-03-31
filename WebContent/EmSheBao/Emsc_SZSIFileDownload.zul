@@ -1,0 +1,103 @@
+<!--
+	创建人：林少斌
+	创建时间：2015-4-23
+	用途：独立户变更数据下载PDF页面
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winSZSIDownload" title="社会保险 -- 独立户变更数据下载PDF页面"
+		border="normal" width="800px" height="50%"
+		apply="org.zkoss.bind.BindComposer" closable="true"
+		viewModel="@id('vm') @init('Controller.EmSheBao.Emsc_SZSIFileDownloadController')">
+		<div height="98%" style="overflow-y:scroll">
+			<groupbox>
+				<caption label="下载文件" />
+				<grid style="border:0px">
+					<rows>
+						<row>
+							<cell width="20%">
+								<label value="文件名称：" />
+							</cell>
+							<cell>
+								<textbox mold="rounded" rows="1"
+									readonly="true" width="280px"
+									value="@load(vm.sbData.escs_uploadfile)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="退回原因：" />
+							</cell>
+							<cell>
+								<textbox rows="3" width="70%"
+									value="@bind(vm.reason)" />
+							</cell>
+						</row>
+						<row>
+							<cell colspan="2" align="center">
+								<button label="退回"
+									onClick="@command('szsiReturn',win=winSZSIDownload)" />
+								<button label="下载"
+									onClick="@command('download')" />
+								<button label="转下一步"
+									onClick="@command('submit',win=winSZSIDownload)" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox>
+				<caption label="社保变更个人档案信息" />
+				<grid style="border:0px">
+					<rows>
+						<row>
+							<cell width="20%">
+								<label value="所属月份" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.sbData.ownmonth)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="公司名称" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.sbData.escs_company)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="姓名" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.sbData.escs_name)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="变更类型" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.sbData.escs_change)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="变动内容" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.sbData.escs_content)" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+		</div>
+	</window>
+</zk>

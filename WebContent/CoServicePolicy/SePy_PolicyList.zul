@@ -1,0 +1,122 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="服务政策信息列表" border="normal" vflex="1"
+	apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('vm') @init('Controller.CoServicePolicy.SePy_PolicyListController')"
+>
+<hlayout vflex="1" hflex="1">
+<listbox vflex="1" hflex="2" model="@load(vm.list)" 
+onSelect="@command('selectedrow')"
+selectedItem="@bind(vm.filemodel)" emptyMessage="没有数据">
+	<listhead>
+	<listheader width="40px" align="center">序号</listheader>
+	<listheader align="center">
+		<vlayout>
+			<label value="政策类型"></label>
+			<textbox onChange="@command('search')" instant="true" value="@bind(vm.type)"></textbox>
+		</vlayout>
+	</listheader>
+	<listheader align="center">
+		<vlayout>
+			<label value="标题"></label>
+			<textbox onChange="@command('search')" instant="true" value="@bind(vm.title)"></textbox>
+		</vlayout>
+	</listheader>
+	<listheader align="center">
+		<vlayout>
+			<label value="发文机构"></label>
+			<textbox onChange="@command('search')" instant="true" value="@bind(vm.agencies)"></textbox>
+		</vlayout>
+	</listheader>
+	<listheader align="center" width="80px">
+		<vlayout>
+			<label value="城市"></label>
+			<textbox onChange="@command('search')" instant="true" value="@bind(vm.city)"></textbox>
+		</vlayout>
+	</listheader>
+	<listheader align="center" width="80px">
+		<vlayout>
+			<label value="添加人"></label>
+			<textbox onChange="@command('search')" instant="true" value="@bind(vm.addname)"></textbox>
+		</vlayout>
+	</listheader>
+	</listhead>
+	<template name="model">
+	<listitem>
+		<listcell label="${forEachStatus.index+1 }" />
+		<listcell label="@load(each.sypo_type)" />
+		<listcell label="@load(each.sypo_title)" />
+		<listcell label="@load(each.sypo_agencies)" />
+		<listcell label="@load(each.sypo_city)"></listcell>
+		<listcell label="@load(each.sypo_addname)" />
+	</listitem>
+	</template>
+</listbox>
+<grid vflex="1" hflex="1">
+		<rows visible="@bind(vm.viables)">
+			<row>
+				<cell width="80px"></cell>
+				<cell></cell>
+				<cell width="60px"></cell>
+				<cell></cell>
+			</row>
+			<row>
+				<cell width="60px" ><label>政策类型</label></cell>
+				<cell colspan="3"><label value="@bind(vm.filemodel.sypo_type)" style="color:#666"></label></cell>
+			</row>
+			<row>
+				<cell><label>政策内容</label></cell>
+				<cell colspan="3"><label value="@bind(vm.filemodel.sypo_content)" style="color:#666" ></label></cell>
+			</row>
+			<row visible="@bind(vm.wagevisable)">
+				<cell><label>当地社平工资</label></cell>
+				<cell><label value="@bind(vm.filemodel.sypo_sminwage)" style="color:#666" ></label></cell>
+				<cell width="60px"><label>执行时间</label></cell>
+				<cell><label value="@bind(vm.filemodel.sypo_sminwagedate)" style="color:#666" ></label></cell>
+			</row>
+			<row visible="@bind(vm.wagevisable)">
+				<cell><label>当地最低工资</label></cell>
+				<cell><label value="@bind(vm.filemodel.sypo_minwage)" style="color:#666" ></label></cell>
+				<cell width="60px"><label>执行时间</label></cell>
+				<cell><label value="@bind(vm.filemodel.sypo_minwagedate)" style="color:#666" ></label></cell>
+			</row>
+			<row visible="@bind(vm.wagevisable)">
+				<cell><label>当地最低工资标准</label></cell>
+				<cell><label value="@bind(vm.filemodel.sypo_minwagestandard)" style="color:#666" ></label></cell>
+				<cell width="60px"><label>执行时间</label></cell>
+				<cell><label value="@bind(vm.filemodel.sypo_standarddate)" style="color:#666" ></label></cell>
+			</row>
+			<row visible="@bind(vm.wagevisable)">
+				<cell><label>当地最低小时工工资</label></cell>
+				<cell><label value="@bind(vm.filemodel.sypo_hourwage)" style="color:#666" ></label></cell>
+				<cell width="60px"><label>执行时间</label></cell>
+				<cell><label value="@bind(vm.filemodel.sypo_hourwagedate)" style="color:#666" ></label></cell>
+			</row>
+			<row>
+				
+				<cell colspan="4">
+					<grid model="@bind(vm.filemodel.filelist)" visible="@bind(vm.viable)">
+						<columns>
+							<column align="center">文件名</column>
+							<column align="center" width="80px">上传人</column>
+							<column align="center" width="80px">上传时间</column>
+							<column align="center">备注</column>
+						</columns>
+						<rows>
+						<template name="model">
+							<row>
+								<cell><a onClick="@command('openfile',url=each.file_url)"><label value="@bind(each.file_title)"></label></a></cell>
+								<cell><label value="@bind(each.file_addname)"></label></cell>
+								<cell><label value="@bind(each.file_addtime)"></label></cell>
+								<cell><label value="@bind(each.file_remark)"></label></cell>
+							</row>
+						</template>
+						</rows>
+					</grid>
+				</cell>
+			</row>
+		</rows>
+	</grid>
+</hlayout>
+</window>
+</zk>

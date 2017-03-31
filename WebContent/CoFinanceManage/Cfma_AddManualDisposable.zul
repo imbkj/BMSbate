@@ -1,0 +1,120 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="添加公司非标" border="normal" width="60%" height="80%"
+		closable="true" apply="org.zkoss.bind.BindComposer" id="addcoWin"
+		viewModel="@id('vm') @init('Controller.CoFinanceManage.Cfma_AddManualDisposableController')">
+
+		<grid>
+			<rows>
+				<row>
+					<cell align="center">
+						<label value="公司名称" />
+					</cell>
+					<cell align="center">
+						<label value="@load(vm.com.coba_company)" />
+					</cell>
+					<cell align="center">
+						<label value="公司编号" />
+					</cell>
+					<cell align="center">
+						<label value="@load(vm.com.cid)" />
+					</cell>
+					</row>
+					<row>
+					<cell align="center">
+						<label value="客服" />
+					</cell>
+					<cell align="center">
+						<label value="@load(vm.com.coba_client)" />
+					</cell>
+						<cell>
+						<label value="所属月份" />
+					</cell>
+					<cell>
+						<combobox model="@load(vm.monthList)"
+							mold="rounded" readonly="true" value="@bind(vm.m.ownmonth)">
+							<template name="model">
+								<comboitem label="@bind(each)" />
+							</template>
+						</combobox>
+					</cell>
+				</row>
+<!-- 			</rows> -->
+<!-- 		</grid> -->
+<!-- 		<grid> -->
+<!-- 			<rows> -->
+				<row>
+				<cell>
+						<label value="合同选择" />
+					</cell>
+					<cell>
+						<combobox readonly="true" id="cocoCom"
+							mold="rounded" model="@load(vm.cocos)" selectedItem="@bind(vm.cocosm)" 
+							onChange="@command('setbjdlist')">
+							<template name="model">
+								<comboitem
+									label="@bind(each.coco_compactid)" value="@bind(each.coco_id)" />
+							</template>
+						</combobox>
+					</cell>
+				 
+				<cell>
+						<label value="应收费用" />
+					</cell>
+					<cell>
+						<doublebox value="@bind(vm.m.cfmd_Receivable)"
+							mold="rounded" />
+					</cell>
+				</row>
+				<row>
+					 
+					
+							<cell>
+						<label value="产品大类" />
+					</cell>
+					<cell >
+						<combobox readonly="true" mold="rounded"
+							model="@load(vm.copas)" selectedItem="@bind(vm.copasm)"
+							onChange="@command('getprinfo')"
+							 >
+							<template name="model">
+								<comboitem label="@bind(each.coli_name)"
+									value="@bind(each.coli_name)" />
+							</template>
+						</combobox>
+					</cell>
+					<cell>
+				<label value="产品小类" />
+					</cell>
+					<cell  >
+						<combobox readonly="true" mold="rounded" value="@bind(vm.xl)"
+							model="@load(vm.copasinfo)" selectedItem="@bind(vm.copasminfo)" >
+							<template name="model">
+								<comboitem label="@bind(each.coli_name)"
+									value="@bind(each.cpac_name)" />
+							</template>
+						</combobox>
+					</cell>
+					
+					
+				</row>
+				
+				<row>
+					<cell>
+						<label value="收费原因" />
+					</cell>
+					<cell colspan="3">
+						<textbox rows="3"
+							value="@bind(vm.m.cfmd_Reason)" width="98%" mold="rounded" />
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button label="提交"
+						onClick="@command('commit',addcoWin=addcoWin,cocoCom=cocoCom)" />
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

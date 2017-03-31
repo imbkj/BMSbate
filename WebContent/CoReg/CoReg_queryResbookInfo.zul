@@ -1,0 +1,464 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<?component name="docDataList" macro-uri="/DocumentsInfo/DocumentsInfo_UpPageList.zul" inline="true"?>
+<zk>
+	<window title="${vm.com.coba_company }" border="normal" height="80%" width="80%"
+		closable="true" apply="org.zkoss.bind.BindComposer" onCreate="@command('createwin',win=self)"
+		viewModel="@id('vm') @init('Controller.CoReg.CoReg_queryResbookInfoController')">
+		<div height="100%" style="overflow-y:scroll">
+			<groupbox mold="3d" title="基本信息">
+				<grid>
+					<columns>
+						<column width="13%" />
+						<column width="230px" />
+						<column width="12%" />
+						<column />
+						<column width="10%" />
+						<column />
+					</columns>
+					<rows>
+						<row>
+							行业类型
+							<cell>
+								<label
+									value="@load(vm.com.cori_industry_type)" />
+							</cell>
+							注册资金
+							<doublebox format=",###.##" mold="rounded"
+								value="@bind(vm.com.cori_reg_fund)">
+							</doublebox>
+							隶属单位
+							<textbox mold="rounded"
+								value="@bind(vm.com.cori_belong_unit)">
+							</textbox>
+						</row>
+						<row>
+							法定代表人
+							<textbox mold="rounded"
+								value="@bind(vm.com.cori_legal_person)">
+							</textbox>
+							联系电话
+							<textbox mold="rounded"
+								value="@bind(vm.com.cori_lp_tel)">
+							</textbox>
+							公司传真
+							<textbox mold="rounded"
+								value="@bind(vm.com.cori_fax)">
+							</textbox>
+						</row>
+						<row>
+							单位负责人
+							<textbox mold="rounded"
+								value="@bind(vm.com.cori_unti_principal)">
+							</textbox>
+							联系电话
+							<textbox mold="rounded"
+								value="@bind(vm.com.cori_up_tel)">
+							</textbox>
+							邮政编码
+							<textbox mold="rounded"
+								value="@bind(vm.com.cori_postcode)">
+							</textbox>
+						</row>
+						<row>
+							开业时间
+							<textbox mold="rounded"
+								value="@bind(vm.com.cori_open_date)">
+							</textbox>
+							经营起始日期
+							<textbox mold="rounded"
+								value="@bind(vm.com.cori_operate_s_date)">
+							</textbox>
+							社保编号
+							<textbox mold="rounded"
+								value="@bind(vm.com.cori_ss_code)">
+							</textbox>
+						</row>
+						<row>
+							单位月平均工资
+							<cell colspan="5">
+								<doublebox format=",###.##"
+									mold="rounded" value="@bind(vm.com.cori_salary)" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox mold="3d" title="单位劳动用工信息">
+				<grid>
+					<columns>
+						<column width="20%" />
+						<column />
+					</columns>
+					<rows>
+						<row>
+							劳动规章制度
+							<cell>
+								<grid>
+									<columns>
+										<column width="25%" />
+										<column />
+									</columns>
+									<rows>
+										<row>
+											是否依法建立和完善
+											<combobox mold="rounded"
+												readonly="true" width="50px"
+												value="${vm.com.cori_if_build==1?'是':'否' }">
+												<comboitem label="是"
+													value="1" />
+												<comboitem label="否"
+													value="0" />
+											</combobox>
+										</row>
+										<row>
+											是否通过平等协商确定
+											<combobox mold="rounded"
+												readonly="true" width="50px"
+												value="${vm.com.cori_if_pass==1?'是':'否' }">
+												<comboitem label="是"
+													value="1" />
+												<comboitem label="否"
+													value="0" />
+											</combobox>
+										</row>
+										<row>
+											是否公示或告知员工
+											<combobox mold="rounded"
+												readonly="true" width="50px"
+												value="${vm.com.cori_if_tell==1?'是':'否' }">
+												<comboitem label="是"
+													value="1" />
+												<comboitem label="否"
+													value="0" />
+											</combobox>
+										</row>
+									</rows>
+								</grid>
+							</cell>
+						</row>
+						<row>
+							员工人数
+							<cell>
+								<grid>
+									<columns>
+										<column width="10%" />
+										<column />
+										<column width="10%" />
+										<column />
+										<column width="17%" />
+										<column />
+									</columns>
+									<rows>
+										<row>
+											总人数
+											<hlayout>
+												<intbox width="50px"
+													instant="true" mold="rounded"
+													value="@bind(vm.com.cori_all_p)">
+												</intbox>
+												人
+											</hlayout>
+											深户
+											<hlayout>
+												<intbox width="50px"
+													instant="true" mold="rounded"
+													value="@bind(vm.com.cori_sz_p)">
+												</intbox>
+												人
+											</hlayout>
+											非深户
+											<hlayout>
+												<intbox mold="rounded"
+													instant="true" width="50px"
+													value="@bind(vm.com.cori_foreign_p)">
+												</intbox>
+												人
+											</hlayout>
+										</row>
+									</rows>
+								</grid>
+							</cell>
+						</row>
+						<row>
+							劳动合同
+							<cell>
+								<grid>
+									<columns>
+										<column width="25%" />
+										<column />
+									</columns>
+									<rows>
+										<row>
+											已签订劳动合同
+											<hlayout>
+												<intbox width="50px"
+													mold="rounded"
+													value="@bind(vm.com.cori_sign_contract_p)">
+												</intbox>
+												人
+											</hlayout>
+										</row>
+										<row>
+											合同文本是否交付劳动者
+											<combobox mold="rounded"
+												readonly="true" width="50px"
+												value="${vm.com.cori_if_give==1?'是':'否' }">
+												<comboitem label="是"
+													value="1" />
+												<comboitem label="否"
+													value="0" />
+											</combobox>
+										</row>
+										<row>
+											是否建立劳动合同签收备案制度
+											<combobox mold="rounded"
+												readonly="true" width="50px"
+												value="${vm.com.cori_if_build_sign_in==1?'是':'否' }">
+												<comboitem label="是"
+													value="1" />
+												<comboitem label="否"
+													value="0" />
+											</combobox>
+										</row>
+									</rows>
+								</grid>
+							</cell>
+						</row>
+						<row>
+							工作时间
+							<cell>
+								<combobox mold="rounded"
+									value="@bind(vm.com.cori_wtime_type)" readonly="true">
+									<comboitem label="标准工时制度" />
+									<comboitem label="不定时工作制" />
+									<comboitem label="综合计算工时制" />
+								</combobox>
+								<space></space>
+
+								<grid>
+									<columns>
+										<column width="25%" />
+										<column />
+									</columns>
+									<rows>
+										<row>
+											工作时制
+											<div>
+												<hlayout>
+													<intbox
+														mold="rounded" width="35px"
+														value="@bind(vm.com.cori_hour_per_day)">
+													</intbox>
+													小时/天
+												</hlayout>
+												<space></space>
+												<hlayout>
+													<intbox
+														mold="rounded" width="35px"
+														value="@bind(vm.com.cori_hour_per_week)">
+													</intbox>
+													小时/周
+												</hlayout>
+												<space></space>
+												<hlayout>
+													每周工作
+													<intbox
+														mold="rounded" width="35px"
+														value="@bind(vm.com.cori_day_per_week)">
+													</intbox>
+													天
+												</hlayout>
+											</div>
+										</row>
+										<row>
+											是否存在超时加班加点情况
+											<combobox mold="rounded"
+												readonly="true" width="50px"
+												value="${vm.com.cori_if_ot==1?'是':'否' }">
+												<comboitem label="是"
+													value="1" />
+												<comboitem label="否"
+													value="0" />
+											</combobox>
+										</row>
+									</rows>
+								</grid>
+							</cell>
+						</row>
+						<row>
+							工资支付
+							<cell>
+								<grid>
+									<columns>
+										<column width="25%" />
+										<column />
+										<column width="25%" />
+										<column />
+									</columns>
+									<rows>
+										<row>
+											每月工资发放时间
+											<hlayout>
+												<intbox mold="rounded"
+													width="50px" value="@bind(vm.com.cori_salary_date)" />
+												日
+											</hlayout>
+											是否存在拖欠员工工资情况
+											<combobox mold="rounded"
+												readonly="true" width="50px"
+												value="${vm.com.cori_if_arrear==1?'是':'否' }">
+												<comboitem label="是"
+													value="1" />
+												<comboitem label="否"
+													value="0" />
+											</combobox>
+										</row>
+										<row>
+											是否低于最低工资标准
+											<combobox mold="rounded"
+												readonly="true" width="50px"
+												value="${vm.com.cori_if_lowest==1?'是':'否' }">
+												<comboitem label="是"
+													value="1" />
+												<comboitem label="否"
+													value="0" />
+											</combobox>
+											是否按规定支付加班加点工资
+											<combobox mold="rounded"
+												readonly="true" width="50px"
+												value="${vm.com.cori_if_ar_ot==1?'是':'否' }">
+												<comboitem label="是"
+													value="1" />
+												<comboitem label="否"
+													value="0" />
+											</combobox>
+										</row>
+									</rows>
+								</grid>
+							</cell>
+						</row>
+						<row>
+							社会保险
+							<cell>
+								<grid>
+									<columns>
+										<column width="25%" />
+										<column />
+										<column width="25%" />
+										<column />
+									</columns>
+									<rows>
+										<row>
+											是否参加社会保险
+											<combobox mold="rounded"
+												readonly="true" width="50px"
+												value="${vm.com.cori_if_join_ss==1?'是':'否' }">
+												<comboitem label="是"
+													value="1" />
+												<comboitem label="否"
+													value="0" />
+											</combobox>
+											参加人数
+											<div>
+												<intbox mold="rounded"
+													width="50px" value="@bind(vm.com.cori_join_p)">
+												</intbox>
+												人
+											</div>
+										</row>
+									</rows>
+								</grid>
+							</cell>
+						</row>
+						<row>
+							其他
+							<cell>
+								<grid>
+									<columns>
+										<column width="25%" />
+										<column />
+										<column width="25%" />
+										<column />
+									</columns>
+									<rows>
+										<row>
+											是否发生30人以上群体性劳资纠纷
+											<cell colspan="3">
+												<combobox mold="rounded"
+													readonly="true" width="50px"
+													value="${vm.com.cori_if_happen_ld==1?'是':'否' }">
+													<comboitem label="是"
+														value="1" />
+													<comboitem label="否"
+														value="0" />
+												</combobox>
+											</cell>
+										</row>
+										<row>
+											是否招用童工
+											<combobox mold="rounded"
+												readonly="true" width="50px"
+												value="${vm.com.cori_if_kid==1?'是':'否' }">
+												<comboitem label="是"
+													value="1" />
+												<comboitem label="否"
+													value="0" />
+											</combobox>
+											是否成立工会组织
+											<combobox mold="rounded"
+												readonly="true" width="50px"
+												value="${vm.com.cori_if_union==1?'是':'否' }">
+												<comboitem label="是"
+													value="1" />
+												<comboitem label="否"
+													value="0" />
+											</combobox>
+										</row>
+									</rows>
+								</grid>
+							</cell>
+						</row>
+						<row if="false">
+							开户办理类型
+							<combobox mold="rounded" readonly="true"
+								value="@bind(vm.com.cori_reg_transact_type)">
+								<comboitem label="中智办理" />
+								<comboitem label="独自办理" />
+							</combobox>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox title="状态变更记录" mold="3d">
+				<grid width="100%" emptyMessage="暂无数据"
+					model="@load(vm.hosList)">
+					<columns>
+						<column align="center" label="操作" />
+						<column align="center" label="完成时间" />
+						<column align="center" label="添加人" />
+						<column align="center" label="添加时间" />
+					</columns>
+					<template name="model">
+						<row>
+							<label value="@load(each.operate)" />
+							<label value="@load(each.crsr_statetime)" />
+							<label value="@load(each.crsr_addname)" />
+							<label value="@load(each.crsr_addtime)" />
+						</row>
+					</template>
+				</grid>
+			</groupbox>
+			<groupbox title="材料" mold="3d">
+				<grid>
+					<rows>
+						<row>
+							<docDataList id="docGrid" puzu_id="13"
+								doc_type="c" gid="" tid="${vm.m.rebk_cori_id}" log_url="/DocumentsInfo/"
+								dHeight="180px" dWidth="100%" />
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+		</div>
+	</window>
+</zk>

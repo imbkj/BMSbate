@@ -1,0 +1,170 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<?component name="docDataList" macro-uri="../DocumentsInfo/DocumentsInfo_UpPageList.zul" inline="true"?>
+
+<zk>
+	<window title="档案调入 - 通知员工缴纳费用" border="normal" closable="true"
+		id="winclient" width="700px" height="600px"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.Archives.Archive_ClientCommitController')">
+		<scrollview vflex="1">
+			<groupbox>
+				<caption>档案信息</caption>
+				<grid>
+					<rows>
+						<row>
+							<cell></cell>
+							<cell></cell>
+							<cell></cell>
+							<cell></cell>
+						</row>
+						<!-- 公共显示信息 -->
+						<row>
+							<cell width="100px">公司名称</cell>
+							<cell colspan="3">
+								<label
+									value="@load(vm.edm.coba_company)" />
+							</cell>
+						</row>
+						<row>
+							<cell>员工姓名</cell>
+							<cell>
+								<label value="@load(vm.edm.eada_name)" />
+							</cell>
+							<cell>身份证号码</cell>
+							<cell>
+								<label
+									value="@load(vm.edm.eada_idcard)" />
+							</cell>
+						</row>
+						<row>
+							<cell>档案类型</cell>
+							<cell>
+								<label
+									value="@load(vm.edm.eada_filetype)" />
+							</cell>
+							<cell>入职中智时间</cell>
+							<cell>
+								<label
+									value="@load(vm.edm.emba_indate)" />
+							</cell>
+						</row>
+
+						<row>
+							<cell>毕业院校</cell>
+							<cell>
+								<label
+									value="@load(vm.edm.emba_school)" />
+							</cell>
+							<cell>学历</cell>
+							<cell>
+								<label
+									value="@load(vm.edm.emba_degree)" />
+							</cell>
+						</row>
+
+						<row>
+							<cell>婚姻状况</cell>
+							<cell>
+								<label
+									value="@load(vm.edm.emba_marital)" />
+							</cell>
+							<cell>原档案托管方式</cell>
+							<cell>
+								<label
+									value="@load(vm.edm.eada_wtmode)" />
+							</cell>
+						</row>
+
+						<row>
+							<cell>档案所在地</cell>
+							<cell colspan="3">
+								<label
+									value="@load(vm.edm.eada_fileplace)" />
+							</cell>
+						</row>
+						<row>
+							<cell>户口详细地址</cell>
+							<cell colspan="3">
+								<label
+									value="@load(vm.edm.emba_native)" />
+							</cell>
+						</row>
+						<row>
+							<cell>档案欠费情况</cell>
+							<cell colspan="3">
+								<label
+									value="@load(vm.edm.eada_charge)" />
+							</cell>
+						</row>
+						
+					</rows>
+					<!-- 公共显示信息End -->
+
+				</grid>
+			</groupbox>
+			<groupbox>
+				<caption>联系记录</caption>
+				<grid sizedByContent="true" span="true" emptyMessage="暂无记录" 
+					model="@load(vm.ealist)">
+					<columns>
+						<column width="90px" align="center">
+							联系时间
+						</column>
+						<column width="120px" align="center">
+							联系人
+						</column>
+						<column width="120px" align="center">
+							联系方式
+						</column>
+						<column align="center">联系内容</column>
+						<column align="center">操作</column>
+					</columns>
+					<template name="model">
+						<row>
+							<cell>
+								<label
+									value="@load(each.eali_linktime)" />
+							</cell>
+							<cell>
+								<label value="@load(each.eali_addname)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.eali_linkmode)" />
+							</cell>
+							<cell align="left">
+								<label
+									value="@load(each.eali_linkcontent)" />
+							</cell>
+							<cell>
+								<button label="删除" onClick="@command('del',a=each)" />
+							</cell>
+						</row>
+					</template>
+
+				</grid>
+			</groupbox>
+			<groupbox>
+				<caption>递交材料情况</caption>
+				<grid>
+					<rows>
+						<row>
+							<cell>
+								<!-- 材料内联页 参数：puzu_id：模块页面id， doc_type：员工(g)还是公司(c)，gid：公司数据则插入空白 ，业务表id ，log_url：获取到页面路径的前部分-->
+								<docDataList id="docGrid" puzu_id="5"
+									doc_type="g" gid="${vm.edm.gid}" tid="${vm.edm.eada_id }"
+									log_url="/DocumentsInfo/" dWidth="100%" dHeight="100%" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+
+		</scrollview>
+		<div align="center">
+			<button label="添加联系记录" onClick="@command('addlink')" />
+			<button label="转下一步"
+				onClick="@command('submit',win=winclient)" />
+		</div>
+	</window>
+</zk>

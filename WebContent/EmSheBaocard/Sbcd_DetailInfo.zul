@@ -1,0 +1,174 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<?component name="docDataList" macro-uri="../DocumentsInfo/DocumentsInfo_UpPageList.zul" inline="true"?>
+<zk>
+<window title="社保卡详细信息" border="normal" width="80%" height="80%" closable="true">
+<grid vflex="1">
+		<rows>
+			<row>
+				<cell width="100px">员工姓名</cell>
+				<cell><textbox value="${arg.m.sbcd_name}" readonly="true"></textbox></cell>
+				<cell width="100px">员工编号</cell>
+				<cell><textbox value="${arg.m.gid}" readonly="true"></textbox></cell>
+				<cell width="80px">性别</cell>
+				<cell><textbox value="${arg.m.sbcd_sex}" readonly="true"></textbox></cell>
+			</row>
+			<row>
+				<cell>单位编号</cell>
+				<cell><textbox value="${arg.m.cid}" readonly="true"></textbox></cell>
+				<cell>单位全称</cell>
+				<cell colspan="3"><textbox width="80%" value="${arg.m.sbcd_company}" readonly="true"></textbox></cell>
+			</row>
+			<row>
+				<cell>社保单位编码</cell>
+				<cell><textbox value="${arg.m.sbcd_sbnumber}" readonly="true"></textbox></cell>
+				<cell>社保单位名称</cell>
+				<cell colspan="3"><textbox width="80%" value="${arg.m.sbcd_companyname}" readonly="true"></textbox></cell>
+			</row>
+			<row>
+				<cell>社保电脑号</cell>
+				<cell><textbox value="${arg.m.sbcd_computerid}"></textbox></cell>
+				<cell>民族</cell>
+				<cell>
+					<textbox value="${arg.m.sbcd_folk}" readonly="true" />
+				</cell>
+				<cell>移动电话</cell>
+				<cell><textbox value="${arg.m.sbcd_mobile}"></textbox></cell>
+			</row>
+			
+			<row>
+				<cell>证件类型</cell>
+				<cell>
+					<textbox value="${arg.m.sbcd_idcardclass}" readonly="true" />
+				</cell>
+				<cell>证件号码</cell>
+				<cell><textbox value="${arg.m.sbcd_idcard}"></textbox></cell>
+				<cell>发证机关</cell>
+				<cell><textbox value="${arg.m.sbcd_agencies}"></textbox></cell>
+			</row>
+			<row>
+				<cell>证件有效起始日</cell>
+				<cell><textbox value="${arg.m.sbcd_idcardstartdate}"></textbox></cell>
+				<cell>证件有效终止日</cell>
+				<cell><textbox value="${arg.m.sbcd_idcardenddate}"></textbox></cell>
+				<cell>出生日期</cell>
+				<cell><textbox value="${arg.m.sbcd_birthday}"></textbox></cell>
+			</row>
+			<row>
+				<cell>联系地址省</cell>
+				<cell>
+					<textbox value="${arg.m.sbcd_province}" readonly="true" />
+				</cell>
+				<cell>联系地址市</cell>
+				<cell colspan="3">
+					<textbox value="${arg.m.sbcd_city}" readonly="true" />
+				</cell>
+			</row>
+			<row>
+				<cell>详细联系地址</cell>
+				<cell colspan="5"><textbox width="80%" value="${arg.m.sbcd_address}"></textbox></cell>
+			</row>
+			<row>
+				<cell>照片回执号</cell>
+				<cell><textbox value="${arg.m.sbcd_photonum}"></textbox></cell>
+				<cell>户籍所在省</cell>
+				<cell><textbox value="${arg.m.sbcd_hjprovince}" readonly="true" /></cell>
+				<cell>户籍所在市</cell>
+				<cell>
+					<textbox value="${arg.m.sbcd_hjcity}" readonly="true" />
+				</cell>
+			</row>
+			<row>
+				<cell>文化程度</cell>
+				<cell>
+					<textbox value="${arg.m.sbcd_education}" readonly="true" />
+				</cell>
+				<cell>婚姻状况</cell>
+				<cell>
+					<textbox value="${arg.m.sbcd_marry}" readonly="true" />
+				</cell>
+				<cell>户口性质</cell>
+				<cell>
+					<textbox value="${arg.m.sbcd_hj}" readonly="true" />
+					
+				</cell>
+			</row>
+			<row>
+				<cell>职业</cell>
+				<cell>
+					<textbox value="${arg.m.sbcd_job}" readonly="true" />
+						
+				</cell>
+				<cell>办理类型</cell>
+				<cell>
+					<textbox value="${arg.m.sbcd_content}" readonly="true" />
+				</cell>
+				<cell>办卡银行</cell>
+				<cell>
+					<textbox value="${arg.m.sbcd_upbankname}"></textbox>
+				</cell>
+			</row>
+			<row>
+				<cell>添加人</cell>
+				<cell>
+					<textbox value="${arg.m.sbcd_addname}" readonly="true" />
+						
+				</cell>
+				<cell>添加时间</cell>
+				<cell colspan="3">
+					<textbox value="${arg.m.sbcd_addtime}" readonly="true" />
+				</cell>
+			</row>
+			<row>
+				<cell>福利核收时间</cell>
+				<cell>
+					<textbox value="${arg.m.sbcd_flaccpettime}" readonly="true" />	
+				</cell>
+				<cell>递交银行时间</cell>
+				<cell>
+					<textbox value="${arg.m.sbcd_tobanktime}" readonly="true" />
+				</cell>
+				<cell>福利领卡时间</cell>
+				<cell>
+					<textbox value="${arg.m.sbcd_fltaketime}"></textbox>
+				</cell>
+			</row>
+			<row>
+				<cell>中心领卡时间</cell>
+				<cell>
+					<textbox value="${arg.m.sbcd_centertaketime}" readonly="true" />	
+				</cell>
+				<cell>客服领卡时间</cell>
+				<cell colspan="3">
+					<textbox value="${arg.m.sbcd_clienttaketime}" readonly="true" />
+				</cell>
+			</row>
+			<row>
+				<cell>领卡人</cell>
+				<cell>
+					<textbox value="${arg.m.sbcd_staffname}" readonly="true" />	
+				</cell>
+				<cell>领卡方式</cell>
+				<cell>
+					<textbox value="${arg.m.sbcd_taketype}" readonly="true" />
+				</cell>
+				<cell>领卡时间</cell>
+				<cell>
+					<textbox value="${arg.m.sbcd_stafftime}"></textbox>
+				</cell>
+			</row>
+			<row>
+				<cell>取消原因</cell>
+				<cell colspan="5"><textbox width="80%" value="${arg.m.sbcd_cancelcase}"></textbox></cell>
+			</row>
+			<row>
+				<cell width="80px">资料</cell>
+				<cell colspan="5">
+					<!-- 材料内联页 参数：puzu_id：模块页面id， doc_type：员工(g}还是公司(c}，gid：公司数据则插入空白 ，业务表id ，log_url：获取到页面路径的前部分-->
+					<docDataList id="docGrid" puzu_id="${arg.m.sbcd_bankdocid }" doc_type="g"  gid="${arg.m.gid}"
+					tid="${arg.m.sbcd_id }" log_url="/DocumentsInfo/"/>
+				</cell>
+			</row>
+		</rows>
+	</grid>
+</window>
+</zk>

@@ -1,0 +1,96 @@
+<?page title="单位公积金-信息查询" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="单位公积金-信息查询" border="normal" width="100%"
+		height="100%" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoHousingFund.CoHousingFund_SelectListforallinoneController')">
+		<script type="text/javascript" src="/js/Datebox.js"></script>
+		<borderlayout>
+			
+			<center>
+				<grid hflex="1" vflex="1" emptyMessage="暂无数据"
+					model="@load(vm.scohfList)" mold="paging">
+					<columns sizable="true">
+						<column align="center" width="40px"></column>
+						<column align="center" label="公司编号">
+						 
+						</column>
+						<column align="center" label="公司简称">
+							 
+						</column>
+						<column align="center" label="首次托收月">
+							 
+						</column>
+						<column align="center" label="托收日"
+							sort="auto(cohf_tsday)">
+							 
+						</column>
+						<column align="center" label="公积金号">
+							 
+						</column>
+						<column align="center" label="有无密钥">
+							 
+						</column>
+						<column align="center" label="服务状态">
+							 
+						</column>
+						<column align="center" label="添加人"></column>
+						<column align="center" label="添加时间"
+							sort="auto(cohf_addtime)">
+						</column>
+						<column align="center" label="客服">
+						 
+						</column>
+						<column align="center" label="操作"
+							width="60px">
+						</column>
+					</columns>
+					<template name="model">
+						<row>
+							<custom-attributes cid="${each.cid }" />
+							<detail fulfill="onOpen" open="false" >
+								<include
+									src="/CoHousingFund/CoHousingFund_SelectList_Detail.zul"
+									cid="${cid }">
+								</include>
+							</detail>
+							<cell>
+								<label value="@load(each.cid)"
+									if="${not empty each.cid }" />
+								<label value="中智大户" style="color:blue"
+									if="${empty each.cid }" />
+							</cell>
+							<label value="@load(each.coba_shortname)" />
+							<label value="@load(each.cohf_firmonth)" />
+							<label value="@load(each.cohf_tsday)" />
+							<label value="@load(each.cohf_houseid)" />
+							<label value="@load(each.ispwd)" />
+							<cell>
+								<label value="@load(each.statename)"
+									if="${each.statename eq '服务中' }" style="color:blue" />
+								<label value="@load(each.statename)"
+									if="${each.statename eq '终止服务' }" style="color:red" />
+							</cell>
+							<label value="@load(each.cohf_addname)" />
+							<label
+								value="@load(each.cohf_addtimeString)" />
+							<label value="@load(each.coba_client)" />
+							<cell>
+								<menubar autodrop="true"
+									orient="vertical">
+									<menu
+										image="../images/pencil-small.png">
+										<menupopup>
+											<menuitem label="账户详情 "
+												onClick="@command('openwin',each=each,
+												url='../CoHousingFund/CoHousingFund_Info.zul')" />
+										</menupopup>
+									</menu>
+								</menubar>
+							</cell>
+						</row>
+					</template>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

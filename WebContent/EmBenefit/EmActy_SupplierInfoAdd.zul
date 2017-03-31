@@ -1,0 +1,115 @@
+<?page title="员工活动——供应商信息新增" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="员工活动——供应商信息新增" border="normal" width="50%"
+		apply="org.zkoss.bind.BindComposer" id="windeclare"
+		viewModel="@id('vm') @init('Controller.EmBenefit.EmActy_SupplierInfoAddController')">
+		<grid width="100%">
+			<columns visible="false">
+				<column width="120px" />
+				<column />
+				<column width="120px" />
+				<column />
+			</columns>
+			<rows>
+				<row>
+					<cell>供应商名称</cell>
+					<cell colspan="3">
+						<textbox id="supname" width="60%"
+							mold="rounded">
+						</textbox>
+					</cell>
+				</row>
+				<row>
+					<cell>提供服务类型</cell>
+					<cell colspan="3">
+						<chosenbox id="items" width="60%" model="@load(vm.itemList)" />
+					</cell>
+				</row>
+				<row>
+					<cell>供应商网址</cell>
+					<cell colspan="3">
+						<textbox id="website" width="60%"
+							mold="rounded">
+						</textbox>
+					</cell>
+				</row>
+				<row>
+					<cell>供应商地址</cell>
+					<cell colspan="3">
+						<textbox width="60%" id="address"
+							mold="rounded">
+						</textbox>
+					</cell>
+				</row>
+				<row>
+					<cell>备注</cell>
+					<cell colspan="3">
+						<textbox width="60%" id="remark"
+							mold="rounded">
+						</textbox>
+					</cell>
+				</row>
+				<row visible="false">
+					<cell>联系人姓名</cell>
+					<cell>
+						<textbox id="linkname"></textbox>
+					</cell>
+					<cell>联系人手机号码</cell>
+					<cell>
+						<textbox id="mobile"></textbox>
+					</cell>
+				</row>
+				<row visible="false">
+					<cell>联系人电话号码</cell>
+					<cell>
+						<textbox id="phone"></textbox>
+					</cell>
+					<cell>联系人地址</cell>
+					<cell>
+						<textbox id="linkaddress" width="90%"></textbox>
+					</cell>
+				</row>
+				<row visible="false">
+					<cell>联系人电子邮箱</cell>
+					<cell>
+						<textbox id="email"></textbox>
+					</cell>
+					<cell>提供产品</cell>
+					<cell>
+						<textbox id="proname"></textbox>
+					</cell>
+				</row>
+				<row visible="false">
+					<cell>产品原价</cell>
+					<cell>
+						<textbox id="price"></textbox>
+					</cell>
+					<cell>产品折扣价</cell>
+					<cell>
+						<textbox id="disprice"></textbox>
+					</cell>
+				</row>
+				<row visible="false">
+					<cell>产品折扣</cell>
+					<cell>
+						<textbox id="discount"></textbox>
+					</cell>
+					<cell>产品数量</cell>
+					<cell>
+						<textbox id="pronum"></textbox>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center" span="4">
+					<button
+						onClick="@command('add',supname=supname.value,website=website.value,address=address.value,
+		linkname=linkname.value,mobile=mobile.value,phone=phone.value,linkaddress=linkaddress.value,proname=proname.value,price=price.value,
+		disprice=disprice.value,discount=discount.value,pronum=pronum.value,email=email.value,remark=remark.value,items=items.selectedObjects)">
+						提交
+					</button>
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

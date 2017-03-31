@@ -1,0 +1,79 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="委托外地详情" border="normal" width="100%" height="100%"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmCommissionOut.EmCommissionOut_EmSelectListController')">
+		<borderlayout>
+			<north height="40%">
+				<grid emptyMessage="该员工没有委托出数据"
+					model="@load(vm.emoutList)" height="100%">
+					<columns>
+						<column width="40px"></column>
+						<column label="服务费标准" align="center"></column>
+						<column label="当地标准" align="center"></column>
+						<column label="服务费" align="center"></column>
+						<column label="委托地" align="center"></column>
+						<column label="委托机构" align="center"></column>
+						<column label="状态" align="center"></column>
+						<column label="添加人" align="center"></column>
+						<column label="添加时间" align="center"></column>
+					</columns>
+					<template name="model">
+						<row style="cursor:pointer"
+							onClick="@command('detail',
+									src='/EmCommissionOut/EmCommissionOut_Detail1.zul',
+									each=each,include=icd)">
+							<custom-attributes daid="${each.ecou_id }" />
+							<detail open="false" fulfill="onOpen">
+								<include
+									src="/EmCommissionOut/EmCommissionOut_EmSelectDetail.zul"
+									daid="${daid }">
+								</include>
+							</detail>
+							<cell>
+								<label value="@load(each.ecos_name)" />
+							</cell>
+							<cell>
+								<label value="@load(each.soin_title)" />
+							</cell>
+								<cell>
+								<label value="@load(each.wtot_fee)" />
+							</cell>
+							<cell>
+								<label value="@load(each.city)" />
+							</cell>
+							<cell>
+								<label value="@load(each.coab_name)" />
+							</cell>
+							<cell>
+								<div>
+									<label
+										if="${each.statename eq '在职' }" value="@load(each.statename)"
+										style="color:blue" />
+									<label
+										if="${each.statename eq '退回' }" value="@load(each.statename)"
+										style="color:red" />
+									<label
+										if="${each.statename eq '离职' }" value="@load(each.statename)"
+										style="color:#666" />
+								</div>
+							</cell>
+							<cell>
+								<label value="@load(each.ecou_addname)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.ecou_addtime1)" />
+							</cell>
+						</row>
+					</template>
+				</grid>
+			</north>
+			<center>
+				<include id="icd" hflex="1" vflex="1"
+					onCreate="@command('includeinit',include=self)">
+				</include>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

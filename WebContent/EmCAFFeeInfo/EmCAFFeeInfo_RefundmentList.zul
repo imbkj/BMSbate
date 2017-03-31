@@ -1,0 +1,144 @@
+<!--
+	创建人：林少斌
+	创建时间：2014-9-30
+	用途：证件及档案费用退回数据处理列表
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="证件档案费用 -- 退回数据页面" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmCAFFeeInfo.EmCAFFeeInfo_RefundmentListController')"
+		border="normal" sizable="true" height="100%" width="100%">
+		<borderlayout>
+			<north border="0" title="数据查询" collapsible="true"
+				flex="true" open="false">
+				<panel border="1">
+					<panelchildren style="padding:5px;">
+						<grid id="searchGird" width="100%">
+							<rows>
+								<row>
+									<cell width="100px"
+										style="color:#666;">
+										公司名称
+									</cell>
+									<textbox id="coco_company"
+										width="150px" value="@bind(vm.company)" mold="rounded" />
+								</row>
+							</rows>
+							<foot>
+								<footer align="center">
+									<button id="btSearch" label="查询"
+										onClick="@command('search')" />
+								</footer>
+							</foot>
+						</grid>
+					</panelchildren>
+				</panel>
+			</north>
+			<center>
+				<grid model="@load(vm.ecfiList)" id="gridwin"
+					height="100%" width="100%" emptyMessage="暂无数据" mold="paging"
+					pageSize="200">
+					<columns>
+						<column label="客服代表" align="center" />
+						<column label="公司简称" align="center" />
+						<column label="所属月份" align="center" />
+						<column label="员工姓名" align="center" />
+						<column label="类别" align="center" />
+						<column label="付款性质" align="center" />
+						<column label="金额" align="center" />
+						<column label="付款状态" align="center" />
+						<column label="收款日期" align="center" />
+						<column label="退款日期" align="center" />
+						<column label="状态" align="center" />
+						<column label="操作" align="center" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<cell>
+									<label value="@load(each.client)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.shortname)" />
+								</cell>
+								<cell>
+									<label value="@load(each.ownmonth)" />
+								</cell>
+								<cell>
+									<label value="@load(each.name)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ecfi_class)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ecfi_payment_kind)" />
+								</cell>
+								<cell>
+									<label value="@load(each.ecfi_fee)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ecfi_payment_state)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ecfi_rec_date)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ecfi_refundment_date)" />
+								</cell>
+								<cell>
+									<label value="未退款"
+										if="${each.ecfi_if_refundment=='0'}" />
+									<label value="已退款"
+										if="${each.ecfi_if_refundment=='1'}" />
+								</cell>
+								<cell>
+									<label value="退款"
+										style="cursor:pointer;color:#666;"
+										onClick="@command('openUpdate',ecfi_id=each.ecfi_id)" />
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</center>
+			<south>
+				<vlayout width="100%">
+					<panel border="0">
+						<panelchildren>
+							<vbox width="100%">
+								<grid width="100%">
+									<rows>
+										<row>
+											<cell style="color:#666;"
+												align="center">
+												<hlayout>
+													未退款 [
+													<label value="" />
+													]
+												</hlayout>
+											</cell>
+											<cell style="color:#666;"
+												align="center">
+												<hlayout>
+													已退款 [
+													<label value="" />
+													]
+												</hlayout>
+											</cell>
+										</row>
+									</rows>
+								</grid>
+							</vbox>
+						</panelchildren>
+					</panel>
+				</vlayout>
+			</south>
+		</borderlayout>
+	</window>
+</zk>

@@ -1,0 +1,126 @@
+<?page title="体检合作机构信息管理列表" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="体检合作机构信息管理列表" border="normal" vflex="1"
+		apply="org.zkoss.bind.BindComposer" id="win" width="99%" height="99%"
+		viewModel="@id('vm') @init('Controller.EmBodyCheck.Embc_SetupInfoListController')">
+		<style src="/css/style.css"></style>
+		<borderlayout>
+			<north border="0" title="检索" collapsible="true" flex="true"
+				style="padding-bottom:10px;">
+				<grid>
+					<columns visible="false">
+						<column width="120px" />
+						<column />
+						<column width="120px" />
+						<column />
+						<column width="120px" />
+						<column />
+					</columns>
+					<rows>
+						<row>
+							<cell>机构名称</cell>
+							<cell>
+								<textbox id="setup" mold="rounded" />
+							</cell>
+							<cell>联系人</cell>
+							<cell>
+								<textbox id="linkname" mold="rounded" />
+							</cell>
+							<cell>联系电话</cell>
+							<cell>
+								<textbox id="phone" mold="rounded" />
+							</cell>
+						</row>
+						<row>
+							<cell>合作起始日</cell>
+							<cell>
+								<datebox id="begindate" mold="rounded" />
+							</cell>
+							<cell>协议到期日</cell>
+							<cell>
+								<datebox id="enddate" mold="rounded" />
+							</cell>
+							<cell>状态</cell>
+							<cell>
+								<combobox id="states" mold="rounded">
+									<comboitem label="" value="-1" />
+									<comboitem label="生效" value="1" />
+									<comboitem label="取消" value="0" />
+								</combobox>
+							</cell>
+						</row>
+					</rows>
+					<foot>
+						<footer align="center" span="6">
+							<button label="查询"
+								onClick="@command('embcsetupadd',setup=setup.value,linkname=linkname.value,phone=phone.value,
+			begindate=begindate.value,enddate=enddate.value,states=states.selectedItem.value)" />
+						</footer>
+					</foot>
+				</grid>
+			</north>
+			<center>
+				<grid vflex="1" model="@load(vm.setuplist)"
+					emptyMessage="没有查询到数据">
+					<columns>
+						<column label="序号" width="50px" align="center" />
+						<column label="体检机构名称" align="center" />
+						<column label="联系人" align="center" />
+						<column label="联系电话" align="center" />
+						<column label="合作起始日期" align="center" />
+						<column label="协议到期日" align="center" />
+						<column label="状态" align="center" />
+						<column label="备注" align="center" />
+						<column label="操作" align="center" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<label
+									value="${forEachStatus.index+1 }">
+								</label>
+								<label
+									value="@load(each.ebcs_hospital)">
+								</label>
+								<label value="@load(each.ebcs_name)"></label>
+								<label value="@load(each.ebcs_phone)"></label>
+								<label
+									value="@load(each.ebcs_inuredate)">
+								</label>
+								<label
+									value="@load(each.ebcs_indate)">
+								</label>
+								<label
+									value="${each.ebcs_state==1?'生效':'取消' }">
+								</label>
+								<label
+									value="@load(each.ebcs_remark)">
+								</label>
+								<cell align="center">
+									<menubar autodrop="true"
+										width="50px">
+										<menu
+											image="../images/pencil-small.png">
+											<menupopup>
+												<menuitem label="编辑"
+													onClick="@command('openZUL',model=each,url='Embc_SetupUpdate.zul')" />
+												<menuitem label="计算公式"
+													visible="false"
+													onClick="@command('openZUL',model=each,url='Embc_SetupInfo.zul')" />
+												<menuitem label="合同"
+													visible="false"
+													onClick="@command('openZUL',model=each,url='Embc_SetupInfo.zul')" />
+												<menuitem label="新增地址"
+													onClick="@command('openZUL',model=each,url='Embc_SetupAddressAdd.zul')" />
+											</menupopup>
+										</menu>
+									</menubar>
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

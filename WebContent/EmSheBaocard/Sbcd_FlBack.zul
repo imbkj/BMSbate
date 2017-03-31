@@ -1,0 +1,28 @@
+<?page title="退回" contentType="text/html;charset=UTF-8"?>
+<?component name="docDataList" macro-uri="../DocumentsInfo/DocumentsInfo_UpPageList.zul" inline="true"?>
+<zk>
+<window title="退回" border="normal" width="80%" height="80%" closable="true" id="bwin"
+	apply="org.zkoss.bind.BindComposer"
+    viewModel="@id('vm') @init('Controller.EmSheBaocard.Sbcd_FlBackController')"
+>
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell width="80px">退回原因</cell>
+			<cell><textbox width="90%" rows="5" value="@bind(vm.model.sbcd_backcase)"></textbox></cell>
+		</row>
+		<row>
+			<cell width="80px">退回资料</cell>
+			<cell>
+				<!-- 材料内联页 参数：puzu_id：模块页面id， doc_type：员工(g)还是公司(c)，gid：公司数据则插入空白 ，业务表id ，log_url：获取到页面路径的前部分-->
+				<docDataList id="docGrid" puzu_id="${vm.model.sbcd_bankdocid }" doc_type="g"  gid="${vm.model.gid}"
+				tid="${arg.model.sbcd_id }" log_url="/DocumentsInfo/"/>
+			</cell>
+		</row>
+	</rows>
+	<foot>
+		<footer align="center"><button onClick="@command('back',win=bwin,gd=docGrid)">确认退回</button></footer>
+	</foot>
+</grid>
+</window>
+</zk>

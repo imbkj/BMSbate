@@ -1,0 +1,343 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<?component name="docDataList" macro-uri="../DocumentsInfo/DocumentsInfo_AddPageList.zul" inline="true"?>
+<zk>
+	<window title="申办专办员" border="normal" height="100%" width="60%"
+		closable="true" apply="org.zkoss.bind.BindComposer" id="win" vflex="1"
+		hflex="1"
+		viewModel="@id('vm') @init('Controller.CoHousingFund.CoHouse_ZbList1SerController')"
+		onCreate="@command('isHaveZb',addcheck=addcheck,updatecheck=updatecheck,delcheck=delcheck,addremark=addremark,updateremark=updateremark,delremark=delremark,gd=gd,gd1=gd1,gd2=gd2)">
+
+		<grid height="100%" id="outGrid">
+			<rows>
+				<row>
+					<cell>
+						<checkbox label="新增专办员" id="addcheck"
+							checked="true"
+							onCheck="@command('showCell',addRow=addRow,addcheck=self,updateRow=updateRow,delRow=delRow,updatecheck=updatecheck,delcheck=delcheck,gd=gd,gd1=gd1,gd2=gd2,gd4=gr4,checkid=isPwd)" />
+						<checkbox label="专办员信息变更" id="updatecheck"
+							onCheck="@command('showUpdate',addRow=addRow,addcheck=addcheck,updateRow=updateRow,updatecheck=self,delRow=delRow,delcheck=delcheck,gd=gd,gd1=gd1,gd2=gd2,gd4=gr4)" />
+						<checkbox label="注销专办员" id="delcheck"
+							onCheck="@command('showDel',addRow=addRow,addcheck=addcheck,updatecheck=updatecheck,updateRow=updateRow,delRow=delRow,delcheck=self,gd=gd,gd1=gd1,gd2=gd2,gd4=gr4)" />
+					</cell>
+				</row>
+				<row>
+					<grid>
+						<rows>
+							<row>
+								<cell align="center" colspan="3"
+									width="20%">
+									<label value="单位公积金号" />
+
+								</cell>
+								<cell align="left">
+									<label value="@bind(vm.houseid) " />
+								</cell>
+							</row>
+							<row>
+								<cell align="center" colspan="3"
+									width="10%">
+									<label value="单位名称(全称)" />
+
+								</cell>
+								<cell align="left">
+									<label value="@bind(vm.company)  " />
+								</cell>
+							</row>
+						</rows>
+					</grid>
+				</row>
+				<row id="addRow">
+					<cell>
+						<grid>
+							<rows>
+								<!-- 新增专办员信息 -->
+								<row>
+									<cell width="20%">
+										<label value="新增专办员" />
+									</cell>
+								</row>
+								<row>
+									<grid>
+										<rows>
+
+											<row>
+												<cell align="left"
+													width="15%">
+													<label value="操作月份" />
+
+												</cell>
+												<cell align="left">
+													<label
+														value="@bind(vm.currentime)" />
+												</cell>
+											</row>
+											<row>
+												<cell align="left"
+													width="15%">
+													<label value="备注 " />
+												</cell>
+												<cell align="left"
+													context="2">
+													<textbox
+														mold="rounded" id="addremark" value="@bind(vm.addRemark)"
+														width="80%" />
+												</cell>
+											</row>
+											<row>
+												<cell colspan="2">
+													<label
+														value="是否同时申请密钥" />
+													<checkbox id="isPwd"
+														onCheck="@command('isapplypwd',applypwd=applypwd,checkid=self,gd4=gr4)" />
+												</cell>
+											</row>
+										</rows>
+									</grid>
+								</row>
+							</rows>
+						</grid>
+					</cell>
+				</row>
+
+				<!-- 2 -->
+
+				<row id="updateRow" visible="false">
+
+					<cell>
+						<grid>
+							<rows>
+								<row>
+									<cell width="20%">
+										<label value="专办员信息变更" />
+									</cell>
+								</row>
+								<row>
+									<grid>
+										<rows>
+											<row>
+												<cell align="left"
+													colspan="3" width="160px">
+													<label
+														value="选择要变更的专办员" />
+													<label value="*"
+														style="color:red" />
+												</cell>
+												<cell align="left">
+													<combobox
+														mold="rounded" instant="true" readonly="true" id="zbcbox"
+														model="@load(vm.zbListBycohf_id)" width="44%"
+														onSelect="@command('getZbid',zbid=zbcbox.selectedItem.value)">
+														<template
+															name="model">
+															<comboitem
+																label="@bind(each.chfz_numberAndName)"
+																value="@bind(each.chfz_id)" />
+														</template>
+													</combobox>
+												</cell>
+											</row>
+											<row>
+												<cell align="left"
+													width="15%" colspan="3">
+													<label value="操作月份" />
+													<label value="*"
+														style="color:red" />
+												</cell>
+												<cell align="left">
+													<label
+														value="@bind(vm.currentime)" />
+												</cell>
+
+											</row>
+											<row>
+												<cell align="left"
+													width="15%" colspan="3">
+													<label value="备注 " />
+													<label value="*"
+														style="color:red" />
+												</cell>
+												<cell align="left"
+													context="2">
+													<textbox
+														mold="rounded" id="updateremark"
+														value="@bind(vm.updateRemark)" width="80%" />
+												</cell>
+											</row>
+										</rows>
+									</grid>
+								</row>
+							</rows>
+						</grid>
+					</cell>
+				</row>
+
+				<!-- 3 -->
+				<row id="delRow" visible="false">
+
+					<cell>
+						<grid>
+							<rows>
+								<row>
+									<cell width="20%">
+										<label value="注销专办员" />
+									</cell>
+								</row>
+								<row>
+									<grid>
+										<rows>
+											<row>
+												<cell align="left"
+													width="15%">
+													<label value="操作月份" />
+													<label value="*"
+														style="color:red" />
+												</cell>
+												<cell align="left">
+													<label
+														value="@bind(vm.currentime)" />
+												</cell>
+											</row>
+											<row>
+												<cell align="left"
+													width="15%">
+													<label value="备注 " />
+													<label value="*"
+														style="color:red" />
+												</cell>
+												<cell align="left"
+													context="2">
+													<textbox
+														mold="rounded" id="delremark" value="@bind(vm.delRemark)"
+														width="80%" />
+												</cell>
+											</row>
+										</rows>
+									</grid>
+								</row>
+							</rows>
+						</grid>
+					</cell>
+				</row>
+				<row>
+					<groupbox visible="false" id="gr4">
+						<caption label="申报密钥" />
+						<grid id="gd4">
+							<rows>
+								<row>
+									<cell width="100%">
+										<grid>
+											<rows>
+												<row>
+													<cell align="left"
+														width="15%">
+														<label
+															value="密钥办理年限" />
+														<label value="*"
+															style="color:red" />
+													</cell>
+													<cell
+														align="left">
+														<combobox
+															mold="rounded" instant="true" readonly="true"
+															id="addYearlimit" width="20%"
+															onSelect="@command('yearLimit',addLimit=self.selectedItem.value)">
+															<comboitem
+																label="1年" value="1" />
+															<comboitem
+																label="2年" value="2" />
+															<comboitem
+																label="3年" value="3" />
+														</combobox>
+													</cell>
+												</row>
+											</rows>
+										</grid>
+									</cell>
+								</row>
+
+								<row>
+									<grid id="gdgd">
+										<rows>
+											<row>
+												<cell>
+													<label value="提交资料" />
+												</cell>
+											</row>
+											<row>
+												<cell>
+													<!-- 材料内联页 参数：puzu_id：模块页面id， doc_type：员工(g)还是公司(c)，gid：公司数据则插入空白 ，业务表id,log_url：获取到页面路径的前部分，ifSubmit：当前页面已勾选后的材料状态 -->
+													<docDataList
+														id="docGrid4" puzu_id="112" doc_type="c"
+														cid="@bind(vm.cid)" dHeight="200px" dWidth="100%" />
+												</cell>
+											</row>
+										</rows>
+									</grid>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<grid id="gd">
+						<rows>
+							<row>
+								<cell>
+									<label value="提交资料" />
+								</cell>
+							</row>
+							<row>
+								<cell id="addDoc">
+									<!-- 材料内联页 参数：puzu_id：模块页面id， doc_type：员工(g)还是公司(c)，gid：公司数据则插入空白 ，业务表id,log_url：获取到页面路径的前部分，ifSubmit：当前页面已勾选后的材料状态 -->
+									<docDataList id="docGrid"
+										puzu_id="117" doc_type="c" cid="@bind(vm.cid)" dHeight="200px"
+										dWidth="100%" log_url="/DocumentsInfo/"/>
+								</cell>
+							</row>
+						</rows>
+					</grid>
+					<grid id="gd1">
+						<rows>
+							<row>
+								<cell>
+									<label value="提交资料" />
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<!-- 材料内联页 参数：puzu_id：模块页面id， doc_type：员工(g)还是公司(c)，gid：公司数据则插入空白 ，业务表id,log_url：获取到页面路径的前部分，ifSubmit：当前页面已勾选后的材料状态 -->
+									<docDataList id="docGrid1"
+										puzu_id="118" doc_type="c" cid="@bind(vm.cid)" dHeight="200px"
+										dWidth="100%" log_url="/DocumentsInfo/"/>
+								</cell>
+							</row>
+						</rows>
+					</grid>
+					<grid id="gd2">
+						<rows>
+							<row>
+								<cell>
+									<label value="提交资料" />
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<!-- 材料内联页 参数：puzu_id：模块页面id， doc_type：员工(g)还是公司(c)，gid：公司数据则插入空白 ，业务表id,log_url：获取到页面路径的前部分，ifSubmit：当前页面已勾选后的材料状态 -->
+									<docDataList id="docGrid2"
+										puzu_id="119" doc_type="c" cid="@bind(vm.cid)" dHeight="200px"
+										dWidth="100%" log_url="/DocumentsInfo/"/>
+								</cell>
+							</row>
+						</rows>
+					</grid>
+					<button label="提交"
+						onClick="@command('submit',addcheck=addcheck,updatecheck=updatecheck,delcheck=delcheck,gd=docGrid,gd1=docGrid1,gd2=docGrid2,gdgd=docGrid4,win=win,checkid=isPwd)" />
+				</footer>
+			</foot>
+		</grid>
+
+	</window>
+</zk>

@@ -1,0 +1,43 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window id="winbjME" title="系统短信" border="normal" width="600px"
+		height="300px" closable="true" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmHouse.EmHouse_BjReturnController')"
+		onCreate="@command('winName',a=self)">
+		<grid height="85%">
+			<columns>
+				<column width="15%"></column>
+				<column></column>
+			</columns>
+			<rows>
+				<row>
+					可选择模板
+					<combobox readonly="true" instant="true"
+						onChange="@command('temselect')" model="@load(vm.temList)"
+						selectedItem="@bind(vm.temModel)" mold="rounded">
+						<template name="model">
+							<comboitem label="@load(each.pmte_model)" />
+						</template>
+					</combobox>
+				</row>
+				<row if="${vm.dis==true }">
+					退回数据
+					<checkbox id="ckreturn" checked="@bind(vm.ck)" />
+
+				</row>
+				<row>
+					<label value="内容" style="color:#666" />
+					<cell>
+						<textbox rows="5" hflex="1" vflex="1"
+							value="@bind(vm.temModel.syme_content)">
+						</textbox>
+					</cell>
+				</row>
+			</rows>
+		</grid>
+		<hbox pack="center" align="center" width="100%">
+
+			<button label="发送" onClick="@command('send')"></button>
+		</hbox>
+	</window>
+</zk>

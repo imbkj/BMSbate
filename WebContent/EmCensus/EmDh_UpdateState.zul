@@ -1,0 +1,247 @@
+<?page title="调户申请状态更新" contentType="text/html;charset=UTF-8"?>
+<?component name="docDataList" macro-uri="../DocumentsInfo/DocumentsInfo_UpPageList.zul" inline="true"?>
+<zk>
+	<window title="调户申请状态更新" border="normal" width="60%" height="60%"
+		closable="true" id="dhwin" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmCensus.EmDh.Emdh_StateChangeController')">
+		<grid vflex="1">
+			<rows>
+				<row>
+					<cell width="100px">公司编号</cell>
+					<cell>
+						<label value="@load(vm.dhmodel.cid)"></label>
+					</cell>
+					<cell width="100px">公司名称</cell>
+					<cell>
+						<label
+							value="@load(vm.dhmodel.coba_shortname)">
+						</label>
+					</cell>
+				</row>
+				<row>
+					<cell>员工姓名</cell>
+					<cell>
+						<label value="@load(vm.dhmodel.emdh_name)"></label>
+					</cell>
+					<cell>身份证号码</cell>
+					<cell>
+						<label value="@load(vm.dhmodel.emdh_idcard)"></label>
+					</cell>
+				</row>
+				<row visible="${vm.tmodel.wfno_step==6}">
+					<cell>收费对象</cell>
+					<cell>
+						<label value="@load(vm.dhmodel.emdh_feeer)"></label>
+					</cell>
+					<cell>费用收取时间</cell>
+					<cell>
+						<label value="@load(vm.dhmodel.emdh_feetime)"></label>
+					</cell>
+				</row>
+				<row visible="${vm.tmodel.wfno_step==6}">
+					<cell>收费负责人</cell>
+					<cell colspan="3">
+						<label
+							value="@load(vm.dhmodel.emdh_feegeter)">
+						</label>
+					</cell>
+				</row>
+				<row
+					visible="${vm.tmodel.wfno_step==6 or vm.tmodel.wfno_step==12}">
+					<cell>政府费用</cell>
+					<cell>
+						<label value="@load(vm.dhmodel.emdh_govefee)"></label>
+					</cell>
+					<cell>服务费用</cell>
+					<cell>
+						<label
+							value="@load(vm.dhmodel.emdh_servefee)">
+						</label>
+					</cell>
+				</row>
+				<row>
+					<cell>当前状态</cell>
+					<cell colspan="3">
+						<textbox readonly="true"
+							value="${vm.dhmodel.states }">
+						</textbox>
+					</cell>
+				</row>
+				<row visible="${vm.tmodel.wfno_step==4}">
+					<cell>条件审查日期</cell>
+					<cell>
+						<datebox value="${vm.dhmodel.emdh_time3 }"
+							id="time3">
+						</datebox>
+					</cell>
+					<cell>账户类型</cell>
+					<cell>
+						<combobox value="@bind(vm.dhmodel.emdh_zhtype)"
+							id="zhtype" readonly="true">
+							<comboitem label="中智户" />
+							<comboitem label="独立户" />
+						</combobox>
+					</cell>
+				</row>
+				<row visible="${vm.tmodel.wfno_step==5}">
+					<cell>信息预审日期</cell>
+					<cell colspan="3">
+						<datebox value="${vm.dhmodel.emdh_time4 }"
+							id="time4">
+						</datebox>
+					</cell>
+				</row>
+				<row visible="${vm.tmodel.wfno_step==6}">
+					<cell>预审通过日期</cell>
+					<cell colspan="3">
+						<datebox value="${vm.dhmodel.emdh_time5 }"
+							id="time5">
+						</datebox>
+						<label style="color:red;">(*)</label>
+					</cell>
+				</row>
+				<row visible="${vm.tmodel.wfno_step==6}">
+					<cell>收取费用</cell>
+					<cell>
+						<doublebox id="fee"></doublebox>
+					</cell>
+					<cell>费用类型</cell>
+					<cell>
+						<combobox value="@bind(vm.feetype)">
+							<comboitem label=""></comboitem>
+							<comboitem label="政府费用"></comboitem>
+							<comboitem label="服务费用"></comboitem>
+						</combobox>
+					</cell>
+				</row>
+				<row visible="${vm.tmodel.wfno_step==7}">
+					<cell>员工领取材料日期</cell>
+					<cell colspan="3">
+						<datebox value="${vm.dhmodel.emdh_time6 }"
+							id="time6">
+						</datebox>
+					</cell>
+				</row>
+				<row visible="${vm.tmodel.wfno_step==9}">
+					<cell>代理部受理时间</cell>
+					<cell colspan="3">
+						<datebox value="@bind(vm.emdh_proxytime)"></datebox>
+					</cell>
+				</row>
+				<row visible="${vm.tmodel.wfno_step==10}">
+					<cell>上报材料日期</cell>
+					<cell colspan="3">
+						<datebox value="${vm.dhmodel.emdh_time8 }"
+							id="time8">
+						</datebox>
+					</cell>
+				</row>
+				<row visible="${vm.tmodel.wfno_step==11}">
+					<cell>调令下达日期</cell>
+					<cell colspan="3">
+						<datebox value="${vm.dhmodel.emdh_time9 }"
+							id="time9">
+						</datebox>
+					</cell>
+				</row>
+				<row visible="${vm.tmodel.wfno_step==12}">
+					<cell>员工领取调令日期</cell>
+					<cell colspan="3">
+						<datebox value="${vm.dhmodel.emdh_time10 }"
+							id="time10">
+						</datebox>
+					</cell>
+				</row>
+				<row visible="${vm.tmodel.wfno_step==12}">
+					<cell>已收费用</cell>
+					<cell>
+						<textbox value="${vm.dhmodel.emdh_totalfee }"
+							readonly="true" id="haspay">
+						</textbox>
+					</cell>
+					<cell>费用类型</cell>
+					<cell>
+						<textbox value="${vm.dhmodel.emdh_fistfeetype }"
+							readonly="true">
+						</textbox>
+					</cell>
+				</row>
+
+				<row visible="${vm.tmodel.wfno_step==12}">
+					<cell>本次收取费用</cell>
+					<cell>
+						<doublebox id="nowpay"></doublebox>
+					</cell>
+					<cell>费用类型</cell>
+					<cell>
+						<combobox value="@bind(vm.feetype)">
+							<comboitem label=""></comboitem>
+							<comboitem label="政府费用"></comboitem>
+							<comboitem label="服务费用"></comboitem>
+						</combobox>
+					</cell>
+				</row>
+				<row visible="false">
+					<cell>所属月份</cell>
+					<cell colspan="3">
+						<monthbox format="yyyyMM" />
+					</cell>
+				</row>
+				<row visible="${vm.tmodel.wfno_step==4}">
+					<cell>调户方式</cell>
+					<cell colspan="3">
+						<combobox value="@load(vm.dhmodel.emdh_dhtype)"
+							id="dhtype" readonly="true">
+							<comboitem label="调干" />
+							<comboitem label="招调工" />
+							<comboitem label="毕业生接收" />
+						</combobox>
+					</cell>
+				</row>
+				<row
+					visible="false">
+					<cell>是否落户</cell>
+					<cell>
+						<radiogroup id="iflh"
+							onCheck="@command('checkradio',radio=self)">
+							<radio label="是" value="1" />
+							<radio label="否" value="0" selected="true" />
+						</radiogroup>
+					</cell>
+					<cell visible="@load(vm.hjtypevis)">落户类型</cell>
+					<cell visible="@load(vm.hjtypevis)">
+						<combobox value="@bind(vm.hjintype)">
+							<comboitem label="中智集体户"></comboitem>
+							<comboitem label="客户集体户"></comboitem>
+							<comboitem label="自有房产"></comboitem>
+						</combobox>
+					</cell>
+				</row>
+				<row visible="false">
+					<cell>是否答案保管</cell>
+					<cell>
+						<radiogroup id="ifda">
+							<radio label="是" value="1" />
+							<radio label="否" value="0" selected="true" />
+						</radiogroup>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button id="summit"
+						onClick="@command('updatestate',win=dhwin,time3=time3.value,dhtype=dhtype.value,fee=fee.value,
+		time4=time4.value,time5=time5.value,time6=time6.value,time8=time8.value,time9=time9.value,time10=time10.value,iflh=iflh,ifda=ifda,nowpay=nowpay.value)">
+						提交
+					</button>
+					<button onClick="@command('link')">联系员工</button>
+					<button onClick="@command('addRemark')">备注</button>
+					<button
+						onClick="@command('beginagain',win=dhwin)">
+						重置流程
+					</button>
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

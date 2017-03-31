@@ -1,0 +1,246 @@
+<!--
+	创建人：林少斌
+	创建时间：2013-12-20
+	用途：工资报盘数据管理页面
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="工资报盘数据 -- 管理页面" border="normal" width="100%"
+		height="100%" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmSalary.EmSalary_TXTListController')">
+		<borderlayout vflex="1">
+			<north border="0" title="数据查询" collapsible="true"
+				flex="true" open="true">
+				<panel border="1">
+					<panelchildren style="padding:5px;">
+						<grid width="100%">
+							<rows>
+								<row>
+									<cell width="80px"
+										style="color:#666;">
+										发放日期
+									</cell>
+									<cell>
+										<combobox id="txt_date"
+											width="90%" autodrop="true" mold="rounded" readonly="true"
+											model="@load(vm.txtDateList)"
+											selectedItem="@load(vm.nowDate)"
+											onChange="@command('search',txt_date=txt_date,txt_batch=txt_batch,etfi_state=etfi_state,emba_name=emba_name)">
+											<template name="model">
+												<comboitem
+													label="@load(each.etfi_txt_date)" />
+											</template>
+										</combobox>
+									</cell>
+									<cell width="80px"
+										style="color:#666;">
+										发放批次
+									</cell>
+									<cell>
+										<combobox id="txt_batch"
+											width="60%" model="@load(vm.txtBatchList)" autodrop="true"
+											readonly="true"
+											onChange="@command('search',txt_date=txt_date,txt_batch=txt_batch,etfi_state=etfi_state,emba_name=emba_name)"
+											mold="rounded">
+											<template name="model">
+												<comboitem
+													label="第${each.etfi_txt_batch}批"
+													value="${each.etfi_txt_batch}" />
+											</template>
+										</combobox>
+									</cell>
+									<cell width="80px"
+										style="color:#666;">
+										发放状态
+									</cell>
+									<cell>
+										<combobox id="etfi_state"
+											width="60%" autodrop="true" readonly="true"
+											onChange="@command('search',txt_date=txt_date,txt_batch=txt_batch,etfi_state=etfi_state,emba_name=emba_name)"
+											mold="rounded">
+											<comboitem label="全部"
+												value="" />
+											<comboitem label="未报盘"
+												value="0" />
+											<comboitem label="已报盘"
+												value="1" />
+										</combobox>
+									</cell>
+									<cell width="80px"
+										style="color:#666;">
+										姓名
+									</cell>
+									<cell>
+										<textbox id="emba_name" 
+											onBlur="@command('search',txt_date=txt_date,txt_batch=txt_batch,etfi_state=etfi_state,emba_name=emba_name)"
+											onOK="@command('search',txt_date=txt_date,txt_batch=txt_batch,etfi_state=etfi_state,emba_name=emba_name)"
+											mold="rounded" width="60%" />
+									</cell>
+									<cell>
+										<button label="生成报盘文件"
+											visible="@load(vm.chkdate)"
+											onClick="@command('createTXT',txt_date=txt_date,txt_batch=txt_batch,etfi_state=etfi_state,emba_name=emba_name)" />
+									</cell>
+								</row>
+								<row>
+									<cell colspan="9">
+										<vbox>
+											<hbox>
+												<label value="TXT数据共" />
+												<label
+													value="@load(vm.total_count)" style="color:#0000FF" />
+												<label value="笔， 金额合计：" />
+												<label
+													value="@load(vm.total_pay)" style="color:#0000FF" />
+												<label value="元" />
+											</hbox>
+											<hbox>
+												<label value="支付模块数据共" />
+												<label
+													value="@load(vm.total_ep_count)" style="color:#0000FF" />
+												<label value="笔， 金额合计：" />
+												<label
+													value="@load(vm.total_empay)" style="color:#0000FF" />
+												<label value="元" />
+											</hbox>
+											<hbox>
+												<label value="所有数据共" />
+												<label
+													value="@load(vm.all_total_count)" style="color:#0000FF" />
+												<label value="笔， 金额合计：" />
+												<label
+													value="@load(vm.all_total_pay)" style="color:#0000FF" />
+												<label value="元" />
+												<space/>
+												<space/>
+												<label value="今日银行余额：" />
+												<label
+													value="@load(vm.balance)" style="color:#0000FF" />
+												<label value="元，扣除报盘后余额" />
+												<label
+													value="@load(vm.remaining)" style="color:#0000FF" />
+												<label value="元，" />
+											</hbox>
+										</vbox>
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</panelchildren>
+				</panel>
+			</north>
+			<center>
+				<grid width="100%" height="100%" sizedByContent="true"
+					model="@load(vm.dataList)" emptyMessage="无数据">
+					<columns sizable="true">
+						<column label="编号" align="center" width="60px" />
+						<column label="员工账号" align="center" />
+						<column label="员工账户名" align="center"
+							sort="auto(etfi_ba_name)" />
+						<column label="金额" align="center" width="120px"
+							sort="auto(etfi_pay)" />
+						<column label="员工开户银行" align="center" />
+						<column label="用途" align="center" width="80px"
+							sort="auto(usage_type)" />
+						<column label="识别码" align="center" width="60px" />
+						<column label="状态" align="center" width="60px"
+							sort="auto(state)" />
+						<column label="操作" align="center" width="60px" />
+						<column width="30px" align="center" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<cell>
+									<label
+										value="${forEachStatus.index + 1}" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.etfi_bank_account)" />
+								</cell>
+								<cell>
+									<label tooltiptext="@load(each.coba_shortname)"
+										value="@load(each.etfi_ba_name)" />
+								</cell>
+								<cell>
+									<label value="@load(each.etfi_pay)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.etfi_bank)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.usage_type)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.etfi_code)" />
+								</cell>
+								<cell>
+									<label value="@load(each.state)" />
+								</cell>
+								<cell>
+									<menubar autodrop="true"
+										visible="@load(vm.chkdate)">
+										<menu
+											image="../images/pencil-small.png">
+											<menupopup>
+												<menuitem label="删除"
+													onClick="@command('editTXT',url='../EmSalary/EmSalary_TXTDel.zul',etfiM=each,txt_date=txt_date,txt_batch=txt_batch,etfi_state=etfi_state,emba_name=emba_name)" />
+												<menuitem label="修改账户名"
+													onClick="@command('editTXT',url='../EmSalary/EmSalary_TXTUpdate.zul',etfiM=each,txt_date=txt_date,txt_batch=txt_batch,etfi_state=etfi_state,emba_name=emba_name)" />
+											</menupopup>
+										</menu>
+									</menubar>
+								</cell>
+								<cell>
+									<image
+										src="../images/20070708132244928.gif"
+										if="${each.etfi_same_ban+each.etfi_same_ba>=1? true:false }" />
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</center>
+			<south border="0" title="问题数据检测区" collapsible="true"
+				height="30%" flex="true" open="true">
+				<panel border="1">
+					<panelchildren style="padding:5px;">
+						<grid width="100%" height="100%"
+							model="@load(vm.sameDataList)" emptyMessage="无数据">
+							<columns sizable="true">
+								<column label="员工账号" align="center"
+									sort="auto(etfi_bank_account)" />
+								<column label="员工账户名" align="center"
+									sort="auto(etfi_ba_name)" />
+								<column label="公司简称" align="center" />
+								<column label="出错信息" align="center" />
+							</columns>
+							<rows>
+								<template name="model">
+									<row>
+										<label
+											value="@load(each.etfi_bank_account)" />
+										<label
+											value="@load(each.etfi_ba_name)" />
+										<label
+											value="@load(each.coba_shortname)" />
+										<cell>
+											<label value="存在账户名相同的数据；"
+												if="${each.etfi_same_ban==1? true:false }" />
+											<label value="存在账号相同的数据；"
+												if="${each.etfi_same_ba==1? true:false }" />
+										</cell>
+									</row>
+								</template>
+							</rows>
+						</grid>
+					</panelchildren>
+				</panel>
+			</south>
+		</borderlayout>
+	</window>
+</zk>

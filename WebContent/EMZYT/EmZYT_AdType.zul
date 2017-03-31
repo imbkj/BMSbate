@@ -1,0 +1,51 @@
+<!--
+	创建人：林少斌
+	创建时间：2014-4-25
+	用途：委托单调整类型选择
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="win" title="智翼通接口 -- 修改调整单事件" border="normal"
+		width="80%" closable="true" height="50%"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmZYT.EmZYT_AdTypeController')">
+		<grid width="100%">
+			<rows>
+				<row>
+					<cell width="15%">
+						<label value="所属月份" />
+					</cell>
+					<cell>
+						<monthbox id="ownmonth"
+							sclass="datebox-month-only" format="yyyyMM" />
+					</cell>
+				</row>
+				<row>
+					<cell>委托事件</cell>
+					<cell>
+						<combobox id="sclass" readonly="true"
+							model="@load(vm.sclassList)" mold="rounded">
+							<template name="model">
+								<comboitem label="@load(each)" />
+							</template>
+						</combobox>
+					</cell>
+				</row>
+				<row>
+					<cell colspan="2">
+						<label value="已选择" />
+						<label value="@load(vm.listSize)"
+							style="color:red;" />
+						<label value="条调整数据。" />
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button label="提交" id="btSubmit"
+						onClick="@command('submit',win=win,sclass=sclass,ownmonth=ownmonth)" />
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

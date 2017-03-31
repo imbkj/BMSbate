@@ -1,0 +1,133 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="重新提交公司非标" border="normal" width="100%" height="100%"
+		closable="true" apply="org.zkoss.bind.BindComposer" id="addcoWin"
+		viewModel="@id('vm') @init('Controller.CoFinanceManage.Cfma_modAddManualDisController')">
+
+		<grid>
+			<rows>
+				<row>
+					<cell width="8%">
+						<label value="公司名称" />
+					</cell>
+					<cell align="center">
+						<label value="@load(vm.com.coba_company)" />
+					</cell>
+					<cell width="8%">
+						<label value="公司编号" />
+					</cell>
+					<cell align="center">
+						<label value="@load(vm.com.cid)" />
+					</cell>
+					<cell width="8%">
+						<label value="客服" />
+					</cell>
+					<cell align="center">
+						<label value="@load(vm.com.coba_client)" />
+					</cell>
+				</row>
+			</rows>
+		</grid>
+		<grid>
+			<rows>
+				<row if="${vm.m.gid != 0 ? true : flase}">
+					<cell>
+						<label value="员工姓名" />
+					</cell>
+					<cell>
+						<label value="@load(vm.emba_name)" />
+					</cell>
+					<cell>
+						<label value="员工编号" />
+					</cell>
+					<cell>
+						<label value="@load(vm.m.gid)" />
+					</cell>
+				</row>
+				<row>
+					<cell>
+						<label value="所属月份" />
+					</cell>
+					<cell>
+						<combobox model="@load(vm.monthList)"
+							mold="rounded" readonly="true" value="@bind(vm.m.ownmonth)">
+							<template name="model">
+								<comboitem label="@bind(each)" />
+							</template>
+						</combobox>
+					</cell>
+					<cell>
+						<label value="应收费用" />
+					</cell>
+					<cell>
+						<doublebox value="@bind(vm.m.cfmd_Receivable)" />
+					</cell>
+				</row>
+				<row>
+					<cell>
+						<label value="财务科目名称" />
+					</cell>
+					<cell>
+						<combobox readonly="true" mold="rounded"
+							model="@load(vm.copas)" value="@bind(vm.m.cfmd_cpac_name)">
+							<template name="model">
+								<comboitem label="@bind(each)"
+									value="@bind(each)" />
+							</template>
+						</combobox>
+					</cell>
+					<cell>
+						<label value="福利产品名称" />
+					</cell>
+					<cell>
+						<textbox value="@bind(vm.m.cfmd_copr_name)"
+							mold="rounded" />
+					</cell>
+				</row>
+				<row>
+					<cell>
+						<label value="合同选择" />
+					</cell>
+					<cell colspan="3">
+						<combobox readonly="true" id="cocoCom"
+							mold="rounded" value="@bind(vm.m.cfmd_coco_id)"
+							if="${vm.m.gid == 0? true: false }" model="@load(vm.cocos)">
+							<template name="model">
+								<comboitem
+									label="@bind(each.coco_compactid)" value="@bind(each.coco_id)" />
+							</template>
+						</combobox>
+						<textbox readonly="true" mold="rounded"
+							value="@load(vm.compact)" if="${vm.m.gid != 0 ? true: false }" />
+					</cell>
+				</row>
+				<row>
+					<cell>
+						<label value="收费原因" />
+					</cell>
+					<cell colspan="3">
+						<textbox rows="3" mold="rounded"
+							value="@bind(vm.m.cfmd_Reason)" width="98%" />
+					</cell>
+				</row>
+				<row>
+					<cell>
+						<label value="退回原因" />
+					</cell>
+					<cell colspan="3">
+						<textbox rows="3" readonly="true" mold="rounded"
+							value="@bind(vm.m.cfmd_backreason)" width="98%" />
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button label="提交"
+						onClick="@command('commit',addcoWin=addcoWin)" />
+					<button label="删除"
+						onClick="@command('delete',addcoWin=addcoWin)" />
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

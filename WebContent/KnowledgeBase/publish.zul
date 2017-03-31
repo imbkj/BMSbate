@@ -1,0 +1,7 @@
+<window title="Chat" border="normal" apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('vm') @init('Controller.KnowledgeBase.publishController')">
+
+    Say <textbox onOK="@command('post',self=self)" onChange="@command('post',self=self)"/>
+    <separator bar="true"/>
+    <vbox id="inf" onCreate="@command('initinf',self=self)"/>
+</window>

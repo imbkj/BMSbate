@@ -1,0 +1,315 @@
+<?page title="添加收款" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="公司收款列表-添加收款" border="normal" vflex="1"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmFinanceManage.Finance_NewGatheringListssController')">
+		<borderlayout>
+			<north border="0" title="检索" collapsible="true"
+				style="padding-bottom:10px;">
+				<grid>
+					<rows>
+						<row>
+							
+							<cell width="80px">公司名称</cell>
+							<cell>
+								<textbox value="@bind(vm.company)"></textbox>
+									<button
+								onClick="@command('addsk',gd=gd)">
+								添加收款
+							</button>
+							</cell>
+							<cell width="80px">公司编号</cell>
+							<cell>
+								<textbox value="@bind(vm.cid)"></textbox>
+								
+								
+							</cell>
+							<cell width="80px">客服</cell>
+							<cell>
+								<textbox value="@bind(vm.client)"></textbox>
+							</cell>
+							<cell width="80px">所属月份</cell>
+							<cell>
+								<datebox sclass="datebox-month-only"
+									format="yyyyMM" id="ownmonth" value="@bind(vm.ownmonth)" />
+							</cell>
+						</row>
+						<row>
+							<cell width="80px">收款金额</cell>
+							<cell>
+								<decimalbox value="@bind(vm.fee)"></decimalbox>
+							</cell>
+							<cell width="80px">收款时间</cell>
+							<cell>
+								<datebox width="90px"
+									value="@bind(vm.startDate)">
+								</datebox>
+								<label
+									style="margin-right:5px;margin-left:5px;">
+									—
+								</label>
+								<datebox width="90px"
+									value="@bind(vm.endDate)">
+								</datebox>
+							</cell>
+							<cell width="80px">用友入账</cell>
+							<cell>
+								<combobox readonly="true"
+									value="@bind(vm.inyongyou)">
+									<comboitem label="" />
+									<comboitem label="已录用友" />
+									<comboitem label="未录用友" />
+								</combobox>
+							</cell>
+							<cell>备注</cell>
+							<cell><textbox width="80%" value="@bind(vm.remark)"></textbox></cell>
+						</row>
+					</rows>
+					<foot>
+						<footer align="center">
+						<button
+								onClick="@command('search',gd=gd)">
+								查询
+							</button>
+							
+							<button label="打印收款" onClick="@command('printGa')"/>
+							
+							
+							
+						 
+							<label style="margin-left:20px;color:red;">合计：</label>
+							<label value="@load(vm.total)" style="color:#0000FF;"></label>
+						</footer>
+					</foot>
+				</grid>
+			</north>
+			<center>
+				<grid model="@load(vm.list)" id="gd" vflex="1"
+					hflex="1" mold="paging" pageSize="10000" sizedByContent="true">
+					<frozen columns="7"></frozen>
+					<columns>
+						<column align="center"
+							width="80px"><label value="序号"/><checkbox value="@load(each)" onClick="@command('checkAll',gd=gd,ck=self)"></checkbox></column>
+						<column label="公司编号" align="center"
+							width="80px" />
+						<column label="公司名称" align="center" />
+						
+						<column label="所属月份" align="center" />
+						<column label="合计" align="center" />
+						<column label="服务费" align="center" />
+						<column label="财务服务费" align="center"
+							sort="" />
+					    <column label="社保费" align="center" />
+					    	<column label="公积金" align="center" />
+					    <column label="残保金" align="center" />
+					    	<column label="税后工资" align="center" />
+					    	<column label="个调税" align="center" />
+					    <column label="商保费" align="center" />
+					    <column label="书报费" align="center" />
+					    	<column label="活动费" align="center" />
+					    
+						<column label="体检费" align="center" />
+					
+					    
+						<column label="档案保管费" align="center"
+							sort="" />
+						<column label="户口" align="center" />	
+
+								
+						<column label="商务服务费" align="center"
+							sort="" />
+						<column label="招聘服务费" align="center"
+							sort="" />
+						
+					 
+						<column label="社保卡" align="center"
+							sort="" />
+						<column label="其他" align="center" />
+						<column label="税金" align="center" />
+						<column label="收款类型" align="center" />
+						<column label="开票状态" align="center" />
+						<column label="客服" align="center" />
+						<column label="收款时间" align="center" />
+						<column label="备注" align="center" />
+						<column label="添加人" align="center" />
+						<column label="修改" align="center" />
+					
+					</columns>
+					<rows>
+					<template name="model">
+					<row style="border:1px dotted #cad9ea;background-color:#f5fafe;cursor:pointer">
+							<cell onClick="@command('checkCb',cel=self,m=each)"><label value="${forEachStatus.index + 1}" /><checkbox value="@load(each)"></checkbox></cell>
+							<cell onClick="@command('checkCb',cel=self,m=each)"><label value="@load(each.cid)" /></cell>
+							<cell onClick="@command('checkCb',cel=self,m=each)"><label value="@load(each.coba_shortname)"/></cell>
+							
+							<cell onClick="@command('checkCb',cel=self,m=each)" ><label value="@load(each.ownmonth)" /></cell>
+							<cell onClick="@command('selectLabel',cel=self,type='total')"><label value="@load(each.amount.cfmb_TotalPaidIn)" style="color:#0000FF;"/></cell>
+									<cell onClick="@command('selectLabel',cel=self)">
+								<label style="${0>each.amount.serviceFee?'color:orange;':''}"
+									value="${each.amount.serviceFee!='0.00'?each.amount.serviceFee:''}"
+									/>
+							</cell>
+									<cell onClick="@command('selectLabel',cel=self)">
+								<label style="${0>each.amount.finanServiceFee?'color:orange;':''}"
+									value="${each.amount.finanServiceFee!='0.00'?each.amount.finanServiceFee:'' }" />
+							</cell>
+									<cell onClick="@command('selectLabel',cel=self)">
+								<label
+								style="${0>each.amount.sheBaoFee?'color:orange;':''}"
+									value="${each.amount.sheBaoFee!='0.00'?each.amount.sheBaoFee:''}" />
+							</cell>
+								<cell onClick="@command('selectLabel',cel=self)">
+								<label style="${0>each.amount.houseGjj?'color:orange;':''}"
+								 value="${each.amount.houseGjj!='0.00'?each.amount.houseGjj:''}"
+									 />
+							</cell>
+							
+										<cell onClick="@command('selectLabel',cel=self)">
+								<label style="${0>each.amount.deformityFee?'color:orange;':''}"
+									value="${each.amount.deformityFee!='0.00'?each.amount.deformityFee:'' }" />
+							</cell>
+							
+							<cell onClick="@command('selectLabel',cel=self)">
+								<label style="${0>each.amount.salaryOfAfterTax?'color:orange;':''}"
+									value="${each.amount.salaryOfAfterTax!='0.00'?each.amount.salaryOfAfterTax:'' }" />
+							</cell>
+										<cell onClick="@command('selectLabel',cel=self)">
+								<label style="${0>each.amount.oMoveFee?'color:orange;':''}"
+									value="${each.amount.oMoveFee!='0.00'?each.amount.oMoveFee:'' }" />
+							</cell>
+							
+											<cell onClick="@command('selectLabel',cel=self)">
+								<label style="${0>each.amount.businessProtectFee?'color:orange;':''}"
+									value="${each.amount.businessProtectFee!='0.00'?each.amount.businessProtectFee:''}" />
+							</cell>
+									<cell onClick="@command('selectLabel',cel=self)">
+								<label style="${0>each.amount.bookFee?'color:orange;':''}"
+									value="${each.amount.bookFee!='0.00'?each.amount.bookFee:'' }" />
+							</cell>
+						<cell onClick="@command('selectLabel',cel=self)">
+								<label style="${0>each.amount.activityFee?'color:orange;':''}"
+									value="${each.amount.activityFee!='0.00'?each.amount.activityFee:''}" />
+							</cell>
+							
+													<cell onClick="@command('selectLabel',cel=self)">
+								<label style="${0>each.amount.bodyTestFee?'color:orange;':''}"
+									value="${each.amount.bodyTestFee!='0.00'?each.amount.bodyTestFee:''}" />
+							</cell>
+							
+						<cell onClick="@command('selectLabel',cel=self)">
+								<label style="${0>each.amount.fileManageFee?'color:orange;':''}"
+									value="${each.amount.fileManageFee!='0.00'?each.amount.fileManageFee:''}" />
+							</cell>
+					
+								<cell onClick="@command('selectLabel',cel=self)">
+								<label style="${0>each.amount.accountfee?'color:orange;':''}"
+									value="${each.amount.accountfee!='0.00'?each.amount.accountfee:'' }" />
+							</cell>
+						
+					
+				
+				
+					
+							<cell onClick="@command('selectLabel',cel=self)">
+								<label style="${0>each.amount.businessServiceFee?'color:orange;':''}"
+									value="${each.amount.businessServiceFee!='0.00'?each.amount.businessServiceFee:'' }" />
+							</cell>
+							<cell onClick="@command('selectLabel',cel=self)">
+								<label style="${0>each.amount.recruitServiceFee?'color:orange;':''}"
+									value="${each.amount.recruitServiceFee!='0.00'?each.amount.recruitServiceFee:'' }" />
+							</cell>
+				
+						
+							<cell onClick="@command('selectLabel',cel=self)">
+								<label style="${0>each.amount.lasscFee?'color:orange;':''}"
+									value="${each.amount.lasscFee!='0.00'?each.amount.lasscFee:'' }" />
+							</cell>
+							<cell onClick="@command('selectLabel',cel=self)">
+								<label style="${0>each.amount.other?'color:orange;':''}"
+								 value="${each.amount.other!='0.00'?each.amount.other:'' }" />
+							</cell>
+							<cell onClick="@command('selectLabel',cel=self)">
+								<label style="${0>each.amount.taxes?'color:orange;':''}"
+								 value="${each.amount.taxes!='0.00'?each.amount.taxes:'' }" />
+							</cell>
+							<cell><label value="@load(each.cfss_type)"></label></cell>
+							<cell><label value="@load(each.cfss_fpstate)" onClick="@command('editFpstate',m=each)"></label></cell>
+							<cell><label value="@load(each.coba_client)"/></cell>
+							<cell><label value="@load(each.amount.addtime)" /></cell>
+							<cell><label value="@load(each.amount.remark)" /></cell>
+							<cell><label value="@load(each.amount.addname)" /></cell>
+							<cell>
+								<a
+									onClick="@command('editUfid',model=each)">
+									<label>修改</label>
+								</a>
+							</cell>
+						</row>
+					</template>
+					</rows>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+<script><![CDATA[
+        zk.afterLoad("zul.db", function () {
+            // Datebox Calendar Renderer
+            var _Cwgt = {};
+            zk.override(zul.db.CalendarPop.prototype, _Cwgt, {
+                // switch the view after redraw or open as needed
+                redraw: function (out) {
+                    _Cwgt.redraw.apply(this, arguments); //call the original method
+                    this._customChangeView ();
+                },
+                open: function (silent) {
+                    _Cwgt.open.apply(this, arguments); //call the original method
+                    this._customChangeView ();
+                },
+                _customChangeView: function () {
+                    // cannot show month/day
+                    if (jq(this.parent.$n()).hasClass('datebox-year-only')) {
+                        var view = this._view;
+                        // switch to year view as needed
+                        if (view == 'month' || view == 'day')
+                            this._setView("year");
+                    } else if (jq(this.parent.$n()).hasClass('datebox-month-only')) {
+                        // cannot show day view
+                        // switch to month view as needed
+                        if (this._view == 'day')
+                            this._setView("month");
+                    }
+                },
+                // customize the chooseDate function
+                _chooseDate: function (target, val) {
+                    var view = this._view;
+                    if (jq(this.parent.$n()).hasClass('datebox-month-only')
+                        || jq(this.parent.$n()).hasClass('datebox-year-only')) {
+                        // do customize chooseDate if the parent (datebox)
+                        // has specific class
+                        var date = this.getTime(),
+                            year = (view == 'decade' || view == 'year')? val : date.getFullYear(),
+                            month = view == 'month'? val : 0,
+                            date = 1;
+                        // set date value
+                        this._setTime(year, month, 1);
+                        if (view == 'decade') {
+                            // switch to year view if at decade view
+                            this._setView("year");
+                        } else if (jq(this.parent.$n()).hasClass('datebox-month-only')
+                            && view == 'year') {
+                            // switch to month view if at year view and the month view is allowed
+                            this._setView("month");
+                        } else if (jq(this.parent.$n()).hasClass('datebox-month-only') && view == 'month'
+                            || jq(this.parent.$n()).hasClass('datebox-year-only') && view == 'year') {
+                            // close calendar and update value if already at the smallest allowed view
+                            this.close();
+                            this.parent.updateChange_();
+                        }
+                    } else {
+                        _Cwgt._chooseDate.apply(this, arguments); //call the original method
+                    }
+                }
+            });
+        });
+    ]]></script>
+</zk>

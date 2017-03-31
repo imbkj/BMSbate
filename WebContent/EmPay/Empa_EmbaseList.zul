@@ -1,0 +1,226 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="个人支付——员工列表" border="normal" id="paymain"
+		apply="org.zkoss.bind.BindComposer" width="100%" height="100%"
+		viewModel="@id('vm') @init('Controller.EmPay.EmPa_EmbaseListController')">
+		<borderlayout width="100%" height="100%">
+			<north border="0" title="检索" collapsible="true" flex="true"
+				style="padding-bottom:10px;">
+				<grid>
+					<rows>
+						<row>
+							<cell width="80px">公司编号</cell>
+							<cell>
+								<textbox mold="rounded" value="@bind(vm.m.cid)"></textbox>
+							</cell>
+							<cell width="80px">公司名称</cell>
+							<cell>
+								<textbox mold="rounded"
+									value="@bind(vm.m.coba_company)">
+								</textbox>
+							</cell>
+							<cell width="80px">客服</cell>
+							<cell colspan="3">
+								<combobox model="@load(vm.loginlist)" mold="rounded"
+									value="@bind(vm.m.coba_client)">
+									<template name="model">
+										<comboitem label="@load(each)" />
+									</template>
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>员工编号</cell>
+							<cell>
+								<textbox mold="rounded" value="@bind(vm.m.gid)"></textbox>
+							</cell>
+							<cell>员工姓名</cell>
+							<cell>
+								<textbox mold="rounded"
+									value="@bind(vm.m.emba_name)">
+								</textbox>
+							</cell>
+							<cell>身份证号</cell>
+							<cell>
+								<textbox mold="rounded"
+									value="@bind(vm.m.emba_idcard)">
+								</textbox>
+							</cell>
+							<cell>在职状态</cell>
+							<cell>
+								<combobox mold="rounded"
+									value="@bind(vm.m.statename)">
+									<comboitem></comboitem>
+									<comboitem label="离职"></comboitem>
+									<comboitem label="在职"></comboitem>
+									<comboitem label="入职中"></comboitem>
+								</combobox>
+							</cell>
+						</row>
+					</rows>
+					<foot>
+						<footer align="center">
+							<button onClick="@command('search')">
+								查询
+							</button>
+							<button onClick="@command('batchAddPay')">
+								批量支付
+							</button>
+						</footer>
+					</foot>
+				</grid>
+			</north>
+			<center>
+				<grid width="100%" height="100%" model="@load(vm.list)"
+					id="gd" emptyMessage="没有数据" mold="paging" pageSize="500">
+					<columns>
+						<column label="序号" width="60px" align="center" />
+						<column label="公司编号" align="center"
+							width="80px" />
+						<column label="公司名称" align="center" />
+						<column label="员工编号" align="center"
+							width="80px" />
+						<column label="员工姓名" align="center" />
+						<column label="身份证号" align="center" />
+						<column label="客服" align="center" />
+						<column label="状态" align="center" width="60px" />
+						<column label="操作" width="80px" align="center"
+							if="false">
+						</column>
+						<column width="60px" align="center">
+							<checkbox
+								onCheck="@command('checkall',gd=gd,ck=self)">
+							</checkbox>
+						</column>
+
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<cell>
+									<label
+										value="${forEachStatus.index+1 }">
+									</label>
+								</cell>
+								<cell>
+									<label value="@load(each.cid)"></label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.coba_company)">
+									</label>
+								</cell>
+								<cell>
+									<label value="@load(each.gid)"></label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emba_name)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emba_idcard)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.coba_client)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										if="${each.emba_state==0 or each.emba_state==1}"
+										value="${each.emba_state==1?'在职':'离职' }">
+									</label>
+									<label
+										if="${each.emba_state==3 or each.emba_state==5 or each.emba_state==2}"
+										value="入职中" />
+									<label if="${each.emba_state==4}"
+										value="取消入职">
+									</label>
+								</cell>
+								<cell>
+									<checkbox value="@load(each)"
+										checked="@bind(each.check)"
+										onClick="@command('check',a=each)">
+									</checkbox>
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</center>
+			<south title="已选列表" height="40%">
+				<grid id="sgd" width="100%" height="100%"
+					sizedByContent="true" span="true" model="@load(vm.checklist)">
+					<columns>
+						<column label="序号" width="60px" align="center" />
+						<column label="公司编号" align="center"
+							width="80px" />
+						<column label="公司名称" align="center" />
+						<column label="员工编号" align="center"
+							width="80px" />
+						<column label="员工姓名" align="center" />
+						<column label="身份证号" align="center" />
+						<column label="客服" align="center" />
+						<column label="状态" align="center" width="60px" />
+						<column label="操作" width="80px"
+							align="center" />
+
+					</columns>
+					<template name="model">
+						<row>
+							<cell>
+								<label
+									value="${forEachStatus.index+1 }">
+								</label>
+							</cell>
+							<cell>
+								<label value="@load(each.cid)"></label>
+							</cell>
+							<cell>
+								<label
+									value="@load(each.coba_company)">
+								</label>
+							</cell>
+							<cell>
+								<label value="@load(each.gid)"></label>
+							</cell>
+							<cell>
+								<label value="@load(each.emba_name)">
+								</label>
+							</cell>
+							<cell>
+								<label
+									value="@load(each.emba_idcard)">
+								</label>
+							</cell>
+							<cell>
+								<label
+									value="@load(each.coba_client)">
+								</label>
+							</cell>
+							<cell>
+								<label
+									if="${each.emba_state==0 or each.emba_state==1}"
+									value="${each.emba_state==1?'在职':'离职' }">
+								</label>
+								<label
+									if="${each.emba_state==3 or each.emba_state==5 or each.emba_state==2}"
+									value="入职中" />
+								<label if="${each.emba_state==4}"
+									value="取消入职">
+								</label>
+							</cell>
+							<cell>
+								<button label="删除"
+									onClick="@command('del',a=each)" />
+							</cell>
+						</row>
+					</template>
+				</grid>
+			</south>
+		</borderlayout>
+	</window>
+</zk>

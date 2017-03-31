@@ -1,0 +1,75 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="财务结算费用" border="normal" closable="true" width="60%"
+		height="60%" id="win" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.Archives.Archive_FileCheckOutController')">
+		<grid vflex="1">
+			<rows>
+				<row>
+					<cell width="80px">档案费</cell>
+					<cell>
+						<textbox value="@load(vm.models.eada_dnfee)"
+							readonly="true">
+						</textbox>
+					</cell>
+					<cell width="80px">户口费用</cell>
+					<cell>
+						<textbox value="@load(vm.models.eada_hkfee)"
+							readonly="true">
+						</textbox>
+					</cell>
+				</row>
+				<row>
+					<cell width="80px">调出方式</cell>
+					<cell>
+						<textbox
+							value="@load(vm.models.eada_checkoutmode)" readonly="true">
+						</textbox>
+					</cell>
+					<cell width="80px">机要费用</cell>
+					<cell>
+						<textbox value="@load(vm.models.eada_jyfee)"
+							readonly="true">
+						</textbox>
+					</cell>
+				</row>
+				<row>
+					<cell width="80px">结算人</cell>
+					<cell>
+						<textbox value="@load(vm.username)"
+							readonly="true">
+						</textbox>
+					</cell>
+					<cell width="80px">结算时间</cell>
+					<cell>
+						<datebox id="ftime"></datebox>
+					</cell>
+				</row>
+				<row>
+					<cell>备注</cell>
+					<cell colspan="3">
+						<textbox rows="5" width="80%" id="remark"></textbox>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button id="summit"
+						onClick="@command('summitaccount',win=win,ftime=ftime.value,remark=remark.value)">
+						提交
+					</button>
+					<button
+						onClick="@command('addremark',win=win)">
+						备注
+					</button>
+					<button onClick="@command('cwback',win=win)">
+						退回
+					</button>
+					<button onClick="@command('emfinace',win=winfee)">
+						个人收款明细
+					</button>
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

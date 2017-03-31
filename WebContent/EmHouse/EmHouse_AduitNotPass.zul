@@ -1,0 +1,65 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="联网核查不通过人员" id="winAduitNotPass" border="normal"
+		width="100%" height="100%" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmHouse.EmHouse_AduitNotPassController')" closable="true">
+		<borderlayout>
+			<north>
+
+			</north>
+			<center>
+				<grid model="@load(vm.list)">
+					<columns>
+						<column align="center" label="所属月份" />
+						<column align="center" label="账户类型" />
+						<column align="center" label="所属公司" />
+						<column align="center" label="姓名" />
+						<column align="center" label="身份证号码" />
+						<column align="center" label="公积金号" />
+						<column align="center" label="基数" />
+						<column align="center" label="公司比例" />
+						<column align="center" label="个人比例" />
+						<column align="center" label="操作" />
+
+					</columns>
+					<template name="model">
+						<row>
+							<cell>
+								<label value="@load(each.ownmonth)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emhu_single2)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emhu_company)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emhu_name)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emhu_idcard)" />
+							</cell>
+							<cell>
+								<textbox
+									value="@bind(each.emhu_houseid)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emhu_radix)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emhu_cpp)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emhu_opp)" />
+							</cell>
+							<cell>
+								<button label="审核通过"
+									onClick="@command('aduit',a=each)" />
+							</cell>
+						</row>
+					</template>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

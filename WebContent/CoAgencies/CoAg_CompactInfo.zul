@@ -1,0 +1,6 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="合同内容" border="normal" width="80%" height="80%" closable="true" id="cwin">
+<include src="../CoAgencies/CoAg_CompactInfo.jsp?coct_id=${arg.model.coct_id}"></include>
+</window>
+</zk>

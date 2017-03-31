@@ -1,0 +1,70 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="档案调入 - 市内人才" border="normal" id="wincommit"
+		closable="true" width="600px" height="320px"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.Archives.Archive_CommitChargeController')">
+		<scrollview height="100%">
+			<groupbox>
+				<caption>市人才档案费用情况确认</caption>
+				<grid height="100%">
+					<rows>
+						<row>
+							<cell width="120px">是否存在欠费</cell>
+							<cell>
+								<combobox id="cmt" readonly="true">
+									<comboitem label="是"></comboitem>
+									<comboitem label="否"></comboitem>
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>欠费情况</cell>
+							<cell>
+								<hbox>
+									费用从
+									<datebox id="date1" />
+									欠费至
+									<datebox id="date2" />
+									其中
+								</hbox>
+								<hbox>
+									档案费
+									<doublebox id="dbox1" value="0" />
+									元
+								</hbox>
+								<hbox>
+									户口费
+									<doublebox id="dbox2" value="0" />
+									元
+								</hbox>
+								<hbox>
+									滞纳金
+									<doublebox id="dbox3" value="0" />
+									元
+								</hbox>
+							</cell>
+						</row>
+						<row>
+							<cell>备注</cell>
+							<cell>
+								<textbox width="80%" rows="5"
+									value="@bind(vm.eam.eada_remark)">
+								</textbox>
+							</cell>
+						</row>
+					</rows>
+				</grid>
+				<div align="center">
+					<button label="提交"
+						onClick="@command('submit',win=wincommit)" />
+					<button label="查看报价单" onClick="@command('check')" />
+					<button
+						onClick="@command('addremark',win=wincommit)">
+						备注
+					</button>
+				</div>
+			</groupbox>
+		</scrollview>
+	</window>
+</zk>

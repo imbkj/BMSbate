@@ -1,0 +1,34 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<?component name="docDataList" macro-uri="../DocumentsInfo/DocumentsInfo_UpPageList.zul" inline="true"?>
+<zk>
+<window title="交接材料" border="normal" width="80%" height="80%" closable="true" id="win"
+apply="org.zkoss.bind.BindComposer"
+    viewModel="@id('vm') @init('Controller.EmCensus.EmDh.Emdh_StateChangeController')">
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell width="70px">当前状态</cell>
+			<cell><textbox readonly="true" value="${vm.dhmodel.states }"></textbox></cell>
+			<cell width="80px">交齐材料日期</cell>
+			<cell><datebox value="${vm.dhmodel.emdh_time2 }" id="emdh_time"></datebox><label style="color:red;">(*)</label></cell>	
+		</row>
+		<row>
+			<cell width="70px">勾选积分入户初审材料</cell>
+			<cell colspan="3">
+				<docDataList id="docGrid"
+					puzu_id="${vm.dhmodel.emdh_doc }" doc_type="g" gid=""
+					tid="${vm.id}"
+					log_url="../DocumentsInfo/" dHeight="320px" dWidth="100%"/>
+			</cell>
+		</row>
+	</rows>
+	<foot>
+		<footer align="center">
+			<button onClick="@command('submit',docGrid=docGrid,win=win)">暂存</button>
+			<button onClick="@command('submitconfirm',docGrid=docGrid,win=win,emdh_time=emdh_time.value)">确认提交</button>
+			<button onClick="@command('addRemark')">备注</button>
+		</footer>
+	</foot>
+</grid>
+</window>
+</zk>

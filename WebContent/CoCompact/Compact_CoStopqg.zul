@@ -1,0 +1,84 @@
+<!--
+	创建人：林少斌
+	创建时间：2015-1-19
+	用途：报价单项目终止(全国项目部)
+-->
+<?page title="报价单项目" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winCoStop" title="报价单项目" border="normal" closable="true" width="80%" 
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoCompact.Compact_CoStopqgController')">
+		<label value="${arg.cocoM.coli_id}" id="coli_id"
+			visible="false" />
+		<label value="${arg.cocoM.coli_coco_id}" id="coco_id"
+			visible="false" />
+		<grid>
+			<rows>
+				<row>
+					<cell>产品名称：</cell>
+					<cell>
+						<label value="${arg.cocoM.coli_name}" />
+					</cell>
+					<cell>收费单位：</cell>
+					<cell>
+						<label value="${arg.cocoM.coli_cpfc_name}" />
+					</cell>
+				</row>
+
+				<row>
+					<cell>产品类型：</cell>
+					<cell>
+						<label value="${arg.cocoM.coli_pclass}" />
+					</cell>
+					<cell>城市/机构：</cell>
+					<cell>
+						<label value="${arg.cocoM.city}" />
+						<label value=" / " />
+						<label value="${arg.cocoM.coab_name}" />
+					</cell>
+				</row>
+
+				<row>
+					<cell>享受方式：</cell>
+					<cell>
+						<label value="${arg.cocoM.coli_standard}" />
+					</cell>
+					<cell>份数：</cell>
+					<cell>
+						<div if="${each.coli_pclass=='商业保险' }">
+							<label value="$(arg.cocoM.coli_amount)" />
+							份
+						</div>
+					</cell>
+				</row>
+
+				<row>
+					<cell>描述：</cell>
+					<cell colspan="3">
+						<label value="${arg.cocoM.coli_content}" />
+					</cell>
+				</row>
+
+				<row>
+					<cell>收费金额：</cell>
+					<cell>
+						<label id="coli_fee" value="${arg.cocoM.coli_fee}" />
+					</cell>
+					<cell>终止时间：</cell>
+					<cell>
+						<monthbox width="130px" id="st_date"
+							readonly="true" mold="rounded" format="yyyyMM" />
+					</cell>
+				</row>
+
+				<row>
+					<cell colspan="4" align="center">
+					<label style="color:#F00" value="该业务有员工正在使用中，未做停缴操作，请先操作停缴！" visible="false"/>
+						<button label="提交" id="co_stopok" 
+							onClick="@command('co_stopok', w1=winCoStop,coli_id=coli_id,coli_fee=coli_fee,st_date=st_date,cocoid=coco_id)" />
+					</cell>
+				</row>
+			</rows>
+		</grid>
+	</window>
+</zk>

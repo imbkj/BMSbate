@@ -1,0 +1,59 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<grid span="true" mold="paging" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoFinanceManage.Cfma_AllFinanceDetailController')"
+		model="@load(vm.cfmaList)" pageSize="12" emptyMessage="无数据"
+		sizedByContent="true" hflex="1">
+		<columns sizable="true">
+			<column label="所属月份" align="center" sort="auto(ownmonth)" />
+			<column label="人事应收" align="center"
+				sort="auto(cfma_PersonnelReceivable)" />
+			<column label="财务应收" align="center"
+				sort="auto(cfma_FinanceReceivable)" />
+			<column label="总应收" align="center"
+				sort="auto(totalReceivable)" />
+			<column label="总实收" align="center" sort="auto(totalPaidIn)" />
+			<column label="垫付金额" align="center"
+				sort="auto(totalLoanBalance)" />
+			<column label="结转金额" align="center"
+				sort="auto(totalCarryForwardEx)" />
+			<column label="差额" align="center"
+				sort="auto(totalImbalance)" />
+		</columns>
+		<rows>
+			<template name="model">
+				<row>
+					<cell>
+						<label value="@load(each.ownmonth)"
+							onClick="@command('viewMonthlyCompany',ownmonth=each.ownmonth)"
+							style="cursor:pointer;color:#00F;" />
+					</cell>
+					<cell>
+						<label
+							value="@load(each.cfma_PersonnelReceivable)" />
+					</cell>
+					<cell>
+						<label
+							value="@load(each.cfma_FinanceReceivable)" />
+					</cell>
+					<cell>
+						<label value="@load(each.totalReceivable)" />
+					</cell>
+					<cell>
+						<label value="@load(each.totalPaidIn)" />
+					</cell>
+					<cell>
+						<label value="@load(each.totalLoanBalance)" />
+					</cell>
+					<cell>
+						<label value="@load(each.totalCarryForwardEx)" />
+					</cell>
+					<cell>
+						<label value="@load(each.totalImbalance)"
+							style="color:red;" />
+					</cell>
+				</row>
+			</template>
+		</rows>
+	</grid>
+</zk>

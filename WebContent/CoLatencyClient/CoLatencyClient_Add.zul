@@ -1,0 +1,518 @@
+<?page title="新增潜在客户信息" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window border="normal" title="潜在客户信息新增" closable="true" width="98%" id="colawin"
+		apply="org.zkoss.bind.BindComposer,Controller.CoLatencyClient.CoLatencyClient_AddController"
+		viewModel="@id('addclient') @init('Controller.CoLatencyClient.CoLatencyClient_AddController')">
+		<groupbox mold="3d" open="true" title="基本信息"
+			style="margin-top:10px;">
+			<grid>
+				<rows>
+					<row>
+						<cell width="160px">公司名称</cell>
+						<cell>
+							<combobox id="company" width="80%"
+								instant="true"
+								autodrop="true" buttonVisible="false"
+								value="@bind(addclient.companyname)" autocomplete="false">
+								</combobox>
+								<zscript><![CDATA[
+			/*Dictionary.getDictionary() returns a String[] containing the dictionary words*/
+			ListModel dictModel = new SimpleListModel(
+					bll.CoLatencyClient.CoLatencyClient_AddBll.getInfoList(company.getValue()));
+			company.setModel(dictModel);
+]]></zscript>
+							<label style="color:red;">(*)</label>
+						</cell>
+						<cell width="160px">客户类型</cell>
+						<cell>
+							<combobox id="clientstyle"
+								readonly="true">
+								<comboitem label="" />
+								<comboitem label="公司" />
+								<comboitem label="分公司" />
+								<comboitem label="代表处" />
+								<comboitem label="办事处" />
+							</combobox>
+							<label style="color:red;">(*)</label>
+						</cell>
+					</row>
+					<row>
+						<cell>公司网址</cell>
+						<cell>
+							<textbox width="80%" id="website" />
+						</cell>
+						<cell>跟进人</cell>
+						<cell>
+							<combobox id="follower"
+								model="@load(addclient.personList)">
+								<template name="model">
+									<comboitem label="@bind(each)" />
+								</template>
+							</combobox>
+						</cell>
+					</row>
+					<row>
+						<cell>地址</cell>
+						<cell>
+							<textbox width="80%" id="address" />
+							<label style="color:red;">(*)</label>
+						</cell>
+						<cell>国内是否注册</cell>
+						<cell>
+							<combobox id="ifsign" readonly="true">
+								<comboitem label="" value="-1" />
+								<comboitem label="是" value="1" />
+								<comboitem label="否" value="0" />
+							</combobox>
+							<label style="color:red;">(*)</label>
+						</cell>
+					</row>
+					<row>
+						<cell>客户位置</cell>
+						<cell>
+							<combobox id="ClientArea" readonly="true">
+								<comboitem label="" />
+								<comboitem label="罗湖区" />
+								<comboitem label="福田区" />
+								<comboitem label="南山区" />
+								<comboitem label="龙岗区" />
+								<comboitem label="盐田区" />
+								<comboitem label="宝安区" />
+								<comboitem label="光明新区" />
+								<comboitem label="坪山区" />
+								<comboitem label="外地" />
+							</combobox>
+							<label style="color:red;">(*)</label>
+						</cell>
+						<cell>客户企业性质</cell>
+						<cell>
+							<combobox id="kind" readonly="true">
+								<comboitem label="" />
+								<comboitem label="央企或下属企业" />
+								<comboitem label="国企" />
+								<comboitem label="股份制企业" />
+								<comboitem label="民企" />
+								<comboitem label="外企" />
+								<comboitem label="中外合资或合作企业" />
+								<comboitem label="事业单位" />
+								<comboitem label="其他性质" />
+							</combobox>
+							<label style="color:red;">(*)</label>
+						</cell>
+					</row>
+					<row>
+						<cell>企业需求人数</cell>
+						<cell>
+							<combobox id="clientsize" readonly="true">
+								<comboitem label="" />
+								<comboitem label="小型(20人以下)" />
+								<comboitem label="中型(20-50人)" />
+								<comboitem label="大型(50人以上)" />
+							</combobox>
+							<label style="color:red;">(*)</label>
+						</cell>
+						<cell>企业实际人数</cell>
+						<cell>
+							<combobox id="realsize" readonly="true">
+								<comboitem label="" />
+								<comboitem label="小型(20人以下)" />
+								<comboitem label="中型(20-50人)" />
+								<comboitem label="大型(50人以上)" />
+							</combobox>
+						</cell>
+					</row>
+					<row>
+						<cell>所属行业</cell>
+						<cell>
+							<combobox id="trade"
+								model="@load(addclient.trademodel)" readonly="true">
+								<template name="model">
+									<comboitem label="@bind(each.name)" />
+								</template>
+							</combobox>
+							<label style="color:red;">(*)</label>
+						</cell>
+						<cell>客户来源</cell>
+						<cell>
+							<combobox id="clientsource"
+								readonly="true">
+								<comboitem label="" />
+								<comboitem label="主动开发" />
+								<comboitem label="来电来访咨询" />
+								<comboitem label="客户及雇员介绍" />
+								<comboitem label="中智介绍" />
+								<comboitem label="合作伙伴介绍" />
+								<comboitem label="客户业务开拓" />
+								<comboitem label="中智注册" />
+								<comboitem label="公司系统介绍" />
+								<comboitem label="老客户变更"/>
+								<comboitem label="老客户变更"/>
+								
+							</combobox>
+							<label style="color:red;">(*)</label>
+						</cell>
+					</row>
+					
+					<row>
+						<cell>
+							原有服务供应商： 
+						</cell>
+						<cell colspan="3">
+								<combobox id="ssource"
+								 >
+								<comboitem label="" />
+								<comboitem label="前程无忧" />
+								<comboitem label="易才" />
+								<comboitem label="南油外服" />
+								<comboitem label="外企德科" />
+								<comboitem label="鹏劳" />
+								<comboitem label="深劳" />
+								<comboitem label="深圳外服" />
+								<comboitem label="泛亚人力" />
+							 
+								
+							</combobox>
+						</cell>
+					</row>
+					
+					<row>
+						<cell>
+							客户联系记录(
+							<a onClick="addrow()">添加</a>
+							)
+						</cell>
+						<cell colspan="3">
+							<vlayout hflex="1" id="notesvla">
+								<hlayout hflex="1">
+									<hlayout>
+										<datebox id="notes"
+											readonly="true" />
+									</hlayout>
+									<hlayout hflex="1">
+										<textbox id="txtnotes"
+											hflex="1" />
+									</hlayout>
+								</hlayout>
+							</vlayout>
+						</cell>
+					</row>
+					<row>
+						<cell>签约成功率</cell>
+						<cell>
+							<combobox id="slevel" readonly="true">
+								<comboitem value="0" label="" />
+								<comboitem value="5"
+									label="较高(短期签约可能性比较大)" />
+
+								<comboitem value="3" label="一般(可能性一般)" />
+
+								<comboitem value="1" label="较低(可能性较小)" />
+							</combobox>
+							<label style="color:red;">(*)</label>
+						</cell>
+						<cell>所属年份</cell>
+						<cell>
+							<intbox id="ownyear" readonly="true" />
+							<label style="color:red;">(*)</label>
+						</cell>
+					</row>
+					<row>
+						<cell>客户要求服务内容</cell>
+						<cell>
+							<textbox multiline="true" rows="5"
+								width="90%" id="servicecontent" mold="rounded" />
+						</cell>
+						<cell>备注</cell>
+						<cell>
+							<textbox multiline="true" rows="5"
+								width="90%" id="remark" mold="rounded" />
+						</cell>
+					</row>
+				</rows>
+			</grid>
+		</groupbox>
+		<separator />
+		<groupbox mold="3d" open="true" title="客户信誉评定"
+			visible="false">
+			<grid id="gridcredit">
+				<rows id="credit"></rows>
+			</grid>
+		</groupbox>
+		<separator />
+		<groupbox mold="3d" open="true" title="联系人信息">
+			<hlayout>
+				联系人的个数：
+				<spinner id="num" value="1" onChange="addItem()"
+					instant="true" />
+			</hlayout>
+			<listbox id="linkpeop">
+
+				<listitem>
+					<listcell>
+						<grid id="linkinfo">
+							<rows>
+								<row>
+									<cell rowspan="5" width="160px">
+										联系人1
+									</cell>
+									<cell width="100px">联系人姓名</cell>
+									<cell>
+										<textbox id="linkname" />
+									</cell>
+									<cell width="100px">职位</cell>
+									<cell>
+										<textbox id="job" />
+									</cell>
+								</row>
+								<row>
+									<cell>电话号码1</cell>
+									<cell>
+										<textbox id="tel" />
+									</cell>
+									<cell>电话号码2</cell>
+									<cell>
+										<textbox id="mobile" />
+									</cell>
+								</row>
+								<row>
+									<cell>手机号码</cell>
+									<cell>
+										<textbox />
+									</cell>
+									<cell>传真</cell>
+									<cell>
+										<textbox id="fax" />
+									</cell>
+								</row>
+								<row>
+									<cell>电子邮箱1</cell>
+									<cell>
+										<textbox />
+									</cell>
+									<cell>电子邮箱2</cell>
+									<cell>
+										<textbox />
+									</cell>
+								</row>
+								<row>
+									<cell>职责</cell>
+									<cell>
+										<textbox />
+									</cell>
+									<cell>备注</cell>
+									<cell>
+										<textbox width="80%" />
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</listcell>
+				</listitem>
+			</listbox>
+		</groupbox>
+		<separator />
+		<grid>
+			<rows>
+				<row>
+					<cell colspan="4" align="center">
+						<button id="addbtn" label="提交" />
+					</cell>
+				</row>
+			</rows>
+		</grid>
+		<zscript><![CDATA[
+	//declare zscript methods
+	//添加多个联系人
+	void addItem() {
+		if (num.getValue() <= 50) {
+			if (num.getValue() >= 1) {
+				int nu = linkinfo.getRows().getChildren().size();
+				int hu = nu / 5 + 1;
+				int nub = num.getValue() - hu + 1;
+				if (nub > 0) {
+					for (int i = 0; i < nub; i++) {
+						Row newrow1 = new Row();
+						Row newrow2 = new Row();
+						Row newrow3 = new Row();
+						Row newrow4 = new Row();
+						Row newrow5 = new Row();
+
+						Cell cell0 = new Cell();
+						cell0.setRowspan(5);
+						Label lal = new Label("联系人" + hu);
+						lal.setParent(cell0);
+						Cell cell1 = new Cell();
+						Label la1 = new Label("联系人姓名");
+						la1.setParent(cell1);
+						Cell cell2 = new Cell();
+						Cell cell3 = new Cell();
+						Label la3 = new Label("职位");
+						la3.setParent(cell3);
+						Cell cell4 = new Cell();
+						cell0.setParent(newrow1);
+						cell1.setParent(newrow1);
+						cell2.setParent(newrow1);
+						cell3.setParent(newrow1);
+						cell4.setParent(newrow1);
+
+						Cell cell5 = new Cell();
+						Label la5 = new Label("电话号码1");
+						la5.setParent(cell5);
+						Cell cell6 = new Cell();
+						Cell cell7 = new Cell();
+						Label la7 = new Label("电话号码2");
+						la7.setParent(cell7);
+						Cell cell8 = new Cell();
+						cell5.setParent(newrow2);
+						cell6.setParent(newrow2);
+						cell7.setParent(newrow2);
+						cell8.setParent(newrow2);
+
+						Cell celld = new Cell();
+						Label lad = new Label("手机号码");
+						lad.setParent(celld);
+						Cell cellg = new Cell();
+						Cell cellf = new Cell();
+						Label lag = new Label("传真");
+						lag.setParent(cellf);
+						Cell cellj = new Cell();
+
+						celld.setParent(newrow3);
+						cellg.setParent(newrow3);
+						cellf.setParent(newrow3);
+						cellj.setParent(newrow3);
+
+						Cell cell9 = new Cell();
+						Label la9 = new Label("电子邮件1");
+						la9.setParent(cell9);
+						Cell cell10 = new Cell();
+						Cell cell11 = new Cell();
+						Label la11 = new Label("电子邮件1");
+						la11.setParent(cell11);
+						Cell cell12 = new Cell();
+
+						//职责
+						Cell cellzz = new Cell();
+						Label la1zz = new Label("职责");
+						la1zz.setParent(cellzz);
+						Cell cellzt = new Cell();
+
+						//备注
+						Cell cellbz = new Cell();
+						Label la1bz = new Label("备注");
+						la1bz.setParent(cellbz);
+						Cell cellz = new Cell();
+
+						cell9.setParent(newrow4);
+						cell10.setParent(newrow4);
+						cell11.setParent(newrow4);
+						cell12.setParent(newrow4);
+
+						cellzz.setParent(newrow5);
+						cellzt.setParent(newrow5);
+						cellbz.setParent(newrow5);
+						cellz.setParent(newrow5);
+
+						Textbox tx1 = new Textbox();
+						Textbox tx2 = new Textbox();
+						Textbox tx3 = new Textbox();
+						Textbox tx4 = new Textbox();
+						Textbox tx5 = new Textbox();
+						Textbox tx6 = new Textbox();
+						Textbox txnum1 = new Textbox();
+						Textbox txnum2 = new Textbox();
+						Textbox txz = new Textbox();
+						txz.setWidth("80%");
+						Textbox txzz = new Textbox();
+
+						tx1.setParent(cell2);
+						tx2.setParent(cell4);
+						tx3.setParent(cell6);
+						tx4.setParent(cell8);
+						tx5.setParent(cell10);
+						tx6.setParent(cell12);
+						txz.setParent(cellz);
+						txzz.setParent(cellzt);
+						txzz.setParent(cellzt);
+						txnum1.setParent(cellg);
+						txnum2.setParent(cellj);
+						newrow1.setParent(linkinfo.getRows());
+						newrow2.setParent(linkinfo.getRows());
+						newrow3.setParent(linkinfo.getRows());
+						newrow4.setParent(linkinfo.getRows());
+						newrow5.setParent(linkinfo.getRows());
+						hu = hu + 1;
+					}
+				} else {
+					int nub2 = hu - num.getValue() - 1;
+					if (nub2 > 0) {
+						for (int j = nub2 * 5; j > 0; j--) {
+							List r = linkinfo.getRows().getChildren();
+							int y = r.size();
+							if (y >= 0) {
+								Row rw = (Row) r.get(y - 1);
+								linkinfo.getRows().removeChild(rw);
+							}
+						}
+					}
+				}
+			} else {
+				Messagebox.show("联系人个数不能小于1", "提示", Messagebox.OK,
+						Messagebox.INFORMATION);
+				num.setValue(1);
+			}
+		} else {
+			Messagebox.show("联系人个数太多了，不能大于50", "提示", Messagebox.OK,
+					Messagebox.INFORMATION);
+			num.setValue(1);
+		}
+
+	}
+	String isDel() {
+		String str = "";
+		int k = 0;
+		for (int i = linkinfo.getRows().getChildren().size(); i >= 0; i--) {
+			k = k + 1;
+			if (k < 6) {
+				Row ro = (Row) linkinfo.getRows().getChildren().get(i);
+				Cell cel = (Cell) ro.getChildren().get(1);
+				Cell cel2 = (Cell) ro.getChildren().get(3);
+				Textbox tb = (Textbox) cel.getChildren().get(0);
+				Textbox tb2 = (Textbox) cel2.getChildren().get(0);
+				if (tb.getValue() != null || !tb.getValue().equals("")
+						|| tb2.getValue() != null || !tb2.getValue().equals("")) {
+					str = "最后一个联系人已经填写了数据，删除后该联系人数据将会清空";
+					break;
+				}
+			}
+		}
+		return str;
+	}
+	//添加多个联系记录
+	void addrow() {
+		Hlayout hl = new Hlayout();
+		Hlayout h2 = new Hlayout();
+		Hlayout h3 = new Hlayout();
+		h3.setHflex("1");
+		hl.setHflex("1");
+		Datebox datebox = new Datebox();
+		datebox.setReadonly(true);
+		Textbox txtbox = new Textbox();
+		hl.setParent(notesvla);
+		h2.setParent(hl);
+		h3.setParent(hl);
+		datebox.setParent(h2);
+		txtbox.setParent(h3);
+		txtbox.setHflex("1");
+		A rm = new A("删除");
+		rm.addEventListener(Events.ON_CLICK,
+				new org.zkoss.zk.ui.event.EventListener() {
+					public void onEvent(Event event) throws Exception {
+						hl.detach();
+					}
+				});
+		hl.appendChild(rm);
+	}
+]]></zscript>
+	</window>
+</zk>

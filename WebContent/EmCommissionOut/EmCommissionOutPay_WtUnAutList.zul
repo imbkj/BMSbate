@@ -1,0 +1,158 @@
+<?page title="差额列表" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="差额列表" border="normal"
+		apply="org.zkoss.bind.BindComposer" closable="true" width="98%"
+		viewModel="@id('vm') @init('Controller.EmCommissionOut.EmCommissionOutPay_WtUnAutListController')">
+		<grid id="searchGird" width="100%">
+			<rows>
+				<row>
+					<cell width="60px">员工姓名</cell>
+					<cell>
+						<textbox value="" id="name" mold="rounded" />
+					</cell>
+
+					<cell width="60px">员工编号</cell>
+					<cell>
+						<textbox value="" id="gid" mold="rounded" />
+					</cell>
+
+					<cell width="60px">公司名称</cell>
+					<cell>
+						<textbox value="" id="company" mold="rounded" />
+					</cell>
+					<cell>客服</cell>
+					<cell>
+						<combobox mold="rounded"
+							model="@load(vm.clientlist)" width="80px" value="" id="client">
+							<template name="model">
+								<comboitem
+									label="@load(each.coba_client)" />
+							</template>
+						</combobox>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button id="wtSearch" label="查询"
+						onClick="@command('wtaut_search',gid=gid,name=name,client=client,company=company)" />
+				</footer>
+			</foot>
+		</grid>
+		<grid width="100%" id="g1" mold="paging" pageSize="10"
+			model="@load(vm.wt_wtunflist)">
+			<columns>
+			<column align="center" width="30px"></column>
+				<column label="序号" align="center" />
+				<column label="公司编号" align="center" />
+				<column label="公司名称" align="center" />
+				<column label="员工编号" align="center" />
+				<column label="员工姓名" align="center" />
+				<column label="养老差额" align="center" />
+				<column label="失业差额" align="center" />
+				<column label="医疗差额" align="center" />
+				<column label="工伤差额" align="center" />
+				<column label="生育差额" align="center" />
+				<column label="住房差额" align="center" />
+				<column label="其它差额" align="center" />
+				<column label="档案差额" align="center" />
+				<column label="服务费差额" align="center" />
+				<column label="总差额" align="center" />
+				<column label="二次确认状态" align="center" />
+				<column label="操作" align="center" width="30px"></column>
+				<column label="" align="center" width="30px">
+					<checkbox id="cka" width="30px"
+						onClick="@command('checkall',a=self.checked,b=g1)" />
+				</column>
+			</columns>
+			<rows>
+				<template name="model">
+					<row>
+					<custom-attributes
+									gid="${each.gid}"  ownmonth="${each.ownmonth} " cabc_idl="${each.ecop_cabc_id} " />
+								<detail open="false" fulfill="onOpen"
+									visible="${each.ownmonth>0}">
+									<include height="100px"
+										src="EmCommissionOutPay_BaseInfo1.zul" gid="${gid}" sownmonth="${ownmonth}" cabc_idl="${cabc_idl}" />
+								</detail>
+						<cell>
+							<label value="${forEachStatus.index + 1}" />
+						</cell>
+						<cell>
+							<label value="@load(each.cid)" />
+						</cell>
+						<cell>
+							<label value="@load(each.ecop_company)" />
+						</cell>
+						<cell>
+							<label value="@load(each.gid)" />
+						</cell>
+						<cell>
+							<label value="@load(each.ecop_name)" />
+						</cell>
+						<cell>
+
+							<label value="@load(each.ecop_yl_di)" />
+						</cell>
+						<cell>
+							<label value="@load(each.ecop_sye_di)" />
+						</cell>
+						<cell>
+							<label value="@load(each.ecop_jl_di)" />
+						</cell>
+						<cell>
+							<label value="@load(each.ecop_gs_di)" />
+						</cell>
+						<cell>
+							<label value="@load(each.ecop_syu_di)" />
+						</cell>
+						<cell>
+							<label value="@load(each.ecop_house_di)" />
+						</cell>
+						<cell>
+							<label value="@load(each.ecop_other_di)" />
+						</cell>
+						<cell>
+							<label value="@load(each.ecop_file_di)" />
+						</cell>
+						<cell>
+							<label value="@load(each.ecop_fw_di)" />
+						</cell>
+						<cell>
+							<label value="@load(each.ecop_sf_fee)" />
+						</cell>
+						<cell>
+							<label
+								onClick="@command('ec_aut', emco=each)"
+								value="@load(each.ecop_ch_st)" style="cursor:pointer" />
+						</cell>
+						<cell>
+							<menubar autodrop="true">
+								<menu
+									image="../images/pencil-small.png">
+									<menupopup>
+										<menuitem label="备注及反馈"
+											onClick="@command('remark', emco=each)" />
+										<menuitem label="调整委托单"
+											onClick="@command('wt_change', emco=each,gridco=g1)" />
+										<menuitem label="费用添加"
+											onClick="@command('wt_sfeeadd', emco=each,gridco=g1,cabc_id=cabc_id,scid=scid,ownmonth=ownmonth)" />
+									</menupopup>
+								</menu>
+							</menubar>
+						</cell>
+						<cell>
+									<checkbox
+										value="@load(each.ecop_id)"
+										if="${each.ecop_state==1?true:false}" />
+									<label value="已确认"
+										if="${each.ecop_state==2?true:false}" />
+								</cell>
+					</row>
+				</template>
+			</rows>
+
+		</grid>
+
+	</window>
+</zk>

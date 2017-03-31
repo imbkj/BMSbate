@@ -1,0 +1,61 @@
+<?page title="交接申请表格" contentType="text/html;charset=UTF-8"?>
+<?component name="docDataList" macro-uri="../DocumentsInfo/DocumentsInfo_UpPageList.zul" inline="true"?>
+<zk>
+	<window title="财务结算费用" border="normal" width="80%" height="80%"
+		closable="true" id="win" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.Archives.Archive_FilePassController')">
+		<grid vflex="1">
+			<rows>
+				<row>
+					<cell width="90px"></cell>
+					<cell></cell>
+					<cell width="90px"></cell>
+					<cell></cell>
+				</row>
+				<row>
+					<cell>交接表格</cell>
+					<cell colspan="3">
+						<!-- 材料内联页 参数：puzu_id：模块页面id， doc_type：员工(g)还是公司(c)，gid：公司数据则插入空白 ，业务表id ，log_url：获取到页面路径的前部分-->
+						<docDataList id="docGrid"
+							puzu_id="${vm.models.eada_doc}" doc_type="g"
+							gid="${vm.models.gid}" tid="${vm.models.eada_id}"
+							log_url="../DocumentsInfo/" dHeight="200px" dWidth="100%" />
+					</cell>
+				</row>
+				<row>
+					<cell>费用结算日期</cell>
+					<cell colspan="3">
+						<datebox id="paydate"
+							value="${vm.models.eada_paydate }">
+						</datebox>
+					</cell>
+				</row>
+				<row>
+					<cell>收费情况</cell>
+					<cell colspan="3">
+						<textbox id="arrearageinfo"
+							value="${vm.models.eada_arrearageinfo}" width="95%" rows="5">
+						</textbox>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button
+						onClick="@command('summitfee',win=win,paydate=paydate.value,arrearageinfo=arrearageinfo.value)">
+						提交
+					</button>
+					<button onClick="@command('addremark',win=win)">
+						备注
+					</button>
+					<button onClick="@command('cwback',win=win)">
+						退回
+					</button>
+					<button onClick="@command('emfinace',win=winfee)">
+						个人收款明细
+					</button>
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

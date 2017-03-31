@@ -1,0 +1,61 @@
+<?page title="账单业务明细" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<tabbox width="100%" tabscroll="false"
+		apply="Controller.CoFinanceManage.Cfma_BusinessAllListController">
+		<tabs>
+			<tab label="社会保险" if="${$composer.shebaoListSize>0}" />
+			<tab label="住房公积金" if="${$composer.gjjListSize>0}" />
+			<tab label="工资明细" if="${$composer.salaryListSize>0}" />
+			<tab label="个税明细" if="${$composer.emTaxListSize>0}" />
+			<tab label="员工福利及服务费" if="${$composer.emProductListSize>0}" />
+			<tab label="公司福利及服务费" if="${$composer.coProductListSize>0}" />
+			<tab label="委托${each.city}"
+				forEach="${$composer.emCommissionOutList}" />
+			<tab label="公司费用调整"
+				if="${$composer.coDisposableListSize>0}" />
+			<tab label="员工费用调整"
+				if="${$composer.emDisposableListSize>0}" />
+		</tabs>
+		<tabpanels>
+			<tabpanel if="${$composer.shebaoListSize>0}">
+				<include src="../CoFinanceManage/Cfma_SheBaoList.zul"
+					shebaoList="${$composer.shebaoList}" />
+			</tabpanel>
+			<tabpanel if="${$composer.gjjListSize>0}">
+				<include src="../CoFinanceManage/Cfma_GjjList.zul"
+					gjjList="${$composer.gjjList}" />
+			</tabpanel>
+			<tabpanel if="${$composer.salaryListSize>0}">
+				<include src="../CoFinanceManage/Cfma_SalaryList.zul"
+					salaryList="${$composer.salaryList}" />
+			</tabpanel>
+			<tabpanel if="${$composer.emTaxListSize>0}">
+				<include src="../CoFinanceManage/Cfma_TaxList.zul"
+					taxList="${$composer.emTaxList}" />
+			</tabpanel>
+			<tabpanel if="${$composer.emProductListSize>0}">
+				<include src="../CoFinanceManage/Cfma_EmProductList.zul"
+					emProductList="${$composer.emProductList}" />
+			</tabpanel>
+			<tabpanel if="${$composer.coProductListSize>0}">
+				<include src="../CoFinanceManage/Cfma_CoProductList.zul"
+					coProductList="${$composer.coProductList}" />
+			</tabpanel>
+			<tabpanel forEach="${$composer.emCommissionOutList}">
+				<include
+					src="../CoFinanceManage/Cfma_EmCommissionOutList.zul"
+					emCommissionOutModel="${each}" />
+			</tabpanel>
+			<tabpanel if="${$composer.coDisposableListSize>0}">
+				<include
+					src="../CoFinanceManage/Cfma_CoDisposableList.zul"
+					coDisposableList="${$composer.coDisposableList}" />
+			</tabpanel>
+			<tabpanel if="${$composer.emDisposableListSize>0}">
+				<include
+					src="../CoFinanceManage/Cfma_EmDisposableList.zul"
+					emDisposableList="${$composer.emDisposableList}" />
+			</tabpanel>
+		</tabpanels>
+	</tabbox>
+</zk>

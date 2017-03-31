@@ -1,0 +1,212 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="win" title="${arg.city}-${arg.jgname}-年调状态更新" border="normal" width="550px"
+		height="450px" closable="true" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmCommissionOut.EmCommissionOut_ntOperatesController')">
+		<script type="text/javascript" src="/js/Datebox.js"></script>
+		<borderlayout>
+			<center autoscroll="true" border="none">
+				<grid   emptyMessage="暂无数据"
+					vflex="1" >
+				<rows>
+					<row>
+						<cell>
+						<label								 
+									value="项目 " />
+						</cell>
+						<cell>  
+						<label				 
+									value="年调生效时间 " />
+						</cell>
+						<cell  >
+						
+						</cell>
+					</row>
+						<row  visible="@load(vm.ylvisble)">
+							<cell>
+								<label								 
+									value="养老生效时间 " />
+							
+							</cell>
+							<cell>
+								<datebox id="ecyt_ylaotime" onFocus="self.select()"
+									format="yyyy-MM" sclass="datebox-month-only"
+									value="@bind(vm.emcommodel.ecyt_ylaotime)">
+								</datebox>
+							</cell>
+							<cell>
+								<div style="cursor:pointer"
+									onClick="@command('dateAll',date=vm.emcommodel.ecyt_ylaotime,ind=1)">
+									<image src="/images/130.gif">
+									</image>
+								</div>
+							</cell>
+							
+						</row>
+							<row   visible="@load(vm.ecyt_sye)">
+							<cell>
+								<label								 
+									value="失业生效时间" />
+							
+							</cell>
+							<cell>
+								<datebox onFocus="self.select()"
+									format="yyyy-MM" sclass="datebox-month-only"
+									value="@bind(vm.emcommodel.ecyt_syetime)">
+								</datebox>
+							</cell>
+							<cell>
+								<div style="cursor:pointer"
+									onClick="@command('dateAll',date=vm.emcommodel.ecyt_syetime,
+										ind=2)">
+									<image src="/images/130.gif">
+									</image>
+								</div>
+							</cell>
+							
+						</row>
+							<row visible="@bind(vm.ecyt_gshang)" >
+							<cell>
+								<label								 
+									value="工伤生效时间" />
+							
+							</cell>
+							<cell>
+								<datebox onFocus="self.select()"
+									format="yyyy-MM" sclass="datebox-month-only"
+									value="@bind(vm.emcommodel.ecyt_gshangtime)">
+								</datebox>
+							</cell>
+							<cell>
+								<div style="cursor:pointer"
+									onClick="@command('dateAll',date=vm.emcommodel.ecyt_gshangtime,
+										ind=3)">
+									<image src="/images/130.gif">
+									</image>
+								</div>
+							</cell>
+							
+						</row>
+							<row  visible="@load(vm.yliaovisble)">
+							<cell>
+								<label								 
+									value="医疗生效时间" />
+							
+							</cell>
+							<cell>
+								<datebox onFocus="self.select()"
+									format="yyyy-MM" sclass="datebox-month-only"
+									value="@bind(vm.emcommodel.ecyt_yliaotime)">
+								</datebox>
+							</cell>
+							<cell>
+								<div style="cursor:pointer"
+									onClick="@command('dateAll',date=vm.emcommodel.ecyt_yliaotime,
+										ind=4)">
+									<image src="/images/130.gif">
+									</image>
+								</div>
+							</cell>
+							
+						</row>
+							<row  visible="@load(vm.ecyt_syu)">
+							<cell >
+								<label								 
+									value="生育生效时间" />
+							
+							</cell>
+							<cell>
+								<datebox onFocus="self.select()"
+									format="yyyy-MM" sclass="datebox-month-only"
+									value="@bind(vm.emcommodel.ecyt_syutime)">
+								</datebox>
+							</cell>
+							<cell>
+								<div style="cursor:pointer"
+									onClick="@command('dateAll',date=vm.emcommodel.ecyt_syutime,ind=5)">
+									<image src="/images/130.gif">
+									</image>
+								</div>
+							</cell>
+							
+						</row>
+							<row  visible="@load(vm.ecyt_gjj)">
+							<cell>
+								<label								 
+									value="住房生效时间" />
+							
+							</cell>
+							<cell>
+								<datebox onFocus="self.select()"
+									format="yyyy-MM" sclass="datebox-month-only"
+									value="@bind(vm.emcommodel.ecyt_gjjtime)">
+								</datebox>
+							</cell>
+							<cell>
+								<div style="cursor:pointer"
+									onClick="@command('dateAll',date=vm.emcommodel.ecyt_gjjtime,
+										ind=6)">
+									<image src="/images/130.gif">
+									</image>
+								</div>
+							</cell>
+							
+						</row>
+							<row  visible="@load(vm.ecyt_bcgjj)">
+							<cell>
+								<label								 
+									value="补充住房生效时间" />
+							
+							</cell>
+							<cell colspan="2">
+								<datebox onFocus="self.select()"
+									format="yyyy-MM" sclass="datebox-month-only"
+									value="@bind(vm.emcommodel.ecyt_bcgjjtime)">
+								</datebox>
+							</cell>
+<!-- 							<cell> -->
+<!-- 								<div style="cursor:pointer" -->
+<!-- 									onClick="@command('dateAll',date=vm.emcommodel.ecyt_bcgjjtime, -->
+<!-- 										ind=7"> -->
+<!-- 									<image src="/images/130.gif"> -->
+<!-- 									</image> -->
+<!-- 								</div> -->
+<!-- 							</cell> -->
+							
+						</row>
+							<row>
+							<cell>
+								<label								 
+									value="添加时间" />
+							
+							</cell>
+							<cell colspan="2">
+								<datebox onFocus="self.select()"
+									format="yyyy-MM" sclass="datebox-month-only"
+									value="@bind(vm.emcommodel.ecyt_modtime)">
+								</datebox>
+							</cell>
+							 
+							
+						</row>
+						</rows>
+				
+				</grid>
+			</center>
+			<south>
+				<hbox width="100%" align="center" pack="center">
+					<hlayout>
+						<button label="提交" onClick="@command('submit')" />
+						
+						<button label="提交1" onClick="@command('submitnew')" if="${vm.admin==1}" />
+					</hlayout>
+				</hbox>
+				
+				 
+					 
+						
+				 
+			</south>
+		</borderlayout>
+	</window>
+</zk>

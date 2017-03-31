@@ -1,0 +1,57 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="居住证费用明细" border="normal" width="80%" height="80%"
+	apply="org.zkoss.bind.BindComposer" closable="true"
+		viewModel="@id('vm') @init('Controller.EmResidencePermit.Emrp_FeeInfoController')"
+		>
+		<grid vflex="1" model="@load(vm.list)" id="gd">
+			<columns>
+				<column label="序号" width="40px" align="center" />
+				<column label="客服代表" align="center" />
+				<column label="公司名称" align="center" />
+				<column label="姓名" align="center" />
+				<column label="付款性质" align="center" />
+				<column label="费用" align="center" />
+				<column label="付款状态" align="center" />
+			</columns>
+			<rows>
+				<template name="model">
+					<row>
+						<cell>
+							<label
+								value="@load(forEachStatus.index + 1)">
+							</label>
+						</cell>
+						<cell>
+							<label value="@load(each.coba_client)">
+							</label>
+						</cell>
+						<cell>
+							<label value="@load(each.coba_shortname)">
+							</label>
+						</cell>
+						<cell>
+							<label value="@load(each.emba_name)">
+							</label>
+						</cell>
+						<cell>
+							<label value="@load(each.erpi_payment_kind)">
+							</label>
+						</cell>
+						<cell>
+							<label value="@load(each.erpi_fee)">
+							</label>
+						</cell>
+						<cell>
+							<label value="@load(each.erpi_payment_state)">
+							</label>
+						</cell>
+					</row>
+				</template>
+			</rows>
+			<foot>
+				<footer align="center" span="7"><button onClick="@command('Export',gd=gd)">导出</button></footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

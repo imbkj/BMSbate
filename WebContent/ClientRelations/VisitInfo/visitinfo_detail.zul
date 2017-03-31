@@ -1,0 +1,180 @@
+<?page contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="win" title="拜访/回访详情" border="normal" width="700px"
+		height="500px" closable="true"
+		apply="org.zkoss.bind.BindComposer,Controller.ClientRelations.VisitInfo.visitinfodetailController"
+		viewModel="@id('vm') @init('Controller.ClientRelations.VisitInfo.visitinfodetailController')">
+		<div height="100%" style="overflow-y:scroll">
+			<groupbox title="维护成本" mold="3d">
+				<grid style="border:0px">
+					<columns>
+						<column width="20%"></column>
+						<column></column>
+					</columns>
+					<rows>
+						<row>
+							成本类型
+							<cell>
+								<label
+									value="@load(vm.vim1.viin_cost)" />
+							</cell>
+						</row>
+						<row>
+							具体说明
+							<textbox id="costremark" rows="5" hflex="1"
+								value="@load(vm.vim1.viin_costremark)" readonly="true">
+							</textbox>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox title="拜访/回访情况" mold="3d">
+				<grid style="border:0px">
+					<columns>
+						<column width="20%"></column>
+						<column></column>
+					</columns>
+					<rows>
+						<row>
+							被访人员
+							<cell>
+								<label hflex="1"
+									value="@load(vm.vim1.viin_personed)" />
+							</cell>
+						</row>
+						<row>
+							被访人职位
+							<cell>
+								<label id="job" hflex="1"
+									value="@load(vm.vim1.viin_job)" />
+							</cell>
+						</row>
+						<row>
+							本次拜访/回访主要目的
+							<cell>
+								<textbox rows="3" hflex="1"
+									value="@load(vm.vim1.viin_aim)" readonly="true" />
+							</cell>
+						</row>
+						<row>
+							实际拜访/回访日期
+							<cell>
+								<label value="@load(vm.vim1.viin_truetime)" />
+							</cell>
+						</row>
+						<row>
+							纪要
+							<textbox id="summary" rows="5" hflex="1"
+								value="@load(vm.vim1.viin_summary)" readonly="true">
+							</textbox>
+						</row>
+						<row>
+							客户反馈
+							<textbox id="feedback" rows="5" hflex="1"
+								value="@load(vm.vim1.viin_feedback)" readonly="true">
+							</textbox>
+						</row>
+						<row>
+							是否有后续跟进事项
+							<cell>
+								<radiogroup id="iffollow">
+									<radio label="是"
+										selected="@load(vm.vim1.viin_iffolow)">
+									</radio>
+									<radio label="否"
+										selected="@load(not vm.vim1.viin_iffolow)">
+									</radio>
+								</radiogroup>
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox id="gbgj" title="待跟进事项"
+				visible="@load(vm.vim1.viin_iffolow)" mold="3d">
+				<grid style="border:0px">
+					<columns>
+						<column></column>
+					</columns>
+					<rows>
+						<row>
+							<cell>
+								<grid id="gdfollows" style="border:0px"
+									model="@load(vm.followList)">
+									<columns>
+										<column />
+									</columns>
+									<template name="model">
+										<row>
+											<cell>
+												<grid>
+													<columns>
+														<column
+															width="20%" />
+														<column />
+														<column
+															width="20%" />
+														<column />
+													</columns>
+													<rows>
+														<row>
+															<cell
+																colspan="4">
+																<span
+																	style="color:blue">
+																	跟进事项${each.vifo_order
+																	}
+																</span>
+															</cell>
+														</row>
+														<row>
+															待跟进事项
+															<cell
+																colspan="3">
+																<label
+																	value="@load(each.vifo_order)" visible="false" />
+																<label
+																	hflex="1" value="@load(each.vifo_content)" />
+															</cell>
+														</row>
+														<row>
+															待跟进人
+															<cell
+																colspan="3">
+																<label
+																	value="@load(each.vifo_name)" />
+															</cell>
+														</row>
+														<row>
+															涉及跟进部门
+															<cell>
+																<label value="@load(each.deptname)" />
+															</cell>
+															处理时间
+															<cell>
+																<label value="@load(each.vifo_disposetime)" />
+															</cell>
+														</row>
+														<row>
+															处理过程及结果
+															<cell
+																colspan="3">
+																<textbox
+																	rows="5" hflex="1" readonly="true"
+																	value="@load(each.vifo_disposecontent)" />
+															</cell>
+														</row>
+													</rows>
+												</grid>
+											</cell>
+										</row>
+									</template>
+								</grid>
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+		</div>
+	</window>
+</zk>

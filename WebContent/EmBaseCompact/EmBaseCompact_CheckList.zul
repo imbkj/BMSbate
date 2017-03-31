@@ -1,0 +1,69 @@
+<?page title="劳动合同查询" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="雇员合同查询" border="normal" width="100%"
+		apply="org.zkoss.bind.BindComposer" sizable="true" height="800px"
+		viewModel="@id('vm') @init('Controller.EmBaseCompact.EmBaseCompact_MakeListController')">
+		<borderlayout vflex="1">
+			<north border="0" title="数据查询" collapsible="true"
+				flex="true" open="true">
+				<panel border="1">
+					<panelchildren style="padding:5px;">
+						<grid id="searchGird" width="100%">
+							<rows>
+								<row>
+
+									<cell width="100px">员工姓名</cell>
+									<textbox id="role_name"
+										mold="rounded" width="150px" value="" />
+									<cell width="100px">合同到期日</cell>
+									<datebox width="140px" id="ebco_maturity_date"
+										 mold="rounded"
+										format="yyyy-MM-dd" />
+								</row>
+							</rows>
+							<foot>
+								<footer align="center">
+									<button id="btSearch" label="查询"
+										onClick="@command('em_search',tb1=role_name,ebco_maturity_date=ebco_maturity_date)" />
+								</footer>
+							</foot>
+						</grid>
+					</panelchildren>
+				</panel>
+			</north>
+			<center>
+				<grid width="100%" mold="paging" pageSize="19"
+					model="@load(vm.checklist)">
+					<columns>
+						<column label="序号" align="center" width="60px" />
+						<column label="公司名称" align="center" />
+						<column label="员工姓名" align="center" />
+						<column label="合同起始时间" align="center" />
+						<column label="合同到期时间" align="center" />
+						<column label="入职时间" align="center" />
+						<column label="操作类型" align="center" />
+						<column label="预览" align="center" width="100px" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<label
+									value="${forEachStatus.index + 1}" />
+								<label value="@load(each.company)" />
+								<label value="@load(each.name)" />
+								<label
+									value="@load(each.ebco_incept_date)" />
+								<label
+									value="@load(each.ebco_maturity_date)" />
+								<label value="@load(each.ebco_addtime)" />
+								<label value="@load(each.ebco_change)" />
+								<label style="cursor:pointer"
+									onClick="@command('emcompact_check', emco=each)" value="查看" />
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

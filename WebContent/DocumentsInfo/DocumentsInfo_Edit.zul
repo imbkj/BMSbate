@@ -1,0 +1,52 @@
+<!--
+	创建人：张志强
+	创建时间：2013-10-31
+	用途：材料修改页面
+-->
+<?page title="修改材料" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="修改材料" id="wins" border="normal"
+		apply="org.zkoss.bind.BindComposer,Controller.DocumentsInfo.DocumentsInfo_EditController" closable="true">
+		<label value="${arg.myDao.doin_id}" id="doin_id" visible="false"/>
+		<grid width="360px" >
+			<rows>
+				<row>
+							<cell>
+								材料类型:
+								<combobox width="168px" readonly="true"
+									id="doin_type" mold="rounded" value="${arg.myDao.doin_type}">
+									<comboitem label="员工材料" value="1" />
+									<comboitem label="公司材料" value="2" />
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>
+								材料名称:
+								<textbox id="doin_content"
+									width="160px" value="${arg.myDao.doin_content}" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								执行状态:
+								<combobox width="168px" readonly="true"
+									id="doin_state" mold="rounded" value="${arg.myDao.doin_state}">
+									<comboitem label="生效" value="1" />
+									<comboitem label="禁用" value="0" />
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>
+								备注:    
+								<textbox id="doin_remark" width="150px" rows="5" hflex="1" value="${arg.myDao.doin_remark}"/>
+							</cell>
+						</row>
+			</rows>
+		</grid>
+		<toolbar mold="panel" align="center">
+			<button id="submitButton" label="提 交" onClick="" />
+		</toolbar>
+	</window>
+</zk>

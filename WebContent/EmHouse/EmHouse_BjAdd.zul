@@ -1,0 +1,142 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<?component name="docDataList" macro-uri="/DocumentsInfo/DocumentsInfo_AddPageList.zul" inline="true"?>
+<zk>
+	<window title="新增公积金补缴" id="winbjadd" width="800px" height="100%"
+		closable="true" border="normal" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmHouse.EmHouse_BjAddController')"
+		onCreate="@command('winC',a=self)">
+		<scrollview orient="vertical" height="100%">
+			<groupbox title="个人信息" mold="3d">
+				<grid>
+					<columns visible="false">
+						<column width="120px" />
+						<column />
+						<column width="120px" />
+						<column />
+					</columns>
+					<rows>
+						<row>
+							<cell>公司名称</cell>
+							<cell>
+								${vm.ejm.emhb_company}(${vm.ejm.cid})
+							</cell>
+							<cell>姓名</cell>
+							<cell>
+								${vm.ejm.emhb_name}(${vm.ejm.gid})
+
+								<label
+									style="color:blue;cursor:pointer;" value="(联系员工)"
+									onClick="@command('link')" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox title="参保信息" mold="3d">
+				<grid>
+					<rows>
+						<row>
+							<cell width="120px">所属月份</cell>
+							<cell>
+								<combobox id="ownmonth" readonly="true"
+									value="@bind(vm.ejm.ownmonth)" model="@load(vm.ownmonthlist)"
+									mold="rounded">
+									<template name="model">
+										<comboitem label="@load(each)" />
+									</template>
+								</combobox>
+
+							</cell>
+							<cell width="120px">个人公积金号码</cell>
+							<cell>${vm.ejm.emhb_houseid}</cell>
+						</row>
+						<row>
+							<cell>补缴起始月</cell>
+							<cell>
+								<monthbox id="std" format="yyyyMM"
+									constraint="after 20090501" value="@load(vm.d1)"
+									onChange="@command('sumtotal')" readonly="true" mold="rounded" />
+							</cell>
+							<cell>补缴终止月</cell>
+							<cell>
+								<monthbox id="spd" format="yyyyMM"
+									value="@load(vm.d2)" onChange="@command('sumtotal')"
+									readonly="true" mold="rounded" />
+							</cell>
+						</row>
+						<row>
+							<cell>单位交比例</cell>
+							<cell>
+								<label value="@load(vm.ejm.emhb_cpp)" />
+							</cell>
+							<cell>个人交比例</cell>
+							<cell>
+								<label value="@load(vm.ejm.emhb_cpp)" />
+							</cell>
+						</row>
+						<row>
+							<cell>缴存工资基数</cell>
+							<cell>
+								<doublebox id="radix" mold="rounded"
+									value="@bind(vm.ejm.emhb_radix)"
+									onChange="@command('sumtotal')" instant="true" />
+							</cell>
+							<cell>补缴金额</cell>
+							<cell>
+								<doublebox id="total" mold="rounded"
+									value="@bind(vm.ejm.emhb_total)"  />
+							</cell>
+						</row>
+						<row>
+							<cell>补缴原因</cell>
+							<cell>
+								<combobox mold="rounded"
+									value="@bind(vm.ejm.emhb_reason)" readonly="true">
+									<comboitem label="漏缴" />
+									<comboitem label="少缴" />
+									<comboitem label="外省市转入补缴" />
+									<comboitem label="基数调整补缴" />
+									<comboitem label="比例调整补缴" />
+									<comboitem label="缓缴补缴" />
+									<comboitem label="其他" />
+								</combobox>
+							</cell>
+							<cell>收费月份</cell>
+							<cell>
+								<combobox id="feeownmonth"
+									value="@bind(vm.ejm.emhb_feemonth)" readonly="true"
+									model="@load(vm.feeownmonglist)" mold="rounded">
+									<template name="model">
+										<comboitem label="@load(each)" />
+									</template>
+								</combobox>
+							</cell>
+						</row>
+						
+						<row>
+
+							<cell>备注</cell>
+							<cell colspan="3">
+								<textbox width="200px" rows="5"
+									value="@bind(vm.ejm.emhb_remark)" mold="rounded" />
+							</cell>
+						</row>
+						<row>
+							<cell>所交资料</cell>
+							<cell colspan="3">
+								<docDataList id="docGrid" doc_type="g"
+									puzu_id="93" gid="${vm.ejm.gid}" dWidth="100%" />
+							</cell>
+						</row>
+					</rows>
+					<foot>
+						<footer align="center">
+							<button label="提交"
+								onClick="@command('submit')" />
+						</footer>
+					</foot>
+				</grid>
+			</groupbox>
+		</scrollview>
+	</window>
+</zk>

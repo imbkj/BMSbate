@@ -1,0 +1,115 @@
+<?page title="体检合作机构信息" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="体检合作机构信息" border="normal" width="700px"
+		height="400px" closable="true" apply="org.zkoss.bind.BindComposer"
+		id="winupdate"
+		viewModel="@id('vm') @init('Controller.EmBodyCheck.Embc_SetupAddController')">
+		<grid width="100%" height="100%">
+			<columns visible="false">
+				<column width="120px" />
+				<column />
+				<column width="120px" />
+				<column />
+			</columns>
+			<rows>
+				<row>
+					<cell>机构名称</cell>
+					<cell colspan="3">
+						<textbox width="500px" id="setup" mold="rounded"
+							value="${arg.model.ebcs_hospital }">
+						</textbox>
+					</cell>
+				</row>
+				<row>
+					<cell>联系人</cell>
+					<cell>
+						<textbox id="linkname" mold="rounded"
+							value="${arg.model.ebcs_name }">
+						</textbox>
+					</cell>
+					<cell>联系电话</cell>
+					<cell>
+						<textbox id="phone" mold="rounded"
+							value="${arg.model.ebcs_phone }">
+						</textbox>
+					</cell>
+				</row>
+				<row>
+					<cell>合作起始日</cell>
+					<cell>
+						<textbox id="begindate" mold="rounded"
+							value="${arg.model.ebcs_inuredate }">
+						</textbox>
+					</cell>
+					<cell>协议到期日</cell>
+					<cell>
+						<textbox id="enddate" mold="rounded"
+							value="${arg.model.ebcs_indate}">
+						</textbox>
+					</cell>
+				</row>
+				<row>
+					<cell>结算类型</cell>
+					<cell colspan="3">
+						<textbox mold="rounded"
+							value="${arg.model.ebcs_balance}">
+						</textbox>
+					</cell>
+				</row>
+				<row>
+					<cell>机构地址</cell>
+					<cell colspan="3">
+						<grid model="@load(vm.addresslist)" width="100%"
+							height="100%">
+							<rows>
+								<template name="model">
+									<row>
+										<cell>
+											<hbox width="100%">
+												<label value="${forEachStatus.index+1 }."/>
+												<label
+													value="@load(each.ebsa_address)">
+												</label>
+												<label width="50px"
+													style="color:red"
+													value="${each.ebsa_state==1?'(有效)':'取消' }">
+												</label>
+											</hbox>
+											<hbox>
+												<checkbox label="星期一" checked="${each.ebsa_w1==1?true:false }" />
+												<checkbox label="星期二" checked="${each.ebsa_w2==1?true:false }" />
+												<checkbox label="星期三" checked="${each.ebsa_w3==1?true:false }" />
+												<checkbox label="星期四" checked="${each.ebsa_w4==1?true:false }" />
+												<checkbox label="星期五" checked="${each.ebsa_w5==1?true:false }" />
+												<checkbox label="星期六" checked="${each.ebsa_w6==1?true:false }" />
+												<checkbox label="星期日" checked="${each.ebsa_w7==1?true:false }" />
+											</hbox>
+										</cell>
+
+									</row>
+
+								</template>
+							</rows>
+						</grid>
+					</cell>
+				</row>
+				<row>
+					<cell>操作流程</cell>
+					<cell colspan="3">
+						<textbox width="90%" rows="5" id="liu"
+							value="${arg.model.ebcs_flow }">
+						</textbox>
+					</cell>
+				</row>
+				<row>
+					<cell>备注</cell>
+					<cell colspan="3">
+						<textbox width="90%" rows="5" id="remark"
+							value="${arg.model.ebcs_remark }">
+						</textbox>
+					</cell>
+				</row>
+			</rows>
+		</grid>
+	</window>
+</zk>

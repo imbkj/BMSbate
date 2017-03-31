@@ -1,0 +1,117 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="委托出服务费查询" border="normal" width="100%"
+		height="100%" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmCommissionOut.Standard.Wtfee_ListController')">
+		<grid hflex="1" vflex="1" emptyMessage="暂无数据"
+			model="@load(vm.sstListqg)" mold="paging">
+			<columns>
+				<column align="center" width="40px" label="序号"></column>
+				<column align="center" label="公司编号">
+					<separator></separator>
+					<textbox width="50%" mold="rounded" instant="true"
+						value="@bind(vm.cid)" onChange="@command('search')" />
+				</column>
+				<column align="center" label="公司简称">
+					<separator></separator>
+					<textbox width="90%" mold="rounded"
+						value="@bind(vm.shortname)" onChange="@command('search')" />
+				</column>
+				
+				<column align="center" label="地区">
+					<separator></separator>
+					<textbox width="90%" mold="rounded"
+						value="@bind(vm.wtcity)" onChange="@command('search')" />
+				</column>
+				
+				<column align="center" label="服务费名称">
+					<separator></separator>
+					<textbox width="90%" mold="rounded"
+						value="@bind(vm.name)" onChange="@command('search')" />
+				</column>
+				
+				<column align="center" label="服务费金额">
+					<separator></separator>
+					<textbox width="90%" mold="rounded"
+						value="@bind(vm.wtfee)" onChange="@command('search')" />
+				</column>
+				
+				
+<!-- 				<column align="center" label="地区"> -->
+<!-- 					<separator></separator> -->
+<!-- 					<combobox width="90%" mold="rounded" readonly="true" -->
+<!-- 						selectedItem="@bind(vm.ppcModel)" onChange="@command('search')" -->
+<!-- 						model="@load(vm.cityList)" autodrop="true"> -->
+<!-- 						<template name="model"> -->
+<!-- 							<comboitem label="@load(each.name)" /> -->
+<!-- 						</template> -->
+<!-- 					</combobox> -->
+<!-- 				</column> -->
+<!-- 				<column align="center" label="机构"> -->
+<!-- 					<separator></separator> -->
+<!-- 					<combobox width="90%" mold="rounded" instant="true" -->
+<!-- 						readonly="true" value="@bind(vm.coab_name)" -->
+<!-- 						onChange="@command('search')" model="@load(vm.coabList)"> -->
+<!-- 						<template name="model"> -->
+<!-- 							<comboitem label="@load(each.coab_name)" /> -->
+<!-- 						</template> -->
+<!-- 					</combobox> -->
+<!-- 				</column> -->
+<!-- 				<column align="center" label="服务费"></column> -->
+<!-- 				<column align="center" label="档案费"></column> -->
+				<column align="center" label="状态">
+					<separator></separator>
+					<combobox width="90%" mold="rounded" instant="true"
+						readonly="true" value="@bind(vm.statename)"
+						onChange="@command('search')" model="@load(vm.stateList)">
+						<template name="model">
+							<comboitem label="@load(each)" />
+						</template>
+					</combobox>
+					
+				</column>
+				<column align="center" label="添加人"></column>
+				<column align="center" label="添加时间" width="15%">
+					
+				</column>
+<!-- 				<column align="center" label="操作" width="60px"></column> -->
+			</columns>
+			<template name="model">
+				<row>
+					<label value="${forEachStatus.index+1 }" />
+					<label value="@load(each.cid)" />
+					<label value="@load(each.coba_shortname)" />
+					<label value="@load(each.wtss_city)" />
+					<label value="@load(each.wtot_feetitle)" />
+					<label value="@load(each.wtot_fee)" />
+<!-- 					<label value="@load(each.wtss_city)" /> -->
+<!-- 					<label value="@load(each.coab_name)" /> -->
+<!-- 					<label value="@load(each.ecos_service_fee)" /> -->
+<!-- 					<label value="@load(each.ecos_archvie_fee)" /> -->
+					<cell>
+						<label value="@load(each.wtot_statestr)" />
+						
+					</cell>
+					<label value="@load(each.wtot_addname)" />
+					<label value="@load(each.wtot_addtime)" />
+<!-- 					<cell> -->
+<!-- 						<menubar autodrop="true"> -->
+<!-- 							<menu -->
+<!-- 								image="../../images/pencil-small.png"> -->
+<!-- 								<menupopup> -->
+<!-- 									<menuitem label="详情" -->
+<!-- 										onClick="@command('openwin',daid=each.wtot_feeid,cid=each.cid, -->
+<!-- 										url='/EmCommissionOut/Standard/wtfee_Detail.zul')" />  -->
+<!-- 									<menuitem label="重新提交" -->
+<!-- 										if="${each.ecos_state eq 5 or each.ecos_state eq 6 }" -->
+<!-- 										onClick="@command('openwin',daid=each.ecos_id, -->
+<!-- 										url='/EmCommissionOut/Standard/Standard_ReSubmit.zul')" /> -->
+<!-- 								</menupopup> -->
+<!-- 							</menu> -->
+<!-- 						</menubar> -->
+<!-- 					</cell> -->
+				</row>
+			</template>
+		</grid>
+	</window>
+</zk>

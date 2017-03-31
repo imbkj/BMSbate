@@ -1,0 +1,86 @@
+<?page title="更新合同" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="win" title="更新合同" border="normal" width="800px"
+		height="200px" closable="true" apply="org.zkoss.bind.BindComposer"
+		onCreate="@command('opWin',a=self)"
+		viewModel="@id('vm') @init('Controller.CoHousingFund.CoHousingFund_UpdateCompactController')">
+		<borderlayout>
+			<center border="none">
+				<grid>
+					<columns>
+						<column width="15%"></column>
+						<column></column>
+						<column width="15%"></column>
+						<column></column>
+					</columns>
+					<rows>
+						<row>
+							<cell>公司编号</cell>
+							<cell>
+								<label value="@load(vm.cm.cid)" />
+							</cell>
+							<cell>公司名称</cell>
+							<cell>
+								<label value="@load(vm.cm.company)" />
+							</cell>
+						</row>
+						<row>
+							<cell>选择合同</cell>
+							<cell>
+								<combobox id="compact"
+									model="@load(vm.compactList)" readonly="true">
+									<template name="model">
+										<comboitem
+											value="@load(each.coco_id)"
+											label="@load(each.coco_compactid)">
+										</comboitem>
+									</template>
+								</combobox>
+							</cell>
+							<cell>缴款方式</cell>
+							<cell>
+								<hbox>
+									<radiogroup>
+										<radio label="客户存款"
+											onClick="@command('updateCompact',a=1)" />
+										<radio label="中智转款"
+											onClick="@command('updateCompact',a=2)" />
+									</radiogroup>
+								</hbox>
+							</cell>
+						</row>
+						<row>
+							<cell>公积金单位编号</cell>
+							<cell>
+								<label
+									value="@load(vm.cm.coco_houseid)" />
+							</cell>
+							<cell>缴交比例</cell>
+							<cell>
+								<label value="@load(vm.cm.coco_cpp)" />
+							</cell>
+						</row>
+						<row>
+							<cell>托收账户开户银行</cell>
+							<cell>
+								<label
+									value="@load(vm.cm.coco_housebank)" />
+
+							</cell>
+							<cell>托收账户银行帐号</cell>
+							<cell>
+								<label
+									value="@load(vm.cm.coco_houseacc)" />
+							</cell>
+						</row>
+					</rows>
+					<foot>
+						<footer span="4" align="center">
+							<button label="提交" onClick="@command('submit')" />
+						</footer>
+					</foot>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

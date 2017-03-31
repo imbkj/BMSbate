@@ -1,0 +1,164 @@
+<?page title="劳动合同模板上传" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winDocCompany" title="公司合同模板上传" border="normal"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmBaseCompact.EmBaseCompact_UploadController')"
+		width="95%" height="560px">
+		<label value="1234" id="cid" visible="false" />
+		<groupbox title="版本信息" mold="3d">
+			<div
+				style="width:100%;height:300px;overflow-y:scroll;overflow-x:hidden;border:1px solid #bcbdbf;">
+				<grid width="100%" id="g1"
+					model="@load(vm.coverlist)">
+					<columns>
+						<column label="序号" align="center" width="60px" />
+						<column label="上传时间" align="center" />
+						<column label="上传人" align="center" >
+						<separator></separator>
+						<textbox id="ch_name" value=""  mold="rounded" width="120px"  onChange="@command('check_list', ch_name=ch_name,ch_class=ch_class,ch_type=ch_type,ch_state=ch_state)"/>
+						</column>
+						<column label="版本号" align="center">
+						<separator></separator>
+						<textbox id="ch_class" value=""  mold="rounded" width="120px" onChange="@command('check_list', ch_name=ch_name,ch_class=ch_class,ch_type=ch_type,ch_state=ch_state)"/>
+						</column>
+						<column label="合同类型" align="center" >
+						<separator></separator>
+						<combobox  mold="rounded"   id="ch_type" 
+								width="120px" readonly="true"
+								value=""  onChange="@command('check_list', ch_name=ch_name,ch_class=ch_class,ch_type=ch_type,ch_state=ch_state)">
+								<comboitem label="" value=""></comboitem>
+								<comboitem label="CS-1-薪资个税代理类" value="CS-1-薪资个税代理类"></comboitem>
+								<comboitem label="CS-2-综合业务类" value="CS-2-综合业务类"></comboitem>
+								<comboitem label="CS-3-费用报销类" value="CS-3-费用报销类"></comboitem>
+								<comboitem label="DH-调户合同" value="DH-调户合同"></comboitem>
+								<comboitem label="FS-2-无机构派遣" value="FS-2-无机构派遣"></comboitem>
+								<comboitem label="FS-2-一般员工派遣" value="FS-2-一般员工派遣"></comboitem>
+								<comboitem label="FS-4-实习生派遣" value="FS-4-实习生派遣"></comboitem>
+								<comboitem label="FS-4-退休人员派遣" value="FS-4-退休人员派遣"></comboitem>
+								<comboitem label="FS-大库合同" value="FS-大库合同"></comboitem>
+								<comboitem label="FS-独立户合同" value="FS-独立户合同"></comboitem>
+								<comboitem label="FW-法务合同" value="FW-法务合同"></comboitem>
+								<comboitem label="GG-广告合同" value="GG-广告合同"></comboitem>
+								<comboitem label="ST-受托合同" value="ST-受托合同"></comboitem>
+								<comboitem label="SW-商务" value="SW-商务"></comboitem>
+								<comboitem label="WB-岗位外包" value="WB-岗位外包"></comboitem>
+								<comboitem label="WB-业务外包" value="WB-业务外包"></comboitem>
+								<comboitem label="WS-外事合同" value="WS-外事合同"></comboitem>
+								<comboitem label="WT-委托合同" value="WT-委托合同"></comboitem>
+								<comboitem label="ZP-招聘合同" value="ZP-招聘合同"></comboitem>
+							</combobox>
+						</column>
+						<column label="执行状态" align="center" >
+						<separator></separator>
+						<combobox  mold="rounded"   id="ch_state" 
+								width="120px" readonly="true"
+								value=""  onChange="@command('check_list', ch_name=ch_name,ch_class=ch_class,ch_type=ch_type,ch_state=ch_state)">
+								<comboitem label="执行中" value="执行中"></comboitem>
+								<comboitem label="历史" value="历史"></comboitem>
+							</combobox>
+						</column>
+						<column label="操作" align="center" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<cell>
+									<label
+										value="${forEachStatus.index + 1}" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ebco_addtime)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ebco_addname)" />
+								</cell>
+								<cell>
+									<label value="@load(each.name)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ebco_term)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ebco_state)" />
+								</cell>
+								<cell>
+									<label style="cursor:pointer"
+										onClick="@command('vercompact_check', emco=each)"
+										value="查看合同" />
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</div>
+		</groupbox>
+		<groupbox title="版本上传" mold="3d" height="180px">
+			<grid width="100%">
+				<rows>
+					<row>
+						<cell align="right" width="80px">
+							<label value="版本号：" />
+						</cell>
+						<cell width="100%">
+							<textbox id="emcompact_temp"
+								value="@load(vm.covername)" width="150px" mold="rounded" />
+						</cell>
+					</row>
+					<row>
+						<cell align="right" width="80px">
+							<label value="合同类型：" />
+						</cell>
+						<cell width="100%">
+							<combobox id="coco_type" mold="rounded"
+								width="120px" readonly="true"
+								value="请选择">
+								<comboitem label="CS-1-薪资个税代理类" value="CS-1-薪资个税代理类"></comboitem>
+								<comboitem label="CS-2-综合业务类" value="CS-2-综合业务类"></comboitem>
+								<comboitem label="CS-3-费用报销类" value="CS-3-费用报销类"></comboitem>
+								<comboitem label="DH-调户合同" value="DH-调户合同"></comboitem>
+								<comboitem label="FS-2-无机构派遣" value="FS-2-无机构派遣"></comboitem>
+								<comboitem label="FS-2-一般员工派遣" value="FS-2-一般员工派遣"></comboitem>
+								<comboitem label="FS-4-实习生派遣" value="FS-4-实习生派遣"></comboitem>
+								<comboitem label="FS-4-退休人员派遣" value="FS-4-退休人员派遣"></comboitem>
+								<comboitem label="FS-大库合同" value="FS-大库合同"></comboitem>
+								<comboitem label="FS-独立户合同" value="FS-独立户合同"></comboitem>
+								<comboitem label="FW-法务合同" value="FW-法务合同"></comboitem>
+								<comboitem label="GG-广告合同" value="GG-广告合同"></comboitem>
+								<comboitem label="ST-受托合同" value="ST-受托合同"></comboitem>
+								<comboitem label="SW-商务" value="SW-商务"></comboitem>
+								<comboitem label="WB-岗位外包" value="WB-岗位外包"></comboitem>
+								<comboitem label="WB-业务外包" value="WB-业务外包"></comboitem>
+								<comboitem label="WS-外事合同" value="WS-外事合同"></comboitem>
+								<comboitem label="WT-委托合同" value="WT-委托合同"></comboitem>
+								<comboitem label="ZP-招聘合同" value="ZP-招聘合同"></comboitem>
+							</combobox>
+							<label value="模板下载" onClick="@command('temp_down',coco_type=coco_type)" />
+						</cell>
+					</row>
+					<row>
+						<cell align="right" width="80px">
+							<label value="文件目录：" />
+						</cell>
+						<cell width="100%">
+							<textbox mold="rounded" rows="1"
+								readonly="true" value="@load(vm.filename)" />
+							<button label="浏览..."
+								upload="true,multiple=true" onUpload="@command('browse')" />
+								
+						</cell>
+					</row>
+				</rows>
+				<foot>
+					<footer align="center">
+						<button label="提交" id="btSubmit"
+							onClick="@command('cover_upload',emcompact_temp=emcompact_temp,cid=cid,coco_type=coco_type)" />
+					</footer>
+				</foot>
+			</grid>
+		</groupbox>
+	</window>
+</zk>

@@ -1,0 +1,198 @@
+<!--
+	创建人：林少斌
+	创建时间：2014-10-21
+	用途：新增算法内容页面(单个工资项目)
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window id="winForDataAdd" title="薪酬管理 -- 算法内容新增页面" border="normal" width="95%"
+		height="95%" closable="true" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmSalary.EmSalary_ForDataSAddController')">
+		<div align="center" width="99%" height="90%"
+			style="overflow-y:scroll;overflow-x:hidden;">
+			<tablelayout columns="3">
+				<tablechildren colspan="3">
+					<groupbox>
+						<caption label="公式内容" />
+						<grid>
+							<rows>
+								<row>
+									<cell align="left" width="15%">
+										<label value="工资项目：" />
+									</cell>
+									<cell align="left">
+										<textbox id="csii_item_name" mold="rounded" value="${arg.csiiM.csii_item_name}" readonly="true" />
+									</cell>
+								</row>
+								<row>
+									<cell align="left">
+										<label value="算法内容：" />
+									</cell>
+									<cell align="left">
+										<textbox id="cfda_t_formula"
+											width="50%" rows="4" cols="12" mold="rounded" readonly="true"
+											value="@load(vm.t_formula)"
+											onFocus="@command('changeFocus',of='f',tbox=cfda_t_formula,obox=cfda_t_range)"/>
+									</cell>
+								</row>
+								<row>
+									<cell align="left">
+										<label value="使用范围：" />
+									</cell>
+									<cell align="left">
+										<textbox id="cfda_t_range"
+											width="50%" rows="4" cols="12" mold="rounded" readonly="true"
+											value="@load(vm.t_range)"
+											onFocus="@command('changeFocus',of='r',tbox=cfda_t_range,obox=cfda_t_formula)" />
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+				</tablechildren>
+				<tablechildren width="40%">
+					<groupbox>
+						<caption label="工资项目" />
+						<grid width="100%">
+							<rows>
+								<row>
+									<cell>
+										<listbox id="itemList"
+											width="100%" height="200px" emptyMessage="无数据"
+											model="@load(vm.itemList)">
+											<listhead>
+												<listheader
+													label="项目名称" />
+											</listhead>
+											<template name="model">
+												<listitem>
+													<listcell
+														onDoubleClick="@command('calculator',f=each.csii_col,t=each.item_name,type=1)">
+														<label
+															value="@load(each.csii_item_name)" />
+													</listcell>
+												</listitem>
+											</template>
+										</listbox>
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+				</tablechildren>
+				<tablechildren width="30%">
+					<groupbox height="240px">
+						<caption label="运算符号" />
+						<grid width="100%">
+							<rows>
+								<row>
+									<cell>
+										<hbox>
+											<button label="1"
+												onClick="@command('calculator',f='1',t='1',type=2)" width="40px" />
+											<button label="2"
+												onClick="@command('calculator',f='2',t='2',type=2)" width="40px" />
+											<button label="3"
+												onClick="@command('calculator',f='3',t='3',type=2)" width="40px" />
+											<button label="4"
+												onClick="@command('calculator',f='4',t='4',type=2)" width="40px" />
+										</hbox>
+										<hbox>
+											<button label="5"
+												onClick="@command('calculator',f='5',t='5',type=2)" width="40px" />
+											<button label="6"
+												onClick="@command('calculator',f='6',t='6',type=2)" width="40px" />
+											<button label="7"
+												onClick="@command('calculator',f='7',t='7',type=2)" width="40px" />
+											<button label="8"
+												onClick="@command('calculator',f='8',t='8',type=2)" width="40px" />
+										</hbox>
+										<hbox>
+											<button label="9"
+												onClick="@command('calculator',f='9',t='9',type=2)" width="40px" />
+											<button label="0"
+												onClick="@command('calculator',f='0',t='0',type=2)" width="40px" />
+											<button label="+"
+												onClick="@command('calculator',f=' + ',t=' + ',type=2)" width="40px" />
+											<button label="-"
+												onClick="@command('calculator',f=' - ',t=' - ',type=2)" width="40px" />
+										</hbox>
+										<hbox>
+											<button label="*"
+												onClick="@command('calculator',f=' * ',t=' * ',type=2)" width="40px" />
+											<button label="/"
+												onClick="@command('calculator',f=' / ',t=' / ',type=2)" width="40px" />
+											<button label="("
+												onClick="@command('calculator',f=' ( ',t=' ( ',type=2)" width="40px" />
+											<button label=")"
+												onClick="@command('calculator',f=' ) ',t=' ) ',type=2)" width="40px" />
+										</hbox>
+										<hbox>
+											<button label="大于"
+												onClick="@command('calculator',f='大于',t='大于',type=2)"  />
+											<button label="小于"
+												onClick="@command('calculator',f='小于',t='小于',type=2)" />
+											<button label="大于等于"
+												onClick="@command('calculator',f='大于等于',t='大于等于',type=2)" />		
+										</hbox>
+										 <hbox>
+											<button label="小于等于"
+												onClick="@command('calculator',f='小于等于',t='小于等于',type=2)"  />
+											<button label="等于"
+												onClick="@command('calculator',f='等于',t='等于',type=2)" />
+											<button label="不等于"
+												onClick="@command('calculator',f='不等于',t='不等于',type=2)" />
+										</hbox>
+										<hbox>
+											<button label="And" onClick="@command('calculator',f='and',t=' and ',type=2)" 
+												width="40px" />
+											<button label="Or" onClick="@command('calculator',f='or',t=' or ' ,type=2)" 
+												width="40px" />
+											<button label="清空"
+												onClick="@command('calculator',f='清空',t='清空',type=2)" />
+										</hbox>
+										<hbox>
+											<textbox id="tb" mold="rounded" width="100px"/>
+											<button label="录入" onClick="@command('input',v=tb.value)"  />
+										</hbox>
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+				</tablechildren>
+				<tablechildren width="30%">
+					<groupbox height="240px">
+						<caption label="特殊计算公式" />
+						<grid width="100%">
+							<rows>
+								<row>
+									<cell>
+										<hbox>
+											<button label="个人所得税计算" onClick="@command('calculator',f='ef.PTax(',t='PTax(' ,type=2)" />
+										</hbox>
+										<hbox>
+											<button label="年终奖金税计算" onClick="@command('calculator',f='ef.DBTax(',t='DBTax(' ,type=2)" />
+										</hbox>
+										<hbox>
+											<button label="劳务报酬税计算" onClick="@command('calculator',f='ef.LWTax(',t='LWTax(' ,type=2)" />
+										</hbox>
+										<hbox>
+											<button label="住房公积金纳税部分计算1" onClick="@command('calculator',f='ef.HouseOver(esda_house_radix,esda_house_percent,esda_house_cradix,esda_house_cpercent,esda_taxplace,ownmonth)',t='HouseOver([住房公积金个人基数],[住房公积金个人比例],[住房公积金公司基数],[住房公积金公司比例],[个税申报地],[所属月份])' ,type=2)" />
+										</hbox>
+										<hbox>
+											<button label="住房公积金纳税部分计算2" onClick="@command('calculator',f='ef.HouseOver2(esda_hafop,esda_hafcp,esda_taxplace,ownmonth)',t='HouseOver2([住房公积金个人部分],[住房公积金公司部分],[个税申报地],[所属月份])' ,type=2)" />
+										</hbox>
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+				</tablechildren>
+			</tablelayout>
+		</div>
+		<toolbar align="center" mold="panel">
+			<button label="提交" onClick="@command('submit',winForDataAdd=winForDataAdd,csii_id=csii_id)"/>
+		</toolbar>
+	</window>
+</zk>

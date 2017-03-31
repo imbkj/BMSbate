@@ -1,0 +1,61 @@
+<?page title="合同签回" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="合同签回" border="normal" id="w1" height="250px"
+		apply="Controller.EmBaseCompact.EmBaseCompact_AddController" width="700px" closable="true">
+		<label id="ebcc_id" value="${arg.ebcc_id}" visible="false" />
+		<groupbox title="合同签回信息" mold="3d">
+			<grid vflex="1" hflex="1">
+				<rows>
+					<row>
+						<cell width="130px">签收时间：</cell>
+						<cell colspan="3">
+							<datebox width="130px" id="embase5"
+								readonly="true" mold="rounded" format="yyyy-MM-dd" />
+							<label style="color:red;">(*)</label>
+						</cell>
+					</row>
+					
+					<row>
+						<cell width="130px">雇员合同起始日：</cell>
+						<cell>
+							<datebox width="130px" id="embase1"
+								readonly="true" mold="rounded" format="yyyy-MM-dd" />
+						</cell>
+						<cell width="130px">雇员合同到期日：</cell>
+						<cell>
+							<datebox width="130px" id="embase2"
+								readonly="true" mold="rounded" format="yyyy-MM-dd" />
+						</cell>
+					</row>
+					
+					<row>
+						<cell width="130px">月工资：</cell>
+						<cell>
+							<textbox id="embase8" mold="rounded"
+								value="${arg.ebcc_wage}" />
+						</cell>
+						<cell width="130px">月工资含加班工资：</cell>
+						<cell>
+							<textbox id="embase12" mold="rounded"
+								value="${arg.ebcc_wage_gz}" />
+						</cell>
+					</row>
+					
+					<row>
+						<cell width="130px">工作岗位：</cell>
+						<cell colspan="3">
+							<textbox id="embase17" mold="rounded"
+								value="${arg.ebcc_working_station}" />
+						</cell>
+					</row>
+
+					<row>
+						<cell colspan="4" align="center">
+							<button label="提交" id="signemcompact" />
+						</cell>
+					</row>
+				</rows>
+			</grid>
+		</groupbox>
+	</window>
+</zk>

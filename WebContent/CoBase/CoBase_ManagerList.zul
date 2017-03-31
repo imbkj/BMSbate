@@ -1,0 +1,125 @@
+<?page title="公司信息列表" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window width="100%" height="100%"
+	apply="org.zkoss.bind.BindComposer" 
+    viewModel="@id('vm') @init('Controller.CoBase.CoBase_infoeditListController')"  id="winmanager" xmlns:w="client">
+		<style src="/css/style.css"></style>
+		<panel title="公司信息列表" border="0" >
+			<panelchildren>
+				<script type="text/javascript">
+					<![CDATA[ function sendPointer(str){ zAu.send(new
+					zk.Event(zk.Widget.$('$win'),'cobaseinfo',str));
+					return true;} ]]>				
+	</script>
+				<borderlayout style="margin-bottom:3px;" width="100%" height="100%">
+					<north border="0" title="检索" collapsible="true"
+						flex="true" style="padding-bottom:10px;">
+						<grid>
+							<rows>
+								<row>
+									<cell style="color:#666;"
+										align="center">
+
+										<combobox id="combo" width="50%" onChange="@command('search',combo=self)"
+											autodrop="true" buttonVisible="false" mold="rounded" value=""
+											popup="pop_coof_name" />
+							<zscript><![CDATA[
+	/*Dictionary.getDictionary() returns a String[] containing the dictionary words*/
+	ListModel dictModel = new SimpleListModel(
+			bll.CoBase.CoBase_SelectBll.searchcobaselists());
+	combo.setModel(dictModel);
+]]></zscript>
+										<popup id="pop_coof_name">
+											可输入拼音/CID/公司简称 查询
+										</popup>
+									</cell>
+								</row>
+							</rows>
+							<foot>
+						<footer align="center">
+							<button id="btSearch" label="检索"
+								onClick="@command('search',combo=combo)" />
+						</footer>
+					</foot>
+						</grid>
+					</north>
+					<west width="220px" border="0">
+						<vlayout sclass="fn-panel1"  width="100%" height="100%">
+							<hlayout sclass="fn-subpanel">
+								<tree id="tree" onCreate="@command('oncreatetree',tree=self)" ></tree>
+								<label id="fi" value="ii"></label>
+							</hlayout>
+						</vlayout>
+					</west>
+					<center sclass="nested-center" style="border:0;">
+						<grid emptyMessage="没有数据" width="100%" height="100%" model="@load(vm.cobaselist)"
+							id="cobaseinfo" mold="paging" pageSize="40">
+							<columns>
+								<column label="编号" align="center"
+									width="60px" sort="auto(cid)" />
+								<column label="a~z" align="center"
+									width="60px" sort="auto(coba_spell)" />
+								<column label="公司名称"
+									sort="auto(coba_company)" />
+								<column label="vip" align="center"
+									width="60px" sort="auto(coba_vip)" />
+								<column label="是否签反贿赂协议书" align="center"
+									width="120px" sort="auto(coba_vip)" />
+								<column label="员工数" align="center"
+									width="60px" sort="auto(peopnum)" />
+								<column label="合同数" align="center"
+									width="60px" sort="auto(coconum)" />
+								<column label="客服" align="center"
+									width="90px" sort="auto(coba_client)" />
+								<column label="操作" align="center"
+									width="150px" />
+							</columns>
+							<rows>
+								<template name="model">
+									<row>
+										<label value="@load(each.cid)" />
+										<label
+											value="@load(each.coba_spell)" />
+										<cell>
+											<hlayout>
+<!-- 												<a onClick="@command('cobasedetials',model=each)" -->
+<!-- 													style="cursor:pointer" -->
+<!-- 													> -->
+													<label
+														value="@load(each.coba_company)" />
+<!-- 												</a> -->
+												<label
+													style="color:red;"
+													visible="${each.coba_servicestate==1?false:true }">
+													(已解约)
+												</label>
+											</hlayout>
+										</cell>
+										<label value="@load(each.coba_vip)"
+											style="color:red;" />
+										<label value="@load(each.coba_ifhasbribery)" />
+										<label value="@load(each.peopnum)" />
+										<label value="@load(each.coconum)" />
+										<label
+											value="@load(each.coba_client)" />
+										<a onClick="@command('openmemulist',model=each)"><label>业务中心</label></a>
+										
+									</row>
+								</template>
+							</rows>
+						</grid>
+					</center>
+					<south>
+						<grid>
+							<rows>
+								<row>
+									<cell>数据统计：</cell>
+								</row>
+							</rows>
+						</grid>
+					</south>
+				</borderlayout>
+			</panelchildren>
+		</panel>
+	</window>
+</zk>

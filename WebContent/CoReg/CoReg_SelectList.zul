@@ -1,0 +1,103 @@
+<?page title="公司网上立户查询" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="公司网上立户查询" border="normal" width="100%" height="100%"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoReg.CoReg_SelectListController')">
+		<grid height="100%" width="100%" emptyMessage="暂无数据"
+			model="@load(vm.scoregList)" mold="paging">
+			<columns>
+				<column align="center" label="公司编号">
+					<separator></separator>
+					<textbox width="50%" mold="rounded" instant="true"
+						value="@bind(vm.cid)" onChange="@command('search')" />
+				</column>
+				<column align="center" label="公司简称">
+					<separator></separator>
+					<textbox width="90%" mold="rounded"
+						value="@bind(vm.shortname)" onChange="@command('search')" />
+				</column>
+				<column align="center" label="所属月份">
+					<separator></separator>
+					<combobox width="90%" mold="rounded" instant="true"
+						model="@load(vm.ownmonthList)" value="@bind(vm.ownmonth)"
+						onChange="@command('search')">
+						<template name="model">
+							<comboitem label="@load(each)" />
+						</template>
+					</combobox>
+				</column>
+				<column align="center" label="开户类型">
+					<separator></separator>
+					<combobox width="90%" mold="rounded" instant="true"
+						readonly="true" value="@bind(vm.reg_type)"
+						onChange="@command('search')">
+						<comboitem />
+						<comboitem label="新开户" />
+						<comboitem label="接管" />
+					</combobox>
+				</column>
+				<column align="center" label="办理类型">
+					<separator></separator>
+					<combobox width="90%" mold="rounded" instant="true"
+						readonly="true" value="@bind(vm.reg_tran_type)"
+						onChange="@command('search')">
+						<comboitem />
+						<comboitem label="中智办理" />
+						<comboitem label="独自办理" />
+					</combobox>
+				</column>
+				<column align="center" label="状态">
+					<separator></separator>
+					<combobox width="90%" mold="rounded" instant="true"
+						readonly="true" value="@bind(vm.statename)"
+						onChange="@command('search')" model="@load(vm.stateList)">
+						<template name="model">
+							<comboitem label="@load(each.statename)" />
+						</template>
+					</combobox>
+				</column>
+				<column align="center" label="添加人">
+					<separator></separator>
+					<textbox width="90%" mold="rounded"
+						value="@bind(vm.addname)" onChange="@command('search')" />
+				</column>
+				<column align="center" label="添加时间" width="15%">
+					<separator></separator>
+					<datebox width="90%" mold="rounded" instant="true"
+						format="yyyy-MM-dd" value="@bind(vm.addtime)"
+						onChange="@command('search')" />
+				</column>
+				<column align="center" label="操作" width="60px"></column>
+			</columns>
+			<template name="model">
+				<row>
+					<label value="@load(each.cid)" />
+					<div>
+						<label
+							if="${each.cori_if_responsebook==1 or (each.cori_if_responsebook==0 and each.cori_if_sign_responsebook==0)}"
+							value="@load(each.coba_shortname)" />
+						<label
+							if="${each.cori_if_responsebook==0 and each.cori_if_sign_responsebook==1 }"
+							value="@load(each.coba_shortname)" style="color:blue" />
+					</div>
+					<label value="@load(each.ownmonth)" />
+					<label value="@load(each.cori_reg_type)" />
+					<label value="@load(each.cori_reg_transact_type)" />
+					<div>
+						<image src="/images/20070708132244928.gif"
+							tooltiptext="还未退回材料"
+							if="${(each.cori_state==6 or each.cori_state==7) and each.cori_tzl_state==0 and each.cori_reg_type!='接管' }"
+							style="cursor:pointer">
+						</image>
+						<label value="@load(each.statename)" />
+					</div>
+					<label value="@load(each.cori_addname)" />
+					<label value="@load(each.cori_addtime)" />
+					<label value="详情" style="color:blue;cursor:pointer"
+						tooltiptext="点击查看详情"
+						onClick="@command('openwin',url='CoReg_Detail.zul',daid=each.cori_id)" />
+				</row>
+			</template>
+		</grid>
+	</window>
+</zk>

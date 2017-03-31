@@ -1,0 +1,158 @@
+<?page title=""生成工资数据"" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winEmSalaryCreate" title="生成工资数据" border="normal"
+		width="60%" closable="true" sizable="true" height="90%"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmSalary.EmSalary_CreateDataController')">
+		<borderlayout>
+			<north title="数据查询" border="none">
+				<grid>
+					<rows>
+						<row>
+							<cell align="right" width="45%">公司简称：</cell>
+							<cell>
+								<label value="@load(vm.shortname)" />
+							</cell>
+						</row>
+						<row>
+							<cell align="right">所属月份：</cell>
+							<cell>
+								<combobox id="ownmonth" mold="rounded"
+									readonly="true" model="@load(vm.ownmonthList)"
+									>
+									<template name="model">
+										<comboitem label="${each}" />
+									</template>
+								</combobox>
+							</cell>
+						</row>
+						<!-- <row>
+							<cell align="right">用途：</cell>
+							<cell>
+							<combobox id="esda_usage_type"
+							mold="rounded" readonly="true" model="@load(vm.usageList)"
+							onChange="@command('usageChange',usage=self,ownmonth=ownmonth.value)">
+							<template name="model">
+							<comboitem
+							label="@load(each.pcco_cn)" value="@load(each.pcco_code)" />
+							</template>
+							</combobox>
+							</cell>
+							</row> -->
+							<row>
+							<cell align="right">生成工资的所属月份：</cell>
+							<cell>
+								<combobox id="cbCreatemonth"
+									mold="rounded" readonly="true"
+									model="@load(vm.createmonthList)" onChange="@command('ownmonthChange',ownmonth=ownmonth.value,createmonth=self.value)">
+									<template name="model">
+										<comboitem label="${each}" />
+									</template>
+								</combobox>
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</north>
+			<center title="数据生成" border="none">
+				<hlayout height="95%" style="padding:10px">
+					<listbox id="lbEm" hflex="1" vflex="true" checkmark="true" multiple="true"
+						model="@load(vm.winEmList)" emptyMessage="无工资数据">
+						<auxhead>
+							<auxheader label="员工列表" colspan="2" />
+						</auxhead>
+						<listhead>
+							<listheader label="员工姓名"
+								sort="auto(emba_name)" align="left" />
+							<listheader sort="auto(esda_usage_typestr)"
+								align="left">
+								<vlayout>
+									<label>用途</label>
+									<combobox mold="rounded"
+										readonly="true"
+										onChange="@command('searchUsage',usage=self.selectedItem.label)">
+										<comboitem label="" />
+										<comboitem label="工资" />
+										<comboitem label="报销" />
+										<comboitem label="住房返还" />
+										<comboitem label="奖金" />
+										<comboitem label="离职补偿金" />
+										<comboitem label="股票分红" />
+									</combobox>
+								</vlayout>
+							</listheader>
+						</listhead>
+						<template name="model">
+							<listitem
+								onDoubleClick="@command('choose',select = self)">
+								<listcell label="@load(each.emba_name)" />
+								<listcell
+									label="@load(each.esda_usage_typestr)" />
+							</listitem>
+						</template>
+
+					</listbox>
+					<vbox spacing="10px" width="24px">
+						<image style="cursor:pointer" id="chooseAllBtn"
+							src="../images/rightrightarrow_g.png"
+							onClick="@command('chooseAll')" />
+						<image style="cursor:pointer" id="chooseBtn"
+							src="../images/rightarrow_g.png"
+							onClick="@command('choose',select = lbEm)" />
+						<image style="cursor:pointer" id="removeBtn"
+							src="../images/leftarrow_g.png"
+							onClick="@command('remove',select = lbCreate)" />
+						<image style="cursor:pointer" id="removeAllBtn"
+							src="../images/leftleftarrow_g.png"
+							onClick="@command('removeAll')" />
+					</vbox>
+					<listbox id="lbCreate" hflex="1" vflex="true" checkmark="true" multiple="true"
+						model="@load(vm.createList)" emptyMessage="请选择需要生成的数据">
+						<auxhead>
+							<auxheader label="分配列表" colspan="2" />
+						</auxhead>
+						<listhead>
+							<listheader label="员工姓名"
+								sort="auto(emba_name)" align="left" />
+							<listheader label="用途"
+								sort="auto(esda_usage_typestr)" align="left" />
+						</listhead>
+						<template name="model">
+							<listitem
+								onDoubleClick="@command('remove',select = self)">
+								<listcell label="@load(each.emba_name)" />
+								<listcell
+									label="@load(each.esda_usage_typestr)" />
+							</listitem>
+						</template>
+					</listbox>
+				</hlayout>
+			</center>
+			<south border="none">
+				<grid>
+					<rows>
+						<row>
+							<cell align="right">
+								<label value="清零字段是否清零:" />
+							</cell>
+							<cell align="left">
+								<radiogroup id="rgIfZero">
+									<radio label="是" value="1"
+										checked="true" />
+									<radio label="否" value="0" />
+								</radiogroup>
+							</cell>
+						</row>
+						<row>
+							<cell align="center" colspan="2">
+								<button label="提交" id="btSubmit"
+									onClick="@command('createData',createmonth=cbCreatemonth.value,ownmonth=ownmonth.value,ifZero=rgIfZero.selectedItem.value,win=winEmSalaryCreate)" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</south>
+		</borderlayout>
+
+	</window>
+</zk>

@@ -1,0 +1,391 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="发票信息" border="normal" width="80%" height="100%"
+		closable="true" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmFinanceManage.Finance_InvoiceController')">
+		<borderlayout width="100%" height="100%">
+		<east title="发票信息修改日志" width="80%" collapsible="true"
+				open="false">
+				<grid width="100%" height="100%" sizedByContent="true" span="true"
+					model="@load(vm.cfmLog)" emptyMessage="暂无开票记录">
+					<columns>
+						<column align="center" label="序号" />
+						<column align="center" label="修改内容" />
+						<column align="center" label="修改人" />
+						<column align="center" label="修改时间" />
+					</columns>
+					<template name="model">
+						<row>
+							<cell>${forEachStatus.index+1 }</cell>
+							<cell>
+								<label value="@load(each.content)" />
+							</cell>
+							<cell>
+								<label value="@load(each.addname)" />
+							</cell>
+							<cell>
+								<label value="@load(each.addtime)" />
+							</cell>
+						</row>
+					</template>
+				</grid>
+			</east>
+			<center>
+				<borderlayout width="100%" height="100%">
+					<north title="发票信息" collapsible="true"
+						open="false">
+						<grid width="100%" height="100%">
+							<columns visible="false">
+								<column width="180px" />
+								<column />
+								<column width="15%" />
+								<column />
+							</columns>
+							<rows>
+								<row>
+									<cell>特殊数据</cell>
+									<cell>
+										<checkbox checked="@bind(vm.cfm.cfva_sp)" />
+									</cell>
+									<cell>已确认信息</cell>
+									<cell>
+										<checkbox checked="@bind(vm.cfm.cfva_confirm)" />
+									</cell>
+								</row>
+								<row>
+									<cell>增值税一般纳税人</cell>
+									<cell>
+										<combobox mold="rounded"
+											value="@bind(vm.cfm.cfva_taxpayers)">
+											<comboitem label="是" />
+
+											<comboitem label="否" />
+										</combobox>
+
+									</cell>
+									<cell>发票类型</cell>
+									<cell>
+										<checkbox label="专票"
+											disabled="@load(vm.only)" checked="@bind(vm.cfm.cfva_only)" />
+										<checkbox label="普票"
+											disabled="@load(vm.simple)"
+											checked="@bind(vm.cfm.cfva_simple)" />
+									</cell>
+								</row>
+								<row>
+									<cell>纳税人识别号（开票用编码）</cell>
+									<cell>
+										<textbox mold="rounded"
+											value="@bind(vm.cfm.cfva_number1)" />
+									</cell>
+									<cell>电话</cell>
+									<cell>
+										<textbox  mold="rounded"
+											value="@bind(vm.cfm.cfva_tel)" />
+									</cell>
+								</row>
+								<row>
+									<cell>注册地址</cell>
+									<cell colspan="3">
+										<textbox mold="rounded"
+											width="90%" value="@bind(vm.cfm.cfva_reg_add)" />
+									</cell>
+								</row>
+								<row>
+									<cell>发票联系人</cell>
+									<cell>
+										<textbox mold="rounded"
+											value="@bind(vm.cfm.cfva_contact)" />
+									</cell>
+									<cell>发票联系人电话</cell>
+									<cell>
+										<textbox mold="rounded"
+											value="@bind(vm.cfm.cfva_contact_tel)" />
+									</cell>
+								</row>
+								<row>
+									<cell>银行账号</cell>
+									<cell>
+										<textbox mold="rounded"
+											value="@bind(vm.cfm.cfva_bank_acc)" />
+									</cell>
+									<cell>开户银行名称</cell>
+									<cell>
+										<textbox mold="rounded"
+											value="@bind(vm.cfm.cfva_bank)" />
+									</cell>
+								</row>
+								<row>
+									<cell>发票抬头</cell>
+									<cell colspan="3">
+										<textbox mold="rounded"
+											width="90%" value="@bind(vm.cfm.cfva_title)" />
+									</cell>
+								</row>
+								<row>
+									<cell>发票接收地址</cell>
+									<cell colspan="3">
+										<textbox mold="rounded"
+											width="90%" value="@bind(vm.cfm.cfva_vat_add)" />
+									</cell>
+								</row>
+								<row>
+									<cell>备注</cell>
+									<cell colspan="3">
+										<textbox mold="rounded"
+											width="90%" value="@bind(vm.cfm.cfva_remark)" />
+									</cell>
+								</row>
+							</rows>
+							<foot>
+								<footer span="4" align="center">
+									<button label="修改"
+										onClick="@command('mod')" />
+								</footer>
+							</foot>
+						</grid>
+					</north>
+					<center>
+						<grid width="100%" height="100%">
+							<rows>
+								<row visible="@load(vm.fim.display)">
+									<cell
+										style="background-color:#984b4b;">
+										<grid width="100%">
+											<columns visible="false">
+												<column width="15%" />
+												<column />
+												<column width="15%" />
+												<column />
+											</columns>
+											<rows>
+												<row>
+													<cell>专票</cell>
+													<cell colspan="3">
+														<checkbox
+															checked="@bind(vm.fim.printState)" />
+													</cell>
+												</row>
+												<row>
+													<cell>名称</cell>
+													<cell colspan="3">
+														<textbox
+															width="90%" value="@bind(vm.fim.gfmc)" />
+													</cell>
+												</row>
+												<row>
+													<cell>纳税人识别号</cell>
+													<cell colspan="3">
+														<textbox
+															width="90%" value="@bind(vm.fim.gfsh)" />
+													</cell>
+												</row>
+												<row>
+													<cell>地址电话</cell>
+													<cell colspan="3">
+														<textbox
+															width="90%" value="@bind(vm.fim.gfdzdh)" />
+													</cell>
+												</row>
+												<row>
+													<cell>开户行及账号</cell>
+													<cell colspan="3">
+														<textbox
+															width="90%" value="@bind(vm.fim.gfyhzh)" />
+													</cell>
+												</row>
+
+												<row>
+													<cell colspan="4">
+														<grid
+															width="100%" height="100%" model="@load(vm.fim.list)"
+															emptyMessage="暂无数据">
+															<columns>
+																<column
+																	align="center" label="货物或应税劳务名称" />
+
+																<column
+																	align="center" label="金额" />
+																<column
+																	align="center" label="税率" />
+
+															</columns>
+															<template
+																name="model">
+																<row>
+																	<cell>
+																		<textbox
+																			width="100%" value="@bind(each.spmc)" />
+																	</cell>
+
+																	<cell>
+																		<textbox
+																			value="@bind(each.je)" />
+																	</cell>
+																	<cell>
+																		<textbox
+																			value="@bind(each.slv)" />
+																	</cell>
+
+																</row>
+															</template>
+														</grid>
+													</cell>
+												</row>
+											</rows>
+											<foot>
+												<footer>备注</footer>
+												<footer span="3"
+													align="left">
+													<textbox
+														mold="rounded" width="90%" value="@bind(vm.fim.bz)" />
+												</footer>
+											</foot>
+										</grid>
+									</cell>
+								</row>
+
+								<row visible="@load(vm.fim2.display)">
+									<cell
+										style="background-color:#00caca;">
+										<grid width="100%">
+											<columns visible="false">
+												<column width="15%" />
+												<column />
+												<column width="15%" />
+												<column />
+											</columns>
+											<rows>
+												<row>
+													<cell>普票</cell>
+													<cell colspan="3">
+														<checkbox
+															checked="@bind(vm.fim2.printState)" />
+													</cell>
+												</row>
+												<row>
+													<cell>名称</cell>
+													<cell colspan="3">
+														<textbox
+															width="90%" value="@bind(vm.fim2.gfmc)" />
+													</cell>
+												</row>
+												<row>
+													<cell>纳税人识别号</cell>
+													<cell colspan="3">
+														<textbox
+															width="90%" value="@bind(vm.fim2.gfsh)" />
+													</cell>
+												</row>
+												<row>
+													<cell>地址电话</cell>
+													<cell colspan="3">
+														<textbox
+															width="90%" value="@bind(vm.fim2.gfdzdh)" />
+													</cell>
+												</row>
+												<row>
+													<cell>开户行及账号</cell>
+													<cell colspan="3">
+														<textbox
+															width="90%" value="@bind(vm.fim2.gfyhzh)" />
+													</cell>
+												</row>
+
+												<row>
+													<cell colspan="4">
+														<grid
+															width="100%" height="100%" model="@load(vm.fim2.list)"
+															emptyMessage="暂无数据">
+															<columns>
+																<column
+																	align="center" label="货物或应税劳务名称" />
+
+																<column
+																	align="center" label="金额" />
+																<column
+																	align="center" label="税率" />
+
+															</columns>
+															<template
+																name="model">
+																<row>
+																	<cell>
+																		<textbox
+																			width="100%" value="@bind(each.spmc)" />
+																	</cell>
+
+																	<cell>
+																		<textbox
+																			value="@bind(each.je)" />
+																	</cell>
+																	<cell>
+																		<textbox
+																			value="@bind(each.slv)" />
+																	</cell>
+
+																</row>
+															</template>
+														</grid>
+													</cell>
+												</row>
+											</rows>
+											<foot>
+												<footer>备注</footer>
+												<footer span="3"
+													align="left">
+													<textbox
+														mold="rounded" width="90%" value="@bind(vm.fim2.bz)" />
+												</footer>
+											</foot>
+										</grid>
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</center>
+					<south>
+						<div align="center">
+							<button label="提交"
+								onClick="@command('submit')" />
+						</div>
+					</south>
+				</borderlayout>
+			</center>
+			<west title="开票记录" width="45%" collapsible="true"
+				open="false">
+				<grid width="100%" height="100%"
+					model="@load(vm.invoiceList)" emptyMessage="暂无开票记录">
+					<columns>
+						<column align="center" label="类型" />
+						<column align="center" label="单据号" />
+						<column align="center" label="合计" />
+						<column align="center" label="开票日期" />
+						<column align="center" label="添加人" />
+						<column align="center" label="操作" />
+					</columns>
+					<template name="model">
+						<row>
+							<cell>
+								<label value="@load(each.fplxName)" />
+							</cell>
+							<cell>
+								<label value="@load(each.djh)" />
+							</cell>
+							<cell>
+								<label value="@load(each.total)" />
+							</cell>
+							<cell>
+								<label value="@load(each.rq)" />
+							</cell>
+							<cell>
+								<label value="@load(each.kpr)" />
+							</cell>
+							<cell></cell>
+						</row>
+					</template>
+				</grid>
+			</west>
+		</borderlayout>
+	</window>
+</zk>

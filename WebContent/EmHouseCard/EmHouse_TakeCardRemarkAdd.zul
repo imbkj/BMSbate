@@ -1,0 +1,19 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="添加备注" border="normal" closable="true" width="60%" height="60%"
+	apply="org.zkoss.bind.BindComposer" id="wind"
+	viewModel="@id('vm') @init('Controller.EmHouseCard.EmHouse_TakeCardRemarkAddController')"
+>
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell width="100px">备注内容</cell>
+			<cell><textbox width="80%" rows="5" id="remark"></textbox></cell>
+		</row>
+	</rows>
+	<foot>
+		<footer align="center"><button onClick="@command('addremark',win=wind,remark=remark.value)">提交</button></footer>
+	</foot>
+</grid>
+</window>
+</zk>

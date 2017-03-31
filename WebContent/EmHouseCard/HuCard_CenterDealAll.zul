@@ -1,0 +1,62 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="批量处理" border="normal" width="80%" height="80%"
+		apply="org.zkoss.bind.BindComposer" closable="true" id="dealwin"
+		viewModel="@id('vm') @init('Controller.EmHouseCard.HuCard_CenterDealAllController')">
+		<grid vflex="1">
+			<rows>
+				<row>
+					<cell width="100px">当前状态</cell>
+					<cell>
+						<label value="@load(vm.model.state_Name)"></label>
+					</cell>
+					<cell width="100px"></cell>
+					<cell></cell>
+				</row>
+				<row visible="${vm.model.state_Name=='福利领卡' }">
+					<cell width="100px">福利发卡人</cell>
+					<cell>
+						<textbox value="@bind(vm.username)"></textbox>
+					</cell>
+					<cell width="100px">中心领卡时间</cell>
+					<cell>
+						<datebox value="@bind(vm.centerdate)"></datebox>
+					</cell>
+				</row>
+				<row visible="${vm.model.state_Name=='中心签收' }">
+					<cell width="100px">下一步状态</cell>
+					<cell>
+						<combobox value="@bind(vm.statename)" onChange="@command('changestate')">
+							<comboitem label="已交客服" />
+							<comboitem label="员工已领" />
+						</combobox>
+					</cell>
+					<cell width="100px" visible="@bind(vm.isvisible)">领卡人</cell>
+					<cell visible="@bind(vm.isvisible )">
+						<textbox value="@bind(vm.takecardname)"></textbox>
+					</cell>
+				</row>
+				<row visible="@bind(vm.isvisible)">
+					<cell width="100px">领卡时间</cell>
+					<cell>
+						<datebox value="@bind(vm.ydate)"></datebox>
+					</cell>
+					<cell width="100px">发卡方式</cell>
+					<cell>
+						<combobox value="@bind(vm.taketype)">
+							<comboitem label="到付邮寄员工" />
+							<comboitem label="统一邮寄联系人" />
+							<comboitem label="上门领卡" />
+							<comboitem label="送卡上门" />
+						</combobox>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button onClick="@command('summit',win=dealwin)">提交</button>
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

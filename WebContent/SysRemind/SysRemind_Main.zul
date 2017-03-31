@@ -1,0 +1,46 @@
+<div id="dv" height="100%" width="100%"
+	apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('vm') @init('Controller.SysRemind.SysRemind_MainController')">
+	<grid height="100%" width="100%">
+		<rows>
+			<row>
+				<cell>
+					<label value="未提醒" onClick="@command('notremind')"
+						style="cursor:pointer" />
+					[
+					<label value="@load(vm.notremindcount)"
+						style="color:red;cursor:pointer" onClick="@command('notremind')" />
+					]
+					<space width="50px" />
+					<label value="已提醒" onClick="@command('reminded')"
+						style="cursor:pointer" />
+					[
+					<label value="@load(vm.isremindcount)"
+						style="color:red;cursor:pointer" onClick="@command('reminded')" />
+					]
+				</cell>
+			</row>
+			<row>
+				<cell>
+					<hbox height="100%" align="center">
+						<label value="即将提醒：" />
+						<label value="@load(vm.prModel.remindtime)"
+							style="white-space: nowrap;color:blue" />
+						<space width="25px" />
+						<div tooltip="content,position=after_pointer"
+							style="cursor:pointer;overflow:hidden;-ms-text-overflow: ellipsis;
+						-o-text-overflow: ellipsis;">
+							<popup id="content" width="400px">
+								<label
+									value="@load(vm.prModel.content)">
+								</label>
+							</popup>
+							<label value="@load(vm.content)"
+								style="white-space: nowrap;text-overflow:ellipsis;color:#666" />
+						</div>
+					</hbox>
+				</cell>
+			</row>
+		</rows>
+	</grid>
+</div>

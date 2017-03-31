@@ -1,0 +1,95 @@
+<!--
+	创建人：林少斌
+	创建时间：2013-9-26
+	用途：委托机构信息详细页面
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<grid width="100%" height="100%">
+		<rows>
+			<row>
+				<cell width="15%" style="color:#666;">机构名称：</cell>
+				<cell colspan="3">
+					<textbox id="tbName"  hflex="1"
+						value="${arg.coabM.coab_name}" readonly="true" mold="rounded"/>
+				</cell>
+				<cell width="10%" style="color:#666;">机构性质：</cell>
+				<cell width="25%">
+					<textbox id="cbSetuptype"  hflex="1"
+						value="${arg.coabM.coab_setuptype}" readonly="true" mold="rounded"/>
+				</cell>
+			</row>
+			<row>
+				所属省市：
+				<cell width="25%">
+					<textbox id="cbProvince"  hflex="1"
+						value="${arg.coabM.coab_province}" readonly="true" mold="rounded"/>
+					<textbox id="cbCity" hflex="1"
+						value="${arg.coabM.coab_city}" readonly="true" mold="rounded"/>
+				</cell>
+				<cell width="10%" style="color:#666;">公司邮编：</cell>
+				<cell width="20%">
+					<textbox id="tbZipcode"  hflex="1"
+						value="${arg.coabM.coab_zipcode}" readonly="true" mold="rounded"/>
+				</cell>
+				联系地址：
+				<textbox id="tbCoaddress"  hflex="1"
+					value="${arg.coabM.coab_coaddress}" readonly="true" mold="rounded"/>
+			</row>
+			<row>
+				法定代表人：
+				<textbox id="tbCompanymanager"  hflex="1"
+					value="${arg.coabM.coab_companymanager}" readonly="true" mold="rounded"/>
+				注册资金：
+				<textbox id="tbCapital"  hflex="1"
+					value="${arg.coabM.coab_capital}" readonly="true" mold="rounded"/>
+				注册地址：
+				<textbox id="tbRegaddress"  hflex="1"
+					value="${arg.coabM.coab_regaddress}" readonly="true" mold="rounded"/>
+			</row>
+			<row>
+				机构业务范围：
+				<cell colspan="3">
+					<textbox id="tbBusiness" hflex="1"
+						value="${arg.coabM.coab_business}" readonly="true" mold="rounded"/>
+				</cell>
+				发票是否寄送：
+				<textbox id="cbSendinvoice"  hflex="1"
+					value="${arg.coabM.coab_sendinvoice}" readonly="true" mold="rounded"/>
+			</row>
+			<row>
+				约定付款日期/付款月份：
+				<cell>
+					<textbox id="cbPayday"  hflex="1"
+						value="${arg.coabM.coab_payday}" readonly="true" mold="rounded"/>
+					<textbox id="cbPaymon"  hflex="1"
+						value="${arg.coabM.coab_paymon}" readonly="true" mold="rounded"/>
+				</cell>
+				银行账户：
+				<textbox id="tbAccountnum"  hflex="1"
+					value="${arg.coabM.coab_accountnum}" readonly="true" mold="rounded"/>
+				开户行：
+				<textbox id="tbAccountbank"  hflex="1"
+					value="${arg.coabM.coab_accountbank}" readonly="true" mold="rounded"/>
+			</row>
+			<row>
+				客户来源：
+				<textbox id="cbSource"  hflex="1"
+					value="${arg.coabM.coab_source}" readonly="true" mold="rounded"/>
+				客服：
+				<textbox id="cbClient"  hflex="1"
+					value="${arg.coabM.coab_client}" readonly="true" mold="rounded"/>
+				合作状态：
+				<textbox id="cbHz"  hflex="1"
+					value="${arg.coabM.coab_hz}" readonly="true" mold="rounded"/>
+			</row>
+			<row>
+				备注：
+				<cell colspan="5">
+					<textbox id="tbRemark" rows="5"  hflex="1"
+						value="${arg.coabM.coab_remark}" readonly="true" mold="rounded"/>
+				</cell>
+			</row>
+		</rows>
+	</grid>
+</zk>

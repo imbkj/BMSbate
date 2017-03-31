@@ -1,0 +1,87 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<!-- 调用内联页的文件名 -->
+<?component name="docDataList" macro-uri="/DocumentsInfo/DocumentsInfo_AddPageList.zul" inline="true"?>
+<zk>
+	<window id="win" title="@load(vm.title)" border="normal"
+		width="600px" closable="true" height="400px"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmSocialinPaper.EmSocialinPaper_AddController')">
+		<div height="100%">
+			<grid height="90%">
+				<columns>
+					<column width="13%"></column>
+					<column></column>
+					<column width="18%"></column>
+					<column></column>
+				</columns>
+				<rows>
+					<row>
+						公司编号
+						<textbox mold="rounded" readonly="true"
+							value="@load(vm.epm.cid)" />
+						公司简称
+						<textbox mold="rounded" readonly="true"
+							value="@load(vm.em.coba_company)" />
+					</row>
+					<row>
+						员工编号
+						<textbox mold="rounded" readonly="true"
+							value="@load(vm.epm.gid)" />
+						员工姓名
+						<textbox mold="rounded"
+							value="@bind(vm.epm.name)" />
+					</row>
+					<row>
+						身份证号
+						<textbox mold="rounded"
+							value="@bind(vm.epm.espa_idcard)" />
+						办理状态
+						<combobox mold="rounded" readonly="true"
+							model="@load(vm.typeList)" value="@bind(vm.epm.espa_type)">
+							<template name="model">
+								<comboitem
+									label="@load(each.statename)" />
+							</template>
+						</combobox>
+					</row>
+					<row>
+						付款情况
+						<textbox mold="rounded" value="未付"
+							readonly="true" />
+						付款方式
+						<combobox mold="rounded" readonly="true"
+							model="@load(vm.feetype)" value="@bind(vm.epm.espa_feetype)">
+							<template name="model">
+								<comboitem
+									label="@load(each.statename)" />
+							</template>
+						</combobox>
+					</row>
+					<row>
+						所属月份
+						<textbox mold="rounded"
+							value="@bind(vm.epm.ownmonth)" readonly="true" />
+						雇员交资料日期
+						<datebox format="yyyy-MM-dd"
+							value="@bind(vm.filetime)" />
+					</row>
+					<row>
+						<cell>材料</cell>
+						<cell colspan="3">
+							<!-- 材料内联页
+								参数：puzu_id：模块页面id，gid，pUsername，pUserId
+								交接人下拉框使用的login表username，id -->
+							<docDataList id="docGrid" puzu_id="6"
+								gid="@load(vm.em.gid)" pUsername="@load(vm.epm.espa_addname)"
+								pUserId="@load(vm.userid)" dHeight="115px" dWidth="100%" />
+						</cell>
+					</row>
+				</rows>
+			</grid>
+			<hbox width="100%" pack="center" align="center">
+				<button label="提交"
+					onClick="@command('submit',win=win,gd=docGrid)" />
+			</hbox>
+		</div>
+	</window>
+</zk>

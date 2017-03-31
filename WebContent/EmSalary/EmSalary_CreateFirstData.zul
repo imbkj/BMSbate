@@ -1,0 +1,114 @@
+<?page title="第一次生成空数据的工资" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winEmSalaryCreateFirst" title="批量新增工资" border="normal"
+		width="60%" closable="true" sizable="true" height="90%"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmSalary.EmSalary_CreateFirstDataController')">
+		<borderlayout>
+			<north title="公司信息" border="none">
+				<grid>
+					<rows>
+						<row>
+							<cell align="right" width="45%">公司简称：</cell>
+							<cell>
+								<label value="@load(vm.shortname)" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</north>
+			<center title="数据生成" border="none">
+				<hlayout height="95%" style="padding:10px">
+					<listbox id="lbEm" hflex="1" vflex="true"
+						model="@load(vm.emList)"
+						emptyMessage="批量新增仅可新增“从未在系统录入工资，且已分配相应报价单及算法”的员工，该公司暂无此类型的员工。">
+						<auxhead>
+							<auxheader label="员工列表" colspan="2" />
+						</auxhead>
+						<listhead>
+							<listheader label="员工编号" sort="auto(gid)"
+								align="center" />
+							<listheader label="员工姓名" sort="auto(name)"
+								align="center" />
+							<listheader label="在职状态"
+								sort="auto(emba_statestr)" align="center" />
+						</listhead>
+						<template name="model">
+							<listitem
+								onDoubleClick="@command('choose',select = self)">
+								<listcell label="@load(each.gid)" />
+								<listcell label="@load(each.name)" />
+								<listcell
+									label="@load(each.emba_statestr)" style="@load(each.emba_statestr eq '离职'?'color:red':'color:blue')" />
+							</listitem>
+						</template>
+
+					</listbox>
+					<vbox spacing="10px" width="24px">
+						<image style="cursor:pointer" id="chooseAllBtn"
+							src="../images/rightrightarrow_g.png"
+							onClick="@command('chooseAll')" />
+						<image style="cursor:pointer" id="chooseBtn"
+							src="../images/rightarrow_g.png"
+							onClick="@command('choose',select = lbEm.selectedItem)" />
+						<image style="cursor:pointer" id="removeBtn"
+							src="../images/leftarrow_g.png"
+							onClick="@command('remove',select = lbCreate.selectedItem)" />
+						<image style="cursor:pointer" id="removeAllBtn"
+							src="../images/leftleftarrow_g.png"
+							onClick="@command('removeAll')" />
+					</vbox>
+					<listbox id="lbCreate" hflex="1" vflex="true"
+						model="@load(vm.createList)" emptyMessage="请选择需要生成的数据">
+						<auxhead>
+							<auxheader label="分配列表" colspan="2" />
+						</auxhead>
+						<listhead>
+							<listheader label="员工编号" sort="auto(gid)"
+								align="center" />
+							<listheader label="员工姓名" sort="auto(name)"
+								align="center" />
+							<listheader label="在职状态"
+								sort="auto(emba_statestr)" align="center" />
+						</listhead>
+						<template name="model">
+							<listitem
+								onDoubleClick="@command('remove',select = self)">
+								<listcell label="@load(each.gid)" />
+								<listcell label="@load(each.name)" />
+								<listcell
+									label="@load(each.emba_statestr)"  style="@load(each.emba_statestr eq '离职'?'color:red':'color:blue')"/>
+							</listitem>
+						</template>
+					</listbox>
+				</hlayout>
+			</center>
+			<south border="none">
+				<grid>
+					<rows>
+						<row>
+							<cell align="center">
+								生成
+								<combobox id="cbCreatemonth"
+									mold="rounded" readonly="true"
+									model="@load(vm.createmonthList)">
+									<template name="model">
+										<comboitem label="${each}" />
+									</template>
+								</combobox>
+								月份工资数据
+							</cell>
+						</row>
+						<row>
+							<cell align="center">
+								<button label="提交" id="btSubmit"
+									onClick="@command('createData',createmonth=cbCreatemonth.value,win=winEmSalaryCreateFirst)" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</south>
+		</borderlayout>
+
+	</window>
+</zk>

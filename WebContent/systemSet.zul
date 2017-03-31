@@ -1,0 +1,131 @@
+<?page title="系统通知" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="系统通知" border="normal"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.systemSetController')"
+		height="99%" width="99%" closable="true" sizable="true"
+		maximizable="true">
+		<groupbox title="在线用户通知" mold="3d">
+			<grid>
+				<rows>
+					<row>
+						<cell align="center" width="200px">接收人</cell>
+						<cell colspan="5">
+							<combobox id="cbSendname" readonly="true"
+								mold="rounded" model="@load(vm.logList)" width="300px">
+								<template name="model">
+									<comboitem
+										label="@load(each.log_name)" value="@load(each.log_id)" />
+								</template>
+							</combobox>
+						</cell>
+					</row>
+					<row>
+						<cell align="center">通知信息</cell>
+						<cell colspan="5">
+							<textbox width="60%" mold="rounded"
+								value="@bind(vm.sysMessage)" />
+						</cell>
+					</row>
+					<row>
+						<cell align="center" colspan="6">窗体设置</cell>
+					</row>
+					<row>
+						<cell align="center">窗口标题</cell>
+						<cell>
+							<textbox width="80%" mold="rounded"
+								value="@bind(vm.title)" />
+						</cell>
+						<cell align="center">弹出位置</cell>
+						<cell>
+							<combobox readonly="true" mold="rounded"
+								value="@bind(vm.position)">
+								<comboitem label="left,top" />
+								<comboitem label="left,center" />
+								<comboitem label="left,bottom" />
+								<comboitem label="center,top" />
+								<comboitem label="center" />
+								<comboitem label="center,bottom" />
+								<comboitem label="right,top" />
+								<comboitem label="right,center" />
+								<comboitem label="right,bottom" />
+								<comboitem label="parent" />
+							</combobox>
+						</cell>
+						<cell align="center">弹出方式</cell>
+						<cell>
+							<combobox readonly="true" mold="rounded"
+								value="@bind(vm.openMethod)">
+								<comboitem label="doPopup" />
+								<comboitem label="doModal" />
+								<comboitem label="doOverlapped" />
+							</combobox>
+						</cell>
+					</row>
+					<row>
+						<cell align="center">长度</cell>
+						<cell>
+							<textbox width="30%" mold="rounded"
+								value="@bind(vm.height)" />
+						</cell>
+						<cell align="center">宽度</cell>
+						<cell>
+							<textbox width="30%" mold="rounded"
+								value="@bind(vm.width)" />
+						</cell>
+						<cell align="center">是否有关闭按钮</cell>
+						<cell>
+							<radiogroup
+								selectedItem="@bind(vm.closable)">
+								<radio label="有" value="有" />
+								<radio label="无" value="无" />
+							</radiogroup>
+						</cell>
+					</row>
+				</rows>
+				<foot>
+					<footer align="center">
+						<button label="发送提示"
+							onClick="@command('sendMessage',sendName=cbSendname.selectedItem.value)" />
+					</footer>
+				</foot>
+			</grid>
+		</groupbox>
+		<groupbox title="登录设置" mold="3d">
+			<grid>
+				<rows>
+					<row>
+						<cell width="35%">登录设置</cell>
+						<cell>
+							<radiogroup
+								selectedItem="@bind(vm.loginSet)">
+								<radio label="开放登录" value="开放登录" />
+								<radio label="禁止登录" value="禁止登录" />
+							</radiogroup>
+						</cell>
+					</row>
+					<row>
+						<cell>提示信息</cell>
+						<cell>
+							<textbox width="80%" mold="rounded"
+								value="@bind(vm.loginMessage)" />
+						</cell>
+					</row>
+					<row>
+						<cell>备注</cell>
+						<cell>
+							<label value="IT部门不限制登录，重启服务器后会自动开发登录。"
+								style="color:red;" />
+						</cell>
+					</row>
+				</rows>
+				<foot>
+					<footer align="center">
+						<button label="确认设置"
+							onClick="@command('setLogin')" />
+					</footer>
+				</foot>
+			</grid>
+		</groupbox>
+	</window>
+</zk>

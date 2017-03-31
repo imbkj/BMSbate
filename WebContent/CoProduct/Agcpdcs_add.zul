@@ -1,0 +1,132 @@
+<?page title="新增服务产品" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="win" title="新增服务产品" border="normal" width="60%" height="80%" closable="true"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoProduct.Agcpdcs_addController')">
+		<borderlayout>
+			<center autoscroll="true" border="none">
+				<grid>
+					<columns>
+						<column width="15%"></column>
+						<column style="white-space:nowrap"></column>
+					</columns>
+					<rows>
+					<row>
+							城市/委托机构
+							<cell>
+							<label value="@load(vm.city)"> </label>
+							----
+							<label value="@load(vm.ag)"> </label>
+							
+
+							</cell>
+						</row>
+						<row>
+							<cell style="color:#666;">
+								产品名称
+								<label style="color:red" value="(*)" />
+								:
+							</cell>
+							<textbox mold="rounded" width="280px"
+								value="@bind(vm.cop.copr_name)" />
+						</row>
+						<row>
+							<cell style="color:#666;">
+								产品类型
+								<label style="color:red" value="(*)" />
+								:
+							</cell>
+							<cell>
+								<hlayout>
+									<combobox readonly="true"
+										value="@bind(vm.cop.copr_type)" mold="rounded"
+										onChange="@command('class_change',cpst_name=cpst_name)">
+										
+										<comboitem label="服务产品"></comboitem>
+										
+									</combobox>
+									<space />
+									<combobox readonly="true"
+										selectedItem="@bind(vm.classModel)"
+										model="@load(vm.sclasslist)" mold="rounded"
+										onChange="@command('getstalist',cpst_name=cpst_name)">
+										<template name="model">
+											<comboitem
+												label="@load(each.copc_name)">
+											</comboitem>
+										</template>
+									</combobox>
+								</hlayout>
+							</cell>
+						</row>
+						<row visible="false" >
+							享受方式:
+							<cell >
+								<checkbox id="allchose" label="(全选)"
+									onCheck="@command('allselect',select=event.checked)">
+								</checkbox>
+								<chosenbox id="cpst_name" hflex="1"
+									model="@load(vm.standardlist)" emptyMessage="请选择享受方式">
+								</chosenbox>
+							</cell>
+						</row>
+						
+						<row>
+							描述:
+							<textbox id="copr_content" rows="5"
+								hflex="1" value="@bind(vm.cop.copr_content)">
+							</textbox>
+						</row>
+						<row>
+							<cell>默认收费单位及收费金额</cell>
+							<cell>
+								<grid model="@load(vm.eclasslist)"
+									width="500px">
+									<columns>
+										<column label="默认收费单位">
+											<checkbox
+												onClick="@command('gdallselect',check=self.checked)" />
+										</column>
+										<column label="默认收费金额"></column>
+										<column width="40px"
+											align="center">
+											<image
+												src="/images/lock.png">
+											</image>
+										</column>
+									</columns>
+									<template name="model">
+										<row>
+											<cell>
+												<checkbox
+													style="cursor:pointer" label="@load(each.cpfc_name)"
+													checked="@bind(each.ifU)" />
+											</cell>
+											<cell>
+												<doublebox
+													onFocus="self.select()" format=",###.###"
+													value="@bind(each.fee)" />
+											</cell>
+											<cell>
+												<checkbox
+													checked="@bind(each.cpfr_lock1)" tooltiptext="是否锁定">
+												</checkbox>
+											</cell>
+										</row>
+									</template>
+								</grid>
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</center>
+			<south>
+				<vbox align="center" width="100%">
+					<button id="submit" label="提交"
+						onClick="@command('submit',cpst_name=cpst_name)">
+					</button>
+				</vbox>
+			</south>
+		</borderlayout>
+	</window>
+</zk>

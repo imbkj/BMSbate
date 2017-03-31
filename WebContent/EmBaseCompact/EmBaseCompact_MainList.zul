@@ -1,0 +1,81 @@
+<?page title="雇员合同列表" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="雇员合同列表" border="normal" width="80%"
+		apply="org.zkoss.bind.BindComposer" sizable="true" height="600px"
+		viewModel="@id('vm') @init('Controller.EmBaseCompact.EmBaseCompact_MakeListController')" closable="true">
+		<borderlayout vflex="1">
+			<north border="0" title="数据查询" collapsible="true"
+				flex="true" open="true">
+				<panel border="1">
+					<panelchildren style="padding:5px;">
+						<grid id="searchGird" width="100%">
+							<rows>
+								<row>
+
+									<cell width="100px">员工姓名</cell>
+									<textbox id="name"
+										width="150px" value="" />
+									<cell>客服</cell>
+									<combobox mold="rounded"
+												width="120px" value="" id="client"
+												model="@load(vm.clientlist)">
+												<template
+													name="model">
+													<comboitem
+														label="@load(each.ebco_addname)"
+														value="@load(each.ebco_addname)">
+													</comboitem>
+												</template>
+											</combobox>
+								</row>
+							</rows>
+							<foot>
+								<footer align="center">
+									<button id="btSearch" label="查询"
+										onClick="@command('qs_search',name=name,client=client)" />
+								</footer>
+							</foot>
+						</grid>
+					</panelchildren>
+				</panel>
+			</north>
+			<center>
+				<grid width="100%" mold="paging" pageSize="19" height="450px"
+					model="@load(vm.emcompactmainlist)">
+					<columns>
+						<column label="序号" align="center" width="60px" />
+						<column label="雇员编号" align="center" />
+						<column label="公司编号" align="center" />
+						<column label="员工名称" align="center" />
+						<column label="公司名称" align="center" />
+						<column label="合同起始时间" align="center" />
+						<column label="合同到期时间" align="center" />
+						<column label="客服" align="center" />
+						<column label="通知时间" align="center" />
+						<column label="操作" align="center" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<label
+									value="${forEachStatus.index + 1}" />
+									<label value="@load(each.gid)" />
+									<label value="@load(each.cid)" />
+								<label value="@load(each.name)" />
+								<label value="@load(each.company)" />
+								<label
+									value="@load(each.ebco_incept_date)" />
+								<label
+									value="@load(each.ebco_maturity_date)" />
+								<label value="@load(each.ebco_addname)" />
+								<label value="@load(each.ebco_remind_date)" />
+								<label value="已通知"   if="${each.ebco_remind_state>0?true:false}"/>
+								<label value="未通知"  onClick="@command('remind_st',emco=each)" style="cursor:pointer"  if="${each.ebco_remind_state==0?true:false}"/>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

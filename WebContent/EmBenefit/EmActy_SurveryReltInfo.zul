@@ -1,0 +1,27 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window border="0"
+	apply="org.zkoss.bind.BindComposer" id="windeclare"
+	viewModel="@id('vm') @init('Controller.EmBenefit.EmActy_SurveryReltInfoController')"
+>
+<grid model="@load(vm.clist)">
+		<columns visible="false">
+			<column label="序号" width="50px" align="center"/>
+			<column label="调查内容"/>
+			<column label="票数"/>
+		</columns>
+		<rows>
+			<template name="model" if="${vm.model.hiti_answertype!=3}">
+			<row>
+				<cell><label value="${forEachStatus.index+1 }" style="margin-left:10px;"></label></cell>
+				<cell><label value="@load(each.hicn_content)"></label></cell>
+				<cell><label value="${each.num>0?each.num:0 }人选择"></label></cell>
+			</row>
+			</template>
+			<row  if="${vm.model.hiti_answertype!=3?'false':'true'}">
+				<cell colspan="3"><textbox value="@load(vm.model.relt_txtcon)"></textbox></cell>
+			</row>
+		</rows>
+	</grid>	
+</window>
+</zk>

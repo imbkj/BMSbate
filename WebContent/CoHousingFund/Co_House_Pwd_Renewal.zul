@@ -1,0 +1,131 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<?component name="docDataList" macro-uri="../DocumentsInfo/DocumentsInfo_UpPageList.zul" inline="true"?>
+<zk>
+	<window title="数字证书续期" border="normal" width="65%" closable="true"
+		vflex="1" hflex="1" apply="org.zkoss.bind.BindComposer" id="winds"
+		viewModel="@id('vm') @init('Controller.CoHousingFund.CoHouse_pwd_RenewalController')">
+		<grid height="100%">
+			<rows>
+				<row id="statusRow"
+					if="${vm.m.cfpc_state == 1 ? true : false }">
+					<cell>
+						<radiogroup id="okradio">
+							<radio label="申报中" selected="true"
+								value="2" />
+							<radio label="已申报" value="3" />
+						</radiogroup>
+					</cell>
+				</row>
+				<row>
+					<grid>
+						<rows>
+							<row>
+								<cell align="left" width="15%">
+									<label value="操作月份" />
+									<label value="*" style="color:red" />
+								</cell>
+								<cell align="left">
+									<label width="10%"
+										value="@bind(vm.m.ownmonth)" />
+								</cell>
+								<cell align="left" width="15%">
+									<label value="密钥续期年限" />
+									<label value="*" style="color:red" />
+								</cell>
+								<cell align="left">
+									<label
+										value="@bind(vm.m.cfpc_yearlimit)" />
+									<label value="年" />
+								</cell>
+							</row>
+							<row>
+								<cell align="left">
+									<label value="续期密钥" />
+									<label value="*" style="color:red" />
+								</cell>
+								<cell colspan="3">
+									<combobox mold="rounded"
+										instant="true" readonly="true" width="40%"
+										visible="${vm.m.cfpc_state == 1 ? true:false}"
+										id="renewalCombo" model="@load(vm.pwdList)">
+										<template name="model">
+											<comboitem
+												label="@bind(each.chfp_numberAndName)" value="@bind(each)" />
+										</template>
+									</combobox>
+									<combobox mold="rounded"
+										instant="true" readonly="true" width="40%"
+										value="${vm.m.numberAndName }"
+										visible="${vm.m.cfpc_state != 1 ? true:false}">
+										<comboitem
+											label="@load(vm.m.numberAndName)" />
+									</combobox>
+
+								</cell>
+							</row>
+							<row>
+								<cell align="left" width="15%">
+									<label value="密钥起始日期" />
+									<label value="*" style="color:red" />
+								</cell>
+								<cell align="left">
+									<datebox mold="rounded"
+										instant="true" readonly="true" format="yyyy-MM-dd"
+										value="@bind(vm.m.startdate)" id="sqsdid" />
+								</cell>
+								<cell align="left" width="15%">
+									<label value="密钥到期日期" />
+									<label value="*" style="color:red" />
+								</cell>
+								<cell align="left">
+									<datebox mold="rounded"
+										instant="true" readonly="true" format="yyyy-MM-dd"
+										value="@bind(vm.m.enddate)" id="sqedid"
+										onBlur="@command('addDateCheck')" />
+								</cell>
+							</row>
+							<row>
+								<cell align="left" width="15%">
+									<label value="客服备注 " />
+									<label value="*" style="color:red" />
+								</cell>
+								<cell align="left" colspan="3">
+									<label
+										value="@bind(vm.m.cfpc_remark)" width="60%" />
+								</cell>
+							</row>
+						</rows>
+					</grid>
+				</row>
+				<row>
+					<grid id="gd">
+						<rows>
+							<row>
+								<cell>
+									<label value="提交资料" />
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<!-- 材料内联页 参数：puzu_id：模块页面id， doc_type：员工(g)还是公司(c)，gid：公司数据则插入空白 ，业务表id,log_url：获取到页面路径的前部分，ifSubmit：当前页面已勾选后的材料状态 -->
+									<docDataList id="docGrid"
+										puzu_id="121" doc_type="c" cid="@bind(vm.m.cid)"
+										tid="${vm.m.cfpc_id }" dHeight="200px" dWidth="100%" log_url="/DocumentsInfo/" />
+								</cell>
+							</row>
+						</rows>
+					</grid>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button label="申报"
+						if="${vm.m.cfpc_state == 1 ? true : false }"
+						onClick="@command('submit',wind=winds,gd=docGrid,sbstate=okradio.selectedItem.value,m=renewalCombo.selectedItem.value)" />
+					<button if="${vm.m.cfpc_state == 2 ? true : false }"
+						onClick="@command('shenbao',wind=winds,gd=docGrid)" label="已申报" />
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

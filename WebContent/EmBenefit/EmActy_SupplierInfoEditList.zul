@@ -1,0 +1,120 @@
+<?page title="员工活动——供应商信息管理列表" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="员工活动——供应商信息管理列表" border="normal" vflex="1"
+		apply="org.zkoss.bind.BindComposer" id="windeclare"
+		viewModel="@id('vm') @init('Controller.EmBenefit.EmActy_SupplierInfoController')">
+		<borderlayout>
+			<north border="0" title="检索" collapsible="true" flex="true"
+				style="padding-bottom:10px;" open="true">
+				<grid>
+					<rows>
+						<row>
+							<cell width="80px">供应商名称</cell>
+							<cell>
+								<textbox id="supname" />
+							</cell>
+							<cell width="80px">供应商地址</cell>
+							<cell>
+								<textbox id="supaddress" />
+							</cell>
+							<cell width="80px">网址</cell>
+							<cell>
+								<textbox id="website" />
+							</cell>
+						</row>
+					</rows>
+					<foot>
+						<footer align="center">
+							<button
+								onClick="@command('seach',supname=supname.value,supaddress=supaddress.value,website=website.value)">
+								查询
+							</button>
+						</footer>
+					</foot>
+				</grid>
+			</north>
+			<center>
+				<grid width="100%" model="@load(vm.list)" mold="paging"
+					sizedByContent="true" span="true" pageSize="500">
+					<columns>
+
+						<column label="序号" align="center" />
+						<column label="供应商名称" align="center" />
+						<column label="供应商地址" align="center" />
+						<column label="网址" align="center" />
+						<column label="服务类型" align="center" />
+						<column label="添加人" align="center" />
+						<column label="添加时间" align="center" />
+						<column label="备注" align="center" />
+						<column label="操作" align="center" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+
+								<cell>
+									<label
+										value="${forEachStatus.index+1 }">
+									</label>
+								</cell>
+								<cell align="left" >
+									<label
+										value="@load(each.supp_name)">
+									</label>
+								</cell>
+								<cell align="left" >
+									<label
+										value="@load(each.supp_address)">
+									</label>
+								</cell>
+								<cell align="left" >
+									<label
+										value="@load(each.supp_website)">
+									</label>
+								</cell>
+								<cell align="left" >
+									<label
+										value="@load(each.supp_type)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.supp_addname)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.supp_addtime)">
+									</label>
+								</cell>
+								<cell  align="left" >
+									<label
+										value="@load(each.supp_remark)">
+									</label>
+								</cell>
+								<cell>
+									<menubar autodrop="true">
+										<menu
+											image="../images/pencil-small.png">
+											<menupopup>
+												<menuitem label="修改"
+													onClick="@command('openZUL',url='EmActy_SupplierEdit.zul',model=each)" />
+												<menuitem label="添加联系人"
+													onClick="@command('openZUL',url='EmActy_SupLinkManAdd.zul',model=each)" />
+												<menuitem label="添加报价"
+													onClick="@command('openZUL',url='EmActy_ProductAdd.zul',model=each)" />
+												<menuitem label="详细信息"
+													visible="false"
+													onClick="@command('openZUL',url='EmActy_SupplierInfo.zul',model=each)" />
+											</menupopup>
+										</menu>
+									</menubar>
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

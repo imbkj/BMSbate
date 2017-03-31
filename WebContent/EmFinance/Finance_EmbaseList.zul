@@ -1,0 +1,62 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window border="normal" width="1100px" height="80%" id="emwin"
+	apply="org.zkoss.bind.BindComposer" closable="true"
+	viewModel="@id('vm') @init('Controller.EmFinance.Finance_EmbaseController')"
+	title="${arg.model.name}—委托对账——${arg.model.emfz_company }(${arg.model.cid })">
+<grid vflex="1" span="true" sizedByContent="true"
+ model="@load(vm.model.efWtList)" emptyMessage="该公司还没有台帐数据，请确认是否已同步台帐">
+		<columns>
+			<column align="center" width="40px"></column>
+			<column label="序号" width="60px" align="center"/>
+			<column label="员工编号" align="center" width="80px"/>
+			<column label="姓名" align="center" width="90px"/>
+			<column label="身份证号" align="center" width="160px"/>
+			<column label="差额合计" align="center" sort="auto(fifz_total)"/>
+			<column label="社保差额" align="center"/>
+			<column label="养老费差额" align="center"/>
+			<column label="公积金差额" align="center"/>
+			<column label="服务费差额" align="center"/>
+			<column label="档案费差额" align="center"/>
+			<column label="其他费差额" align="center"/>
+			<column label="调整费用" align="center"/>
+		</columns>
+		<rows>
+		<template name="model">
+			<row>
+			<custom-attributes model="${each}"/>
+			<detail open="false" fulfill="onOpen" >
+					<include src="/EmFinance/Finance_Info.zul" model="${model}"/>
+			</detail>
+				<cell><label value="${forEachStatus.index+1 }"></label></cell>
+				<cell><label value="@load(each.gid)"></label></cell>
+				<cell><a onClick="@command('openImprove',gid=each.gid,cid=each.cid,ownmonth=each.ownmonth)"><label value="@load(each.emfi_name)"/></a></cell>
+				<cell><label value="@load(each.emfi_idcard)"></label></cell>
+				<cell><label value="${each.emfi_total-each.emfz_total+each.emfi_n_total-each.emfz_other-each.emfz_fee2 }"></label></cell>
+				<cell><label value="${each.emfi_sbtotal-each.emfz_sbtotal }"></label></cell>
+				<cell><label value="${each.emfi_yltotal-each.emfz_yltotal }"></label></cell>
+				<cell><label value="${each.emfi_housetotal-each.emfz_housetotal }"></label></cell>
+				<cell><label value="${each.emfi_fee-each.emfz_fee }"></label></cell>
+				<cell><label value="${each.emfi_filefee-each.emfz_filefee }"></label></cell>
+				<cell><label value="${each.emfi_elsefee-each.emfz_elsefee }"></label></cell>
+				<cell><label value="@load(each.emfi_n_total-each.emfz_other)"></label></cell>
+			</row>
+		</template>
+		</rows>
+		<foot>
+			<footer span="26" align="left">
+				<hlayout>
+					<label>数据统计：</label><label if="false">公司部分收费金额为:</label><label if="false" style="margin-right:20px;color:#FF0000;">[${vm.model.cofi_fee }]</label>
+					<label>系统台账员工数</label><label style="margin-right:20px;color:#FF0000;">[${vm.model.emFiCount }]</label>
+					<label>智翼通台账员工数</label><label style="margin-right:20px;color:#FF0000;">[${vm.model.emFzCount}]</label>
+					<label value="系统员工和智翼通员工不一致列表"></label>
+					<a onClick="@command('diffient')"><label style="margin-right:20px;color:#FF0000;">[${vm.diffnum}]</label></a>
+					<button label="公司业务中心" onClick="@command('openmemulist')"/>
+					<button label="非标管理" onClick="@command('manualDisposable')"/>
+				</hlayout>
+			</footer>
+		</foot>
+	</grid>
+
+</window>
+</zk>

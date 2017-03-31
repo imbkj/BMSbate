@@ -1,0 +1,50 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="win" title="@load(vm.title)" border="normal"
+		closable="true" width="500px" height="200px"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmSocialinPaper.EmSocialinPaper_OperateController')">
+		<div height="100%">
+			<grid height="85%">
+				<columns>
+					<column width="20%" />
+					<column />
+				</columns>
+				<rows>
+					<row>
+						选中姓名
+						<label value="@load(vm.names)" />
+					</row>
+					<row>
+						<label value="@load(vm.timestr)" />
+						<datebox format="yyyy-MM-dd" mold="rounded"
+							value="@bind(vm.time)" />
+					</row>
+					<row visible="@bind(vm.qyVis)">
+						办理区域
+						<combobox readonly="true" mold="rounded"
+							model="@load(vm.comboList)" value="@bind(vm.area)">
+							<template name="model">
+								<comboitem
+									label="@load(each.statename)" />
+							</template>
+						</combobox>
+					</row>
+					<row visible="@bind(vm.fkVis)">
+						发卡方式
+						<combobox readonly="true" mold="rounded"
+							model="@load(vm.comboList)" value="@bind(vm.sendtype)">
+							<template name="model">
+								<comboitem
+									label="@load(each.statename)" />
+							</template>
+						</combobox>
+					</row>
+				</rows>
+			</grid>
+			<hbox width="100%" pack="center" align="center">
+				<button label="提交" onClick="@command('next',win=win)" />
+			</hbox>
+		</div>
+	</window>
+</zk>

@@ -1,0 +1,133 @@
+<!--
+	创建人：赵敏捷
+	创建时间：2014-1-17
+	用途：客服提交基数采集数据
+-->
+
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winemco" title="基数采集列表" apply="org.zkoss.bind.BindComposer,Controller.EmCommissionOut.EmCyearaddinfolistController"
+		viewModel="@id('vm') @init('Controller.EmCommissionOut.EmCyearaddinfolistController')"
+		border="normal" sizable="true" height="100%" width="100%" closable="true">
+		<borderlayout>
+			<north>
+		<groupbox title="@load(vm.cjxm)">
+					<include src="../CoPolicyNotice/Pono_PubInfoList.zul" cpnt_type="基数采集" cpnr_data_id="${vm.d_id}">
+					</include>
+				</groupbox>
+		</north>
+			<center>
+
+		
+<grid vflex="1" id="gridwin"  mold="paging" pageSize="40"   >
+	<columns id="gridcols" style="cursor:pointer" onCreate="@command('colsInit',self=gridwin)" >
+	<column width="100px" align="center">
+	<checkbox id="allcheck" value="选择" onCheck="@command('checkall',gd=gridwin,ck=allcheck)">
+	</checkbox>
+	</column>
+	
+		<column width="100px" align="center"
+							sort="auto(cid)">
+							<vbox align="center">
+								<label value="公司编号"
+									style="color:black;" />
+								<intbox id="ibcid"
+									constraint="no negative"
+									onChange="@command('changeList',ibcid=ibcid, ibGid=ibGid,cname=cname,gname=gname,gridwin=gridwin,ecycstate=ecycstate)"
+									/>
+							</vbox>
+						</column>
+							<column width="150px" align="center"
+							sort="auto(coba_name)">
+							<vbox align="center">
+								<label value="公司简称"
+									style="color:black;" />
+								<textbox id="cname"
+									
+									onChange="@command('changeList',ibcid=ibcid, ibGid=ibGid,cname=cname,gname=gname,gridwin=gridwin,ecycstate=ecycstate)"
+									/>
+							</vbox>
+						</column>
+						
+						<column width="100px" align="center"
+							sort="auto(gid)">
+							<vbox align="center">
+								<label value="员工编号"
+									style="color:black;" />
+								<intbox id="ibGid"
+									constraint="no negative"
+									onChange="@command('changeList',ibcid=ibcid, ibGid=ibGid,cname=cname,gname=gname,gridwin=gridwin,ecycstate=ecycstate)"
+									/>
+							</vbox>
+						</column>
+							<column width="150px" align="center"
+							sort="auto(emba_name)">
+							<vbox align="center">
+								<label value="员工简称"
+									style="color:black;" />
+								<textbox id="gname"
+									
+									onChange="@command('changeList',ibcid=ibcid, ibGid=ibGid,cname=cname,gname=gname,gridwin=gridwin,ecycstate=ecycstate)"
+									/>
+							</vbox>
+						</column>
+						
+							<column width="150px" align="center"
+							 >
+							<vbox align="center">
+								<label value="状态"
+									style="color:black;" />
+								<combobox id="ecycstate" model="@load(vm.wtztlist)" width="50%" autodrop="true" mold="rounded"
+								 selectedItem="@bind(vm.wtzt)" onChange="@command('changeList',ibcid=ibcid, ibGid=ibGid,cname=cname,
+								 gname=gname,gridwin=gridwin,ecycstate=ecycstate)">
+									<template name="model">
+											<comboitem
+												label="@load(each)" />
+										</template>
+										
+										</combobox>
+								
+							</vbox>
+						</column>
+	
+	
+	</columns>
+	<rows id="gridrows" >
+
+	</rows>
+</grid>
+
+
+
+			</center>
+			<south>
+	<vlayout width="100%">
+					<panel border="0">
+						<panelchildren >
+							<vbox width="100%">
+								<grid width="100%">
+									<rows>
+										<row>
+											<div align="center" width="100%">
+				<button label="导入基数"
+						onClick="@command('jscj',win=winemco)" />
+						
+						
+					<button label="提交" id="btSubmit" 
+						onClick="@command('Upjscjlist', gridwin=gridwin)" />
+					<label value="修改完数据后，请点击提交按钮。" style="color:red" />
+				</div>
+	</row>
+									</rows>
+									
+								</grid>
+							</vbox>
+						</panelchildren>
+					</panel>
+				</vlayout>
+</south>
+
+		</borderlayout>
+		
+	</window>
+</zk>

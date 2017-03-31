@@ -1,0 +1,123 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="供应商合同审核" width="100%" height="100%"
+		id="wincompactAudit" border="normal"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmBenefit.EmActy_compactAuditController')"
+		closable="true">
+		<borderlayout>
+			<north>
+				<grid>
+					<rows>
+						<row>
+							<cell>供应商名称</cell>
+							<cell>
+								<textbox mold="rounded" id="company" />
+							</cell>
+							<cell>合同编号</cell>
+							<cell>
+								<textbox mold="rounded" id="compactid" />
+							</cell>
+						</row>
+						<row>
+							<cell>添加人</cell>
+							<cell>
+								<combobox mold="rounded" id="addname"
+									model="@load(vm.addnameList)">
+									<template name="model">
+										<comboitem
+											label="@load(each.eaco_addname)" />
+									</template>
+								</combobox>
+							</cell>
+							<cell>是否未审核</cell>
+							<cell>
+								<combobox mold="rounded" value="否"
+									id="compactState" readonly="true">
+									<comboitem label="是" value="3" />
+									<comboitem label="否" value="1" />
+								</combobox>
+							</cell>
+						</row>
+					</rows>
+					<foot>
+						<footer align="center">
+							<button label="查询"
+								onClick="@command('search')">
+							</button>
+						</footer>
+					</foot>
+				</grid>
+			</north>
+			<center>
+				<grid id="gd" width="100%" height="100%"
+					model="@load(vm.compactList)">
+					<columns>
+						<column align="center">序号</column>
+						<column align="center">供应商</column>
+						<column align="center">合同编号</column>
+						<column align="center">归档编号</column>
+						<column align="center">签订时间</column>
+						<column align="center">生效时间</column>
+						<column align="center">审核时间</column>
+						<column align="center">签回时间</column>
+						<column align="center">归档时间</column>
+						<column align="center">操作</column>
+					</columns>
+					<template name="model">
+						<row>
+							<cell>${forEachStatus.index+1 }</cell>
+							<cell>
+								<label value="@load(each.eaco_name)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.eaco_compactid)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.eaco_fileId)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.eaco_signdate)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.eaco_inuredate)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.eaco_auditdate)" />
+
+							</cell>
+							<cell>
+								<label
+									value="@load(each.eaco_returndate)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.eaco_filedate)" />
+							</cell>
+							<cell>
+								
+								<menubar autodrop="true" width="50px"
+									sclass="mymb">
+									<menu
+										image="../images/pencil-small.png">
+										<menupopup>
+											<menuitem
+												if="${each.eaco_state==3 }" label="审核"
+												onClick="@command('audit',a=each)" />
+											
+										</menupopup>
+									</menu>
+								</menubar>
+							</cell>
+						</row>
+					</template>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

@@ -1,0 +1,43 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="短信回复" border="normal" width="50%" height="50%"
+	id="replywin" apply="org.zkoss.bind.BindComposer" closable="true"
+	viewModel="@id('vm') @init('Controller.SysMessage.Message_ReplyAddController')"
+>
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell width="80px"></cell>
+			<cell></cell>
+			<cell width="80px"></cell>
+			<cell></cell>
+		</row>
+		<row>
+			<cell width="80px">收件人</cell>
+			<cell colspan="3">
+				<textbox readonly="true" value="@load(vm.model.syme_addname)"></textbox>
+			</cell>
+		</row>
+		<row>
+			<cell width="80px">模板</cell>
+			<cell colspan="3">
+				<combobox model="@load(vm.temList)" readonly="true" onChange="@command('temselect',temcb=self)">
+					<template name="model">
+						<comboitem label="@load(each.pmte_model)" value="@load(each)"/>
+					</template>
+				</combobox>
+				<checkbox label="发邮件" style="border:0;margin-left:10px;"></checkbox>
+			</cell>
+		</row>
+		<row>
+			<cell width="80px">短信内容</cell>
+			<cell colspan="3">
+			<textbox width="80%" rows="4" value="@bind(vm.content)" onOK="@command('send',win=replywin)"></textbox></cell>
+		</row>
+	</rows>
+	<foot>
+		<footer align="center"><button onClick="@command('reply',win=replywin)">发送</button></footer>
+	</foot>
+</grid>
+</window>
+</zk>

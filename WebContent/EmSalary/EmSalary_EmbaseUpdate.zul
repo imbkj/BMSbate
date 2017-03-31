@@ -1,0 +1,111 @@
+<!--
+	创建人：林少斌
+	创建时间：2013-12-20
+	用途：工资个人信息修改页面
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winESEU" title="个人信息修改" border="normal" width="60%" closable="true"
+		sizable="true" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmSalary.EmSalary_EmbaseUpdateController')">
+		<grid>
+			<rows>
+				<row>
+					<cell style="color:#666;">公司简称：</cell>
+					<cell style="color:#666;">
+						<label
+							value="@load(vm.baseModel.coba_shortname)" />
+					</cell>
+					<cell style="color:#666;">公司编号：</cell>
+					<cell style="color:#666;">
+						<label value="@load(vm.baseModel.cid)" />
+					</cell>
+				</row>
+				<row>
+					<cell style="color:#666;">员工姓名：</cell>
+					<cell style="color:#666;">
+						<label value="@load(vm.baseModel.emba_name)" />
+					</cell>
+					<cell style="color:#666;">员工编号：</cell>
+					<cell style="color:#666;">
+						<label value="@load(vm.baseModel.gid)" />
+					</cell>
+				</row>
+				<row>
+					<cell style="color:#666;">所属月份：</cell>
+					<cell style="color:#666;">
+						<label value="@load(vm.baseModel.ownmonth)" />
+					</cell>
+					<cell style="color:#666;">算法名称：</cell>
+					<cell style="color:#666;">
+						<label value="@load(vm.baseModel.ownmonth)" />
+					</cell>
+				</row>
+				<row>
+					<cell style="color:#666;">用途：</cell>
+					<cell style="color:#666;">
+						<label
+							value="@load(vm.baseModel.esda_usage_typestr)" />
+					</cell>
+					<cell style="color:#666;">国籍：</cell>
+					<cell style="color:#666;">
+						<label
+							value="@load(vm.baseModel.esda_nationality)" />
+					</cell>
+				</row>
+				<row>
+					<cell style="color:#666;">开户银行：</cell>
+					<cell style="color:#666;">
+						<label value="@load(vm.baseModel.esda_bank)" />
+					</cell>
+					<cell style="color:#666;">所属银行：</cell>
+					<cell style="color:#666;">
+						<label value="" />
+					</cell>
+				</row>
+				<row>
+					<cell style="color:#666;">账户名：</cell>
+					<cell style="color:#666;">
+						<textbox mold="rounded" width="80%"
+							value="@bind(vm.baseModel.esda_ba_name)" />
+					</cell>
+					<cell style="color:#666;">银行账户：</cell>
+					<cell style="color:#666;">
+						<label
+							value="@load(vm.baseModel.esda_bank_account)" />
+					</cell>
+				</row>
+				<row>
+					<cell style="color:#666;">状态：</cell>
+					<cell style="color:#666;">
+						<label
+							value="@load(vm.baseModel.esda_payment_statestr)" />
+					</cell>
+					<cell style="color:#666;">特殊情况：</cell>
+					<cell style="color:#666;">
+						<label value="" />
+					</cell>
+				</row>
+				<row>
+					<cell style="color:#666;">备注：</cell>
+					<cell style="color:#666;" colspan="3">
+						<label value="@load(vm.baseModel.esda_remark)" />
+					</cell>
+				</row>
+				<row>
+					<cell style="color:#666;">财务备注：</cell>
+					<cell style="color:#666;" colspan="3">
+						<label
+							value="@load(vm.baseModel.esda_fd_remark)" />
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button label="提交" id="btSubmit"
+						onClick="@command('submit',win=winESEU)" />
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

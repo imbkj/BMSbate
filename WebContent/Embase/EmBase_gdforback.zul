@@ -1,0 +1,289 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winGd" width="100%" height="100%" border="normal"
+		closable="true" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.Embase.EmBase_gdforbackController')"
+		onCreate="@command('winD',a=self)">
+		<borderlayout>
+			<north title="搜索条件" collapsible="true" open="true">
+				<grid>
+					<columns visible="false">
+						<column width="120px" />
+						<column />
+						<column width="120px" />
+						<column />
+						<column width="120px" />
+						<column />
+					</columns>
+					<rows>
+						<row>
+							<cell>所属月份</cell>
+							<cell>
+								<combobox model="@load(vm.ownmonthList)"
+									value="@bind(vm.egm.ownmonth)">
+									<template name="model">
+										<comboitem
+											label="@load(each.ownmonth)">
+										</comboitem>
+									</template>
+								</combobox>
+							</cell>
+							<cell>客服</cell>
+							<cell>
+								<combobox model="@load(vm.clientList)"
+									value="@bind(vm.egm.client)">
+									<template name="model">
+										<comboitem
+											label="@load(each.log_name)" />
+									</template>
+								</combobox>
+							</cell>
+							<cell>公司名称</cell>
+							<cell>
+								<textbox value="@bind(vm.egm.company)" />
+							</cell>
+
+						</row>
+						<row>
+							<cell>任务类型</cell>
+							<cell>
+								<combobox model="@load(vm.typeList)"
+									value="@bind(vm.egm.type)">
+									<template name="model">
+										<comboitem
+											label="@load(each.type)" />
+									</template>
+								</combobox>
+							</cell>
+							<cell>操作状态</cell>
+							<cell>
+								<combobox readonly="true"
+									value="@bind(vm.egm.declaretype)">
+									<comboitem label="" />
+									<comboitem label="未处理" />
+									<comboitem label="已处理" />
+									<comboitem label="待确认" />
+									<comboitem label="退回客服" />
+								</combobox>
+							</cell>
+							<cell>姓名</cell>
+							<cell>
+								<textbox value="@bind(vm.egm.name)" />
+							</cell>
+						</row>
+						<row>
+							<cell>公积金账户类型</cell>
+							<cell>
+								<combobox
+									value="@bind(vm.egm.single)">
+									<comboitem label="中智开户" />
+									<comboitem label="独立开户" />
+								</combobox>
+							</cell>
+							<cell>公积金托收日</cell>
+							<cell>
+								<combobox value="@bind(vm.egm.tsday)"
+									model="@load(vm.tsdayList)">
+									<template name="model">
+										<comboitem label="@load(each)" />
+									</template>
+								</combobox>
+							</cell>
+							<cell>服务中心文员</cell>
+							<cell>
+								<combobox model="@load(vm.assistantlist)"
+									value="@bind(vm.egm.assistant)">
+									<template name="model">
+										<comboitem
+											label="@load(each.log_name)" />
+									</template>
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>添加人</cell>
+							<cell>
+								<combobox readonly="true"
+									model="@load(vm.addnamelist)" value="@bind(vm.egm.addname)">
+									<template name="model">
+										<comboitem
+											label="@load(each.log_name)" />
+									</template>
+								</combobox>
+							</cell>
+							<cell>联系方式</cell>
+							<cell>
+								<combobox readonly="true"
+									value="@bind(vm.egm.linktype)">
+									<comboitem label="" />
+									<comboitem label="员工本人" />
+									<comboitem label="指定联系人" />
+									<comboitem label="客服" />
+								</combobox>
+							</cell>
+							<cell>数据状态</cell>
+							<cell>
+								<combobox readonly="true"
+									selectedItem="@bind(vm.egm.declareState)"
+									value="@bind(vm.egm.declareName)">
+									<comboitem value="" label="" />
+									<comboitem value="2" label="未确认" />
+									<comboitem value="1" label="退回" />
+									<comboitem value="3" label="未申报" />
+									<comboitem value="4" label="申报中" />
+									<comboitem value="5" label="已申报" />
+								</combobox>
+							</cell>
+						</row>
+					</rows>
+					<foot>
+						<footer span="6" align="center">
+							<button label="查询"
+								onClick="@command('Search')" />
+						</footer>
+					</foot>
+				</grid>
+			</north>
+			<center>
+				<grid model="@load(vm.gdlist)" width="100%"  mold="paging" pageSize="100"
+					sizedByContent="true" span="true" height="100%"
+					emptyMessage="暂无数据">
+					<columns>
+						<column width="50px" align="center" label="序号" />
+						<column width="80px" align="center"
+							label="所属月份" />
+						<column align="center" label="公司编号" />
+						<column align="center" label="公司简称" />
+						<column align="center" label="客服" />
+						<column align="center" label="员工编号" />
+						<column align="center" label="姓名" />
+						<column align="center" label="状态" />
+						<column align="center" label="任务类型" />
+						<column align="center" label="任务提交时间" />
+						<column align="center" label="中心文员" />
+						<column align="center" label="联系方式" />
+						<column align="center" label="签收方式" />
+						<!-- 						<column align="center" label="添加人" /> -->
+						<column align="center" label="操作人" />
+						<column align="center" label="操作状态" />
+						<column width="35px" align="center" label="小信封" />
+						<column width="35px" align="center" label="短信" />
+						<column align="center" label="操作" />
+					</columns>
+					<template name="model">
+						<row>
+							<cell>
+								<label
+									value="${forEachStatus.index+1 }" />
+							</cell>
+							<cell>
+								<label value="@load(each.ownmonth)" />
+							</cell>
+							<cell>
+								<label value="@load(each.cid)" />
+							</cell>
+							<cell align="left">
+								<label value="@load(each.shortname)" />
+							</cell>
+							<cell>
+								<label value="@load(each.client)" />
+							</cell>
+							<cell>
+								<label value="@load(each.gid)" />
+							</cell>
+							<cell>
+								<label value="@load(each.name)" />
+							</cell>
+							<cell>
+
+
+								<label if="${each.emba_statestr=='离职'}"
+									style="color:red;" value="@load(each.emba_statestr)" />
+								<label if="${each.emba_statestr!='离职'}"
+									value="@load(each.emba_statestr)" />
+							</cell>
+							<cell>
+								<label value="@load(each.type)" />
+							</cell>
+							<cell>
+								<label value="@load(each.addtime)" />
+							</cell>
+							<cell>
+								<label value="@load(each.assistant)" />
+							</cell>
+							<cell>
+								<label style="cursor:pointer;"
+									onClick="@command('linkinfo',a=each)"
+									value="@bind(each.cosp_sbhs_caliname)" />
+							</cell>
+							<cell>
+								<combobox readonly="true" width="125px"
+									onSelect="@command('mod',a=each)"
+									value="@bind(each.datatype)">
+									<comboitem label="" />
+									<comboitem label="退回员工本人" />
+									<comboitem label="退回客服专员" />
+									<comboitem label="退回客服制定联系人" />
+								</combobox>
+							</cell>
+
+							<cell>
+								<label value="@load(each.addname)" />
+							</cell>
+
+							<!-- 								<cell> -->
+							<!-- 								<label value="@load(each.emgd_addname)" /> -->
+							<!-- 							</cell> -->
+
+							<cell>
+								<combobox readonly="true" width="80px"
+									onSelect="@command('mod',a=each)"
+									value="@bind(each.declaretype)">
+									<comboitem label="" />
+									<comboitem label="未处理" />
+									<comboitem label="已处理" />
+									<comboitem label="待确认" />
+									<comboitem label="退回客服" />
+									<comboitem label="结束任务单" />
+
+								</combobox>
+							</cell>
+
+
+							<cell>
+
+								<image src="../images/readed.gif"
+									onClick="@command('message',a=each)" />
+							</cell>
+							<cell>
+								<image src="../images/mobile.gif"
+									style="cursor:pointer" onClick="@command('openmobile',a=each)" />
+							</cell>
+							<cell>
+								<menubar autodrop="true" width="50px"
+									sclass="mymb">
+									<menu
+										image="../images/pencil-small.png">
+										<menupopup>
+											<menuitem label="申报"
+												if="${each.declareState==1 or  each.declareState==2}"
+												onClick="@command('checkInfo',a=each)" />
+											<menuitem label="处理"
+												if="${each.declareState==3 and 
+												(each.typeId==4 or each.typeId==5 or each.typeId==6 or each.typeId==7 
+												or each.typeId==8 or each.typeId==9 or each.typeId==10 or each.typeId==11 or each.typeId==12) and each.type != '医疗补缴新增'}"
+												onClick="@command('checkInfo',a=each)" />
+											<menuitem
+												label="请操作相应的养老补交数据" if="${each.type eq '医疗补缴新增'}" />
+										</menupopup>
+									</menu>
+								</menubar>
+							</cell>
+						</row>
+					</template>
+
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

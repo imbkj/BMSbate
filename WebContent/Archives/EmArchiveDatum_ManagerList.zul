@@ -1,0 +1,282 @@
+<?page title="档案业务信息列表" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window border="0" height="100%" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.Archives.EmArchiveDatum_InfoListController')">
+		<style src="/css/style.css"></style>
+		<panel title="档案业务信息管理列表" height="100%">
+			<panelchildren>
+				<borderlayout height="100%">
+					<north border="0" title="检索" collapsible="true"
+						flex="true" style="padding-bottom:10px;">
+						<grid id="secrchgrid">
+							<rows>
+								<row>
+									<cell width="130px">公司名称</cell>
+									<cell>
+										<textbox id="company"
+											mold="rounded" />
+									</cell>
+									<cell width="130px">员工姓名</cell>
+									<cell>
+										<textbox id="name"
+											mold="rounded" />
+									</cell>
+									<cell width="75px">档案类型</cell>
+									<cell>
+										<combobox id="acclass"
+											mold="rounded">
+											<comboitem label="" />
+											<comboitem label="中智保管" />
+											<comboitem label="委托人才" />
+										</combobox>
+									</cell>
+								</row>
+								<row>
+									<cell width="130px">档案号</cell>
+									<cell width="160px">
+										<textbox id="acid"
+											mold="rounded" />
+									</cell>
+									<cell width="130px">业务类型</cell>
+									<cell>
+										<combobox id="yewclass" value="档案调入"
+											mold="rounded">
+											<comboitem value="-1"
+												label="" />
+											<comboitem value="0"
+												label="档案调入" />
+											<comboitem value="1"
+												label="查借材料" />
+											<comboitem value="2"
+												label="出具证明" />
+											<comboitem value="3"
+												label="材料鉴别归档" />
+											<comboitem value="4"
+												label="转正定级" />
+											<comboitem value="5"
+												label="档案调出" />
+											<comboitem value="6"
+												label="欠费查询" />
+										</combobox>
+									</cell>
+									<cell width="130px">办理状态</cell>
+									<cell>
+										<combobox id="astate" value="待处理"
+											mold="rounded">
+											<comboitem value="0"
+												label="" />
+											<comboitem value="1"
+												label="待处理" />
+											<comboitem value="2"
+												label="处理中" />
+											<comboitem value="3"
+												label="已处理" />
+											<comboitem value="4"
+												label="已退回" />
+										</combobox>
+									</cell>
+								</row>
+								<row>
+									<cell align="center" colspan="6">
+										<button id="btSearch" label="查询"
+											onClick="@command('search',acclass=acclass.value,company=company.value,name=name.value,acid=acid.value,yewclass=yewclass,astate=astate)" />
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</north>
+					<center>
+						<grid width="100%" height="100%"
+							emptyMessage="没有档案信息" model="@load(vm.datumlist)" mold="paging"
+							pageSize="40" sizedByContent="true" span="true">
+							<columns>
+								<column />
+								<column label="序号" align="center" />
+								<column label="公司名称"
+									sort="auto(coba_shortname)" />
+								<column label="员工姓名" align="center"
+									sort="auto(eada_name)" />
+								<column label="档案类型" align="center"
+									sort="auto(eada_filetype)" />
+								<column label="档案号" align="center"
+									sort="auto(eada_fid)" />
+								<column label="办理业务" align="center"
+									sort="auto(eada_type)" />
+								<column label="客服" align="center"
+									sort="auto(coba_client)" />
+								<column label="添加时间" align="center"
+									sort="auto(eada_addtime)" />
+								<column label="状态" align="center"
+									sort="auto(eada_final)" />
+								
+								<column label="操作" align="center" />
+							</columns>
+							<rows>
+								<template name="model">
+									<row>
+										<custom-attributes
+											emar_id="${each.eada_id }" gid="${each.gid }"/>
+										<detail open="false"
+											fulfill="onOpen" visible="${each.num>0?true:false }">
+											<include
+												src="/Archives/Archives_Remark.zul" emar_id="${emar_id}"
+												 gid='${gid}'/>
+										</detail>
+										<cell>
+											<label
+												value="${forEachStatus.index+1 }">
+											</label>
+										</cell>
+										<cell>
+											<label
+												value="@load(each.coba_shortname)">
+											</label>
+										</cell>
+										<cell>
+											<label
+												value="@load(each.eada_name)">
+											</label>
+										</cell>
+										<cell>
+											<label
+												value="@load(each.eada_filetype)">
+											</label>
+										</cell>
+										<cell>
+											<label
+												value="@load(each.eada_fid)">
+											</label>
+										</cell>
+										<cell>
+											<label
+												value="@load(each.eada_type)">
+											</label>
+										</cell>
+										<cell>
+											<label
+												value="@load(each.coba_client)">
+											</label>
+										</cell>
+										<cell>
+											<label
+												value="@load(each.eada_addtime)">
+											</label>
+										</cell>
+										<cell>
+											<label
+												value="@load(each.eada_final)">
+											</label>
+										</cell>
+										
+										<cell>
+											<menubar autodrop="true">
+												<menu
+													image="../images/pencil-small.png">
+													<menupopup>
+														<menuitem
+															label="系统短信"
+															onClick="@command('sendSysMessage',archivemodel=each)" />
+														<menuitem
+															label="手机短信"
+															onClick="@command('sendSMSMessage',archivemodel=each)" />
+														<menuitem
+															label="联系记录"
+															onClick="@command('linkinfo',m=each)" />
+														<menuitem
+															label="受理"
+															visible="${each.eada_final=='待处理' and each.eada_type!='档案调入'}"
+															onClick="@command('openZUL',url='Archive_Accepted.zul',archivemodel=each)" />
+														<menuitem
+															label="下载商调函"
+															visible="${each.eada_type=='档案调入'}"
+															onClick="@command('openZUL',url='Archive_DownSDH.zul',archivemodel=each)" />
+														<menuitem
+															label="受理"
+															visible="${each.eada_final=='待处理' and each.eada_type=='档案调入'}"
+															onClick="@command('openZUL',url='Archive_classify.zul',archivemodel=each)" />
+														<menuitem
+															label="开函" visible="${each.eada_final=='处理中'}"
+															if="${each.eada_type=='档案调入'}"
+															onClick="@command('openZUL',url='EmArchiveDatum_FileCallIn.zul',archivemodel=each)" />
+														<menuitem
+															label="归档" visible="${each.eada_final=='处理中'}"
+															if="${each.eada_type=='档案调入'}"
+															onClick="@command('openZUL',url='Archive_new.zul',archivemodel=each,acclass=acclass.value)" />
+														<menuitem
+															label="借出材料"
+															visible="${each.eada_final=='处理中' and each.eada_lenddate==null}"
+															if="${each.eada_type=='查借材料' and ((each.eada_iffee==1 and each.eada_paydate!=null) or each.eada_iffee==0)}"
+															onClick="@command('openZUL',url='Archive_Datadefine.zul',archivemodel=each)" />
+														<menuitem
+															label="收回材料"
+															visible="${each.eada_final=='处理中' and each.eada_returnarchivedate==null and each.eada_lenddate!=null}"
+															if="${each.eada_type=='查借材料'}"
+															onClick="@command('openZUL',url='Archive_Datadefine.zul',archivemodel=each)" />
+														<menuitem
+															label="发出表格"
+															visible="${each.eada_final=='处理中' and each.eada_drawformdate==null and each.eada_paydate==null}"
+															if="${each.eada_type=='转正定级'}"
+															onClick="@command('openZUL',url='Archive_FilePassHand.zul',archivemodel=each)" />
+
+														<menuitem
+															label="收回表格"
+															visible="${each.eada_final=='处理中' and each.eada_drawformdate!=null and each.eada_returnformdate==null}"
+															if="${each.eada_type=='转正定级'}"
+															onClick="@command('openZUL',url='Archive_FilePassGtBackTable.zul',archivemodel=each)" />
+														<menuitem
+															label="财务结算"
+															visible="${each.eada_final=='处理中' and each.eada_returnformdate!=null and each.eada_paydate==null}"
+															if="${each.eada_type=='转正定级'}"
+															onClick="@command('openZUL',url='Archive_FilePassFee.zul',archivemodel=each)" />
+														<menuitem
+															label="转正定级"
+															visible="${each.eada_final=='处理中' and each.eada_paydate!=null and each.eada_transactdate==null}"
+															if="${each.eada_type=='转正定级'}"
+															onClick="@command('openZUL',url='Archive_FilePassEnd.zul',archivemodel=each)" />
+
+														<menuitem
+															label="编辑"
+															visible="${each.eada_final=='处理中' and each.eada_filetype=='中智保管'}"
+															if="${each.eada_type=='档案调出' and ((each.eada_iffee==1 and eada_accountdate!=null) or each.eada_iffee==0)}"
+															onClick="@command('openZULcheck',url='Archive_FileCheckOutData.zul',archivemodel=each)" />
+														<menuitem
+															label="开证明" visible="${each.eada_final=='处理中'}"
+															if="${each.eada_type=='出具证明' and ((each.eada_iffee==1 and each.eada_paydate!=null) or each.eada_iffee==0)}"
+															onClick="@command('openZUL',url='EmArchiveDatum_OpenProve.zul',archivemodel=each)" />
+														<menuitem
+															label="交接材料"
+															visible="${each.eada_final=='处理中' and each.eada_senddate==null and each.eada_backdate==null}"
+															if="${each.eada_type=='材料归档'}"
+															onClick="@command('openZUL',url='Archive_FileFilingDataUp.zul',archivemodel=each)" />
+														<menuitem
+															label="收回材料"
+															visible="${each.eada_final=='处理中' and each.eada_backdate==null and each.eada_senddate!=null}"
+															if="${each.eada_type=='材料归档'}"
+															onClick="@command('openZUL',url='Archive_FileFilingDataBack.zul',archivemodel=each)" />
+														<menuitem
+															label="编辑" visible="${each.eada_final=='处理中'}"
+															if="${each.eada_type=='欠费查询'}"
+															onClick="@command('openZUL',url='EmArchiveDatum_Arrears.zul',archivemodel=each,acclass=acclass.value)" />
+														<menuitem
+															label="退回"
+															visible="${each.eada_final!='已完成' and each.eada_final!='已退回' and each.eada_type!='档案调入' }"
+															onClick="@command('openZUL',url='Archives_Back.zul',archivemodel=each,acclass=acclass.value)" />
+														<menuitem
+															label="详细" onClick="@command('detail',model=each)" />
+														<menuitem
+															label="备注"
+															onClick="@command('addremark',archivemodel=each)" />
+													</menupopup>
+												</menu>
+											</menubar>
+										</cell>
+									</row>
+								</template>
+							</rows>
+						</grid>
+					</center>
+				</borderlayout>
+			</panelchildren>
+		</panel>
+	</window>
+</zk>

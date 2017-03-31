@@ -1,0 +1,36 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="员工活动——供应商联系人信息新增" border="normal"  width="800px" height="400px" closable="true" id="proadd"
+	apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('vm') @init('Controller.EmBenefit.EmActy_SupProductAddController')"
+>
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell width="80px">姓名</cell>
+			<cell><textbox id="name" mold="rounded"></textbox></cell>
+			<cell width="80px">联系电话</cell>
+			<cell><textbox id="phone" mold="rounded"></textbox></cell>
+		</row>
+		<row>
+			<cell>手机号码</cell>
+			<cell><textbox id="mobile" mold="rounded"></textbox></cell>
+			<cell>电子邮箱</cell>
+			<cell><textbox id="email" mold="rounded"></textbox></cell>
+		</row>
+		<row>
+			<cell>地址</cell>
+			<cell colspan="3"><textbox width="80%" id="address" mold="rounded"></textbox></cell>
+		</row>
+		<row>
+			<cell>备注</cell>
+			<cell colspan="3"><textbox width="80%" rows="5" id="remark" mold="rounded"></textbox></cell>
+		</row>
+	</rows>
+	<foot>
+		<footer align="center"><button onClick="@command('linkadd',name=name.value,phone=phone.value,mobile=mobile.value,
+		email=email.value,address=address.value,win=proadd,remark=remark.value)">提交</button></footer>
+	</foot>
+</grid>
+</window>
+</zk>

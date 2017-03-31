@@ -1,0 +1,478 @@
+<?page title="业务总览" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="win" title="客户服务部管理页面" border="normal" width="99%"
+		height="99%">
+		<script src="../ECharts/echartOp.js"></script>
+		<borderlayout width="100%" apply="org.zkoss.bind.BindComposer"
+			viewModel="@id('vm') @init('chart.bar.BarChartVM')">
+
+			<west width="32%" border="normal">
+
+				<vbox align="center" width="98%">
+					<label value="" />
+					<tabbox>
+						<tabs>
+							<tab label="我的业务" />
+							<tab label="我的预警" />
+							<tab label="我的短信" />
+						</tabs>
+						<tabpanels>
+							<tabpanel>
+								<grid width="98%" height="225px">
+									<rows>
+										<row>
+											<cell align="center">
+												<label value="受托机构数" />
+											</cell>
+											<cell>
+												<label value="33" />
+											</cell>
+											<cell align="center">
+												<label value="受托客户数" />
+											</cell>
+											<cell>
+												<label value="1667" />
+											</cell>
+										</row>
+										<row>
+											<cell align="center">
+												<label value="在职员工数" />
+											</cell>
+											<cell>
+												<label value="19392" />
+											</cell>
+											<cell align="center">
+												<label value="" />
+											</cell>
+											<cell>
+												<label value="" />
+											</cell>
+										</row>
+										<row>
+											<cell align="center">
+												<label value="未入职员工" />
+											</cell>
+											<cell>
+												<label value="0" />
+											</cell>
+											<cell align="center">
+												<label value="入职中员工" />
+											</cell>
+											<cell>
+												<label value="91" />
+											</cell>
+										</row>
+										<row>
+											<cell align="center">
+												<label value="委托机构数" />
+											</cell>
+											<cell>
+												<label value="235" />
+											</cell>
+											<cell align="center">
+												<label value="委托城市数" />
+											</cell>
+											<cell>
+												<label value="361" />
+											</cell>
+										</row>
+										<row>
+											<cell align="center">
+												<label value="委托客户数" />
+											</cell>
+											<cell>
+												<label value="317" />
+											</cell>
+											<cell align="center">
+												<label value="委托员工数" />
+											</cell>
+											<cell>
+												<label value="9297" />
+											</cell>
+										</row>
+										<row>
+											<cell align="center" height="15px">
+												<label value="商保已理赔" />
+											</cell>
+											<cell>
+												<label value="7680" />
+											</cell>
+											<cell align="center">
+												<label value="体检取消名单" />
+											</cell>
+											<cell>
+												<label value="1530" />
+											</cell>
+										</row>
+										<row>
+											<cell align="center" height="15px">
+												<label value="离职未调离档案" />
+											</cell>
+											<cell>
+												<label value="253" />
+											</cell>
+											<cell align="center">
+												<label value="" />
+											</cell>
+											<cell>
+												<label value="" />
+											</cell>
+										</row>
+									</rows>
+								</grid>
+
+							</tabpanel>
+							<tabpanel>
+								<grid height="225px">
+									<rows>
+										<row>
+											<cell align="center">
+												<label value="劳动合同应签" />
+											</cell>
+											<cell>
+												<label value="653" />
+											</cell>
+											<cell align="center">
+												<label value="劳动合同实签" />
+											</cell>
+											<cell>
+												<label value="561" />
+											</cell>
+										</row>
+										<row>
+											<cell align="center">
+												<label value="劳动合同未签回" />
+											</cell>
+											<cell>
+												<label value="53" />
+											</cell>
+											<cell align="center">
+												<label value="劳动合同未归档" />
+											</cell>
+											<cell>
+												<label value="36" />
+											</cell>
+										</row>
+										<row>
+											<cell align="center">
+												<label value="劳动合同签订率" />
+											</cell>
+											<cell>
+												<label value="85%" />
+											</cell>
+											<cell align="center">
+												<label value="" />
+											</cell>
+											<cell>
+												<label value="" />
+											</cell>
+										</row>
+										<row>
+											<cell align="center">
+												<label value="机构合同应签" />
+											</cell>
+											<cell>
+												<label value="235" />
+											</cell>
+											<cell align="center">
+												<label value="机构合同实签" />
+											</cell>
+											<cell>
+												<label value="235" />
+											</cell>
+										</row>
+										<row>
+											<cell align="center">
+												<label value="机构合同未签回" />
+											</cell>
+											<cell>
+												<label value="12" />
+											</cell>
+											<cell align="center">
+												<label value="机构合同未归档" />
+											</cell>
+											<cell>
+												<label value="23" />
+											</cell>
+										</row>
+										<row>
+											<cell align="center">
+												<label value="机构合同签订率" />
+											</cell>
+											<cell>
+												<label value="100%" />
+											</cell>
+											<cell align="center">
+												<label value="" />
+											</cell>
+											<cell>
+												<label value="" />
+											</cell>
+										</row>
+										<row>
+											<cell align="center">
+												<label value="机构未付款" />
+											</cell>
+											<cell>
+												<label value="34" />
+											</cell>
+											<cell align="center">
+												<label value="" />
+											</cell>
+											<cell>
+												<label value="" />
+											</cell>
+										</row>
+										<row>
+											<cell align="center">
+												<label value="社保未到帐情况" />
+											</cell>
+											<cell>
+												<label value="34" />
+											</cell>
+											<cell align="center">
+												<label value="退休员工" />
+											</cell>
+											<cell>
+												<label value="32" />
+											</cell>
+										</row>
+									</rows>
+								</grid>
+							</tabpanel>
+							<tabpanel>
+								<panel id="xtdx" height="217px"
+									border="normal" collapsible="true" style="margin-bottom:10px"
+									title="系统短信">
+									<caption>
+										<hlayout style="float:right">
+											<toolbar>
+												<toolbarbutton
+													label="发送" onClick="@command('sysmessageadd')"
+													style="color:#666:font-size:8pt" />
+												<toolbarbutton
+													label="收件箱" onClick="@command('reci')"
+													style="color:#666:font-size:8pt" />
+												<toolbarbutton
+													label="已发送信息" onClick="@command('sended')"
+													style="color:#666:font-size:8pt" />
+												<toolbarbutton
+													label="草稿" onClick="@command('draft')" if="false"
+													style="color:#666:font-size:8pt" />
+											</toolbar>
+										</hlayout>
+									</caption>
+									<panelchildren>
+										<include
+											src="SysMessage_NotReadList.zul">
+										</include>
+									</panelchildren>
+								</panel>
+							</tabpanel>
+						</tabpanels>
+					</tabbox>
+					<scrollview id="div" height="270px" width="100%"
+						onCreate="@command('pie_load',st_name='支付情况')">
+					</scrollview>
+				</vbox>
+			</west>
+
+			<center border="normal">
+				<vbox align="center" width="100%">
+					<label value="" />
+					<tabbox>
+						<tabs>
+							<tab label="受托机构数统计" />
+							<tab label="受托客户数统计" onClick="@command('bar_load',st_name='受托客户数统计',st_id='bar1')" />
+							<tab label="受托员工数统计" onClick="@command('bar_load',st_name='受托员工数统计',st_id='bar2')" />
+							<tab label="受托回款率统计" onClick="@command('bar_load',st_name='受托回款率统计',st_id='bar3')" />
+							<tab label="受托月均服务费统计" onClick="@command('bar_load',st_name='受托月均服务费统计',st_id='bar4')" />
+						</tabs>
+						<tabpanels>
+							<tabpanel>
+								<scrollview id="bar" height="245px"
+									width="900px"
+									onCreate="@command('bar_load',st_name='受托机构数统计',st_id='bar')">
+								</scrollview>
+							</tabpanel>
+							<tabpanel>
+							<scrollview id="bar1" height="245px"
+									width="900px">
+								</scrollview>
+							</tabpanel>
+							<tabpanel>
+							<scrollview id="bar2" height="245px"
+									width="900px">
+								</scrollview>
+							</tabpanel>
+							<tabpanel>
+							<scrollview id="bar3" height="245px"
+									width="900px">
+								</scrollview>
+							</tabpanel>
+							<tabpanel>
+							<scrollview id="bar4" height="245px"
+									width="900px">
+								</scrollview>
+							</tabpanel>
+						</tabpanels>
+					</tabbox>
+
+
+					<tabbox>
+						<tabs>
+							<tab label="委托机构数统计" />
+							<tab label="委托城市数统计" onClick="@command('line_load',st_name='委托城市数统计',st_id='line1')"/>
+							<tab label="委托客户数统计" onClick="@command('line_load',st_name='委托客户数统计',st_id='line2')"/>
+							<tab label="委托员工数统计" onClick="@command('line_load',st_name='委托员工数统计',st_id='line3')"/>
+						</tabs>
+						<tabpanels>
+							<tabpanel>
+								<scrollview id="line" height="245px"
+									width="900px"
+									onCreate="@command('line_load',st_name='委托机构数统计',st_id='line')">
+								</scrollview>
+							</tabpanel>
+							<tabpanel>
+							<scrollview id="line1" height="245px"
+									width="900px">
+								</scrollview>
+							</tabpanel>
+							<tabpanel>
+							<scrollview id="line2" height="245px"
+									width="900px">
+								</scrollview>
+							</tabpanel>
+							<tabpanel>
+							<scrollview id="line3" height="245px"
+									width="900px">
+								</scrollview>
+							</tabpanel>
+						</tabpanels>
+					</tabbox>
+				</vbox>
+			</center>
+			<east visible="false" border="normal"></east>
+			<south border="normal">
+				<hbox width="100%" height="160px">
+					<label value="" />
+					<label value="" />
+					<tabbox>
+						<tabs>
+							<tab label="任务单处理情况" />
+							<tab label="客户（机构）拜访情况" />
+						</tabs>
+						<tabpanels>
+							<tabpanel>
+								<grid width="100%">
+									<columns>
+										<column label="" align="center" />
+										<column label="黄丽"
+											align="center" />
+										<column label="卢燕娜组"
+											align="center" />
+										<column label="颜璐组"
+											align="center" />
+										<column label="徐文洁组"
+											align="center" />
+<!-- 										<column label="黄盼" -->
+<!-- 											align="center" /> -->
+<!-- 										<column label="卢燕娜" -->
+<!-- 											align="center" /> -->
+<!-- 										<column label="颜红云" -->
+<!-- 											align="center" /> -->
+<!-- 										<column label="车晓霞" -->
+<!-- 											align="center" /> -->
+									</columns>
+									<rows>
+										<row>
+											<cell>未处理</cell>
+											<cell>5</cell>
+											<cell>13</cell>
+											<cell>32</cell>
+											<cell>16</cell>
+ 
+										</row>
+										<row>
+											<cell>处理中</cell>
+											<cell>23</cell>
+											<cell>25</cell>
+											<cell>34</cell>
+											<cell>4</cell>
+ 
+										</row>
+										<row>
+											<cell>已完成</cell>
+											<cell>153</cell>
+											<cell>652</cell>
+											<cell>482</cell>
+											<cell>863</cell>
+
+										</row>
+									</rows>
+								</grid>
+							</tabpanel>
+							<tabpanel>
+								<grid width="100%">
+									<columns>
+										<column label="" align="center" />
+										<column label="黄丽"
+											align="center" />
+										<column label="卢燕娜组"
+											align="center" />
+										<column label="颜璐组"
+											align="center" />
+										<column label="徐文洁组"
+											align="center" />
+<!-- 										<column label="黄盼" -->
+<!-- 											align="center" /> -->
+<!-- 										<column label="卢燕娜" -->
+<!-- 											align="center" /> -->
+<!-- 										<column label="颜红云" -->
+<!-- 											align="center" /> -->
+<!-- 										<column label="车晓霞" -->
+<!-- 											align="center" /> -->
+									</columns>
+									<rows>
+										<row>
+											<cell>计划情况</cell>
+											<cell>34</cell>
+											<cell>0</cell>
+											<cell>154</cell>
+											<cell>178</cell>
+<!-- 											<cell>22</cell> -->
+<!-- 											<cell>3</cell> -->
+<!-- 											<cell>34</cell> -->
+<!-- 											<cell>2</cell> -->
+											
+										</row>
+										<row>
+											<cell>实际拜访</cell>
+										<cell>34</cell>
+											<cell>0</cell>
+											<cell>154</cell>
+											<cell>178</cell>
+ 
+										</row>
+										<row>
+											<cell>完成率</cell>
+											<cell>100%</cell>
+											<cell>100%</cell>
+											<cell>100%</cell>
+											<cell>100%</cell>
+<!-- 											<cell>22%</cell> -->
+<!-- 											<cell>3%</cell> -->
+<!-- 											<cell>34%</cell> -->
+<!-- 											<cell>2%</cell> -->
+										</row>
+									</rows>
+								</grid>
+							</tabpanel>
+						</tabpanels>
+					</tabbox>
+				</hbox>
+			</south>
+
+		</borderlayout>
+	</window>
+</zk>

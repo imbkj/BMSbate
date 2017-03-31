@@ -1,0 +1,182 @@
+<?page title="政策通知信息列表" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window border="normal" vflex="1" hflex="1" title="政策通知信息列表"
+		apply="org.zkoss.bind.BindComposer" id="notewin"
+		viewModel="@id('vm') @init('Controller.CoPolicyNotice.PoNo_InfoListController')">
+		<hlayout vflex="1" hflex="1">
+			<listbox vflex="1" hflex="3" model="@load(vm.list)"
+				onSelect="@command('selectedrow')"
+				selectedItem="@bind(vm.filemodel)" emptyMessage="没有数据">
+				<listhead>
+					<listheader width="40px" align="center">
+						序号
+					</listheader>
+					<listheader width="70px" align="center">
+						<vlayout>
+							<label value="所属月份"></label>
+							<textbox onChange="@command('search')"
+								instant="true" value="@bind(vm.ownmonth)">
+							</textbox>
+						</vlayout>
+					</listheader>
+					<listheader width="80px" align="center">
+						<vlayout>
+							<label value="城市"></label>
+							<textbox onChange="@command('search')"
+								instant="true" value="@bind(vm.city)">
+							</textbox>
+						</vlayout>
+					</listheader>
+					<listheader width="70px" align="center">
+						<vlayout>
+							<label value="类型"></label>
+							<textbox onChange="@command('search')"
+								instant="true" value="@bind(vm.type)">
+							</textbox>
+						</vlayout>
+					</listheader>
+					<listheader align="center">
+						<vlayout>
+							<label value="标题"></label>
+							<textbox onChange="@command('search')"
+								instant="true" value="@bind(vm.title)">
+							</textbox>
+						</vlayout>
+					</listheader>
+					<listheader align="center">
+						<vlayout>
+							<label value="发文机构"></label>
+							<textbox onChange="@command('search')"
+								instant="true" value="@bind(vm.agencies)">
+							</textbox>
+						</vlayout>
+					</listheader>
+					<listheader width="70px" align="center">
+						<vlayout>
+							<label value="添加人"></label>
+							<textbox onChange="@command('search')"
+								instant="true" value="@bind(vm.addname)">
+							</textbox>
+						</vlayout>
+					</listheader>
+					<listheader align="center">
+						<label>上传时间</label>
+					</listheader>
+					<listheader align="center" width="50px">
+						<label>待跟进</label>
+					</listheader>
+					<listheader align="center">
+						<label>反馈截止日</label>
+					</listheader>
+				</listhead>
+				<template name="model">
+					<listitem>
+						<listcell label="${forEachStatus.index+1 }" />
+						<listcell label="@load(each.ownmonth)" />
+						<listcell label="@load(each.pono_city)" />
+						<listcell label="@load(each.pono_type)" />
+						<listcell label="@load(each.pono_title)" />
+						<listcell label="@load(each.pono_agencies)" />
+						<listcell label="@load(each.pono_addname)" />
+						<listcell label="@load(each.pono_addtime)" />
+						<listcell label="@load(each.pono_iffollow)" />
+						<listcell label="@load(each.pono_feedbackbydate)" />
+					</listitem>
+				</template>
+			</listbox>
+			<grid vflex="1" hflex="2">
+				<rows visible="@bind(vm.viables)">
+					<row>
+						<cell width="60px">
+							<label>政策类型</label>
+						</cell>
+						<cell>
+							<label value="@bind(vm.filemodel.pono_type)"
+								style="color:#666">
+							</label>
+						</cell>
+					</row>
+					<row>
+						<cell>
+							<label>政策内容</label>
+						</cell>
+						<cell>
+							<html content="@bind(vm.filemodel.pono_content)" style="font-size:12px;"></html>
+						</cell>
+					</row>
+					<row>
+						<cell>
+							<label>反馈截止日</label>
+						</cell>
+						<cell>
+							<label
+								value="@bind(vm.filemodel.pono_feedbackbydate)"
+								style="color:#666">
+							</label>
+						</cell>
+					</row>
+					<row>
+						<cell>
+							<label>是否待跟进</label>
+						</cell>
+						<cell>
+							<label
+								value="@bind(vm.filemodel.pono_iffollow)" style="color:#666">
+							</label>
+						</cell>
+					</row>
+
+					<row>
+
+						<cell colspan="2">
+							<grid model="@bind(vm.filemodel.filelist)"
+								visible="@bind(vm.viable)">
+								<columns>
+									<column align="center">文件名</column>
+									<column align="center"
+										width="80px">
+										文件类型
+									</column>
+									<column align="center"
+										width="60px">
+										上传人
+									</column>
+									<column align="center">备注</column>
+								</columns>
+								<rows>
+									<template name="model">
+										<row>
+											<cell>
+												<a
+													onClick="@command('openfile',url=each.file_url,win=notewin)">
+													<label
+														value="@bind(each.file_title)">
+													</label>
+												</a>
+											</cell>
+											<cell>
+												<label
+													value="@bind(each.file_type)">
+												</label>
+											</cell>
+											<cell>
+												<label
+													value="@bind(each.file_addname)">
+												</label>
+											</cell>
+											<cell>
+												<label
+													value="@bind(each.file_remark)">
+												</label>
+											</cell>
+										</row>
+									</template>
+								</rows>
+							</grid>
+						</cell>
+					</row>
+				</rows>
+			</grid>
+		</hlayout>
+	</window>
+</zk>

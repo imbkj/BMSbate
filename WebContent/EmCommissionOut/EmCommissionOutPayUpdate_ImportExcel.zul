@@ -1,0 +1,184 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="win1" title="委托对账 - 外地excel导入" border="normal"
+		height="550px" width="700px" closable="true"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmCommissionOut.EmCommissionOutPayUpdate_ImportExcelController')">
+		<script type="text/javascript" src="/js/Datebox.js"></script>
+		<borderlayout>
+			<center>
+				<grid hflex="1" vflex="1">
+					<columns>
+						<column></column>
+						<column></column>
+						<column></column>
+						<column></column>
+					</columns>
+					<rows>
+						<row>
+							<cell>
+								<label value="委托城市" style="color:#666" />
+							</cell>
+							<cell>
+								<combobox model="@load(vm.cityList)"
+									instant="true" 
+									selectedItem="@bind(vm.cityModel)"
+									onChange="@command('citySelect')">
+									<template name="model">
+										<comboitem
+											label="@load(each.city)" />
+									</template>
+								</combobox>
+							</cell>
+							<cell>
+								<label value="委托机构" style="color:#666" />
+							</cell>
+							<cell>
+								<combobox model="@load(vm.scoabList)"
+								 selectedItem="@bind(vm.coabModel)">
+									<template name="model">
+										<comboitem
+											label="@load(each.coab_name)" />
+									</template>
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="账单月份" style="color:#666" />
+							</cell>
+							<cell colspan="3">
+								<datebox onFocus="self.select()"
+									readonly="true" format="yyyyMM" sclass="datebox-month-only"
+									value="@bind(vm.ownmonth)">
+								</datebox>
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="导入excel文件"
+									style="color:#666" />
+							</cell>
+							<cell colspan="3">
+								<textbox value="@load(vm.excelname)"
+									width="200px" readonly="true" />
+								<space></space>
+								<button label="浏览..."
+									upload="true,maxsize=1024"
+									onUpload="@command('browse',media=event.media)">
+								</button>
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="使用的模板" style="color:#666" />
+							</cell>
+							<cell colspan="3">
+								<combobox model="@load(vm.temList)"
+									readonly="true" selectedItem="@bind(vm.temModel)"
+									onSelect="@command('temSelect')">
+									<template name="model">
+										<comboitem
+											label="@load(each.ecut_name)" />
+									</template>
+								</combobox>
+								<space></space>
+								<button label="模板新增"
+									onClick="@command('temOperate',win=win1,type=self.label,
+										url='/EmCommissionOut/Template/Import/EmOut_Tem_Import_add.zul')">
+								</button>
+								<space></space>
+								<button label="模板编辑"
+									onClick="@command('temOperate',win=win1,type=self.label,
+										url='/EmCommissionOut/Template/Import/EmOut_Tem_Import_Mod.zul')">
+								</button>
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="表头所在行数"
+									style="color:#666" />
+							</cell>
+							<cell>
+								<spinner value="@bind(vm.titlerow)"
+									instant="true" onChange="@command('titlerowchange')"
+									onFocus="self.select()">
+								</spinner>
+							</cell>
+							<cell>
+								<label value="数据首行行数"
+									style="color:#666" />
+							</cell>
+							<cell>
+								<spinner value="@bind(vm.datarow)"
+									instant="true" onFocus="self.select()">
+								</spinner>
+							</cell>
+						</row>
+						<row>
+							<cell colspan="4">
+								<vbox>
+									<hbox>
+										<label value="匹配结果：" />
+										<label
+											value="@load(vm.errString)" style="color:blue" />
+									</hbox>
+									<grid emptyMessage="暂无数据"
+										model="@load(vm.fieldList1)">
+										<columns>
+											<column align="center"
+												label="Excel表头">
+											</column>
+											<column align="center"
+												label="模板Excel表头">
+											</column>
+											<column align="center"
+												label="系统字段">
+											</column>
+										</columns>
+										<template name="model">
+											<row>
+												<cell>
+													<label
+														if="${empty each.ecuc_excel_title or
+															empty each.ecuc_ecpr_id }"
+														style="color:red" value="@load(each.ecuc_excel_title1)" />
+													<label
+														if="${not empty each.ecuc_excel_title and
+															not empty each.ecuc_ecpr_id }"
+														value="@load(each.ecuc_excel_title1)" />
+												</cell>
+												<cell>
+													<label
+														if="${empty each.ecuc_ecpr_id }" style="color:red"
+														value="@load(each.ecuc_excel_title)" />
+													<label
+														if="${not empty each.ecuc_ecpr_id }"
+														value="@load(each.ecuc_excel_title)" />
+												</cell>
+												<cell>
+													<label
+														value="@load(each.ecpr_ecpu_fieldstr)" />
+												</cell>
+											</row>
+										</template>
+									</grid>
+								</vbox>
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</center>
+			<south>
+				<hbox width="100%" align="center" pack="center">
+					<hlayout>
+						<button label="预览"
+							onClick="@command('preview',win=win1)" />
+						<button label="提交"
+							onClick="@command('submit',win=win1)" />
+					</hlayout>
+				</hbox>
+			</south>
+		</borderlayout>
+	</window>
+</zk>

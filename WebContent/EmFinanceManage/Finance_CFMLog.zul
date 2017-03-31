@@ -1,0 +1,108 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="发票修改日志" width="100%" height="100%" border="normal"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmFinanceManage.Finance_CFMLogController')">
+		<borderlayout>
+			<north>
+				<grid width="100%" height="100%">
+					<columns visible="false">
+						<column width="12%" />
+						<column />
+						<column width="12%" />
+						<column />
+					</columns>
+					<rows>
+						<row>
+							<cell>公司名称</cell>
+							<cell>
+								<textbox mold="rounded"
+									value="@bind(vm.company)" />
+							</cell>
+							<cell>客服</cell>
+							<cell>
+								<combobox value="@bind(vm.client)"
+									mold="rounded" readonly="true" model="@load(vm.clientList)">
+									<template name="model">
+										<comboitem
+											label="@load(each.coba_client)" />
+									</template>
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>发票信息修改时间</cell>
+							<cell>
+								<datebox mold="rounded"
+									value="@bind(vm.date1)" />
+								-
+								<datebox mold="rounded"
+									value="@bind(vm.date2)" />
+							</cell>
+							<cell>开发人</cell>
+							<cell>
+								<combobox mold="rounded"
+									value="@bind(vm.developer)" readonly="true"
+									model="@load(vm.developerList)">
+									<template name="model">
+										<comboitem
+											label="@load(each.coba_developer)" />
+									</template>
+								</combobox>
+							</cell>
+						</row>
+					</rows>
+					<foot>
+						<footer span="4" align="center">
+							<button label="查询"
+								onClick="@command('search')" />
+						</footer>
+					</foot>
+				</grid>
+			</north>
+			<center>
+				<grid width="100%" height="100%" emptyMessage="暂无数据"
+					model="@load(vm.slist)">
+					<columns>
+						<column align="center" label="序号" />
+						<column align="center" label="公司编号" />
+						<column align="center" label="客服" />
+						<column align="center" label="公司名称" />
+						<column align="center" label="开发人员" />
+						<column align="center" label="交接时间" />
+						<column align="center" label="修改时间" />
+						<column align="center" label="详情" />
+					</columns>
+					<template name="model">
+						<row>
+							<cell>${forEachStatus.index+1 }</cell>
+							<cell>
+								<label value="@load(each.cid)" />
+							</cell>
+							<cell>
+								<label value="@load(each.coba_client)" />
+							</cell>
+							<cell>
+								<label value="@load(each.coba_company)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.coba_developer)" />
+							</cell>
+							<cell>
+								<label value="@load(each.coba_addtime)" />
+							</cell>
+							<cell>
+								<label value="@load(each.addtime)" />
+							</cell>
+							<cell>
+								<button label="详情"
+									onClick="@command('info',a=each)" />
+							</cell>
+						</row>
+					</template>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

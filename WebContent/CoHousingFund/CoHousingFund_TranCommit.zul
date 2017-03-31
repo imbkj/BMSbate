@@ -1,0 +1,558 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<?component name="docDataList" macro-uri="/DocumentsInfo/DocumentsInfo_UpPageList.zul" inline="true"?>
+<zk>
+	<window id="win" title="确认数据" border="normal" width="1000px"
+		height="85%" closable="true" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoHousingFund.CoHousingFund_TranCommitController')"
+		onCreate="@command('winD',a=self)">
+		<borderlayout hflex="1" vflex="1">
+
+			<center border="none" autoscroll="true">
+				<vlayout>
+					<!-- 缴存登记 -->
+					<grid visible="@load(vm.dj)">
+						<columns>
+							<column width="15%"></column>
+							<column></column>
+							<column width="15%"></column>
+							<column></column>
+						</columns>
+						<rows>
+							<row>
+								<cell>
+									<label style="color:#666"
+										value="退回原因" />
+								</cell>
+								<cell colspan="3">
+									<label
+										value="@load(vm.cfm.chfc_backreason)" />
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label style="color:#666"
+										value="公司编号" />
+								</cell>
+								<cell>
+									<label value="@load(vm.cfm.cid)" />
+								</cell>
+								<cell>
+									<label style="color:#666"
+										value="单位名称(全称)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(vm.cfm.chfc_company)" />
+								</cell>
+
+							</row>
+							<row>
+								<cell>
+									<label style="color:#666"
+										value="组织机构代码" />
+								</cell>
+								<cell>
+									<textbox
+										value="@bind(vm.cfm.chfc_comid)" />
+								</cell>
+								<cell>
+									<label style="color:#666"
+										value="资格类型" />
+								</cell>
+								<cell>
+									<combobox readonly="true"
+										width="70px" value="@bind(vm.cfm.chfc_zgtype)">
+										<comboitem label="法人" />
+										<comboitem label="非法人" />
+									</combobox>
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label style="color:#666"
+										value="单位地址" />
+								</cell>
+								<cell>
+									<textbox
+										value="@bind(vm.cfm.chfc_address)" hflex="1" />
+								</cell>
+								<cell colspan="2"></cell>
+							</row>
+							<row>
+								<cell>
+									<label style="color:#666"
+										value="行业代码" />
+								</cell>
+								<cell>
+									<combobox model="@load(vm.industryList)" readonly="true" value="@bind(vm.cfm.chfc_industry)">
+										<template name="model">
+										<comboitem label="@load(each.name)" />
+										</template>
+									</combobox>
+								</cell>
+								<cell>
+									<label style="color:#666"
+										value="邮政编码" />
+								</cell>
+								<cell>
+									<textbox
+										value="@bind(vm.cfm.chfc_pastal)" />
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label style="color:#666"
+										value="所属行政区域" />
+								</cell>
+								<cell>
+									<combobox readonly="true"
+										model="@load(vm.areaszList)"
+										value="@bind(vm.cfm.chfc_area)">
+										<template name="model">
+											<comboitem
+												label="@load(each.area)" />
+										</template>
+									</combobox>
+								</cell>
+								<cell>
+									<label style="color:#666"
+										value="性质分类" />
+								</cell>
+								<cell>
+									<combobox
+										model="@load(vm.conatureList)"
+										value="@bind(vm.cfm.chfc_nature)">
+										<template name="model">
+											<comboitem
+												label="@load(each.pcon_name)" />
+										</template>
+									</combobox>
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label style="color:#666"
+										value="隶属关系" />
+								</cell>
+								<cell>
+									<combobox
+										model="@load(vm.membershipList)"
+										value="@bind(vm.cfm.chfc_attached)">
+										<template name="model">
+											<comboitem
+												label="@load(each.name)" />
+										</template>
+									</combobox>
+								</cell>
+								<cell>
+									<label style="color:#666"
+										value="企业经济类型" />
+								</cell>
+								<cell>
+									<combobox
+										model="@load(vm.coecoclassList)"
+										value="@bind(vm.cfm.chfc_ecoclass)">
+										<template name="model">
+											<comboitem
+												label="@load(each.pcoe_name)" />
+										</template>
+									</combobox>
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label style="color:#666"
+										value="法定代表人或负责人" />
+								</cell>
+								<cell colspan="3">
+									<grid style="border:none">
+										<columns>
+											<column width="10%" />
+											<column width="20%" />
+											<column width="10%" />
+											<column />
+										</columns>
+										<rows>
+											<row>
+												<cell>
+													<label
+														style="color:#666" value="姓名" />
+												</cell>
+												<cell>
+													<textbox
+														value="@bind(vm.cfm.chfc_corname)" />
+												</cell>
+												<cell>
+													<label
+														style="color:#666" value="证件类型" />
+												</cell>
+												<cell>
+													<combobox
+														readonly="true" model="@load(vm.idcardtypeList)"
+														value="@bind(vm.cfm.chfc_coridtype)">
+														<template
+															name="model">
+															<comboitem
+																label="@load(each.name)" />
+														</template>
+													</combobox>
+												</cell>
+											</row>
+											<row>
+												<cell>
+													<label
+														style="color:#666" value="联系电话" />
+												</cell>
+												<cell>
+													<textbox
+														value="@bind(vm.cfm.chfc_cortel)" />
+												</cell>
+												<cell>
+													<label
+														style="color:#666" value="证件号码" />
+												</cell>
+												<cell>
+													<textbox
+														value="@bind(vm.cfm.chfc_coridcard)" />
+												</cell>
+											</row>
+										</rows>
+									</grid>
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label style="color:#666"
+										value="上级主管部门" />
+								</cell>
+								<cell colspan="3">
+									<grid style="border:none">
+										<columns>
+											<column width="10%" />
+											<column />
+										</columns>
+										<rows>
+											<row>
+												<cell>
+													<label
+														style="color:#666" value="名称" />
+												</cell>
+												<cell>
+													<textbox
+														value="@bind(vm.cfm.chfc_department)" />
+												</cell>
+											</row>
+											<row>
+												<cell>
+													<label
+														style="color:#666" value="联系电话" />
+												</cell>
+												<cell>
+													<textbox
+														value="@bind(vm.cfm.chfc_departmenttel)" />
+												</cell>
+											</row>
+										</rows>
+									</grid>
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label style="color:#666"
+										value="单位成立时间" />
+								</cell>
+								<cell>
+									<textbox
+										value="@bind(vm.cfm.chfc_createtime)" />
+								</cell>
+								<cell>
+									<label style="color:#666"
+										value="社保单位编号" />
+								</cell>
+								<cell>
+									<hlayout>
+										<textbox
+											value="@bind(vm.cfm.chfc_sorid)" />
+										<label value="(可不填)"
+											style="color:red" />
+									</hlayout>
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label style="color:#666"
+										value="工商注册号" />
+								</cell>
+								<cell>
+									<textbox
+										value="@bind(vm.cfm.chfc_regid)" />
+								</cell>
+								<cell>
+									<label style="color:#666"
+										value="纳税人识别号" />
+								</cell>
+								<cell>
+									<textbox
+										value="@bind(vm.cfm.chfc_taxpayerid)" />
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label style="color:#666"
+										value="单位/个人缴存比例" />
+								</cell>
+								<cell>
+									<combobox readonly="true"
+										width="50px" model="@load(vm.cppList)"
+										value="@bind(vm.cfm.cpp)">
+										<template name="model">
+											<comboitem
+												label="@load(each)" />
+										</template>
+									</combobox>
+									%
+								</cell>
+								<cell>托收日</cell>
+								<cell>
+									<textbox constraint="/^((0?[1-9])|((1|2)[0-9])|30|31)$/"
+										value="@bind(vm.cfm.chfc_tsday)" />
+									
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label style="color:#666"
+										value="公积金缴存银行" />
+								</cell>
+								<cell>
+									<hlayout>
+										<combobox readonly="true"
+											value="@bind(vm.cfm.chfc_bankjc)"
+											onChange="@command('bankjcchange')">
+											<comboitem />
+											<comboitem label="建设银行" />
+											<comboitem label="招商银行" />
+											<comboitem label="中国银行" />
+											<comboitem label="工商银行" />
+											<comboitem label="中信银行" />
+											<comboitem label="兴业银行" />
+											<comboitem label="交通银行" />
+										</combobox>
+										<hbox
+											visible="@load(vm.cfm.vis_bankjcid)">
+											<space />
+											<label value="账号:"
+												style="color:#666" />
+											<textbox width="160px"
+												value="@bind(vm.cfm.chfc_bankjcid)" inplace="true" />
+										</hbox>
+									</hlayout>
+								</cell>
+								<cell>
+									<label style="color:#666"
+										value="公积金首次托收月" />
+								</cell>
+								<cell>
+									<datebox readonly="true"
+										format="yyyyMM" sclass="datebox-month-only"
+										value="@bind(vm.cfm.firmonth)" />
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label style="color:#666"
+										value="托收账户开户银行" />
+								</cell>
+								<cell>
+									<combobox readonly="true"
+										model="@load(vm.tsbankList)"
+										value="@bind(vm.cfm.chfc_bankts)">
+										<template name="model">
+											<comboitem
+												label="@load(each.bank)" />
+										</template>
+									</combobox>
+								</cell>
+								<cell>
+									<label style="color:#666"
+										value="托收账户银行帐号" />
+								</cell>
+								<cell>
+									<textbox hflex="1"
+										value="@bind(vm.cfm.chfc_banktsid)" />
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label style="color:#666"
+										value="托收账户名称" />
+								</cell>
+								<cell>
+									<textbox hflex="1"
+										value="@bind(vm.cfm.chfc_banktsacc)" />
+								</cell>
+								<cell colspan="2">
+									<label value="(这里输入单位名称)"
+										style="color:red" />
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label style="color:#666"
+										value="操作月份" />
+								</cell>
+								<cell>
+									<datebox readonly="true"
+										format="yyyyMM" sclass="datebox-month-only"
+										value="@bind(vm.cfm.ownmonthDate)" />
+								</cell>
+								<cell>
+									<label style="color:#666"
+										value="是否办理密钥" />
+								</cell>
+								<cell>
+									<radiogroup
+										selectedItem="@bind(vm.cfm.ispwd)">
+										<radio label="办理" value="1"></radio>
+										<radio label="不办理" value="0"></radio>
+									</radiogroup>
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label style="color:#666"
+										value="备注" />
+								</cell>
+								<cell colspan="3">
+									<textbox rows="5" hflex="1"
+										value="@bind(vm.cfm.chfc_remark)" />
+								</cell>
+							</row>
+						</rows>
+					</grid>
+					<!-- 接管 -->
+					<grid visible="@load(vm.jg)">
+						<columns>
+							<column width="15%"></column>
+							<column></column>
+							<column width="15%"></column>
+							<column></column>
+						</columns>
+						<rows>
+							<row>
+								<cell>
+									<label style="color:#666"
+										value="退回原因" />
+								</cell>
+								<cell colspan="3">
+									<label
+										value="@load(vm.cfm.chfc_backreason)" />
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label style="color:#666"
+										value="单位名称(全称)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(vm.cfm.chfc_company)" />
+								</cell>
+								<cell>
+									<label style="color:#666"
+										value="单位公积金账号" />
+								</cell>
+								<cell>
+									<textbox
+										value="@bind(vm.cfm.chfc_houseid)" />
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label style="color:#666"
+										value="归集银行" />
+								</cell>
+								<cell>
+									<combobox readonly="true"
+										model="@load(vm.gjbankList)" value="@bind(vm.cfm.chfc_bankgj)"
+										onChange="@command('gjbankchange')">
+										<template name="model">
+											<comboitem
+												label="@load(each.bank)">
+											</comboitem>
+										</template>
+									</combobox>
+								</cell>
+								<cell>
+									<label style="color:#666"
+										value="领卡银行" />
+								</cell>
+								<cell>
+									<textbox
+										value="@bind(vm.cfm.chfc_banklk)">
+									</textbox>
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label style="color:#666"
+										value="有无密钥" />
+								</cell>
+								<cell>
+									<radiogroup
+										selectedItem="@bind(vm.cfm.ispwd)"
+										onCheck="@command('ispwdcheck')">
+										<radio label="有" value="1"></radio>
+										<radio label="没有" value="0"></radio>
+									</radiogroup>
+								</cell>
+								<cell>
+									<label style="color:#666"
+										value="专办员" visible="@load(vm.cfm.vis_modzb)" />
+								</cell>
+								<cell>
+									<radiogroup
+										selectedItem="@bind(vm.cfm.ismodzb)"
+										visible="@load(vm.cfm.vis_modzb)">
+										<radio label="变更" value="1"></radio>
+										<radio label="不变更" value="0"></radio>
+									</radiogroup>
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label style="color:#666"
+										value="操作月份" />
+								</cell>
+								<cell colspan="3">
+									<datebox readonly="true"
+										format="yyyyMM" sclass="datebox-month-only"
+										value="@bind(vm.cfm.ownmonthDate)" />
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label style="color:#666"
+										value="备注" />
+								</cell>
+								<cell colspan="3">
+									<textbox rows="5" hflex="1"
+										value="@bind(vm.cfm.chfc_remark)" />
+								</cell>
+							</row>
+						</rows>
+					</grid>
+				</vlayout>
+			</center>
+			<south>
+				<div align="center">
+
+					<button label="提交"
+						onClick="@command('submit',a=docGrid)" />
+
+
+				</div>
+			</south>
+		</borderlayout>
+	</window>
+</zk>

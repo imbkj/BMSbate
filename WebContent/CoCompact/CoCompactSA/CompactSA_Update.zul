@@ -1,0 +1,21 @@
+<?page title="合同补充协议的详细信息" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="合同补充协议信息修改" border="normal" width="400px" closable="true" height="300px" id="win"
+	apply="Controller.CoCompact.CoCompactSA.CompactSA_UpdateController">
+<grid vflex="1" hflex="1">
+	<rows>
+		<row>
+			<cell width="60px" style="color:#666;">生效日期</cell>
+			<cell><datebox id="inuredate" mold="rounded"/></cell>
+		</row>
+		<row>
+			<cell width="80px" style="color:#666;">备注</cell>
+			<cell ><textbox rows="4" width="95%" value="${arg.ccsaM.ccsa_remark}" mold="rounded" id="remark"/></cell>
+		</row>
+	</rows>
+	<foot>
+		<footer align="center"><button id="updatebtn">提交</button></footer>
+	</foot>
+</grid>
+</window>
+</zk>

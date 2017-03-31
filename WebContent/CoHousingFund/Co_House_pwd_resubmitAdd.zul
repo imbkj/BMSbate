@@ -1,0 +1,160 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="new page title" border="normal" height="65%"
+		closable="true" width="40%">
+		<grid>
+			<rows>
+				<row>
+					<grid>
+						<rows>
+							<row>
+								<cell align="center" colspan="3"
+									width="15%">
+									<label value="*" style="color:red" />
+									<label value="退回原因" />
+								</cell>
+								<cell align="left">
+									<label value=" " />
+								</cell>
+							</row>
+							<row>
+								<cell align="center" colspan="3"
+									width="15%">
+									<label value="*" style="color:red" />
+									<label value="单位公积金号" />
+								</cell>
+								<cell align="left">
+									<label value="1010933158 " />
+								</cell>
+							</row>
+							<row>
+								<cell align="center" colspan="3"
+									width="10%">
+									<label value="*" style="color:red" />
+									<label value="单位名称(全称)" />
+								</cell>
+								<cell align="left">
+									<label value="深圳联想海外控股有限公司  " />
+								</cell>
+							</row>
+						</rows>
+					</grid>
+				</row>
+				<!-- 新增专办员信息 -->
+				<row>
+					<grid>
+						<rows>
+							<row>
+								<cell width="20%">
+									<label value="密钥续期信息 "
+										style="font-size:15px" />
+								</cell>
+							</row>
+							<row>
+								<cell align="center" width="15%">
+									<label value="*" style="color:red" />
+									<label value="密钥专办员号" />
+								</cell>
+								<cell align="left">
+									<textbox value="" />
+								</cell>
+							</row>
+							<row>
+								<cell align="center" width="15%">
+									<label value="*" style="color:red" />
+									<label value="密钥专办员姓名" />
+								</cell>
+								<cell align="left">
+									<textbox value="" />
+								</cell>
+							</row>
+							<row>
+								<cell align="center" width="15%">
+									<label value="*" style="color:red" />
+									<label value="密钥办理年限" />
+								</cell>
+								<cell align="left">
+									<textbox value="" />
+								</cell>
+							</row>
+							<row>
+								<cell align="center" width="15%">
+									<label value="*" style="color:red" />
+									<label value=" 密钥起始日期 " />
+								</cell>
+								<cell align="left">
+									<datebox format="yyyyMM" />
+								</cell>
+							</row>
+							<row>
+								<cell align="center" width="15%">
+									<label value="*" style="color:red" />
+									<label value=" 密钥到期日期 " />
+								</cell>
+								<cell align="left">
+									<datebox format="yyyyMM" />
+								</cell>
+							</row>
+							<row>
+								<cell align="center" width="15%">
+									<label value="*" style="color:red" />
+									<label value="操作月份" />
+								</cell>
+								<cell align="left">
+									<datebox format="yyyyMM"
+										width="15%" />
+								</cell>
+							</row>
+							<row>
+								<cell align="center" width="15%">
+									<label value="*" style="color:red" />
+									<label value="客服备注" />
+								</cell>
+								<cell align="left">
+									<textbox value="" />
+								</cell>
+							</row>
+						</rows>
+					</grid>
+				</row>
+				<row>
+					<grid>
+
+						<rows>
+							<row>
+								<cell>
+									<label value="提交资料" />
+
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<checkbox value=""
+										label="深圳市住房公积金数字证书申请表 " />
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<checkbox value="" label="数字证书介质 " />
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<checkbox value=""
+										label="密钥专办员身份证复印件 " />
+								</cell>
+							</row>
+						</rows>
+					</grid>
+				</row>
+
+			</rows>
+			<foot>
+				<footer align="center">
+					<button label="重新提交" />
+				</footer>
+			</foot>
+		</grid>
+
+	</window>
+</zk>

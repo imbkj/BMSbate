@@ -1,0 +1,71 @@
+<?page title="员工就业登记补充信息" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="win" title="员工就业登记补充信息" border="normal" width="700px"
+		closable="true" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmReg.EmReg_hd_ModController')">
+		<div height="100%">
+			<grid>
+				<columns>
+					<column width="20%" />
+					<column />
+					<column width="20%" />
+					<column />
+				</columns>
+				<rows>
+					<row>
+						公司编号
+						<label value="@load(vm.erm.cid)" />
+						简称
+						<label style="color:#666"
+							value="@load(vm.erm.coba_shortname)" />
+					</row>
+					<row>
+						员工编号
+						<label value="@load(vm.erm.gid)" />
+						姓名
+						<label value="@load(vm.erm.emba_name)" />
+					</row>
+					<row>
+						户口进入深圳方式
+						<label if="${vm.erm.erin_hjtype eq '本市城镇' }"
+							value="@load(vm.erm.hj_in_sz_way)" />
+						<label if="${vm.erm.erin_hjtype ne '本市城镇' }"
+							value="非深户无'户口进入深圳方式'" />
+						入深方式情况注明
+						<label style="color:#666"
+							value="@load(vm.erm.erin_in_sz_remark)" />
+					</row>
+					<row>
+						就业类型
+						<cell colspan="3">
+							<combobox mold="rounded" readonly="true"
+								model="@load(vm.oetypeList)" selectedItem="@bind(vm.oetypeM)">
+								<template name="model">
+									<comboitem
+										label="@load(each.pcco_cn)" />
+								</template>
+							</combobox>
+						</cell>
+					</row>
+					<row>
+						现居住地址
+						<cell colspan="3">
+							<label value="@bind(vm.erm.erin_nowadd)" />
+						</cell>
+					</row>
+					<row>
+						居住房地址编码
+						<cell colspan="3">
+							<textbox mold="rounded" hflex="1"
+								value="@bind(vm.erm.erin_address_number)" />
+						</cell>
+					</row>
+				</rows>
+			</grid>
+			<hbox width="100%" pack="center" align="center">
+				<button label="提交"
+					onClick="@command('submit',win=win,a=2)" />
+			</hbox>
+		</div>
+	</window>
+</zk>

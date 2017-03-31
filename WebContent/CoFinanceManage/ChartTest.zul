@@ -1,0 +1,20 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="图表DEMO" border="normal" width="99%" height="99%"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoFinanceManage.ChartTestController')"
+		closable="true" sizable="true">
+		<groupbox closable="true" title="DEMO1">
+			<chart type="pie" model="@load(vm.pieModel)"
+				engine="@load(vm.pieEngine)" width="1400px" height="600px"
+				fgAlpha="128" title="饼图统计" />
+		</groupbox>
+
+		<groupbox closable="true" title="DEMO2">
+			<chart type="bar" model="@load(vm.barModel)"
+				engine="@load(vm.barEngine)" width="1400px" height="600px"
+				fgAlpha="128" title="树状统计" />
+		</groupbox>
+
+	</window>
+</zk>

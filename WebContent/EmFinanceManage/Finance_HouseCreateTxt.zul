@@ -1,0 +1,40 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="生成报盘" border="normal" width="400px" height="300px"
+		closable="true" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmFinanceManage.Finance_HouseCreateTxtController')">
+		<grid vflex="1">
+			<rows>
+				<row>
+					<cell width="80px">所属月份</cell>
+					<cell>
+						<label value="@load(vm.ownmonth)"></label>
+					</cell>
+				</row>
+				<row>
+					<cell>填制时间</cell>
+					<cell>
+						<datebox id="makedate"></datebox>
+					</cell>
+				</row>
+				<row>
+					<cell>凭证号</cell>
+					<cell>
+						<textbox width="80px"
+							value="@bind(vm.number)">
+						</textbox>
+						<label style="color:red;">(4位数)</label>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button
+						onClick="@command('submit',makedate=makedate.value)">
+						提交
+					</button>
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

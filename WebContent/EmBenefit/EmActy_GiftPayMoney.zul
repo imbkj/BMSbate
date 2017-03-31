@@ -1,0 +1,43 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window width="90%" height="90%" title="支付费用" id="winEmp" closable="true"
+		border="normal" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmBenefit.EmActy_EmbaseController')">
+		<grid model="@load(vm.warelist)" style="margin-right:5px;"  mold="paging" pageSize="500" vflex="1">
+		<columns>
+			<column label="序号" width="40px" align="center"/>
+			<column label="员工编号" align="center" width="70px"/>
+			<column label="员工姓名" align="center"/>
+			<column label="入职时间" align="center"/>
+			<column label="身份证号码" align="center" width="150px"/>
+			<column label="福利内容" align="center" />
+			<column label="付款性质" align="center"/>
+			<column align="center" width="80px">
+				<checkbox onClick="@command('checkalls',a=self,gd=self.parent.parent.parent)" />
+			</column>
+		</columns>
+		<rows>
+			<template name="model">
+			<row>
+				<cell><label value="${forEachStatus.index+1 }"></label></cell>
+				<cell><label value="@load(each.gid)"></label></cell>
+				<cell><label value="@load(each.emwf_name)"></label></cell>
+				<cell><label value="@load(each.emwf_intime)"></label></cell>
+				<cell><label value="@load(each.emwf_idcard)"></label></cell>
+				<cell><label value="@load(each.productName)" /></cell>
+				<cell><label value="@load(each.emwf_paykind)"></label></cell>
+				<cell>
+					<checkbox value="@load(each)" />
+				</cell>
+			</row>
+			</template>
+		</rows>
+		<foot>
+		<footer align="center" span="8">
+			<button onClick="@command('payinfo',paydate=paydate.value,payname=payname.value,paymoney=paymoney.value)">生成支付账单</button>
+		</footer>
+	</foot>
+	</grid>
+
+</window>
+</zk>

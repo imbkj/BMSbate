@@ -1,0 +1,27 @@
+<?page title="合同签回" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="合同归档" border="normal" id="w5" height="150px"
+		apply="Controller.EmBaseCompact.EmBaseCompactSA_AddController" width="400px" closable="true">
+		<label id="ebcc_id" value="${arg.daid}" visible="false" />
+		<label id="ebcu_tapr_id" value="${arg.id}" visible="false" />
+		<groupbox title="合同归档信息" mold="3d">
+			<grid vflex="1" hflex="1">
+				<rows>
+					<row>
+						<cell width="130px">归档时间：</cell>
+						<cell colspan="3">
+							<datebox width="130px" id="embase1"
+								readonly="true" mold="rounded" format="yyyy-MM-dd" />
+							<label style="color:red;">(*)</label>
+						</cell>
+					</row>
+					<row>
+						<cell colspan="4" align="center">
+							<button label="提交" id="filingemcompact" />
+						</cell>
+					</row>
+				</rows>
+			</grid>
+		</groupbox>
+	</window>
+</zk>

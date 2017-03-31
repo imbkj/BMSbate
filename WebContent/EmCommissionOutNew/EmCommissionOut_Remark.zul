@@ -1,0 +1,26 @@
+<?page title="添加备注" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="添加备注" border="normal" width="27%" 
+		apply="org.zkoss.bind.BindComposer" closable="true" id="win2"
+		viewModel="@id('vm') @init('Controller.EmCommissionOutNew.EmCommissionOut_RemarkController')">
+		<label value="${arg.ecoc_id}" id="ecoc_id" />
+		<grid width="100%" id="g1" mold="paging"
+			sizedByContent="true" span="true">
+			<rows>
+				<row>
+					<cell>
+						<textbox width="240px" rows="4" id="outcontent"
+							mold="rounded" value="" />
+					</cell>
+					<cell>
+						邮件通知<checkbox id="email" />
+					</cell>
+				</row>
+			</rows>
+		</grid>
+		<div align="center">
+			<button id="submitButton3" label="添加备注"
+				onClick="@command('wt_remark', win=win2,outcontent=outcontent,ecoc_id=ecoc_id,email=email)" />
+		</div>
+	</window>
+</zk>

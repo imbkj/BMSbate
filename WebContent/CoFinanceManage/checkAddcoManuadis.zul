@@ -1,0 +1,121 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="手动添加公司非标审核" border="normal" width="100%"
+		closable="true" height="100%" apply="org.zkoss.bind.BindComposer"
+		id="checkwin"
+		viewModel="@id('vm') @init('Controller.CoFinanceManage.CheckAddcoManuadisController')">
+		<borderlayout>
+			<north>
+				<grid>
+					<rows>
+						<row>
+							<cell width="10%">
+								<label value="公司编号：" />
+							</cell>
+							<cell width="10%">
+								<label value="@load(vm.com.cid)" />
+							</cell>
+							<cell width="10%">
+								<label value="公司名称：" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.com.coba_company)" />
+							</cell>
+							<cell width="10%"
+								if="${vm.m.gid != 0 ? true : false}">
+								<label value="员工名称：" />
+							</cell>
+							<cell width="10%"
+								if="${vm.m.gid != 0 ? true : false}">
+								<label value="@load(vm.em.emba_name)" />
+							</cell>
+							<cell width="10%">
+								<label value="客服代表：" />
+							</cell>
+							<cell width="10%">
+								<label
+									value="@load(vm.com.coba_client)" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</north>
+			<center>
+				<grid>
+					<rows>
+						<row>
+							<cell>
+								<label value="所属月份:" />
+							</cell>
+							<cell>
+								<label value="@load(vm.m.ownmonth)" />
+							</cell>
+							<cell>
+								<label value="合同编号:" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.m.coco_compactid)" />
+							</cell>
+							<cell>
+								<label value="财务科目名称:" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.m.cfmd_cpac_name)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="福利产品名称:" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.m.cfmd_copr_name)" />
+							</cell>
+							<cell>
+								<label value="应收费用:" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.m.cfmd_Receivable)" />
+							</cell>
+							<cell>
+								<label value="状态:" />
+							</cell>
+							<cell>
+								<label if="${vm.m.cfmd_state == 1}"
+									value="已入账" style="color:blue" />
+								<label if="${vm.m.cfmd_state == 2}"
+									value="有效" />
+								<label if="${vm.m.cfmd_state == 3}"
+									value="退回" style="color:red" />
+								<label if="${vm.m.cfmd_state == 4}"
+									value="审核中" style="color:green" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="收费原因:" />
+							</cell>
+							<cell colspan="5">
+								<textbox rows="3" width="98%" mold="rounded"
+									readonly="true" value="@load(vm.m.cfmd_Reason)" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</center>
+			<south>
+				<div align="center">
+					<button label="退回"
+						onClick="@command('back',checkwin=checkwin)" />
+					<button label="审核"
+						onClick="@command('check',checkwin=checkwin)" />
+				</div>
+			</south>
+		</borderlayout>
+
+	</window>
+</zk>

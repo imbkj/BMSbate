@@ -1,0 +1,504 @@
+<?page title="聘用确认书" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="聘用确认书_修改" border="normal" id="w1" height="705px"
+		apply="org.zkoss.bind.BindComposer,Controller.EmBaseCompact.EmBaseCompact_AddController"
+		viewModel="@id('vm') @init('Controller.EmBaseCompact.EmBaseCompact_UpController')">
+		<label id="ebcc_id" value="${arg.ebcc_id1}" visible="false" />
+		<label id="win1" value="${arg.win1}" visible="false" />
+		<groupbox title="合同基本信息" mold="3d">
+			<grid model="@load(vm.compact_editbase)">
+				<rows>
+					<template name="model">
+						<row>
+							<cell>
+								<grid vflex="1" hflex="1"
+									height="610px">
+									<rows>
+										<row>
+											<cell width="130px">
+												雇员合同类型
+											</cell>
+											<cell>
+												<hbox>
+													<combobox
+														mold="rounded" id="compact_type" width="120px"
+														readonly="true" value="@load(each.ebco_compact_type)">
+														<comboitem
+															label="实习生协议" value="实习生协议">
+														</comboitem>
+														<comboitem
+															label="退休人员协议" value="退休人员协议">
+														</comboitem>
+														<comboitem
+															label="劳动合同" value="劳动合同">
+														</comboitem>
+														<comboitem
+															label="劳动合同（受托）" value="劳动合同（受托）">
+														</comboitem>
+														<comboitem
+															label="全外包合同" value="全外包合同">
+														</comboitem>
+													</combobox>
+													<label
+														style="color:red;">
+														(*)
+													</label>
+												</hbox>
+											</cell>
+										</row>
+										<row>
+											<cell width="140px">
+												雇员合同起始日
+											</cell>
+											<cell>
+												<datebox width="140px"
+													id="embase1" readonly="true" mold="rounded"
+													value="@load(each.ebco_incept_date)" format="yyyy-MM-dd" />
+												<label
+													style="color:red;">
+													(*)
+												</label>
+											</cell>
+											<cell width="140px">
+												雇员合同到期日
+											</cell>
+											<cell>
+												<combobox id="embase2"
+													mold="rounded" width="90px" readonly="true"
+													value="@load(each.ebco_term)" onChange="gdcompact()">
+													<comboitem
+														label="有固定期限" />
+													<comboitem
+														label="无固定期限" />
+												</combobox>
+												<datebox width="140px"
+													id="embase3" readonly="true" mold="rounded"
+													value="@load(each.ebco_maturity_date)" format="yyyy-MM-dd"
+													if="${each.ebco_maturity_date!=null?true:false}" />
+												<datebox width="140px"
+													id="embase3" readonly="true" mold="rounded" disabled="true"
+													value="@load(each.ebco_maturity_date)" format="yyyy-MM-dd"
+													if="${each.ebco_maturity_date==null?true:false}" />
+												<label
+													style="color:red;">
+													(*)
+												</label>
+											</cell>
+										</row>
+
+										<row>
+											<cell width="140px">
+												有无试用期
+											</cell>
+											<cell colspan="3">
+												<combobox id="embase4"
+													mold="rounded" width="90px" readonly="true"
+													value="@load(each.ebco_probation_term)"
+													onChange="sycompact()">
+													<comboitem
+														label="有试用期" />
+													<comboitem
+														label="无试用期" />
+												</combobox>
+											</cell>
+										</row>
+
+										<row>
+											<cell width="140px">
+												试用期起始日
+											</cell>
+											<cell>
+												<datebox width="140px"
+													id="embase5" readonly="true" mold="rounded"
+													value="@load(each.ebco_probation_incept)"
+													format="yyyy-MM-dd"
+													if="${each.ebco_probation_incept!=null?true:false}" />
+												<datebox width="140px"
+													id="embase5" readonly="true" mold="rounded" disabled="true"
+													value="@load(each.ebco_probation_incept)"
+													format="yyyy-MM-dd"
+													if="${each.ebco_probation_incept==null?true:false}" />
+											</cell>
+											<cell width="140px">
+												试用期到期日
+											</cell>
+											<cell>
+												<datebox width="140px"
+													id="embase6" readonly="true" mold="rounded"
+													value="@load(each.ebco_probation_mdate)"
+													format="yyyy-MM-dd"
+													if="${each.ebco_probation_mdate!=null?true:false}" />
+												<datebox width="140px"
+													id="embase6" readonly="true" mold="rounded" disabled="true"
+													value="@load(each.ebco_probation_mdate)"
+													format="yyyy-MM-dd"
+													if="${each.ebco_probation_mdate==null?true:false}" />
+											</cell>
+										</row>
+
+										<row>
+											<cell width="140px"
+												colspan="4" height="15px">
+											</cell>
+										</row>
+
+										<row>
+											<cell width="140px">
+												月工资为以下第几项
+											</cell>
+											<cell width="140px"
+												colspan="3">
+												<combobox id="embase7"
+													mold="rounded" width="80px" readonly="true"
+													onChange="gzcompact()" value="@load(each.ebco_change)">
+													<comboitem
+														label="1" />
+													<comboitem
+														label="2" />
+												</combobox>
+											</cell>
+										</row>
+
+										<row>
+											<cell width="140px"
+												colspan="4">
+												<label id="di1"
+													style="color:#000"
+													if="${each.ebco_change=='1'?true:false}">
+													【第一项】
+												</label>
+												<label id="di1"
+													style="color:#ccc"
+													if="${each.ebco_change!='1'?true:false}">
+													【第一项】
+												</label>
+											</cell>
+										</row>
+
+										<row>
+											<cell width="140px">
+												<label id="di2"
+													style="color:#000"
+													if="${each.ebco_change=='1'?true:false}">
+													正常工作时间的月工资
+												</label>
+												<label id="di2"
+													style="color:#ccc"
+													if="${each.ebco_change!='1'?true:false}">
+													正常工作时间的月工资
+												</label>
+											</cell>
+											<cell>
+												<textbox id="embase8"
+													value="@load(each.ebco_wage)" mold="rounded"
+													if="${each.ebco_change=='1'?true:false}" />
+												<textbox id="embase8"
+													value="@load(each.ebco_wage)" mold="rounded"
+													disabled="true" if="${each.ebco_change!='1'?true:false}" />
+											</cell>
+											<cell width="140px">
+												<label id="di3"
+													style="color:#000"
+													if="${each.ebco_change=='1'?true:false}">
+													月综合补贴
+												</label>
+												<label id="di3"
+													style="color:#ccc"
+													if="${each.ebco_change!='1'?true:false}">
+													月综合补贴
+												</label>
+											</cell>
+											<cell>
+												<textbox id="embase9"
+													value="@load(each.ebco_wage_bt)"
+													if="${each.ebco_change=='1'?true:false}" mold="rounded" />
+												<textbox id="embase9"
+													value="@load(each.ebco_wage_bt)"
+													if="${each.ebco_change!='1'?true:false}" mold="rounded"
+													disabled="true" />
+											</cell>
+										</row>
+
+										<row>
+											<cell width="140px">
+												<label id="di4"
+													style="color:#000"
+													if="${each.ebco_change=='1'?true:false}">
+													试用期正常工作时间的月工资
+												</label>
+												<label id="di4"
+													style="color:#ccc"
+													if="${each.ebco_change!='1'?true:false}">
+													试用期正常工作时间的月工资
+												</label>
+											</cell>
+											<cell>
+												<textbox id="embase10"
+													value="@load(each.ebco_probation_wage)"
+													if="${each.ebco_change=='1'?true:false}" mold="rounded" />
+												<textbox id="embase10"
+													value="@load(each.ebco_probation_wage)"
+													if="${each.ebco_change!='1'?true:false}" mold="rounded"
+													disabled="true" />
+											</cell>
+											<cell width="140px">
+												<label id="di5"
+													style="color:#000"
+													if="${each.ebco_change=='1'?true:false}">
+													试用期月综合补贴
+												</label>
+												<label id="di5"
+													style="color:#ccc"
+													if="${each.ebco_change!='1'?true:false}">
+													试用期月综合补贴
+												</label>
+											</cell>
+											<cell>
+												<textbox id="embase11"
+													value="@load(each.ebco_probation_bt)" mold="rounded"
+													if="${each.ebco_change=='1'?true:false}" />
+												<textbox id="embase11"
+													value="@load(each.ebco_probation_bt)" mold="rounded"
+													if="${each.ebco_change!='1'?true:false}" disabled="true" />
+											</cell>
+										</row>
+
+										<row>
+											<cell width="140px"
+												colspan="4">
+												<label id="di6"
+													style="color:#000"
+													if="${each.ebco_change=='2'?true:false}">
+													【第二项】
+												</label>
+												<label id="di6"
+													style="color:#ccc"
+													if="${each.ebco_change!='2'?true:false}">
+													【第二项】
+												</label>
+											</cell>
+										</row>
+
+										<row>
+											<cell width="140px">
+												<label id="di7"
+													style="color:#000"
+													if="${each.ebco_change=='2'?true:false}">
+													月工资（含加班工资）
+												</label>
+												<label id="di7"
+													style="color:#ccc"
+													if="${each.ebco_change!='2'?true:false}">
+													月工资（含加班工资）
+												</label>
+											</cell>
+											<cell>
+												<textbox id="embase12"
+													mold="rounded" value="@load(each.ebco_wage_gz)"
+													if="${each.ebco_change=='2'?true:false}" />
+												<textbox id="embase12"
+													mold="rounded" disabled="true"
+													value="@load(each.ebco_wage_gz)"
+													if="${each.ebco_change!='2'?true:false}" />
+											</cell>
+											<cell width="140px">
+												<label id="di8"
+													style="color:#000"
+													if="${each.ebco_change=='2'?true:false}">
+													试用期（含加班工资）
+												</label>
+												<label id="di8"
+													style="color:#ccc"
+													if="${each.ebco_change!='2'?true:false}">
+													试用期（含加班工资）
+												</label>
+											</cell>
+											<cell>
+												<textbox id="embase13"
+													mold="rounded" value="@load(each.ebco_probation_gz)"
+													if="${each.ebco_change=='2'?true:false}" />
+												<textbox id="embase13"
+													mold="rounded" disabled="true"
+													value="@load(each.ebco_probation_gz)"
+													if="${each.ebco_change!='2'?true:false}" />
+											</cell>
+										</row>
+
+										<row>
+											<cell width="140px"
+												colspan="4" height="15px">
+											</cell>
+										</row>
+
+										<row>
+											<cell width="140px">
+												工资发放日
+											</cell>
+											<cell>
+												<textbox id="embase14"
+													mold="rounded" value="@load(each.ebco_payroll_date)" />
+											</cell>
+											<cell width="140px">
+												工资发放方式
+											</cell>
+											<cell>
+												<combobox id="embase15"
+													mold="rounded" width="110px" readonly="true"
+													value="@load(each.ebco_payroll_mode)">
+													<comboitem
+														label="客户直接发放" />
+													<comboitem
+														label="中智代发" />
+													<comboitem
+														label="委托机构代发" />
+												</combobox>
+											</cell>
+										</row>
+
+										<row>
+											<cell width="140px">
+												工作地点
+											</cell>
+											<cell>
+												<textbox id="embase16"
+													mold="rounded" value="@load(each.ebco_work_place)" />
+											</cell>
+											<cell width="140px">
+												工作岗位
+											</cell>
+											<cell>
+												<textbox id="embase17"
+													mold="rounded" value="@load(each.ebco_working_station)" />
+											</cell>
+										</row>
+
+										<row>
+											<cell width="140px">
+												工作制度
+											</cell>
+											<cell>
+												<combobox id="embase18"
+													mold="rounded" width="140px" readonly="true"
+													value="@load(each.ebco_teaching_hour)">
+													<comboitem
+														label="标准工时制" />
+													<comboitem
+														label="不定时工作制" />
+													<comboitem
+														label="综合计算工时制" />
+												</combobox>
+											</cell>
+											<cell width="140px">
+												休息休假
+											</cell>
+											<cell>
+												<textbox id="embase19"
+													mold="rounded" value="@load(each.ebco_furlough_system)" />
+											</cell>
+										</row>
+
+										<row>
+											<cell width="140px">
+												工作内容
+											</cell>
+											<cell>
+												<textbox id="embase20"
+													mold="rounded" value="@load(each.ebco_work_content)" />
+											</cell>
+											<cell width="140px">
+												其它事项
+											</cell>
+											<cell>
+												<textbox id="embase21"
+													mold="rounded" value="@load(each.ebco_other_business)" />
+											</cell>
+										</row>
+										<row>
+											<cell colspan="4"
+												align="center">
+												<button label="制作合同"
+													id="editemcompact" />
+											</cell>
+										</row>
+									</rows>
+								</grid>
+							</cell>
+						</row>
+					</template>
+				</rows>
+			</grid>
+		</groupbox>
+		<zscript><![CDATA[
+	/*判断有无固定劳动合同*/
+	void gdcompact() {
+		if (embase2.getValue().equals("有固定期限")) {
+			embase3.disabled = false;
+			embase3.value = null;
+		} else {
+			embase3.disabled = true;
+			embase3.value = null;
+		}
+	}
+	/*判断有无试用期*/
+	void sycompact() {
+		if (embase4.getValue().equals("有试用期")) {
+			embase5.disabled = false;
+			embase6.disabled = false;
+			embase5.value = null;
+			embase6.value = null;
+		} else {
+			embase5.disabled = true;
+			embase6.disabled = true;
+			embase5.value = null;
+			embase6.value = null;
+		}
+	}
+	/*判断有无试用期*/
+	void gzcompact() {
+		if (embase7.getValue().equals("1")) {
+			embase8.disabled = false;
+			embase9.disabled = false;
+			embase10.disabled = false;
+			embase11.disabled = false;
+			embase12.disabled = true;
+			embase13.disabled = true;
+			embase8.value = null;
+			embase9.value = null;
+			embase10.value = null;
+			embase11.value = null;
+			embase12.value = null;
+			embase13.value = null;
+			di1.setStyle("color:#000");
+			di2.setStyle("color:#000");
+			di3.setStyle("color:#000");
+			di4.setStyle("color:#000");
+			di5.setStyle("color:#000");
+			di6.setStyle("color:#ccc");
+			di7.setStyle("color:#ccc");
+			di8.setStyle("color:#ccc");
+		} else {
+			embase12.disabled = false;
+			embase13.disabled = false;
+			embase8.disabled = true;
+			embase9.disabled = true;
+			embase10.disabled = true;
+			embase11.disabled = true;
+			embase8.value = null;
+			embase9.value = null;
+			embase10.value = null;
+			embase11.value = null;
+			embase12.value = null;
+			embase13.value = null;
+			di1.setStyle("color:#ccc");
+			di2.setStyle("color:#ccc");
+			di3.setStyle("color:#ccc");
+			di4.setStyle("color:#ccc");
+			di5.setStyle("color:#ccc");
+			di6.setStyle("color:#000");
+			di7.setStyle("color:#000");
+			di8.setStyle("color:#000");
+		}
+	}
+]]></zscript>
+	</window>
+</zk>

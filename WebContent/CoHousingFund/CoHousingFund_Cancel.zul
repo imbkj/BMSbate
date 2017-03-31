@@ -1,0 +1,77 @@
+<?page title="登记注销" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="win" title="登记注销" border="normal" width="800px"
+		apply="org.zkoss.bind.BindComposer" closable="true"
+		viewModel="@id('vm') @init('Controller.CoHousingFund.CoHousingFund_CancelController')">
+		<script type="text/javascript" src="/js/Datebox.js"></script>
+		<borderlayout vflex="min">
+			<center border="none" autoscroll="true">
+				<grid>
+					<columns>
+						<column width="20%"></column>
+						<column></column>
+					</columns>
+					<rows>
+						<row>
+							<cell>
+								<label value="单位公积金号"
+									style="color:#666" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.cohfModel.cohf_houseid)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="公司全称" style="color:#666" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.cohfModel.cohf_company)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="注销原因" style="color:#666" />
+							</cell>
+							<cell>
+								<combobox readonly="true"
+									value="@bind(vm.chfcModel.chfc_stop_reason)">
+									<comboitem label="分立被合并"></comboitem>
+									<comboitem label="破产、解散、撤销"></comboitem>
+									<comboitem label="被吊销营业执照"></comboitem>
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="操作月份" style="color:#666" />
+							</cell>
+							<cell>
+								<datebox readonly="true" format="yyyyMM"
+									sclass="datebox-month-only"
+									value="@bind(vm.chfcModel.ownmonthDate)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="备注" style="color:#666" />
+							</cell>
+							<cell>
+								<textbox hflex="1"
+									value="@bind(vm.chfcModel.chfc_remark)" rows="5" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</center>
+			<south>
+				<hbox width="100%" align="center" pack="center">
+					<button label="提交"
+						onClick="@command('submit',win=win)" />
+				</hbox>
+			</south>
+		</borderlayout>
+	</window>
+</zk>

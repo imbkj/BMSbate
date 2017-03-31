@@ -1,0 +1,136 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="快递信息管理列表" border="normal" vflex="1"
+	apply="org.zkoss.bind.BindComposer"
+    viewModel="@id('vm') @init('Controller.EmExpress.EmExpressInfoListController')"
+>
+<borderlayout>
+<north border="0" title="检索" collapsible="true" flex="true" style="padding-bottom:10px;" open="false">
+<grid>
+	<rows>
+		<row>
+			<cell width="80px" align="center"><label>公司简称</label></cell>
+			<cell><textbox value="@bind(vm.cobananme)"></textbox></cell>
+			<cell width="80px" align="center"><label>员工姓名</label></cell>
+			<cell><textbox value="@bind(vm.embaname)"></textbox></cell>
+			<cell width="80px" align="center"><label>快递内容</label></cell>
+			<cell><textbox value="@bind(vm.content)"></textbox></cell>
+			<cell width="80px" align="center"><label>收件人</label></cell>
+			<cell><textbox value="@bind(vm.recevename)"></textbox></cell>
+		</row>
+		<row>
+			<cell><label>快递等级</label></cell>
+			<cell>
+				<combobox value="@bind(vm.rand)">
+					<comboitem label=""/>
+					<comboitem label="普通"/>
+					<comboitem label="紧急"/>
+				</combobox>
+			</cell>
+			<cell><label>快递类型</label></cell>
+			<cell>
+				<combobox value="@bind(vm.types)">
+					<comboitem label=""/>
+					<comboitem label="个人"/>
+					<comboitem label="公司"/>
+				</combobox>
+			</cell>
+			<cell><label>快递公司</label></cell>
+			<cell>
+				<combobox value="@bind(vm.waycompany)">
+					<comboitem label=""/>
+					<comboitem label="顺丰快递"/>
+					<comboitem label="天天快递"/>
+					<comboitem label="韵达快递"/>
+					<comboitem label="中通快递"/>
+					<comboitem label="圆通快递"/>
+					<comboitem label="申通快递"/>
+					<comboitem label="EMS快递"/>
+				</combobox>
+			</cell>
+			<cell width="50px" align="center"><label>运单号</label></cell>
+			<cell><textbox value="@bind(vm.waynumber)"></textbox></cell>
+		</row>
+		<row>
+			<cell>添加人</cell>
+			<cell><textbox value="@bind(vm.addname)"></textbox></cell>
+			<cell><label>状态</label></cell>
+			<cell>
+				<combobox value="@bind(vm.exstate)" id="statebox" readonly="true">
+					<comboitem label="" value="0"/>
+					<comboitem label="未收件" value="1"/>
+					<comboitem label="已收件" value="2"/>
+					<comboitem label="已发送" value="3"/>
+				</combobox>
+			</cell>
+			<cell><label>有无合并</label></cell>
+			<cell colspan="3">
+				<combobox value="@bind(vm.ifnum)">
+					<comboitem label=""/>
+					<comboitem label="有"/>
+					<comboitem label="无"/>
+				</combobox>
+			</cell>
+		</row>
+	</rows>
+	<foot><footer align="center">
+		<button onClick="@command('search',statebox=statebox)">查询</button>
+		<button onClick="@command('bingsend',gd=gd)">合并发件</button>
+	</footer></foot>
+</grid>
+</north>
+<center>
+<grid vflex="1" model="@load(vm.list)" id="gd">
+		<columns>
+			<column label="序号" width="40px" align="center"/>
+			<column label="单位简称" align="center"/>
+			<column label="员工姓名" align="center"/>
+			<column label="快件内容" align="center"/>
+			<column label="收件人" align="center"/>
+			<column label="快递等级" align="center"/>
+			<column label="快递类型" align="center"/>
+			<column label="快递公司" align="center"/>
+			<column label="运单号" align="center"/>
+			<column label="邮寄地址" align="center"/>
+			<column label="添加人" align="center"/>
+			<column label="添加时间" align="center"/>
+			<column label="状态" align="center"/>
+			<column label="是否有合并" align="center"/>
+			<column label="操作" align="center" width="60px"/>
+			<column align="center" width="40px"><checkbox onCheck="@command('checkall',gd=gd,ck=self)"></checkbox></column>
+		</columns>
+		<rows>
+			<template name="model">
+			<row  style="${each.expr_rank=='紧急'?'color:#FF0000;':'' }">
+				<cell><label value="${forEachStatus.index+1 }"></label></cell>
+				<cell><label value="@load(each.coba_shortname)"></label></cell>
+				<cell><label value="@load(each.emba_name)"></label></cell>
+				<cell><label value="@load(each.expr_content)"></label></cell>
+				<cell><label value="@load(each.exct_receivename)"></label></cell>
+				<cell><label value="@load(each.expr_rank)"></label></cell>
+				<cell><label value="@load(each.expr_class)"></label></cell>
+				<cell><label value="@load(each.expr_company)"></label></cell>
+				<cell><label value="@load(each.expr_waynumber)"></label></cell>
+				<cell><label value="@load(each.exct_address)"></label></cell>
+				<cell><label value="@load(each.expr_addname)"></label></cell>
+				<cell><label value="@load(each.expr_addtime)"></label></cell>
+				<cell><label value="@load(each.ecprstate)"></label></cell>
+				<cell><label value="${each.num!=null?'有':'' }"></label></cell>
+				<menubar autodrop="true">
+					<menu
+					image="../images/pencil-small.png">
+						<menupopup>
+							<menuitem label="编辑" visible="${each.expr_state!=3}"
+								onClick="@command('edit',model=each)" />
+						</menupopup>
+					</menu>
+				</menubar>
+				<cell><checkbox if="${each.expr_state==2}" value="@load(each)"></checkbox></cell>
+			</row>
+			</template>
+		</rows>
+	</grid>
+</center>
+</borderlayout>
+</window>
+</zk>

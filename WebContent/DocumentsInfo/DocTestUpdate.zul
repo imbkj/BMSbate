@@ -1,0 +1,30 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<!-- 调用内联页的文件名 -->
+<?component name="docDataList" macro-uri="DocumentsInfo_UpPageList.zul" inline="true"?>
+<zk>
+	<window id="w1" title="交接" border="normal"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.DocumentsInfo.DocTestUpdateController')">
+		<grid id="g1" height="100%" width="100%">
+			<rows>
+				<row>
+					<cell width="20%">材料</cell>
+					<cell>
+						<!-- 材料内联页 参数：puzu_id：模块页面id， doc_type：员工(g)还是公司(c)，gid：公司数据则插入空白 ，业务表id,log_url：获取到页面路径的前部分，lh_people：上一手交接人默认值-->
+						<docDataList id="docGrid" puzu_id="32" doc_type="g" gid="133499" tid="995" log_url="" dHeight="200px" dWidth="100%" lh_people="林少斌"/>
+					</cell>
+				</row>
+				<row>
+					<cell>备注</cell>
+					<textbox id="content" rows="5" hflex="1" />
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button label="提交" id="btSubmit"
+						onClick="@command('Submit',gd=docGrid,tb1=content)" />
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

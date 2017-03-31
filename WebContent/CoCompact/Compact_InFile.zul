@@ -1,0 +1,110 @@
+<!--
+	创建人：林少斌
+	创建时间：2013-10-17
+	用途：公司合同归档页面
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<zscript>
+	//日期
+	day = new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10",
+			"11", "12", "13", "14","15", "16", "17", "18", "19", "20", "21", "22",
+			"23", "24", "25", "26", "27", "28", "29", "30", "31" };
+</zscript>
+	<window id="w1" title="公司合同 -- 归档页面" border="normal" width="500px"
+		height="300px" closable="true"
+		apply="Controller.CoCompact.Compact_InFileController">
+		<grid width="100%">
+			<rows>
+				<row>
+					<cell width="20%" style="color:#666;">合同编号</cell>
+					<cell width="30%" >
+						<textbox id="coco_compactid" mold="rounded"
+							hflex="1" 
+							value="${$composer.cocoList.getCoco_compactid()}" />
+					</cell>
+					<cell></cell>
+					<cell></cell>
+				</row>
+				<row>
+					<cell width="20%" style="color:#666;">合同归档日期：</cell>
+					<cell width="30%">
+						<hbox>
+							<datebox id="coco_filedate" readonly="true"
+								value="${$composer.filedate}" format="yyyy-MM-dd" mold="rounded"
+								width="90%" />
+							<label style="color:red;">*</label>
+						</hbox>
+					</cell>
+					<!-- 取消合同存档编号 -->
+					<cell visible="false" width="20%"
+						style="color:#666;">
+						合同存档编号：
+					</cell>
+					<cell visible="false" width="30%">
+						<textbox id="coco_fileid" mold="rounded"
+							width="90%" />
+					</cell>
+					<cell style="color:#666;" width="20%">合同自动延长</cell>
+					<cell width="30%">
+						<hbox>
+							<combobox id="coco_delay" width="60%"
+								value="${$composer.cocoList.getCoco_delay()}" readonly="true"
+								mold="rounded">
+								<comboitem label="是" />
+								<comboitem label="否" />
+							</combobox>
+							<label style="color:red;" value="*" />
+						</hbox>
+					</cell>
+				</row>
+				<row>
+					<cell width="15%" style="color:#666;">每月付款日：</cell>
+					<cell>
+						<hbox>
+							<combobox id="coco_paydate" width="60%"
+								value="${$composer.cocoList.getCoco_paydate()}" readonly="true"
+								mold="rounded">
+								<comboitem label="${each}"
+									forEach="${day}" />
+							</combobox>
+							<label style="color:red;" value="*" />
+						</hbox>
+					</cell>
+					<cell width="15%" style="color:#666;">合同到期日：</cell>
+					<cell width="35%">
+						<datebox id="coco_indate" readonly="true"
+							value="${$composer.indate}" format="yyyy-MM-dd" mold="rounded"
+							width="90%" />
+					</cell>
+				</row>
+				<row>
+					<cell width="15%" style="color:#666;">中文合同份数：</cell>
+					<cell>
+						<intbox id="coco_chs_copies" mold="rounded"
+							hflex="1" width="80%" />
+						<label style="color:red;">*</label>
+					</cell>
+					<cell width="15%" style="color:#666;">英文合同份数：</cell>
+					<cell width="35%">
+						<intbox id="coco_en_copies" mold="rounded"
+							width="90%" />
+					</cell>
+				</row>
+				<row>
+					<cell width="15%" style="color:#666;">备注：</cell>
+					<cell width="20%" colspan="3">
+						<textbox id="coco_remark" mold="rounded"
+							hflex="1" rows="4"
+							value="${$composer.cocoList.getCoco_remark()}" />
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button label="提交" id="btSubmit" />
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

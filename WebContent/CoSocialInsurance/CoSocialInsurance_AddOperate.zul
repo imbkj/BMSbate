@@ -1,0 +1,428 @@
+<?page title="状态变更" contentType="text/html;charset=UTF-8"?>
+<!-- 调用内联页的文件名 -->
+<?component name="docDataList" macro-uri="/DocumentsInfo/DocumentsInfo_UpPageList.zul" inline="true"?>
+<zk>
+	<window id="win" title="缴存登记 - 状态变更" border="normal" width="80%"
+		closable="true" apply="org.zkoss.bind.BindComposer" height="80%"
+		viewModel="@id('vm') @init('Controller.CoSocialInsurance.CoSocialInsurance_AddOperateController')">
+<scrollview vflex="1">
+			<groupbox title="基本信息" mold="3d">
+				<grid>
+					<columns>
+						<column width="15%"></column>
+						<column></column>
+						<column width="15%"></column>
+						<column></column>
+						<column width="15%"></column>
+						<column></column>
+					</columns>
+					<rows>
+						<row>
+							公司编号
+							<label value="@load(vm.m.cid)" />
+							<cell>公司名称</cell>
+							<cell colspan="3">
+								<label value="@load(vm.m.coba_company)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label style="color:#666"
+									value="新参保企业信息登记表" />
+							</cell>
+							<cell colspan="3">
+								<label value="@load(vm.m.csbc_pdf)"
+									style="cursor:pointer;color:blue" tooltiptext="点击下载"
+									onClick="@command('download',filename=self.value)" />
+							</cell>
+							<cell>组织机构代码</cell>
+							<cell>
+								<label value="@bind(vm.m.csbc_comid)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label style="color:#666"
+									value="单位社保编号" />
+							</cell>
+							<cell>
+								<label value="@bind(vm.m.csbc_sorid)" />
+							</cell>
+							<cell>
+								<label style="color:#666"
+									value="密码(6~10位)" />
+							</cell>
+							<cell>
+								<!-- <label value="@bind(vm.m.csbc_pwd)"
+									if="${arg.role eq 'hd' }" />
+								<label value="******"
+									if="${arg.role eq 'qd' }" /> -->
+							</cell>
+							<cell>
+								<label style="color:#666"
+									value="社保分局名称" />
+							</cell>
+							<cell>
+								<label value="@bind(vm.m.csbc_sbadd)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label style="color:#666" value="工商注册号" />
+							</cell>
+							<cell>
+								<label value="@bind(vm.m.csbc_regid)" />
+							</cell>
+							<cell>
+								<label style="color:#666"
+									value="企业所在辖区" />
+							</cell>
+							<cell>
+								<label value="@bind(vm.m.csbc_sorarea)" />
+							</cell>
+							<cell>
+								<label style="color:#666" value="街道" />
+							</cell>
+							<cell>
+								<label value="@bind(vm.m.csbc_street)" />
+							</cell>
+							
+						</row>
+						<row>
+							<cell>
+								<label style="color:#666" value="经济类型" />
+							</cell>
+							<cell>
+								<label
+									value="@bind(vm.m.csbc_ecoclass)" />
+							</cell>
+							<cell>
+								<label style="color:#666" value="行业一级" />
+							</cell>
+							<cell>
+								<label
+									value="@bind(vm.m.csbc_iclassfirst)" />
+							</cell>
+							<cell>
+								<label style="color:#666" value="行业二级" />
+							</cell>
+							<cell>
+								<label
+									value="@bind(vm.m.csbc_industryclass)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label style="color:#666"
+									value="发工商执照日期" />
+							</cell>
+							<cell>
+								<label value="@bind(vm.m.csbc_licdate)"
+									maxlength="10" />
+							</cell>
+							<cell>
+								<label style="color:#666" value="组成形式" />
+							</cell>
+							<cell colspan="3">
+								<label value="@bind(vm.m.csbc_forms)" />
+							</cell>
+						</row>
+<!-- 						<row>
+							<cell>
+								<label style="color:#666" value="镇" />
+							</cell>
+							<cell>
+								<label value="@bind(vm.m.csbc_town)" />
+							</cell>
+						</row> -->
+						<row>
+							<cell>
+								<label style="color:#666"
+									value="企业注册地址" />
+							</cell>
+							<cell>
+								<label hflex="1"
+									value="@bind(vm.m.csbc_regadd)" />
+							</cell>
+							<cell>
+								<label style="color:#666" value="企业邮编" />
+							</cell>
+							<cell>
+								<label
+									value="@bind(vm.m.csbc_pastcode)" />
+							</cell>
+							<cell>
+								<label style="color:#666"
+									value="企业联系电话座机" />
+							</cell>
+							<cell>
+								<label value="@bind(vm.m.csbc_cotel)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label style="color:#666" value="法人姓名" />
+							</cell>
+							<cell>
+								<label value="@bind(vm.m.csbc_corname)" />
+							</cell>
+							<cell>
+								<label style="color:#666"
+									value="法人身份证号" />
+							</cell>
+							<cell>
+								<label
+									value="@bind(vm.m.csbc_coridcard)" />
+							</cell>
+							<cell>
+								<label style="color:#666"
+									value="企业主管部门" />
+							</cell>
+							<cell>
+								<label value="@bind(vm.m.csbc_dep)" />
+							</cell>
+						</row>
+						
+						<row>
+							<cell>
+								<label style="color:#666" value="银行编码" />
+							</cell>
+							<cell>
+								<label
+									value="@bind(vm.m.csbc_bankcode)" />
+							</cell>
+							<cell>
+								<label style="color:#666"
+									value="银行全称(营业部全称)" />
+							</cell>
+							<cell colspan="3">
+								<label
+									value="@bind(vm.m.csbc_bankname)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label style="color:#666" value="银行账号" />
+							</cell>
+							<cell>
+								<label
+									value="@bind(vm.m.csbc_bankacctid)" />
+							</cell>
+							<cell>
+								<label style="color:#666"
+									value="医疗机构(就近杜康点)" />
+							</cell>
+							<cell colspan="3">
+								<label value="@bind(vm.m.csbc_heaname)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label style="color:#666"
+									value="社保卡制卡银行" />
+							</cell>
+							<cell>
+								<label
+									value="@bind(vm.m.cosb_cardbank)" />
+							</cell>
+							<cell>
+								<label style="color:#666"
+									value="社保卡制卡详细支行" />
+							</cell>
+							<cell colspan="3">
+								<label
+									value="@bind(vm.m.cosb_branchbank)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label style="color:#666" value="是否办理UKEY" />
+							</cell>
+							<cell>
+								<label value="@bind(vm.m.cosb_ukey)" style="color:red"/>
+							</cell>
+							<cell>
+								<label style="color:#666"
+									value="UKEY生效时间" />
+							</cell>
+							<cell>
+								<label
+									value="@bind(vm.m.cosb_ukeytruetime)">
+								</label>
+							</cell>
+							<cell>
+								<label style="color:#666"
+									value="UKEY失效时间" />
+							</cell>
+							<cell>
+								<label
+									value="@bind(vm.m.cosb_ukeyfailtime)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label style="color:#666"
+									value="社保业务主要提交方式" />
+							</cell>
+							<cell>
+								<label
+									value="@bind(vm.m.csbc_submission)" />
+							</cell>
+							<cell>
+								<label style="color:#666"
+									value="收据送达方式" />
+							</cell>
+							<cell>
+								<label
+									value="@bind(vm.m.csbc_payapply)" />
+							</cell>
+							<cell>
+								<label style="color:#666"
+									value="社保托收方式" />
+							</cell>
+							<cell>
+								<label value="@bind(vm.m.csbc_paytype)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label style="color:#666"
+									value="失业比例" />
+							</cell>
+							<cell>
+								<label value="@bind(vm.per1)" />
+							</cell>
+							<cell>
+								<label style="color:#666" value="工伤比例" />
+							</cell>
+							<cell colspan="3">
+								<label value="@bind(vm.per2)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label style="color:#666" value="参加险种" />
+							</cell>
+							<cell colspan="5">
+								<label style="color:red"
+									value="养老、医疗(综合、住院、劳务工)、工伤、失业、住房" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label style="color:#666" value="备注" />
+							</cell>
+							<cell colspan="5">
+								<label value="@bind(vm.m.csbc_remark)" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox title="补充信息" mold="3d">
+				<grid>
+					<columns>
+						<column width="15%"></column>
+						<column></column>
+						<column width="15%"></column>
+						<column></column>
+					</columns>
+					<rows>
+					<row if="${vm.state==1 }">
+						<cell>
+							<label style="color:#666" value="经办人姓名" />
+						</cell>
+						<cell>
+							<textbox value="@bind(vm.m.csbc_attnname)" />
+						</cell>
+						<cell>
+							<label style="color:#666" value="经办人移动电话" />
+						</cell>
+						<cell>
+							<textbox
+								value="@bind(vm.m.csbc_attnmobile)" />
+						</cell>
+					</row>
+					<row if="${vm.state==1  and (vm.m.cosb_ukey=='是' or vm.m.cosb_ukey=='有')}">
+						<cell>
+							<label style="color:#666" value="UKEY生效时间" />
+						</cell>
+						<cell>
+							<datebox value="@bind(vm.ukeytruetime)" readonly="true"></datebox>
+						</cell>
+						<cell>
+							<label style="color:#666" value="UKEY失效时间" />
+						</cell>
+						<cell>
+							<datebox value="@bind(vm.ukeyfailtime)"
+								readonly="true" />
+						</cell>
+					</row>
+					<row if="${vm.state==1 }">
+						新参保企业信息登记表
+						<cell colspan="3">
+							<textbox value="@load(vm.filename)"
+								width="200px" readonly="true" />
+							<space></space>
+							<button label="浏览..."
+								upload="true"
+								onUpload="@command('browse',media=event.media)">
+							</button>
+						</cell>
+					</row>
+					<row if="${vm.state==3 }">
+						单位社保编号
+						<textbox value="@bind(vm.m.csbc_sorid)" />
+						密码(6~10位)
+						<textbox value="@bind(vm.m.csbc_pwd)"
+							maxlength="10" />
+					</row>
+					<row if="${vm.state==3 }">
+						社保分局名称
+						<cell colspan="3">
+							
+								
+							<combobox id="csbc_sbaddstr"
+								model="@load(vm.csbc_sbaddstr)" value="@bind(vm.m.csbc_sbadd)">
+								<template name="model">
+									<comboitem label="@bind(each)" />
+								</template>
+							</combobox>
+						</cell>
+					</row>
+					<row if="${vm.state==3 }">
+						失业比例
+						<cell>
+							<doublebox width="30px"
+								value="@bind(vm.per1)" />
+							%
+						</cell>
+						工伤比例
+						<cell>
+							<doublebox width="30px"
+								value="@bind(vm.per2)" />
+							%
+						</cell>
+					</row>
+					<row if="${vm.state==2 }">
+						<cell colspan="4">
+							<label value="签收材料" style="color:#666" />
+						</cell>
+					</row>
+					<row if="${vm.state==2 }">
+						<cell colspan="4">
+							<docDataList id="docGrid" puzu_id="36"
+								doc_type="c" gid="" tid="${vm.m.csbc_id }"
+								log_url="/DocumentsInfo/" dHeight="230px" dWidth="100%" lh_people="${vm.m.csbc_addname}"/>
+						</cell>
+					</row>
+				</rows>
+			</grid>
+			</groupbox>
+			<hbox width="100%" pack="center" align="center">
+				<button label="提交"
+					onClick="@command('submit',win=win,gd=docGrid)" />
+			</hbox>
+		</scrollview>
+	</window>
+</zk>

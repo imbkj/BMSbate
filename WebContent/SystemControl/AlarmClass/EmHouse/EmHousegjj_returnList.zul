@@ -1,0 +1,77 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="公积金交单退回信息" id="winHouseReturn" width="100%"
+		height="80%" closable="true" border="normal"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmHouse.EmHousegjj_returnListController')">
+		<borderlayout>
+			<north></north>
+			<center>
+				<grid width="100%" height="100%" sizedByContent="true"
+					span="true" model="@load(vm.changelist)">
+					<columns>
+						<column align="center" label="序号" />
+						<column align="center" label="系统短信" />
+						<column align="center" label="所属月份" />
+						<column align="center" label="公司名称" />
+						<column align="center" label="姓名" />
+						<column align="center" label="变更类型" />
+						<column align="center" label="变更内容" />
+						<column align="center" label="办理状态" />
+						<column align="center" label="客服" />
+						<column align="center" label="添加人" />
+						<column align="center" label="添加时间" />
+						<column align="center" label="申报时间" />
+					</columns>
+					<template name="model">
+						<row>
+							<cell>${forEachStatus.index+1 }</cell>
+							<cell>
+								<image style="cursor:pointer"
+									src="./images/noread.gif" onClick="@command('message',a=each)"
+									if="${each.smwr_tid>0 and each.symr_readstate==0 }" />
+								<image style="cursor:pointer"
+									src="./images/readed.gif" onClick="@command('message',a=each)"
+									if="${each.smwr_tid>0 and each.symr_readstate==1 }" />
+							</cell>
+							<cell>
+								<label value="@load(each.ownmonth)" />
+							</cell>
+							<cell>
+								<label value="@load(each.ehcg_company)" />
+							</cell>
+							<cell>
+								<label value="@load(each.ehcg_name)" />
+							</cell>
+							<cell>
+								<label value="@load(each.ehcg_change)" />
+							</cell>
+							<cell
+								tooltiptext="@load(each.ehcg_content)">
+								<label maxlength="50"
+									value="@load(each.ehcg_content)" />
+							</cell>
+							<cell>
+								<label value="@load(each.states)" />
+							</cell>
+							<cell>
+								<label value="@load(each.coba_client)" />
+							</cell>
+							<cell>
+								<label value="@load(each.ehcg_addname)" />
+							</cell>
+							<cell>
+								<label value="@load(each.ehcg_addtime)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.ehcg_declareTime)" />
+							</cell>
+
+						</row>
+					</template>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

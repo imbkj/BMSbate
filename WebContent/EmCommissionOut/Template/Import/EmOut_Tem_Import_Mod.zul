@@ -1,0 +1,112 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="win" title="模板修改" border="normal" height="550px"
+		width="700px" closable="true" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmCommissionOut.Template.Import.EmOut_Tem_Import_ModController')">
+		<borderlayout>
+			<center>
+				<grid hflex="1" vflex="1">
+					<columns>
+						<column></column>
+						<column></column>
+						<column></column>
+						<column></column>
+					</columns>
+					<rows>
+						<row>
+							<cell>
+								<label value="模板名称" style="color:#666" />
+							</cell>
+							<cell>
+								<textbox value="@bind(vm.m.ecut_name)"
+									onChange="@command('checkname')" />
+							</cell>
+							<cell>
+								<label value="表头所在行数"
+									style="color:#666" />
+							</cell>
+							<cell>
+								<spinner
+									onChange="@command('titlerowchange')"
+									value="@bind(vm.m.ecut_titlerow)" instant="true"
+									onFocus="self.select()">
+								</spinner>
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="使用状态" style="color:#666" />
+							</cell>
+							<cell colspan="3">
+								<combobox value="@bind(vm.statename)"
+									readonly="true">
+									<comboitem label="可用" />
+									<comboitem label="禁用" />
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="导入excel文件"
+									style="color:#666" />
+							</cell>
+							<cell colspan="3">
+								<textbox
+									value="@load(vm.m.ecut_excelname)" width="200px"
+									readonly="true" />
+								<space></space>
+								<button label="浏览..."
+									upload="true,maxsize=1024"
+									onUpload="@command('browse',media=event.media)">
+								</button>
+							</cell>
+						</row>
+						<row>
+							<cell colspan="4">
+								<grid emptyMessage="暂无数据"
+									model="@load(vm.m.cList)">
+									<columns>
+										<column align="center"
+											label="Excel表头">
+										</column>
+										<column align="center"
+											label="系统字段">
+										</column>
+									</columns>
+									<template name="model"
+										var="cList">
+										<row>
+											<cell>
+												<label
+													value="@load(cList.ecuc_excel_title)" />
+											</cell>
+											<cell>
+												<combobox
+													readonly="true" model="@load(cList.fieldList)"
+													selectedItem="@bind(cList.fieldModel)">
+													<template
+														name="model" var="field">
+														<comboitem
+															label="@load(field.ecpr_ecpu_fieldstr)" />
+													</template>
+												</combobox>
+											</cell>
+										</row>
+									</template>
+								</grid>
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</center>
+			<south>
+				<hbox width="100%" align="center" pack="center">
+					<hlayout>
+						<button label="提交" disabled="@load(vm.ifsub)"
+							onClick="@command('submit',win=win)" />
+					</hlayout>
+				</hbox>
+			</south>
+		</borderlayout>
+	</window>
+</zk>

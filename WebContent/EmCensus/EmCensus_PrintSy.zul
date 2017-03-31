@@ -1,0 +1,26 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="户口卡借卡" border="normal" height="90%" width="90%" closable="true"
+	apply="org.zkoss.bind.BindComposer" id="win"
+    viewModel="@id('vm') @init('Controller.EmCensus.EmCensus_BorrowCardController')"
+>
+<zscript language="Java">
+import Util.UserInfo;
+String user = UserInfo.getUserid();
+Integer eadaId = Integer.valueOf(Executions.getCurrent().getArg()
+			.get("daid").toString());
+</zscript>
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell>
+				<include height="100%" src="../EmCensus/EmCensus_PrintSy.jsp?emhj_id=${eadaId }"></include>
+			</cell>	
+		</row>
+	</rows>
+	<foot>
+		<footer align="center"><button onClick="@command('borrowcardprint',win=win)">确认借卡</button></footer>
+	</foot>
+</grid>
+</window>
+</zk>

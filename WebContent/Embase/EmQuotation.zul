@@ -1,0 +1,55 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window width="100%" height="100%" title="员工报价单信息" id="winQT"
+		border="normal" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.Embase.EmQutationController')"
+		onCreate="@command('Emp',a=self)" closable="true">
+		
+			<groupbox title="报价单信息" height="100%">
+				<grid id="gd" model="@load(vm.list)" height="100%">
+					<columns>
+						<column align="center">报价单</column>
+						<column align="center">产品类型</column>
+						<column align="center">适用城市</column>
+						<column align="center">产品名称</column>
+						<column align="center">金额</column>
+						<column align="center">服务起始日</column>
+						<column align="center">收费起始日</column>
+						<column align="center">终止收费日</column>
+					</columns>
+					<template name="model">
+						<row>
+							<cell>
+								<label value="@load(each.coof_name)" />
+							</cell>
+							<cell>
+								<label value="@load(each.copc_name)" />
+							</cell>
+							<cell>
+								<label value="@load(each.city)" />
+							</cell>
+							<cell>
+								<label value="@load(each.coli_name)" />
+							</cell>
+							<cell>
+								<label value="@load(each.coli_fee)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.cgli_startdate2)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.cgli_startdate)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.cgli_stopdate)" />
+							</cell>
+						</row>
+					</template>
+				</grid>
+			</groupbox>
+		
+	</window>
+</zk>

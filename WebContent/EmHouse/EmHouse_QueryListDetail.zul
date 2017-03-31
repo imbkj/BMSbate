@@ -1,0 +1,24 @@
+<grid apply="org.zkoss.bind.BindComposer" emptyMessage="没有数据记录"
+	viewModel="@id('vmInfo') @init('Controller.EmHouse.EmHouse_QueryListDetailController')" 
+	model="@load(vmInfo.list)">
+	<columns>
+		<column align="center" label="基数" />
+		<column align="center" label="比例" />
+		<column align="center" label="变动情况"/>
+		<column align="center" label="状态"/>
+		<column align="center" label="添加时间"/>
+		<column align="center" label="添加人"/>
+	</columns>
+	<rows>
+		<template name="model">
+			<row>	
+				<label value="@load(each.emhc_radix)"></label>
+				<label value="@load(each.emhc_cpp)"></label>
+				<label value="@load(each.emhc_change)"></label>
+				<label value="@load(each.emhc_statename)"></label>
+				<label value="@load(each.emhc_addtime)"></label>
+				<label value="@load(each.emhc_addname)"></label>
+		   </row>
+		</template>
+	</rows>
+</grid>

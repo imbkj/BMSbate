@@ -1,0 +1,32 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="补缴查询详情" border="normal" width="50%" height="40%"
+		closable="true" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoHousingFund.CoHousingFund_PaymentBillsListController')">
+		<grid emptyMessage="暂时没有联数据" width="100%" sizedByContent="true"
+			model="@load(vm.billsList)" span="true">
+			<columns>
+				<column align="center" label="查询日期" />
+				<column align="center" label="到账状态" />
+				<column align="center" label="添加人" />
+				<column align="center" label="添加时间" />
+			</columns>
+			<template name="model">
+				<row>
+					<cell align="center">
+						<label value="@load(each.queryDateString)" />
+					</cell>
+					<cell align="center">
+						<label value="@load(each.isAccount)" />
+					</cell>
+					<cell align="center">
+						<label value="@load(each.addname)" />
+					</cell>
+					<cell align="center">
+						<label value="@load(each.addtimeString)" />
+					</cell>
+				</row>
+			</template>
+		</grid>
+	</window>
+</zk>

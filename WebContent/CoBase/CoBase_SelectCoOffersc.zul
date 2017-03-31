@@ -1,0 +1,89 @@
+
+<!-- 委托出服务费的时候查询 -->
+
+<?page title="报价单" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="报价单" border="normal" width="100%" height="450px"
+		closable="true" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoBase.CoBase_SelectCoOfferController')">
+		<borderlayout>
+			<north border="none" open="true" title="检索条件">
+<!-- 				<grid hflex="1" vflex="1"> -->
+<!-- 					<columns> -->
+<!-- 						<column width="10%"></column> -->
+<!-- 						<column></column> -->
+<!-- 					</columns> -->
+<!-- 					<rows> -->
+<!-- 						<row> -->
+<!-- 							<cell> -->
+<!-- 								<label value="合同编号" style="color:#666" /> -->
+<!-- 							</cell> -->
+<!-- 							<cell> -->
+<!-- 								<combobox readonly="true" -->
+<!-- 									model="@load(vm.compactList)" -->
+<!-- 									selectedItem="@bind(vm.compactModel)" -->
+<!-- 									onChange="@command('search')"> -->
+<!-- 									<template name="model"> -->
+<!-- 										<comboitem -->
+<!-- 											label="@load(each.coco_compactid)"> -->
+<!-- 										</comboitem> -->
+<!-- 									</template> -->
+<!-- 								</combobox> -->
+<!-- 							</cell> -->
+<!-- 						</row> -->
+<!-- 					</rows> -->
+<!-- 				</grid> -->
+			</north>
+			<center border="none">
+				<grid model="@load(vm.coofferList)" hflex="1" vflex="1"
+					mold="paging" emptyMessage="暂无报价单数据" height="400px" pageSize="5">
+					<columns>
+						<column width="40px"></column>
+						<column label="所属合同" />
+						<column label="报价单名称" />
+						<column label="报价金额" />
+						<column label="合同类型" />
+						<column label="人数规模" />
+						<column label="添加人" />
+						<column label="添加时间" />
+<!-- 						<column label="操作" width="60px" /> -->
+					</columns>
+					<template name="model">
+						<row>
+							<custom-attributes daid="${each.coof_id }" />
+							<detail open="false" fulfill="onOpen">
+ 								<include
+  									src="/CoBase/CoBase_SelectCoOffer_Detail.zul"  
+ 									daid="${daid}">  
+  								</include>  
+								
+						
+								
+							</detail>
+							<label value="@load(each.coco_compactid)" />
+							<label value="@load(each.coof_name)" />
+							<label value="@load(each.coof_sum)" />
+							<label value="@load(each.cpct_name1)" />
+							<label value="@load(each.coof_gm)" />
+							<label value="@load(each.coof_addname)" />
+							<label value="@load(each.addtime)" />
+<!-- 							<label value="修改项目" style="cursor:pointer" -->
+<!-- 								onClick="@command('chakan',model=each)" /> -->
+								
+<!-- 									<menubar autodrop="true"> -->
+<!-- 									<menu -->
+<!-- 										image="../images/pencil-small.png"> -->
+<!-- 										<menupopup> -->
+											
+<!-- 											<menuitem label="修改项目报价单" -->
+<!-- 												onClick="@command('chakan',model=each)" /> -->
+<!-- 										</menupopup> -->
+<!-- 									</menu> -->
+<!-- 								</menubar> -->
+						</row>
+					</template>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

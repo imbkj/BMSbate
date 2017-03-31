@@ -1,0 +1,418 @@
+<!--
+	创建人：林少斌
+	创建时间：2014-1-8
+	用途：变更数据申报页面
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winDetailData" title="社会保险 -- 变更数据批量申报" border="normal"
+		width="800px" height="80%" apply="org.zkoss.bind.BindComposer"
+		closable="true"
+		viewModel="@id('vm') @init('Controller.EmSheBao.Emsc_DetailController')">
+		<div height="98%" style="overflow-y:scroll">
+			<groupbox>
+				<caption label="申报状态更改/备忘" />
+				<grid style="border:0px">
+					<rows>
+						<row>
+							<cell width="20%">
+								<label value="申报状态：" />
+							</cell>
+							<cell>
+								<radiogroup id="rg" />
+								<radio radiogroup="rg" label="未申报"
+									value="0"
+									selected="${vm.sbData.emsc_ifdeclare=='0'? true:false}" />
+								<radio radiogroup="rg" label="申报中"
+									style="color:#090" value="2"
+									selected="${vm.sbData.emsc_ifdeclare=='2'? true:false}" />
+								<radio radiogroup="rg" label="已申报"
+									disabled="${vm.sbData.emsc_ifwrong!=1? true:false }"
+									if="${vm.sbData.emsc_ifdeclare!='2' or vm.sbData.emsc_change!='档案修改'}"
+									style="color:#00F" value="1"
+									selected="${vm.sbData.emsc_ifdeclare=='1'? true:false}" />
+								<radio radiogroup="rg" label="已申报"
+									if="${vm.sbData.emsc_ifdeclare=='2' and vm.sbData.emsc_change=='档案修改'}"
+									style="color:#00F" value="1" />
+								<radio radiogroup="rg" label="退回"
+									style="color:#F00" value="3"
+									selected="${vm.sbData.emsc_ifdeclare=='3'? true:false}" />
+								<radio radiogroup="rg"
+									label="退回(并结束任务单)" style="color:#F00" value="13"
+									selected="${vm.sbData.emsc_ifdeclare=='3'? true:false}" />
+								<button label="修改状态"
+									disabled="${vm.sbData.emsc_ifdeclare=='1'? true:false}"
+									onClick="@command('changeState',winDetailData=winDetailData,flag=flag,rg=rg,epms_content=epms_content,cb=cb)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="退回短信收件人：" />
+							</cell>
+							<cell>
+								<bandbox id="bd" mold="rounded"
+									autodrop="true" readonly="true" width="95%"
+									value="@bind(vm.selectedname)">
+									<bandpopup>
+										<grid width="370px"
+											model="@load(vm.deptlist)">
+											<columns>
+												<column width="40px" />
+											</columns>
+											<rows>
+												<template
+													name="model">
+													<row>
+														<detail
+															open="false" fulfill="onOpen">
+															<listbox
+																width="170px" model="@load(each.loginlist)"
+																checkmark="true" multiple="true">
+																<template
+																	name="model">
+																	<listitem
+																		label="@load(each.log_name)" value="@load(each)"
+																		onClick="@command('checkname',model=each,bd=bd,lbitem=self)" />
+																</template>
+															</listbox>
+														</detail>
+														<cell>
+															<label
+																value="@load(each.dep_name)">
+															</label>
+														</cell>
+													</row>
+												</template>
+											</rows>
+										</grid>
+									</bandpopup>
+								</bandbox>
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="退回原因模板：" />
+							</cell>
+							<cell>
+								<combobox model="@load(vm.temList)"
+									readonly="true" onChange="@command('temselect',temcb=self)">
+									<template name="model">
+										<comboitem
+											label="@load(each.pmte_model)" value="@load(each)" />
+									</template>
+								</combobox>
+								<checkbox label="发邮件" checked="true"
+									style="border:0;margin-left:10px;" id="cb">
+								</checkbox>
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="退回原因：" />
+							</cell>
+							<cell>
+								<textbox id="epms_content"
+									value="@load(vm.reason)" readonly="false" width="70%"
+									mold="rounded" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="历史小信封和退回原因：" />
+							</cell>
+							<cell>
+								<grid model="@load(vm.list)"
+									emptyMessage="没有联系记录">
+									<columns>
+										<column align="center">
+											<label>发件人</label>
+										</column>
+										<column align="center">
+											<label>收件人</label>
+										</column>
+										<column align="center">
+											<label>发件时间</label>
+										</column>
+										<column align="center">
+											<label>短信内容</label>
+										</column>
+										<column align="center">
+											<label>状态</label>
+										</column>
+									</columns>
+									<rows>
+										<template name="model">
+											<row
+												style="border:1px dotted #cad9ea;background-color:#f5fafe;">
+												<cell>
+													<label
+														value="@load(each.syme_addname)">
+													</label>
+												</cell>
+												<cell>
+													<label
+														value="@load(each.symr_name)">
+													</label>
+												</cell>
+												<cell>
+													<label
+														value="@load(each.syme_addtime)">
+													</label>
+												</cell>
+												<cell>
+													<label
+														value="@load(each.syme_content)">
+													</label>
+												</cell>
+												<cell>
+													<label
+														value="@load(each.statename)">
+													</label>
+												</cell>
+											</row>
+										</template>
+									</rows>
+								</grid>
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="备忘：" />
+							</cell>
+							<cell>
+								<textbox id="flag" mold="rounded"
+									value="@load(vm.sbData.emsc_flag)" />
+								<button label="添加备忘"
+									onClick="@command('addFlag',winDetailData=winDetailData,flag=flag)" />
+							</cell>
+						</row>
+						<row if="${vm.sbData.emsc_change eq '停交'}">
+							<cell>
+								<label value="停交原因：" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.sbData.emsc_stopreason)" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox>
+				<caption label="个人信息" />
+				<grid style="border:0px">
+					<rows>
+						<row>
+							<cell width="20%">
+								<label value="公司编号" />
+							</cell>
+							<cell>
+								<label value="@load(vm.sbData.cid)" />
+							</cell>
+							<cell width="20%">
+								<label value="员工编号" />
+							</cell>
+							<cell>
+								<label value="@load(vm.sbData.gid)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="所属公司" />
+							</cell>
+							<cell colspan="3">
+								<label
+									value="@load(vm.sbData.emsc_company)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="所属月份" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.sbData.ownmonth)" />
+							</cell>
+							<cell>
+								<label value="个人电脑号" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.sbData.emsc_computerid)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="姓名" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.sbData.emsc_name)" />
+							</cell>
+							<cell>
+								<label value="配偶姓名" />
+							</cell>
+							<cell>
+
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="户籍" />
+							</cell>
+							<cell>
+								<label value="@load(vm.sbData.emsc_hj)" />
+							</cell>
+							<cell>
+								<label value="性别" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.sbData.emba_sex)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="职工性质" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.sbData.emsc_worker)" />
+							</cell>
+							<cell>
+								<label value="身份证号" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.sbData.emsc_idcard)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="职别" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.sbData.emsc_officialrank)" />
+							</cell>
+							<cell>
+								<label value="出生年月" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.sbData.emba_birth)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="民族" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.sbData.emsc_folk)" />
+							</cell>
+							<cell>
+								<label value="月工资总额" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.sbData.emsc_radix)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="利手" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.sbData.emsc_hand)" />
+							</cell>
+							<cell>
+								<label value="参保手机" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.sbData.emsc_mobile)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="备注" />
+							</cell>
+							<cell colspan="3">
+								<textbox rows="4"
+									value="@load(vm.sbData.emsc_remark)" width="70%"
+									readonly="true" />
+							</cell>
+						</row>
+						<row
+							visible="${vm.sbData.emsc_change=='停交'? true:false}">
+							<cell>
+								<label value="停交原因" />
+							</cell>
+							<cell colspan="3">
+
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox>
+				<caption label="参保险种" />
+				<grid style="border:0px">
+					<rows>
+						<row>
+							<cell width="20%">
+								<label value="养老参保情况" />
+							</cell>
+							<cell>
+								<label value="@load(vm.sbData.emsc_yl)" />
+							</cell>
+							<cell width="20%">
+								<label value="医疗参保情况" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.sbData.emsc_yltype)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="工伤参保情况" />
+							</cell>
+							<cell>
+								<label value="@load(vm.sbData.emsc_gs)" />
+							</cell>
+							<cell>
+								<label value="生育参保情况" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.sbData.emsc_syu)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="失业参保情况" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.sbData.emsc_sye)" />
+							</cell>
+							<cell>
+								<label value="住房参保情况" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.sbData.emsc_house)" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox>
+				<caption label="系统日志" />
+			</groupbox>
+		</div>
+	</window>
+</zk>

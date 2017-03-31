@@ -1,0 +1,65 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="公积金超时审核" id="winaduit" width="100%" height="500px"
+		closable="true" border="normal" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmHouse.EmHouse_AduitController')"
+		onCreate="@command('winC',a=self)">
+		<grid id="gd" width="100%" height="100%" model="@load(vm.list)"
+			mold="paging" pageSize="30" sizedByContent="true" span="true"
+			emptyMessage="暂无数据">
+			<columns>
+				<column align="center">序号</column>
+				<column align="center">所属月份</column>
+				<column align="center">公司编号</column>
+				<column align="center">公司名称</column>
+				<column align="center">员工编号</column>
+				<column align="center">员工姓名</column>
+				<column align="center">变动类型</column>
+				<column align="center">申请原因</column>
+				<column align="center">客服代表</column>
+				<column align="center">添加时间</column>
+				<column align="center">部门</column>
+				<column align="center">操作</column>
+			</columns>
+			<template name="model">
+				<row>
+					<cell>${forEachStatus.index+1 }</cell>
+					<cell>
+						<label value="@load(each.ownmonth)" />
+					</cell>
+					<cell>
+						<label value="@load(each.cid)" />
+					</cell>
+					<cell>
+						<label value="@load(each.emhc_company)" />
+					</cell>
+					<cell>
+						<label value="@load(each.gid)" />
+					</cell>
+					<cell>
+						<label value="@load(each.emhc_name)" />
+					</cell>
+					<cell>
+						<label value="@load(each.emhc_change)" />
+					</cell>
+					<cell>
+						<label value="@load(each.emhc_remark)" />
+					</cell>
+					<cell>
+						<label value="@load(each.emhc_client)" />
+					</cell>
+					<cell>
+						<label value="@load(each.emhc_addtime)" />
+					</cell>
+					<cell>
+						<label value="@load(each.dep_name)" />
+					</cell>
+					<cell>
+						<button label="审核"
+							onClick="@command('submit',a=each)" />
+					</cell>
+				</row>
+			</template>
+		</grid>
+	</window>
+</zk>

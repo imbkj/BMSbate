@@ -1,0 +1,129 @@
+<!--
+	创建人：林少斌
+	创建时间：2015-12-24
+	用途：报价单调整页面
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="报价单调整页面" border="normal" width="100%"
+		height="98%" closable="true" id="winCGUp"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.Embase.EmBase_CoGlistUpController')">
+		<scrollview vflex="1" hflex="1">
+			<groupbox mold="3d" open="true" title="员工基本信息">
+				<grid>
+					<rows>
+						<row>
+							<cell width="80px">所属公司</cell>
+							<cell style="color:#00F;">
+								<label
+									value="@load(vm.emM.coba_shortname)" />
+							</cell>
+							<cell width="80px">员工姓名</cell>
+							<cell style="color:#00F;">
+								<label value="@load(vm.emM.emba_name)" />
+							</cell>
+							<cell width="80px">身份证号</cell>
+							<cell style="color:#00F;">
+								<label
+									value="@load(vm.emM.emba_idcard)" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox mold="3d" open="true" title="报价单信息">
+				<grid id="coofferlist" model="@load(vm.cflList)"
+					visible="@load(vm.ifCflsit)">
+					<columns>
+						<column align="center">报价单</column>
+						<column align="center">产品类型</column>
+						<column align="center">城市</column>
+						<column align="center">产品名称</column>
+						<column align="center">金额</column>
+						<column align="center">服务起始月</column>
+						<column align="center">收费起始月</column>
+						<column align="center">终止收费月</column>
+						<column width="70px" align="center">
+							<checkbox id="cka" disabled="true"
+								checked="true" />
+						</column>
+					</columns>
+					<rows>
+						<template name="model">
+							<row
+								style="border:1px dotted #cad9ea;background-color:#f5fafe;">
+								<cell>
+									<label
+										value="@load(each.coof_name)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.coli_pclass)" />
+								</cell>
+								<cell>
+									<label value="@load(each.city)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.coli_name)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.coli_fee2)" />
+								</cell>
+								<cell>
+									<hbox>
+										<monthbox format="yyyy-MM-01"
+											readonly="true" value="@load(each.cgli_startdate2)"
+											onChange="@command('setcheck',a=coofferlist,b=self)"
+											mold="rounded" />
+										<image src="../images/130.gif"
+											style="cursor:pointer;"
+											onClick="@command('copysd',a=coofferlist,b=5,rowIndex=forEachStatus.index)" />
+									</hbox>
+								</cell>
+								<cell>
+									<hbox>
+										<monthbox format="yyyy-MM-01"
+											readonly="true" value="@load(each.cgli_startdate)"
+											onChange="@command('setcheck',a=coofferlist,b=self)"
+											mold="rounded" />
+										<image src="../images/130.gif"
+											style="cursor:pointer;"
+											onClick="@command('copysd',a=coofferlist,b=6,rowIndex=forEachStatus.index)" />
+									</hbox>
+								</cell>
+								<cell>
+									<hbox>
+										<monthbox format="yyyy-MM-30"
+											readonly="true" value="@load(each.cgli_stopdate)"
+											onChange="@command('setcheck',a=coofferlist,b=self)"
+											mold="rounded" />
+										<image src="../images/130.gif"
+											style="cursor:pointer;"
+											onClick="@command('copysd',a=coofferlist,b=7,rowIndex=forEachStatus.index)" />
+									</hbox>
+								</cell>
+								<cell>
+									<checkbox
+										value="@load(each.coli_id)" checked="true" disabled="true" />
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</groupbox>
+			<grid>
+				<foot>
+					<footer align="center">
+						<hbox>
+							<button label="提交" id="btSubmit"
+								onClick="@command('submit',win=winCGUp,coofferlist=coofferlist)" />
+						</hbox>
+					</footer>
+				</foot>
+			</grid>
+		</scrollview>
+	</window>
+</zk>

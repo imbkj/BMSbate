@@ -1,0 +1,81 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window border="normal" width="80%" height="80%" id="emwin"
+	apply="org.zkoss.bind.BindComposer" closable="true"
+	viewModel="@id('vm') @init('Controller.EmFinance.Finance_EmbaseController')"
+	title="${arg.model.name}—委托对账">
+
+<grid vflex="1" span="true" sizedByContent="true" model="@load(vm.model.efWtList)">
+		<columns>
+			<column label="序号" width="60px" align="center"/>
+			<column label="员工编号" align="center"/>
+			<column label="姓名" align="center" width="80px"/>
+			<column label="身份证号" align="center"/>
+			<column label="系统合计" align="center"/>
+			<column label="智翼通合计" align="center"/>
+			<column label="差额合计" align="center"/>
+			<column label="系统社保费" align="center"/>
+			<column label="智翼通社保费" align="center"/>
+			<column label="社保差额" align="center"/>
+			<column label="系统养老费" align="center"/>
+			<column label="智翼通养老费" align="center"/>
+			<column label="养老费差额" align="center"/>
+			<column label="系统公积金" align="center"/>
+			<column label="智翼通公积金" align="center"/>
+			<column label="公积金差额" align="center"/>
+			<column label="系统服务费" align="center"/>
+			<column label="智翼通服务费" align="center"/>
+			<column label="服务费差额" align="center"/>
+			<column label="系统档案费" align="center"/>
+			<column label="智翼通档案费" align="center"/>
+			<column label="档案费差额" align="center"/>
+			<column label="系统其他费" align="center"/>
+			<column label="智翼通其他费" align="center"/>
+			<column label="其他费差额" align="center"/>
+			<column label="系统非标" align="center"/>
+		</columns>
+		<rows>
+		<template name="model">
+			<row>
+				<cell><label value="${forEachStatus.index+1 }"></label></cell>
+				<cell><label value="@load(each.gid)"></label></cell>
+				<cell><label value="@load(each.emfi_name)"></label></cell>
+				<cell><label value="@load(each.emfi_idcard)"></label></cell>
+				<cell><label value="@load(each.emfi_total)"></label></cell>
+				<cell><label value="@load(each.emfz_total)"></label></cell>
+				<cell><label value="${each.emfi_total-each.emfz_total }"></label></cell>
+				<cell><label value="@load(each.emfi_sbtotal)"></label></cell>
+				<cell><label value="@load(each.emfz_sbtotal)"></label></cell>
+				<cell><label value="${each.emfi_sbtotal-each.emfz_sbtotal }"></label></cell>
+				<cell><label value="@load(each.emfi_yltotal)"></label></cell>
+				<cell><label value="@load(each.emfz_yltotal)"></label></cell>
+				<cell><label value="${each.emfi_yltotal-each.emfz_yltotal }"></label></cell>
+				<cell><label value="@load(each.emfi_housetotal)"></label></cell>
+				<cell><label value="@load(each.emfz_housetotal)"></label></cell>
+				<cell><label value="${each.emfi_housetotal-each.emfz_housetotal }"></label></cell>
+				<cell><label value="@load(each.emfi_fee)"></label></cell>
+				<cell><label value="@load(each.emfz_fee)"></label></cell>
+				<cell><label value="${each.emfi_fee-each.emfz_fee }"></label></cell>
+				<cell><label value="@load(each.emfi_filefee)"></label></cell>
+				<cell><label value="@load(each.emfz_filefee)"></label></cell>
+				<cell><label value="${each.emfi_filefee-each.emfz_filefee }"></label></cell>
+				<cell><label value="@load(each.emfi_elsefee)"></label></cell>
+				<cell><label value="@load(each.emfz_elsefee)"></label></cell>
+				<cell><label value="${each.emfi_elsefee-each.emfz_elsefee }"></label></cell>
+				<cell><label value="@load(each.emfi_n_total)"></label></cell>
+			</row>
+		</template>
+		</rows>
+		<foot>
+			<footer span="26" align="left">
+				<hlayout>
+					<label>数据统计：</label><label>公司部分收费金额为:</label><label style="margin-right:20px;color:#FF0000;">[${vm.model.cofi_fee }]</label>
+					<label>系统台账员工数</label><label style="margin-right:20px;color:#FF0000;">[${vm.model.emFiCount }]</label>
+					<label>智翼通台账员工数</label><label style="margin-right:20px;color:#FF0000;">[${vm.model.emFzCount}]</label>
+				</hlayout>
+			</footer>
+		</foot>
+	</grid>
+
+</window>
+</zk>

@@ -1,0 +1,21 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="取消" border="normal" width="600px" height="300px" closable="true"
+	apply="org.zkoss.bind.BindComposer" id="celwin"
+		viewModel="@id('vm') @init('Controller.EmBenefit.EmActy_CancelController')"
+>
+<grid vflex="1">
+		<rows>
+			<row>
+				<cell width="80px">取消理由</cell>
+				<cell>
+					<textbox width="80%" rows="4" value="@bind(vm.cancelcase)"></textbox>
+				</cell>
+			</row>
+		</rows>
+		<foot>
+			<footer align="center"><button  onClick="@command('cancel',win=celwin)">提交</button></footer>
+		</foot>
+	</grid>
+</window>
+</zk>

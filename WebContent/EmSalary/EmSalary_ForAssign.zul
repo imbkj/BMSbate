@@ -1,0 +1,128 @@
+<!--
+	创建人：林少斌
+	创建时间：2013-12-18
+	用途：算法分配页面
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winForAss" title="薪酬管理 -- 算法分配页面" border="normal"
+		width="80%" height="80%" apply="org.zkoss.bind.BindComposer"
+		closable="true"
+		viewModel="@id('vm') @init('Controller.EmSalary.EmSalary_ForAssignController')">
+		<borderlayout vflex="1">
+			<north border="0" title="数据查询" collapsible="true"
+				flex="true" open="true">
+				<panel border="1">
+					<panelchildren style="padding:5px;">
+						<grid id="searchGird" width="100%">
+							<rows>
+								<row>
+									<cell width="100px"
+										style="color:#666;">
+										是否已分配
+									</cell>
+									<cell>
+										<combobox id="type"
+											readonly="true" autodrop="true" mold="rounded"
+											onChange="@command('search',type=self)">
+											<comboitem label="全部" />
+											<comboitem label="未分配" />
+											<comboitem label="已分配" />
+										</combobox>
+									</cell>
+								</row>
+								<!-- <row>
+									<cell width="100px"
+									style="color:#666;">
+									客服
+									</cell>
+									<cell>
+									<combobox id="client" readonly="true"
+									width="60%" autodrop="true" mold="rounded"
+									onChange="@command('searchCobase',client=self)">
+									<comboitem
+									label="${each.coba_client}"
+									if="${each.coba_client =='全部'?false:true}"
+									forEach="${vm.clientList}" />
+									</combobox>
+									</cell>
+									<cell width="100px"
+									style="color:#666;">
+									公司
+									</cell>
+									<cell>
+									<combobox id="cid" width="60%" readonly="true"
+									model="@load(vm.cobaseList)" autodrop="true"
+									onChange="@command('search',cid=self)" mold="rounded">
+									<template name="model">
+									<comboitem
+									label="[${each.cid}] ${each.coba_shortname}"
+									value="${each.cid}" />
+									</template>
+									</combobox>
+									</cell>
+									</row> -->
+							</rows>
+						</grid>
+					</panelchildren>
+				</panel>
+			</north>
+			<center>
+				<grid>
+					<rows>
+						<row>
+							<cell width="50%" valign="top">
+								<listbox id="emlist" checkmark="true"
+									height="300px" model="@load(vm.emList)" emptyMessage="无数据"
+									multiple="true">
+									<listhead>
+										<listheader width="30px" />
+										<listheader label="员工编号"
+											width="65px" align="left" />
+										<listheader label="姓名"
+											align="left" />
+										<listheader label="当前算法"
+											align="left" />
+									</listhead>
+									<template name="model">
+										<listitem>
+											<listcell />
+											<listcell
+												label="@load(each.gid)" />
+											<listcell
+												label="@load(each.emba_name)" />
+											<listcell
+												label="@load(each.cfin_name)" />
+										</listitem>
+									</template>
+								</listbox>
+							</cell>
+							<cell valign="top">
+								<listbox id="cfin_id"
+									model="@load(vm.formulaList)" emptyMessage="无数据"
+									multiple="true">
+									<listhead>
+										<listheader label="该公司所有算法"
+											align="left" />
+									</listhead>
+									<template name="model">
+										<listitem>
+											<listcell
+												label="@load(each.cfin_name)" />
+										</listitem>
+									</template>
+								</listbox>
+							</cell>
+						</row>
+					</rows>
+					<foot>
+						<footer align="center">
+							<button label="提交" id="btSubmit"
+								onClick="@command('submit',cid=cid,emlist=emlist,cfin_id=cfin_id,winForAss=winForAss)" />
+						</footer>
+					</foot>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

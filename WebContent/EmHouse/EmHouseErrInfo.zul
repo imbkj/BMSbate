@@ -1,0 +1,43 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="BMS与公积金中心数据比对" id="winEI" width="100%" height="100%"
+		closable="true" border="normal" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmHouse.EmHouseErrInfoController')">
+		<scrollview>
+			<grid >
+				<columns>
+					<column></column>
+					<column>姓名</column>
+					<column>公积金号</column>
+					<column>身份证号码</column>
+					<column>月交费金额</column>
+				</columns>
+				<rows>
+					<row>
+						<cell>BMS</cell>
+						<cell><label value="" /></cell>
+						<cell><label /></cell>
+						<cell><label /></cell>
+						<cell><label /></cell>
+					</row>
+					<row if="${vm.m==0 }">
+						<cell>公积金中心</cell>
+						<cell><label /></cell>
+						<cell><label /></cell>
+						<cell><label /></cell>
+						<cell><label /></cell>
+					</row>
+					<row if="${vm.m==1 }">
+						<cell>公积金中心</cell>
+						<cell><label /></cell>
+						<cell><label /></cell>
+						<cell><label /></cell>
+						<cell><label /></cell>
+					</row>
+
+				</rows>
+			</grid>
+
+		</scrollview>
+	</window>
+</zk>

@@ -1,0 +1,56 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="公积金批量导入" border="normal" width="95%" closable="true"
+		height="90%" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.Batchprocessing.BatP_HouseAddController')">
+		<grid vflex="1" model="@load(vm.list)">
+			<columns>
+				<column label="序号" width="40px" align="center" />
+				<column label="公司编号" align="center" width="60px"/>
+				<column label="公司名称" align="center"/>
+				<column label="员工编号" align="center" width="60px"/>
+				<column label="员工姓名" align="center" width="70px"/>
+				<column label="单位公积金号" align="center"/>
+				<column label="个人公积金号" align="center"/>
+				<column label="基数" align="center" width="70px"/>
+				<column label="个人比例" align="center" width="60px"/>
+				<column label="单位比例" align="center" width="60px"/>
+				<column label="户籍" align="center" width="80px"/>
+				<column label="最高学历" align="center"/>
+				<column label="职称" align="center"/>
+				<column label="移动电话" align="center"/>
+				<column label="配偶姓名" align="center"/>
+				<column label="配偶身份证号" align="center"/>
+				<column label="提示" align="center"/>
+			</columns>
+			<rows>
+				<template name="model">
+				<row>
+					<cell><label value="${forEachStatus.index+1 }"></label></cell>
+					<cell><label value="@load(each.cid)"></label></cell>
+					<cell><label value="@load(each.coba_company)"></label></cell>
+					<cell><label value="@load(each.gid)"></label></cell>
+					<cell><label value="@load(each.emhc_name)"></label></cell>
+					<cell><label value="@load(each.emhc_companyid)"></label></cell>
+					<cell><label value="@load(each.emhc_houseid)"></label></cell>
+					<cell><label value="@load(each.emhc_trueradix)"></label></cell>
+					<cell><label value="@load(each.emhc_opp)"></label></cell>
+					<cell><label value="@load(each.emhc_cpp)"></label></cell>
+					<cell><label value="@load(each.emhc_hj)"></label></cell>
+					<cell><label value="@load(each.emhc_degree)"></label></cell>
+					<cell><label value="@load(each.emhc_title)"></label></cell>
+					<cell><label value="@load(each.emhc_mobile)"></label></cell>
+					<cell><label value="@load(each.emhc_wifename)"></label></cell>
+					<cell><label value="@load(each.emhc_wifeidcard)"></label></cell>
+					<cell><label value="@load(each.errorMsg)" style="color:${each.message==false?'red':'' }"></label></cell>
+				</row>
+				</template>
+			</rows>
+			<foot>
+				<footer span="15" align="center">
+					<button onClick="@command('summit')">确认导入</button>
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

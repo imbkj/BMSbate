@@ -1,0 +1,204 @@
+<?page title="商业保险理赔新增" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="商业保险理赔新增" border="normal" width="90%"
+		apply="org.zkoss.bind.BindComposer" sizable="true" closable="true"
+		viewModel="@id('vm') @init('Controller.EmCommercialInsurance.CI_InsurantClaim_Controller')">
+		<label id="gid" value="${arg.gid}" visible="false" />
+		<label id="cid" value="${arg.cid}" visible="false" />
+		<label id="ecin_iname" value="${arg.eccl_insurer}"
+			visible="false" />
+		<radiogroup id="a1" />
+		<grid width="100%" id="g2">
+			<rows>
+				<row>
+					<cell>索赔类型</cell>
+					<cell>
+						<textbox mold="rounded"
+							value="${arg.eccl_castsort }" id="eccl_castsort" />
+					</cell>
+					<cell>就诊人</cell>
+					<cell>
+						<textbox mold="rounded"
+							value="${arg.eccl_insurant }" id="name" />
+					</cell>
+				</row>
+				<row>
+					<cell>金额计算器</cell>
+					<cell colspan="3">
+						<textbox mold="rounded" id="pay_moneysum" onChange="sumin()"
+							value="" />
+					</cell>
+				</row>
+				<row>
+					<cell>符合金额</cell>
+					<cell>
+						<textbox mold="rounded" id="pay_money" value="" />
+					</cell>
+					<cell>索赔次数</cell>
+					<cell>
+						<textbox mold="rounded" readonly="true"
+							id="pay_count" value="@load(vm.ci_base.eccl_class)" />
+					</cell>
+				</row>
+				<row>
+					<cell>符合发票数量</cell>
+					<cell colspan="3">
+						<textbox mold="rounded" id="fp_count" value="" />
+					</cell>
+
+				</row>
+				<row>
+					<cell style="color:#FF0000">退回金额</cell>
+					<cell>
+						<textbox mold="rounded" id="t_money" value="" />
+					</cell>
+					<cell style="color:#FF0000">退回发票</cell>
+					<cell>
+						<textbox mold="rounded" id="t_count" value="" />
+					</cell>
+				</row>
+
+			</rows>
+		</grid>
+
+		<grid width="100%" mold="paging" id="g1">
+			<rows>
+
+				<row>
+					<grid width="100%">
+						<rows>
+							<row>
+								<cell>手机号码</cell>
+								<cell>
+									<textbox mold="rounded" id="mobile"
+										value="@load(vm.ci_base.eccl_mobile)" />
+								</cell>
+								<cell>邮箱地址</cell>
+								<cell>
+									<textbox mold="rounded" id="email"
+										value="@load(vm.ci_base.eccl_email_addname)" />
+								</cell>
+							</row>
+
+							<row>
+								<cell>银行名称</cell>
+								<cell>
+									<textbox mold="rounded"
+										id="bankname" value="@load(vm.ci_base.eccl_bankname)" />
+								</cell>
+								<cell>户名</cell>
+								<cell>
+									<textbox mold="rounded" id="hm" value="${arg.eccl_insurer}" if="${each.eccl_insurer==''?true:false}"/>
+									<textbox mold="rounded" id="hm" value="${arg.eccl_insurant}" if="${each.eccl_insurer!=''?true:false}"/>
+								</cell>
+							</row>
+							<row>
+								<cell>银行帐号</cell>
+								<cell colspan="3">
+									<textbox mold="rounded"
+										id="bankacctid" value="@load(vm.ci_base.eccl_bankacctid)" />
+								</cell>
+							</row>
+							<row>
+								<cell>备注</cell>
+								<cell colspan="3">
+									<textbox mold="rounded" rows="6"
+										width="50%" id="remark" />
+									<radio value="1" radiogroup="a1"
+										onClick="ga1()" id="ra1" />
+									合格
+									<radio value="1" radiogroup="a1"
+										onClick="ga2()" id="ra2" />
+									不合格
+									<radio value="1" radiogroup="a1"
+										onClick="ga3()" id="ra3" />
+									部份合格
+								</cell>
+							</row>
+						</rows>
+					</grid>
+				</row>
+
+			</rows>
+		</grid>
+		<grid width="100%">
+			<rows>
+				<row>
+					<cell colspan="5" align="center">
+						<button label="提交"
+							onClick="@command('ci_claim_add', gid=gid,cid=cid,ra1=ra1,ra2=ra2,ra3=ra3,remark=remark,eccl_castsort=eccl_castsort,name=name,pay_money=pay_money,pay_count=pay_count,t_money=t_money,t_count=t_count,fp_count=fp_count,mobile=mobile,email=email,bankname=bankname,hm=hm,bankacctid=bankacctid,ecin_iname=ecin_iname)" />
+					</cell>
+				</row>
+			</rows>
+		</grid>
+		<zscript><![CDATA[
+	/*判断有无固定劳动合同*/
+	void ga1() {
+		remark.value = name.value
+				+ "您好！中智公司已收到您的商保索赔资料，发票金额"
+				+ pay_money.value
+				+ "元，发票张数"
+				+ fp_count.value
+				+ "张；以上商保资料我们将尽快提交给保险公司进入理赔流程，请核实知悉！若有问题，请在一个工作日内回复邮件ci_service@szciic.com或拨打电话0755-83974002";
+	}
+	void ga2() {
+		remark.value = name.value
+				+ "，您好！中智公司已收到您的商保索赔资料，发票金额"
+				+ pay_money.value
+				+ "元，发票张数"
+				+ fp_count.value
+				+ "张；您以上资料初步审核不完整，请```（要求由福利部操作人员书写），待您补充完整以上资料我们才能将您的整份商保索赔资料提交给保险公司进入理赔流程，请尽快提供，谢谢！若有问题，请尽快回复邮件ci_service@szciic.com或拨打电话0755-83974002";
+	}
+	void ga3() {
+
+		Float fl = Float.valueOf(pay_money.getValue().toString())
+				+ Float.valueOf(t_money.getValue().toString());
+		Float fl2 = Float.valueOf(fp_count.getValue().toString())
+				+ Float.valueOf(t_count.getValue().toString());
+		remark.value = name.value
+				+ "，您好！中智公司已收到您的商保索赔资料，发票金额"
+				+ fl
+				+ "元，发票张数"
+				+ fl2
+				+ "张；其中发票金额"
+				+ pay_money.value
+				+ "元，发票张数"
+				+ fp_count.value
+				+ "张符合要求我们将尽快提交给保险公司进入理赔流程。剩余部分发票"
+				+ t_money.value
+				+ "元，发票张数"
+				+ t_count.value
+				+ "张，初步审核不完整，请`````（要求由福利部操作人员书写），待您补充完整以上资料我们才能将您此部分商保索赔资料提交给保险公司进入理赔流程，请尽快提供，谢谢！联系电话：0755-83974002";
+
+	}
+	
+	void sumin()	{
+	Float mys=0;
+	String mystr=pay_moneysum.value;
+
+	String[] mystr1=mystr.split("\\+");
+	System.out.println(mystr1.length);
+	
+	Float abb=0;
+	int loop=0;
+	for(loop=0;loop<mystr1.length;loop++)
+	{
+	if(mystr1[loop]=="")
+	{
+	mys=0;
+	}
+	else
+	{
+	mys=Float.valueOf(mystr1[loop]);
+	}
+	abb=Float.valueOf(abb)+Float.valueOf(mys);
+	}
+	
+	
+
+	pay_money.value=new java.text.DecimalFormat("#.00").format(abb);
+	fp_count.value=Integer.toString(mystr1.length);
+	}
+]]></zscript>
+	</window>
+</zk>

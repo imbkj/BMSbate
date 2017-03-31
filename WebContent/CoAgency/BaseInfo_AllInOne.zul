@@ -1,0 +1,38 @@
+<!--
+	创建人：林少斌
+	创建时间：2013-9-25
+	用途：委托机构信息详细页面
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="委托机构信息详细页面" border="normal" closable="true"
+		width="98%" height="98%">
+		<scrollview width="100%" height="100%">
+			<portallayout maximizedMode="whole">
+				<portalchildren style="padding: 5px" width="100%">
+					<panel height="300px" title="基本信息" border="normal"
+						collapsible="true" maximizable="true"
+						style="margin-bottom:10px">
+						<panelchildren>
+							<custom-attributes coabM="${arg.coabM}" />
+							<include width="100%" height="100%"
+								src="/CoAgency/BaseInfo_Detail.zul" coabM="${coabM}" />
+						</panelchildren>
+					</panel>
+				</portalchildren>
+				<portalchildren style="padding: 5px" width="100%">
+					<panel height="300px" title="联系人信息" border="normal"
+						collapsible="true" maximizable="true"
+						style="margin-bottom:10px">
+						<panelchildren>
+							<custom-attributes
+								coab_id="${arg.coabM.coab_id}" />
+							<include width="100%" height="100%"
+								src="/CoAgency/LinkMan_List.zul" coab_id="${coab_id}" />
+						</panelchildren>
+					</panel>
+				</portalchildren>
+			</portallayout>
+		</scrollview>
+	</window>
+</zk>

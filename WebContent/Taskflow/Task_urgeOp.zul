@@ -1,0 +1,26 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winUrgeOp" title="任务单催促处理" border="normal"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.Taskflow.Task_UrgeOpController')"
+		width="700px" sizable="true" closable="true" hflex="1">
+		<grid>
+			<rows>
+				<row>
+					<cell>催促原因：</cell>
+					<cell>
+						<textbox rows="5" width="70%"
+							value="@bind(vm.reason)" />
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button label="提交"
+						onClick="@command('addUrge',win=winUrgeOp)" />
+				</footer>
+			</foot>
+
+		</grid>
+	</window>
+</zk>

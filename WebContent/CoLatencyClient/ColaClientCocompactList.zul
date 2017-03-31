@@ -1,0 +1,75 @@
+<zk>
+<grid apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('compact') @init('Controller.CoLatencyClient.ColaClientLinkManList_Controller')"
+	model="@load(compact.compactmodel)" emptyMessage="暂时没有联系人信息">
+	<columns>
+		<column width="40px">序号</column>
+		<column>合同编号</column>
+		<column>合同类型</column>
+		<column>金额</column>
+		<column>添加人</column>
+		<column>备注</column>
+		<column>添加时间</column>
+		<column>状态</column>
+		<column>详细</column>
+		<column>预览</column>
+	</columns>
+	<rows>
+		<template name="model">
+
+			<row align="center">
+				<label value="" />
+				<label value="@load(each.coco_compactid)" />
+				<label value="@load(each.coco_compacttype)" />
+				<label value="@load(each.coof_fee)" />
+				<label value="@load(each.coco_addname)" />
+				<label value="@load(each.coco_remark)" />
+				<label value="@load(each.coco_addtime)" />
+				<label value="@load(each.state)" />
+				<a style="cursor:pointer"
+											id="${each.coco_id}" onClick="openCocoDetail(self.id)">
+											<label value="详细" />
+										</a>
+										<label value="文档预览" style="cursor:pointer"  onClick="compact_check(self.getParent().getChildren().get(8).getId())"/>
+			</row>
+		</template>
+	</rows>
+</grid>
+	<zscript>
+<![CDATA[
+import Controller.CoBase.CoBase_DetailInfoController;
+import Model.CoCompactModel;
+import bll.CoCompact.BaseInfo_SelectListBll;
+import java.util.HashMap;
+import java.util.Map;
+
+//弹出公司合同详细信息
+	void openCocoDetail(String cocoid) {
+		//调用方法
+		CoCompactModel cocoM = new CoCompactModel();
+		BaseInfo_SelectListBll bll = new BaseInfo_SelectListBll();
+
+		List cobasein = bll.searchCoCoBase(cocoid);
+		if (!cobasein.isEmpty()) {
+			cocoM = (CoCompactModel) cobasein.get(0);
+		}
+		Map map = new HashMap();
+
+		map.put("coco_id", cocoid);
+		Window window = (Window) Executions.createComponents(
+				"../CoBase/CoCompact_Info.zul", null, map);
+		window.doModal();
+	}
+//弹出公司合同详细信息
+		void compact_check(String cocoid) {
+			//调用方法
+			Map map = new HashMap();
+
+			map.put("id", cocoid);
+			Window window = (Window) Executions.createComponents(
+					"/CoCompact/Compact_CheckDoc.zul", null, map);
+			window.doModal();
+		}
+]]>
+</zscript>
+</zk>

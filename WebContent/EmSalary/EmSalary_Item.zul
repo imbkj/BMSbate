@@ -1,0 +1,198 @@
+<!--
+	创建人：林少斌
+	创建时间：2013-12-5
+	用途：工资项目设置页面
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="薪酬管理 -- 工资项目设置页面" border="normal" width="90%"
+		height="90%" closable="true" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmSalary.EmSalary_ItemController')">
+		<grid width="100%" height="100%">
+			<rows>
+				<row>
+					<cell align="left" width="15%">
+						<label value="项目算法组合：" />
+					</cell>
+					<cell align="left">
+						<hbox>
+							<combobox id="ownmonthCb" width="50%"
+								readonly="true" model="@load(vm.ownmonthList)"
+								selectedItem="@load(vm.ownmonth)" autodrop="true" mold="rounded"
+								onChange="@command('seach',ownmonthCb=ownmonthCb)">
+								<template name="model">
+									<comboitem label="@load(each)" />
+								</template>
+							</combobox>
+							<combobox id="cfin_id" width="50%"
+								readonly="true" model="@load(vm.formulaList)" autodrop="true"
+								mold="rounded" selectedItem="@load(vm.fModel)"
+								onChange="@command('seachFormula',ownmonthCb=ownmonthCb,cfin_id=cfin_id)">
+								<template name="model">
+									<comboitem
+										label="@load(each.cfin_name)" value="@load(each.cfin_id)" />
+								</template>
+							</combobox>
+						</hbox>
+					</cell>
+					<cell align="right">
+						<button label="新增项目"
+							onClick="@command('addItem',ownmonthCb=ownmonthCb)" />
+						<button label="重新定义项目算法组合"
+							onClick="@command('copyItem',ownmonthCb=ownmonthCb)" />
+						<button label="显示或隐藏项目"
+							onClick="@command('openChangeDis')" />
+						<button label="验证算法" onClick="@command('chkFor',cfin_id=cfin_id)" />
+					</cell>
+				</row>
+				<row visible="false">
+					<cell align="left" colspan="3">
+						<hlayout width="100%">
+							<label value="(注意：" />
+							<label style="color:blue;" value="蓝色" />
+							<label value="项目为已设置算法项目；" />
+							<label style="color:red;" value="红色" />
+							<label value="项目为固定项目，请不要修改固定项目的性质。)" />
+						</hlayout>
+					</cell>
+				</row>
+				<row>
+					<cell align="left" colspan="3">
+						<grid width="100%" height="100%">
+							<rows>
+								<row>
+									<cell width="80%">
+										<listbox id="itemList"
+											width="100%" selectedIndex="@load(vm.seq)" height="300px"
+											model="@load(vm.itemFormulaList)" emptyMessage="无数据">
+											<listhead>
+												<listheader
+													label="项目名称" />
+												<listheader
+													label="对应固定项目名" />
+												<listheader
+													label="项目属性" />
+												<listheader
+													label="显示状态" sort="auto(csii_fd_state)"/>
+												<listheader
+													label="是否含公式" />
+												<listheader label="操作"
+													width="10%" />
+											</listhead>
+											<template name="model">
+												<listitem>
+													<listcell>
+														<label
+															value="@load(each.csii_item_name)" />
+													</listcell>
+													<listcell>
+														<label
+															value="@load(each.csgi_content)" />
+													</listcell>
+													<listcell>
+														<label
+															value="@load(each.csia_attribute)" />
+													</listcell>
+													<listcell>
+														<label
+															value="显示"
+															if="${each.csii_fd_state==1}" onClick="@command('changeDis',fd_state=0,csii_id=each.csii_id)"/>
+														<label
+															value="隐藏"
+															if="${each.csii_fd_state==0}" onClick="@command('changeDis',fd_state=1,csii_id=each.csii_id)"/>
+													</listcell>
+													<listcell>
+														<label
+															value="内含公式"
+															if="${each.chk_cfd !=null and each.chk_cfd!='' }" />
+													</listcell>
+													<listcell>
+														<menubar
+															autodrop="true">
+															<menu
+																image="../images/pencil-small.png">
+																<menupopup>
+																	<menuitem
+																		label="修改项目" if="${vm.chkForItem[0] eq '0'}"
+																		onClick="@command('editItem',url='../EmSalary/EmSalary_ItemUpdate.zul',csiiM=each)" />
+																	<menuitem
+																		label="修改项目名" if="${vm.chkForItem[0] ne '0'}"
+																		onClick="@command('upItemName',csiiM=each)" />
+																	<menuitem
+																		label="删除项目"
+																		onClick="@command('editItem',url='../EmSalary/EmSalary_ItemDel.zul',csiiM=each)"
+																		disabled="${each.csgi_content.length()>0?true:false}" />
+																	<menuitem
+																		label="修改清零状态"
+																		onClick="@command('editIfZero',csiiM=each)" />
+																	<menuitem
+																		label="设置算法"
+																		onClick="@command('editFormula',csiiM=each)" />
+																</menupopup>
+															</menu>
+														</menubar>
+													</listcell>
+												</listitem>
+											</template>
+										</listbox>
+									</cell>
+									<cell>
+										<vbox spacing="10px"
+											width="24px">
+											<image
+												style="cursor:pointer" id="topBtn"
+												src="../images/upuparrow_g.png"
+												onClick="@command('move',type='top',itemList=itemList)" />
+											<image
+												style="cursor:pointer" id="upBtn"
+												src="../images/uparrow_g.png"
+												onClick="@command('move',type='up',itemList=itemList)" />
+											<image
+												style="cursor:pointer" id="downBtn"
+												src="../images/downarrow_g.png"
+												onClick="@command('move',type='down',itemList=itemList)" />
+											<image
+												style="cursor:pointer" id="bottomBtn"
+												src="../images/downdownarrow_g.png"
+												onClick="@command('move',type='bottom',itemList=itemList)" />
+										</vbox>
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</cell>
+				</row>
+				<row>
+					<cell colspan="3">
+						<grid width="100%" height="100%">
+							<rows>
+								<row>
+									<cell>税前合计=（所有）税前加项-（所有）税前减项</cell>
+								</row>
+								<row>
+									<cell>
+										纳税调整合计=（所有）纳税调整加项-（所有）纳税调整减项
+									</cell>
+								</row>
+								<row>
+									<cell>
+										工资个税=（税前合计+纳税调整合计-3500或4800）x
+										适用税率-速算扣除数
+									</cell>
+								</row>
+								<row>
+									<cell>税后合计=（所有）税后加项-（所有）税后减项</cell>
+								</row>
+								<row>
+									<cell>
+										实发工资=税前合计-社保个人部分-住房公积金个人部分-工资个税+税后合计
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</cell>
+				</row>
+			</rows>
+		</grid>
+	</window>
+</zk>

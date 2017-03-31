@@ -1,0 +1,50 @@
+<div id="dv" height="100%" apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('vm') @init('Controller.SysMessage.SysMessage_NotReadListController')">
+	<grid height="100%" model="@load(vm.notreadlist)"
+		emptyMessage="暂无未阅的系统短信">
+		<columns>
+			<column align="center" width="70%">
+				<textbox value="@bind(vm.name)"
+					onChange="@command('search')" width="45%" instant="true"
+					mold="rounded">
+				</textbox>
+			</column>
+			<column align="center">
+				<combobox model="@load(vm.deptList)" readonly="true"
+					width="70%" selectedItem="@bind(vm.depModel)" instant="true"
+					onChange="@command('search')" mold="rounded">
+					<template name="model">
+						<comboitem label="@load(each.dep_name)" />
+					</template>
+				</combobox>
+			</column>
+		</columns>
+		<template name="model">
+			<row style="cursor:pointer"
+				onClick="@command('opendetail',each=each)"
+				context="detailpopup_${each.syme_log_id }">
+				<cell>
+					<label value="@load(each.syme_addname)" />
+					[
+					<label value="${each.row }" style="color:red"
+						if="${not empty each.row and each.row ne 0 }" />
+					<label value="0" style="color:#666"
+						if="${empty each.row or each.row eq 0 }" />
+					/
+					<label value="${each.recicount }"
+						style="color:blue" />
+					]
+					<menupopup >
+						<menuitem label="查看"
+							onClick="@command('opendetail',each=each)">
+						</menuitem>
+						<menuitem label="即时聊天(测试)"
+							href="/KnowledgeBase/publish.zul">
+						</menuitem>
+					</menupopup>
+				</cell>
+				<label value="@load(each.dep_name)" />
+			</row>
+		</template>
+	</grid>
+</div>

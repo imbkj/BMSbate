@@ -1,0 +1,90 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="公积金密钥申报" border="normal" width="100%" height="100%"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoHousingFund.CoHouse_PwdList1Controller')">
+		<borderlayout>
+			<center>
+				<grid height="100%" mold="paging" pageSize="15"
+					sizedByContent="true" span="true" model="@load(vm.schfmList)">
+					<columns>
+						<column label="公司编号" align="center">
+							<separator></separator>
+							<textbox mold="rounded" width="80%"
+								value="@bind(vm.cid)" onChange="@command('search')" />
+						</column>
+						<column label="公司名称" align="center">
+							<separator></separator>
+							<textbox mold="rounded" width="80%"
+								value="@bind(vm.coName)" onChange="@command('search')" />
+						</column>
+						<column label="首次托收月" align="center">
+							<separator></separator>
+							<textbox mold="rounded" width="80%"
+								value="@bind(vm.firstMonth)" onChange="@command('search')" />
+						</column>
+						<column label="托收日" align="center"></column>
+						<column label="公积金号" width="10%"
+							align="center">
+							<separator></separator>
+							<textbox mold="rounded" width="80%"
+								value="@bind(vm.cogjjid)" onChange="@command('search')" />
+						</column>
+						<column label="添加时间" align="center"></column>
+						<column label="申报时间" align="center"></column>
+						<column label="客服" align="center"></column>
+						<column label="操作" align="center"></column>
+					</columns>
+					<template name="model">
+						<row>
+							<cell align="center">
+								<label value="@bind(each.cid)" />
+							</cell>
+							<cell align="center">
+								<label value="@load(each.coba_company)"
+									style="color:black" />
+							</cell>
+							<cell align="center">
+								<label
+									value="@load(each.cohf_firmonth)" />
+							</cell>
+							<cell align="center">
+								<label value="@load(each.cohf_tsday)" />
+							</cell>
+							<cell align="center">
+								<label value="@load(each.cohf_houseid)" />
+							</cell>
+							<cell align="center">
+								<label
+									value="@load(each.cohf_addtimeString)" />
+							</cell>
+							<cell align="center">
+								<label
+									value="@load(each.cohf_completetimeString)" />
+							</cell>
+							<cell align="center">
+								<label value="@load(each.cohf_client)" />
+							</cell>
+							<cell align="center">
+								<menubar autodrop="true">
+									<menu
+										image="../images/pencil-small.png">
+										<menupopup>
+											<menuitem label="业务办理"
+												onClick="@command('contro',status=each.cohf_state,company=each.coba_company,houseid=each.cohf_houseid,cohf_id=each.cohf_id)" />
+
+											<menuitem label="详细信息 "
+												onClick="@command('CoInfo',cid=each.cid,cohfid=each.cohf_id)" />
+										</menupopup>
+									</menu>
+								</menubar>
+							</cell>
+						</row>
+					</template>
+				</grid>
+
+			</center>
+		</borderlayout>
+
+	</window>
+</zk>

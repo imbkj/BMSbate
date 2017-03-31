@@ -1,0 +1,18 @@
+<!--
+	创建人：张志强
+	创建时间：2013-12-5
+	用途：劳动合同审核页面框架
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="雇员合同审核" border="normal" width="95%"
+		closable="true">
+		<zscript language="Java">
+	import Util.UserInfo;
+	String user = UserInfo.getUserid();
+</zscript>
+		<include id="incl_id"
+			src="../EmBaseCompact/EmBaseCompactSA_AutDoc.jsp?ebcc_id=${arg.daid}&amp;user=${user}&amp;ebcu_tapr_id=${arg.id}">
+		</include>
+	</window>
+</zk>

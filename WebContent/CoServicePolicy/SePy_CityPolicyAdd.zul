@@ -1,0 +1,151 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="${arg.classname }——服务政策信息新增"  border="normal" width="80%" height="80%" closable="true"
+	apply="org.zkoss.bind.BindComposer" id="editwin"
+	viewModel="@id('vm') @init('Controller.CoServicePolicy.SePy_CityPolicyAddController')"
+>
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell width="120px">政策类型</cell>
+			<cell>
+				<combobox readonly="true" width="80%" value="@bind(vm.model.sypo_type)"
+				onChange="@command('changetype',type=self.value)">
+					<comboitem label="当地操作规则"/>
+					<comboitem label="当地工资标准"/>
+					<comboitem label="残保金"/>
+					<comboitem label="社保补缴"/>
+					<comboitem label="社保凭证（社保卡）"/>
+					<comboitem label="社保查询"/>
+					<comboitem label="公积金凭证（公积金卡或存折）"/>
+					<comboitem label="公积金查询"/>
+					<comboitem label="财税"/>
+					<comboitem label="档案、户口"/>
+					<comboitem label="其他"/>
+				</combobox>
+			</cell>
+			<cell width="80px">标题</cell>
+			<cell>
+				<textbox width="80%" value="@bind(vm.model.sypo_title)"></textbox>
+			</cell>	
+		</row>
+		<row>
+			<cell>政策内容</cell>
+			<cell colspan="3"><textbox width="80%" rows="4" value="@bind(vm.model.sypo_content)"></textbox></cell>
+		</row>
+		<row visible="@load(vm.viablerw)">
+			<cell>当地社平工资</cell>
+			<cell><textbox value="@bind(vm.model.sypo_sminwage)"></textbox></cell>
+			<cell>执行时间</cell>
+			<cell><datebox value="@bind(vm.sminwagedate)"></datebox></cell>
+		</row>
+		<row visible="@load(vm.viablerw)">
+			<cell>当地最低工资</cell>
+			<cell><textbox value="@bind(vm.model.sypo_minwage)"></textbox></cell>
+			<cell>执行时间</cell>
+			<cell><datebox value="@bind(vm.minwagedate)"></datebox></cell>
+		</row>
+		<row visible="@load(vm.viablerw)">
+			<cell>当地最低工资标准</cell>
+			<cell><textbox value="@bind(vm.model.sypo_minwagestandard)"></textbox></cell>
+			<cell>执行时间</cell>
+			<cell><datebox value="@bind(vm.standarddate)"></datebox></cell>
+		</row>
+		<row visible="@load(vm.viablerw)">
+			<cell>当地最低小时工工资</cell>
+			<cell><textbox value="@bind(vm.model.sypo_hourwage)"></textbox></cell>
+			<cell>执行时间</cell>
+			<cell><datebox value="@bind(vm.hourwagedate)"></datebox></cell>
+		</row>
+		<row>
+			<cell>上传文件</cell>
+			<cell colspan="3"><button id="attachBtn" upload="true" label="添加文件" onUpload="@command('upfile')"/></cell>
+		</row>
+		<row visible="@bind(vm.filegdvisible)">
+			<cell>已选择文件</cell>
+			<cell colspan="3">
+				<grid model="@load(vm.filelist)" id="gd">
+					<columns>
+						<column label="文件名称" align="center"/>
+
+						<column label="备注" align="center"/>
+						<column label="操作" align="center" width="80px"/>
+					</columns>
+					<rows>
+						<template name="model">
+						<row>
+							<cell><label value="@load(each.file_title)"></label></cell>
+							<cell><textbox width="90%" value="@bind(each.file_remark)"></textbox></cell>
+							<cell><a onClick="@command('del',model=each)"><label>删除</label></a></cell>	
+						</row>
+						</template>
+					</rows>
+				</grid>
+			</cell>
+		</row>
+	</rows>
+	<foot><footer align="center"><button onClick="@command('summit',gd=gd,win=editwin)">提交</button></footer></foot>
+</grid>
+<script><![CDATA[
+        zk.afterLoad("zul.db", function () {
+            // Datebox Calendar Renderer
+            var _Cwgt = {};
+            zk.override(zul.db.CalendarPop.prototype, _Cwgt, {
+                // switch the view after redraw or open as needed
+                redraw: function (out) {
+                    _Cwgt.redraw.apply(this, arguments); //call the original method
+                    this._customChangeView ();
+                },
+                open: function (silent) {
+                    _Cwgt.open.apply(this, arguments); //call the original method
+                    this._customChangeView ();
+                },
+                _customChangeView: function () {
+                    // cannot show month/day
+                    if (jq(this.parent.$n()).hasClass('datebox-year-only')) {
+                        var view = this._view;
+                        // switch to year view as needed
+                        if (view == 'month' || view == 'day')
+                            this._setView("year");
+                    } else if (jq(this.parent.$n()).hasClass('datebox-month-only')) {
+                        // cannot show day view
+                        // switch to month view as needed
+                        if (this._view == 'day')
+                            this._setView("month");
+                    }
+                },
+                // customize the chooseDate function
+                _chooseDate: function (target, val) {
+                    var view = this._view;
+                    if (jq(this.parent.$n()).hasClass('datebox-month-only')
+                        || jq(this.parent.$n()).hasClass('datebox-year-only')) {
+                        // do customize chooseDate if the parent (datebox)
+                        // has specific class
+                        var date = this.getTime(),
+                            year = (view == 'decade' || view == 'year')? val : date.getFullYear(),
+                            month = view == 'month'? val : 0,
+                            date = 1;
+                        // set date value
+                        this._setTime(year, month, 1);
+                        if (view == 'decade') {
+                            // switch to year view if at decade view
+                            this._setView("year");
+                        } else if (jq(this.parent.$n()).hasClass('datebox-month-only')
+                            && view == 'year') {
+                            // switch to month view if at year view and the month view is allowed
+                            this._setView("month");
+                        } else if (jq(this.parent.$n()).hasClass('datebox-month-only') && view == 'month'
+                            || jq(this.parent.$n()).hasClass('datebox-year-only') && view == 'year') {
+                            // close calendar and update value if already at the smallest allowed view
+                            this.close();
+                            this.parent.updateChange_();
+                        }
+                    } else {
+                        _Cwgt._chooseDate.apply(this, arguments); //call the original method
+                    }
+                }
+            });
+        });
+    ]]></script>
+</window>
+</zk>

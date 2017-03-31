@@ -1,0 +1,121 @@
+<?page title="档案转出确认" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="档案转出确认" border="normal" width="80%" height="80%"
+		closable="true" id="winss" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.Archives.Archive_FileCheckOutController')">
+		<radiogroup id="yorn" />
+		<grid vflex="1">
+			<rows>
+				<row>
+					<cell width="100px">员工姓名</cell>
+					<cell>
+						<label value="@load(vm.models.eada_name)"></label>
+					</cell>
+					<cell width="100px">员工编号</cell>
+					<cell>
+						<label value="@load(vm.models.gid)"></label>
+					</cell>
+				</row>
+				<row>
+					<cell>单位名称</cell>
+					<cell>
+						<label
+							value="@load(vm.models.coba_shortname)">
+						</label>
+					</cell>
+					<cell>单位编号</cell>
+					<cell>
+						<label value="@load(vm.models.cid)"></label>
+					</cell>
+				</row>
+				<row>
+					<cell>状态</cell>
+					<cell>
+						<label value="@load(vm.models.eada_final)"></label>
+					</cell>
+					<cell visible="@load(vm.isback)">退回人</cell>
+					<cell visible="@load(vm.isback)">
+						<label value="@load(vm.models.eada_modname)"></label>
+					</cell>
+				</row>
+				<row>
+					<cell>档案号</cell>
+					<cell>
+						<textbox value="${vm.models.eada_fid }"
+							readonly="true">
+						</textbox>
+					</cell>
+					<cell>员工欠费起始时间</cell>
+					<cell>
+						<datebox id="chargedate"
+							value="${vm.models.eada_chargedate }">
+						</datebox>
+					</cell>
+				</row>
+				<row>
+					<cell visible="false">转往单位</cell>
+					<cell visible="false">
+						<textbox id="checkoutsetup" width="90%"
+							value="${vm.models.eada_checkoutsetup }">
+						</textbox>
+					</cell>
+					<cell>是否待确定</cell>
+					<cell>
+						<hlayout>
+							<radio id="yes" label="是" value="0"
+								radiogroup="yorn" />
+							<radio id="no" label="否" value="1"
+								radiogroup="yorn" selected="true" />
+						</hlayout>
+					</cell>
+				</row>
+				<row visible="@load(vm.isback)">
+					<cell>员工缴费情况</cell>
+					<cell colspan="3">
+						<textbox width="80%" rows="5" id="charge"
+							value="${vm.models.eada_charge }">
+						</textbox>
+					</cell>
+				</row>
+				<row>
+					<cell>调出原因</cell>
+					<cell colspan="3">
+						<textbox width="80%" rows="5"
+							id="checkoutreason" value="${vm.models.eada_checkoutreason}">
+						</textbox>
+					</cell>
+				</row>
+				<row visible="@load(vm.isback)">
+					<cell>退回原因</cell>
+					<cell colspan="3">
+						<textbox width="80%" rows="5"
+							value="@load(vm.models.eada_backcase)">
+						</textbox>
+					</cell>
+				</row>
+				<row>
+					<cell>备注</cell>
+					<cell colspan="3">
+						<textbox width="80%" rows="5" id="remark"
+							value="${vm.remarks }">
+						</textbox>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button id="summit"
+						onClick="@command('summitupdate',charge=charge.value,
+		yorn=yorn.selectedItem.value,remark=remark.value,win=winss,chargedate=chargedate.value,checkoutdate=checkoutdate.value,
+		checkoutmode=checkoutmode.value,checkoutsetup=checkoutsetup.value,checkoutreason=checkoutreason.value)">
+						提交
+					</button>
+					<button
+							onClick="@command('addremark',win=winss)">
+							备注
+						</button>
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

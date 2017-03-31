@@ -1,0 +1,114 @@
+<?page title="员工业务中心" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window width="99%" height="99%" id="centerwin" xmlns:w="client"
+		closable="true" title="员工业务中心" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.SystemControl.EmBuCenterInfoListController')">
+		<style src="/css/style.css"></style>
+		<borderlayout
+			style="margin-bottom:3px;background-color:#FFFFFF;" vflex="1"
+			hflex="1">
+			<west width="220px" splittable="true" collapsible="true"
+				title="业务菜单">
+				<vlayout sclass="fn-panel1" vflex="1" hflex="1">
+					<hlayout sclass="fn-subpanel" vflex="1" hflex="1">
+						<tree id="tree" vflex="1"
+							onCreate="@command('oncreatetree',tree=self,refleshurl=refleshurl)">
+						</tree>
+					</hlayout>
+				</vlayout>
+			</west>
+			<center
+				style="border:0;margin-top:8px;padding-bottom:8px;">
+				<borderlayout vflex="1" hflex="1">
+					<north>
+						<div vflex="1" hflex="1"
+							style="border-style:solid; border-width:1px; border-color:#CCCCCC;">
+							<grid>
+								<rows>
+									<row>
+										<cell width="80px">公司编号</cell>
+										<cell>
+											<label
+												value="@load(vm.emmodel.cid)">
+											</label>
+										</cell>
+										<cell width="80px">公司全称</cell>
+										<cell>
+											<label
+												value="@load(vm.emmodel.coba_company)">
+											</label>
+										</cell>
+										<cell width="80px">公司简称</cell>
+										<cell>
+											<label
+												value="@load(vm.emmodel.coba_shortname)">
+											</label>
+										</cell>
+									</row>
+									<row>
+										<cell width="80px">员工编号</cell>
+										<cell>
+											<label
+												value="@load(vm.emmodel.gid)">
+											</label>
+										</cell>
+										<cell width="80px">员工姓名</cell>
+										<cell>
+											<label
+												value="${vm.emmodel.emba_name}(${vm.emmodel.emba_pinyin })">
+											</label>
+										</cell>
+										<cell width="80px">入职时间</cell>
+										<cell>
+											<hbox>
+												<label
+													value="@load(vm.emmodel.emba_indate)">
+												</label>
+												<label
+													if="${vm.emmodel.emba_state==0 }">
+													(离职时间:${vm.emmodel.emba_outdate})
+												</label>
+											</hbox>
+										</cell>
+									</row>
+									<row>
+										<cell width="80px">身份证号</cell>
+										<cell>
+											<label
+												value="@load(vm.emmodel.emba_idcard)">
+											</label>
+										</cell>
+										<cell width="80px">手机号码</cell>
+										<cell>
+											<label
+												value="@load(vm.emmodel.emba_mobile)">
+											</label>
+										</cell>
+										<cell width="80px">委托机构</cell>
+										<cell>
+											<hbox>
+												<label
+													value="@load(vm.coabM.coab_city)" />
+												<label value=" -- " />
+												<label
+													value="@load(vm.coabM.coab_name)" />
+											</hbox>
+										</cell>
+									</row>
+								</rows>
+							</grid>
+						</div>
+					</north>
+					<center style="margin-top:8px;">
+						<custom-attributes gid="${vm.gid }"
+							cid="${vm.cid }" embaId="${vm.embaId }" win="${vm.win}" />
+						<include src="/Embase/Embase_DetailInfo.zul"
+							id="refleshurl" vflex="1" hflex="1" gid="${gid }" cid="${cid }"
+							embaId="${embaId }" win="${win }" step="1">
+						</include>
+					</center>
+				</borderlayout>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

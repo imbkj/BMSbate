@@ -1,0 +1,80 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="档案修改" border="normal" vflex="1" hflex="1"
+		apply="org.zkoss.bind.BindComposer" id="editwin"
+		viewModel="@id('vm') @init('Controller.Archives.Archive_InfoUpdateController')"
+	>
+		<grid vflex="1">
+			<rows>
+				<row>
+					<cell width="120px"></cell>
+					<cell></cell>
+					<cell width="120px"></cell>
+					<cell></cell>
+				</row>
+				<row>
+					<cell>请选择档案</cell>
+					<cell colspan="3">
+						<combobox readonly="true" model="@load(vm.archivelist)"
+						 value="@bind(vm.model.emar_fid)" onChange="@command('changefid',cb=self)">
+							<template name="model">
+								<comboitem label="${each.emar_archivetype } - ${each.emar_fid }" value="@load(each)" />
+							</template>
+						</combobox>
+					</cell>
+				</row>
+				<row>
+					<cell>档案费用付款性质</cell>
+					<cell>
+						<combobox readonly="true" value="@bind(vm.model.emar_rspaykind)">
+							<comboitem label="" />
+							<comboitem label="个人付" />
+							<comboitem label="服务费中包含" />
+							<comboitem label="公司按月支付" />
+							<comboitem label="公司一次性支付" />
+						</combobox>
+					</cell>
+					<cell>档案发票</cell>
+					<cell>
+						<combobox readonly="true" value="@bind(vm.model.emar_rsinvoice)">
+							<comboitem label="" />
+							<comboitem label="政府发票" />
+							<comboitem label="财务确定" />
+							<comboitem label="其他" />
+						</combobox>
+					</cell>
+				</row>
+				<row>
+					<cell>户口费用付款性质</cell>
+					<cell>
+						<combobox readonly="true" value="@bind(vm.model.emar_hjpaykind)">
+							<comboitem label="" />
+							<comboitem label="个人付" />
+							<comboitem label="服务费中包含" />
+							<comboitem label="公司按月支付" />
+							<comboitem label="公司一次性支付" />
+						</combobox>
+					</cell>
+					<cell>户口发票</cell>
+					<cell>
+						<combobox readonly="true" value="@bind(vm.model.emar_hjinvoice)">
+							<comboitem label="" />
+							<comboitem label="政府发票" />
+							<comboitem label="财务确定" />
+							<comboitem label="其他" />
+						</combobox>
+					</cell>
+				</row>
+				<row>
+					<cell>备注</cell>
+					<cell colspan="3">
+						<textbox rows="3" width="80%" value="@bind(vm.model.emar_remark)"></textbox>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center"><button onClick="@command('summit',win=editwin)">修改</button></footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

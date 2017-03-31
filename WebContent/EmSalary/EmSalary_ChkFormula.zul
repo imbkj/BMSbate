@@ -1,0 +1,97 @@
+<!--
+	创建人：林少斌
+	创建时间：2014-4-4
+	用途：工资算法设置页面
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="薪酬管理 -- 工资算法验证页面" border="normal" width="70%"
+		closable="true" sizable="true" height="90%"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmSalary.EmSalary_ChkFormulaController')">
+		<borderlayout vflex="1" hflex="1">
+			<north title="个人信息" collapsible="true" splittable="true"
+				autoscroll="true">
+				<grid>
+					<rows>
+						<row>
+							<cell style="color:#666;">算法名称：</cell>
+							<cell style="color:#666;">
+								<label value="@load(vm.cfin_name)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="雇佣性质" />
+							</cell>
+							<cell>
+								<combobox id="hpro" readonly="true"
+									autodrop="true" mold="rounded">
+									<comboitem label="雇佣合同" />
+									<comboitem label="劳务协议" />
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<hbox>
+									<label value="国籍" />
+								</hbox>
+							</cell>
+							<cell>
+								<combobox id="nationality"
+									readonly="true" autodrop="true" mold="rounded">
+									<comboitem label="中国" />
+									<comboitem label="其它" />
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<hbox>
+									<label value="个税申报地" />
+								</hbox>
+							</cell>
+							<cell>
+								<combobox id="taxplace" autodrop="true"
+									mold="rounded">
+									<comboitem label="深圳" />
+									<comboitem label="${each}"
+										forEach="${vm.citylist }" />
+								</combobox>
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</north>
+			<center title="工资信息" autoscroll="true">
+				<grid id="gdItem" model="@load(vm.csIIInfoList)">
+					<rows>
+						<template name="model">
+							<row>
+								<cell width="50%" align="right">
+									<label
+										value="${each.csii_item_name}" />
+								</cell>
+								<cell width="50%">
+									<decimalbox format="###.##"
+										value="@load(each.amount)" />
+									<label style="color:#0000FF;"
+										value="算法自动计算" if="${each.cfda}" />
+									<label style="color:#666666;"
+										value="(固定项目：${each.csgi_content})" if="${each.if_gd==1}" />
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</center>
+			<south>
+				<div align="center" width="100%">
+					<button label="提交"
+						onClick="@command('submit',gdItem=gdItem,hpro=hpro,nationality=nationality,taxplace=taxplace)" />
+				</div>
+			</south>
+		</borderlayout>
+	</window>
+</zk>

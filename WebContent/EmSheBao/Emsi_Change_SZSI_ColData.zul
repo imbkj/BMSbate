@@ -1,0 +1,91 @@
+<?page title="特殊(交单)变更-服务中心核收" contentType="text/html;charset=UTF-8"?>
+<?component name="embase" macro-uri="Emsi_EmBase.zul" inline="true"?>
+<?component name="docDataList" macro-uri="/DocumentsInfo/DocumentsInfo_AddPageList.zul" inline="true"?>
+<zk>
+	<window id="winChangeSZSI" title="特殊(交单)变更-服务中心核收" border="normal"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmSheBao.Emsi_Change_SZSI_ColDataController')"
+		height="80%" width="80%" closable="true" sizable="true"
+		maximizable="true">
+		<borderlayout>
+			<north title="个人信息" border="none">
+				<embase gid="${vm.ecModel.gid}"
+					name="${vm.ecModel.escs_name}" />
+			</north>
+			<center title="参保信息" border="none">
+				<grid width="100%" height="100%">
+					<rows>
+						<row>
+							<cell width="15%" style="color:#666;"
+								align="center">
+								变更类型
+							</cell>
+							<cell width="85%">
+								<label
+									value="@load(vm.ecModel.escs_change)" />
+							</cell>
+						</row>
+						<row>
+							<cell style="color:#666;" align="center">
+								所属月份
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.ecModel.ownmonth)" />
+							</cell>
+						</row>
+						<row>
+							<cell width="15%" style="color:#666;"
+								align="center">
+								变更内容
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.ecModel.escs_content)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="退回原因：" />
+							</cell>
+							<cell>
+								<textbox rows="3" width="70%"
+									value="@bind(vm.reason)" />
+							</cell>
+						</row>
+						<row>
+							<cell width="15%" style="color:#666;"
+								align="center">
+								所交资料
+							</cell>
+							<cell>
+								<docDataList id="docGrid" puzu_id="33"
+									gid="${vm.ecModel.gid}" dWidth="100%" />
+							</cell>
+						</row>
+						<row>
+							<cell width="15%" style="color:#666;"
+								align="center">
+								备注
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.ecModel.escs_remark)" />
+							</cell>
+						</row>
+					</rows>
+					<foot>
+						<footer align="center">
+							<button label="退回"
+								onClick="@command('szsiReturn',win=winChangeSZSI)" />
+							<button label="联系员工"
+								onClick="@command('lx')" />
+							<button label="提交" id="btSubmit"
+								onClick="@command('changeSZSI',win=winChangeSZSI,gd=docGrid)" />
+						</footer>
+					</foot>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

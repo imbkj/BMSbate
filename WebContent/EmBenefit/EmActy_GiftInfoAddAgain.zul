@@ -1,0 +1,167 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="福利享受重新申请" border="normal" width="90%" height="90%" closable="true" id="addwin"
+	apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('vm') @init('Controller.EmBenefit.EmActy_GiftInfoUpAgainController')"
+>
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell width="80px">供应商</cell>
+			<cell>
+				<combobox model="@load(vm.suplist)" id="supname" selectedItem="@bind(vm.supmodel)" mold="rounded"
+				 onChange="@command('updatelist',val=self.value)" value="@bind(vm.m.supp_name)">
+					<template name="model">
+						<comboitem label="@load(each.supp_name)" value="@load(each.supp_id)"/>
+					</template>
+				</combobox>
+			</cell>
+			<cell width="80px">名称</cell>
+			<cell>
+				<combobox model="@load(vm.prolist)" id="giftname" mold="rounded"
+				 selectedItem="@bind(vm.promodel)" value="@bind(vm.m.gift_name)"
+				  onSelect="@command('getPrice',innum=innum.value,nowprice=nowprice.value)" >
+					<template name="model">
+						<comboitem label="@load(each.prod_name)" value="@load(each.prod_id)"/>
+					</template>
+				</combobox>
+			</cell>
+			<cell width="80px">所属月份</cell>
+			<cell><textbox mold="rounded" id="ownmonth" value="@bind(vm.m.ownmonth)"/></cell>
+		</row>
+		<row>
+			<cell>总数</cell>
+			<cell><intbox id="innum"  mold="rounded" readonly="true"
+			onChanging="@command('getPrice',innum=innum.value,nowprice=nowprice.value)" 
+			instant="true" value="@bind(vm.m.gift_totalnum)" ></intbox></cell>
+			<cell>原价</cell>
+			<cell><doublebox id="price" format="0.00" value="@bind(vm.m.gift_price)" constraint="no negative"  mold="rounded"></doublebox></cell>
+			<cell>折扣价</cell>
+			<cell><doublebox id="nowprice" format="0.00" value="@bind(vm.m.gift_nowprice)" instant="true" mold="rounded"
+			onChanging="@command('getPrice',innum=innum.value,nowprice=nowprice.value)" constraint="no negative"></doublebox></cell>
+		</row>
+		<row>
+			<cell>总金额</cell>
+			<cell><doublebox id="totalrice" readonly="true" value="@bind(vm.m.gift_totalprice)" mold="rounded"></doublebox></cell>
+			<cell>备注</cell>
+			<cell colspan="3"><textbox id="remark" width="80%" rows="3" value="@bind(vm.m.gift_remark)" mold="rounded"></textbox></cell>
+		</row>
+		<row>
+			<cell>员工名单</cell>
+			<cell colspan="5">
+				<grid id="gdList" model="@load(vm.list)"
+					sizedByContent="true" span="true" mold="paging" pageSize="10"
+					emptyMessage="暂无数据">
+					<columns>
+						<column align="center" width="40px">序号</column>
+						<column align="center">公司名称</column>
+						<column align="center">姓名</column>
+						<column align="center">福利内容</column>
+						<column align="center">福利项目</column>
+						<column align="center">份数</column>
+						<column align="center">客服</column>
+						<column align="center">付款性质</column>
+						<column align="center">寄送方式</column>
+					</columns>
+					<template name="model">
+						<row>
+							<cell>${forEachStatus.index+1 }</cell>
+							<cell>
+								<label value="@load(each.emwf_company)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emwf_name)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emwf_content)" />
+							</cell>
+							<cell>
+								<label value="@load(each.embf_name)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emwf_amount)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emwf_client)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emwf_paykind)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.emwf_delivery)" />
+							</cell>			
+						</row>
+					</template>
+				</grid>
+			</cell>
+		</row>
+	</rows>
+	<foot>
+		<footer align="center"><button onClick="@command('summit',addwin=addwin,ownmonth=ownmonth.value)">提交</button></footer>
+	</foot>
+</grid>
+<script><![CDATA[
+        zk.afterLoad("zul.db", function () {
+            // Datebox Calendar Renderer
+            var _Cwgt = {};
+            zk.override(zul.db.CalendarPop.prototype, _Cwgt, {
+                // switch the view after redraw or open as needed
+                redraw: function (out) {
+                    _Cwgt.redraw.apply(this, arguments); //call the original method
+                    this._customChangeView ();
+                },
+                open: function (silent) {
+                    _Cwgt.open.apply(this, arguments); //call the original method
+                    this._customChangeView ();
+                },
+                _customChangeView: function () {
+                    // cannot show month/day
+                    if (jq(this.parent.$n()).hasClass('datebox-year-only')) {
+                        var view = this._view;
+                        // switch to year view as needed
+                        if (view == 'month' || view == 'day')
+                            this._setView("year");
+                    } else if (jq(this.parent.$n()).hasClass('datebox-month-only')) {
+                        // cannot show day view
+                        // switch to month view as needed
+                        if (this._view == 'day')
+                            this._setView("month");
+                    }
+                },
+                // customize the chooseDate function
+                _chooseDate: function (target, val) {
+                    var view = this._view;
+                    if (jq(this.parent.$n()).hasClass('datebox-month-only')
+                        || jq(this.parent.$n()).hasClass('datebox-year-only')) {
+                        // do customize chooseDate if the parent (datebox)
+                        // has specific class
+                        var date = this.getTime(),
+                            year = (view == 'decade' || view == 'year')? val : date.getFullYear(),
+                            month = view == 'month'? val : 0,
+                            date = 1;
+                        // set date value
+                        this._setTime(year, month, 1);
+                        if (view == 'decade') {
+                            // switch to year view if at decade view
+                            this._setView("year");
+                        } else if (jq(this.parent.$n()).hasClass('datebox-month-only')
+                            && view == 'year') {
+                            // switch to month view if at year view and the month view is allowed
+                            this._setView("month");
+                        } else if (jq(this.parent.$n()).hasClass('datebox-month-only') && view == 'month'
+                            || jq(this.parent.$n()).hasClass('datebox-year-only') && view == 'year') {
+                            // close calendar and update value if already at the smallest allowed view
+                            this.close();
+                            this.parent.updateChange_();
+                        }
+                    } else {
+                        _Cwgt._chooseDate.apply(this, arguments); //call the original method
+                    }
+                }
+            });
+        });
+    ]]></script>
+
+</window>
+</zk>

@@ -1,0 +1,167 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="员工公积金- 补缴信息查询" id="bjSwin" border="normal"
+		width="100%" height="100%" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmHouse.EmHouse_BjSearchListController')"
+		closable="true">
+
+		<borderlayout>
+			<north id="north" collapsible="true" title="高级选项"
+				open="true">
+				<grid>
+					<rows>
+						<row>
+							<cell width="120px">所属月份</cell>
+							<cell>
+								<combobox mold="rounded" readonly="true"
+									value="@bind(vm.ejm.ownmonth)"
+									model="@load(vm.ownmonthList)">
+									<template name="model">
+										<comboitem
+											label="@load(each.ownmonth)" />
+									</template>
+								</combobox>
+							</cell>
+							<cell width="120px">公司</cell>
+							<cell>
+								<combobox mold="rounded" autodrop="true"
+									 onChanging="@command('updateCompany',a=event)"
+									value="@bind(vm.ejm.emhb_company)"
+									model="@load(vm.companyList)">
+									<template name="model">
+										<comboitem
+											label="@load(each.emhb_company)">
+											${each.cid }
+										</comboitem>
+									</template>
+								</combobox>
+							</cell>
+
+						</row>
+						<row>
+							<cell>缴费月份</cell>
+							<cell>
+								<combobox mold="rounded"
+									value="@bind(vm.ejm.emhb_feemonth)"
+									model="@load(vm.feemonthList)">
+									<template name="model">
+										<comboitem
+											label="@load(each.emhb_feemonth)" />
+									</template>
+								</combobox>
+							</cell>
+							<cell>员工</cell>
+							<cell>
+								<combobox mold="rounded" autodrop="true" onChanging="@command('updateEMP',a=event)"
+									value="@bind(vm.ejm.emhb_name)" model="@load(vm.empList)"
+									>
+									<template name="model">
+										<comboitem
+											label="@load(each.emhb_name)">
+											${each.gid }
+										</comboitem>
+									</template>
+								</combobox>
+							</cell>
+						</row>
+					</rows>
+					<foot>
+						<footer align="center">
+							<button label="查询"
+								onClick="@command('search')" />
+							<button label="导出"
+								onClick="@command('export')" />
+						</footer>
+					</foot>
+				</grid>
+			</north>
+			<center>
+				<grid id="gdList" height="100%" sizedByContent="true"
+					span="true" mold="paging" pageSize="100" model="@load(vm.list)"
+					emptyMessage="暂时没有数据记录">
+					<columns>
+						<column align="center" label="序号" />
+						<column align="center" label="公司简称" />
+						<column align="center" label="所属月份" />
+						<column align="center" label="缴费月份" />
+						<column align="center" label="姓名" />
+						<column align="center" label="单位公积金" />
+						<column align="center" label="个人公积金" />
+						<column align="center" label="身份证" />
+						<column align="center" label="基数" />
+						<column align="center" label="比例" />
+						<column align="center" label="补缴起始月" />
+						<column align="center" label="补缴终止月" />
+						<column align="center" label="总额" />
+						<column align="center" label="状态" />
+						<column align="center" label="添加时间" />
+						<column align="center" label="客服" />
+						<column align="center" label="添加人" />
+						<column align="center" label="短信" />
+
+					</columns>
+					<template name="model">
+						<row>
+							<cell>${forEachStatus.index+1 }</cell>
+							<cell
+								style="color:${each.emhb_single==0?'red':'black' }">
+								<label value="@load(each.emhb_company)" />
+							</cell>
+							<cell>
+								<label value="@load(each.ownmonth)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.emhb_feemonth)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emhb_name)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.emhb_companyid)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emhb_houseid)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emhb_idcard)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emhb_radix)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emhb_cpp)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.emhb_startmonth)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.emhb_stopmonth)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emhb_total)" />
+							</cell>
+							<cell>
+								<label value="@load(each.states)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emhb_addtime)" />
+							</cell>
+							<cell>
+								<label value="@load(each.client)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emhb_addname)" />
+							</cell>
+							<cell></cell>
+						</row>
+					</template>
+				</grid>
+			</center>
+		</borderlayout>
+
+	</window>
+</zk>

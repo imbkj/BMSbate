@@ -1,0 +1,27 @@
+<!--
+	创建人：林少斌
+	创建时间：2013-9-24
+	用途：委托机构联系人删除页面
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="w1" title="委托机构联系人-- 删除页面" border="normal"
+		apply="org.zkoss.bind.BindComposer,Controller.CoAgency.LinkMan_DeleteController" closable="true" width="600px">
+		<grid width="100%">
+			<rows>
+				<row>
+					<cell width="15%" style="color:#666;">删除原因：</cell>
+					<cell>
+						<textbox id="cali_delreason" rows="5"
+							width="80%"  mold="rounded"/>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button label="提交" id="btSubmit" />
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

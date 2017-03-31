@@ -1,0 +1,32 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="用友信息修改" border="normal" width="600px"
+		apply="org.zkoss.bind.BindComposer" id="editwin"
+		viewModel="@id('vm') @init('Controller.EmFinanceManage.Finance_GatherInfoEditController')"
+		height="500px" closable="true">
+		<grid vflex="1">
+			<rows>
+				<row>
+					<cell width="60px">单位编号</cell>
+					<cell><label value="@load(vm.m.cid)"></label></cell>
+					<cell width="60px">单位名称</cell>
+					<cell><label value="@load(vm.m.coba_company)"></label></cell>
+				</row>
+				<row>
+					<cell>用友编号</cell>
+					<cell><textbox value="@bind(vm.fuid)"></textbox></cell>
+					<cell>客户类型</cell>
+					<cell>
+						<combobox value="@bind(vm.clientclass)">
+							<comboitem label="AF" />
+							<comboitem label="FS" />
+						</combobox>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center"><button onClick="@command('submit',win=editwin)">提交</button></footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

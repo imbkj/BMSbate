@@ -1,0 +1,98 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="委托外地记录修改" id="winUpdate" width="80%" height="60%" closable="true"
+ border="normal" apply="org.zkoss.bind.BindComposer"  vflex="1" hflex="1"
+  viewModel="@id('vm') @init('Controller.EmCommissionOut.EmCommissionOutimport_UpdateController')">
+  <grid hflex="1" vflex="1">
+	  <rows>
+		  <row>
+			  <cell width="120px">员工姓名</cell>
+              <cell width="300px"><textbox width="80%" id="ecou_name" value="@load(vm.m.ecou_name)" /></cell>
+              <cell width="120px">身份证号码</cell>
+              <cell width="300px"><textbox width="80%" id="ecou_idcard" value="@load(vm.m.ecou_idcard)" /></cell>
+              <cell width="120px">服务费代码</cell>
+              <cell width="300px"><textbox width="80%" id="ecou_ecos_id" value="@load(vm.m.ecou_ecos_id)" /></cell>
+           </row>
+           <row>
+              <cell>当地标准代码</cell>
+              <cell><textbox width="80%" id="ecou_soin_id" value="@load(vm.m.ecou_soin_id)" /></cell>
+			  <cell>手机号</cell>
+              <cell ><textbox width="80%" id="ecou_mobile" value="@load(vm.m.ecou_mobile)" /></cell>
+              <cell>是否保管档案</cell>
+              <cell>
+                <combobox  width="80%" id="ecou_filestate" readonly="true" value="@load(vm.ecou_filestate)">
+					<comboitem label="" />
+					<comboitem label="是" />
+					<comboitem label="否" />
+				</combobox>
+              </cell>
+           </row>
+           <row>
+              <cell>合同起始时间</cell>
+              <cell ><datebox width="80%" id="ecou_compact_f" value="@load(vm.ecou_compact_f)"></datebox></cell>
+              <cell>合同结束时间</cell>
+              <cell ><datebox  width="80%" id="ecou_compact_l" value="@load(vm.ecou_compact_l)" /></cell>
+              <cell>工作电话</cell>
+              <cell ><textbox width="80%"  id="ecou_com_phone" value="@load(vm.m.ecou_com_phone)" /></cell>
+           </row>
+           <row>
+              <cell>社保基数</cell>
+              <cell ><textbox width="80%" id="ecou_sb_base" value="@load(vm.m.ecou_sb_base)"/></cell>
+              <cell>公积金基数</cell>
+              <cell ><textbox width="80%" id="ecou_house_base" value="@load(vm.m.ecou_house_base)" /></cell>
+              <cell>实际工资</cell>
+              <cell ><textbox width="80%" id="ecou_salary" value="@load(vm.m.ecou_salary)" /></cell>
+           </row>
+           <row>
+              <cell>客服</cell>
+              <cell ><textbox width="80%" id="ecou_client" value="@load(vm.m.ecou_client)" /></cell>
+              <cell>养老起始</cell>
+              <cell ><datebox width="80%" id="ecou_yldate" value="@load(vm.ecou_yldate)" /></cell>
+              <cell>医疗起始</cell>
+              <cell ><datebox width="80%" id="ecou_yliaodate" value="@load(vm.ecou_yliaodate)" /></cell>
+           </row>
+           <row>
+              <cell>大病起始</cell>
+              <cell ><datebox width="80%" id="ecou_dbdate" value="@load(vm.ecou_dbdate)" /></cell>
+              <cell>生育起始</cell>
+              <cell ><datebox width="80%" id="ecou_syudate" value="@load(vm.ecou_syudate)" /></cell>
+              <cell>工伤起始</cell>
+              <cell ><datebox width="80%" id="ecou_gsdate" value="@load(vm.ecou_gsdate)" /></cell>
+           </row>
+           <row>
+              <cell>失业保险起始</cell>
+              <cell ><datebox width="80%" id="ecou_sydate" value="@load(vm.ecou_sydate)" /></cell>
+              <cell>住房起始</cell>
+              <cell ><datebox width="80%" id="ecou_zfdate" value="@load(vm.ecou_zfdate)" /></cell>
+              <cell>住房单位比例</cell>
+              <cell ><textbox width="80%" id="ecou_zfcp" value="@load(vm.m.ecou_zfcp)" /></cell>
+           </row>
+           <row>
+              <cell>住房个人比例</cell>
+              <cell ><textbox width="80%" id="ecou_zfop" value="@load(vm.m.ecou_zfop)" /></cell>
+              <cell>补充公积金起始</cell>
+              <cell ><datebox width="80%" id="ecou_bczfdate" value="@load(vm.ecou_bczfdate)" /></cell>
+              <cell>补充住房单位比例</cell>
+              <cell ><textbox width="80%" id="ecou_bczfcp" value="@load(vm.m.ecou_bczfcp)" /></cell>
+           </row>
+           <row>
+              <cell>补充住房个人比例</cell>
+              <cell ><textbox width="80%" id="ecou_bczfop" value="@load(vm.m.ecou_bczfop)" /></cell>
+              <cell>残保金起始时间</cell>
+              <cell ><datebox width="80%" id="ecou_cbjdate" value="@load(vm.ecou_cbjdate)" /></cell>
+              <cell>服务费起始时间</cell>
+              <cell ><datebox width="80%" id="ecou_fwfdate" value="@load(vm.ecou_fwfdate)" /></cell>
+           </row>
+           <row>
+              <cell>备注</cell>
+              <cell ><textbox width="100%" rows="5" id="ecou_remark" value="@load(vm.m.ecou_remark)" /></cell>
+           </row>
+	   </rows>
+	   <foot>
+		   <footer align="center">
+			   <button label="提交" onClick="@command('Charge',ecou_name=ecou_name.value,ecou_idcard=ecou_idcard.value,ecou_ecos_id=ecou_ecos_id.value,ecou_soin_id=ecou_soin_id.value,ecou_mobile=ecou_mobile.value,ecou_filestate=ecou_filestate.value,ecou_compact_f=ecou_compact_f.value,ecou_compact_l=ecou_compact_l.value,ecou_com_phone=ecou_com_phone.value,ecou_sb_base=ecou_sb_base.value,ecou_house_base=ecou_house_base.value,ecou_salary=ecou_salary.value,ecou_client=ecou_client.value,ecou_yldate=ecou_yldate.value,ecou_yliaodate=ecou_yliaodate.value,ecou_dbdate=ecou_dbdate.value,ecou_syudate=ecou_syudate.value,ecou_gsdate=ecou_gsdate.value,ecou_sydate=ecou_sydate.value,ecou_zfdate=ecou_zfdate.value,ecou_zfcp=ecou_zfcp.value,ecou_zfop=ecou_zfop.value,ecou_bczfdate=ecou_bczfdate.value,ecou_bczfcp=ecou_bczfcp.value,ecou_bczfop=ecou_bczfop.value,ecou_cbjdate=ecou_cbjdate.value,ecou_fwfdate=ecou_fwfdate.value,ecou_remark=ecou_remark.value,win=winUpdate)" />
+		   </footer>
+	   </foot>
+	</grid>
+</window>
+</zk>

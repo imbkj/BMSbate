@@ -1,0 +1,48 @@
+<window title="修改计划" border="0" width="400px" apply="Controller.Canlendar.Calendar_EditorController"
+        mode="popup" position="center,center" closable="true" id="win">
+        <grid hflex='1'>
+            <columns>
+                <column width="80px" align="right" />
+                <column />
+            </columns>
+            <rows>
+                <row>
+                    开始时间:
+                    <div>
+                        <datebox format="yyyy-MM-dd HH:mm:ss" hflex="true" id="begindate" value="${arg.model.cale_begindate}"/>
+                    </div>
+                </row>
+                <row>
+                    结束时间:
+                    <div>
+                        <datebox format="yyyy-MM-dd HH:mm:ss" hflex="true" id="enddate" value="${arg.model.cale_enddate}"/>
+                    </div>
+                </row>
+                <row>
+                    颜色:
+                    <hlayout sclass="z-valign-middle">
+                        边框-
+                        <colorbox  height="20px" id="borthcolor"  value="${arg.model.cale_headcolor}"/>
+                        内容-
+                        <colorbox height="20px" id="concolor" value="${arg.model.cale_contentcolor}"/>
+                    </hlayout>
+     
+                </row>
+                  <row>
+                    标题:
+                    <textbox width="97%" id="tittle" value="${arg.model.cale_tittle}"/>
+                </row>
+                <row>
+                    内容:
+                    <textbox multiline="true" id="cont" rows="3" width="97%"/>
+                </row>
+                <row>
+                    <cell colspan="2" style="text-align:center;">
+                        <button label="确定" id="okbtn" width="80px" />
+                        <button label="取消" id="cancelbtn" width="80px" />
+                        <button label="删除" id="deletebtn" width="80px" />
+                    </cell>
+                </row>
+            </rows>
+        </grid>
+    </window>

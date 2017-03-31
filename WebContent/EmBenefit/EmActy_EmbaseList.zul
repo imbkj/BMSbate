@@ -1,0 +1,134 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window width="90%" height="87%" title="待发放礼品员工列表" id="winEmp"
+		closable="true" border="normal" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmBenefit.EmActy_EmbaseListController')">
+		<grid id="gdList" model="@load(vm.list)" vflex="1" mold="paging"
+			pageSize="200" emptyMessage="暂无数据">
+			<columns>
+				<column align="center" width="40px">序号</column>
+				<column align="center">
+					<label>公司名称</label>
+					<textbox width="95%"
+						value="@bind(vm.mm.emwf_company)"
+						onChange="@command('searchemba')" instant="true">
+					</textbox>
+				</column>
+				<column align="center">
+					<label>姓名</label>
+					<textbox width="95%" value="@bind(vm.mm.emwf_name)"
+						onChange="@command('searchemba')" instant="true">
+					</textbox>
+				</column>
+				<column align="center" width="150px">
+					<label>身份证号</label>
+					<textbox width="95%"
+						value="@bind(vm.mm.emwf_idcard)" onChange="@command('searchemba')"
+						instant="true">
+					</textbox>
+				</column>
+				<column align="center">
+					<label>礼品内容</label>
+					<textbox width="95%" value="@bind(vm.mm.prod_name)"
+						onChange="@command('searchemba')" instant="true">
+					</textbox>
+				</column>
+				<column align="center">
+					<label>何时需要</label>
+					<datebox value="@bind(vm.xy)" width="95%"
+						onChange="@command('searchemba')" instant="true">
+					</datebox>
+				</column>
+				<column align="center" width="80px">数量</column>
+				<column align="center">
+					<label>部门</label>
+					<combobox width="95%" value="@bind(vm.mm.emwf_dept)"
+						onChange="@command('searchemba')" instant="true">
+						<comboitem label="" />
+						<comboitem label="客户服务部 " />
+						<comboitem label="全国项目部     " />
+					</combobox>
+				</column>
+				<column align="center">
+					<label>客服</label>
+					<combobox width="95%" model="@load(vm.clientlist)"
+						value="@bind(vm.mm.emwf_client)" onChange="@command('searchemba')"
+						instant="true">
+						<template name="model">
+							<comboitem label="@load(each)" />
+						</template>
+					</combobox>
+				</column>
+				<column align="center">
+					<label>寄送方式</label>
+					<combobox width="95%"
+						value="@bind(vm.mm.emwf_delivery)"
+						onChange="@command('searchemba')" instant="true">
+						<comboitem label="" />
+						<comboitem label="自取" />
+						<comboitem label="快递" />
+						<comboitem label="公司送货上门" />
+					</combobox>
+				</column>
+				<column align="center">
+					<checkbox onClick="@command('checkall',a=self)" />
+				</column>
+			</columns>
+			<rows>
+				<template name="model">
+					<row>
+						<cell>${forEachStatus.index+1 }</cell>
+						<cell>
+							<label value="@load(each.emwf_company)" />
+						</cell>
+						<cell>
+							<label value="@load(each.emwf_name)" />
+						</cell>
+						<cell>
+							<label value="@load(each.emwf_idcard)" />
+						</cell>
+						<cell>
+							<label value="@load(each.emwf_prodcontent)" />
+						</cell>
+						<cell>
+							<label value="@load(each.emwf_need)" />
+						</cell>
+						<cell>
+							<label
+								value="${each.emwf_producenum}${each.prod_unit}" />
+						</cell>
+						<cell>
+							<label value="@load(each.emwf_dept)" />
+						</cell>
+						<cell>
+							<label value="@load(each.emwf_client)" />
+						</cell>
+						<cell>
+							<label value="@load(each.emwf_delivery)" />
+						</cell>
+
+						<cell>
+							<hlayout>
+								<checkbox value="@load(each)" />
+								<a
+									onClick="@command('send',win=winEmp,model=each)">
+									<label value="发放" />
+								</a>
+							</hlayout>
+						</cell>
+					</row>
+				</template>
+			</rows>
+			<foot>
+				<footer align="center" span="15">
+					<button label="下一步" onClick="@command('summit')">
+					</button>
+					<button
+						onClick="@command('sendall',win=winEmp,gd=gdList)">
+						批量发放
+					</button>
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

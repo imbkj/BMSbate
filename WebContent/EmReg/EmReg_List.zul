@@ -1,0 +1,262 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="员工就业登记信息" border="normal" vflex="1" hflex="1"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmReg.EmReg_ListController')">
+		<grid model="@load(vm.emreglist)" emptyMessage="没有就业登记信息" if="${vm.coreg_ifexist==false }">
+			<rows>
+				<row>
+					<cell></cell>
+				</row>
+			</rows>
+		</grid>
+		<div height="100%" style="overflow-y:scroll" if="${vm.coreg_ifexist }">
+			<groupbox title="基本信息" mold="3d">
+				<grid>
+					<columns>
+						<column width="10%" />
+						<column />
+						<column width="12%" />
+						<column />
+						<column width="12%" />
+						<column />
+					</columns>
+					<rows>
+						
+						<row>
+							曾用名
+							<label
+								value="@bind(vm.regmodel.erin_former_name)" />
+							性别
+							<label value="@load(vm.regmodel.emba_sex)" />
+							相片图像号
+							<label
+								value="@bind(vm.regmodel.erin_photo_number)" />
+						</row>
+						<row>
+							民族
+							<label value="@bind(vm.regmodel.erin_folk)" />
+							出生日期
+							<label value="@load(vm.regmodel.emba_birth)" />
+							文化程度
+							<label value="@bind(vm.regmodel.erin_education)" />
+						</row>
+						<row>
+							户籍类型
+							<label value="@bind(vm.regmodel.erin_hjtype)" />
+							政治面貌
+							<label value="@bind(vm.regmodel.erin_party)" />
+							婚姻状况
+							<label value="@bind(vm.regmodel.erin_marital)" />
+						</row>
+						<row>
+							户籍地址
+							<cell colspan="5">
+								<label style="color:#666"
+									value="@bind(vm.regmodel.erin_hjadd)" />
+							</cell>
+						</row>
+						<row>
+							现居住地址
+							<cell colspan="5">
+								<label style="color:#666"
+									value="@bind(vm.regmodel.erin_nowadd)" />
+							</cell>
+						</row>
+						<row>
+							居住房屋地址编码
+							<cell colspan="5">
+								<label style="color:#666"
+									value="@bind(vm.regmodel.erin_address_number)" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox title="就业登记信息" mold="3d">
+				<grid>
+					<columns>
+						<column width="16%" />
+						<column />
+						<column width="15%" />
+						<column />
+						<column width="14%" />
+						<column />
+					</columns>
+					<rows>
+						<row>
+							本单位工作起始日期
+							<label
+								value="@bind(vm.regmodel.erin_unit_b_date)" />
+							职业技能等级
+							<label
+								value="@bind(vm.regmodel.erin_skilllevel)" />
+							职称
+							<label value="@bind(vm.regmodel.erin_title)" />
+						</row>
+						<row>
+							是否兼职
+							<label value="@bind(vm.is_parttime)" />
+							就业类型
+							<label value="@bind(vm.regmodel.oe_type)" />
+							工种
+							<label value="@bind(vm.regmodel.erin_wcin)" />
+						</row>
+						<row>
+							劳动合同开始日期
+							<label
+								value="@bind(vm.regmodel.erin_compact_s_date)" />
+							劳动合同结束日期
+							<label
+								value="@bind(vm.regmodel.erin_compact_e_date)" />
+							无固定劳动期限
+							<label value="@bind(vm.if_unlimited)" />
+						</row>
+						<row>
+							合同性质
+							<label
+								value="@bind(vm.regmodel.erin_compact_kind)" />
+							合同年限
+							<cell colspan="3"
+								if="${vm.regmodel.erin_compact_ylimit ne '长期' and 
+								not empty vm.regmodel.erin_compact_ylimit }">
+								<label style="color:#666"
+									value="@bind(vm.regmodel.erin_compact_ylimit)" />
+								<label style="color:#666" value="年" />
+							</cell>
+							<cell colspan="3"
+								if="${vm.regmodel.erin_compact_ylimit eq '长期' }">
+								<label style="color:#666"
+									value="@bind(vm.regmodel.erin_compact_ylimit)" />
+							</cell>
+						</row>
+						<row>
+							户口进入深圳日期
+							<label
+								value="@bind(vm.regmodel.erin_in_sz_date)" />
+							户口进入深圳方式
+							<label style="color:#666"
+								value="@bind(vm.regmodel.hj_in_sz_way)" />
+							入深方式情况注明
+							<label style="color:#666"
+								value="@bind(vm.regmodel.erin_in_sz_remark)" />
+						</row>
+						<row>
+							个人社保电脑号
+							<label
+								value="@bind(vm.regmodel.erin_computerid)" />
+							参加工作时间
+							<label value="@bind(vm.regmodel.erin_worktime)" />
+							月均工资(元)
+							<label value="@bind(vm.regmodel.erin_salary)" />
+						</row>
+						<row>
+							身份证完整住址
+							<cell colspan="5">
+								<label
+									value="@bind(vm.regmodel.erin_idcard_address)" />
+							</cell>
+						</row>
+						<row>
+							来深时间
+							<label
+								value="@bind(vm.regmodel.erin_come_sz_date)" />
+							服务处所
+							<cell colspan="3">
+								<label
+									value="@bind(vm.regmodel.erin_s_place)" />
+							</cell>
+						</row>
+						<row>
+							来深居住事由
+							<label value="@bind(vm.regmodel.come_sz_reason)" />
+							住所类别
+							<label value="@bind(vm.regmodel.house_class)" />
+							居住方式
+							<label value="@bind(vm.regmodel.house_mode)" />
+						</row>
+						<row>
+							入住时间
+							<label value="@bind(vm.regmodel.erin_r_date)" />
+							本人固定电话
+							<label value="@bind(vm.regmodel.erin_phone)" />
+							本人手机
+							<label value="@bind(vm.regmodel.erin_mobile)" />
+						</row>
+						<row>
+							紧急联系人姓名
+							<label value="@bind(vm.regmodel.erin_epname)" />
+							紧急联系人固定电话
+							<label value="@bind(vm.regmodel.erin_epphone)" />
+							紧急联系人手机
+							<label value="@bind(vm.regmodel.erin_epmobile)" />
+						</row>
+						<row>
+							广东省流动人口避孕节育情况报告单号
+							<cell colspan="5">
+								<label
+									value="@bind(vm.regmodel.erin_birthcontrol)" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox title="办理信息" mold="3d">
+				<grid>
+					<columns>
+						<column width="15%" />
+						<column />
+						<column width="12%" />
+						<column />
+					</columns>
+					<rows>
+						<row>
+							是否添加居住证转换
+							<cell colspan="3">
+								<label style="color:#666"
+									value="@bind(vm.if_resident_con)" />
+							</cell>
+						</row>
+						<row>
+							办理性质
+							<label value="@bind(vm.regmodel.erin_t_kind)" />
+							交接人
+							<label
+								value="@bind(vm.regmodel.erin_handover_people)" />
+						</row>
+						<row>
+							备注
+							<cell colspan="3">
+								<label
+									value="@bind(vm.regmodel.erin_remark)" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox title="状态变更记录" mold="3d">
+				<grid width="100%" emptyMessage="暂无数据"
+					model="@load(vm.hosList)">
+					<columns>
+						<column align="center" label="状态" />
+						<column align="center" label="操作" />
+						<column align="center" label="完成时间" />
+						<column align="center" label="添加人" />
+						<column align="center" label="添加时间" />
+						<column align="center" label="备注" />
+					</columns>
+					<template name="model">
+						<row>
+							<label value="@load(each.statename)" />
+							<label value="@load(each.operate)" />
+							<label value="@load(each.ersr_statetime)" />
+							<label value="@load(each.ersr_addname)" />
+							<label value="@load(each.ersr_addtime)" />
+							<label value="@load(each.ersr_remark)" />
+						</row>
+					</template>
+				</grid>
+			</groupbox>
+		</div>
+	</window>
+</zk>

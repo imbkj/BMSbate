@@ -1,0 +1,135 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window width="100%" height="100%" title="员工福利待确认名单" id="winEmp"
+		border="normal" apply="org.zkoss.bind.BindComposer" closable="true"
+		onCreate="@command('winD',a=self)"
+		viewModel="@id('vm') @init('Controller.EmBenefit.EmBenefit_AddEMController')">
+		<borderlayout>
+			<north>
+				<grid>
+					<columns visible="false">
+						<column width="120px"></column>
+						<column></column>
+						<column width="120px"></column>
+						<column></column>
+					</columns>
+					<rows>
+						<row>
+							<cell>公司</cell>
+							<cell>
+								<combobox id="company"
+									model="@load(vm.coList)"
+									onChange="@command('updateEmbaseList')" instant="true">
+									<template name="model">
+										<comboitem
+											value="@load(each.cid)" label="@load(each.coba_company)" />
+									</template>
+								</combobox>
+							</cell>
+							<cell>客服</cell>
+							<cell>
+								<combobox id="client"
+									onChange="@command('updateCompanyList')" instant="true"
+									model="@load(vm.clientList)">
+									<template name="model">
+										<comboitem
+											label="@load(each.coba_client)" />
+									</template>
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>姓名</cell>
+							<cell>
+								<combobox id="emp"
+									onChange="@command('updateEmbaseList')" instant="true"
+									model="@load(vm.nameList)">
+									<template name="model">
+										<comboitem
+											label="@load(each.emba_name)" />
+									</template>
+								</combobox>
+							</cell>
+							<cell>福利项目</cell>
+							<cell>
+								<combobox id="fl" readonly="true"
+									model="@load(vm.itemList)" onChange="@command('search')">
+									<template name="model">
+										<comboitem
+											value="@load(each.embf_id)" label="@load(each.embf_name)" />
+									</template>
+								</combobox>
+							</cell>
+						</row>
+					</rows>
+					<foot>
+						<footer span="4" align="center">
+							<button label="查询"
+								onClick="@command('search')" />
+						</footer>
+					</foot>
+				</grid>
+			</north>
+			<center>
+				<grid width="100%" height="100%" sizedByContent="true"
+					span="true" model="@load(vm.emList)" 
+					emptyMessage="暂无数据">
+					<columns>
+						<column width="50px" align="center" label="序号" />
+						<column align="center" label="公司名称" />
+						<column width="90px" align="center" label="客服" />
+						<column align="center" label="姓名" />
+						<column align="center" label="身份证" />
+						<column width="120px" align="center"
+							label="入职时间" />
+						<column align="center" label="福利项目" />
+						<column align="center" label="享受方式" />
+						<column width="120px" align="center" label="付款性质" />
+						<column width="50px" align="center">
+							<checkbox id="cka"
+								onClick="@command('checkall',a=self)" />
+						</column>
+					</columns>
+					<template name="model">
+						<row>
+							<cell>${forEachStatus.index+1 }</cell>
+							<cell align="left">
+								<label value="@load(each.coba_company)" />
+							</cell>
+							<cell>
+								<label value="@load(each.coba_client)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emba_name)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emba_idcard)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emba_indate)" />
+							</cell>
+							<cell>
+								<label value="@load(each.coli_name)" />
+							</cell>
+							<cell>
+								<label value="@load(each.coli_standard)" />
+							</cell>
+							<cell>
+								<label value="@load(each.coli_flpaykind)" />
+							</cell>
+							<cell>
+								<checkbox checked="@bind(each.checked)" />
+							</cell>
+						</row>
+					</template>
+
+				</grid>
+			</center>
+			<south>
+				<div align="center">
+					<button label="提交" onClick="@command('submit')" />
+				</div>
+			</south>
+		</borderlayout>
+	</window>
+</zk>

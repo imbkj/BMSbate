@@ -1,0 +1,74 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="添加标准信息" border="normal" width="400px" closable="true"
+	apply="Controller.ClientRelations.CreditRating.CreditContentInfo_AddController">
+<grid emptyMessage="没有内容的信息" id="coninfo" height="300px"> 
+					<columns>
+						<column>内容的数量：<spinner id="num" onChange="addItem()" instant="true" value="1"/><label value="${arg.colg.crcr_id}" visible="false" id="ceid"/></column>
+						<column></column>
+					</columns>
+					<rows id="conrows">
+						<row>
+							<cell>内容名称1</cell>
+							<cell><textbox/></cell>
+						</row>
+					</rows>
+					<foot>
+	<footer align="center" span="2">
+	<button id="sumitj">提交</button>
+	</footer>
+	</foot>
+				</grid>
+	<zscript><![CDATA[  
+        //declare zscript methods
+        void addItem(){
+        if(num.getValue()>=0)
+        {
+           int nu=conrows.getChildren().size();
+           int nub=num.getValue()-nu;
+           int hu=nu+1;
+           if(nub>0)
+           {   
+        	   for(int i=0;i<nub;i++)
+        	   {
+           			Row newrow=new Row();
+           			Cell cell0=new Cell();
+           			Label lal=new Label("内容名称"+hu);
+          		 	lal.setParent(cell0);
+           			Cell cell1=new Cell();
+           			cell0.setParent(newrow);
+           			cell1.setParent(newrow); 
+           			Textbox tx=new Textbox();
+           			tx.setParent(cell1);
+           			newrow.setParent(conrows);
+           			hu=hu+1;
+        	   }
+           }
+           else
+           {
+        	   int nub2=hu-num.getValue()-1;
+        	   if(nub2>0)
+        	   {
+        		   for(int j=nub2;j>0;j--)
+        		   {	
+        			   List r=conrows.getChildren();
+        			   int y=r.size();
+        			   if(y>=0)
+        			   {
+        				   Row rw=(Row)r.get(y-1);
+        				   conrows.removeChild(rw);
+        			   }
+        		   }
+        	   }
+           }
+        	}
+        	else
+        	{
+        		Messagebox.show("个数不能小于0","提示", Messagebox.OK, Messagebox.INFORMATION);
+        		num.setValue(0);
+        	}
+        
+        }
+    ]]></zscript>			
+</window>
+</zk>

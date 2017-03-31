@@ -1,0 +1,33 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="未审核记录修改" id="winMainUpdate" width="50%" height="50%" closable="true"
+	    border="normal" apply="org.zkoss.bind.BindComposer"  vflex="1" hflex="1"
+		viewModel="@id('vm') @init('Controller.MainRecord.MaintenanceRecord_UpdateController')">
+	   <grid hflex="1" vflex="1">
+			<rows>
+				<row>
+				  <cell width="5%">
+					申请原因
+		          </cell>
+                  <cell >
+				    <textbox rows="5" width="90%" id="textproposereson"
+				     value="@load(vm.mainModel.proposereson)" />
+                  </cell>
+                </row>
+              <row>
+			   <cell width="5%">SQL语句</cell>
+			   <cell >
+				  <textbox rows="5" width="90%" id="textsql"
+				   value="@load(vm.mainModel.sql)" />
+				</cell>
+			 </row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button label="提交"
+						onClick="@command('Charge',proposereson=textproposereson.value,sql=textsql.value,win=winMainUpdate)" />
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

@@ -1,0 +1,322 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<?component name="docDataList" macro-uri="../DocumentsInfo/DocumentsInfo_UpPageList.zul" inline="true"?>
+<zk>
+	<window title="重新提交密钥信息" border="normal" width="50%" closable="true"
+		height="80%" apply="org.zkoss.bind.BindComposer" id="win"
+		viewModel="@id('vm') @init('Controller.CoHousingFund.CoHousingFund_PwdResubmitController')"
+		onCreate="@command('setInfo',addcheck=addcheck,updatecheck=updatecheck,rebewalcheck=rebewalcheck,addYearlimit=addYearlimit,renewalYearLimit=renewalYearLimit,addRow=addRow,updateRow=updateRow,showRenewalRow=showRenewalRow,gd=gd,gd1=gd1,gd2=gd2)">
+		<grid id="gid" height="100%">
+
+			<rows>
+				<row>
+					<cell>
+						<checkbox label="申请数字证书" id="addcheck" />
+						<checkbox label="密钥变更" id="updatecheck" />
+						<checkbox label="密钥续期" id="rebewalcheck" />
+					</cell>
+				</row>
+				<row id="addRow">
+					<cell width="100%">
+						<grid>
+							<rows>
+								<row>
+									<grid>
+										<rows>
+											<row
+												if="${vm.cfpc.cfpc_state == 4 }">
+												<cell width="20%">
+													<label
+														value="退回原因:" />
+												</cell>
+												<cell>
+													<label
+														value="@load(vm.cfpc.backReason)" />
+												</cell>
+											</row>
+										</rows>
+									</grid>
+								</row>
+								<row>
+									<cell width="100%">
+										<grid>
+											<rows>
+												<row>
+													<cell align="left"
+														width="15%">
+														<label
+															value="密钥办理年限" />
+														<label value="*"
+															style="color:red" />
+													</cell>
+													<cell
+														align="left">
+														<label
+															value="@bind(vm.addYearlimit)" />
+													</cell>
+													<cell align="left"
+														width="10%">
+														<label
+															value="操作月份" />
+														<label value="*"
+															style="color:red" />
+													</cell>
+													<cell
+														align="left">
+														<label
+															value="@bind(vm.currentime)" />
+													</cell>
+												</row>
+												<row>
+													<cell
+														align="left">
+														<label
+															value="备注 " />
+														<label value="*"
+															style="color:red" />
+													</cell>
+													<cell colspan="3"
+														align="left">
+														<textbox
+															mold="rounded" id="addremark" value="@bind(vm.addRemark)"
+															width="70%" />
+													</cell>
+												</row>
+											</rows>
+										</grid>
+									</cell>
+								</row>
+
+							</rows>
+						</grid>
+					</cell>
+
+				</row>
+
+				<!-- 变更密钥 -->
+
+				<row id="updateRow" visible="false">
+					<cell>
+						<grid>
+							<rows>
+								<row>
+									<grid>
+										<rows>
+											<row
+												if="${vm.cfpc.cfpc_state == 4 }">
+												<cell width="20%">
+													<label
+														value="退回原因:" />
+												</cell>
+												<cell>
+													<label
+														value="@load(vm.cfpc.backReason)" />
+												</cell>
+											</row>
+										</rows>
+									</grid>
+								</row>
+								<row>
+									<cell width="20%">
+										<label value="密钥专办员变更" />
+									</cell>
+
+								</row>
+								<!-- 密钥信息  -->
+								<row>
+									<grid>
+										<rows>
+											<row>
+												<cell align="left"
+													width="15%">
+													<label
+														value="原密钥专办员姓名" />
+													<label value="*"
+														style="color:red" />
+												</cell>
+												<cell>
+													<textbox
+														mold="rounded" instant="true" readonly="true"
+														value="@bind(vm.yName)" />
+												</cell>
+												<cell align="left"
+													width="15%">
+													<label
+														value="原密钥专办员号" />
+													<label value="*"
+														style="color:red" />
+												</cell>
+												<cell>
+													<textbox
+														mold="rounded" instant="true" readonly="true"
+														value="@bind(vm.yNumber)" />
+												</cell>
+											</row>
+											<row>
+												<cell align="left"
+													width="15%">
+													<label value="操作月份" />
+													<label value="*"
+														style="color:red" />
+												</cell>
+												<cell align="left">
+													<label
+														value="@bind(vm.currentime)" />
+												</cell>
+												<cell align="left"
+													width="15%">
+													<label value="备注 " />
+													<label value="*"
+														style="color:red" />
+												</cell>
+												<cell align="left"
+													context="2">
+													<textbox
+														mold="rounded" id="updateremark"
+														value="@bind(vm.updateRemark)" width="90%" />
+												</cell>
+											</row>
+										</rows>
+									</grid>
+								</row>
+							</rows>
+						</grid>
+					</cell>
+				</row>
+				<!-- 密钥续期 -->
+				<row id="showRenewalRow" visible="false">
+					<cell>
+						<grid>
+							<rows>
+								<row>
+									<grid>
+										<rows>
+											<row
+												if="${vm.cfpc.cfpc_state == 4 }">
+												<cell width="20%">
+													<label
+														value="退回原因:" />
+												</cell>
+												<cell>
+													<label
+														value="@load(vm.cfpc.backReason)" />
+												</cell>
+											</row>
+										</rows>
+									</grid>
+								</row>
+								<row>
+									<cell>
+										<label value="数字证书续期 " />
+									</cell>
+								</row>
+								<row>
+									<grid>
+										<rows>
+											<row>
+												<cell align="left"
+													width="15%">
+													<label
+														value="密钥续期年限" />
+													<label value="*"
+														style="color:red" />
+												</cell>
+												<cell align="left">
+													<label
+														value="@bind(vm.renewalYearLimit)" />
+												</cell>
+												<cell align="left"
+													width="15%">
+													<label value="操作月份" />
+													<label value="*"
+														style="color:red" />
+												</cell>
+												<cell align="left">
+													<label
+														value="@bind(vm.currentime)" />
+												</cell>
+											</row>
+											<row>
+												<cell align="left"
+													width="15%">
+													<label value="备注 " />
+													<label value="*"
+														style="color:red" />
+												</cell>
+												<cell align="left"
+													colspan="3">
+													<textbox
+														mold="rounded" id="renewalremark"
+														value="@bind(vm.renewalRemark)" width="60%" />
+												</cell>
+											</row>
+										</rows>
+									</grid>
+								</row>
+
+							</rows>
+						</grid>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<grid id="gd">
+
+						<rows>
+							<row>
+								<cell>
+									<label value="提交资料" />
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<!-- 材料内联页 参数：puzu_id：模块页面id， doc_type：员工(g)还是公司(c)，gid：公司数据则插入空白 ，业务表id,log_url：获取到页面路径的前部分，ifSubmit：当前页面已勾选后的材料状态 -->
+									<docDataList id="docGrid"
+										puzu_id="120" doc_type="c" cid="@bind(vm.cfpc.cid)"
+										tid="${vm.cfpc.cfpc_id}" dHeight="200px" dWidth="100%" />
+								</cell>
+							</row>
+						</rows>
+					</grid>
+					<grid id="gd1">
+
+						<rows>
+							<row>
+								<cell>
+									<label value="提交资料" />
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<!-- 材料内联页 参数：puzu_id：模块页面id， doc_type：员工(g)还是公司(c)，gid：公司数据则插入空白 ，业务表id,log_url：获取到页面路径的前部分，ifSubmit：当前页面已勾选后的材料状态 -->
+									<docDataList id="docGrid1"
+										puzu_id="121" doc_type="c" cid="@bind(vm.cfpc.cid)"
+										tid="${vm.cfpc.cfpc_id}" dHeight="200px" dWidth="100%" />
+								</cell>
+							</row>
+						</rows>
+					</grid>
+					<grid id="gd2">
+						<rows>
+							<row>
+								<cell>
+									<label value="提交资料" />
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<!-- 材料内联页 参数：puzu_id：模块页面id， doc_type：员工(g)还是公司(c)，gid：公司数据则插入空白 ，业务表id,log_url：获取到页面路径的前部分，ifSubmit：当前页面已勾选后的材料状态 -->
+									<docDataList id="docGrid2"
+										puzu_id="122" doc_type="c" cid="@bind(vm.cfpc.cid)"
+										tid="${vm.cfpc.cfpc_id}" dHeight="200px" dWidth="100%" />
+								</cell>
+							</row>
+						</rows>
+					</grid>
+					<button label="提交"
+						onClick="@command('submit',addcheck=addcheck,updatecheck=updatecheck,rebewalcheck=rebewalcheck,gd=docGrid,gd1=docGrid1,gd2=docGrid2,win=win)" />
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

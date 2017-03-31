@@ -1,0 +1,127 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="社保卡信息列表" border="normal" vflex="1"
+	apply="org.zkoss.bind.BindComposer" id="win"
+    viewModel="@id('vm') @init('Controller.EmSheBaocard.Sbcd_InfoListController')"
+>
+<borderlayout vflex="1">
+<north border="0" title="检索" collapsible="true" style="padding-bottom:10px;">
+<grid>
+	<rows>
+		<row>
+			<cell width="80px">员工编号</cell>
+			<cell><textbox value="@bind(vm.gid)"></textbox></cell>
+			<cell width="80px">员工姓名</cell>
+			<cell><textbox value="@bind(vm.sbcd_name)"></textbox></cell>
+			<cell width="80px">身份证号码</cell>
+			<cell><textbox value="@bind(vm.idcard)"></textbox></cell>
+			<cell width="90px">个人社保电脑号</cell>
+			<cell><textbox value="@bind(vm.sbcd_computerid)"></textbox></cell>
+		</row>
+		<row>
+			<cell width="80px">单位编号</cell>
+			<cell><textbox value="@bind(vm.cid)"></textbox></cell>
+			<cell width="80px">单位名称</cell>
+			<cell><textbox value="@bind(vm.company)"></textbox></cell>
+			<cell width="80px">社保单位编码</cell>
+			<cell><textbox value="@bind(vm.sbcd_comno)"></textbox></cell>
+			<cell width="80px">制卡状态</cell>
+			<cell>
+				<combobox model="@load(vm.statelist)" readonly="true" id="sbcdstate">
+					<template name="model">
+						<comboitem label="@load(each.cdst_statename)" value="@load(each.cdst_id)"/>
+					</template>
+				</combobox>
+			</cell>
+		</row>
+		<row>
+							<cell width="80px">办理类型</cell>
+							<cell>
+								<combobox readonly="true" value="@bind(vm.blclass)">
+									<comboitem label="" />
+									<comboitem label="新增" />
+									<comboitem label="存量(换卡)" />
+								</combobox>
+							</cell>
+							<cell width="80px">发卡对象</cell>
+							<cell>
+								<combobox readonly="true" value="@bind(vm.cosp_card_caliname)">
+									<comboitem label="" />
+									<comboitem label="客服" />
+									<comboitem label="联系人" />
+								</combobox>
+							</cell>
+							<cell width="80px">表格交接人</cell>
+							<cell>
+								<combobox readonly="true" value="@bind(vm.cosp_bsal_caliname)">
+									<comboitem label="" />
+									<comboitem label="客服" />
+									<comboitem label="联系人" />
+								</combobox>
+							</cell>
+							<cell width="80px">制卡银行</cell>
+							<cell>
+								<combobox
+									model="@load(vm.branbanklist)" value="@bind(vm.branbank)">
+									<template name="model">
+										<comboitem label="@load(each)" />
+									</template>
+								</combobox>
+							</cell>
+						</row>
+	</rows>
+	<foot>
+		<footer align="center"><button onClick="@command('search',sbcdstate=sbcdstate)">查询</button></footer>
+	</foot>
+</grid>
+</north>
+<center>
+<grid model="@load(vm.list)" vflex="1" mold="paging" pageSize="50" emptyMessage="没有数据">
+		<columns>
+			<column label="序号" width="40px" align="center"/>
+			<column label="社保单位编码" align="center"/>
+			<column label="社保单位名称" align="center" width="220px"/>
+			<column label="姓名" align="center"/>
+			<column label="社保电脑号" align="center"/>
+			<column label="证件号码" align="center" width="150px"/>
+			<column label="照片回执码" align="center"/>
+			<column label="户口性质" align="center"/>
+			<column label="办理类型" align="center"/>
+			<column label="制卡银行" align="center"/>
+			<column label="客服" align="center"/>
+			<column label="状态" align="center"/>
+			<column label="短信" width="60px" align="center"/>
+			<column label="详细" width="60px" align="center"/>
+		</columns>
+		<rows>
+			<template name="model">
+			<row>
+				<cell><label value="${forEachStatus.index+1 }"></label></cell>
+				<cell><label value="@load(each.sbcd_sbnumber)"></label></cell>
+				<cell><label value="@load(each.sbcd_companyname)"></label></cell>
+				<cell><label value="@load(each.sbcd_name)"></label></cell>
+				<cell><label value="@load(each.sbcd_computerid)"></label></cell>
+				<cell><label value="@load(each.sbcd_idcard)"></label></cell>
+				<cell><label value="@load(each.sbcd_photonum)"></label></cell>
+				<cell><label value="@load(each.sbcd_hj)"></label></cell>
+				<cell><label value="@load(each.sbcd_content)"></label></cell>
+				<cell><label value="@load(each.sbcd_upbankname)"></label></cell>
+				<cell><label value="@load(each.coba_client)"></label></cell>
+				<cell><label value="@load(each.cdst_statename)"></label></cell>
+				<cell>
+				<image if="${each.msgnum>0}" sclass="complex-layout-header-img" 
+					src="../images/noread.gif" />
+					<image if="${each.msgnum==0 and msgsnum>0}" sclass="complex-layout-header-img" 
+					src="../images/readed.gif" />
+					<image if="${msgsnum==0}" sclass="complex-layout-header-img" 
+					src="../images/noread.gif" />
+				</cell>
+				<cell><a onClick="@command('datail',model=each)"><label value="详细"></label></a></cell>
+			</row>
+			</template>
+		</rows>
+	</grid>
+</center>
+</borderlayout>
+</window>
+</zk>

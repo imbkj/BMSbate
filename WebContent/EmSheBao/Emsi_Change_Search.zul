@@ -1,0 +1,246 @@
+<?page title="社保变更查询" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winChangeSearch" title="社保变更查询" border="normal"
+		width="100%" height="100%" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmSheBao.Emsi_Change_SearchController')">
+		 <tablelayout columns="2" width="100%" height="100%">
+			<tablechildren height="70%" width="80%" rowspan="2">
+				<groupbox height="100%">
+					<caption label="条件检索" />
+					<grid height="100%">
+						<rows>
+							<row>
+								<cell width="18%">
+									<label value="所属月份：" />
+								</cell>
+								<cell>
+									<combobox value="@bind(vm.ownmonth)"
+										mold="rounded" model="@load(vm.ownmonthList)"
+										readonly="true">
+										<template name="model">
+											<comboitem
+												label="@load(each)" />
+										</template>
+									</combobox>
+								</cell>
+								<cell>
+									<label value="员工查询：" />
+								</cell>
+								<cell>
+									<textbox width="180px"
+										mold="rounded" value="@bind(vm.emcon)" />
+									<combobox width="100px"
+										value="@bind(vm.emtype)" readonly="true" mold="rounded">
+										<comboitem label="员工姓名" />
+										<comboitem label="员工编号" />
+										<comboitem label="身份证" />
+										<comboitem label="电脑号" />
+									</combobox>
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label value="客服代表：" />
+								</cell>
+								<cell>
+									<combobox mold="rounded"
+										value="@bind(vm.client)" >
+										<comboitem label="全部"
+											value="全部" />
+										<comboitem
+											label="${each.log_name}" forEach="${vm.clientList}" />
+
+									</combobox>
+								</cell>
+								<cell>
+									<label value="公司查询：" />
+								</cell>
+								<cell>
+									<textbox width="180px"
+										mold="rounded" value="@bind(vm.cocon)" />
+									<combobox width="100px"
+										value="@bind(vm.cotype)" readonly="true" mold="rounded">
+										<comboitem label="公司名称" />
+										<comboitem label="公司编号" />
+									</combobox>
+								</cell>
+
+							</row>
+							<row>
+								<cell>
+									<label value="变动情况：" />
+								</cell>
+								<cell>
+									<combobox mold="rounded"
+										value="@bind(vm.change)" readonly="true">
+										<comboitem label="全部" />
+										<comboitem label="新增" />
+										<comboitem label="调入" />
+										<comboitem label="停交" />
+										<comboitem label="修改工资" />
+										<comboitem label="档案修改" />
+									</combobox>
+								</cell>
+								<cell>
+									<label value="申报状态：" />
+								</cell>
+								<cell>
+									<combobox mold="rounded"
+										value="@bind(vm.dstate)" readonly="true">
+										<comboitem label="全部" />
+										<comboitem label="已申报" />
+										<comboitem label="申报中" />
+										<comboitem label="未申报" />
+										<comboitem label="退回" />
+										<comboitem label="待确认" />
+										<comboitem label="审核中" />
+									</combobox>
+								</cell>
+
+							</row>
+							<row>
+								<cell>
+									<label value="开户状态：" />
+								</cell>
+								<cell>
+									<combobox mold="rounded"
+										value="@bind(vm.single)" readonly="true">
+										<comboitem label="全部" />
+										<comboitem label="独立开户" />
+										<comboitem label="中智开户" />
+										<comboitem label="中智开户(委托)" />
+									</combobox>
+								</cell>
+								<cell>
+									<label value="生效状态：" />
+								</cell>
+								<cell>
+									<combobox mold="rounded"
+										value="@bind(vm.opstate)" readonly="true">
+										<comboitem label="全部" />
+										<comboitem label="已生效" />
+										<comboitem label="未生效" />
+									</combobox>
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label value="添加人：" />
+								</cell>
+								<cell>
+									<combobox mold="rounded"
+										value="@bind(vm.addname)" readonly="true">
+										<comboitem label="全部"
+											value="全部" />
+										<comboitem
+											label="${each.log_name}" forEach="${vm.clientList}" />
+									</combobox>
+								</cell>
+								<cell>
+									<label value="部门：" />
+								</cell>
+								<cell>
+									<combobox mold="rounded"
+										value="@bind(vm.dept)" readonly="true">
+										<comboitem label="全部" />
+										<comboitem label="客户服务部" />
+										<comboitem label="全国项目部" />
+									</combobox>
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label value="特殊检索：" />
+								</cell>
+								<cell colspan="3">
+									<checkbox style="color:red"
+										label="多次变更" checked="@bind(vm.ifmodify)" />
+									<checkbox checked="@bind(vm.ifmsg)"
+										image="../images/read.gif" />
+								</cell>
+							</row>
+						</rows>
+						<foot>
+							<footer align="center">
+								<button label="查询" id="btSubmit"
+									onClick="@command('search')" />
+							</footer>
+						</foot>
+					</grid>
+				</groupbox>
+			</tablechildren>
+			<tablechildren>
+				<groupbox height="100%">
+					<caption label="快速检索" />
+					<grid height="100%">
+						<rows>
+							<row>
+								<cell>
+									<vbox>
+										<label value="本月特殊数据" />
+										<label value="本月更改数据" />
+										<label value="中智大户未申报" />
+										<label value="中智大户申报中" />
+										<label value="中智大户退回" />
+										<label value="当月特殊数据" />
+										<label value="当月修改数据 " />
+										<label value="当天添加数据" />
+									</vbox>
+								</cell>
+							</row>
+						</rows>
+					</grid>
+				</groupbox>
+			</tablechildren>
+			<tablechildren height="65%">
+				<groupbox height="100%">
+					<caption label="详细统计" />
+					<grid height="100%">
+						<rows>
+							<row>
+								<cell width="60%">
+									<label value="当月变更数 ：" />
+								</cell>
+								<cell height="100%">
+									<label value="@load(vm.count[0])" />
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label value="已处理数 ：" />
+								</cell>
+								<cell>
+									<label value="@load(vm.count[1])" />
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label value="中智大户总数 ：" />
+								</cell>
+								<cell>
+									<label value="@load(vm.count[2])" />
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label value="委托大户总数 ：" />
+								</cell>
+								<cell>
+									<label value="@load(vm.count[3])" />
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label value="独立开户总数：" />
+								</cell>
+								<cell>
+									<label value="@load(vm.count[4])" />
+								</cell>
+							</row>
+						</rows>
+					</grid>
+				</groupbox>
+			</tablechildren>
+		</tablelayout> 
+	</window>
+</zk>

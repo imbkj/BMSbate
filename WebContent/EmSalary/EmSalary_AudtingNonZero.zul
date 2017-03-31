@@ -1,0 +1,84 @@
+<?page title="工资非清零数据修改审核" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winEmSalaryAudtingNonZero" title="工资非清零数据修改审核"
+		border="normal" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmSalary.EmSalary_AudtingNonZeroController')"
+		height="100%" width="100%" closable="true" sizable="true">
+		<borderlayout>
+			<center>
+				<grid id="gdSalary" height="100%" emptyMessage="暂无数据"
+					mold="paging" pageSize="50" sizedByContent="true"
+					model="@load(vm.salaryWinList)">
+					<columns sizable="true">
+						<column label="序号" width="50px" align="center" />
+						<column width="100px" align="center"
+							sort="auto(gid)">
+							<vbox align="center">
+								<label value="员工编号"
+									style="color:black;" />
+								<intbox id="ibGid"
+									constraint="no negative"
+									onChange="@command('changeList', ibGid=ibGid,txtName=txtName)" />
+							</vbox>
+						</column>
+						<column width="150px" align="center"
+							sort="auto(name)">
+							<vbox align="center">
+								<label value="员工姓名"
+									style="color:black;" />
+								<textbox id="txtName"
+									onChange="@command('changeList', ibGid=ibGid,txtName=txtName)" />
+							</vbox>
+						</column>
+						<column label="用途" width="80px" align="center"
+							sort="auto(esda_usage_typestr)" />
+						<column label="备注" width="80px" align="center" />
+						<column label="状态" width="80px" align="center"
+							sort="auto(tbrb_customInt)" />
+						<column label="${each.csii_item_name}"
+							width="100px" forEach="${vm.itemList}" />
+
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<label
+									value="${forEachStatus.index + 1}" />
+								<label value="@load(each.gid)" />
+								<label value="@load(each.name)"
+									style="cursor:pointer;"
+									onClick="@command('SelEmbase', lbl=self)" />
+								<label
+									value="@load(each.esda_usage_typestr)" />
+								<cell align="center">
+									<label
+										style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden"
+										value="@load(esda_remark)" tooltiptext="@load(esda_remark)" />
+								</cell>
+								<label
+									value="@load(each.tbrb_customInt eq 0?'未审核':'已审核')"
+									style="${each.tbrb_customInt==0?'color:red':''}" />
+								<decimalbox format="###.##"
+									value="${each.amount}" forEach="${each.itemList}"
+									inplace="true" readonly="true" />
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</center>
+			<south>
+				<div align="center" width="100%">
+					<button label="导出excel"
+						onClick="@command('excel',win=winEmSalaryAudtingNonZero)" />
+					<button label="审核通过"
+						onClick="@command('audtingSalary',win=winEmSalaryAudtingNonZero)" />
+					<button label="退回"
+						onClick="@command('returnSalary',win=winEmSalaryAudtingNonZero)" />
+					<button label="终止任务"
+						onClick="@command('stopTask',win=winEmSalaryAudtingNonZero)" />
+				</div>
+			</south>
+		</borderlayout>
+
+	</window>
+</zk>

@@ -1,0 +1,87 @@
+<!--
+	创建人：林少斌
+	创建时间：2013-10-12
+	用途：潜在客户拜访计划修改页面
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="w1" title="潜在客户拜访计划 -- 修改页面" border="normal"
+		width="700px" height="250px" closable="true"
+		apply="org.zkoss.bind.BindComposer,Controller.ClientRelations.VisitInfo.LatencyClientVisit_UpdateController"
+		viewModel="@id('vm') @init('Controller.ClientRelations.VisitInfo.LatencyClientVisit_UpdateController')">
+		<groupbox width="100%">
+			<caption>拜访计划信息</caption>
+			<grid width="100%">
+				<rows>
+					<row>
+						<cell width="15%" style="color:#666;">
+							主执行人：
+						</cell>
+						<cell>
+							<combobox id="viin_person" readonly="true"
+								width="60%" model="@load(vm.personList)" mold="rounded"
+								value="${arg.viinM.viin_person}">
+								<template name="model">
+									<comboitem
+										label="@load(each.log_name)" />
+								</template>
+							</combobox>
+							<label style="color:red;">(*)</label>
+						</cell>
+						<cell width="15%" style="color:#666;">
+							次执行人：
+						</cell>
+						<cell>
+						<chosenbox id="viin_subordinate"
+							model="@load(vm.subordinateLML)" hflex="1" onCreate="@command('selViinSubordinate')">
+						</chosenbox>
+						</cell>
+					</row>
+					<row>
+						<cell style="color:#666;">拜访方式：</cell>
+						<cell>
+							<combobox id="viin_type" mold="rounded"
+								readonly="true" width="60%" value="${arg.viinM.viin_type}">
+								<comboitem label="上门" />
+								<comboitem label="电话" />
+								<comboitem label="邮件" />
+							</combobox>
+							<label style="color:red;">(*)</label>
+						</cell>
+						<cell style="color:#666;">拜访类型：</cell>
+						<cell>
+							<combobox id="viin_class" mold="rounded"
+								readonly="true" width="60%" value="${arg.viinM.viin_class}">
+								<comboitem label="初次回访" />
+								<comboitem label="定期回访" />
+								<comboitem label="年度回访" />
+								<comboitem label="临时回访" />
+							</combobox>
+							<label style="color:red;">(*)</label>
+						</cell>
+					</row>
+					<row>
+						<cell style="color:#666;">拜访计划月份：</cell>
+						<cell>
+							<combobox id="viin_month" mold="rounded"
+								readonly="true" width="60%" model="@load(vm.viinMonth)"
+								value="${arg.viinM.viin_month}">
+								<template name="model">
+									<comboitem label="@load(each)" />
+								</template>
+							</combobox>
+							<label style="color:red;">(*)</label>
+						</cell>
+						<cell></cell>
+						<cell></cell>
+					</row>
+				</rows>
+				<foot>
+					<footer align="center">
+						<button label="提交" id="btSubmit" />
+					</footer>
+				</foot>
+			</grid>
+		</groupbox>
+	</window>
+</zk>

@@ -1,0 +1,150 @@
+<?page title="工资数据修改" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winEmSalaryUpdate" title="工资数据修改" border="normal"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmSalary.EmSalaryBase_UpdateController')"
+		height="100%" width="100%" closable="true" sizable="true">
+		<groupbox title="工资详细" width="100%" height="78%">
+			<grid id="gdSalary" height="100%" mold="paging"
+				pageSize="50" sizedByContent="true" span="true"
+				model="@load(vm.salaryWinList)" emptyMessage="暂无可修改的工资数据">
+				<frozen style="background: #DFDED8" columns="5">
+					<div style="padding: 0 10px;" />
+				</frozen>
+				<columns sizable="true">
+					<column width="40px" align="center" />
+					<column label="序号" width="50px" align="center" />
+					<column width="100px" align="center"
+						sort="auto(gid)">
+						<vbox align="center">
+							<label value="员工编号" style="color:black;" />
+							<intbox id="ibGid" mold="rounded"
+								width="80px" constraint="no negative"
+								onChange="@command('changeList', ibGid=ibGid,txtName=txtName)" />
+						</vbox>
+					</column>
+					<column width="150px" align="center"
+						sort="auto(name)">
+						<vbox align="center">
+							<label value="员工姓名" style="color:black;" />
+							<textbox id="txtName" mold="rounded"
+								width="120px"
+								onChange="@command('changeList', ibGid=ibGid,txtName=txtName)" />
+						</vbox>
+					</column>
+					<column label="用途" width="80px" align="center"
+						sort="auto(esda_usage_typestr)" />
+					<column label="是否台账外" width="80px" align="center" />
+					<column label="备注" width="80px" align="center" />
+					<column label="财务备注" width="80px" align="center" />
+					<column label="状态" width="80px" align="center"
+						sort="auto(esda_payment_statestr)" />
+					<column label="删除操作" width="80px" align="center">
+						<vbox align="center">
+							<checkbox
+								onClick="@command('checkAll',gdSalary=gdSalary,cbAll=self)" />
+						</vbox>
+					</column>
+					<column label="${each.csii_item_name}"
+						forEach="${vm.itemList}" />
+
+				</columns>
+				<rows>
+					<template name="model">
+						<row>
+							<custom-attributes
+								item="${each.itemListSel}" />
+							<detail open="false" fulfill="onOpen">
+								<include
+									src="/EmSalary/EmSalaryBase_UpdateDetail.zul" item="${item}" />
+							</detail>
+							<cell>
+								<checkbox visible="false" />
+								<label
+									value="${forEachStatus.index + 1}" />
+							</cell>
+							<label value="@load(each.gid)" />
+							<label value="@load(each.name)" 	style="cursor:pointer;"
+								onClick="@command('SelEmbase', lbl=self)" />
+							<label
+								value="@load(each.esda_usage_typestr)" />
+							<label
+								value="@load(each.esda_oof_statestr)" />
+							<cell align="center">
+								<label
+									style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden"
+									value="@load(each.esda_remark)"
+									tooltiptext="@load(each.esda_remark)" />
+							</cell>
+							<cell align="center">
+								<label
+									style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden"
+									value="@load(each.esda_fd_remark)"
+									tooltiptext="@load(each.esda_fd_remark)" />
+							</cell>
+							<label
+								value="@load(each.esda_payment_statestr)" />
+							<cell align="center">
+								<checkbox />
+								<label value="刪除"
+									style="cursor:pointer;color:#00F;"
+									onClick="@command('DelSalary', lbl=self)" />
+							</cell>
+							<decimalbox format="###.##"
+								value="${each.amount}" forEach="${each.itemList}" inplace="true"
+								onChange="changeStytle(self)" constraint="no empty" />
+						</row>
+					</template>
+				</rows>
+			</grid>
+		</groupbox>
+		<div align="center" width="100%">
+			<button label="批量导入"
+				onClick="@command('BatchAddSalary', gdSalary=gdSalary)" />
+			<button label="批量删除"
+				onClick="@command('BatchDelSalary', gdSalary=gdSalary)" />
+			<button label="导入变动数据" onClick="@command('ChangeSalary')" />
+			<button label="提交" id="btSubmit"
+				onClick="@command('UpSalary', gdSalary=gdSalary,winEmSalaryUpdate=winEmSalaryUpdate)" />
+			<label value="修改完数据后，请点击提交按钮。" style="color:red" />
+			<button label="跳转到待确认页面" onClick="@command('confirmSalary',winEmSalaryUpdate=winEmSalaryUpdate)"/>
+		</div>
+		<groupbox title="工资合计" width="100%" height="20%">
+			<grid height="95%" emptyMessage="暂无数据" mold="paging"
+				pageSize="2" sizedByContent="true"
+				model="@load(vm.salaryWinListSUM)">
+				<frozen style="background: #DFDED8" columns="1">
+					<div style="padding: 0 10px;" />
+				</frozen>
+				<columns>
+					<column width="40px" align="center" />
+					<column label="${each.csii_item_name}"
+						forEach="${vm.itemListSUM}" />
+				</columns>
+				<rows>
+					<template name="model">
+						<row>
+							<custom-attributes
+								item="${each.itemListSelSUM}" />
+							<detail open="false" fulfill="onOpen">
+								<include
+									src="/EmSalary/EmSalaryBase_UpdateDetail.zul" item="${item}" />
+							</detail>
+							<decimalbox format="###.##"
+								value="${each.amount}" forEach="${each.itemListSUM}"
+								inplace="true" readonly="true"/>
+						</row>
+					</template>
+				</rows>
+			</grid>
+		</groupbox>
+		<zscript><![CDATA[
+	void changeStytle(Decimalbox db) {
+		((Checkbox) db.getParent().getChildren().get(1).getChildren().get(0))
+				.setChecked(true);
+		db.setStyle("background-color:#FFCCFF;");
+	}
+]]></zscript>
+	</window>
+
+</zk>

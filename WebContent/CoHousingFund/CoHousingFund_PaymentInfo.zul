@@ -1,0 +1,119 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="添加公积金补缴信息" border="normal" closable="true"
+		apply="org.zkoss.bind.BindComposer" width="40%" height="50%"
+		id="paymentWin" onCreate="@command('init',btn=btn,lb=lb)"
+		viewModel="@id('vm') @init('Controller.CoHousingFund.CoHousingFund_PaymentInfoController')">
+
+		<borderlayout>
+			<north>
+				<grid>
+					<rows>
+						<row>
+							<cell width="20%">
+								<label value="公积金编号" />
+							</cell>
+							<cell>
+								<label value="@load(vm.m.cohf_houseid)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="公司全称" />
+							</cell>
+							<cell>
+								<label value="@load(vm.m.companyname)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="所属月份" />
+							</cell>
+							<cell>
+								<label value="@load(vm.m.ownmonth)" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+
+			</north>
+			<center>
+				<grid>
+					<rows>
+						<row>
+							<groupbox width="100%" open="true"
+								title="填写补缴信息">
+								<grid width="100%" height="100%">
+									<rows>
+										<row>
+											<cell width="30%">
+												<label value="补缴金额" />
+											</cell>
+											<cell>
+												<doublebox
+													onChange="@command('ischange')"
+													if="${ vm.m.cofp_isaccount=='未到帐'}"
+													value="@bind(vm.m.payment)" />
+												<label
+													if="${vm.m.cofp_isaccount=='已到帐' }"
+													value="@bind(vm.m.payment)" />
+											</cell>
+										</row>
+									</rows>
+								</grid>
+							</groupbox>
+
+						</row>
+						<row>
+							<groupbox width="100%" open="true"
+								title="填写补缴到帐信息">
+								<grid width="100%" height="100%">
+									<rows>
+										<row>
+											<cell width="30%">
+												<label value="查询日期" />
+											</cell>
+											<cell>
+												<datebox width="40%"
+													format="yyyy-MM-dd" value="@bind(vm.m.cofp_queryDate)" />
+											</cell>
+										</row>
+										<row>
+											<cell>
+												<label value="到账情况" />
+											</cell>
+											<cell>
+												<combobox width="40%"
+													readonly="true" if="${vm.m.cofp_isaccount=='未到帐' }"
+													id="com" value="@bind(vm.m.cofp_isaccount)"
+													mold="rounded">
+													<comboitem
+														label="未到帐" />
+													<comboitem
+														label="已到帐" />
+												</combobox>
+												<label
+													if="${vm.m.cofp_isaccount=='已到帐' }"
+													value="@bind(vm.m.cofp_isaccount)" style="color:green" />
+											</cell>
+										</row>
+									</rows>
+								</grid>
+							</groupbox>
+						</row>
+					</rows>
+				</grid>
+
+			</center>
+			<south>
+				<div align="center">
+					<button label="保存" id="btn"
+						onClick="@command('save',paymentWin=paymentWin)" />
+					<label value="最终到账状态为已到账，无法再进行修改" visible="false"
+						id="lb" />
+				</div>
+			</south>
+		</borderlayout>
+
+	</window>
+</zk>

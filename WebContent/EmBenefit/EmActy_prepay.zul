@@ -1,0 +1,180 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window width="90%" height="90%" title="预付款" id="winEmp"
+		closable="true" border="normal" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmBenefit.EmActy_prePaysController')">
+		<grid vflex="1">
+			<rows>
+				<row style="background-color:#ffffff;">
+					<div style="margin-top:10px;margin-bottom:10px;">
+						<hlayout>
+							<label>付款方式</label>
+							<combobox readonly="true"
+								value="@bind(vm.paytype)" onChange="@command('selType')">
+								<comboitem label="预付款" />
+								<comboitem label="货到付款" />
+							</combobox>
+							<label visible="@load(vm.vislab)"
+								style="margin-right:10px;margin-left:20px;margin-top:10px;
+			margin-bottom:20px;color:#FF0000;">
+								预付款金额
+							</label>
+							<decimalbox visible="@load(vm.vislab)"
+								value="@bind(vm.prePrice)" onChange="@command('paychange')">
+							</decimalbox>
+							<label
+								style="margin-right:10px;margin-left:20px;margin-top:10px;margin-bottom:20px;color:#FF0000;">
+								总金额
+							</label>
+							<label value="@load(vm.allPrice)"></label>
+							<label if="false"
+								style="margin-right:10px;margin-left:20px;margin-top:10px;margin-bottom:20px;color:#FF0000;">
+								库存
+							</label>
+							<label value="@load(vm.nowHouseNum)"
+								if="false">
+							</label>
+							<label
+								visible="${vm.model.gift_type=='礼品' }" if="false"
+								style="margin-right:10px;margin-left:20px;margin-top:10px;margin-bottom:20px;color:#FF0000;">
+								使用库存(${vm.user_num })
+							</label>
+							<intbox if="false" instant="true"
+								onChange="@command('housechange')"
+								value="@bind(vm.useHouseNum)">
+							</intbox>
+							<vlayout>
+								<a onClick="@command('openHouse')"
+									style="margin-right:10px;margin-left:20px;margin-top:10px;margin-bottom:20px;color:#FF0000;">
+									使用库存
+								</a>
+								<listbox visible="@load(vm.hvis)"
+									width="70%" model="@load(vm.hlist)">
+									<listhead>
+										<listheader width="18%"></listheader>
+										<listheader></listheader>
+									</listhead>
+									<template name="model">
+										<listitem>
+											<listcell>
+												<label
+													value="@load(each.wase_name)">
+												</label>
+											</listcell>
+											<listcell>
+												<textbox instant="true"
+													width="60px" value="@bind(each.use_num)"
+													onChange="@command('useHouse',hm=each)">
+												</textbox>
+												<label value="共有 "></label>
+												<label
+													value="${each.wase_nownum}" style="color:red;">
+												</label>
+												<label
+													value="${each.wase_unit}可使用">
+												</label>
+											</listcell>
+										</listitem>
+									</template>
+								</listbox>
+							</vlayout>
+						</hlayout>
+					</div>
+				</row>
+				<row style="background-color:#ffffff;">
+					<grid vflex="1" model="@load(vm.list)">
+						<columns>
+							<column width="40px" align="center">
+								<label>序号</label>
+							</column>
+							<column align="center">
+								<label>公司名称</label>
+							</column>
+							<column align="center" width="80px">
+								<label>员工编号</label>
+							</column>
+							<column align="center">
+								<label>员工姓名</label>
+							</column>
+							<column align="center">
+								<label>福利类型</label>
+							</column>
+							<column align="center">
+								<label>福利项目</label>
+							</column>
+							<column align="center">
+								<label>福利内容</label>
+							</column>
+							<column align="center">
+								<label>享受标准</label>
+							</column>
+							<column align="center">
+								<label>实际费用</label>
+							</column>
+						</columns>
+						<rows>
+							<template name="model">
+								<row>
+									<cell>
+										<label
+											value="${forEachStatus.index+1 }">
+										</label>
+									</cell>
+									<cell>
+										<label
+											value="@load(each.emwf_company)">
+										</label>
+									</cell>
+									<cell>
+										<label
+											value="@load(each.gid)">
+										</label>
+									</cell>
+									<cell>
+										<label
+											value="@load(each.emwf_name)">
+										</label>
+									</cell>
+									<cell>
+										<label
+											value="@load(each.embf_mold)">
+										</label>
+									</cell>
+									<cell>
+										<label
+											value="@load(each.embf_name)">
+										</label>
+									</cell>
+									<cell>
+										<label
+											value="@load(each.emwf_producefo)">
+										</label>
+									</cell>
+									<cell>
+										<label
+											value="@load(each.emwf_charge)">
+										</label>
+									</cell>
+									<cell>
+										<label
+											value="@load(each.emwf_price)">
+										</label>
+									</cell>
+
+								</row>
+							</template>
+						</rows>
+						<foot>
+							<footer align="center" span="9">
+								<button
+									onClick="@command('addpayinfo',win=winEmp)">
+									提交
+								</button>
+							</footer>
+						</foot>
+					</grid>
+				</row>
+			</rows>
+		</grid>
+	</window>
+</zk>

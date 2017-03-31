@@ -1,0 +1,50 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="标题信息新增" border="normal" width="60%" height="60%" closable="true"
+	apply="org.zkoss.bind.BindComposer" id="editwin"
+	viewModel="@id('vm') @init('Controller.CoServicePolicy.SyPo_TitleAddController')"
+>
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell width="80px">标题</cell>
+			<cell><textbox width="80%" value="@bind(vm.ml.item_title)"></textbox></cell>
+		</row>
+		<row>
+			<cell width="80px">填写类型</cell>
+			<cell>
+				<radiogroup onCheck="@command('checktype',cb=self)">
+					<radio label="文本框" value="1"/>
+					<radio label="下拉列表" value="2"/>
+				</radiogroup>
+			</cell>
+		</row>
+		<row visible="@load(vm.visableable)">
+			<cell width="80px">下拉列表内容</cell>
+			<cell>
+				<grid model="@load(vm.droplist)" 
+				 emptyMessage="请添加列表内容">
+					<columns>
+						<column label="序号" width="60px" align="center"/>
+						<column label="内容" align="center"/>
+						<column label="操作" width="60px" align="center"/>
+					</columns>
+					<rows>
+						<template name="model">
+						<row>
+							<cell><label value="${forEachStatus.index+1 }"></label></cell>
+							<cell><label value="@load(each.drop_content)"></label></cell>
+							<cell><a onClick="@command('del',model=each)"><label value="删除"></label></a></cell>
+						</row>
+						</template>
+					</rows>
+				</grid>
+			</cell>
+		</row>
+	</rows>
+	<foot>
+		<footer align="center"><button onClick="@command('submit',win=editwin)">提交</button></footer>
+	</foot>
+</grid>
+</window>
+</zk>

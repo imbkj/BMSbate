@@ -1,0 +1,22 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="下载文件" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.Archives.Emarchive_DownFileController')"
+		border="normal" sizable="true" height="90px" width="800px"
+		closable="true">
+		<grid>
+			<columns visible="false">
+				<column width="120px"></column>
+				<column></column>
+			</columns>
+			<rows>
+				<row>
+					<cell>下载附件</cell>
+					<cell>
+						
+					</cell>
+				</row>
+			</rows>
+		</grid>
+	</window>
+</zk>

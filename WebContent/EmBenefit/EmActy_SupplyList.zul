@@ -1,0 +1,35 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="WinList" width="500px" height="400px" title="供应商列表"
+		closable="true" border="normal" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmBenefit.EmActy_SupplyListController')"
+		onCreate="@command('winD',a=self)">
+		<borderlayout>
+			<center>
+				<grid width="100%" model="@load(vm.supList)"
+					sizedByContent="true" span="true" emptyMessage="无法读取数据">
+					<columns>
+						<column align="center" label="序号" />
+						<column align="center" label="供应商名称" />
+						<column align="center" />
+					</columns>
+					<template name="model">
+						<row>
+							<cell>${forEachStatus.index+1 }</cell>
+							<cell align="left">
+								<label value="@load(each.supp_name)" />
+							</cell>
+							<cell>
+								<checkbox checked="@bind(each.checked)" />
+							</cell>
+						</row>
+					</template>
+
+				</grid>
+			</center>
+			<south>
+				<div align="center"><button label="提交" onClick="@command('submit')" /></div>
+			</south>
+		</borderlayout>
+	</window>
+</zk>

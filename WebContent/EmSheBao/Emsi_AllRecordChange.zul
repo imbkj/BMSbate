@@ -1,0 +1,107 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winChangeList" title="社会保险 -- 所有变更记录页面" border="normal"
+		closable="true" width="90%" height="70%"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmSheBao.Emsi_AllRecordChangeController')">
+		<borderlayout vflex="1">
+			<center>
+				<grid id="dataGrid" width="100%" height="100%"
+					model="@load(vm.changeList)" emptyMessage="无数据">
+					<columns sizable="true">
+						<column label="所属月份" align="center"
+							sort="auto(ownmonth)" />
+						<column label="参保姓名" align="center"
+							sort="auto(emsc_name)" />
+						<column label="帐户类型" align="center"
+							sort="auto(emsc_singleStr)" />
+						<column label="基数" align="center" />
+						<column label="户籍" align="center" />
+						<column label="医疗类型" align="center" />
+						<column label="养老" align="center" />
+						<column label="工伤" align="center" />
+						<column label="生育" align="center" />
+						<column label="失业" align="center" />
+						<column label="变动类型" align="center"
+							sort="auto(emsc_change)" />
+						<column label="变动内容" align="center"
+							sort="auto(emsc_content)" />
+						<column label="申报时间" align="center"
+							sort="auto(emsc_addtime)" width="70px" />
+						<column label="申报人" align="center"
+							sort="auto(emsc_addname)" />
+						<column label="状态" align="center"
+							sort="auto(emsc_ifdeclare)" />
+						<column label="备注" align="center" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<cell>
+									<label value="@load(each.ownmonth)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emsc_name)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emsc_singleStr)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emsc_radix)" if="${each.emsc_radix != 0}" />
+									<label value="--"
+										if="${each.emsc_radix ==0}" />
+								</cell>
+								<cell>
+									<label value="@load(each.emsc_hj)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emsc_yltype)" />
+								</cell>
+								<cell>
+									<label value="@load(each.emsc_yl)" />
+								</cell>
+								<cell>
+									<label value="@load(each.emsc_gs)" />
+								</cell>
+								<cell>
+									<label value="@load(each.emsc_syu)" />
+								</cell>
+								<cell>
+									<label value="@load(each.emsc_sye)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emsc_change)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emsc_content)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emsc_declaretime)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emsc_declarename)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emsc_ifdeclare)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emsc_remark)" />
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

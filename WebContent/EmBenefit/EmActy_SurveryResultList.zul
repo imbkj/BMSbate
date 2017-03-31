@@ -1,0 +1,130 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="调查结果" border="normal" vflex="1"
+	apply="org.zkoss.bind.BindComposer" id="wins"
+	viewModel="@id('vm') @init('Controller.EmBenefit.EmActy_SurveryHistoryListController')"
+>
+<style src="/css/style.css"></style>
+<borderlayout>
+<north border="0" title="检索" collapsible="true" flex="true" style="padding-bottom:10px;" open="false">
+	<grid>
+		<rows>
+			<row>
+				<cell width="80px">调查对象</cell>
+				<cell>
+					<combobox readonly="true" id="surveytype">
+						<comboitem label="深圳公司" value="1"/>
+						<comboitem label="外地机构" value="2"/>
+					</combobox>
+				</cell>
+				<cell width="80px">所属年份</cell>
+				<cell>
+					<datebox sclass="datebox-year-only" format="yyyy" />
+				</cell>
+				<cell><button onClick="@command('search',surveytype=surveytype.selectedItem.value,ownyear=ownyear.value)">查询</button></cell>
+			</row>
+		</rows>
+	</grid>
+</north>
+<center>
+<grid  vflex="1" model="@load(vm.list)" id="gd" mold="paging" pageSize="500">
+	<columns visible="false">
+		<column label="序号" width="40px" align="center" valign="top"/>
+		<column label="题目"/>
+	</columns>
+	<rows>
+		<template name="model">
+			<row>
+				<cell><label value="${forEachStatus.index+1 }"></label></cell>
+				<cell>
+					<hlayout>
+						<label value="${each.hitl_title}（${each.hiti_ownyear }年${each.answertype }题）"></label>
+						<a onClick="@command('openzul',model=each,url='EmActy_SurveyResultDetailed.zul')"><label>详细数据</label></a>
+					</hlayout>
+					<grid model="@load(each.list)" if="${each.hiti_answertype!=3}" style="border-color:#FFFFFF;border-width:0;">
+						<columns visible="false">
+							<column label="序号" width="50px" align="center"/>
+							<column label="调查内容"/>
+							<column label="票数" align="right"/>
+						</columns>
+						<rows>
+							<template name="model">
+								<row>
+									<cell><label value="${forEachStatus.index+1 }" style="margin-left:10px;"></label></cell>
+									<cell><label value="@load(each.hicn_content)"></label></cell>
+									<cell><label value="${each.num>0?each.num:0 }人选择"></label></cell>
+								</row>
+							</template>
+						</rows>
+					</grid>
+					
+				</cell>
+			</row>
+		</template>
+	</rows>
+</grid>
+</center>
+</borderlayout>
+<script type="text/javascript"><![CDATA[
+        zk.afterLoad("zul.db", function () {
+            // Datebox Calendar Renderer
+            var _Cwgt = {};
+            zk.override(zul.db.CalendarPop.prototype, _Cwgt, {
+                // switch the view after redraw or open as needed
+                redraw: function (out) {
+                    _Cwgt.redraw.apply(this, arguments); //call the original method
+                    this._customChangeView ();
+                },
+                open: function (silent) {
+                    _Cwgt.open.apply(this, arguments); //call the original method
+                    this._customChangeView ();
+                },
+                _customChangeView: function () {
+                    // cannot show month/day
+                    if (jq(this.parent.$n()).hasClass('datebox-year-only')) {
+                        var view = this._view;
+                        // switch to year view as needed
+                        if (view == 'month' || view == 'day')
+                            this._setView("year");
+                    } else if (jq(this.parent.$n()).hasClass('datebox-month-only')) {
+                        // cannot show day view
+                        // switch to month view as needed
+                        if (this._view == 'day')
+                            this._setView("month");
+                    }
+                },
+                // customize the chooseDate function
+                _chooseDate: function (target, val) {
+                    var view = this._view;
+                    if (jq(this.parent.$n()).hasClass('datebox-month-only')
+                        || jq(this.parent.$n()).hasClass('datebox-year-only')) {
+                        // do customize chooseDate if the parent (datebox)
+                        // has specific class
+                        var date = this.getTime(),
+                            year = (view == 'decade' || view == 'year')? val : date.getFullYear(),
+                            month = view == 'month'? val : 0,
+                            date = 1;
+                        // set date value
+                        this._setTime(year, month, 1);
+                        if (view == 'decade') {
+                            // switch to year view if at decade view
+                            this._setView("year");
+                        } else if (jq(this.parent.$n()).hasClass('datebox-month-only')
+                            && view == 'year') {
+                            // switch to month view if at year view and the month view is allowed
+                            this._setView("month");
+                        } else if (jq(this.parent.$n()).hasClass('datebox-month-only') && view == 'month'
+                            || jq(this.parent.$n()).hasClass('datebox-year-only') && view == 'year') {
+                            // close calendar and update value if already at the smallest allowed view
+                            this.close();
+                            this.parent.updateChange_();
+                        }
+                    } else {
+                        _Cwgt._chooseDate.apply(this, arguments); //call the original method
+                    }
+                }
+            });
+        });
+    ]]></script>
+</window>
+</zk>

@@ -1,0 +1,154 @@
+<?page title="社保批量导入工资修改列表" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<grid apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.Batchprocessing.EmSheBao_SalaryUpdateListController')"
+		emptyMessage="暂无社保工资修改数据" model="@load(vm.winUlList)" mold="paging"
+		pageSize="15" width="100%" height="100%">
+		<columns sizable="true">
+			<column align="center" width="40px">
+				<vlayout>
+					<label>全选</label>
+					<checkbox onClick="@command('checkAll')"
+						checked="@bind(vm.checkAll)" />
+				</vlayout>
+			</column>
+			<column width="70px" sort="auto(cid)" align="center">
+				<vlayout>
+					<label>公司编号</label>
+					<intbox id="ibCid" constraint="no negative"
+						width="95%" onChange="@command('setCid', ibCid=ibCid)"
+						onOk="@command('setCid', ibCid=ibCid)" mold="rounded" />
+				</vlayout>
+			</column>
+			<column label="公司简称" align="center"
+				sort="auto(coba_shortname)" />
+			<column align="center" sort="auto(gid)" width="70px">
+				<vlayout>
+					<label>员工编号</label>
+					<intbox id="ibGid" constraint="no negative"
+						width="95%" onChange="@command('setGid', ibGid=ibGid)"
+						onOk="@command('setGid', ibGid=ibGid)" mold="rounded" />
+				</vlayout>
+			</column>
+			<column align="center" sort="auto(emsu_name)">
+				<vlayout>
+					<label>姓名</label>
+					<textbox value="@bind(vm.name)" width="80%"
+						onChange="@command('search')" onOk="@command('search')"
+						mold="rounded">
+					</textbox>
+				</vlayout>
+			</column>
+			<column align="center">
+				<vlayout>
+					<label>身份证</label>
+					<textbox value="@bind(vm.idcard)" width="95%"
+						onChange="@command('search')" onOk="@command('search')"
+						mold="rounded">
+					</textbox>
+				</vlayout>
+			</column>
+			<column align="center">
+				<vlayout>
+					<label>电脑号</label>
+					<textbox value="@bind(vm.computerid)" width="95%"
+						onChange="@command('search')" mold="rounded">
+					</textbox>
+				</vlayout>
+			</column>
+			<column align="center" sort="auto(ownmonth)" width="80px">
+				<vlayout>
+					<label>所属月份</label>
+					<intbox id="ibOwnmonth" constraint="no negative"
+						width="95%"
+						onChange="@command('setOwnmonth', ibOwnmonth=ibOwnmonth)"
+						mold="rounded" />
+				</vlayout>
+			</column>
+			<column label="旧基数" align="center" width="70px" />
+			<column label="新基数" align="center" width="70px" />
+			<column label="客服" align="center" sort="auto(coba_client)"
+				width="90px" />
+			<column align="center" width="90px">
+				<vlayout>
+					<label>导入人</label>
+					<textbox value="@bind(vm.addname)" width="95%"
+						onChange="@command('search')" mold="rounded">
+					</textbox>
+				</vlayout>
+			</column>
+			<column align="center" sort="auto(emsu_addtime)"
+				width="100px">
+				<vlayout>
+					<label>导入时间</label>
+					<datebox id="dbAddtime" width="95%" mold="rounded"
+						format="yyyy-MM-dd"
+						onChange="@command('setAddtime', dbAddtime=dbAddtime)"
+						onOK="@command('setAddtime', dbAddtime=dbAddtime" />
+				</vlayout>
+			</column>
+			<column align="center" sort="auto(emsu_state)"
+				width="90px">
+				<vlayout>
+					<label>状态</label>
+					<combobox readonly="true" mold="rounded"
+						value="@bind(vm.state)" width="95%"
+						onChange="@command('search')">
+						<comboitem label="" />
+						<comboitem label="未提交" />
+						<comboitem label="已提交" />
+					</combobox>
+				</vlayout>
+			</column>
+			<column align="center" sort="auto(emsu_err)">
+				<vlayout>
+					<label>提示</label>
+					<combobox readonly="true" mold="rounded"
+						model="@load(vm.errlist)" value="@bind(vm.err)" width="95%"
+						onChange="@command('search')">
+						<template name="model">
+							<comboitem label="@load(each.emsu_err)" />
+						</template>
+					</combobox>
+				</vlayout>
+			</column>
+		</columns>
+		<rows>
+			<template name="model">
+				<row>
+					<checkbox
+						disabled="${each.emsu_state==0?false:true}"
+						checked="@bind(each.check)" />
+					<label value="@load(each.cid)" />
+					<label value="@load(each.coba_shortname)" />
+					<label value="@load(each.gid)" />
+					<label value="@load(each.emsu_name)" />
+					<label value="@load(each.emsu_idcard)" />
+					<label value="@load(each.emsu_computerid)" />
+					<label value="@load(each.ownmonth)" />
+					<label value="@load(each.emsu_old_radix)" />
+					<label value="@load(each.emsu_radix)" />
+					<label value="@load(each.coba_client)" />
+					<label value="@load(each.emsu_addname)" />
+					<label value="@load(each.emsu_addtime)" />
+					<label value="@load(each.emsu_stateStr)"
+						style="${each.emsu_state==0?'color:red;': 'color:#00F;'}" />
+					<cell align="center">
+						<label
+							style="color:red;white-space: nowrap;text-overflow: ellipsis;overflow: hidden；"
+							value="@load(each.emsu_err)" tooltiptext="@load(each.emsu_err)"
+							if="${each.emsu_err!=null and each.emsu_state==0?true:false}" />
+					</cell>
+				</row>
+			</template>
+		</rows>
+		<foot>
+			<footer align="center" span="15">
+				<hlayout>
+					<button label="提交数据" onClick="@command('submit')" />
+					<button label="删除数据" onClick="@command('delete')" />
+				</hlayout>
+			</footer>
+		</foot>
+	</grid>
+</zk>

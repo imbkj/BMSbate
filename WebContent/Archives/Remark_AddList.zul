@@ -1,0 +1,47 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="添加备注" border="normal" width="60%" height="70%" closable="true" id="remarkwin"
+	apply="org.zkoss.bind.BindComposer"
+    viewModel="@id('vm') @init('Controller.Archives.Remark_AddList')">
+
+<groupbox closable="true" style="margin-bottom:10px;" vflex="1">
+	<caption>
+		<label>备注信息</label>
+	</caption>
+<grid model="@load(vm.list)" emptyMessage="没有备注信息" vflex="1">
+	<columns>
+		<column label="序号" width="40px" align="center"/>
+		<column label="添加人" width="70px" align="center"/>
+		<column label="添加时间" width="80px" align="center"/>
+		<column label="备注" align="center"/>
+	</columns>
+	<rows>
+		<template name="model">
+			<row>
+				<label value="${forEachStatus.index+1 }"></label>
+				<label value="@load(each.eare_addname)"></label>
+				<label value="@load(each.eare_addtime)"></label>
+				<label value="@load(each.eare_content)"></label>
+		   </row>
+		</template>
+	</rows>
+</grid>
+</groupbox>
+<groupbox closable="false" style="margin-bottom:10px;">
+	<caption>
+		<label>新增备注</label>
+	</caption>
+<grid>
+	<rows>
+		<row>
+			<cell width="80px">备注内容</cell>
+			<cell><textbox value="@bind(vm.remark)" rows="5" width="90%" id="remark"></textbox></cell>
+		</row>
+	</rows>
+	<foot>
+		<footer align="center"><button onClick="@command('submit',win=remarkwin)">提交</button></footer>
+	</foot>
+</grid>
+</groupbox>
+</window>
+</zk>

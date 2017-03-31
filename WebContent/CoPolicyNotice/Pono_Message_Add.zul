@@ -1,0 +1,161 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="发短信" border="normal" width="70%" height="80%"
+		closable="true" id="sendwin" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoPolicyNotice.PoNo_Message_AddController')">
+		<grid model="@load(vm.list)" height="200px"
+			emptyMessage="没有联系记录">
+			<columns>
+				<column width="80px" align="center">
+					<label>发件人</label>
+				</column>
+				<column width="80px" align="center">
+					<label>收件人</label>
+				</column>
+				<column width="130px" align="center">
+					<label>发件时间</label>
+				</column>
+				<column align="center">
+					<label>短信内容</label>
+				</column>
+				<column align="center" width="80px">
+					<label>状态</label>
+				</column>
+				<column align="center" width="120px">
+					<label>操作</label>
+				</column>
+			</columns>
+			<rows>
+				<template name="model">
+					<row
+						style="border:1px dotted #cad9ea;background-color:#f5fafe;">
+						<cell>
+							<label value="@load(each.syme_addname)">
+							</label>
+						</cell>
+						<cell>
+							<label value="@load(each.symr_name)"></label>
+						</cell>
+						<cell>
+							<label value="@load(each.syme_addtime)">
+							</label>
+						</cell>
+						<cell>
+							<label value="@load(each.syme_content)">
+							</label>
+						</cell>
+						<cell>
+							<label value="@load(each.statename)"></label>
+						</cell>
+						<cell>
+							<hlayout>
+								<a if="false"
+									onClick="@command('read',model=each,win=sendwin)">
+									<label value="阅读"></label>
+								</a>
+								<a>
+									<label value="回复"
+										onClick="@command('reply',model=each,win=sendwin)"
+										if="${each.symr_name==vm.username and each.symr_readstate==1 }">
+									</label>
+								</a>
+							</hlayout>
+						</cell>
+					</row>
+				</template>
+			</rows>
+		</grid>
+		<grid width="100%" style="margin-top:20px;" vflex="1">
+			<columns visible="false">
+				<column width="80px" />
+				<column />
+				<column width="80px" />
+				<column />
+			</columns>
+			<rows>
+				<row>
+					<cell width="80px">收件人</cell>
+					<cell colspan="3">
+						<bandbox id="bd" mold="rounded" autodrop="true"
+							readonly="true" width="95%" value="@bind(vm.selectedname)">
+							<bandpopup>
+								<grid width="370px"
+									model="@load(vm.deptlist)">
+									<columns visible="false">
+										<column width="40px" />
+									</columns>
+									<rows>
+										<template name="model">
+											<row>
+												<detail open="false"
+													fulfill="onOpen">
+													<listbox
+														width="170px" model="@load(each.loginlist)"
+														checkmark="true" multiple="true" onSelect="@command('checkall',bd=bd,lb=self)">
+														<listhead>
+															<listheader>全选</listheader>
+														</listhead>
+														<template
+															name="model">
+															<listitem
+																label="@load(each.log_name)" value="@load(each)"
+																onClick="@command('checkname',model=each,bd=bd,lbitem=self)" />
+														</template>
+													</listbox>
+												</detail>
+												<cell>
+													<label
+														value="@load(each.dep_name)">
+													</label>
+												</cell>
+											</row>
+										</template>
+									</rows>
+								</grid>
+							</bandpopup>
+						</bandbox>
+					</cell>
+				</row>
+				<row>
+					<cell width="80px">模板</cell>
+					<cell colspan="3">
+						<combobox model="@load(vm.temList)"
+							readonly="true" onChange="@command('temselect',temcb=self)">
+							<template name="model">
+								<comboitem
+									label="@load(each.pmte_model)" value="@load(each)" />
+							</template>
+						</combobox>
+						<checkbox label="发邮件"
+							style="border:0;margin-right:10px;" id="cb" checked="true">
+						</checkbox>
+						<button upload="true" label="添加附件"
+							onUpload="@command('upfile',hlt=hlt)" />
+					</cell>
+				</row>
+				<row>
+					<cell>附件</cell>
+					<cell>
+						<vlayout id="hlt"></vlayout>
+					</cell>
+				</row>
+				<row>
+					<cell width="80px">短信内容</cell>
+					<cell colspan="3">
+						<textbox width="80%" rows="4"
+							value="@bind(vm.content)" onOK="@command('send',win=sendwin)">
+						</textbox>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center" span="4">
+					<button
+						onClick="@command('send',win=sendwin,cb=cb)">
+						发送
+					</button>
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

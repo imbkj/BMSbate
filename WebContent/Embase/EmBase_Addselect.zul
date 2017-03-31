@@ -1,0 +1,466 @@
+<!-- 员工入职第一页 -->
+
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="@load(vm.winId)" title="@load(vm.ebm.coba_company)"
+		onCreate="@command('readInfo',a=self)" width="100%" height="100%"
+		border="normal" closable="true" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.Embase.EmBase_AddController')">
+		<borderlayout>
+			<east id="items" width="100%" open="false" collapsible="true"
+				title="项目信息">
+				<borderlayout>
+					<north>
+						<grid width="100%">
+							<columns visible="false">
+								<column width="120px" />
+								<column />
+								<column width="120px" />
+								<column />
+								<column width="120px" />
+								<column />
+							</columns>
+							<rows>
+								<row>
+									<cell>合同编号</cell>
+									<cell>
+										<hbox>
+											<combobox id="compactid" width="120px" readonly="true"
+												onChange="@command('updateCompact')" instant="true"
+												model="@load(vm.compactlist)" value="@bind(vm.compactid)">
+												<template
+													name="model">
+													<comboitem
+														value="@load(each)" label="@load(each.coco_compactid)" />
+												</template>
+											</combobox>
+											<label value="" />
+										</hbox>
+									</cell>
+									<cell>产品类型</cell>
+									<cell>
+										<combobox id="pclassid" width="120px" readonly="true"
+											onChange="@command('updateProductClass')" instant="true"
+											model="@load(vm.productlist)" value="@bind(vm.itemclass)">
+											<template name="model">
+												<comboitem
+													value="@load(each)" label="@load(each.coli_pclass)" />
+											</template>
+										</combobox>
+									</cell>
+									<cell>城市</cell>
+									<cell>
+										<combobox id="city"
+											onChange="@command('updateCity')" instant="true"
+											value="@bind(vm.city)" model="@load(vm.cityList)">
+											<template name="model">
+												<comboitem
+													label="@load(each.coli_city)" />
+											</template>
+										</combobox>
+									</cell>
+								</row>
+								<row>
+									<cell>报价单</cell>
+									<cell>
+										<combobox id="quoteid" width="120px" readonly="true"
+											onChange="@command('updateQuote')" instant="true"
+											model="@load(vm.quotelist)" value="@bind(vm.quotename)">
+											<template name="model">
+												<comboitem
+													value="@load(each)" label="@load(each.coof_name)" />
+											</template>
+										</combobox>
+									</cell>
+									<cell>产品名称</cell>
+									<cell>
+										<textbox
+											value="@bind(vm.itemName)" width="120px"
+											onChange="@command('updateCompact')" instant="true" />
+									</cell>
+									<cell></cell>
+									<cell></cell>
+								</row>
+							</rows>
+						</grid>
+					</north>
+					<center>
+						<grid id="gdItem" width="100%" height="100%"
+							sizedByContent="true" span="true" emptyMessage="暂无数据"
+							model="@load(vm.itemlist)">
+							<columns>
+								<column label="报价单名称" />
+								<column label="产品类型" />
+								<column label="城市" />
+								<column label="产品名称" />
+								<column label="费用" />
+								<column label="服务起始月" />
+								<column label="收费起始月" />
+								<column align="center">
+									<checkbox
+										onClick="@command('checkItemAll',a=self)" />
+								</column>
+							</columns>
+							<template name="model">
+								<row>
+									<cell>
+										<label
+											value="@load(each.coof_name)" />
+									</cell>
+									<cell>
+										<label
+											value="@load(each.coli_pclass)" />
+									</cell>
+									<cell>
+										<label value="@load(each.city)" />
+									</cell>
+									<cell>
+										<hbox>
+											<label
+												value="@load(each.coli_name)" />
+											<label style="color:blue"
+												value="@load(each.coco_shebao)" />
+											<label style="color:blue"
+												value="@load(each.coco_house)" />
+										</hbox>
+									</cell>
+									<cell>
+										<label
+											value="@load(each.coli_fee2)" />
+									</cell>
+									<cell>
+										<monthbox format="yyyyMM"
+											onChange="@command('updateSt2',a=each,b=self)" instant="true"
+											readonly="true" />
+										<image src="../images/130.gif"
+											onClick="@command('copydate1',a=each)"
+											style="cursor:pointer;" />
+									</cell>
+									<cell>
+										<monthbox format="yyyyMM"
+											onChange="@command('updateSt',a=each,b=self)"
+											readonly="true" />
+										<image src="../images/130.gif"
+											onClick="@command('copydate2',a=each)"
+											style="cursor:pointer;" />
+									</cell>
+									<cell>
+										<checkbox 
+											onClick="@command('checkItem',a=each)"
+											checked="@bind(each.checked)" />
+									</cell>
+								</row>
+							</template>
+						</grid>
+					</center>
+					<south>
+						<div align="center">
+							<button label="返回" onClick="@command('closeItem')" />
+						</div>
+					</south>
+				</borderlayout>
+			</east>
+			<center>
+				<borderlayout>
+					<center>
+						<tabbox height="100%">
+							<tabs>
+								<tab label="员工入职" />
+								<tab label="员工信息采集"
+									visible="@load(vm.ifembasenotin)" />
+							</tabs>
+							<tabpanels>
+								<tabpanel>
+									<borderlayout>
+										<north>
+											<groupbox>
+												<grid>
+													<rows>
+														<row>
+															<cell
+																width="110px">
+																姓名
+															</cell>
+															<cell>
+																<textbox
+																	mold="rounded" value="@bind(vm.ebm.emba_name)"  width="130px"/>
+															</cell>
+															<cell
+																width="110px">
+																入职时间
+															</cell>
+															<cell>
+																<datebox
+																	id="inciicdate" mold="rounded" readonly="true"
+																	value="@load(vm.inDate)" />
+															</cell>
+															<cell>
+																国籍
+															</cell>
+															<cell>
+																<combobox
+																	id="nationality" value="@bind(vm.ebm.emba_nationality)"
+																	model="@load(vm.pnList)" autodrop="true"  width="130px"
+																	mold="rounded">
+																	<template
+																		name="model">
+																		<comboitem
+																			label="@load(each.puna_name)" />
+																	</template>
+																</combobox>
+															</cell>
+														</row>
+														<row>
+															<cell>
+																身份证
+															</cell>
+															<cell>
+																<textbox
+																	id="idcard" mold="rounded" width="200px"
+																	onChange="@command('idcardinfo')" instant="true"
+																	value="@bind(vm.ebm.emba_idcard)" />
+																<combobox
+																	id="idcardclass" mold="rounded" width="100px"
+																	value="@bind(vm.ebm.emba_idcardclass)" readonly="true"
+																	onChange="@command('changeNationality')">
+																	<comboitem
+																		label="身份证" />
+																	<comboitem
+																		label="军人证" />
+																	<comboitem
+																		label="台胞证" />
+																	<comboitem
+																		label="护照" />
+																	<comboitem
+																		label="港澳证" />
+																</combobox>
+															</cell>
+															<cell>
+																出生日期
+															</cell>
+															<cell>
+																<datebox
+																	id="birth" mold="rounded" readonly="true"
+																	value="@load(vm.birthDate)" />
+															</cell>
+															<cell>
+																性别
+															</cell>
+															<cell>
+																<combobox
+																	id="sex" mold="rounded" width="100px"
+																	value="@bind(vm.ebm.emba_sex)" readonly="true">
+																	<comboitem
+																		label="男" />
+																	<comboitem
+																		label="女" />
+																</combobox>
+															</cell>
+														</row>
+														<row>
+															<cell>
+																家庭电话
+															</cell>
+															<cell>
+																<textbox
+																	id="phone" mold="rounded"  width="130px"
+																	value="@bind(vm.ebm.emba_phone)" />
+															</cell>
+															<cell>
+																手机号码
+															</cell>
+															<cell>
+																<textbox
+																	id="mobile" mold="rounded"  width="130px"
+																	value="@bind(vm.ebm.emba_mobile)" />
+															</cell>
+															<cell>
+																邮箱
+															</cell>
+															<cell>
+																<textbox
+																	id="email" mold="rounded"  width="130px"
+																	value="@bind(vm.ebm.emba_email)" />
+															</cell>
+														</row>
+														<row>
+															<cell>
+																社保缴交地
+															</cell>
+															<cell>
+																<combobox  width="130px"
+																	id="sbplace" mold="rounded" readonly="true"
+																	value="@bind(vm.ebm.emba_sb_place)">
+																	<comboitem
+																		label="" />
+																	<comboitem
+																		label="本地" />
+																	<comboitem
+																		label="外地" />
+																</combobox>
+															</cell>
+															<cell>
+																公积金缴交地
+															</cell>
+															<cell>
+																<combobox  width="130px"
+																	id="houseplace" mold="rounded" readonly="true"
+																	value="@bind(vm.ebm.emba_house_place)">
+																	<comboitem
+																		label="" />
+																	<comboitem
+																		label="本地" />
+																	<comboitem
+																		label="外地" />
+																</combobox>
+															</cell>
+															<cell
+																width="110px">
+																是否有档案托管服务
+															</cell>
+															<cell>
+																<combobox  width="130px"
+																	id="emzt_iffileservice" mold="rounded" readonly="true"
+																	value="@bind(vm.emcont.emzt_iffileservice)">
+																	<comboitem
+																		label="是" />
+																	<comboitem
+																		label="否" />
+																</combobox>
+															</cell>
+															<!-- <cell>外籍人参保</cell>
+																<cell>
+																<combobox readonly="true" mold="rounded"
+																value="@bind(vm.ebm.emba_emsb_foreigner)">
+																<comboitem label="是" />
+																<comboitem label="否" />
+																</combobox>
+																</cell> -->
+														</row>
+													</rows>
+												</grid>
+											</groupbox>
+										</north>
+										<center>
+											<groupbox title="报价单信息"
+												width="100%" height="100%">
+												<grid id="coofferlist"
+													model="@load(vm.cflList)" height="100%"
+													emptyMessage="暂无数据">
+													<columns
+														sizable="true">
+														<column
+															align="center">
+															报价单
+														</column>
+														<column
+															align="center">
+															产品类型
+														</column>
+														<column
+															align="center">
+															城市
+														</column>
+														<column
+															align="center">
+															产品名称
+														</column>
+														<column
+															align="center">
+															费用
+														</column>
+														<column
+															width="120px" align="center">
+															服务起始月
+														</column>
+														<column
+															width="120px" align="center">
+															收费起始月
+														</column>
+<!-- 														<column -->
+<!-- 															width="70px" align="center"> -->
+<!-- 														</column> -->
+													</columns>
+
+													<template
+														name="model">
+														<row
+															style="border:1px dotted #cad9ea;">
+															<cell>
+																<label
+																	value="@load(each.coof_name)" />
+															</cell>
+															<cell>
+																<label
+																	value="@load(each.coli_pclass)" />
+															</cell>
+															<cell>
+																<label
+																	value="@load(each.city)" />
+															</cell>
+															<cell>
+																<hbox>
+																	<label
+																		value="@load(each.coli_name)" />
+																	<label
+																		style="color:blue" value="@load(each.coco_shebao)" />
+																	<label
+																		style="color:blue" value="@load(each.coco_house)" />
+																</hbox>
+															</cell>
+															<cell
+																if="${each.coli_group_count>0 }"
+																rowspan="${each.coli_group_count }">
+																<hbox>
+																	<label
+																		value="@load(each.coli_fee2)" />
+																	${each.coli_cpfc_name}
+																</hbox>
+															</cell>
+															<cell
+																if="${each.coli_group_count>0 }"
+																rowspan="${each.coli_group_count }">
+																<label
+																	value="@load(each.st2)" />
+															</cell>
+															<cell
+																if="${each.coli_group_count>0 }"
+																rowspan="${each.coli_group_count }">
+																<label
+																	value="@load(each.st)" />
+															</cell>
+<!-- 															<cell -->
+<!-- 																if="${each.coli_group_count>0 }" -->
+<!-- 																rowspan="${each.coli_group_count }"> -->
+<!-- 																<button -->
+<!-- 																	label="删除" onClick="@command('delItem',a=each)" /> -->
+<!-- 															</cell> -->
+														</row>
+													</template>
+												</grid>
+											</groupbox>
+										</center>
+									</borderlayout>
+								</tabpanel>
+								<tabpanel>
+									<custom-attributes
+										emba_id="${vm.embanotin_id }" cid="${vm.cid }" />
+									<include
+										src="../Embase/Embase_Addsec.zul" daid="${emba_id}"
+										cid="${cid}" />
+								</tabpanel>
+							</tabpanels>
+						</tabbox>
+					</center>
+					<south>
+						<div align="center">
+<!-- 							<button label="选择报价单项目" onClick="@command('selectItem')" /> -->
+							<button label="下一页"
+								onClick="@command('btnSubmitselect')" />
+						</div>
+					</south>
+				</borderlayout>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

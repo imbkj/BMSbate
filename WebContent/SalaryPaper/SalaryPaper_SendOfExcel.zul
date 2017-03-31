@@ -1,0 +1,50 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="发送Excel工资单" border="normal" width="60%" id="excelWin"
+		hflex="1" vflex="1" apply="org.zkoss.bind.BindComposer"
+		closable="true"
+		viewModel="@id('vm') @init('Controller.SalaryPaper.SalaryPaper_SendOfExcelController')">
+
+		<grid>
+			<rows>
+				<row>
+					<cell width="20%" align="center">
+						<label value="发送地址" />
+					</cell>
+					<cell>
+						<textbox value="@bind(vm.m.esda_email)"
+							width="50%" />
+							<label value="*" style="color:red"/>
+						<label value="多个地址间请以半角 , (逗号)隔开" />
+					</cell>
+				</row>
+				<row>
+					<cell colspan="2">
+						<label value="@load(vm.title)" />
+					</cell>
+				</row>
+				<row>
+					<cell colspan="2" align="center">
+						<include id="incl_id" src="@load(vm.urlJsp)"></include>
+					</cell>
+				</row>
+				<row>
+					<cell width="20%" align="center">
+						<label value="特殊备注" />
+					</cell>
+					<cell>
+						<textbox rows="5"
+							value="@bind(vm.m.esda_remark)" width="90%" />
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button label="发送"
+						onClick="@command('sendExcelType',excelWin=excelWin)" />
+				</footer>
+			</foot>
+		</grid>
+
+	</window>
+</zk>

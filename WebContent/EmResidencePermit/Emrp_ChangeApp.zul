@@ -1,0 +1,12 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="居住证转换" border="normal" width="80%" height="80%" closable="true">
+<grid vflex="1">
+		<rows>
+			<row>
+				<cell></cell>
+			</row>
+		</rows>
+	</grid>
+</window>
+</zk>

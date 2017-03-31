@@ -1,0 +1,53 @@
+<grid width="100%" id="g1" apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('vm') @init('Controller.EmCommissionOut.EmCommissionOutBaseInfoController')"
+	model="@load(vm.embasepaylistin)" hflex="1" vflex="1" mold="paging"
+	sizedByContent="true" span="true">
+	<columns>
+		<column label="所属帐单" align="center" width="30px" />
+		<column label="养老" align="center" width="30px" />
+		<column label="失业" align="center" width="30px" />
+		<column label="医疗" align="center" width="30px" />
+		<column label="工伤" align="center" width="30px" />
+		<column label="生育" align="center" width="30px" />
+		<column label="住房" align="center" width="30px" />
+		<column label="其它" align="center" width="30px" />
+		<column label="档案" align="center" width="30px" />
+		<column label="服务费" align="center" width="30px" />
+	</columns>
+	<rows>
+		<template name="model">
+			<row>
+				<cell width="30px" align="center">
+					<label value="@load(each.ecop_company)" />
+				</cell>
+				<cell width="30px" align="center">
+					<label value="@load(each.ecop_yl_sf)" />
+				</cell>
+				<cell width="30px" align="center">
+					<label value="@load(each.ecop_sye_sf)" />
+				</cell>
+				<cell width="30px" align="center">
+					<label value="@load(each.ecop_jl_sf)" />
+				</cell>
+				<cell width="30px" align="center">
+					<label value="@load(each.ecop_gs_sf)" />
+				</cell>
+				<cell width="30px" align="center">
+					<label value="@load(each.ecop_syu_sf)" />
+				</cell>
+				<cell width="30px" align="center">
+					<label value="@load(each.ecop_house_sf)" />
+				</cell>
+				<cell width="30px" align="center">
+					<label value="@load(each.ecop_other_sf)" />
+				</cell>
+				<cell width="30px" align="center">
+					<label value="@load(each.ecop_file_sf)" />
+				</cell>
+				<cell width="30px" align="center">
+					<label value="@load(each.ecop_fw_sf)" />
+				</cell>
+			</row>
+		</template>
+	</rows>
+</grid>

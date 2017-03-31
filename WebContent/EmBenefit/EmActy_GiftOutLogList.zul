@@ -1,0 +1,42 @@
+<window border="0" vflex="1" apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('vm') @init('Controller.EmBenefit.EmActy_GiftOutLogListController')"
+	>
+	<grid  id="editwin" emptyMessage="没有出库记录" model="@load(vm.list)" visible="${vm.listnum>0 }">
+		<columns>
+			<column label="序号" align="center" width="40px"/>
+			<column label="出库数量" align="center"/>
+			<column label="出库时间" align="center"/>
+			<column label="出库人" align="center"/>
+			<column label="备注" align="center"/>
+		</columns>
+		<rows>
+		<template name="model">
+			<row>
+				<cell><label value="${forEachStatus.index+1 }"></label></cell>
+				<cell><label value="@load(each.gout_num)"></label></cell>
+				<cell><label value="@load(each.gout_time)"></label></cell>
+				<cell><label value="@load(each.gout_name)"></label></cell>
+				<cell><label value="@load(each.gout_remark)"></label></cell>
+			</row>
+		</template>
+		</rows>
+	</grid>
+	<grid emptyMessage="没有退回信息记录" model="@load(vm.blist)" visible="${vm.blistnum>0 }">
+		<columns>
+			<column label="序号" align="center" width="40px"/>
+			<column label="退回原因" align="center"/>
+			<column label="退回人" align="center"/>
+			<column label="退回时间" align="center"/>
+		</columns>
+		<rows>
+		<template name="model">
+			<row>
+				<cell><label value="${forEachStatus.index+1 }"></label></cell>
+				<cell><label value="@load(each.gibk_cause)"></label></cell>
+				<cell><label value="@load(each.gtbk_name)"></label></cell>
+				<cell><label value="@load(each.gtbk_time)"></label></cell>
+			</row>
+		</template>
+		</rows>
+	</grid>
+</window>

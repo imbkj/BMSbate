@@ -1,0 +1,19 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="报价单退回" border="normal" width="500px" height="300px" closable="true"
+	apply="org.zkoss.bind.BindComposer" id="backwin"
+	viewModel="@id('vm') @init('Controller.CoQuotation.CoQuotation_AuditBackController')"
+>
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell width="60px">退回原因</cell>
+			<cell><textbox rows="6" width="95%" value="@bind(vm.backcase)"></textbox></cell>
+		</row>
+	</rows>
+	<foot>
+		<footer align="center"><button onClick="@command('back',win=backwin)">提交</button></footer>
+	</foot>
+</grid>
+</window>
+</zk>

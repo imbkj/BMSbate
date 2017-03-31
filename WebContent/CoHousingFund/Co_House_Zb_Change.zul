@@ -1,0 +1,181 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="专办员信息变更" border="normal" height="60%"
+		closable="true" width="40%">
+		<grid>
+			<rows>
+				<row>
+					<grid>
+						<rows>
+							<row>
+								<cell colspan="3" width="20%">
+									<label value="专办员信息变更" />
+								</cell>
+							</row>
+							<row>
+								<cell align="center" colspan="3"
+									width="15%">
+									<label value="*" style="color:red" />
+									<label value="选择要变更的专办员" />
+								</cell>
+								<cell align="left">
+									<combobox value="陈景桃44122919830601373XGO" width="45%">
+										<comboitem 
+											label="陈景桃44122919830601373XGO" />
+									</combobox>
+								</cell>
+							</row>
+							<row>
+								<cell align="center" colspan="3"
+									width="15%">
+									<label value="*" style="color:red" />
+									<label value="单位公积金号" />
+								</cell>
+								<cell align="left">
+									<label value="1010933158 " />
+								</cell>
+							</row>
+							<row>
+								<cell align="center" colspan="3"
+									width="10%">
+									<label value="*" style="color:red" />
+									<label value="单位名称(全称)" />
+								</cell>
+								<cell align="left">
+									<label value="深圳联想海外控股有限公司  " />
+								</cell>
+							</row>
+							<row>
+								<cell align="center" colspan="3"
+									width="15%">
+									<label value="*" style="color:red" />
+									<label value="专办员号" />
+								</cell>
+								<cell align="left">
+									<label
+										value="44122919830601373XGO " />
+								</cell>
+							</row>
+						</rows>
+					</grid>
+				</row>
+				<!-- 变更专办员信息 -->
+				<row>
+					<grid>
+						<rows>
+							<row>
+								<cell width="20%">
+									<label value="变更专办员信息"
+										style="font-size:15px" />
+								</cell>
+							</row>
+							<row>
+								<cell align="center" width="15%">
+									<label value="*" style="color:red" />
+									<label value="姓名" />
+								</cell>
+								<cell width="25%">
+									<label value="陈景桃" />
+								</cell>
+								<cell align="left">
+									<label value="修改为" />
+									<textbox value="" />
+								</cell>
+							</row>
+							<row>
+								<cell align="center" width="15%">
+									<label value="*" style="color:red" />
+									<label value="固定电话" />
+								</cell>
+								<cell width="25%">
+									<label value="83970625" />
+								</cell>
+								<cell align="left">
+									<label value="修改为" />
+									<textbox value="" />
+								</cell>
+							</row>
+							<row>
+								<cell align="center" width="15%">
+									<label value="*" style="color:red" />
+									<label value="移动电话" />
+								</cell>
+								<cell width="25%">
+									<label value="13570810224" />
+								</cell>
+								<cell align="left">
+									<label value="修改为" />
+									<textbox value="" />
+								</cell>
+							</row>
+							<row>
+								<cell align="center" width="15%">
+									<label value="*" style="color:red" />
+									<label value="电子邮箱" />
+								</cell>
+								<cell width="25%">
+									<label value="cjt@szciic.com" />
+								</cell>
+								<cell align="left">
+									<label value="修改为" />
+									<textbox value="" />
+								</cell>
+							</row>
+							<row>
+								<cell align="center" width="15%">
+									<label value="*" style="color:red" />
+									<label value="操作月份" />
+								</cell>
+								<cell align="left">
+									<datebox format="yyyyMM"
+										width="38%" />
+								</cell>
+							</row>
+							<row>
+								<cell align="center" width="15%">
+									<label value="*" style="color:red" />
+									<label value="备注 " />
+								</cell>
+								<cell align="left" colspan="2">
+									<textbox value="" width="80%"/>
+								</cell>
+							</row>
+						</rows>
+					</grid>
+				</row>
+				<row>
+					<grid>
+
+						<rows>
+							<row>
+								<cell>
+									<label value="提交资料" />
+
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<checkbox value=""
+										label="深圳市住房公积金新增专办员注册登记申请表 " />
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<checkbox value=""
+										label="新增专办员的身份证原件及对应复印件 " />
+								</cell>
+							</row>
+						</rows>
+					</grid>
+				</row>
+
+			</rows>
+			<foot>
+				<footer align="center">
+					<button label="提交" />
+				</footer>
+			</foot>
+		</grid>
+
+	</window>
+</zk>

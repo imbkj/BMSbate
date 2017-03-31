@@ -1,0 +1,34 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="就业登记办理状态处理" border="normal" width="80%" height="80%"
+		apply="org.zkoss.bind.BindComposer" closable="true" id="updatewin"
+		viewModel="@id('vm') @init('Controller.EmReg.EmReg_StopDealAllController')">
+		<grid vflex="1">
+			<rows>
+				<row>
+					<cell width="80px">交接日期</cell>
+					<cell><datebox value="@bind(vm.erin_handover_date)"></datebox></cell>
+					<cell width="80px">申报日期</cell>
+					<cell><datebox value="@bind(vm.erin_declare_date)"></datebox></cell>
+					<cell width="80px">收盖章日期</cell>
+					<cell><datebox value="@bind(vm.erin_wd_seal_date)"></datebox></cell>
+				</row>
+				<row>
+					<cell>办成日期</cell>
+					<cell><datebox value="@bind(vm.erin_success_date)"></datebox></cell>
+					<cell>领取日期</cell>
+					<cell colspan="3"><datebox value="@bind(vm.erin_get_date)"></datebox></cell>
+					<cell if="false">领取人</cell>
+					<cell if="false"><textbox value="@bind(vm.model.erin_get_people)"></textbox></cell>
+				</row>
+				<row>
+					<cell>备注</cell>
+					<cell colspan="5"><textbox rows="5" width="80%" value="@bind(vm.remark)"></textbox></cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center"><button onClick="@command('submit',win=updatewin)">提交</button></footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

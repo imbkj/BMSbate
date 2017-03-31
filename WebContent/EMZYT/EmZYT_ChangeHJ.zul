@@ -1,0 +1,157 @@
+<!--
+	创建人：林少斌
+	创建时间：2014-12-23
+	用途：智翼通接口户籍调整页面
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<?component name="docDataList" macro-uri="../DocumentsInfo/DocumentsInfo_AddPageList.zul" inline="true"?>
+<zk>
+	<window id="winHjc" title="智翼通接口 -- 户籍调整操作" border="normal"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmZYT.EmZYT_ChangeHJController')"
+		height="100%" width="100%" closable="false" sizable="true">
+		<scrollview vflex="1" hflex="1">
+			<div width="100%" height="100%" if="${vm.existsShebao}"
+				align="center">
+				<label value="${vm.existsMessage}" />
+			</div>
+			<groupbox mold="3d" open="true" title="社会保险"
+				if="${!vm.existsShebao}">
+				<grid width="100%" height="100%">
+					<rows>
+						<row>
+							<cell>
+								<hbox>
+									<label value="是否操作社保户籍变更" />
+									<radiogroup
+										onCheck="@command('ifDo',type=1,val=self.selectedItem.value)">
+										<radio value="1" label="是"
+											checked="true" />
+										<radio value="0" label="否" />
+									</radiogroup>
+								</hbox>
+							</cell>
+						</row>
+					</rows>
+				</grid>
+				<grid width="100%" height="100%"
+					visible="@load(vm.ifDoshebao)">
+					<rows>
+						<row>
+							<cell>所属月份</cell>
+							<cell colspan="3">
+								<vlayout>
+									<combobox mold="rounded"
+										readonly="true" value="@bind(vm.sbownmonth)"
+										model="@load(vm.sbownmonthList)">
+										<template name="model">
+											<comboitem
+												label="@load(each)" />
+										</template>
+									</combobox>
+									<label value="已过申报截止日，当月已不能变更"
+										if="${vm.isIfStop()}" style="color:red;" />
+								</vlayout>
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="户籍由" />
+							</cell>
+							<cell>
+								<textbox
+									value="@bind(vm.sbModel.esiu_hj)" readonly="true" width="80%"
+									mold="rounded" />
+							</cell>
+							<cell>
+								<label value="变更为" />
+							</cell>
+							<cell>
+								<textbox value="@load(vm.sbchangecon)"
+									width="80%" mold="rounded" readonly="true" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<div width="100%" height="100%" if="${vm.existsGjj}"
+				align="center">
+				<label value="${vm.existsGjjMessage}" />
+			</div>
+
+			<groupbox mold="3d" open="true" title="住房公积金">
+				<grid width="100%" height="100%">
+					<rows>
+						<row>
+							<cell>
+								<hbox>
+									<label value="是否操作公积金户籍变更" />
+									<radiogroup
+										onCheck="@command('ifDo',type=2,val=self.selectedItem.value)">
+										<radio value="1" label="是"
+											checked="true" />
+										<radio value="0" label="否" />
+									</radiogroup>
+								</hbox>
+							</cell>
+						</row>
+					</rows>
+				</grid>
+				<grid width="100%" height="100%"
+					visible="@load(vm.ifDogjj)">
+					<rows>
+						<row>
+							<cell>所属月份</cell>
+							<cell colspan="3">
+								<combobox readonly="true" mold="rounded"
+									value="@bind(vm.gjjownmonth)"
+									model="@load(vm.gjjownmonthList)">
+									<template name="model">
+										<comboitem label="@load(each)" />
+									</template>
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="户籍由" />
+							</cell>
+							<cell>
+								<textbox value="@bind(vm.gjjHJ)"
+									readonly="true" width="80%" mold="rounded" />
+							</cell>
+							<cell>
+								<label value="变更为" />
+							</cell>
+							<cell>
+								<combobox id="changevalue" value="@bind(vm.changeVal)"
+									model="@load(vm.pmList)" mold="rounded" readonly="true">
+									<template name="model">
+										<comboitem
+											label="@load(each.pcco_cn)">
+										</comboitem>
+									</template>
+								</combobox>
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox height="100%" visible="false">
+				<caption>公积金材料交接</caption>
+				<!-- 材料内联页 参数：puzu_id：模块页面id， doc_type：员工(g)还是公司(c)，gid：公司数据则插入空白 ，业务表id ，log_url：获取到页面路径的前部分-->
+				<docDataList id="docGrid" puzu_id="35"
+					gid="${vm.emztM.gid }" dWidth="100%" dHeight="100%"
+					pUsername="${vm.username }" pUserId="${vm.userid }" />
+			</groupbox>
+			<grid width="100%" height="100%">
+				<foot>
+					<footer align="center">
+						<button label="提交" id="btSubmit"
+							onClick="@command('submit',winC=winHjc)" />
+					</footer>
+				</foot>
+			</grid>
+		</scrollview>
+	</window>
+</zk>

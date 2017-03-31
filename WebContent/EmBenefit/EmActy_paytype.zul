@@ -1,0 +1,60 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window width="90%" height="90%" title="确认支付方式" id="winEmp" closable="true"
+		border="normal" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmBenefit.EmActy_paytypeController')">
+	<grid vflex="1">
+		<rows>
+			<row>
+				<cell width="80px">付款方式</cell>
+				<cell>
+					<combobox readonly="true" value="@bind(vm.paytype)">
+						<comboitem label="预付款"/>
+						<comboitem label="货到付款"/>
+					</combobox>
+				</cell>
+			</row>
+			<row vflex="1">
+				<cell width="80px">员工列表</cell>
+				<cell vflex="1">
+					<grid id="gdList" vflex="1" model="@load(vm.list)"
+						sizedByContent="true" span="true" mold="paging" pageSize="200"
+						emptyMessage="暂无数据">
+						<columns>
+							<column width="40px" align="center"><label>序号</label></column>
+							<column align="center"><label>公司名称</label></column>
+							<column align="center" width="80px"><label>员工编号</label></column>
+							<column align="center"><label>员工姓名</label></column>
+							<column align="center"><label>福利类型</label></column>
+							<column align="center"><label>福利项目</label></column>
+							<column align="center"><label>福利内容</label></column>
+							<column align="center"><label>享受标准</label></column>
+							<column align="center" width="80px"><label>实际费用</label></column>
+						</columns>
+						<rows>
+							<template name="model">
+								<row>
+									<cell><label value="${forEachStatus.index+1 }"></label></cell>
+									<cell><label value="@load(each.emwf_company)"></label></cell>
+									<cell><label value="@load(each.gid)"></label></cell>
+									<cell><label value="@load(each.emwf_name)"></label></cell>
+									<cell><label value="@load(each.embf_mold)"></label></cell>
+									<cell><label value="@load(each.embf_name)"></label></cell>
+									<cell><label value="@load(each.emwf_producefo)"></label></cell>
+									<cell><label value="@load(each.emwf_charge)"></label></cell>
+									<cell><label value="@load(each.emwf_price)"></label></cell>
+								</row>
+							</template>
+						</rows>
+					</grid>
+				</cell>
+			</row>
+		</rows>
+		<foot>
+			<footer align="center" span="9">
+				<button onClick="@command('addpaytype',win=winEmp)">提交</button>
+			</footer>
+		</foot>
+	</grid>		
+</window>
+</zk>

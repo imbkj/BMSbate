@@ -1,0 +1,128 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="密钥申报详情" border="normal" width="55%" height="35%"
+		apply="org.zkoss.bind.BindComposer" closable="true"
+		viewModel="@id('vm') @init('Controller.CoHousingFund.CoHousingFund_PwdMinuteController')">
+
+
+		<groupbox>
+			<caption label="申报详情" />
+			<grid>
+
+				<rows>
+					<row>
+						<cell width="20%" align="center">
+							<label value="申报状态：" />
+						</cell>
+						<cell colspan="3">
+							<label value="未申报"
+								if="${ vm.cfpm.cfpc_state==1}" />
+							<label value="申报中"
+								if="${ vm.cfpm.cfpc_state==2}" style="color:#090" />
+							<label value="已申报"
+								if="${ vm.cfpm.cfpc_state==3}" style="color:#00F" />
+							<label value="退回"
+								if="${ vm.cfpm.cfpc_state==4}" style="color:#F00" />
+						</cell>
+					</row>
+
+					<row>
+
+						<cell>
+							<label value="所属单位:" />
+						</cell>
+						<cell>
+							<label value="@load(vm.cfpm.cohf_company)" />
+						</cell>
+						<cell>
+							<label value="变动情况:" />
+						</cell>
+						<cell>
+							<label value="@load(vm.cfpm.cfpc_addtype)" />
+						</cell>
+
+					</row>
+					<row>
+						<cell>
+							<label value="专办员姓名:" />
+						</cell>
+						<cell>
+							<label value="@load(vm.cfpm.cfpc_zb_name)" />
+						</cell>
+						<cell>
+							<label value="专办员编号:" />
+						</cell>
+						<cell>
+							<label
+								value="@load(vm.cfpm.cfpc_zb_number)" />
+						</cell>
+					</row>
+
+
+					<row>
+						<cell>
+							<label value="申报时间:" />
+						</cell>
+						<cell>
+							<label
+								value="@load(vm.cfpm.cfpc_completetime)" />
+						</cell>
+						<cell>
+							<label value="所属月份:" />
+						</cell>
+						<cell>
+							<label value="@load(vm.cfpm.ownmonth)" />
+						</cell>
+					</row>
+					<row>
+						<cell>
+							<label value="密钥开始时间" />
+						</cell>
+						<cell>
+							<label
+								value="@load(vm.cfpm.startDateString)" />
+						</cell>
+						<cell>
+							<label value="密钥到期时间" />
+						</cell>
+						<cell>
+							<label value="@load(vm.cfpm.endDateString)" />
+						</cell>
+					</row>
+					<row>
+						<cell>
+							<label value="密钥期限" />
+						</cell>
+						<cell>
+							<label
+								value="@load(vm.cfpm.cfpc_yearlimit)" />
+						</cell>
+						<cell>
+							<label value="客服备注:" />
+						</cell>
+						<cell>
+							<label value="@load(vm.cfpm.cfpc_remark)" />
+						</cell>
+					</row>
+					<row if="${vm.cfpm.cfpc_state == 4 }">
+						<cell>
+							<label value="退回原因:" />
+						</cell>
+						<cell colspan="3">
+							<label value="@load(vm.cfpm.backReason)" />
+						</cell>
+					</row>
+				</rows>
+			</grid>
+		</groupbox>
+		<groupbox visible="false">
+			<caption label="系统日志" />
+			<grid>
+
+				<rows>
+					<row></row>
+				</rows>
+			</grid>
+		</groupbox>
+	</window>
+</zk>

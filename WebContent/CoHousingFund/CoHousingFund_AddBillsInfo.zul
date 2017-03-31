@@ -1,0 +1,70 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="添加公积金到账信息" border="normal"
+		apply="org.zkoss.bind.BindComposer" width="40%" height="30%"
+		closable="true"
+		viewModel="@id('vm') @init('Controller.CoHousingFund.CoHousingFund_AddBillsInfoController')">
+		<borderlayout>
+			<north>
+				<groupbox>
+					<grid>
+						<rows>
+							<row>
+								<cell width="20%">
+									<label value="公积金" />
+								</cell>
+								<cell>
+									<label value="60022611" />
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label value="公司全称" />
+								</cell>
+								<cell>
+									<label
+										value="北欧亚太(北京)国际货运代理有限公司深圳分公司" />
+								</cell>
+							</row>
+						</rows>
+					</grid>
+
+				</groupbox>
+			</north>
+			<center>
+
+				<groupbox width="100%" open="true" title="填写到账信息">
+					<grid width="100%" height="100%">
+						<rows>
+							<row>
+								<cell>
+									<label value="查询日期" />
+								</cell>
+								<cell>
+									<label value="@load(vm.month)" />
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label value="到账情况" />
+								</cell>
+								<cell>
+									<textbox />
+								</cell>
+							</row>
+						</rows>
+					</grid>
+				</groupbox>
+			</center>
+			<south>
+
+				<div align="center">
+					<button label="保存" />
+				</div>
+			</south>
+		</borderlayout>
+		
+
+
+	</window>
+</zk>

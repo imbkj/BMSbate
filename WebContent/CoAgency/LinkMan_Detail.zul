@@ -1,0 +1,98 @@
+<!--
+	创建人：林少斌
+	创建时间：2013-9-26
+	用途：委托机构联系人详细页面
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window width="800px" title="委托机构联系人-- 详细页面" border="normal" closable="true">
+	<grid width="100%" >
+		<rows>
+			<row>
+				<cell width="15%" style="color:#666;">联系人类型：</cell>
+				<cell width="35%">
+					<textbox id="cali_linkman"
+						value="${arg.caliM.cali_linkman}" readonly="true"  mold="rounded"/>
+				</cell>
+				<cell width="15%" style="color:#666;">是否重要联系人：</cell>
+				<cell width="35%">
+					<checkbox id="cali_vip" checked="${arg.caliM.cali_vip==1?true:false}" disabled="true"/>
+				</cell>
+			</row>
+			<row>
+				姓名：
+				<cell>
+					<textbox id="cali_name"
+						value="${arg.caliM.cali_name}" readonly="true"  mold="rounded"/>
+				</cell>
+				英文名：
+				<cell>
+					<textbox id="cali_ename"
+						value="${arg.caliM.cali_ename}" readonly="true"  mold="rounded"/>
+				</cell>
+			</row>
+			<row>
+				手机：
+				<cell>
+					<textbox id="cali_mobile"
+						value="${arg.caliM.cali_mobile}" readonly="true"  mold="rounded"/>
+				</cell>
+				座机：
+				<cell>
+					<textbox id="cali_tel" value="${arg.caliM.cali_tel}"
+						readonly="true"  mold="rounded"/>
+				</cell>
+			</row>
+			<row>
+				职位：
+				<cell>
+					<textbox id="cali_job" value="${arg.caliM.cali_job}"
+						readonly="true"  mold="rounded"/>
+				</cell>
+				传真：
+				<cell>
+					<textbox id="cali_fax" value="${arg.caliM.cali_fax}"
+						readonly="true"  mold="rounded"/>
+				</cell>
+			</row>
+			<row>
+				生日：
+				<cell>
+					<textbox id="cali_birth"
+						value="${arg.caliM.cali_birth}" readonly="true"  mold="rounded"/>
+				</cell>
+				兴趣爱好：
+				<cell>
+					<textbox id="cali_hobby"
+						value="${arg.caliM.cali_hobby}" readonly="true"  mold="rounded"/>
+				</cell>
+			</row>
+			<row>
+				Email：
+				<cell>
+					<textbox id="cali_email"
+						value="${arg.caliM.cali_email}" readonly="true"  mold="rounded"/>
+				</cell>
+				联系地址：
+				<cell>
+					<textbox id="cali_address"
+						value="${arg.caliM.cali_address}" readonly="true"  mold="rounded"/>
+				</cell>
+			</row>
+			<row>
+				个性描述：
+				<cell>
+					<textbox id="cali_personality"
+						value="${arg.caliM.cali_personality}" rows="5" width="80%"
+						readonly="true"  mold="rounded"/>
+				</cell>
+				备注：
+				<cell>
+					<textbox id="cali_remark" rows="5" width="80%"
+						value="${arg.caliM.cali_remark}" readonly="true" mold="rounded"/>
+				</cell>
+			</row>
+		</rows>
+	</grid>
+	</window>
+</zk>

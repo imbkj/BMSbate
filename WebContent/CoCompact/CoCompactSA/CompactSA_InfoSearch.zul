@@ -1,0 +1,84 @@
+<!--
+	创建人：陈耀家
+	创建时间：2013-10-17
+	用途：公司合同协议查询页面
+-->
+<?page title="公司合同补充协议 -- 数据查询页面" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="公司合同补充协议 -- 数据查询页面" border="normal" width="100%" height="100%" apply="org.zkoss.bind.BindComposer" 
+		viewModel="@id('vm') @init('Controller.CoCompact.CoCompactSA.CompactSA_InfoSearchController')">
+		<borderlayout vflex="1">
+			<north border="0" title="数据查询" collapsible="true"
+				flex="true" open="true">
+					<panel border="1">
+						<panelchildren style="padding:5px;">
+							<grid id="searchGird" width="100%" >
+								<rows>
+									<row>
+									<cell width="100px" style="color:#666;">公司名称</cell>
+										<textbox id="coba_company"  width="150px" value="@bind(vm.coba_company)" mold="rounded"/>
+										<cell width="100px" style="color:#666;">合同编号</cell>
+										<textbox id="ccsa_said"  width="150px" value="@bind(vm.compactid)" mold="rounded"/>
+									</row>
+									<row>
+										<cell width="100px" style="color:#666;">添加人</cell>
+										<combobox id="ccsa_addname" model="@load(vm.ccsaAddnameList)" value="@bind(vm.ccsa_addname)"  
+										 autodrop="true" mold="rounded" >
+											<template name="model">
+												<comboitem label="@load(each.ccsa_addname)"/>
+											</template>
+										</combobox>
+										<cell>协议状态</cell>
+										<cell>
+										<combobox id="ccsa_state" selectedItem="@bind(vm.ccsa_state)"
+										 autodrop="true" mold="rounded" >
+											<comboitem label="" value="10"/>
+											<comboitem label="待制作协议" value="0"/>
+											<comboitem label="已制作协议" value="1"/>
+											<comboitem label="已审核" value="2"/>
+											<comboitem label="已打印" value="3"/>
+											<comboitem label="已签回" value="4"/>
+											<comboitem label="已归档" value="5"/>
+										</combobox>
+										</cell>
+									</row>
+								</rows>
+								<foot>
+									<footer align="center">
+										<button id="btSearch" label="查询"
+											onClick="@command('search')" />
+									</footer>
+								</foot>
+							</grid>
+						</panelchildren>
+					</panel>
+			</north>
+			<center>
+				<grid width="100%" height="100%"  model="@load(vm.ccsaBaseList)" emptyMessage="无数据" mold="paging" pageSize="20">
+					<columns sizable="true">
+						<column label="序号" align="center"  width="60px"/>
+						<column label="公司名称" align="center" sort="auto(coba_company)" />
+						<column label="合同编号" align="center" sort="auto(coco_compactid)"/>
+						<column label="添加时间" align="center" sort="auto(ccsa_addtime)"/>
+						<column label="审核时间" align="center" sort="auto(ccsa_auditingdate)"/>
+						<column label="备注" align="center" />
+						<column label="操作" align="center" width="100px"/>
+					</columns>
+					<rows>
+						<template name="model">
+							<row>	
+								<label value="${forEachStatus.index + 1}" />
+								<label value="@load(each.coba_company)" />
+								<label value="@load(each.coco_compactid)" />
+								<label value="@load(each.ccsa_addtime)" />
+								<label value="@load(each.ccsa_auditingdate)" />
+								<label value="@load(each.ccsa_remark)" />
+								<label style="cursor:pointer; color:#666;" value="详细" onClick="@command('detial', ccsaM=each)" />
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

@@ -1,0 +1,77 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<?component name="docDataList" macro-uri="../DocumentsInfo/DocumentsInfo_UpPageList.zul" inline="true"?>
+<zk>
+	<window title="前到修改录入信息" border="normal" height="60%" width="60%"
+		closable="true" apply="org.zkoss.bind.BindComposer" id="win" vflex="1"
+		hflex="1"
+		viewModel="@id('vm') @init('Controller.CoHousingFund.CoHousingFund_UpdatePwdZbController')">
+		<grid>
+			<rows>
+				<row>
+					<cell align="left" width="15%">
+						<label value="操作月份    " />
+						<label value="*" style="color:red" />
+					</cell>
+					<cell>
+						<label value="@bind(vm.currentime)" />
+					</cell>
+				</row>
+				<row>
+					<cell align="left" width="15%">
+						<label value="原密钥专办员" />
+						<label value="*" style="color:red" />
+					</cell>
+					<cell>
+						<combobox mold="rounded" instant="true"
+							readonly="true" width="40%" id="coboxid"
+							model="@load(vm.pwdList)"
+							onSelect="@command('getChfp_id',pwd=self.selectedItem.value))">
+							<template name="model">
+								<comboitem
+									label="@bind(each.chfp_numberAndName)" value="@bind(each)" />
+							</template>
+						</combobox>
+					</cell>
+				</row>
+				<row>
+					<cell align="left" width="15%">
+						<label value="备注 " />
+						<label value="*" style="color:red" />
+					</cell>
+					<cell align="left">
+						<textbox mold="rounded" id="updateremark"
+							value="@bind(vm.cfpc.cfpc_remark)" width="90%" />
+					</cell>
+				</row>
+				<row>
+					<cell colspan="2">
+						<grid id="gd">
+							<rows>
+								<row>
+									<cell>
+										<label value="提交资料" />
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<!-- 材料内联页 参数：puzu_id：模块页面id， doc_type：员工(g)还是公司(c)，gid：公司数据则插入空白 ，业务表id,log_url：获取到页面路径的前部分，ifSubmit：当前页面已勾选后的材料状态 -->
+										<docDataList id="docGrid"
+											puzu_id="122" doc_type="c" cid="@bind(vm.cfpc.cid)"
+											tid="${vm.cfpc.cfpc_id }" dHeight="200px" dWidth="100%" />
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+
+					<button label="提交"
+						onClick="@command('submit',gd=docGrid,win=win)" />
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

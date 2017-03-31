@@ -1,0 +1,20 @@
+<grid apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('remark') @init('Controller.Archives.Archives_RemarkController')" 
+	model="@load(remark.model)" emptyMessage="没有备注信息" >
+	<columns>
+		<column label="序号" width="40px"/>
+		<column label="添加人" width="100px"/>
+		<column label="添加时间" width="100px"/>
+		<column label="备注"/>
+	</columns>
+	<rows>
+		<template name="model">
+			<row>
+				<label value="${forEachStatus.index+1 }"></label>
+				<label value="@load(each.eare_addname)"></label>
+				<label value="@load(each.eare_addtime)"></label>
+				<label value="@load(each.eare_content)"></label>
+		   </row>
+		</template>
+	</rows>
+</grid>

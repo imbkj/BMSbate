@@ -1,0 +1,36 @@
+<div width="95%" height="100%" apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('vm') @init('Controller.CoQuotation.CoQuotationDetail_SelectListController')">
+	<grid model="@load(vm.coofferList)" emptyMessage="暂无报价单数据">
+		<columns>
+			<column label="报价单名称" />
+			<column label="报价金额" />
+			<column label="报价方式" />
+			<column label="合同类型" />
+			<column label="人数规模" />
+			<column label="添加人" />
+			<column label="添加时间" />
+			<column label="状态" />
+			<column label="备注" />
+			<column label="操作" width="60px" />
+		</columns>
+		<template name="model">
+			<row>
+				<label value="@load(each.coof_name)" />
+				<label value="@load(each.coof_sum)" />
+				<label value="@load(each.coof_quotemode)" />
+				<label value="@load(each.cpct_name1)" />
+				<label value="@load(each.coof_gm)" />
+				<label value="@load(each.coof_addname)" />
+				<label value="@load(each.coof_addtime)" />
+				<div>
+					<label value="未审核" if="${each.coof_state==1 }" />
+					<label value="已审核" if="${each.coof_state==2 }" />
+					<label value="最终报价" if="${each.coof_state==3 }" />
+				</div>
+				<label value="@load(each.coof_remark)" />
+				<label value="查看" style="cursor:pointer"
+					onClick="@command('chakan',model=each)" />
+			</row>
+		</template>
+	</grid>
+</div>

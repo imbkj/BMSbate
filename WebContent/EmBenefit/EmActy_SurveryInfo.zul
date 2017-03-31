@@ -1,0 +1,41 @@
+<?page title="确认调查信息" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="确认调查信息" border="normal" apply="org.zkoss.bind.BindComposer" closable="true" width="80%" height="80%" id="ewin"
+	viewModel="@id('vm') @init('Controller.EmBenefit.EmActy_SurveyContentEditListController')">
+<hlayout style="margin-bottom:10px;margin-top:10px;">
+	<label style="margin-left:20px;margin-right:10px;">调查对象</label>
+	<combobox readonly="true" id="surveytype">
+		<comboitem label="深圳公司" value="1"/>
+		<comboitem label="外地机构" value="2"/>
+	</combobox>
+	<label style="margin-left:50px;margin-right:10px;">所属年份</label>
+	<intbox value="@load(vm.year)" id="ownyear"></intbox>
+</hlayout>
+<grid model="@load(vm.list)" vflex="1" id="gd">
+	<columns visible="false">
+		<column label="序号" width="40px" align="center"/>
+		<column label="题目"/>
+		<column label="选择" width="60px"/>
+	</columns>
+    <rows>
+    	<template name="model">
+        	<row>
+        		<cell valign="top"><label value="${forEachStatus.index+1 }、" /></cell>
+        		<cell>
+        			<label value="@load(each.sury_title)"></label>
+        			<grid style="border-color:#FFFFFF;border-width:0;">
+        				<rows onCreate="@command('addrow',rws=self,val=each.list,antype=each.sury_answertype)">
+						</rows>
+        			</grid>
+        		</cell>
+        		<cell><checkbox checked="true" value="@load(each.sury_id)"></checkbox></cell>
+        	</row>
+        </template>
+    </rows>
+    <foot>
+    	<footer align="center" span="2"><button onClick="@command('sumit',gd=gd,win=ewin,
+    	surveytype=surveytype.selectedItem.value,ownyear=ownyear.value)">提交</button></footer>
+    </foot>
+</grid>
+</window>
+</zk>

@@ -1,0 +1,159 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window border="normal" title="公司领款列表" width="100%" height="100%"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoFinanceManage.Cfma_CollectListslkController')">
+		<borderlayout>
+			<north border="0">
+				<grid>
+					<rows>
+						<row>
+							<cell width="20%" align="left">公司检索：</cell>
+							<cell>
+								<textbox mold="rounded" id="comt"
+									onOK="@command('search',company=self.value)"
+									value="@bind(vm.company)" tooltiptext="可以输入 公司编号 或 公司名称 搜索"
+									width="60%" onChange="@command('search',company=self.value)" />
+							</cell>
+							<cell width="20%">客服：</cell>
+							<cell>
+								<combobox mold="rounded"
+									model="@load(vm.clientnameList)"
+									onSelect="@command('getClientName',clientxc=self.selectedItem.value)"
+									width="40%">
+									<template name="model">
+										<comboitem label="@bind(each)"
+											value="@bind(each)" />
+									</template>
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="所属月份：" />
+							</cell>
+							<cell>
+								<monthbox mold="rounded" id="ownmonth"
+									width="40%" format="yyyyMM" value="@bind(vm.ownmonth)"
+									onChange="@command('ownmon',own=self.value)" />
+							</cell>
+
+							<cell width="20%">薪酬负责人：</cell>
+							<cell>
+								<combobox mold="rounded"
+									model="@load(vm.clientxcnameList)"
+									onSelect="@command('getClientxc',client=self.selectedItem.value)"
+									width="40%">
+									<template name="model">
+										<comboitem label="@bind(each)"
+											value="@bind(each)" />
+									</template>
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell align="center" colspan="4">
+								<button label="查询"
+									onClick="@command('search',company=comt.value)" />
+<!-- 								<button label="查看今天所有收款" -->
+<!-- 									onClick="@command('today')" /> -->
+<!-- 								<button label="发票领取表" -->
+<!-- 									onClick="@command('CoInvoice')" /> -->
+<!-- 								<button label="打印收款" -->
+<!-- 									onClick="@command('printInvoices',gridid=gridid)" /> -->
+<!-- 								<button label="打开旧系统收款页面"> -->
+<!-- 									<attribute name="onClick">     -->
+<!--     <![CDATA[ -->
+<!-- 	Clients.evalJavaScript("window.open('http://ciic/EmFinanceManage/Finance_Gathering.asp');"); -->
+<!-- ]]>     -->
+<!--     </attribute> -->
+<!-- 								</button> -->
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</north>
+			<center border="0">
+				<grid span="true" mold="paging" pageSize="50"
+					id="gridid" model="@load(vm.samountlist)" emptyMessage="无数据"
+					 vflex="1">
+				
+					<columns sizable="true" id="colums">
+						<column width="40px"></column>
+						<column label="公司编号" align="center" sort="auto(cid)" />
+						<column label="公司名称" align="center" sort="" />
+						 <column label="最近收款月份" align="center" sort="auto(month)" />
+<!-- 						  <column label="公司总应款日期" align="center" sort="" /> -->
+						<!-- 						 <column label="公司总应收" align="center" sort="" /> -->
+						<column label="公司收款总额" align="center" sort="" />
+						<column label="已领款金额" align="center" sort="" />
+						<column label="未领款金额" align="center" sort="auto(imbalance)" />
+						<column label="最近领款月份" align="center" sort="auto(cfdm_addtime)" />
+						<column label="客服" align="center" />
+						 
+						<column label="操作" align="center" sort="" />
+					</columns>
+					<template name="model">
+						<row>
+							<custom-attributes 
+							cid="${each.cid }" company="${each.coba_company}"
+							/>
+							<detail open="false" fulfill="onOpen">
+								<include src="/CoFinanceManage/Cfma_CollectLoglk.zul" cid="${cid}" company='${company}'/>
+								
+									
+							</detail>
+							<cell>
+								<label value="@load(each.cid)" />
+							</cell>
+							<cell>
+								<label value="@load(each.coba_company)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.month)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.cfco_TotalPaidIn)" />
+							</cell>
+							<cell>
+								<label value="@load(each.balance)" />
+							</cell>
+							<cell>
+								<label value="@load(each.imbalance)" />
+							</cell>
+							<cell>
+								<label value="@load(each.cfdm_addtime)" />
+							</cell>
+								
+							<cell>
+								<label value="@load(each.coba_client)" />
+							</cell>
+						
+							<!-- 							<cell> -->
+							<!-- 								<checkbox disabled="${each.flag}" -->
+							<!-- 									value="@load(each.cfcms)" /> -->
+							<!-- 							</cell> -->
+							<cell>
+								<menubar autodrop="true">
+									<menu
+										image="../images/pencil-small.png">
+										<menupopup>
+											<menuitem label="账单领款"
+												onClick="@command('companyCollect',cid=each.cid,companyname=each.coba_company)" />
+
+											<menuitem label="小信封"
+												onClick="@command('msg',id=each.cid,addname=each.coba_client)" />
+										</menupopup>
+									</menu>
+								</menubar>
+							</cell>
+						</row>
+					</template>
+				</grid>
+			</center>
+			<south></south>
+		</borderlayout>
+	</window>
+</zk>

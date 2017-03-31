@@ -1,0 +1,148 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="委托账单导入" border="normal" width="100%" height="100%"
+		closable="true" apply="org.zkoss.bind.BindComposer" id="wind"
+		viewModel="@id('vm') @init('Controller.EmFinanceManage.Finance_ZYTController')">
+		<borderlayout>
+			<north>
+				<grid width="100%" height="100%">
+					<columns visible="false">
+						<column width="15%" />
+						<column />
+					</columns>
+					<rows>
+						<row>
+							<cell>文件上传</cell>
+							<cell>
+								<textbox mold="rounded" readonly="true"
+									value="" width="280px" />
+								<button label="浏览..."
+									upload="true,multiple=true" onUpload="@command('browse')" />
+
+								<button label="用友TXT"
+									onClick="@command('createtxt')" />
+								<label style="color:red"
+									value="@load(vm.uploadState)" />
+							</cell>
+						</row>
+						<row>
+							<cell>委托机构</cell>
+							<cell>
+								<textbox mold="rounded"
+									value="@bind(vm.jg)" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</north>
+			<center>
+				<grid width="100%" height="100%" model="@load(vm.flist)" sizedByContent="true" span="true" emptyMessage="暂无数据">
+					<columns>
+						<column width="50px" align="center" label="序号" />
+						<column align="center" label="公司编号" />
+						<column align="center" label="公司名称" />
+						<column align="center" label="用友编号" />
+						<column align="center" label="客户类型" />
+						<column align="center" label="支付福利费用合计" />
+						<column align="center" label="额外费用合计" />
+						<column align="center" label="档案费用合计" />
+						<column align="center" label="服务费" />
+						<column align="center" label="应收其中社保费" />
+						<column align="center" label="应收其中公积金" />
+						<column align="center" label="支付总计费用" />
+						
+						<column width="10px" align="center" label="" />
+					</columns>
+					<template name="model">
+						<row>
+							<cell>
+								<label
+									value="${forEachStatus.index+1 }" />
+							</cell>
+							<cell>
+								<label value="@load(each.cid)" />
+							</cell>
+							<cell>
+								<label value="@load(each.company)" />
+							</cell>
+							<cell>
+								<textbox width="100%"
+									value="@bind(each.uid)" />
+							</cell>
+							<cell>
+								<combobox width="100%"
+									value="@bind(each.compactType)">
+									<comboitem label="AF" />
+									<comboitem label="FS" />
+								</combobox>
+							</cell>
+							<cell>
+								<label value="@load(each.flTotal)" />
+							</cell>
+							<cell>
+								<label value="@load(each.otherTotal)" />
+							</cell>
+							<cell>
+								<label value="@load(each.fileTotal)" />
+							</cell>
+							<cell>
+								<label value="@load(each.feeTotal)" />
+							</cell>
+							<cell>
+								<label value="@load(each.sbTotal)" />
+							</cell>
+							<cell>
+								<label value="@load(each.gjjTotal)" />
+							</cell>
+							<cell>
+								<label value="@load(each.total)" />
+							</cell>
+							
+							<cell></cell>
+						</row>
+					</template>
+					<foot>
+						<footer span="5">
+							<label style="font-weight:bold" value="合计" />
+						</footer>
+						<footer>
+							<label style="font-weight:bold"
+								value="@load(vm.fl)" />
+						</footer>
+						<footer>
+							<label style="font-weight:bold"
+								value="@load(vm.other)" />
+						</footer>
+						<footer>
+							<label style="font-weight:bold"
+								value="@load(vm.file)" />
+						</footer>
+						<footer>
+							<label style="font-weight:bold"
+								value="@load(vm.fee)" />
+						</footer>
+						<footer>
+							<label style="font-weight:bold"
+								value="@load(vm.sb)" />
+						</footer>
+						<footer>
+							<label style="font-weight:bold"
+								value="@load(vm.gjj)" />
+						</footer>
+						<footer>
+							<label style="font-weight:bold"
+								value="@load(vm.total)" />
+						</footer>
+						<footer  />
+
+					</foot>
+				</grid>
+			</center>
+			<south>
+				<div align="center">
+
+				</div>
+			</south>
+		</borderlayout>
+	</window>
+</zk>

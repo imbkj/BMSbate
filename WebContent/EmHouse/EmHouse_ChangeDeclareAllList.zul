@@ -1,0 +1,43 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="公积金交单批量申报" border="normal" closable="true" width="80%" height="80%"
+apply="org.zkoss.bind.BindComposer" id="windeclareall"
+	viewModel="@id('vm') @init('Controller.EmHouse.EmHouse_ChangeDeclareAllListController')"
+>
+<grid emptyMessage="暂时没有数据记录" id="declarelist" vflex="1"
+	model="@load(vm.list)" >
+	<columns>
+		<column label="序号" width="40px"/>
+		<column label="公司简称" align="left"/>
+		<column visible="false" width="1px"></column>
+		<column label="员工姓名"  align="center"/>
+		<column >
+				<radiogroup onCheck="@command('radioSelectAll',r=self.selectedItem.value,declarelist=declarelist)">
+					<radio  label="未申报" value="0" style="margin-right:15px;" /><radio  label="申报中" value="2" style="margin-right:15px;" /><radio  label="已申报" value="1" style="margin-right:15px;"/>
+				</radiogroup>
+		</column>
+		
+	</columns>
+	<rows>
+		<template name="model">
+			<row>
+				<cell><label value="${forEachStatus.index+1 }"></label></cell>
+				<cell><label value="@load(each.coba_shortname)"></label></cell>
+				<cell><label value="@load(each.ehcg_id)" visible="false"></label></cell>
+				<cell><label value="@load(each.ehcg_name)"></label></cell>
+				<cell align="center">
+				<radiogroup>
+					<radio label="未申报" value="0" selected="${each.ehcg_ifdeclare==0 }" style="margin-right:15px;"/>
+					<radio label="申报中" value="2" selected="${each.ehcg_ifdeclare==2 }" style="margin-right:15px;"/>
+					<radio label="已申报" value="1" selected="${each.ehcg_ifdeclare==1 }" style="margin-right:15px;"/>
+				</radiogroup></cell>
+				
+			</row>
+		</template>
+	</rows>
+	<foot>
+		<footer align="center" span="4"><button onClick="@command('declareAll',declarelist=declarelist,windeclareall=windeclareall)">确认申报</button></footer>
+	</foot>
+</grid>
+</window>
+</zk>

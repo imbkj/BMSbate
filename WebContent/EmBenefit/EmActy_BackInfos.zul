@@ -1,0 +1,16 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="退回信息" border="normal" width="600px" height="300px" closable="true"
+	apply="org.zkoss.bind.BindComposer" id="backwin"
+	viewModel="@id('vm') @init('Controller.EmBenefit.EmActy_BackInfosController')"
+>
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell width="80px">退回原因</cell>
+			<cell><textbox rows="4" width="80%" readonly="true" value="@bind(vm.model.emwf_backcase)"></textbox></cell>	
+		</row>
+	</rows>
+</grid>
+</window>
+</zk>

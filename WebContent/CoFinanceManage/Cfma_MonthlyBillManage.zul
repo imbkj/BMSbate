@@ -1,0 +1,160 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winMothlyBillManage" title="账单管理" border="normal"
+		width="99%" height="99%" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoFinanceManage.Cfma_MothlyBillManageController')"
+		closable="true" sizable="true">
+		<borderlayout width="100%" height="100%">
+			<north title="公司本月账单" collapsible="true" splittable="true"
+				autoscroll="true" vflex="1" hflex="1">
+				<vlayout>
+					<grid width="99.8%">
+						<rows>
+							<row>
+								<cell style="color:#666;">公司编号：</cell>
+								<cell style="color:#666;">
+									<label
+										value="@load(vm.cfmaModel.cid)" />
+								</cell>
+								<cell style="color:#666;">公司名称：</cell>
+								<cell style="color:#666;" width="30%">
+									<label
+										value="@load(vm.cfmaModel.coba_company)" />
+								</cell>
+								<cell style="color:#666;">所属月份：</cell>
+								<cell style="color:#666;">
+									<label
+										value="@load(vm.cfmaModel.ownmonth)"
+										style="color:blue;font-size:20px;border:2px" />
+								</cell>
+							</row>
+							<row>
+								<cell style="color:#666;">人事应收：</cell>
+								<cell style="color:#666;">
+									<label
+										value="@load(vm.cfmaModel.cfma_PersonnelReceivable)" />
+								</cell>
+								<cell style="color:#666;">财务应收：</cell>
+								<cell style="color:#666;">
+									<label
+										value="@load(vm.cfmaModel.cfma_FinanceReceivable)" />
+								</cell>
+								<cell style="color:#666;">客服：</cell>
+								<cell style="color:#666;">
+									<label
+										value="@load(vm.cfmaModel.coba_client)" />
+								</cell>
+							</row>
+							<row>
+								<cell style="color:#666;">综合操作：</cell>
+								<cell style="color:#666;" colspan="5">
+									<button label="同步台账"
+										image="../images/re1.jpg" onClick="@command('synchronous')" />
+									<button label="生成账单"
+										onClick="@command('createBill')" />
+									<button label="合并账单"
+										onClick="@command('mergeBill')" />
+									<button label="非标管理"
+										onClick="@command('manualDisposable')" />
+								</cell>
+							</row>
+						</rows>
+					</grid>
+					<grid span="true" emptyMessage="暂无账单"
+						model="@load(vm.mbList)" sizedByContent="true" width="99.8%">
+						<columns sizable="true">
+							<column align="center" width="30px" />
+							<column label="账单号" sort="auto(cfmb_number)"
+								align="center" />
+							<column label="账单描述" sort="auto(cfmb_name)"
+								align="center" />
+							<column label="人事应收"
+								sort="auto(cfmb_PersonnelReceivable)" align="center" />
+							<column label="财务应收"
+								sort="auto(cfmb_FinanceReceivable)" align="center" />
+							<column label="实收金额"
+								sort="auto(cfmb_TotalPaidIn)" align="center" />
+							<column label="垫付金额"
+								sort="auto(cfmb_LoanBalance)" align="center" />
+							<column label="结转金额"
+								sort="auto(cfmb_CarryForwardEx)" align="center" />
+							<column label="差额" sort="auto(imbalance)"
+								align="center" />
+							<column label="人事应收确认"
+								sort="auto(cfmb_PersonnelConfirm)" align="center" />
+							<column label="财务应收确认"
+								sort="auto(cfmb_FinanceConfirm)" align="center" />
+							<column label="销账情况"
+								sort="auto(cfmb_WriteOffs)" align="center" />
+							<column label="操作" align="center" />
+
+						</columns>
+						<rows>
+							<template name="model">
+								<row>
+									<checkbox
+										checked="@bind(each.check)"
+										disabled="${each.cfmb_TotalPaidIn>0 }" />
+									<!-- disabled="${each.cfmb_PersonnelConfirm==1 or each.cfmb_FinanceConfirm==1?true:false}" /> -->
+									<label
+										value="@load(each.cfmb_number)"
+										style="cursor:pointer;color:#00F;"
+										onClick="@command('viewBill',billNo=self.value)" />
+									<label
+										value="@load(each.cfmb_name)" />
+									<label
+										value="@load(each.cfmb_PersonnelReceivable)" />
+									<label
+										value="@load(each.cfmb_FinanceReceivable)" />
+									<label
+										value="@load(each.cfmb_TotalPaidIn)" />
+									<label
+										value="@load(each.cfmb_LoanBalance)" />
+									<label
+										value="@load(each.cfmb_CarryForwardEx)" />
+									<label value="@load(each.imbalance)"
+										style="color:red;" />
+									<cell style="color:#666;">
+										<label value="已确认"
+											if="${each.cfmb_PersonnelConfirm==1?true:false}" />
+										<label value="待确认"
+											style="cursor:pointer;color:#00F;"
+											if="${each.cfmb_PersonnelConfirm==0?true:false}"
+											onClick="@command('perConfirm',m=each)" />
+									</cell>
+									<cell style="color:#666;">
+										<label value="已确认"
+											if="${each.cfmb_FinanceConfirm==1?true:false}" />
+										<label value="待确认"
+											style="cursor:pointer;color:#00F;"
+											if="${each.cfmb_FinanceConfirm==0?true:false}"
+											onClick="@command('finConfirm',m=each)" />
+									</cell>
+									<label
+										value="@load(each.cfmb_WriteOffsStr)"
+										style="${each.cfmb_WriteOffs==1?'color:#00F;':'color:red;' }" />
+									<menubar autodrop="true"
+										width="50px">
+										<menu
+											image="../images/pencil-small.png">
+											<menupopup>
+												<menuitem label="撤销账单"
+													onClick="@command('delBill',m=each)" />
+										
+											</menupopup>
+
+										</menu>
+									</menubar>
+								</row>
+							</template>
+						</rows>
+					</grid>
+				</vlayout>
+			</north>
+			<center title="本月未加账单业务" autoscroll="true">
+				<include id="icBusinessList" src="@load(vm.listSrc)"
+					onCreate="@command('setInclude',com=self)" />
+			</center>
+		</borderlayout>
+	</window>
+</zk>

@@ -1,0 +1,96 @@
+<?page title="机构帐单列表" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="机构帐单列表" border="normal"
+		apply="org.zkoss.bind.BindComposer" closable="true" width="100%"
+		viewModel="@id('vm') @init('Controller.EmCommissionOut.EmCommissionOutPayController')"
+		height="500px">
+		<borderlayout>
+			<north>
+				<grid width="100%" id="g1"
+					model="@load(vm.yfembasepaylist)" height="500px" mold="paging"
+					sizedByContent="true" span="true">
+					<columns>
+						<column label="序号" align="center" width="30px" />
+						<column label="帐单月份" align="center"
+							width="30px" />
+						<column label="公司名称" align="center"
+							width="30px" />
+						<column label="员工姓名" align="center"
+							width="30px" />
+						<column label="养老" align="center" width="30px" />
+						<column label="失业" align="center" width="30px" />
+						<column label="医疗" align="center" width="30px" />
+						<column label="工伤" align="center" width="30px" />
+						<column label="生育" align="center" width="30px" />
+						<column label="住房" align="center" width="30px" />
+						<column label="其它" align="center" width="30px" />
+						<column label="档案" align="center" width="30px" />
+						<column label="服务费" align="center" width="30px" />
+						<column label="总计" align="center" width="30px" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<cell>
+									<label
+										value="${forEachStatus.index + 1}" />
+								</cell>
+								<cell>
+									<label value="@load(each.ownmonth)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ecop_company)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ecop_name)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ecop_yl_yf)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ecop_sye_yf)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ecop_jl_yf)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ecop_gs_yf)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ecop_syu_yf)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ecop_house_yf)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ecop_other_yf)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ecop_file_yf)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ecop_fw_yf)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ecop_paytotal)" />
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</north>
+		</borderlayout>
+	</window>
+</zk>

@@ -1,0 +1,971 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<!-- 调用内联页的文件名 -->
+<?component name="docDataList" macro-uri="../DocumentsInfo/DocumentsInfo_UpPageList.zul" inline="true"?>
+<zk>
+	<window title="公司详细信息" border="normal" width="95%" height="95%"
+		closable="true" id="windetial"
+		apply="Controller.CoBase.CoBase_DetailInfoController">
+		<scrollview vflex="1" hflex="1">
+			<groupbox mold="3d" open="true" title="公司基本信息">
+				<grid>
+					<rows>
+						<row>
+							<cell width="80px" style="color:#666;">
+								公司名称
+							</cell>
+							<cell>
+								<textbox id="company" width="70%"
+									value="${windetial$composer.model.coba_company}" />
+							</cell>
+							<cell width="80px" style="color:#666;">
+								公司简称
+							</cell>
+							<cell>
+								<textbox id="shortname"
+									value="${windetial$composer.model.coba_shortname}" />
+							</cell>
+						</row>
+						<row>
+							<cell style="color:#666;">英文名称</cell>
+							<cell>
+								<textbox id="enname"
+									value="${windetial$composer.model.coba_englishname}" />
+							</cell>
+							<cell style="color:#666;">客户来源</cell>
+							<cell>
+								<textbox id="clientsource"
+									value="${windetial$composer.model.coba_clientsource}" />
+							</cell>
+						</row>
+						<row>
+							<cell style="color:#666;">客户规模</cell>
+							<cell>
+								<textbox id="clientsize"
+									value="${windetial$composer.model.coba_clientsize}" />
+							</cell>
+							<cell style="color:#666;">所属行业</cell>
+							<cell>
+								<textbox id="trade"
+									value="${windetial$composer.model.coba_industytype}" />
+							</cell>
+						</row>
+						<row>
+							<cell style="color:#666;">机构性质</cell>
+							<cell>
+								<textbox id="comtype"
+									value="${windetial$composer.model.coba_setuptype}" />
+							</cell>
+							<cell style="color:#666;">客户企业性质</cell>
+							<cell>
+								<textbox
+									value="${windetial$composer.model.coba_kind}" />
+							</cell>
+						</row>
+						<row>
+							<cell style="color:#666;">所在区域</cell>
+							<cell colspan="3">
+								<textbox id="comarea"
+									value="${windetial$composer.model.coba_area}" />
+							</cell>
+						</row>
+						<row>
+							<cell style="color:#666;">办公地址</cell>
+							<cell colspan="3">
+								<textbox id="linkaddress" width="90%"
+									value="${windetial$composer.model.coba_address}" />
+							</cell>
+						</row>
+						<row>
+							<cell style="color:#666;">合同履行地</cell>
+							<cell>
+								<textbox id="compactaddress"
+									value="${windetial$composer.model.coba_servicearea}" />
+							</cell>
+							<cell style="color:#666;">合作起始日</cell>
+							<cell>
+								<textbox id="begind"
+									value="${windetial$composer.model.coba_hzqsr}" />
+							</cell>
+						</row>
+						<row>
+							<cell style="color:#666;">注册资金</cell>
+							<cell>
+								<textbox id="reg_fund"
+									value="${windetial$composer.model.coba_reg_fund}" /><label style="color:red;"> (单位:万元;币种:人民币)</label>
+							</cell>
+							<cell style="color:#666;">国内注册机构</cell>
+							<cell>
+								<textbox id="singn" />
+							</cell>
+						</row>
+						<row>
+							<cell style="color:#666;">部门经理</cell>
+							<cell>
+								<textbox id="deptmanager"
+									value="${windetial$composer.model.coba_manager}" />
+							</cell>
+							<cell style="color:#666;">开发人员</cell>
+							<cell>
+								<textbox id="openpeop"
+									value="${windetial$composer.model.coba_developer}" />
+							</cell>
+						</row>
+						<row>
+							<cell style="color:#666;">客服代表</cell>
+							<cell>
+								<textbox id="client"
+									value="${windetial$composer.model.coba_client}" />
+							</cell>
+							<cell style="color:#666;">客服经理</cell>
+							<cell>
+								<textbox id="clientmanager"
+									value="${windetial$composer.model.coba_clientmanager}" />
+							</cell>
+						</row>
+						<row>
+							<cell style="color:#666;">薪酬负责人</cell>
+							<cell>
+								<textbox id="xinpeop"
+									value="${windetial$composer.model.coba_gzaddname}" />
+							</cell>
+							<cell style="color:#666;">薪酬审核人</cell>
+							<cell>
+								<textbox id="xinifpeop"
+									value="${windetial$composer.model.coba_gzaudname}" />
+							</cell>
+						</row>
+						<row>
+							<cell style="color:#666;">备注</cell>
+							<cell colspan="3">
+								<textbox id="remark"
+									value="${windetial$composer.model.coba_remark}" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			
+			<groupbox mold="3d" open="false" title="人事服务要求">
+<grid>
+		<rows>
+			<row>
+				<cell width="160px"></cell>
+				<cell></cell>
+				<cell width="80px"></cell>
+				<cell></cell>
+			</row>
+			<row>
+				<cell width="160px">发票寄送时间</cell>
+				<cell colspan="3">
+					<textbox value="${windetial$composer.servicemodel.isenddate}" readonly="true" id="senddate">
+					</textbox>
+				</cell>
+				</row>
+			<row>
+				<cell width="160px">社会保险缴纳</cell>
+				<cell>
+					<textbox value="${windetial$composer.servicemodel.sbtype}" readonly="true"></textbox>
+				</cell>
+				<cell width="80px">社保备注</cell>
+				<cell><textbox width="80%" value="${windetial$composer.servicemodel.csqe_sbtype_remark}" readonly="true"></textbox></cell>
+				</row>
+				<row>
+				<cell width="160px">住房公积金缴纳</cell>
+				<cell>
+					<textbox value="${windetial$composer.servicemodel.csqe_house}" readonly="true" id="csqe_house">
+					</textbox>
+				</cell>
+				<cell>公积金备注</cell>
+				<cell><textbox width="80%" value="${windetial$composer.servicemodel.csqe_house_remark}" readonly="true"></textbox></cell>
+			</row>
+			<row>
+				<cell>劳动就业登记手续办理</cell>
+				<cell>
+					<textbox value="${windetial$composer.servicemodel.csqe_regist}" readonly="true">
+					</textbox>
+				</cell>
+				<cell>备注</cell>
+				<cell><textbox width="80%" value="${windetial$composer.servicemodel.csqe_regist_remark}" readonly="true"></textbox></cell>
+				</row>
+				<row>
+				<cell>各种证件的办理和费用收取</cell>
+				<cell>
+					<textbox value="${windetial$composer.servicemodel.cardpay}" readonly="true" id="cardpay">
+					</textbox>
+				</cell>
+				<cell>备注</cell>
+				<cell><textbox width="80%" readonly="true" value="${windetial$composer.servicemodel.csqe_cardpay_remark}"></textbox></cell>
+			</row>
+			<row>
+				<cell>上门服务</cell>
+				<cell>
+					<textbox value="${windetial$composer.servicemodel.csqe_dtdservice==1?'有':'无'}" readonly="true" id="dtdservice">
+					</textbox>
+				</cell>
+				<cell>备注</cell>
+				<cell><textbox width="80%" value="${windetial$composer.servicemodel.csqe_dtdservice_remark}" readonly="true"></textbox></cell>
+			</row>
+			<row>
+				<cell>委托外地</cell>
+				<cell>
+					<textbox value="${windetial$composer.servicemodel.csqe_wt==1?'有':'无'}" readonly="true" id="wt">
+					</textbox>
+				</cell>
+				<cell>备注</cell>
+				<cell><textbox width="80%" value="${windetial$composer.servicemodel.csqe_wt_remark}" readonly="true"></textbox></cell>
+			</row>
+			<row>
+				<cell>外籍人服务</cell>
+				<cell>
+					<textbox value="${windetial$composer.servicemodel.csqe_fservice==1?'有':'无'}" readonly="true" id="fservice">
+					</textbox>
+				</cell>
+				<cell>备注</cell>
+				<cell><textbox width="80%" value="${windetial$composer.servicemodel.csqe_fservice_remark}" readonly="true"></textbox></cell>
+			</row>
+			<row>
+				<cell>每月付款时间</cell>
+				<cell>
+					<textbox value="${windetial$composer.servicemodel.emfi_backdate}" readonly="true" id="emfi_backdate">
+					</textbox>
+				</cell>
+				<cell>其他</cell>
+				<cell><textbox width="80%" value="${windetial$composer.servicemodel.csqe_other}"></textbox></cell>
+			</row>
+			<row>
+				<cell>服务中需注意的事项</cell>
+				<cell colspan="3"><textbox width="80%" rows="2" value="${windetial$composer.servicemodel.csqe_ispa}"></textbox></cell>
+			</row>
+			<row>
+				<cell>工作中曾需解决过的事情</cell>
+				<cell colspan="3"><textbox width="80%" rows="2" value="${windetial$composer.servicemodel.csqe_ws}"></textbox></cell>
+			</row>
+			<row>
+				<cell>待办事宜</cell>
+				<cell colspan="3"><textbox width="80%" rows="2" value="${windetial$composer.servicemodel.csqe_todo}"></textbox></cell>
+			</row>
+		</rows>
+	</grid>
+	</groupbox>
+	
+	<groupbox mold="3d" open="false" title="薪酬服务要求">
+<groupbox open="true" title="薪酬计算事项">
+<grid>
+	<rows>
+		<row>
+			<cell width="150px">薪酬负责人</cell>
+			<cell>
+			<textbox id="salaryleader" value="${windetial$composer.servicemodel.csqe_salaryleader}">
+			</textbox>
+			</cell>
+			<cell width="150px">薪酬审核人</cell>
+			<cell>
+			<textbox id="salaryduty" readonly="true" value="${windetial$composer.servicemodel.csqe_salaryduty}">
+			</textbox>
+			</cell>
+		</row>
+		<row>
+			<cell width="130px">工资个税付款日</cell>
+			<cell>
+				<textbox id="gzfkd" value="${windetial$composer.servicemodel.emfics_backdate}" 
+				readonly="true">
+				</textbox>
+			</cell>
+			<cell width="110px">工资发放时间约定</cell>
+			<cell>
+				<textbox id="paydate" value="${windetial$composer.servicemodel.paydate}" readonly="true">
+				</textbox>
+			</cell>
+		</row>
+		<row>
+			<cell>社保公积金扣缴约定</cell>
+			<cell>
+				<textbox value="${windetial$composer.servicemodel.csqe_sbhousetype}" readonly="true">
+				</textbox>
+			</cell>
+			<cell>备注</cell>
+			<cell><textbox width="80%" value="${windetial$composer.servicemodel.csqe_sbhouse_remark}" readonly="true"></textbox></cell>
+		</row>
+		<row>
+			<cell>社保公积金转账约定</cell>
+			<cell>
+				<textbox width="80%" value="${windetial$composer.servicemodel.csqe_sbhouse_trans}" readonly="true">
+				</textbox>
+				
+			</cell>
+			<cell>备注</cell>
+			<cell><textbox width="80%" value="${windetial$composer.servicemodel.csqe_sbhouse_trans_renark}" readonly="true"></textbox></cell>
+		</row>
+		<row>
+			<cell>公积金是否有超标员工</cell>
+			<cell>
+				<textbox value="${windetial$composer.servicemodel.houseover}" readonly="true" id="houseover">
+				</textbox>
+			</cell>
+			<cell>备注</cell>
+			<cell><textbox width="80%" value="${windetial$composer.servicemodel.csqe_houseover_remark}" readonly="true"></textbox></cell>
+		</row>
+		<row>
+			<cell>考勤计算约定</cell>
+			<cell>
+				<textbox value="${windetial$composer.servicemodel.actype}" readonly="true" id="actype">
+				</textbox>
+			</cell>
+			<cell>备注</cell>
+			<cell><textbox width="80%" value="${windetial$composer.servicemodel.csqe_actype_remark}" readonly="true"></textbox></cell>
+		</row>
+		<row>
+			<cell>报表汇总约定</cell>
+			<cell>
+				<textbox value="${windetial$composer.servicemodel.report}" readonly="true" id="report">
+				</textbox>
+			</cell>
+			<cell>备注</cell>
+			<cell><textbox width="80%" value="${windetial$composer.servicemodel.csqe_report_remark}"></textbox></cell>
+		</row>
+	</rows>
+</grid>
+</groupbox>
+<groupbox open="true" title="个税计算事项">
+<grid>
+	<rows>
+		<row>
+			<cell width="150px">个税计算约定</cell>
+			<cell>
+				<textbox value="${windetial$composer.servicemodel.taxctype}" readonly="true" width="80%">
+				</textbox>
+			</cell>
+			<cell width="150px">备注</cell>
+			<cell><textbox width="80%" value="${windetial$composer.servicemodel.csqe_taxctype_remark}" readonly="true"></textbox></cell>
+			</row>
+			<row>
+			<cell width="120px">个税申报约定</cell>
+			<cell>
+				<textbox value="${windetial$composer.servicemodel.taxdetype}" readonly="true" id="taxdetype"  width="80%">
+				</textbox>
+			</cell>
+			<cell>备注</cell>
+			<cell><textbox width="80%" value="${windetial$composer.servicemodel.csqe_taxdetype_remark}"></textbox></cell>
+		</row>
+		<row>
+			<cell>个税转账约定</cell>
+			<cell>
+				<textbox value="${windetial$composer.servicemodel.taxpay}" readonly="true" id="taxpay" >
+				</textbox>
+			</cell>
+			<cell>备注</cell>
+			<cell><textbox width="80%" value="${windetial$composer.servicemodel.csqe_taxpay_remark}"></textbox></cell>
+			</row>
+			<row>
+			<cell>委托外地申报约定</cell>
+			<cell>
+				<textbox value="${windetial$composer.servicemodel.taxwt}" readonly="true" id="taxwt" >
+					
+				</textbox>
+			</cell>
+			<cell width="120px">委托地</cell>
+			<cell><textbox width="80%" value="${windetial$composer.servicemodel.csqe_taxwt_place}" readonly="true"></textbox></cell>
+		</row>
+		<row>
+			<cell>个税申报时间</cell>
+			<cell colspan="3">
+				<textbox value="${windetial$composer.servicemodel.taxde_date}" readonly="true" id="taxde_date">
+				
+				</textbox>
+			</cell>
+		</row>
+	</rows>
+</grid>
+</groupbox>
+<groupbox open="true" title="工资单事项">
+<grid>
+	<rows>
+		<row>
+			<cell width="150px">工资单形式</cell>
+			<cell>
+				<textbox value="${windetial$composer.servicemodel.gzpayroll_type}" readonly="true" id="gzpayroll_type">
+					
+				</textbox>
+			</cell>
+			<cell width="150px">纸工资单发送时间约定</cell>
+			<cell>
+				<textbox id="zgz" 
+				 value="${windetial$composer.servicemodel.papergz_paydate}" readonly="true">
+				</textbox>
+			</cell>
+		</row>
+		<row>
+			<cell>密封工资单交接人</cell>
+			<cell><textbox value="${windetial$composer.servicemodel.csqe_gzpayroll_people}"></textbox></cell>
+			<cell>密封工资单是否需要底单</cell>
+			<cell>
+				<textbox value="${windetial$composer.servicemodel.gzpayroll_b==1?'是':'否'}" readonly="true">
+				</textbox>
+			</cell>
+		</row>
+	</rows>
+</grid>
+</groupbox>
+</groupbox>
+			
+			<groupbox mold="3d" open="false" title="联系人信息">
+			<zscript>
+					<![CDATA[
+	int h = 0;
+]]>
+					</zscript>
+				<grid emptyMessage="联系人信息" id="linkman">
+					<columns>
+						<column>序号</column>
+						<column>姓名</column>
+						<column>英文名</column>
+						<column>职位</column>
+						<column>电话</column>
+						<column>手机</column>
+						<column>传真</column>
+						<column>电子邮箱</column>
+						<column>地址</column>
+						<column>职责</column>
+						<column>操作</column>
+					</columns>
+					<rows>
+						<template name="model">
+						<zscript>
+								<![CDATA[
+	h = h + 1;
+]]>
+								</zscript>
+							<row>
+								<label value="${h}"/>
+								<label value="${each.cali_name}" />
+								<label value="${each.cali_ename}" />
+								<label value="${each.cali_job}" />
+								<label value="${each.cali_tel}" />
+								<label value="${each.cali_mobile}" />
+								<label value="${each.cali_fax}" />
+								<label value="${each.cali_email}" />
+								<label value="${each.cali_address}" />
+								<label value="${each.cali_duty}" />
+								<a style="cursor:pointer"
+									id="cal+${each.cali_id}" onClick="openLinkManDetail(self.id)">
+									<label value="详细" />
+								</a>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox mold="3d" open="false" title="公司合同信息">
+				<zscript>
+					<![CDATA[
+	int i = 0;
+]]>
+					</zscript>
+				<grid emptyMessage="没有合同信息" id="cocogrid">
+					<columns>
+						<column width="40px">序号</column>
+						<column>合同编号</column>
+						<column>合同类型</column>
+						<column>金额</column>
+						<column>添加人</column>
+						<column>备注</column>
+						<column>添加时间</column>
+						<column>状态</column>
+						<column width="40px">详细</column>
+					</columns>
+					<rows>
+						<template name="model">
+							<zscript>
+								<![CDATA[
+	i = i + 1;
+]]>
+								</zscript>
+							<row>
+								<label value="${i}" />
+								<label value="${each.coco_compactid}" />
+								<label value="${each.coco_compacttype}" />
+								<label value="${each.coof_fee}" />
+								<label value="${each.coco_addname}" />
+								<label value="${each.coco_remark}" />
+								<label value="${each.coco_addtime}" />
+								<label value="${each.state}" />
+								<a style="cursor:pointer"
+									id="${each.coco_id}" onClick="openCocoDetail(self.id)">
+									<label value="详细" />
+								</a>
+							</row>
+
+						</template>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox mold="3d" open="false" title="公司财务信息">
+				<grid emptyMessage="暂时不提供财务信息">
+					<rows>
+						<row>
+							<cell width="120px" style="color:#666;">
+								人事付款通知发放时间
+							</cell>
+							<cell>
+								<textbox
+									value="${windetial$composer.model.coba_emfi_paydate}" />
+							</cell>
+							<cell width="120px" style="color:#666;">
+								人事回款时间
+							</cell>
+							<cell>
+								<textbox
+									value="${windetial$composer.model.coba_emfi_backdate}" />
+							</cell>
+						</row>
+						<row>
+							<cell style="color:#666;">工资发放时间</cell>
+							<cell>
+								<textbox
+									value="${windetial$composer.model.coba_gz_paydate}" />
+							</cell>
+							<cell style="color:#666;">电子工资单发放时间</cell>
+							<cell>
+								<textbox
+									value="${windetial$composer.model.coba_emailgz_paydate}" />
+							</cell>
+						</row>
+						<row>
+							<cell style="color:#666;">纸质工资单发放时间</cell>
+							<cell>
+								<textbox
+									value="${windetial$composer.model.coba_papergz_paydate}" />
+							</cell>
+							<cell style="color:#666;">薪酬台账明细制作时间</cell>
+							<cell>
+								<textbox
+									value="${windetial$composer.model.coba_emfics_deldate}" />
+							</cell>
+						</row>
+						<row>
+							<cell style="color:#666;">薪酬付款通知发放时间</cell>
+							<cell>
+								<textbox
+									value="${windetial$composer.model.coba_emfics_paydate}" />
+							</cell>
+							<cell style="color:#666;">薪酬回款时间</cell>
+							<cell>
+								<textbox
+									value="${windetial$composer.model.coba_emfics_backdate}" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox mold="3d" open="false" title="公司注册信息">
+				<groupbox>
+					<caption>
+						<label>工商登记信息</label>
+					</caption>
+					<grid style="margin-left:20px;">
+						<rows>
+							<row>
+								<cell width="80px"
+									style="color:#666;">
+									注册代理方
+								</cell>
+								<cell>
+									<textbox
+										value="${windetial$composer.model.coba_regagent}" />
+								</cell>
+								<cell width="100px"
+									style="color:#666;">
+									证件类型
+								</cell>
+								<cell>
+									<textbox
+										value="${windetial$composer.model.coba_certificate}" />
+								</cell>
+							</row>
+							<row>
+								<cell width="80px"
+									style="color:#666;">
+									注册地址
+								</cell>
+								<cell>
+									<textbox
+										value="${windetial$composer.model.coba_address}" />
+								</cell>
+								<cell width="100px"
+									style="color:#666;">
+									法定代表人
+								</cell>
+								<cell>
+									<textbox
+										value="${windetial$composer.model.coba_companymanager}" />
+								</cell>
+							</row>
+							<row>
+								<cell style="color:#666;">工商登记号</cell>
+								<cell>
+									<textbox
+										value="${windetial$composer.model.coba_bregid}" />
+								</cell>
+								<cell style="color:#666;">
+									驻在期限(代表处)
+								</cell>
+								<cell>
+									<textbox
+										value="${windetial$composer.model.coba_regexpires}" />
+								</cell>
+							</row>
+							<row>
+								<cell style="color:#666;">登记时间</cell>
+								<cell>
+									<textbox
+										value="${windetial$composer.model.coba_regtime}" />
+								</cell>
+								<cell style="color:#666;">有效期</cell>
+								<cell>
+									<textbox
+										value="${windetial$composer.model.coba_reglimit}" />
+								</cell>
+							</row>
+							<row>
+								<cell style="color:#666;">组织机构代码</cell>
+								<cell>
+									<textbox
+										value="${windetial$composer.model.coba_organcode}" />
+								</cell>
+								<cell style="color:#666;">有效期</cell>
+								<cell>
+									<textbox
+										value="${windetial$composer.model.coba_organdeadline}" />
+								</cell>
+
+							</row>
+							<row>
+								<cell colspan="4" style="color:#666;">
+									<hlayout>
+										组织机构代码登记日期:
+										<textbox
+											value="${windetial$composer.model.coba_orregtime}" />
+									</hlayout>
+								</cell>
+							</row>
+						</rows>
+					</grid>
+				</groupbox>
+				<groupbox>
+					<caption>
+						<label>国税登记信息</label>
+					</caption>
+					<grid style="margin-left:20px;">
+						<rows>
+							<row>
+								<cell width="80px"
+									style="color:#666;">
+									国税深字号
+								</cell>
+								<cell>
+									<textbox
+										value="${windetial$composer.model.coba_ntid}" />
+								</cell>
+								<cell width="100px"
+									style="color:#666;">
+									登记时间
+								</cell>
+								<cell>
+									<textbox
+										value="${windetial$composer.model.coba_ntregtime}" />
+								</cell>
+							</row>
+							<row>
+								<cell style="color:#666;">有效期</cell>
+								<cell>
+									<textbox
+										value="${windetial$composer.model.coba_ntlimit}" />
+								</cell>
+								<cell style="color:#666;">国税开户行</cell>
+								<cell>
+									<textbox
+										value="${windetial$composer.model.coba_ntbank}" />
+								</cell>
+							</row>
+							<row>
+								<cell style="color:#666;">国税账号</cell>
+								<cell>
+									<textbox
+										value="${windetial$composer.model.coba_ntaccount}" />
+								</cell>
+								<cell style="color:#666;">国税纳税期限</cell>
+								<cell>
+									<textbox
+										value="${windetial$composer.model.coba_ntdeadline}" />
+								</cell>
+							</row>
+						</rows>
+					</grid>
+				</groupbox>
+				<groupbox>
+					<caption>
+						<label>地税登记信息</label>
+					</caption>
+					<grid style="margin-left:20px;">
+						<rows>
+							<row>
+								<cell width="80px"
+									style="color:#666;">
+									地税登记号
+								</cell>
+								<cell>
+									<textbox
+										value="${windetial$composer.model.coba_ltregid}" />
+								</cell>
+								<cell width="100px"
+									style="color:#666;">
+									登记时间
+								</cell>
+								<cell>
+									<textbox
+										value="${windetial$composer.model.coba_ltregtime}" />
+								</cell>
+							</row>
+							<row>
+								<cell style="color:#666;">有效期</cell>
+								<cell>
+									<textbox
+										value="${windetial$composer.model.coba_ltlimit}" />
+								</cell>
+								<cell style="color:#666;">地税开户状态</cell>
+								<cell>
+									<textbox
+										value="${windetial$composer.model.coba_ltstate}" />
+								</cell>
+							</row>
+							<row>
+								<cell style="color:#666;">地税电脑编码</cell>
+								<cell>
+									<textbox
+										value="${windetial$composer.model.coba_ltid}" />
+								</cell>
+								<cell style="color:#666;">地税纳税期限</cell>
+								<cell>
+									<textbox
+										value="${windetial$composer.model.coba_ltdeadline}" />
+								</cell>
+							</row>
+							<row>
+								<cell style="color:#666;">地税开户银行</cell>
+								<cell>
+									<textbox
+										value="${windetial$composer.model.coba_ltbank}" />
+								</cell>
+								<cell style="color:#666;">地税账号</cell>
+								<cell>
+									<textbox
+										value="${windetial$composer.model.coba_ltaccount}" />
+								</cell>
+							</row>
+						</rows>
+					</grid>
+				</groupbox>
+				<groupbox>
+					<caption>
+						<label>个税纳税账户信息</label>
+					</caption>
+					<grid style="margin-left:20px;">
+						<rows>
+							<row>
+								<cell width="80px"
+									style="color:#666;">
+									个税开户状态
+								</cell>
+								<cell>
+									<textbox
+										value="${windetial$composer.model.coba_gtstate}" />
+								</cell>
+								<cell width="100px"
+									style="color:#666;">
+									个税开户行
+								</cell>
+								<cell>
+									<textbox
+										value="${windetial$composer.model.coba_gtbank}" />
+								</cell>
+							</row>
+							<row>
+								<cell style="color:#666;">纳税账户</cell>
+								<cell>
+									<textbox
+										value="${windetial$composer.model.coba_gtacc}" />
+								</cell>
+								<cell style="color:#666;">所属税局</cell>
+								<cell>
+									<textbox
+										value="${windetial$composer.model.coba_gtto}" />
+								</cell>
+							</row>
+							<row>
+								<cell style="color:#666;">个税纳税期限</cell>
+								<cell colspan="3">
+									<textbox
+										value="${windetial$composer.model.coba_gtdeadline}" />
+								</cell>
+							</row>
+							<row>
+								<cell style="color:#666;">递交资料</cell>
+								<cell colspan="3">
+									<!-- 材料内联页 参数：puzu_id：模块页面id， doc_type：员工(g)还是公司(c)，gid：公司数据则插入空白 ，业务表id ，log_url：获取到页面路径的前部分-->
+									<docDataList id="docGrid"
+										puzu_id="4" doc_type="c" gid=""
+										tid="${windetial$composer.model.cid}"
+										log_url="../DocumentsInfo/" dHeight="120px" dWidth="100%" />
+								</cell>
+							</row>
+						</rows>
+					</grid>
+				</groupbox>
+				<groupbox>
+					<caption>
+						<label>薪酬设置信息</label>
+					</caption>
+					<grid style="margin-left:20px;">
+						<rows>
+							<row>
+								<cell width="140px"
+									style="color:#666;">
+									系统自动发送Email工资单
+								</cell>
+								<cell>
+									<textbox value="是"
+										if="${windetial$composer.model.coba_gzautoemail==1}" />
+									<textbox value="否"
+										if="${windetial$composer.model.coba_gzautoemail==0}" />
+								</cell>
+								<cell width="100px"
+									style="color:#666;">
+									Email工资单格式
+								</cell>
+								<cell>
+									<textbox value="纯文本"
+										if="${windetial$composer.model.coba_gzemailtype!=1}" />
+									<textbox value="HTML"
+										if="${windetial$composer.model.coba_gzemailtype==1}" />
+								</cell>
+							</row>
+							<row></row>
+						</rows>
+					</grid>
+				</groupbox>
+				<groupbox>
+					<caption>
+						<label>用友注册信息</label>
+					</caption>
+					<grid style="margin-left:20px;">
+						<rows>
+							<row>
+								<cell width="80px"
+									style="color:#666;">
+									客户类型
+								</cell>
+								<cell>
+									<textbox
+										value="${windetial$composer.model.coba_ufclass}" />
+								</cell>
+								<cell width="100px"
+									style="color:#666;">
+									收款分录编号
+								</cell>
+								<cell>
+									<textbox
+										value="${windetial$composer.model.coba_ufid}" />
+								</cell>
+							</row>
+							<row>
+								<cell colspan="4" style="color:#666;">
+									<hlayout>
+										委托客户社保公积金分录编号：
+										<textbox
+											value="${windetial$composer.model.coba_ufid2}" width="400px" />
+									</hlayout>
+								</cell>
+							</row>
+						</rows>
+					</grid>
+				</groupbox>
+				<groupbox>
+					<caption>
+						<label>社保资料</label>
+					</caption>
+					<grid style="margin-left:20px;">
+						<rows>
+							<row>
+								<cell width="130px"
+									style="color:#666;">
+									社康绑定医疗机构名称
+								</cell>
+								<cell>
+									<textbox
+										value="${windetial$composer.model.coba_sihospital}" />
+								</cell>
+								<cell width="90px"
+									style="color:#666;">
+									医疗机构联系电话
+								</cell>
+								<cell>
+									<textbox
+										value="${windetial$composer.model.coba_sihosphone}" />
+								</cell>
+							</row>
+							<row>
+								<cell style="color:#666;">医疗机构地址</cell>
+								<cell colspan="3">
+									<textbox width="90%"
+										value="${windetial$composer.model.coba_sihosadd}" />
+								</cell>
+							</row>
+						</rows>
+					</grid>
+				</groupbox>
+				<hlayout valign="middle"
+					style="margin-top:10px;color:#666;">
+					<label>注册信息备注：</label>
+					<textbox rows="4" width="450px"
+						value="${windetial$composer.model.coba_regremark}" />
+				</hlayout>
+			</groupbox>
+		</scrollview>
+	</window>
+	<zscript>
+<![CDATA[
+	import Controller.CoBase.CoBase_DetailInfoController;
+	import Model.CoCompactModel;
+	import bll.CoCompact.BaseInfo_SelectListBll;
+	import java.util.HashMap;
+	import java.util.Map;
+	//弹出联系人详细页面
+	void openLinkManDetail(String caliid) {
+		//调用方法
+		String cali_id=caliid.trim().substring(3);
+		Map map = new HashMap();
+		map.put("cali_id", cali_id);
+		Window window = (Window) Executions.createComponents(
+				"CoBaseLinkMan_Sel.zul", null, map);
+		window.doModal();
+	}
+	//弹出公司合同详细信息
+	void openCocoDetail(String cocoid) {
+		//调用方法
+		CoCompactModel cocoM = new CoCompactModel();
+		BaseInfo_SelectListBll bll = new BaseInfo_SelectListBll();
+
+		List cobasein = bll.searchCoCoBase(cocoid);
+		if (!cobasein.isEmpty()) {
+			cocoM = (CoCompactModel) cobasein.get(0);
+		}
+		Map map = new HashMap();
+
+		map.put("coco_id", cocoid);
+		Window window = (Window) Executions.createComponents(
+				"CoCompact_Info.zul", null, map);
+		window.doModal();
+	}
+]]>
+</zscript>
+</zk>

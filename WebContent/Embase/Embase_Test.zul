@@ -1,0 +1,64 @@
+<!-- 
+   功能：创建类似于hibernate的分页功能测试页面
+ anthor：suhongyuan
+ create：2016-06-15
+ -->
+<?page title="embasetest" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window id="embaseTestWindow" title="员工信息 -- 分页功能测试页面" border="normal" width="100%"
+		height="100%"
+		apply="Controller.Embase.Embase_TestController" >
+<borderlayout>
+<north border="0"   collapsible="true"
+	flex="true" open="true">
+  <grid>
+    <rows>
+      <row>
+       <cell>
+		<label value="客服"/>
+	   </cell>
+	   <cell>
+		<textbox rows="6"  id="search"/>
+	   </cell>
+      </row>
+      <row>
+        <cell>
+          <button label="下一步" id="oc" ></button>
+        </cell>
+      </row>
+    </rows>
+  </grid>
+</north>
+
+<center>
+ <grid>
+   <rows>
+    <row>员工列表</row>
+    <row>
+	<listbox id="embaseTestListbox" width="100%">
+		<listhead>  
+			<listheader label="学号" />
+			<listheader label="姓名" />
+			<listheader label="生日" />
+		</listhead>  
+	</listbox>
+	 <template name="model">  
+            <listitem>  
+                <listcell label="${each.Coba_client}" />  
+                <listcell label="${each.coba_company}" />  
+                <listcell label="${each.emba_name}"/>  
+            </listitem>  
+        </template>  
+	</row>
+   </rows>
+  </grid>
+  
+</center>
+	<!-- 分页组件 -->
+<south>
+	<paging id="embasePaging" pageSize="20" />
+</south>
+ 
+  </borderlayout>
+</window>
+</zk>

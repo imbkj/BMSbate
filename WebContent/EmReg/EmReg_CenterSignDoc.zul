@@ -1,0 +1,72 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<!-- 调用内联页的文件名 -->
+<?component name="docDataList" macro-uri="/DocumentsInfo/DocumentsInfo_UpPageList.zul" inline="true"?>
+<zk>
+	<window id="win" title="中心签收" border="normal" height="80%"
+		width="80%" closable="true" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmReg.EmReg_DocBackController')">
+		<grid vflex="1">
+			<rows>
+				<row>
+					<cell width="80px">单位编号</cell>
+					<cell>
+						<label value="@bind(vm.erm.cid)"></label>
+					</cell>
+					<cell width="80px">单位名称</cell>
+					<cell>
+						<label value="@bind(vm.erm.coba_shortname)"></label>
+					</cell>
+				</row>
+				<row>
+					<cell width="80px">员工编号</cell>
+					<cell>
+						<label value="@bind(vm.erm.emba_name)"></label>
+					</cell>
+					<cell width="80px">员工姓名</cell>
+					<cell>
+						<label value="@bind(vm.erm.gid)"></label>
+					</cell>
+				</row>
+				<row>
+					身份证号
+					<label value="@load(vm.erm.erin_idcard)" />
+					户籍
+					<label value="@load(vm.erm.erin_hjtype)" />
+				</row>
+				<row>
+					<cell width="80px">退材料人</cell>
+					<cell>
+						<combobox model="@load(vm.list)"
+							value="@bind(vm.name)">
+							<template name="model">
+								<comboitem label="@load(each)"></comboitem>
+							</template>
+						</combobox>
+						<label style="color:red;">(*)</label>
+					</cell>
+					<cell width="80px">退资料时间</cell>
+					<cell>
+						<datebox value="@bind(vm.date)"></datebox>
+						<label style="color:red;">(*)</label>
+					</cell>
+				</row>
+				<row>
+					<cell colspan="4">
+						<!-- 材料内联页 参数：puzu_id：模块页面id，doc_type：员工(g)还是公司(c)，
+							gid：公司数据则插入空白，业务表id,log_url：获取到页面路径的前部分 -->
+						<docDataList id="docGrid"
+							puzu_id="${vm.puzu_id }" doc_type="g" gid="${vm.erm.gid }"
+							tid="${arg.daid }" log_url="/DocumentsInfo/" dWidth="100%" />
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button label="提交"
+						onClick="@command('submit',win=win,gd=docGrid,a=3)" />
+				</footer>
+			</foot>
+		</grid>
+
+	</window>
+</zk>

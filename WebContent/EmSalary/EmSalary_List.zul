@@ -1,0 +1,70 @@
+<?page title="工资数据修改" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winEmSalaryUpdate" title="工资数据修改" border="normal"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmSalary.EmSalaryBase_UpdateController')"
+		height="100%" width="100%">
+		<borderlayout>
+			<north border="0">
+				<grid>
+					<rows>
+						<row>
+							<cell style="color:red;">所属月份</cell>
+							<cell>
+								<combobox id="cbOwnmonth" mold="rounded"
+									model="@load(vm.ownmonthList)"
+									onChange="@command('ownmonthChange',con=self.value)"
+									readonly="true">
+									<template name="model">
+										<comboitem label="@load(each)" />
+									</template>
+								</combobox>
+							</cell>
+							<cell>公司简称</cell>
+							<cell>
+								<combobox id="cbCompany" mold="rounded"
+									model="@load(vm.companyList)"
+									onChange="@command('companyChange',com=self.selectedItem.value,ownmonth=cbOwnmonth.value)"
+									readonly="true">
+									<template name="model">
+										<comboitem
+											label="@load(each[1])" value="@load(each[0])" />
+									</template>
+								</combobox>
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</north>
+			<center border="0">
+				<grid id="gdSalary" model="@load(vm.salaryList)"
+					emptyMessage="暂无数据">
+					<columns sizable="true">
+						<column label="员工编号" width="80px"
+							align="center" />
+						<column label="员工姓名" width="80px"
+							align="center" />
+						<column label="用途" width="80px" align="center" />
+						<column label="备注" width="80px" align="center" />
+						<column label="状态" width="80px" align="center" />
+						<column label="@load(each.csii_item_name)"
+							width="80px" forEach="@load(vm.itemList)" />
+
+					</columns>
+					<template name="model">
+						<row>
+							<label value="@load(each.gid)" />
+							<label value="@load(each.name)" />
+							<label value="" />
+							<label value="" />
+							<label value="" />
+							<template name="children">
+								<label value="1" />
+							</template>
+						</row>
+					</template>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

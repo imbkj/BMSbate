@@ -1,0 +1,137 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="员工体检信息编辑" border="normal" width="80%" height="80%" closable="true"
+	apply="org.zkoss.bind.BindComposer" id="win"
+    viewModel="@id('vm') @init('Controller.EmBodyCheck.Embc_InfoController')"
+>
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell width="100px">单位全称</cell>
+			<cell><textbox width="80%" value="${vm.model.embc_company }" readonly="true"></textbox></cell>
+			<cell width="100px">单位简称</cell>
+			<cell><textbox width="80%" value="${vm.model.embc_shortname }" readonly="true"></textbox></cell>
+		</row>
+		<row>
+			<cell>员工姓名</cell>
+			<cell><textbox value="${vm.model.embc_name }" readonly="true"></textbox></cell>
+			<cell>员工性别</cell>
+			<cell><textbox value="${vm.model.embc_sex }" readonly="true"></textbox></cell>
+		</row>
+		<row>
+			<cell>员工年龄</cell>
+			<cell><textbox value="${vm.model.embc_age }" readonly="true"></textbox></cell>
+			<cell>身份证号</cell>
+			<cell><textbox value="@load(vm.model.embc_idcard )" width="80%" readonly="true"></textbox></cell>
+		</row>
+		<row>
+			<cell>婚姻状况</cell>
+			<cell><textbox value="${vm.model.embc_marry }" readonly="true"></textbox></cell>
+			<cell>客服</cell>
+			<cell><textbox value="${vm.model.embc_client }" readonly="true"></textbox></cell>
+		</row>
+		<row>
+			<cell>体检医院</cell>
+			<cell><textbox width="80%" value="${vm.model.ebcs_hospital }" readonly="true"></textbox></cell>
+			<cell>体检类型</cell>
+			<cell><textbox value="@load(vm.embctype)" readonly="true"></textbox></cell>
+		</row>
+		<row>
+			<cell>体检地址</cell>
+			<cell colspan="3"><textbox width="80%" value="${vm.model.ebsa_address }" readonly="true"></textbox></cell>
+		</row>
+		<row>
+			<cell>备注</cell>
+			<cell colspan="3"><textbox width="80%" rows="5" value="${vm.model.embc_remark }" readonly="true"></textbox></cell>
+		</row>
+		<row>
+			<cell>预约时间</cell>
+			<cell><textbox value="${vm.model.ebcl_bookdate }" readonly="true"></textbox></cell>
+			<cell>预约模式</cell>
+			<cell><textbox value="${vm.model.ebcl_bookmode==1?'固定时间':'不固定时间'}" readonly="true"></textbox></cell>
+		</row>
+		<row visible="${vm.model.embc_statebname=='待申报' }">
+			<cell>联系医院时间</cell>
+			<cell colspan="3"><datebox id="declaredate"></datebox><label style="color:red;">(*申报时间)</label></cell>
+		</row>
+		<row visible="${vm.model.embc_statebname=='预约中' }">
+			<cell>安排体检时间</cell>
+			<cell><datebox id="plandate" value="@load(vm.embcplandate)"></datebox><label style="color:red;">(*)</label></cell>
+			<cell>领取指引单时间</cell>
+			<cell><datebox id="drawformdate" value="@load(vm.drawformdate)"></datebox></cell>
+		</row>
+		<row visible="${vm.model.embc_statebname=='预约中' }">
+			<cell>签收指引单时间</cell>
+			<cell><datebox id="showformdate" value="@load(vm.showformdate)"></datebox></cell>
+			<cell>签收人</cell>
+			<cell><textbox id="showformpeople" value="@load(vm.username)"></textbox></cell>
+		</row>
+		<row visible="${vm.model.embc_statebname=='体检中'}">
+			<cell visible="false">后道领报告时间</cell>
+			<cell visible="false"><datebox id="showreportdate"></datebox><label style="color:red;">(*)</label></cell>
+			
+		</row>
+		<row visible="${vm.model.embc_statebname=='体检中'}">
+			<cell>福利组领报告时间</cell>
+			<cell><datebox id="completeDate"></datebox></cell>
+			<cell>收报告人</cell>
+			<cell><textbox id="showreportpeople" value="@load(vm.username)"></textbox></cell>
+		</row>
+		<row>
+			<cell>保健号</cell>
+			<cell colspan="3"><textbox id="embcid" value="@load(vm.model.ebcl_bcid)"></textbox></cell>
+		</row>
+		<row visible="${vm.model.embc_statebname=='已体检' }">
+			<cell>客服签收报告时间</cell>
+			<cell><datebox id="clientshowdate"></datebox><label style="color:red;">(*)</label></cell>
+			<cell>签收人</cell>
+			<cell><textbox id="showclient" value="@load(vm.username)"></textbox></cell>
+		</row>
+		<row visible="${vm.model.embc_statebname=='已签收报告' }">
+			<cell>结算时间</cell>
+			<cell><datebox id="balancedate"></datebox><label style="color:red;">(*)</label></cell>
+			<cell>实际体检费</cell>
+			<cell><decimalbox id="fee" value="@bind(vm.fee)"></decimalbox><label style="color:red;">(*)</label></cell>
+		</row>
+		<row visible="${vm.model.embc_statebname=='已签收报告' }">
+			<cell>备注</cell>
+			<cell colspan="3"><textbox id="balanceremark" width="70%" rows="3"/></cell>
+		</row>
+		
+		<row>
+			<cell>体检项目</cell>
+			<cell colspan="3">
+				<grid vflex="1" model="@load(vm.itemlist)" id="it" emptyMessage="没有数据">
+					<columns>
+						<column label="序号" align="center" width="50px"/>
+						<column label="项目名称" align="center"/>
+						<column label="项目内容" align="center"/>
+						<column label="备注" align="center"/>
+						<column label="适用范围" align="center"/>
+					</columns>
+					<rows id="rws">
+						<template name="model">
+							<row>
+								<cell><label value="${forEachStatus.index+1 }"></label></cell>
+								<cell><label value="@load(each.ebit_name)"></label></cell>
+								<cell><label value="@load(each.ebit_info)"></label></cell>
+								<cell><label value="@load(each.ebit_remark)"></label></cell>
+								<cell><label value="@load(each.sex)"></label></cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</cell>
+		</row>
+	</rows>
+	<foot>
+		<footer align="center">
+			<button onClick="@command('declare',win=win)">提交</button>
+			<button  visible="${vm.tmodel.wfno_step==4 }" onClick="@command('scratch',win=win)">暂存</button>
+			<button onClick="@command('cancel',win=win)" visible="false">取消预约</button>
+			<button onClick="@command('back',win=win)" visible="${vm.tmodel.wfno_step==3 or vm.tmodel.wfno_step==4 or vm.tmodel.wfno_step==5}">退回</button>
+		</footer>
+	</foot>
+</grid>
+</window>
+</zk>

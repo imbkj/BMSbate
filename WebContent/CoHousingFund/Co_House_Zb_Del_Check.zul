@@ -1,0 +1,106 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<?component name="docDataList" macro-uri="../DocumentsInfo/DocumentsInfo_UpPageList.zul" inline="true"?>
+<zk>
+	<window title="专办员注销 " border="normal" width="60%" vflex="1"
+		hflex="1" closable="true" apply="org.zkoss.bind.BindComposer" id="win"
+		viewModel="@id('vm') @init('Controller.CoHousingFund.CoHouse_ZbDelCheckController')">
+		<grid height="100%">
+			<rows>
+				<row>
+					<grid>
+						<columns>
+							<column width="20%" />
+							<column></column>
+						</columns>
+						<rows>
+							<row id="statusRow"
+								if="${vm.m.cfzc_state == 1 ? true : false}">
+								<cell colspan="2">
+									<radiogroup id="okradio">
+										<radio label="申报中" value="2"
+											checked="true" />
+										<radio label="已申报" value="3" />
+									</radiogroup>
+								</cell>
+							</row>
+							<row>
+								<cell align="left" width="15%">
+									<label value="操作月份" />
+								</cell>
+								<cell align="left">
+									<label value="@bind(vm.m.ownmonth)" />
+								</cell>
+							</row>
+							<row>
+								<cell align="left" width="13%">
+									<label value="注销的专办员" />
+									<label value="*" style="color:red" />
+								</cell>
+								<cell align="left" id="comid">
+									<combobox mold="rounded"
+										if="${vm.m.cfzc_state == 1 ? true : false }" instant="true"
+										readonly="true" model="@load(vm.zbListBycohf_id)" width="45%"
+										onSelect="@command('setfzid',chfz=self.selectedItem.value)">
+										<template name="model">
+											<comboitem
+												label="@bind(each.chfz_numberAndName)" value="@bind(each)" />
+										</template>
+									</combobox>
+									<label
+										if="${vm.m.cfzc_state != 1 ? true : false }"
+										value="@load(vm.m.cfzc_name)" />
+								</cell>
+							</row>
+							<row>
+								<cell align="left">
+									<label value="客服备注" />
+									<label value="*" style="color:red" />
+								</cell>
+								<cell>
+									<label
+										value="@load(vm.m.cfzc_remark)" />
+								</cell>
+							</row>
+
+						</rows>
+					</grid>
+				</row>
+				<row>
+					<groupbox visible="false">
+						<caption label="系统日志" />
+						<grid>
+							<rows></rows>
+						</grid>
+					</groupbox>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<grid id="gd">
+						<rows>
+							<row>
+								<cell>
+									<label value="提交资料" />
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<!-- 材料内联页 参数：puzu_id：模块页面id， doc_type：员工(g)还是公司(c)，gid：公司数据则插入空白 ，业务表id,log_url：获取到页面路径的前部分，ifSubmit：当前页面已勾选后的材料状态 -->
+									<docDataList id="docGrid"
+										puzu_id="119" doc_type="c" cid="@bind(vm.m.cid)"
+										tid="${vm.m.cfzc_id}" dHeight="200px" dWidth="100%" log_url="/DocumentsInfo/"/>
+								</cell>
+							</row>
+						</rows>
+					</grid>
+					<button id="foot"
+						if="${vm.m.cfzc_state == 1 ? true : false }"
+						onClick="@command('submit',win=win,gd=docGrid,sbstate=okradio.selectedItem.value)"
+						label="申报" />
+					<button if="${vm.m.cfzc_state==2 ? true : false}"
+						onClick="@command('shenbao',win=win,gd=docGrid)" label="已申报" />
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

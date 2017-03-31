@@ -1,0 +1,35 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="短信查询" border="normal" closable="true"
+		apply="org.zkoss.bind.BindComposer" width="1000px" height="530px"
+		viewModel="@id('vm') @init('Controller.Embase.SMS_CheckController')">
+		<div
+			style="width:100%;height:530px;overflow-y:scroll;overflow-x:hidden;border:1px solid #bcbdbf;">
+			<grid id="sms" model="@load(vm.smslist)">
+				<columns>
+					<column align="center" width="100px">手机号码</column>
+					<column align="center" width="50px">发送人</column>
+					<column align="center">内容</column>
+					<column align="center" width="100px">时间</column>
+				</columns>
+
+				<template name="model">
+					<row style="border:1px dotted #cad9ea;">
+						<cell>
+							<label value="@load(each.mobile)" />
+						</cell>
+						<cell>
+							<label value="@load(each.sendname)" />
+						</cell>
+						<cell>
+							<label value="@load(each.content)" />
+						</cell>
+						<cell>
+							<label value="@load(each.sendtime)" />
+						</cell>
+					</row>
+				</template>
+			</grid>
+		</div>
+	</window>
+</zk>

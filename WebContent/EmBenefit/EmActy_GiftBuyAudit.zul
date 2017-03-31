@@ -1,0 +1,51 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="福利享受信息更新" border="normal" width="90%" height="90%" closable="true"
+	apply="org.zkoss.bind.BindComposer" id="editwin"
+	viewModel="@id('vm') @init('Controller.EmBenefit.EmActy_GiftBuyUpdateController')"
+>
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell width="100px"></cell>
+			<cell></cell>
+			<cell width="120px"></cell>
+			<cell></cell>
+		</row>
+		<row>
+			<cell>支付信息</cell>
+			<cell colspan="3">
+				<scrollview>
+					<include height="100%" src="../EmBenefit/EmActy_buyGiftpayinfo.jsp?id=${vm.model.gift_id }"></include>
+				</scrollview>
+			</cell>
+		</row>
+		<row>
+			<cell width="120px">礼品名称</cell>
+			<cell><textbox width="80%" value="@load(vm.model.gift_name)" readonly="true" mold="rounded"></textbox></cell>
+			<cell width="120px">采购数量</cell>
+			<cell><textbox value="@load(vm.model.gift_totalnum)" readonly="true" mold="rounded"></textbox></cell>
+		</row>
+		<row>
+			<cell>礼品单价</cell>
+			<cell><textbox value="@load(vm.model.gift_nowprice)" readonly="true" mold="rounded"></textbox></cell>
+			<cell>总价</cell>
+			<cell><textbox value="${vm.model.gift_totalnum*vm.model.gift_nowprice }" readonly="true" mold="rounded"></textbox></cell>
+		</row>
+		<row>
+			<cell><label value="@load(vm.steppeopstr)"></label></cell>
+			<cell><textbox value="@load(vm.username)" readonly="true" mold="rounded"></textbox></cell>
+			<cell><label value="@load(vm.steptimestr)"></label></cell>
+			<cell><datebox focus="true" id="datetxt" mold="rounded"></datebox></cell>
+		</row>
+		<row>
+			<cell>备注</cell>
+			<cell colspan="3"><textbox width="80%" rows="4" id="remark" value="@load(vm.model.gift_remark)" mold="rounded"></textbox></cell>
+		</row>
+	</rows>
+	<foot>
+		<footer align="center"><button onClick="@command('EditGift',win=editwin,dateval=datetxt.value,remark=remark.value)">提交</button></footer>
+	</foot>
+</grid>
+</window>
+</zk>

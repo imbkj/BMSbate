@@ -1,0 +1,29 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<grid>
+		<rows>
+			<row>
+				<cell colspan="4" align="right" width="400px"><label value="系统数据"></label></cell>
+				<cell align="center"><label value="${arg.model.emfi_total+arg.model.emfi_n_total }"></label></cell>
+				<cell align="center"><label value="${arg.model.emfi_sbtotal }"></label></cell>
+				<cell align="center"><label value="${arg.model.emfi_yltotal }"></label></cell>
+				<cell align="center"><label value="${arg.model.emfi_housetotal }"></label></cell>
+				<cell align="center"><label value="${arg.model.emfi_fee }"></label></cell>
+				<cell align="center"><label value="${arg.model.emfi_filefee }"></label></cell>
+				<cell align="center"><label value="${arg.model.emfi_elsefee }"></label></cell>
+				<cell align="center"><label value="${arg.model.emfi_n_total}"></label></cell>
+			</row>
+			<row>
+				<cell colspan="4" align="right" width="400px"><label value="智翼通数据"></label></cell>
+				<cell align="center"><label value="${arg.model.emfz_total+arg.model.emfz_other+arg.model.emfz_fee2}"></label></cell>
+				<cell align="center"><label value="${arg.model.emfz_sbtotal }"></label></cell>
+				<cell align="center"><label value="${arg.model.emfz_yltotal }"></label></cell>
+				<cell align="center"><label value="${arg.model.emfz_housetotal }"></label></cell>
+				<cell align="center"><label value="${arg.model.emfz_fee }"></label></cell>
+				<cell align="center"><label value="${arg.model.emfz_filefee }"></label></cell>
+				<cell align="center"><label value="${arg.model.emfz_elsefee }"></label></cell>
+				<cell align="center"><label value="${arg.model.emfz_other-arg.model.emfz_servertotal }"></label></cell>
+			</row>
+		</rows>
+	</grid>
+</zk>

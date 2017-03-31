@@ -1,0 +1,67 @@
+<?page title="调户申请状态更新" contentType="text/html;charset=UTF-8"?>
+<?component name="docDataList" macro-uri="../DocumentsInfo/DocumentsInfo_UpPageList.zul" inline="true"?>
+<zk>
+<window title="调户申请状态更新——批量处理" border="normal" width="400px" height="300px" closable="true" id="win"
+	apply="org.zkoss.bind.BindComposer"
+    viewModel="@id('vm') @init('Controller.EmCensus.EmDh.Emdh_StateChangeAllController')"
+>
+<caption>
+	<hlayout style="float:right">
+		<toolbar>
+			<toolbarbutton label="重置流程" onClick="@command('beginagain',win=win)" style="color:#666:font-size:8pt" />
+	   </toolbar>
+	</hlayout>
+</caption>
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell width="100px">当前状态</cell>
+			<cell><textbox readonly="true" value="${arg.model.states }"></textbox></cell>
+		</row>
+		<row visible="${vm.tmodel.wfno_step==3}">
+			<cell>条件审查日期</cell>
+			<cell><datebox id="time3"></datebox></cell>
+		</row>
+		<row visible="${vm.tmodel.wfno_step==4}">
+			<cell>信息预审日期</cell>
+			<cell><datebox  id="time4"></datebox></cell>
+		</row>
+		<row visible="${vm.tmodel.wfno_step==5}">
+			<cell>预审通过日期</cell>
+			<cell><datebox  id="time5"></datebox></cell>
+		</row>
+		<row visible="${vm.tmodel.wfno_step==6}">
+			<cell>员工领取材料日期</cell>
+			<cell><datebox  id="time6"></datebox></cell>
+		</row>
+		<row visible="${vm.tmodel.wfno_step==8}">
+			<cell>报到日期</cell>
+			<cell><datebox  id="time8"></datebox></cell>
+		</row>
+		<row visible="${vm.tmodel.wfno_step==9}">
+			<cell>调令下达日期</cell>
+			<cell><datebox  id="time9"></datebox></cell>
+		</row>
+		<row visible="${vm.tmodel.wfno_step==10}">
+			<cell>员工领取调令日期</cell>
+			<cell><datebox value="${vm.dhmodel.emdh_time10 }" id="time10"></datebox></cell>
+		</row>
+		<row visible="${vm.tmodel.wfno_step==3}">
+			<cell>调户方式</cell>
+			<cell>
+				<combobox id="dhtype" value="${arg.model.emdh_dhtype }">
+					<comboitem label="调干"/>
+					<comboitem label="招调工"/>
+					<comboitem label="毕业生接收"/>
+				</combobox>
+			</cell>
+		</row>
+	</rows>
+	<foot>
+		<footer align="center"><button id="summit" onClick="@command('updatestate',win=win,time3=time3.value,dhtype=dhtype.value,
+		time4=time4.value,time5=time5.value,time6=time6.value,time8=time8.value,time9=time9.value,time10=time10.value)">提交</button>
+		</footer>
+	</foot>
+</grid>
+</window>
+</zk>

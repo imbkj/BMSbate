@@ -1,0 +1,175 @@
+<?page title="工资查询" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="工资详情" border="normal" height="100%" width="100%"
+		apply="org.zkoss.bind.BindComposer" closable="true"
+		viewModel="@id('arch') @init('Controller.EmSalary.EmSalaryInfoListController')">
+
+		<groupbox title="公司收款情况">
+			<div>
+				<grid>
+					<rows>
+						<row>
+							<cell width="10%">
+								<label value="所属月份：" />
+							</cell>
+							<cell width="10%">
+								<label value="@load(arch.ownmonth)"
+									style="color:blue;font-size:20px;" />
+							</cell>
+							<cell width="10%">
+								<label value="公司简称：" />
+							</cell>
+							<cell>
+								<hlayout>
+									<label value="("
+										style="color:blue;" />
+									<label value="@load(arch.cm.cid)"
+										style="color:blue;" />
+									<label value=")"
+										style="color:blue;" />
+									<label
+										value="@load(arch.cm.coba_shortname)" style="color:blue;" />
+								</hlayout>
+							</cell>
+							<cell width="10%">
+								<label value="薪酬负责人：" />
+							</cell>
+							<cell width="10%">
+								<label
+									value="@load(arch.cm.coba_gzaddname)" style="color:blue;" />
+							</cell>
+							<cell width="10%">
+								<label value="客服代表：" />
+							</cell>
+							<cell width="10%">
+								<label
+									value="@load(arch.cm.coba_client)" style="color:blue;" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</div>
+			<grid span="true" model="@load(arch.cofinList)"
+				emptyMessage="无数据" sizedByContent="true" vflex="1">
+				<columns>
+					<column label="项目" align="center" />
+					<column label="应收款" align="center" />
+					<column label="实收款" align="center" />
+					<column label="差额" align="center" />
+				</columns>
+				<rows>
+					<template name="model">
+						<row>
+							<label value="@load(each.cfsa_cpac_name)" />
+							<label value="@load(each.cfsa_Receivable)" />
+							<label value="@load(each.cfsa_PaidIn)" />
+							<label value="@load(each.imbalance)" />
+						</row>
+					</template>
+				</rows>
+			</grid>
+		</groupbox>
+
+		<groupbox title="工资详细">
+			<grid id="secrchgrid" >
+				<rows>
+					<row align="left">
+						<!-- 		<cell align="left">所属月份：</cell> -->
+						<!-- 		<cell> -->
+						<!-- 			<hlayout hflex="1"> -->
+						<!-- 				<combobox id="cownmonth"  instant="true"  model="@load(arch.ownmonthlist)" readonly="true" buttonVisible="false" -->
+						<!-- 				selectedItem="@bind(arch.ownmonth)" value="@bind(arch.ownmonth)"  width="115px"> -->
+						<!-- 						<template name="model"> -->
+						<!-- 									<comboitem label="@load(each)" /> -->
+						<!-- 						</template> -->
+						<!-- 				</combobox> -->
+
+						<!-- 			</hlayout> -->
+						<!-- 		</cell> -->
+						<!-- 		<cell align="left">公司编号：</cell> -->
+						<!-- 		<cell> -->
+						<!-- 		<hlayout hflex="1"> -->
+						<!-- 				<combobox id="ccobasecname"  instant="true" model="@load(arch.cobaselist)" readonly="true" buttonVisible="false" -->
+						<!-- 				selectedItem="@bind(arch.cosname)" value="@bind(arch.cid)" > -->
+						<!-- 						<template name="model"> -->
+						<!-- 									<comboitem label="@load(each)" /> -->
+						<!-- 						</template> -->
+						<!-- 				</combobox> -->
+
+						<!-- 			</hlayout></cell> -->
+						<cell align="left">状态：</cell>
+						<cell>
+
+							<combobox id="csalarystate"
+								model="@load(arch.salarystatelist)"
+								value="@bind(arch.salarystate)"
+								selectedItem="@bind(arch.salarystate)" instant="true"
+								width="115px">
+
+								<template name="model">
+									<comboitem label="@load(each)" />
+								</template>
+
+							</combobox>
+						</cell>
+						<cell align="left">员工编号：</cell>
+
+						<cell>
+							<textbox id="gid" value="@bind(arch.gid)" />
+						</cell>
+						<cell align="left">姓名：</cell>
+
+						<cell>
+							<textbox id="embaname"
+								value="@bind(arch.embaname)" />
+						</cell>
+
+						<cell align="left">身份证号码：</cell>
+
+						<cell>
+							<textbox id="emba_idcard"
+								value="@bind(arch.emba_idcard)" />
+						</cell>
+
+					</row>
+					<row>
+						<!-- 		<cell width="130px" align="right">公司编号：</cell> -->
+						<!-- 		<cell width="160px"><textbox id="Scid" value="@bind(arch.cid)" /></cell> -->
+
+						<cell align="center" colspan="8">
+							<button id="btSearch" label="查询"
+								onClick="@command('search',gd=salarygrid,gdsum=salarygrid1)" />
+						</cell>
+					</row>
+
+				</rows>
+			</grid>
+			<grid vflex="1" id="salarygrid" mold="paging"
+				pageSize="7">
+				<columns id="gridcols" style="cursor:pointer"
+					onCreate="@command('colsInit',self=salarygrid)">
+
+				</columns>
+				<rows id="gridrows"
+					onCreate="@command('rowsInit',self=salarygrid)">
+
+				</rows>
+			</grid>
+		</groupbox>
+
+		<groupbox title="工资合计">
+			<grid vflex="1" id="salarygrid1" mold="paging"
+				pageSize="2">
+				<columns id="gridcols1" style="cursor:pointer"
+					onCreate="@command('colsInitsum',self=salarygrid1)">
+
+				</columns>
+				<rows id="gridrows1"
+					onCreate="@command('rowsInitsum',self=salarygrid1)">
+
+				</rows>
+			</grid>
+		</groupbox>
+
+	</window>
+</zk>

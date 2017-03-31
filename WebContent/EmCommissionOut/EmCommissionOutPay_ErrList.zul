@@ -1,0 +1,55 @@
+<?page title="问题数据列表" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="问题数据列表" border="normal"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmCommissionOut.EmCommissionOutPay_ErrController')"
+		closable="true" width="100%">
+		<label id="dep_company" visible="false"
+			value="${arg.ecop_dep_company }" />
+		
+		<div
+			style="width:100%;height:630px;overflow-y:scroll;overflow-x:hidden;border:1px solid #bcbdbf;">
+			<grid width="100%" id="g1" model="@load(vm.pay_yflist)">
+				<columns>
+					<column label="序号" align="center" width="60px" />
+					<column label="员工编号" align="center" />
+					<column label="公司编号" align="center" />
+					<column label="公司名称" align="center" />
+					<column label="员工姓名" align="center" />
+					<column label="身份证号码" align="center" />
+					<column label="${arg.er_2}帐单情况" align="center" />
+				</columns>
+				<rows>
+					<template name="model">
+						<row>
+							<cell>
+								<label
+									value="${forEachStatus.index + 1}" />
+							</cell>
+							<cell>
+								<label value="@load(each.gid)" />
+							</cell>
+							<cell>
+								<label value="@load(each.cid)" />
+							</cell>
+							<cell>
+								<label value="@load(each.ecop_company)" />
+							</cell>
+							<cell>
+								<label value="@load(each.ecop_name)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.ecop_dep_company)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.ecop_state)" />
+							</cell>
+						</row>
+					</template>
+				</rows>
+			</grid>
+		</div>
+	</window>
+</zk>

@@ -1,0 +1,14 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<?component name="echart" macroURI="/ECharts/echart.zul"?>  
+<zk>
+		<window title="图表DEMO" border="normal" width="99%" height="99%"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.BusinessIntelligence.demoController')"
+		closable="true" sizable="true">
+		<vlayout>
+        <button label="图表" onClick="@command('chart')"/>  
+    	<echart id="echart" echartStyle="height:800px;width:800px;"/>   
+    	</vlayout>
+</window>
+
+</zk>

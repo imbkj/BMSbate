@@ -1,0 +1,63 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="win" title="账户接管 - 重新提交" border="normal" width="880px"
+		apply="org.zkoss.bind.BindComposer" closable="true"
+		viewModel="@id('vm') @init('Controller.CoSocialInsurance.CoSocialInsurance_ReTranController')">
+		<scrollview>
+			<grid>
+				<columns>
+					<column width="15%"></column>
+					<column></column>
+					<column width="15%"></column>
+					<column></column>
+					<column width="15%"></column>
+					<column></column>
+				</columns>
+				<rows>
+					<row>
+						<cell>
+							<label style="color:#666" value="单位名称(全称)" />
+						</cell>
+						<cell colspan="5">
+							<label value="@load(vm.m.coba_company)" />
+						</cell>
+					</row>
+					<row>
+						<cell>
+							<label style="color:#666" value="单位社保编号" />
+						</cell>
+						<cell>
+							<textbox value="@bind(vm.m.csbc_sorid)" />
+						</cell>
+						<cell>
+							<label style="color:#666"
+								value="密码(6-10位长)" />
+						</cell>
+						<cell>
+							<textbox value="@bind(vm.m.csbc_pwd)"
+								maxlength="10" />
+						</cell>
+						<cell>
+							<label style="color:#666" value="社保分局名称" />
+						</cell>
+						<cell>
+							<textbox value="@bind(vm.m.csbc_sbadd)" />
+						</cell>
+					</row>
+					<row>
+						<cell>
+							<label style="color:#666" value="备注" />
+						</cell>
+						<cell colspan="5">
+							<textbox rows="5" hflex="1"
+								value="@bind(vm.m.csbc_remark)" />
+						</cell>
+					</row>
+				</rows>
+			</grid>
+			<hbox width="100%" align="center" pack="center">
+				<button label="提交" onClick="@command('submit',win=win)" />
+			</hbox>
+		</scrollview>
+	</window>
+</zk>

@@ -1,0 +1,163 @@
+<?page title="工资数据管理" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="工资数据管理" border="normal"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmSalary.EmSalaryBase_ListController')"
+		height="100%" width="100%">
+		<borderlayout>
+			<center>
+				<borderlayout>
+					<north border="0">
+						<grid>
+							<rows>
+								<row>
+									<cell>所属月份：</cell>
+									<cell>
+										<combobox id="cbOwnmonth"
+											value="@bind(vm.ownmonth)" mold="rounded"
+											onChange="@command('ownmonthChange')" readonly="true">
+											<comboitem label="" />
+											<comboitem label="${each}"
+												forEach="${vm.ownmonthList}" />
+										</combobox>
+									</cell>
+									<cell>公司：</cell>
+									<cell>
+										<combobox id="cbCompany"
+											value="@bind(vm.company)" mold="rounded"
+											model="@load(vm.cbCompanyList)" instant="true"
+											onChange="@command('companyChange')"
+											onOK="@command('companyChange')"
+											tooltiptext="可以输入 公司编号 或 公司简称 或 拼音简称 搜索"
+											autocomplete="false">
+											<template name="model">
+												<comboitem
+													label="@load(each.coba_shortname)" />
+											</template>
+										</combobox>
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</north>
+					<center border="0">
+						<listbox model="@load(vm.winCompanyList)"
+							hflex="1" vflex="1" emptyMessage="暂无公司数据" width="100%" rows="21"
+							onSelect="@command('selEmbase',selectitem=self.selectedItem)">
+							<listhead sizable="true">
+								<listheader label="公司编号"
+									sort="auto(cid)" align="center" />
+								<listheader label="公司简称"
+									sort="auto(coba_shortname)" align="center" />
+								<listheader label="薪酬负责人"
+									sort="auto(coba_gzaddname)" align="center" />
+								<listheader label="待确认" sort="auto(cou)"
+									align="center" />
+								<listheader label="操作" align="center" />
+							</listhead>
+							<template name="model">
+								<listitem>
+									<listcell label="@load(each.cid)" />
+									<listcell
+										label="@load(each.coba_shortname)" />
+									<listcell
+										label="@load(each.coba_gzaddname)" />
+									<listcell
+										label="@load(vm.winCanUp?each.cou:'N')"
+										style="${each.cou>0?'color:red;':''}" />
+									<listcell>
+										<menubar autodrop="true"
+											width="50px">
+											<menu
+												image="../images/pencil-small.png">
+												<menupopup>
+													<menuitem
+														label="生成工资"
+														onClick="@command('createSalary',cid=each.cid,gzaddname=each.coba_gzaddname)" />
+													<menuitem
+														label="批量新增"
+														onClick="@command('createSalaryFirst',cid=each.cid,gzaddname=each.coba_gzaddname)">
+													</menuitem>
+													<menuitem
+														label="修改工资"
+														onClick="@command('upSalary',cid=each.cid,ownmonth=cbOwnmonth.value,gzaddname=each.coba_gzaddname)"
+														if="${vm.winCanUp}" />
+													<menuitem
+														label="查看待确认列表"
+														onClick="@command('confirmSalary',cid=each.cid,ownmonth=cbOwnmonth.value,gzaddname=each.coba_gzaddname)"
+														if="${vm.winCanUp}" />
+													<menuitem
+														label="非清零项目数据更新"
+														onClick="@command('openZeroItemUp',cid=each.cid,gzaddname=each.coba_gzaddname)" />
+												</menupopup>
+											</menu>
+										</menubar>
+									</listcell>
+								</listitem>
+							</template>
+						</listbox>
+
+					</center>
+				</borderlayout>
+			</center>
+			<east collapsible="true" splittable="true" width="50%">
+				<borderlayout>
+					<north border="0">
+						<grid>
+							<rows>
+								<row>
+									<cell align="right">员工查询：</cell>
+									<cell>
+										<textbox mold="rounded"
+											onChange="@command('selEm',em=self.value)"
+											tooltiptext="可以输入 员工编号 或 员工姓名 或 拼音简称 搜索" />
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</north>
+					<center border="0">
+						<grid height="100%" width="100%"
+							emptyMessage="暂无员工数据" model="@load(vm.winemList)">
+							<columns sizable="true">
+								<column label="员工编号" align="center"
+									sort="auto(gid)" />
+								<column label="姓名" align="center"
+									sort="auto(emba_name)" />
+								<column label="身份证" align="center"
+									sort="auto(emba_idcard)" />
+								<column label="员工状态" align="center"
+									sort="auto(statename)" />
+								<column label="操作" align="center" />
+							</columns>
+							<rows>
+								<template name="model">
+									<row>
+										<label value="@load(each.gid)" />
+										<label
+											value="@load(each.emba_name)" />
+										<label
+											value="@load(each.emba_idcard)" />
+										<label
+											value="@load(each.statename)"
+											style="@load(each.statename eq '离职'?'color:red':'color:blue')" />
+										<menubar autodrop="true"
+											width="50px">
+											<menu
+												image="../images/pencil-small.png">
+												<menupopup>
+													<menuitem
+														label="新增工资" onClick="@command('addSalary',gid=each.gid)" />
+												</menupopup>
+											</menu>
+										</menubar>
+									</row>
+								</template>
+							</rows>
+						</grid>
+					</center>
+				</borderlayout>
+			</east>
+		</borderlayout>
+	</window>
+</zk>

@@ -1,0 +1,106 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winEsCompanyPayInfo" title="工资发放情况汇总" border="normal"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmSalary.EmSalary_CompanyPayInfoController')"
+		height="100%" width="100%">
+		<borderlayout>
+			<north border="0">
+				<grid width="100%">
+					<rows>
+						<row>
+							<cell width="10%" style="color:#666;"
+								align="center">
+								所属月份
+							</cell>
+							<combobox model="@load(vm.ownmonthList)"
+								readonly="true" width="60%" autodrop="true" mold="rounded"
+								value="@bind(vm.ownmonth)">
+								<template name="model">
+									<comboitem label="@load(each)" />
+								</template>
+							</combobox>
+							<cell width="10%" style="color:#666;"
+								align="center" tooltiptext="可以输入 公司编号 或 公司简称  或 公司拼音 搜索">
+								公司查询
+							</cell>
+							<textbox width="90%" mold="rounded"
+								value="@bind(vm.company)" />
+							<cell width="10%" style="color:#666;"
+								align="center">
+								薪酬负责人
+							</cell>
+							<combobox model="@load(vm.gzAddnameList)"
+								width="60%" autodrop="true" mold="rounded"
+								value="@bind(vm.gzAddname)">
+								<template name="model">
+									<comboitem label="@load(each)" />
+								</template>
+							</combobox>
+							<cell width="10%" style="color:#666;"
+								align="center">
+								是否存在差额
+							</cell>
+							<combobox width="60%" autodrop="true"
+								mold="rounded" value="@bind(vm.ifDiff)">
+								<comboitem label="" />
+								<comboitem label="是" />
+								<comboitem label="否" />
+							</combobox>
+						</row>
+					</rows>
+					<foot>
+						<footer align="center">
+							<button label="查询"
+								onClick="@command('search')" />
+						</footer>
+					</foot>
+				</grid>
+			</north>
+			<center border="0">
+				<grid height="100%" emptyMessage="暂无数据"
+					model="@load(vm.winInfoList)" width="100%" mold="paging"
+					pageSize="30">
+					<columns>
+						<column label="所属月份" align="center"
+							sort="auto(ownmonth)" />
+						<column label="公司编号" align="center"
+							sort="auto(cid)" />
+						<column label="公司简称" align="center"
+							sort="auto(coba_shortname)" />
+						<column label="发放总金额" align="center"
+							sort="auto(esda_pay)" />
+						<column label="实收工资款" align="center"
+							sort="auto(cfsa_PaidIn)" />
+						<column label="添加时间" align="center"
+							sort="auto(cfsa_addtime)" />
+						<column label="未发放人数/总人数" align="center"
+							sort="auto(statistics)" />
+						<column label="客服代表" align="center"
+							sort="auto(coba_client)" />
+						<column label="薪酬负责人" align="center"
+							sort="auto(coba_gzaddname)" />
+					</columns>
+					<template name="model">
+						<row>
+							<label value="@load(each.ownmonth)" />
+							<label value="@load(each.cid)" />
+							<label style="cursor:pointer;color:#00F;"
+								value="@load(each.coba_shortname)"
+								onClick="@command('getinfo',model=each)" />
+							<label value="@load(each.esda_pay)" />
+							<label style="cursor:pointer;color:#00F;"
+								value="@load(each.cfsa_PaidIn)"
+								onClick="@command('getGatheringinfo',model=each)" />
+							<label value="@load(each.cfsa_addtime)" />
+							<label value="@load(each.statistics)"
+								style="@load(each.couWf>0?'color:red;':'')" />
+							<label value="@load(each.coba_client)" />
+							<label value="@load(each.coba_gzaddname)" />
+						</row>
+					</template>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

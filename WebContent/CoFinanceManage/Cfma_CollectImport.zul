@@ -1,0 +1,38 @@
+<?page title="导入收款" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winCollectImport" title="导入收款" border="normal"
+		width="650px" height="260px" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoFinanceManage.Cfma_CollectImportController')"
+		closable="true" sizable="true">
+		<borderlayout>
+			<center title="导入收款数据">
+				<grid width="100%" height="100%">
+					<rows>
+						<row>
+							<cell width="20%">文件上传:</cell>
+							<cell>
+								<textbox mold="rounded" rows="1"
+									readonly="true" value="@load(vm.uploadFlieName)" width="280px" />
+								<button label="浏览..."
+									upload="true,multiple=true" onUpload="@command('browse')" />
+							</cell>
+						</row>
+						<row>
+							<cell colspan="2" align="center">
+								<label
+									value=" (注意：数据的格式不可修改，且流水号必须要有！)" style="color:red" />
+							</cell>
+
+						</row>
+					</rows>
+					<foot>
+						<footer align="center">
+							<button label="提交" id="btSubmit"
+								onClick="@command('upload',win=winCollectImport)" />
+						</footer>
+					</foot>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

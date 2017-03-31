@@ -1,0 +1,53 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="公司解约" border="normal" width="100%"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoBase.CoBase_StopContoller')">
+		<grid width="100%">
+			<columns>
+				<column width="15%" />
+				<column />
+			</columns>
+			<rows>
+				<row>
+					<cell>解约时间</cell>
+					<cell>
+						<datebox value="@bind(vm.st)" />
+					</cell>
+				</row>
+				<row>
+					<cell>解约原因</cell>
+					<cell>
+						<combobox readonly="true"
+							value="@bind(vm.cbm.coba_stopreason)">
+							<comboitem label="自行管理" />
+							<comboitem label="转其他机构管理" />
+							<comboitem label="倒闭" />
+							<comboitem label="转中智委托" />
+							<comboitem label="客户性质变更" />
+							<comboitem label="终止委托" />
+							<comboitem label="长期无人" />
+						</combobox>
+
+					</cell>
+				</row>
+				<row>
+					<cell>备注</cell>
+					<cell>
+						<textbox rows="5" width="80%"
+							value="@bind(vm.cbm.coba_stopremark)" />
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer span="2" align="center">
+					<button label="解约" visible="@load(vm.display)"
+						onClick="@command('submit')" />
+					<label style="color:red;"
+						value="@load(vm.errMessage)" />
+				</footer>
+			</foot>
+		</grid>
+
+	</window>
+</zk>

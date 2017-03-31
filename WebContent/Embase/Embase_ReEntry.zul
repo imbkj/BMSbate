@@ -1,0 +1,6 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="重新入职" border="normal" width="80%" height="80%" closable="true">
+New Content Here!
+</window>
+</zk>

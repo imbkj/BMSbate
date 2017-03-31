@@ -1,0 +1,75 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winDocEmployee" title="员工文件" border="normal"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.DocumentsInfo.DocEmployee_UploadController')"
+		closable="true" sizable="true" width="70%" height="60%">
+		<borderlayout>
+			<north border="0" title="文件上传" collapsible="true"
+				flex="true">
+				<grid width="100%">
+					<rows>
+						<row>
+							<cell align="right" width="40%">
+								<label value="文件类型：" />
+							</cell>
+							<cell width="100%">
+								<combobox id="cbClass" readonly="true" mold="rounded"
+									model="@load(vm.classList)" constraint="no empty:请先选择上传文件的类型。">
+									<template name="model">
+										<comboitem
+											label="@load(each.doin_content)" value="@load(each.doin_id)" />
+									</template>
+								</combobox>
+							</cell>
+						</row>
+
+						<row>
+							<cell align="right" width="40%">
+								<label value="文件目录：" />
+							</cell>
+							<cell width="100%">
+								<textbox mold="rounded" rows="1"
+									readonly="true" value="@load(vm.filename)" />
+								<button label="浏览..."
+									upload="true,multiple=true" onUpload="@command('browse')" />
+							</cell>
+						</row>
+					</rows>
+					<foot>
+						<footer align="center">
+							<button label="提交" id="btSubmit"
+								onClick="@command('upload',class=cbClass)" />
+						</footer>
+					</foot>
+				</grid>
+			</north>
+			<center>
+				<grid id="gdUser" height="100%" emptyMessage="暂无数据"
+					width="100%" mold="paging" pageSize="10"
+					model="@load(vm.picList)">
+					<columns>
+						<column label="序号" align="center"/>
+						<column label="文件类型" align="center" sort="auto(doin_class)" />
+						<column label="文件名" align="center" sort="auto(doin_content)" />
+						<column label="上传用户" align="center" sort="auto(pupi_addname)" />
+						<column label="上传时间" align="center" sort="auto(pupi_addtime)" />
+						<column label="文件大小" align="center" sort="auto(pupi_size)" />
+						<column label="操作" align="center"/>
+					</columns>
+					<template name="model">
+						<row>
+							<label value="${forEachStatus.index + 1}" />
+							<label value="@load(each.doin_class)" />
+							<label value="@load(each.doin_content)" />
+							<label value="@load(each.pupi_addname)" />
+							<label value="@load(each.pupi_addtime)" />
+							<label value="@load(each.pupi_size)" />
+							<label value="下载" style="cursor:pointer" onClick="@command('download',id=each.pupi_id)"/>
+						</row>
+					</template>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

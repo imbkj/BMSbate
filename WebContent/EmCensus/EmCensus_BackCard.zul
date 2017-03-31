@@ -1,0 +1,69 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="还卡" border="normal" width="650px" height="400px" closable="true"
+	apply="org.zkoss.bind.BindComposer" id="win"
+    viewModel="@id('vm') @init('Controller.EmCensus.EmCensus_BorrowCardAuditController')"
+>
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell width="80px">公司简称</cell>
+			<cell><textbox readonly="true" value="@load(vm.bmodel.coba_shortname)"></textbox></cell>
+			<cell width="90px">公司编号</cell>
+			<cell><textbox readonly="true" value="@load(vm.bmodel.cid)"></textbox></cell>
+		</row>
+		<row>
+			<cell width="80px">是否家属借卡</cell>
+			<cell colspan="3"><textbox readonly="true" value="${vm.bmodel.family?'是':'否' }"></textbox></cell>
+		</row>
+		<row if="${vm.bmodel.family}">
+			<cell width="80px">户主姓名</cell>
+			<cell><textbox readonly="true" value="${vm.bmodel.ehbc_wtname }"></textbox></cell>
+			<cell width="90px">户主身份证号</cell>
+			<cell><textbox readonly="true" value="${vm.bmodel.ehbc_wtidcard }"></textbox></cell>
+		</row>
+		<row>
+			<cell width="80px">姓名</cell>
+			<cell><textbox readonly="true" value="@load(vm.bmodel.emhj_name)"></textbox></cell>
+			<cell width="90px">身份证号</cell>
+			<cell><textbox readonly="true" value="@load(vm.bmodel.emhj_idcard)"></textbox></cell>
+		</row>
+		<row>
+			<cell>户口编号</cell>
+			<cell><textbox readonly="true" value="@load(vm.bmodel.emhj_no)"></textbox></cell>
+			<cell>员工状态</cell>
+			<cell><textbox readonly="true" value="@load(vm.bmodel.emba_statename)"></textbox></cell>
+		</row>
+		<row>
+			<cell>还卡类型</cell>
+			<cell colspan="3">
+				<hlayout>
+				<checkbox value="1" label="首页" id="home" checked="${vm.bmodel.ehbc_sy==1}"/>
+				<checkbox value="1" label="户口卡" id="hjcard" checked="${vm.bmodel.ehbc_grhk==1}"/>
+				</hlayout>
+			</cell>
+		</row>
+		<row>
+			<cell>还卡人</cell>
+			<cell><textbox id="backer"/></cell>
+			<cell>还卡时间</cell>
+			<cell><datebox  width="100px" id="backtime"/></cell>
+		</row>
+		<row>
+			<cell>退还押金</cell>
+			<cell><textbox  width="100px" id="bachcash" value="@load(vm.bmodel.ehbc_fee)"/></cell>
+			<cell>归还人才时间</cell>
+			<cell><datebox  width="100px" id="rctime"/></cell>
+		</row>
+		<row>
+			<cell>备注</cell>
+			<cell colspan="3"><textbox width="95%" rows="5" id="remark"/></cell>
+		</row>
+	</rows>
+	<foot>
+		<footer align="center"><button onClick="@command('borrowCardBack',home=home,hjcard=hjcard,remark=remark.value,
+		backer=backer.value,bachcash=bachcash.value,backtime=backtime.value,win=win,rctime=rctime.value)">确认还卡</button></footer>
+	</foot>
+</grid>
+</window>
+</zk>

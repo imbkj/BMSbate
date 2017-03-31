@@ -1,0 +1,49 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<?component name="docDataList" macro-uri="../DocumentsInfo/DocumentsInfo_AddPageList.zul" inline="true"?>
+<zk>
+<window title="查借材料" border="normal" width="80%" closable="true" height="95%"
+	apply="Controller.Archives.Archive_FileConsultController" id="winadd">
+	<radiogroup id="yorn" onCheck=""/>
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell width="80px">员工姓名</cell>
+			<cell><label id="name"></label></cell>
+			<cell width="80px">身份证号</cell>
+			<cell><label id="idcard"></label></cell>
+		</row>
+		<row>
+			<cell width="80px">借阅材料内容</cell>
+			<cell colspan="3">
+				<docDataList id="docGrid" puzu_id="7" gid="10001"
+						dWidth="100%" pUsername="陈耀家" pUserId="248" />
+			</cell>
+		</row>
+		<row>
+			<cell>借用事由</cell>
+			<cell colspan="3">
+				<textbox id="reason" width="80%" rows="5"></textbox>
+			</cell>
+		</row>
+		<row>
+			<cell>备注</cell>
+			<cell colspan="3">
+				<textbox id="remark" width="80%" rows="5"></textbox>
+			</cell>
+		</row>
+		<row>
+			<cell>是否待确定</cell>
+			<cell colspan="3">
+				<hlayout>
+				 <radio id="yes" label="是" value="1" radiogroup="yorn" />
+                 <radio id="no" label="否" value="0" radiogroup="yorn" selected="true"/>
+                 </hlayout>
+			</cell>
+		</row>
+	</rows>
+	<foot>
+		<footer align="center"><button id="summit">提交</button></footer>
+	</foot>
+</grid>
+</window>
+</zk>

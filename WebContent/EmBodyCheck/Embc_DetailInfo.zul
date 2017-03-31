@@ -1,0 +1,135 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="员工体检信息修改" border="normal" width="80%" closable="true"
+		height="80%" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmBodyCheck.Embc_DetailInfoController')">
+		<grid vflex="1">
+			<rows>
+				<row>
+					<cell width="120px">公司名称</cell>
+					<cell>
+						<label value="@load(vm.ecm.embc_company)" />
+
+					</cell>
+					<cell width="120px">员工姓名</cell>
+					<cell>
+						<label value="@load(vm.ecm.embc_name)" />
+					</cell>
+				</row>
+				<row>
+					<cell>身份证号</cell>
+					<cell>
+						<label value="@load(vm.ecm.embc_idcard)" />
+					</cell>
+					<cell>性别</cell>
+					<cell>
+						<label value="@load(vm.ecm.embc_sex)" />
+					</cell>
+				</row>
+				<row>
+					<cell>员工年龄</cell>
+					<cell>
+						<label value="@load(vm.ecm.embc_age)" />
+
+					</cell>
+					<cell>婚姻状况</cell>
+					<cell>
+						<label value="@load(vm.ecm.embc_marry)" />
+
+					</cell>
+				</row>
+				<row>
+
+					<cell>客服</cell>
+					<cell colspan="3">
+						<label value="@load(vm.ecm.embc_client)" />
+
+					</cell>
+				</row>
+				<row>
+					<cell>体检医院</cell>
+					<cell>
+						<label value="@load(vm.ecm.ebcs_hospital)" />
+
+					</cell>
+					<cell>体检类型</cell>
+					<cell>
+						<label value="@load(vm.ecm.ebcl_typename)" />
+
+					</cell>
+				</row>
+				<row>
+					<cell>体检地址</cell>
+					<cell colspan="3">
+						<label value="@load(vm.ecm.ebsa_address)" />
+
+					</cell>
+				</row>
+				<row>
+					<cell>备注</cell>
+					<cell colspan="3">
+						<label value="@load(vm.ecm.embc_remark)" />
+
+					</cell>
+				</row>
+				<row>
+					<cell>预约时间</cell>
+					<cell>
+						<label value="@load(vm.ecm.ebcl_bookdate)" />
+
+					</cell>
+					<cell>预约模式</cell>
+					<cell>
+						<label value="@load(vm.ecm.ebcl_bookmode2)" />
+
+					</cell>
+				</row>
+				<row>
+					<cell>已选项目</cell>
+					<cell colspan="3">
+						<grid id="gd" model="@load(vm.itemlist)"
+							height="300px" width="100%" emptyMessage="没有数据">
+							<columns>
+								<column label="序号" align="center"
+									width="50px" />
+								<column label="项目名称" align="center" />
+								<column label="项目内容" align="center" />
+								<column label="备注" align="center" />
+								<column label="适用范围" align="center" />
+							</columns>
+							<template name="model">
+								<row>
+									<cell>
+										<label
+											value="${forEachStatus.index+1 }">
+										</label>
+									</cell>
+									<cell>
+										<label
+											value="@load(each.ebit_name)">
+										</label>
+									</cell>
+									<cell>
+										<label
+											value="@load(each.ebit_info)">
+										</label>
+									</cell>
+									<cell>
+										<label
+											value="@load(each.ebit_remark)">
+										</label>
+									</cell>
+									<cell>
+										<label
+											value="@load(each.sex)">
+										</label>
+									</cell>
+								</row>
+							</template>
+						</grid>
+					</cell>
+				</row>
+			</rows>
+		</grid>
+	</window>
+</zk>

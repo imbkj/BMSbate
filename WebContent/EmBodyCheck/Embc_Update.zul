@@ -1,0 +1,51 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="员工体检信息批量修改" border="normal" width="60%" height="60%" closable="true"
+	apply="org.zkoss.bind.BindComposer" id="uwin"
+		viewModel="@id('vm') @init('Controller.EmBodyCheck.Embc_UpdateController')"
+>
+<grid vflex="1">
+		<rows>
+			<row>
+			<cell>联系医院时间</cell>
+			<cell><datebox id="declaredate" value="@bind(vm.declaredate)"></datebox></cell>
+			<cell>安排体检时间</cell>
+			<cell><datebox id="plandate" value="@bind(vm.plandate)"></datebox></cell>
+		</row>
+		<row if="false">
+			<cell>领取指引单时间</cell>
+			<cell colspan="3"><datebox id="drawformdate" value="@bind(vm.drawformdate)"></datebox></cell>
+		</row>
+		<row if="false">
+			<cell>签收指引单时间</cell>
+			<cell><datebox id="showformdate" value="@bind(vm.showformdate)"></datebox></cell>
+			<cell>指引单签收人</cell>
+			<cell><textbox id="showformpeople" value="@bind(vm.showformpeople)" ></textbox></cell>
+		</row>
+		<row if="false">
+			<cell visible="false">后道收报告时间</cell>
+			<cell visible="false"><datebox id="drawreportdate" value="@bind(vm.drawreportdate)"></datebox></cell>
+		</row>
+		<row>
+			<cell>福利部领取体检报告时间</cell>
+			<cell colspan="3"><datebox id="completeDate" value="@bind(vm.completeDate)"></datebox></cell>
+		</row>
+		<row if="false">
+			<cell>客服签收报告时间</cell>
+			<cell><datebox id="showreportdate" value="@bind(vm.showreportdate)"></datebox></cell>
+			<cell>收报告人</cell>
+			<cell><textbox id="showreportpeople" value="@bind(vm.showreportpeople)"></textbox></cell>
+		</row>
+		<row>
+			<cell>结算时间</cell>
+			<cell><datebox value="@bind(vm.balancedate)"></datebox></cell>
+			<cell>实际体检费用</cell>
+			<cell><decimalbox id="fee" value="@bind(vm.fee)"></decimalbox></cell>
+		</row>
+		</rows>
+		<foot>
+			<footer align="center"><button onClick="@command('Edit',win=uwin)">提交</button></footer>
+		</foot>
+	</grid>
+</window>
+</zk>

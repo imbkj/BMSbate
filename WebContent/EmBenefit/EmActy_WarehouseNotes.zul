@@ -1,0 +1,95 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="记录" border="normal" width="70%" height="80%" closable="true"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmBenefit.EmActy_WarehouseNoteController')">
+		<groupbox mold="3d" open="true" title="系统修改记录" vflex="1">
+			<grid vflex="1" model="@load(vm.buylist)">
+				<columns>
+					<column label="序号" align="center" width="40px"/>
+					<column label="任务单" align="center" width="180px"/>
+					<column label="总量" align="center"/>
+					<column label="库存变动数" align="center"/>
+					<column label="变动前库存量" align="center"/>
+					<column label="变动后库存量" align="center"/>
+					<column label="备注" align="center"/>
+					<column label="操作人" align="center"/>
+					<column label="操作时间" align="center" width="150px"/>
+				</columns>
+				<rows>
+					<template name="model">
+						<row>
+							<cell>${forEachStatus.index+1 }</cell>
+							<cell>
+								<label value="@load(each.hsnt_tali_name)"></label>
+							</cell>
+							<cell>
+								<label value="@load(each.hsnt_num)"></label>
+							</cell>
+							<cell>
+								<label
+									value="@load(each.hsnt_changenum)">
+								</label>
+							</cell>
+							<cell>
+								<label
+									value="@load(each.hsnt_beforenum)">
+								</label>
+							</cell>
+							<cell>
+								<label
+									value="@load(each.hsnt_afternum)">
+								</label>
+							</cell>
+							<cell>
+								<label
+									value="@load(each.hsnt_remark)">
+								</label>
+							</cell>
+							<cell>
+								<label
+									value="@load(each.hsnt_addname)">
+								</label>
+							</cell>
+							<cell>
+								<label
+									value="@load(each.hsnt_addtime)">
+								</label>
+							</cell>
+						</row>
+					</template>
+				</rows>
+			</grid>
+		</groupbox>
+		<groupbox mold="3d" open="true" title="手动修改记录" vflex="1">
+			<grid vflex="1" model="@load(vm.editlist)">
+				<columns>
+					<column label="序号" align="center" />
+					<column label="修改内容" align="center" />
+					<column label="修改人" align="center" />
+					<column label="修改时间" align="center" />
+				</columns>
+				<rows>
+					<template name="model">
+						<row>
+							<cell>${forEachStatus.index+1 }</cell>
+							<cell>
+								<label value="@load(each.hsnt_editcontent)"></label>
+							</cell>
+							<cell>
+								<label
+									value="@load(each.hsnt_addname)">
+								</label>
+							</cell>
+							<cell>
+								<label
+									value="@load(each.hsnt_addtime)">
+								</label>
+							</cell>
+						</row>
+					</template>
+				</rows>
+			</grid>
+		</groupbox>
+	</window>
+</zk>

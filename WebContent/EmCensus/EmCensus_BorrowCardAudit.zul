@@ -1,0 +1,111 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="借卡审核" border="normal" width="750px" height="650px" closable="true"
+	apply="org.zkoss.bind.BindComposer" id="win"
+    viewModel="@id('vm') @init('Controller.EmCensus.EmCensus_BorrowCardAuditController')"
+>
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell width="80px">公司简称</cell>
+			<cell><textbox readonly="true" value="@load(vm.bmodel.coba_shortname)"></textbox></cell>
+			<cell width="90px">公司编号</cell>
+			<cell><textbox readonly="true" value="@load(vm.bmodel.cid)"></textbox></cell>
+		</row>
+		<row>
+			<cell width="80px">是否家属借卡</cell>
+			<cell colspan="3"><textbox readonly="true" value="${vm.bmodel.family?'是':'否' }"></textbox></cell>
+		</row>
+		<row if="${vm.bmodel.family}">
+			<cell width="80px">户主姓名</cell>
+			<cell><textbox readonly="true" value="${vm.bmodel.emba_name}"></textbox></cell>
+			<cell width="90px">户主身份证号</cell>
+			<cell><textbox readonly="true" value="${vm.bmodel.emba_idcard }"></textbox></cell>
+		</row>
+		<row>
+			<cell width="80px">姓名</cell>
+			<cell><textbox readonly="true" value="@load(vm.bmodel.emhj_name)"></textbox></cell>
+			<cell width="90px">身份证号</cell>
+			<cell><textbox readonly="true" value="@load(vm.bmodel.emhj_idcard)"></textbox></cell>
+		</row>
+		<row>
+			<cell width="90px">员工编号</cell>
+			<cell colspan="3"><textbox readonly="true" value="${vm.bmodel.gid }"></textbox></cell>
+		</row>
+		<row>
+			<cell>户口编号</cell>
+			<cell><textbox readonly="true" value="@load(vm.bmodel.emhj_no)"></textbox></cell>
+			<cell>员工状态</cell>
+			<cell><textbox readonly="true" value="@load(vm.bmodel.emba_statename)"></textbox></cell>
+		</row>
+		<row>
+			<cell>借卡类型</cell>
+			<cell colspan="3">
+				<hlayout>
+				<checkbox value="1" label="首页" id="home" checked="${vm.bmodel.ehbc_sy==1}"/>
+				<checkbox value="1" label="首页复印件" id="homecopy" checked="${vm.bmodel.ehbc_syfy==1}"/>
+				<checkbox value="1" label="户口卡" id="hjcard" checked="${vm.bmodel.ehbc_grhk==1}"/>
+				</hlayout>
+			</cell>
+		</row>
+		<row>
+			<cell>借卡时间</cell>
+			<cell colspan="3"><datebox id="borrowtime"/></cell>
+		</row>
+		<row>
+			<cell>后补押金</cell>
+			<cell colspan="3">
+				<combobox id="ifhbu">
+					<comboitem label="是"/>
+					<comboitem label="否"/>
+				</combobox>
+			</cell>
+		</row>
+		<row>
+			<cell>借卡押金</cell>
+			<cell><textbox  width="100px" id="cash"/></cell>
+			<cell>借卡人</cell>
+			<cell><textbox  width="100px" id="borrowhand" value="@load(vm.bmodel.emhj_name)"/></cell>
+		</row>
+		<row>
+			<cell>押金缴交方式</cell>
+			<cell>
+				<combobox width="110px" id="cashtype">
+					<comboitem label="现金"/>
+					<comboitem label="汇款"/>
+				</combobox>
+			</cell>
+			<cell>是否委托他人</cell>
+			<cell>
+				<combobox width="110px" id="ifother" onChange="@command('rwvisible',rw=rw,val=self.value)">
+					<comboitem label="是"/>
+					<comboitem label="否"/>
+				</combobox>
+			</cell>
+		</row>
+		<row visible="false" id="rw">
+			<cell>委托人姓名</cell>
+			<cell><textbox  width="100px" id="wtname"/></cell>
+			<cell>委托人身份证号</cell>
+			<cell><textbox  width="100px" id="wtidcard"/></cell>
+		</row>
+		<row>
+			<cell>借卡理由</cell>
+			<cell colspan="3"><textbox width="95%" rows="5" id="borrowreason" value="@load(vm.bmodel.ehbc_case)"/></cell>
+		</row>
+		<row>
+			<cell>备注</cell>
+			<cell colspan="3"><textbox width="95%" rows="5" id="flremark"/></cell>
+		</row>
+	</rows>
+	<foot>
+		<footer align="center">
+			<button onClick="@command('borrowemCensusAudit',home=home,homecopy=homecopy,hjcard=hjcard,
+		borrowtime=borrowtime.value,cash=cash.value,borrowhand=borrowhand.value,ifhbu=ifhbu.value,
+		cashtype=cashtype.value,borrowreason=borrowreason.value,flremark=flremark.value,ifother=ifother.value,win=win)">审核通过</button>
+			<button onClick="@command('cancel',win=win)">取消办理</button>
+		</footer>
+	</foot>
+</grid>
+</window>
+</zk>

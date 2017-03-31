@@ -1,0 +1,55 @@
+<?page title="社保字典库导出" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="社保字典库导出" border="normal" width="99%" height="99%"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.SocialInsurance.SocialExportController')"
+		closable="true" sizable="true">
+		<borderlayout>
+			<north border="0">
+				<label value="导出城市:" />
+			</north>
+			<center border="0">
+				<grid height="100%" emptyMessage="暂无数据"
+					model="@load(vm.cityList)" width="100%">
+					<columns>
+						<column label="序号" width="40px" align="center" />
+						<column label="城市" align="center"
+							sort="auto(name)" />
+						<column label="现用算法总数" width="100px"
+							align="center" sort="auto(cou)" />
+						<column width="40px" align="center">
+							<checkbox checked="@bind(vm.checkAll)"
+								onClick="@command('checkAll')" />
+						</column>
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<cell align="center">
+									<label
+										value="${forEachStatus.index + 1}" />
+								</cell>
+								<cell align="center">
+									<label value="@load(each.name)" />
+								</cell>
+								<cell align="center">
+									<label value="@load(each.cou)" />
+								</cell>
+								<cell align="center">
+									<checkbox
+										checked="@bind(each.check)" />
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</center>
+			<south border="0">
+				<box align="center" width="100%" pack="center">
+					<button label="导出社保算法"
+						onClick="@command('exportData')" />
+				</box>
+			</south>
+		</borderlayout>
+	</window>
+</zk>

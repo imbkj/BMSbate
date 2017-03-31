@@ -1,0 +1,134 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="员工公积金 - 停交" id="winStop" border="normal"
+		closable="true" width="800px" height="480px"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmHouse.EmHouse_StopController')"
+		onCreate="@command('winC',a=self)">
+		<scrollview>
+			<groupbox title="个人信息" mold="3d">
+				<grid>
+					<columns visible="false">
+						<column width="120px" />
+						<column />
+						<column width="120px" />
+						<column />
+					</columns>
+					<rows>
+						<row>
+							<cell>公司名称</cell>
+							<cell>
+								${vm.ecm.emhc_company}(${vm.ecm.cid})
+							</cell>
+							<cell>姓名</cell>
+							<cell>
+								${vm.ecm.emhc_name}(${vm.ecm.gid})
+
+								<label style="color:blue;cursor:pointer;"
+									value="(联系员工)" onClick="@command('link')" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox title="参保信息" mold="3d">
+
+				<grid>
+					<rows>
+						<row>
+							<cell width="100px">服务终止月份</cell>
+							<cell>
+								<combobox value="@bind(vm.ecm.stopmonth)" readonly="true"
+									mold="rounded" model="@load(vm.ownmonthList)">
+									<template name="model">
+										<comboitem
+											label="@load(each)">
+										</comboitem>
+									</template>
+								</combobox>
+							</cell>
+							<cell width="100px">参保人手机</cell>
+							<cell>
+								<label
+									value="@load(vm.ecm.emhc_mobile)" />
+							</cell>
+						</row>
+						<row>
+							<cell>单位公积金编号</cell>
+							<cell>
+								<label
+									value="@load(vm.ecm.emhc_companyid)" />
+							</cell>
+							<cell>个人公积金编号</cell>
+							<cell>
+								<label
+									value="@load(vm.ecm.emhc_houseid)" />
+							</cell>
+
+						</row>
+						<row>
+							<cell>户籍</cell>
+							<cell>
+								<label value="@load(vm.ecm.emhc_hj)" />
+							</cell>
+							<cell>缴存工资基数</cell>
+							<cell>
+								<label value="@load(vm.ecm.emhc_radix)" />
+							</cell>
+						</row>
+						<row>
+							<cell>单位交比例</cell>
+							<cell>
+								<label value="@load(vm.ecm.emhc_cpp)" />
+							</cell>
+							<cell>个人交比例</cell>
+							<cell>
+								<label value="@load(vm.ecm.emhc_opp)" />
+							</cell>
+						</row>
+						<row>
+							<cell>职称</cell>
+							<cell>
+								<label value="@load(vm.ecm.emhc_title)" />
+							</cell>
+							<cell>最高学历</cell>
+							<cell>
+								<label
+									value="@load(vm.ecm.emhc_degree)" />
+							</cell>
+						</row>
+						<row>
+							<cell>配偶姓名</cell>
+							<cell>
+								<label
+									value="@load(vm.ecm.emhc_wifename)" />
+							</cell>
+							<cell>配偶身份证</cell>
+							<cell>
+								<label
+									value="@load(vm.ecm.emhc_wifeidcard)" />
+							</cell>
+						</row>
+						
+						<row>
+							<cell>
+								<label>备注</label>
+							</cell>
+							<cell colspan="3">
+								<textbox id="remark" width="80%"
+									rows="5" value="@bind(vm.ecm.emhc_remark)" mold="rounded" />
+							</cell>
+
+						</row>
+					</rows>
+					<foot>
+						<footer align="center">
+							<button label="提交"
+								onClick="@command('submit')" />
+						</footer>
+					</foot>
+				</grid>
+			</groupbox>
+		</scrollview>
+	</window>
+</zk>

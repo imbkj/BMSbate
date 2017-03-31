@@ -1,0 +1,275 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winep" title="员工报价单分配" border="normal" width="100%"
+		closable="true" height="100%" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoCompact.Embase_CompactAllotController')"
+		onCreate="@command('winCa',a=self)">
+		<borderlayout>
+			<east width="30%" open="false" collapsible="true"
+				title="合同报价单">
+				<borderlayout>
+					<north height="50%">
+						<grid width="100%" height="100%"
+							emptyMessage="无数据" model="@load(vm.coList)">
+							<columns>
+
+								<column align="center">合同编号</column>
+								<column align="center" width="80px"></column>
+							</columns>
+							<template name="model">
+								<row>
+									<cell>
+										<label
+											value="@load(each.coco_compactid)" />
+									</cell>
+									<cell>
+										<checkbox
+											checked="@bind(each.checked)"
+											onClick="@command('searchProduct',a=true)" />
+									</cell>
+								</row>
+							</template>
+						</grid>
+					</north>
+					<center>
+						<grid tooltip="报价单列表" width="100%" height="100%"
+							emptyMessage="无数据" model="@load(vm.cofList)">
+							<columns>
+
+								<column align="center">报价单</column>
+								<column align="center" width="80px"></column>
+							</columns>
+							<template name="model">
+								<row>
+									<cell>
+										<label
+											value="@load(each.coof_name)" />
+									</cell>
+									<cell>
+										<checkbox
+											checked="@bind(each.checked)"
+											onClick="@command('searchProduct')" />
+									</cell>
+								</row>
+							</template>
+						</grid>
+					</center>
+				</borderlayout>
+			</east>
+			<center>
+				<borderlayout height="100%">
+					<north height="40%" splittable="true">
+						<grid id="emp" width="100%" height="100%"
+							sizedByContent="true" span="true" emptyMessage="无数据"
+							model="@load(vm.ebList2)">
+							<columns>
+								<column align="center" width="80px">
+									服务地区
+									<textbox width="80px"
+										value="@bind(vm.ebm.emba_wt)" instant="true"
+										onChange="@command('searchEmp')" />
+								</column>
+								<column align="center" width="80px">
+									员工编号
+									<textbox value="@bind(vm.ebm.gid)"
+										width="80px" instant="true" onChange="@command('searchEmp')" />
+								</column>
+								<column align="center">
+									姓名
+									<textbox
+										value="@bind(vm.ebm.emba_name)" instant="true"
+										onChange="@command('searchEmp')" />
+								</column>
+								<column align="center">
+									身份证
+									<textbox
+										value="@bind(vm.ebm.emba_idcard)" instant="true"
+										onChange="@command('searchEmp')" />
+								</column>
+								<column align="center">性别</column>
+								<column width="20px" align="center">
+									<checkbox id="cka"
+										checked="@bind(vm.empChecked)"
+										onClick="@command('checkAllEmp',a=self)" />
+								</column>
+							</columns>
+							<template name="model">
+								<row>
+									<cell>
+										<label
+											value="@load(each.emba_wt)" />
+									</cell>
+									<cell>
+										<label value="@load(each.gid)" />
+									</cell>
+									<cell>
+										<label
+											value="@load(each.emba_name)" />
+									</cell>
+									<cell>
+										<label
+											value="@load(each.emba_idcard)" />
+									</cell>
+									<cell>
+										<label
+											value="@load(each.emba_sex)" />
+									</cell>
+									<cell>
+										<checkbox
+											checked="@bind(each.checked)"
+											onClick="@command('checkEmp',a=each)" />
+									</cell>
+								</row>
+							</template>
+							<foot>
+								<footer span="5" align="center"
+									valign="bottom">
+									<hbox>
+										已选
+										<label style="color:red"
+											value="@load(vm.empnum)" />
+										人,
+										<label style="color:red"
+											value="@load(vm.empItem)" />
+										个项目,
+										<label
+											visible="@load(vm.ebm.top)" value="@load(vm.toolTips)" />
+										<intbox width="50px"
+											visible="@load(vm.ebm.top)" value="@bind(vm.maxNum)" />
+										<button label="刷新人数"
+											visible="@load(vm.ebm.top)" onClick="@command('research')" />
+
+										<combobox id="sItem"
+											width="80px" value="@bind(vm.selectItem)"
+											model="@load(vm.cglist)" onChange="@command('searchEmp')"
+											instant="true" readonly="true">
+											<template name="model">
+												<comboitem
+													label="@load(each.coli_name)" />
+											</template>
+										</combobox>
+										<combobox id="allot"
+											width="80px" value="全部" onChange="@command('searchEmp')"
+											instant="true" readonly="true">
+											<comboitem value="2"
+												label="全部" />
+											<comboitem value="0"
+												label="未分配" />
+											<comboitem value="1"
+												label="已分配" />
+										</combobox>
+									</hbox>
+								</footer>
+							</foot>
+						</grid>
+
+					</north>
+
+					<center>
+						<listbox id="cp" hflex="1" vflex="1"
+							sizedByContent="true" span="true" emptyMessage="无数据"
+							model="@load(vm.cfList2)">
+							<listhead>
+								<listheader align="center">
+									序号
+								</listheader>
+								<listheader align="center">
+									报价单
+								</listheader>
+								<listheader align="center">
+									产品类型
+								</listheader>
+								<listheader align="center">
+									地区
+									<textbox width="60px"
+										value="@bind(vm.cfm.coli_city)" instant="true"
+										onChange="@command('searchProduct')" />
+								</listheader>
+								<listheader align="center">
+									产品名称
+									<textbox
+										value="@bind(vm.cfm.coli_name)" instant="true"
+										onChange="@command('searchProduct')" />
+								</listheader>
+								<listheader align="center">
+									服务起始时间
+								</listheader>
+								<listheader align="center">
+									收费起始时间
+								</listheader>
+								<listheader align="center"
+									width="80px">
+									<checkbox id="ckap"
+										checked="@bind(vm.productChecked)"
+										onClick="@command('checkAP')" />
+								</listheader>
+							</listhead>
+							<template name="model">
+								<listitem>
+									<listcell
+										onClick="@command('checkproduct',a=each)">
+										${forEachStatus.index + 1 }
+									</listcell>
+									<listcell
+										onClick="@command('checkproduct',a=each)">
+										<label
+											value="${each.coof_name}" />
+									</listcell>
+									<listcell
+										onClick="@command('checkproduct',a=each)">
+										<label
+											value="${each.coli_pclass}" />
+									</listcell>
+									<listcell
+										onClick="@command('checkproduct',a=each)">
+										<label
+											value="${each.coli_city}" />
+									</listcell>
+									<listcell
+										onClick="@command('checkproduct',a=each)">
+										<hbox>
+											<label
+												value="${each.coli_name}" />
+											<label style="color:blue;"
+												value="${each.coco_gs}" />
+										</hbox>
+									</listcell>
+									<listcell>
+										<monthbox format="yyyyMM"
+											readonly="true" value="${each.cgli_startdate2 }"
+											onChange="@command('updateInfo',a=each,b=1,c=self)" />
+										<image src="../images/130.gif"
+											style="cursor:pointer;"
+											onClick="@command('copysd',a=1,b=each.cgli_startdate2,rowIndex=forEachStatus.index)" />
+									</listcell>
+									<listcell>
+										<monthbox format="yyyyMM"
+											readonly="true" value="${each.cgli_startdate }"
+											onChange="@command('updateInfo',a=each,b=2,c=self)" />
+										<image src="../images/130.gif"
+											style="cursor:pointer;"
+											onClick="@command('copysd',a=2,b=each.cgli_startdate,rowIndex=forEachStatus.index)" />
+									</listcell>
+									<listcell>
+										<checkbox
+											checked="@bind(each.checked)"
+											onClick="@command('checkproduct',a=each)" />
+									</listcell>
+								</listitem>
+							</template>
+							<listfoot>
+								<listfooter span="8" align="center">
+									<button label="重选项目"
+										onClick="@command('submit',a=1)" />
+									<button label="补充项目"
+										onClick="@command('submit',a=2)" />
+								</listfooter>
+
+							</listfoot>
+						</listbox>
+					</center>
+				</borderlayout>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

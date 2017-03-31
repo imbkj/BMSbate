@@ -1,0 +1,100 @@
+<!--
+	创建人：林少斌
+	创建时间：2013-10-17
+	用途：公司信息修改列表页面
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="公司信息 -- 管理页面" border="normal" width="100%"
+		height="100%" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoBase.CoBase_UpdateListController')">
+		<borderlayout vflex="1">
+			<north border="0" title="数据查询" collapsible="true"
+				flex="true" open="true">
+				<panel border="1">
+					<panelchildren style="padding:5px;">
+							<grid height="50px">
+							<rows>
+								<row>
+							<cell style="color:#666;" align="center" >
+
+								<combobox id="combo" width="50%"
+									autodrop="true" buttonVisible="false"
+											 mold="rounded" value="" 
+											 popup="pop_coof_name"
+											 onChange="@command('search')" onOK="@command('search')"
+									value="@bind(vm.strwhere)"
+											/>
+								<zscript><![CDATA[
+	/*Dictionary.getDictionary() returns a String[] containing the dictionary words*/
+	ListModel dictModel = new SimpleListModel(
+			bll.CoBase.CoBase_SelectBll.searchcobaselists());
+	combo.setModel(dictModel);
+]]></zscript>
+								<popup id="pop_coof_name">
+									可输入拼音/CID/公司简称  查询
+								</popup>
+							</cell>
+
+
+						</row>
+							</rows>
+						</grid>
+					</panelchildren>
+				</panel>
+			</north>
+			<center>
+				<grid width="100%" height="100%"
+					model="@load(vm.cobaBaseList)" emptyMessage="无数据" mold="paging"
+					pageSize="20">
+					<columns sizable="true">
+						<column label="序号" align="center" width="60px" />
+						<column label="公司编号" align="center"
+							sort="auto(cid)" />
+						<column label="公司名称" align="center"
+							sort="auto(coba_company)" />
+						<column label="客服代表" align="center"
+							sort="auto(coba_client)" />
+						<column label="操作" align="center" width="60px" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<label
+									value="${forEachStatus.index + 1}" />
+								<label value="@load(each.cid)" />
+								<label value="@load(each.coba_company)" />
+								<label value="@load(each.coba_client)" />
+								
+								<menubar autodrop="true">
+									<menu
+										image="../images/pencil-small.png">
+										<menupopup>
+											<menuitem label="修改基本信息"
+												onClick="@command('openZUL',url='CoBaseInfo_Update.zul',cobaM=each)" />
+											<menuseparator />
+											<menuitem label="联系人管理"
+												onClick="@command('openLinkMan_CtrlList', cid=each.cid)" />
+											<menuseparator />
+											<menuitem label="新增合同信息"
+												onClick="@command('AddCompany',cobaM=each)" />
+											<menuitem label="修改财务信息"
+												onClick="@command('openZUL',url='CoBaseCS_Update.zul',cobaM=each)" />
+											<menuitem label="修改注册信息"
+												onClick="@command('openZUL',url='CoBaseReg_Update.zul',cobaM=each)" />
+											<!-- <menuseparator />
+											<menuitem label="预增员工"
+												onClick="@command('addem',a=1,cobaM=each)" />
+											<menuitem label="新增员工"
+												onClick="@command('addem',a=2,cobaM=each)" /> -->
+										</menupopup>
+									</menu>
+								</menubar>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

@@ -1,0 +1,9 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<?component name="docDataList" macro-uri="../DocumentsInfo/DocumentsInfo_AddPageList.zul" inline="true"?>
+<zk>
+<window border="0" apply="org.zkoss.bind.BindComposer" id="datawin"
+		viewModel="@id('vm') @init('Controller.EmReg.datalistController')">
+<docDataList id="docGrid" gid="10001" puzu_id="${param.pubid}"
+	dWidth="100%" pUsername="陈耀家" pUserId="248" />
+</window>
+</zk>

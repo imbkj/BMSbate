@@ -1,0 +1,153 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="个人支付列表" border="normal"
+		apply="org.zkoss.bind.BindComposer" width="100%" height="100%"
+		viewModel="@id('vm') @init('Controller.EmPay.EmPa_ManagerListController')">
+		<borderlayout height="100%">
+			<north border="0" title="检索" collapsible="true" flex="true"
+				style="padding-bottom:10px;">
+				<grid width="100%" height="100%">
+					<rows>
+						<row>
+							<cell width="80px">支付单号</cell>
+							<cell>
+								<textbox mold="rounded"
+									value="@bind(vm.m.empa_number)">
+								</textbox>
+							</cell>
+							<cell width="80px">帐款所属期</cell>
+							<cell>
+								<monthbox format="yyyyMM" mold="rounded"
+									id="ownmonth" />
+							</cell>
+							<cell width="80px">添加人</cell>
+							<cell>
+								<textbox mold="rounded"
+									value="@bind(vm.m.empa_addname)">
+								</textbox>
+							</cell>
+							<cell width="60px">添加时间</cell>
+							<cell>
+								<datebox value="@bind(vm.m.addtime)" mold="rounded"/>
+							</cell>
+
+						</row>
+						<row>
+							<cell>公司名称</cell>
+							<cell>
+								<textbox mold="rounded"
+									value="@bind(vm.m.coba_company)" />
+							</cell>
+							<cell>员工姓名</cell>
+							<cell>
+								<textbox mold="rounded"
+									value="@bind(vm.m.name)" />
+							</cell>
+							<cell></cell>
+							<cell></cell>
+							<cell></cell>
+							<cell></cell>
+
+						</row>
+					</rows>
+					<foot>
+						<footer align="center">
+							<button
+								onClick="@command('search',ownmonth=ownmonth.value)">
+								查询
+							</button>
+						</footer>
+					</foot>
+				</grid>
+			</north>
+			<center>
+				<grid width="100%" height="100%" model="@load(vm.list)" id="gd"
+					emptyMessage="没有数据" mold="paging" pageSize="500">
+					<columns>
+						<column label="序号" width="40px" align="center" />
+						<column label="支付单号" align="center" />
+						<column label="公司名称" align="center" />
+						<column label="姓名" align="center" />
+						<column label="帐款所属期" align="center"></column>
+						<column label="支付总金额" align="center" />
+						<column label="个人所得税总金额" align="center" />
+						<column label="税后总金额" align="center" />
+						<column label="添加人" align="center"
+							width="140px" />
+						<column label="添加时间" align="center"></column>
+						<column label="状态" align="center"></column>
+						<column label="操作" width="80px"
+							align="center">
+						</column>
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<cell>
+									<label
+										value="${forEachStatus.index+1 }">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.empa_number)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.coba_company)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.empa_name)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ownmonth)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.empa_aftertaxtotal)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.empa_taxtotal)">
+									</label>
+								</cell>
+
+								<cell>
+									<label
+										value="@load(each.empa_feetotal)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.empa_addname)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.empa_addtime)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.state_name)">
+									</label>
+								</cell>
+								<cell>
+									<button label="审批"
+										onClick="@command('singleUpdate',model=each)" />
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

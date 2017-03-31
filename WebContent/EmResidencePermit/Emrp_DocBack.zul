@@ -1,0 +1,27 @@
+<?page title="材料退回" contentType="text/html;charset=UTF-8"?>
+<!-- 调用内联页的文件名 -->
+<?component name="docDataList" macro-uri="/DocumentsInfo/DocumentsInfo_UpPageList.zul" inline="true"?>
+<zk>
+	<window id="win" title="材料退回" border="normal" height="350px"
+		width="700px" closable="true" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmResidencePermit.Emrp_DocBackController')">
+		<div height="100%">
+			<grid>
+				<rows>
+					<row>材料</row>
+					<row>
+						<!-- 材料内联页 参数：puzu_id：模块页面id，doc_type：员工(g)还是公司(c)，
+							gid：公司数据则插入空白，业务表id,log_url：获取到页面路径的前部分 -->
+						<docDataList id="docGrid" puzu_id="34"
+							doc_type="g" gid="${vm.gid }" tid="${vm.daid }"
+							log_url="/DocumentsInfo/" dHeight="230px" dWidth="100%" />
+					</row>
+				</rows>
+			</grid>
+			<hbox width="100%" pack="center" align="center">
+				<button label="提交"
+					onClick="@command('submit',win=win,gd=docGrid)" />
+			</hbox>
+		</div>
+	</window>
+</zk>

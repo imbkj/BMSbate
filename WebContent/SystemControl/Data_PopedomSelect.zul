@@ -1,0 +1,100 @@
+<?page title="数据权限查询" contentType="text/html;charset=UTF-8"?>
+<zk>
+<panel title="数据权限查询" border="normal" width="100%" apply="org.zkoss.bind.BindComposer" sizable="true"  height="100%"  viewModel="@id('Data_PopedomSelect') @init('Controller.SystemControl.Data_PopedomSelectController')" >
+<panelchildren>
+<style src="/css/style.css"></style>
+<borderlayout  vflex="1">
+<north border="0" title="数据查询" flex="true" open="true">
+	   <vlayout  width="100%" >
+                    <panel border="1">
+                        <panelchildren style="padding:5px;">
+                            <vbox width="100%" >
+                            <grid width="100%" >
+        					<rows width="100%">
+            				<row style="background:#F7F7F7;">
+            				<hlayout>
+            				<label value="查询对象:" />
+            				<combobox id="selectcon" style="padding-right:5px;" model="@load(Data_PopedomSelect.loginlist)"  value="@bind(Data_PopedomSelect.log_name)"  onChange="@command('search')"  mold="rounded"> 
+           					 	<template name="model">
+									<comboitem label="@load(each.log_name)" />
+								</template>
+							</combobox>
+							</hlayout>
+							</row>
+       		 				</rows>
+       		 				
+    						</grid>
+                            </vbox>
+                        </panelchildren>
+                    </panel>
+         </vlayout>
+</north>
+<center  style="height:650px;" flex="true">
+<grid   model="@load(Data_PopedomSelect.dataPopedomlist)" id="gridwin"
+            emptyMessage="暂无符合条件数据" mold="paging" pageSize="300" height="300px" hflex="1" style="border:0;">
+ 		<auxhead sclass="category-center">
+				<auxheader label="权限列表" colspan="8" />
+			</auxhead>
+		<columns sizable="true">
+				<column align="center" label="序号" width="5%"/>
+                <column align="center" sort="auto(cid)">
+               	   公司编号
+                <textbox id="cocid" instant="true"
+						value="@bind(Data_PopedomSelect.cocid)" onChange="@command('search')"  mold="rounded">
+				</textbox>
+                </column>
+                <column align="center" sort="auto(coba_shortname)" >
+                	公司简称
+                <textbox id="coshortname" instant="true" width="50%"
+						value="@bind(Data_PopedomSelect.coshortname)" onChange="@command('search')"  mold="rounded">
+				</textbox>
+                 </column>
+                <column align="center"  sort="auto(coba_client)">
+            	    客服
+                <textbox id="coclinet" instant="true" width="50%"
+						value="@bind(Data_PopedomSelect.coclinet)" onChange="@command('search')"  mold="rounded" >
+				</textbox>
+                 </column>
+                <column align="center" >
+                	查询权限	
+                
+				</column>
+                <column align="center" >
+                	修改权限
+             
+                 </column>
+                <column align="center">
+             	   删除权限
+               
+                 </column>
+                 <column align="center" sort="auto(dat_addname)">
+                	  添加人
+                 <textbox id="coaddname" instant="true" width="50%"
+						value="@bind(Data_PopedomSelect.coaddname)" onChange="@command('search')" mold="rounded" >
+				</textbox>
+                  </column>
+                <column align="center" label=" 添加时间" sort="auto(dat_addtime)"/>
+        </columns>
+			  <template name="model">
+			 <row>
+			 		<label value="@load(forEachStatus.index + 1)" />
+                    <label value="@load(each.cid)" />
+                    <label value="@load(each.coba_shortname)"/>
+                    <label value="@load(each.coba_client)"/>
+                    <label value="@load(each.dat_selected)"/>
+                    <label value="@load(each.dat_edited)"/>
+                    <label value="@load(each.dat_delete)"/>
+                    <label value="@load(each.dat_addname)"/>
+                    <label value="@load(each.dat_addtime)"/>
+                                 
+                </row>	
+			  </template>
+		
+		
+	</grid>
+</center>
+<south></south>
+</borderlayout>
+</panelchildren>
+</panel>
+</zk>

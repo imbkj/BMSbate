@@ -1,0 +1,102 @@
+<?page title="补缴社保" contentType="text/html;charset=UTF-8"?>
+<?component name="embase" macro-uri="Emsi_EmBase.zul" inline="true"?>
+<zk>
+	<window id="winEmsiBj" title="补缴社保" border="normal"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmSheBao.Emsi_BjStep3Controller')"
+		height="98%" width="98%" closable="true" sizable="true"
+		maximizable="true">
+		<div width="100%" height="100%" if="${vm.existsShebao}"
+			align="center">
+			<label value="${vm.existsMessage}" />
+		</div>
+		<borderlayout if="${!vm.existsShebao}">
+			<north title="个人信息" border="none">
+				<embase gid="${vm.gid}" name="${vm.sbModel.esiu_name}" />
+			</north>
+			<center title="参保信息" border="none">
+				<grid width="100%" height="100%">
+					<rows>
+						<row>
+							所属月份
+							<cell>
+								<vlayout>
+									<label value="@load(vm.ownmonth)" />
+									<!-- 									<image src="../images/gif-0293.gif" -->
+									<!-- 										border="0" style="cursor:help" if="${vm.isIfStop()}" -->
+									<!-- 										tooltiptext="当月已过申报截止日，系统自动将所属月份顺延至下月，请找客服确认" /> -->
+									<label
+										value="当月已过申报截止日，系统自动将所属月份顺延至下月，请找客服确认" if="${vm.isIfStop()}"
+										style="color:red;" />
+								</vlayout>
+							</cell>
+							电脑号
+							<cell>
+								<label
+									value="@load(vm.sbModel.esiu_computerid)" />
+							</cell>
+						</row>
+						<row>
+							补缴项目
+							<cell>
+								<label value="养老保险" />
+							</cell>
+							收费月份
+							<cell>
+								<label value="@load(vm.feemonth)" />
+							</cell>
+						</row>
+						<row>
+							<cell colspan="4" align="center">
+								<grid span="true"
+									model="@load(vm.bjList)" emptyMessage="无数据" width="80%"
+									height="100%">
+									<rows>
+										<template name="model">
+											<row>
+												补缴月份
+												<cell>
+													<label
+														value="@load(each.emsb_startmonth)" />
+												</cell>
+												补缴基数
+												<cell>
+													<label
+														value="@load(each.emsb_radix)" />
+												</cell>
+												是否待确认
+												<cell colspan="2">
+													<radiogroup
+														onCheck='@command("checkDeclare",declare=self.selectedItem.value,m=each)'>
+														<radio label="是"
+															value="4" />
+														<radio label="否"
+															value="0" checked="true" />
+													</radiogroup>
+												</cell>
+												<cell colspan="2">
+													<hbox>
+														<checkbox disabled="true"
+															checked="@load(each.chk_jlbj)" />
+														<label
+															value="存在医疗补交" />
+													</hbox>
+												</cell>
+											</row>
+										</template>
+									</rows>
+								</grid>
+							</cell>
+						</row>
+					</rows>
+					<foot>
+						<footer align="center">
+							<button label="提交" id="btSubmit"
+								onClick="@command('bj',win=winEmsiBj)" />
+						</footer>
+					</foot>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

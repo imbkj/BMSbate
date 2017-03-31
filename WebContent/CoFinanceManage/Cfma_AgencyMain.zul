@@ -1,0 +1,159 @@
+<?page title="机构收款主页" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="机构收款" border="normal" width="99%" height="99%"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoFinanceManage.Cfma_AgencyMainController')"
+		closable="true" sizable="true">
+		<div>
+			<grid>
+				<rows>
+					<row>
+						<cell>
+							<label value="省份：" />
+						</cell>
+						<cell>
+							<label value="@load(vm.cfagModel.province)"
+								style="color:blue;" />
+						</cell>
+						<cell>
+							<label value="城市：" />
+						</cell>
+						<cell>
+							<label value="@load(vm.cfagModel.city)"
+								style="color:blue;" />
+						</cell>
+						<cell>
+							<label value="机构名称：" />
+						</cell>
+						<cell>
+							<label value="@load(vm.cfagModel.coab_name)"
+								style="color:blue;" />
+						</cell>
+					</row>
+				</rows>
+			</grid>
+		</div>
+		<borderlayout>
+			<north title="机构台账统计" border="none" collapsible="true"
+				splittable="true">
+				<grid>
+					<rows>
+						<row>
+							<cell width="10%">
+								<label value="总应收合计：" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.cfagModel.totalReceivable)" />
+							</cell>
+							<cell>
+								<label value="总实收：" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.cfagModel.totalPaidIn)"
+									style="cursor:pointer;text-decoration:underline"
+									onClick="@command('collectLog')" />
+							</cell>
+							<cell>
+								<label value="差额：" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.cfagModel.totalImbalance)"
+									style="color:red;font-size:20px;" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="机构余额：" />
+							</cell>
+							<cell align="left">
+								<label
+									value="@load(vm.cfagModel.cfat_Balance)"
+									style="color:blue;font-size:20px;" />
+							</cell>
+							<cell>
+								<label value="冲销金额：" />
+							</cell>
+							<cell colspan="3" align="left">
+								<label
+									value="@load(vm.cfagModel.totalWriteOffEx)"/>
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="综合操作：" />
+							</cell>
+							<cell colspan="5">
+								<button label="机构收款"
+									onClick="@command('AgencyCollect')" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</north>
+			<center title="账单信息" border="none">
+				<grid span="true" mold="paging" model="@load(vm.mbList)"
+					pageSize="10" emptyMessage="暂未生成账单" sizedByContent="true" hflex="1"
+					height="100%">
+					<columns sizable="true">
+						<column label="序号" align="center" />
+						<column label="所属月份" sort="auto(ownmonth)"
+							align="center" />
+						<column label="账单编号" sort="auto(cfab_number)"
+							align="center" />
+						<column label="应收金额"
+							sort="auto(totalReceivable)" align="center" />
+						<column label="实收金额" sort="auto(cfab_PaidIn)"
+							align="center" />
+						<column label="冲销金额"
+							sort="auto(cfab_WriteOffEx)" align="center" />
+						<column label="差额" sort="auto(imbalance)"
+							align="center" />
+						<column label="销账情况" sort="auto(writeOffs)"
+							align="center" />
+						<column label="操作" align="center" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<label
+									value="${forEachStatus.index + 1}" />
+								<label value="@load(each.ownmonth)" />
+								<label value="@load(each.cfab_number)"
+									style="cursor:pointer;color:#00F;"
+									onClick="@command('viewBill',cfab_number=self.value)" />
+								<label
+									value="@load(each.totalReceivable)" />
+								<label value="@load(each.cfab_PaidIn)" />
+								<label
+									value="@load(each.cfab_WriteOffEx)" />
+								<label value="@load(each.imbalance)"
+									style="color:red;" />
+								<label value="@load(each.writeOffsStr)"
+									style="${each.writeOffs==0?'color:red;':'color:#00F;' }" />
+								<menubar autodrop="true" width="50px">
+									<menu
+										image="../images/pencil-small.png">
+										<menupopup>
+											<menuitem label="账单收款"
+												onClick="@command('billCollect',cfab_number=each.cfab_number)"
+												if="${each.writeOffs==0 and each.imbalance lt 0?true:false}" />
+											<menuitem label="领款"
+												onClick="@command('distribution',cfab_number=each.cfab_number)"
+												if="${each.writeOffs==0 and each.imbalance lt 0?true:false}" />
+											<menuitem label="核销"
+												onClick="@command('ChargeOff',m=each)"
+												if="${each.writeOffs==0 and each.imbalance gt -100?true:false}" />
+										</menupopup>
+									</menu>
+								</menubar>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

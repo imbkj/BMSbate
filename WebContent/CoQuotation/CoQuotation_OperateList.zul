@@ -1,0 +1,96 @@
+<!-- 
+	创建人：潘浪宇
+	创建时间：2013-10-15
+	用途：报价单管理-潜在客户列表
+-->
+<?page contentType="text/html;charset=UTF-8"?>
+
+<zk>
+	<style>.z-row { background-color: #000000; }</style>
+	<window title="潜在客户列表" border="normal" height="100%"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('colaclient') @init('Controller.CoCompact.CoQuotation.CoQuotation_ListController')" onCreate="@command('gridPage',a=self)">
+		<grid id="gd" emptyMessage="没有潜在客户信息" height="100%"
+			model="@load(colaclient.listmodel)" mold="paging">
+			<auxhead>
+				<auxheader style="text-align: center" colspan="10">
+					<button onClick="@command('add')">新增潜在客户信息</button>
+				</auxheader>
+			</auxhead>
+			<columns>
+				<column width="40px" align="center"></column>
+				<column width="40px" align="center">序号</column>
+				<column align="center">
+					<vlayout>
+						公司名称
+						<textbox value="@bind(colaclient.companyName)"
+							mold="rounded" width="80%" onChange="@command('searchmenu')"
+							 />
+					</vlayout>
+				</column>
+				<column align="center">客户规模</column>
+				
+				<column align="center" style="white-space:normal">跟进人
+					<combobox value="@bind(colaclient.follower)"
+						mold="rounded" width="80%" onChange="@command('searchmenu')"
+						instant="true" model="@load(colaclient.followerlist)">
+						<template name="model">
+							<comboitem label="@load(each)" />
+						</template>
+					</combobox></column>
+				<column sort="auto(cola_addtime)" align="center">
+					添加时间
+				</column>
+				<column align="center">客户要求服务内容</column>
+				<column align="center" style="white-space:normal"
+					sort="auto(cola_successname)">
+					成功率
+					<combobox readonly="true"
+						value="@bind(colaclient.level)" width="80%" mold="rounded"
+						onChange="@command('searchmenu')" instant="true">
+						<comboitem label="" />
+						<comboitem label="较高" />
+						<comboitem label="一般" />
+						<comboitem label="较低" />
+					</combobox>
+				</column>
+				<column align="center" sort="auto(coba_LTS)">状态</column>
+				<column align="center" width="60px">操作</column>
+			</columns>
+			<rows>
+				<template name="model">
+					<row align="center">
+						<custom-attributes cola_id="${each.cola_id }" />
+						<detail open="false" fulfill="onOpen"
+							visible="@load(each.detailVisible)">
+							<include
+								src="/CoQuotation/CoQuotationDetail_OperateList.zul"
+								cola_id="${cola_id}" />
+						</detail>
+						<label value="${forEachStatus.index+1 }" />
+						<label value="@load(each.cola_company)" />
+						<label value="@load(each.cola_clientsize)" />
+						<label value="@load(each.cola_addname)" />
+						<label value="@load(each.cola_addtime)" />
+						<label value="@load(each.cola_servicecontent)" />
+						<label value="@load(each.cola_successname)" />
+						<label value="${each.coba_LTS>0?'已转':'未转' }"></label>
+						<menubar autodrop="true">
+							<menu image="/images/pencil-small.png">
+								<menupopup>
+									<menuitem label="新增报价单"
+										onClick="@command('quotationadd',model=each)" />
+									<menuseparator />
+									<menuitem label="修改"
+										onClick="@command('updateColaClient',clientpdate=each)" />
+									<menuseparator />
+
+								</menupopup>
+							</menu>
+						</menubar>
+					</row>
+				</template>
+			</rows>
+		</grid>
+	</window>
+</zk>

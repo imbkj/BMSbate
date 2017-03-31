@@ -1,0 +1,15 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window border="0"
+	apply="org.zkoss.bind.BindComposer" id="windeclare"
+	viewModel="@id('vm') @init('Controller.EmBenefit.EmActy_SurveyContentInfoController')"
+>
+<grid  vflex="1">
+		<rows>
+			<row onCreate="@command('addcell',rw=self)">
+				
+			</row>
+		</rows>
+	</grid>	
+</window>
+</zk>

@@ -1,0 +1,150 @@
+<?page title="户口业务信息" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="户口业务信息" border="normal" vflex="1"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmCensus.EmCensus_InfoSearchController')">
+		<style src="/css/style.css"></style>
+		<borderlayout height="100%">
+			<north border="0" title="检索" collapsible="true" flex="true"
+				style="padding-bottom:10px;">
+				<grid>
+					<rows>
+						<row>
+							<cell width="100px">
+								<combobox width="100px" readonly="true"
+									value="@bind(vm.embaclass)">
+									<comboitem label="员工姓名" />
+									<comboitem label="员工编号" />
+									<comboitem label="身份证号" />
+								</combobox>
+							</cell>
+							<cell>
+								<textbox id="idcard"
+									value="@bind(vm.embainfo)">
+								</textbox>
+							</cell>
+							<cell width="60px">单位名称</cell>
+							<cell>
+								<textbox id="company"
+									value="@bind(vm.company)">
+								</textbox>
+							</cell>
+							<cell width="60px">单位编号</cell>
+							<cell>
+								<textbox id="cid"
+									value="@bind(vm.cid)">
+								</textbox>
+							</cell>
+							<cell width="60px">状态</cell>
+							<cell>
+								<combobox id="emstate"
+									readonly="true">
+									<comboitem value="0" label="" />
+									<comboitem value="1" label="已确认" />
+									<comboitem value="2" label="已借卡" />
+									<comboitem value="3" label="未还齐" />
+									<comboitem value="4" label="退回" />
+									<comboitem value="5" label="在册" />
+									<comboitem value="6" label="迁出" />
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell width="60px">户口编号</cell>
+							<cell>
+								<textbox id="hjno"
+									value="@bind(vm.hjno)">
+								</textbox>
+							</cell>
+							<cell width="60px">户口所在地</cell>
+							<cell>
+								<combobox id="address"
+									value="@bind(vm.hjaddress)" readonly="true">
+									<comboitem label="" />
+									<comboitem label="中智园岭所" />
+									<comboitem label="市人才高新所" />
+									<comboitem label="市人才笋岗所" />
+									<comboitem label="意法研发高新所" />
+									<comboitem label="环仪招商所" />
+									<comboitem label="纽威桂园所" />
+									<comboitem label="福田人才沙头所" />
+									<comboitem label="外企部南园所" />
+									<comboitem label="南山人才南头所" />
+									<comboitem label="戈尔福保所" />
+									<comboitem label="星巴克福田所" />
+								</combobox>
+							</cell>
+							<cell width="60px">入户方式</cell>
+							<cell colspan="3">
+								<combobox value="@bind(vm.inhjtype)"
+									readonly="true">
+									<comboitem label="" />
+									<comboitem label="调干" />
+									<comboitem label="招调工" />
+									<comboitem label="随迁入户" />
+									<comboitem label="出生入户" />
+									<comboitem label="夫妻投靠" />
+									<comboitem label="毕业生接收" />
+									<comboitem label="留学生接收" />
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell colspan="8" align="center">
+								<button id="summit"
+									onClick="@command('search',emstate=emstate.selectedItem.value)">
+									查询
+								</button>
+								<button id="excel" label="导出数据"
+									onClick="@command('export')">
+								</button>
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</north>
+			<center>
+				<grid model="@load(vm.emcensus)" emptyMessage="没有户籍信息"
+					mold="paging" pageSize="40" vflex="1" hflex="1">
+					<columns>
+						<column label="序号" width="50px" align="center" />
+						<column label="户口编号" align="center" />
+						<column label="姓名" width="60px" align="center" />
+						<column label="公司" align="center" />
+						<column label="身份证号" align="center"
+							width="150px" />
+						<column label="户口所在地" align="center" />
+						<column label="入户时间" align="center" />
+						<column label="入户方式" align="center" />
+						<column label="状态" align="center" width="60px" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<label
+									value="${forEachStatus.index+1 }">
+								</label>
+								<label value="@load(each.emhj_no)"></label>
+								<label value="@load(each.emhj_name)"></label>
+								<label
+									value="@load(each.coba_shortname)">
+								</label>
+								<label
+									value="@load(each.emhj_idcard)">
+								</label>
+								<label value="@load(each.emhj_place)"></label>
+								<label
+									value="@load(each.emhj_in_time)">
+								</label>
+								<label
+									value="@load(each.emhj_in_class)">
+								</label>
+								<label value="@load(each.states)"></label>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

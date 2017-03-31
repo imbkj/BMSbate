@@ -1,0 +1,26 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<?component name="docDataList" macro-uri="../DocumentsInfo/DocumentsInfo_AddPageList.zul" inline="true"?>
+<zk>
+<window title="批量处理" border="normal" width="80%" height="80%" closable="true" id="wind"
+	apply="org.zkoss.bind.BindComposer" 
+	viewModel="@id('vm') @init('Controller.EmHouseCard.HuCard_ClientDealAllController')">
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell width="80px"> 核收资料时间</cell>
+			<cell><datebox id="clientuptime"></datebox></cell>	
+		</row>
+		<row>
+			<cell width="80px">提交资料</cell>
+			<cell>
+				<docDataList id="docGrid" puzu_id="${vm.dataId }" 
+						dWidth="100%" pUsername="陈耀家" pUserId="248" />
+			</cell>	
+		</row>
+	</rows>
+	<foot>
+		<footer align="center"><button onClick="@command('summit',win=wind,gd=docGrid,clientuptime=clientuptime.value)">提交</button></footer>
+	</foot>
+</grid>
+</window>
+</zk>

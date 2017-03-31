@@ -1,0 +1,116 @@
+<?page title="户口新增" contentType="text/html;charset=UTF-8"?>
+
+<zk>
+	<window title="户口新增" border="normal" height="80%" width="80%"
+		closable="true" id="win" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmCensus.EmCensusList_AddController')">
+		<grid vflex="1">
+			<rows>
+				<row>
+					<cell width="80px">
+						<label>姓名</label>
+					</cell>
+					<cell>
+						<label value="@load(vm.embamodel.emba_name)"></label>
+					</cell>
+					<cell width="80px">
+						<label>身份证号</label>
+					</cell>
+					<cell>
+						<label
+							value="@load(vm.embamodel.emba_idcard)">
+						</label>
+					</cell>
+				</row>
+				<row>
+					<cell width="70px">帐户类型</cell>
+					<cell>
+						<combobox id="type"
+							value="@load(vm.dhmodel.emdh_zhtype)">
+							<comboitem label="" />
+							<comboitem label="中智集体户" />
+							<comboitem label="客户公司集体户" />
+							<comboitem label="人才集体户" />
+						</combobox>
+					</cell>
+					<cell width="80px">落户派出所</cell>
+					<cell>
+						<combobox id="address">
+							<comboitem label="" />
+							<comboitem label="中智通心岭所" />
+							<comboitem label="市人才高新所" />
+							<comboitem label="市人才笋岗所" />
+							<comboitem label="意法研发高新所" />
+							<comboitem label="环仪招商所" />
+							<comboitem label="纽威桂园所" />
+							<comboitem label="福田人才沙头所" />
+							<comboitem label="外企部南园所" />
+							<comboitem label="南山人才南头所" />
+							<comboitem label="戈尔福保所" />
+							<comboitem label="星巴克福田所" />
+						</combobox>
+					</cell>
+				</row>
+				<row>
+					<cell>入户方式</cell>
+					<cell colspan="3">
+						<combobox
+							onChange="@command('ifvisible',val=self.value,rw=rw,lb=lb,cb=self,type=type,address=address)" id="wt"
+							value="${arg.dhmodel.emdh_dhtype }" readonly="true">
+							<comboitem label="" />
+							<comboitem label="调干" />
+							<comboitem label="招调工" />
+							<comboitem label="随迁入户" />
+							<comboitem label="出生入户" />
+							<comboitem label="家属随迁"/>
+							<comboitem label="夫妻投靠" />
+							<comboitem label="市内异动" />
+							<comboitem label="毕业生接收" />
+							<comboitem label="留学生接收" />
+						</combobox>
+					</cell>
+				</row>
+				<row visible="flase" id="rw">
+					<cell>家属姓名</cell>
+					<cell>
+						<textbox id="family"></textbox>
+					</cell>
+					<cell>家属身份证号</cell>
+					<cell>
+						<textbox id="idcard"
+							onChange="@command('checkifExist',val=self.value)">
+						</textbox>
+					</cell>
+				</row>
+				<row visible="false">
+					<cell>借卡理由</cell>
+					<cell colspan="3">
+						<textbox width="90%" rows="5" id="outcase"></textbox>
+					</cell>
+				</row>
+				<row>
+					<cell>备注</cell>
+					<cell colspan="3">
+						<textbox width="90%" rows="5" id="remark"></textbox>
+					</cell>
+				</row>
+				<!-- <row>
+					<cell>应交材料</cell>
+					<cell colspan="3">
+					<docDataList id="docGrid" puzu_id="17" gid="10001"
+					dWidth="100%" pUsername="陈耀家" pUserId="248" />
+					</cell>
+					</row> -->
+			</rows>
+			<foot>
+				<footer align="center">
+					<button
+						onClick="@command('addemCensus',type=type.value,address=address.value,win=win,remark=remark.value,
+			wt=wt.value,family=family.value,idcard=idcard.value,outcase=outcase.value,docGrid=docGrid,addtype='1')">
+						提交
+					</button>
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

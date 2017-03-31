@@ -1,0 +1,63 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<?component name="docDataList" macro-uri="../DocumentsInfo/DocumentsInfo_AddPageList.zul" inline="true"?>
+<zk>
+	<window title="材料鉴别归档" border="normal" width="60%" height="60%"
+		closable="true" id="win" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.Archives.Archive_FileFilingDataUpOrBackController')">
+		<grid vflex="1">
+			<rows>
+				<row>
+					<cell width="100px">归档材料名称</cell>
+					<cell>
+						<grid model="@load(vm.filelist)" id="gd">
+							<columns>
+								<column width="40px" align="center">
+								</column>
+								<column></column>
+							</columns>
+							<rows>
+								<template name="model">
+									<row>
+										<cell>
+											<checkbox
+												value="@load(each)" onCheck="@command('checkbox',ck=self)"
+												checked="@load(each.ischecked)" disabled="false">
+											</checkbox>
+										</cell>
+										<cell>
+											<label
+												value="@load(each.filename)">
+											</label>
+											<label
+												value="@load(each.dhfl_file_content)" />
+
+										</cell>
+									</row>
+								</template>
+							</rows>
+						</grid>
+					</cell>
+				</row>
+				<row>
+					<cell width="100px">材料归档时间</cell>
+					<cell>
+						<datebox></datebox>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button onClick="@command('summit',win=win)">
+						提交
+					</button>
+					<button onClick="@command('addremark',win=win)">
+						备注
+					</button>
+					<button onClick="@command('back',win=win)">
+						退回
+					</button>
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

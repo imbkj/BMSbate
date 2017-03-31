@@ -1,0 +1,63 @@
+<?page title="转正定级新增" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="转正定级新增" border="normal" closable="true" width="80%" id="win" height="95%"
+apply="org.zkoss.bind.BindComposer"
+    viewModel="@id('vm') @init('Controller.Archives.Archive_FilePassController')">
+    <radiogroup id="yorn" onCheck=""/>
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell width="150px">员工姓名</cell>
+			<cell><label id="name" value="@load(vm.emmodel.emba_name)"></label></cell>
+			<cell width="80">员工姓名</cell>
+			<cell><label value="@load(vm.emmodel.emba_idcard)"></label></cell>
+		</row>
+		<row>
+			<cell width="150px">是否需要协助确认转正资格</cell>
+			<cell colspan="3">
+				<combobox id="ifhelp" readonly="true">
+					<comboitem value="1" label="是"/>
+					<comboitem value="0" label="否"/>
+				</combobox>
+			</cell>
+		</row>
+		<row>
+			<cell>是否代购表格</cell>
+			<cell colspan="3">
+				<combobox id="ifbuy" readonly="true">
+					<comboitem value="1" label="是"/>
+					<comboitem value="0" label="否"/>
+				</combobox>
+			</cell>
+		</row>
+		<row>
+			<cell>后续事宜是否雇员自行办理</cell>
+			<cell colspan="3">
+				<combobox id="ifown" readonly="true">
+					<comboitem value="1" label="是"/>
+					<comboitem value="0" label="否"/>
+				</combobox>
+			</cell>
+		</row>
+		<row>
+			<cell>备注</cell>
+			<cell colspan="3"><textbox id="reamak" width="80%" rows="5"></textbox></cell>
+		</row>
+		<row>
+			<cell>是否待确定</cell>
+			<cell colspan="3">
+				<hlayout>
+				 <radio id="yes" label="是" value="1" radiogroup="yorn" />
+                 <radio id="no" label="否" value="0" radiogroup="yorn" selected="true"/>
+                 </hlayout>
+			</cell>
+		</row>
+	</rows>
+	<foot>
+		<footer align="center"><button onClick="@command('summit',ifhelp=ifhelp.selectedItem.value,
+		ifbuy=ifbuy.selectedItem.value,ifown=ifown.selectedItem.value,reamak=reamak.value,
+		yorn=yorn.selectedItem.value,win=win)">提交</button></footer>	
+	</foot>
+</grid>
+</window>
+</zk>

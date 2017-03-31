@@ -1,0 +1,68 @@
+<?page title="账单结转" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winBillCarryForward" title="账单结转" border="normal"
+		width="500px" height="400px" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoFinanceManage.Cfma_BillCarryForwardController')"
+		closable="true" sizable="true">
+		<grid hflex="1" vflex="1">
+			<rows>
+				<row>
+					<cell width="30%">
+						<label value="账单编号：" />
+					</cell>
+					<cell>
+						<label value="@load(vm.billModel.cfmb_number)" />
+					</cell>
+				</row>
+				<row>
+					<cell>
+						<label value="公司名称：" />
+					</cell>
+					<cell>
+						<label value="@load(vm.billModel.company)" />
+					</cell>
+				</row>
+				<row>
+					<cell>
+						<label value="结转金额：" />
+					</cell>
+					<cell>
+						<label value="@load(-vm.billModel.imbalance)" />
+					</cell>
+				</row>
+				<row>
+					<cell>
+						<label value="添加人：" />
+					</cell>
+					<cell>
+						<label value="@load(vm.username)" />
+					</cell>
+				</row>
+				<row>
+					<cell>
+						<label value="备注：" />
+					</cell>
+					<cell>
+						<textbox id="txtRemark" rows="3" width="75%"
+							mold="rounded" />
+					</cell>
+				</row>
+				<row>
+					<cell>
+						<label value="注：" />
+					</cell>
+					<cell>
+						<label value="结转的金额将自动加到下月台账。"
+							style="color:red;" />
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button label="账单结转"
+						onClick="@command('CarryForward',win=winBillCarryForward,remark=txtRemark.value)" />
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

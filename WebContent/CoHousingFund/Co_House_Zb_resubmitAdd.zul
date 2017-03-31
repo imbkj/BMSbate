@@ -1,0 +1,142 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="new page title" border="normal" height="55%"
+		closable="true" width="40%">
+		<grid>
+			<rows>
+				<row>
+					<grid>
+						<rows>
+							<row>
+								<cell colspan="3" width="20%">
+									<label value="新增专办员" />
+								</cell>
+							</row>
+							<row>
+								<cell align="center" colspan="3"
+									width="15%">
+									<label value="*" style="color:red" />
+									<label value="退回原因" />
+								</cell>
+								<cell align="left">
+									<label value=" " />
+								</cell>
+							</row>
+							<row>
+								<cell align="center" colspan="3"
+									width="15%">
+									<label value="*" style="color:red" />
+									<label value="单位公积金号" />
+								</cell>
+								<cell align="left">
+									<label value="1010933158 " />
+								</cell>
+							</row>
+							<row>
+								<cell align="center" colspan="3"
+									width="10%">
+									<label value="*" style="color:red" />
+									<label value="单位名称(全称)" />
+								</cell>
+								<cell align="left">
+									<label value="深圳联想海外控股有限公司  " />
+								</cell>
+							</row>
+						</rows>
+					</grid>
+				</row>
+				<!-- 新增专办员信息 -->
+				<row>
+					<grid>
+						<rows>
+							<row>
+								<cell width="20%">
+									<label value="新增专办员信息"
+										style="font-size:15px" />
+								</cell>
+							</row>
+							<row>
+								<cell align="center" width="15%">
+									<label value="*" style="color:red" />
+									<label value="姓名" />
+								</cell>
+								<cell align="left">
+									<textbox value="" />
+								</cell>
+							</row>
+							<row>
+								<cell align="center" width="15%">
+									<label value="*" style="color:red" />
+									<label value="固定电话" />
+								</cell>
+								<cell align="left">
+									<textbox value="" />
+								</cell>
+							</row>
+							<row>
+								<cell align="center" width="15%">
+									<label value="*" style="color:red" />
+									<label value="移动电话" />
+								</cell>
+								<cell align="left">
+									<textbox value="" />
+								</cell>
+							</row>
+							<row>
+								<cell align="center" width="15%">
+									<label value="*" style="color:red" />
+									<label value="电子邮箱" />
+								</cell>
+								<cell align="left">
+									<textbox value="" />
+								</cell>
+							</row>
+							<row>
+								<cell align="center" width="15%">
+									<label value="*" style="color:red" />
+									<label value="操作月份" />
+								</cell>
+								<cell align="left">
+									<datebox format="yyyyMM"
+										width="15%" />
+								</cell>
+							</row>
+						</rows>
+					</grid>
+				</row>
+				<row>
+					<grid>
+
+						<rows>
+							<row>
+								<cell>
+									<label value="提交资料" />
+
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<checkbox value=""
+										label="深圳市住房公积金新增专办员注册登记申请表 " />
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<checkbox value=""
+										label="新增专办员的身份证原件及对应复印件 " />
+								</cell>
+							</row>
+						</rows>
+					</grid>
+				</row>
+
+			</rows>
+			<foot>
+				<footer align="center">
+					<button label="重新提交" />
+				</footer>
+			</foot>
+		</grid>
+
+	</window>
+</zk>

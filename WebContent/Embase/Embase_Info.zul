@@ -1,0 +1,36 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window id="embawin" xmlns:w="client" closable="true" title="员工基本信息"
+apply="org.zkoss.bind.BindComposer" 
+    viewModel="@id('vm') @init('Controller.Embase.Embase_InfoController')">
+<style src="/css/style.css"></style>
+	<grid vflex="1">
+		<rows>
+			<row>
+				<cell width="80px">公司编号</cell>
+				<cell><label value="@load(vm.model.cid)"></label></cell>
+				<cell width="80px">公司全称</cell>
+				<cell><label value="@load(vm.model.coba_company)"></label></cell>
+			</row>
+			<row>
+				<cell width="80px">公司简称</cell>
+				<cell><label value="@load(vm.model.coba_shortname)"></label></cell>
+				<cell width="80px">客服</cell>
+				<cell><label value="@load(vm.model.coba_client)"></label></cell>
+			</row>
+			<row>
+				<cell width="80px">员工编号</cell>
+				<cell><label value="@load(vm.model.gid)"></label></cell>
+				<cell width="80px">员工姓名</cell>
+				<cell><label value="@load(vm.model.emba_name)"></label></cell>
+			</row>
+			<row>
+				<cell width="80px">身份证号</cell>
+				<cell><label value="@load(vm.model.emba_idcard)"></label></cell>
+				<cell width="80px">状态</cell>
+				<cell><label value="${vm.model.emba_state==1?'在职':'离职' }"></label></cell>
+			</row>
+		</rows>
+	</grid>
+</window>
+</zk>

@@ -1,0 +1,134 @@
+<!--
+	创建人：林少斌
+	创建时间：2013-12-15
+	用途：工资算法设置页面
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window id="winForInfo" title="薪酬管理 -- 工资算法设置页面" border="normal" width="90%"
+		height="90%" closable="true" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmSalary.EmSalary_ForInfoController')">
+		<grid width="100%" height="100%">
+			<rows>
+				<row>
+					<cell align="left" width="15%">
+						<label value="算法名称：" />
+					</cell>
+					<cell align="left">
+						<combobox id="cfin_id"  width="50%" readonly="true"
+							model="@load(vm.formulaList)" 
+							autodrop="true" mold="rounded"  selectedItem="@load(vm.fModel)"
+							onChange="@command('seach',cfin_id=cfin_id)">
+							<template name="model">
+								<comboitem label="@load(each.cfin_name)" value="@load(each.cfin_id)" />
+							</template>
+						</combobox>
+					</cell>
+					<cell align="right">
+						<button label="新增算法组合"
+							onClick="@command('addFor',cfin_id=cfin_id)" />
+						<button label="删除算法组合" onClick="@command('delFor',cfin_id=cfin_id)" />
+					</cell>
+				</row>
+				<row>
+					<cell align="left" >
+						<label value="算法备注：" />
+					</cell>
+					<cell align="left">
+						<textbox id="cfin_remark" width="50%"  rows="4" cols="8" mold="rounded" value="@load(vm.for_remark)" readonly="true"/>
+					</cell>
+					<cell align="right">
+						<button label="新增算法内容" onClick="@command('addForData',cfin_id=cfin_id)" />
+						<button label="验证算法" onClick="@command('chkFor',cfin_id=cfin_id)" />
+					</cell>
+				</row>
+				<row>
+					<cell align="left" colspan="3">
+						<hlayout width="100%">
+							<label value="(注意：已使用的算法不能做任何算法内容的变动)" />
+						</hlayout>
+					</cell>
+				</row>
+				<row>
+					<cell align="left" colspan="3">
+						<grid width="100%" height="100%">
+							<rows>
+								<row>
+									<cell width="80%">
+										<listbox id="itemList" 
+											width="100%" selectedIndex="@load(vm.seq)" height="300px"
+											model="@load(vm.forDataList)" emptyMessage="无数据">
+											<listhead>
+												<listheader label="项目名称"
+													width="15%" />
+												<listheader
+													label="算法内容" width="40%" />
+												<listheader label="使用范围"
+													width="35%" />
+												<listheader label="操作"
+													width="10%" />
+											</listhead>
+											<template name="model">
+												<listitem>
+													<listcell>
+														<label
+															value="@load(each.csii_item_name)" />
+													</listcell>
+													<listcell>
+														<label
+															value="@load(each.cfda_t_formula)" />
+													</listcell>
+													<listcell>
+														<label
+															value="@load(each.cfda_t_range)" />
+													</listcell>
+													<listcell>
+														<menubar
+															autodrop="true">
+															<menu
+																image="../images/pencil-small.png">
+																<menupopup>
+																	<menuitem
+																		label="修改"
+																		onClick="@command('editItem',url='../EmSalary/EmSalary_ForDataUpdate.zul',cfdaM=each)"/>
+																	<menuitem
+																		label="删除"
+																		onClick="@command('editItem',url='../EmSalary/EmSalary_ForDataDel.zul',cfdaM=each)"/>
+																</menupopup>
+															</menu>
+														</menubar>
+													</listcell>
+												</listitem>
+											</template>
+										</listbox>
+									</cell>
+									<cell>
+										<vbox spacing="10px"
+											width="24px">
+											<image
+												style="cursor:pointer" id="topBtn"
+												src="../images/upuparrow_g.png"
+												onClick="@command('move',type='top',itemList=itemList)" />
+											<image
+												style="cursor:pointer" id="upBtn"
+												src="../images/uparrow_g.png"
+												onClick="@command('move',type='up',itemList=itemList)" />
+											<image
+												style="cursor:pointer" id="downBtn"
+												src="../images/downarrow_g.png"
+												onClick="@command('move',type='down',itemList=itemList)" />
+											<image
+												style="cursor:pointer" id="bottomBtn"
+												src="../images/downdownarrow_g.png"
+												onClick="@command('move',type='bottom',itemList=itemList)" />
+										</vbox>
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</cell>
+				</row>
+			</rows>
+		</grid>
+	</window>
+</zk>

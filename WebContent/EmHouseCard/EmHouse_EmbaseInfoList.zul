@@ -1,0 +1,95 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="公积金卡制卡申请" border="normal"
+	apply="org.zkoss.bind.BindComposer" vflex="1"
+	viewModel="@id('vm') @init('Controller.EmHouseCard.EmHouse_EmbaseInfoListController')"
+>
+<style src="/css/style.css"></style>
+<borderlayout>
+<north border="0" title="检索" collapsible="true" style="padding-bottom:10px;">
+<grid>
+	<rows>
+		<row>
+			<cell width="100px">
+				<combobox width="100px" value="员工姓名" readonly="true" id="nametype">
+					<comboitem label=""/>
+					<comboitem label="员工姓名"/>
+					<comboitem label="身份证号"/>
+					<comboitem label="员工编号"/>
+				</combobox>
+			</cell>
+			<cell><textbox id="name"></textbox></cell>
+			<cell width="100px">
+				<combobox width="100px" value="单位简称" readonly="true" id="comtype">
+					<comboitem label=""/>
+					<comboitem label="单位简称"/>
+					<comboitem label="单位编号"/>
+				</combobox>
+			</cell>
+			<cell><textbox id="comname"></textbox></cell>
+			<cell width="100px"><label value="客服"></label></cell>
+			<cell>
+				<combobox id="client" model="@load(vm.clientlist)">
+					<template name="model">
+						<comboitem label="@load(each)"/>
+					</template>
+				</combobox>
+			</cell>
+		</row>
+		<row>
+			<cell>公积金状态</cell>
+			<cell>
+				<combobox id="housestate">
+					<comboitem label=""/>
+					<comboitem label="已参加公积金"/>
+					<comboitem label="没参加公积金"/>
+				</combobox>
+			</cell>
+			<cell>员工状态</cell>
+			<cell colspan="4">
+				<combobox id="embastate">
+					<comboitem label=""/>
+					<comboitem label="在职"/>
+					<comboitem label="离职"/>
+				</combobox>
+			</cell>
+		</row>
+	</rows>
+	<foot>
+		<footer align="center"><button onClick="@command('search',nametype=nametype.value,name=name.value,
+		client=client.value,comtype=comtype.value,comname=comname.value,housestate=housestate.value,embastate=embastate.value)">查询</button>
+		</footer>
+	</foot>
+</grid>
+</north>
+<center>
+<grid model="@load(vm.list)" mold="paging" pageSize="50"  vflex="1">
+		<columns>
+			<column label="序号" width="50px" align="center" />
+			<column label="公司简称" align="center"/>
+			<column label="员工编号" align="center"/>
+			<column label="员工姓名" align="center"/>
+			<column label="身份证号" align="center"/>
+			<column label="公积金状态" align="center"/>
+			<column label="状态" align="center"/>
+			<column label="操作" align="center"/>
+		</columns>
+		<rows>
+			<template name="model">
+				<row>
+					<cell><label value="${forEachStatus.index+1 }"></label></cell>
+					<cell><label value="@load(each.coba_shortname)"></label></cell>
+					<cell><label value="@load(each.gid)"></label></cell>
+					<cell><label value="@load(each.emba_name)"></label></cell>
+					<cell><label value="@load(each.emba_idcard)"></label></cell>
+					<cell><label value="${each.num>0?'已参加公积金':'没有参加公积金' }"></label></cell>
+					<cell><label value="${each.emba_state==1?'在职':'离职' }"></label></cell>
+					<cell><a onClick="@command('submit',model=each)"><label value="制卡"></label></a></cell>
+				</row>
+			</template>
+		</rows>
+	</grid>
+</center>
+</borderlayout>
+</window>
+</zk>

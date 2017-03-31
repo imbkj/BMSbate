@@ -1,0 +1,29 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="发放礼品" border="normal" width="600px" height="400px" closable="true"
+	apply="org.zkoss.bind.BindComposer" id="sendwin"
+	viewModel="@id('vm') @init('Controller.EmBenefit.EmActy_sendGiftController')"
+>
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell width="80px">领取人</cell>
+			<cell>
+				<combobox id="takeclient">
+					<comboitem label=""/>
+					<comboitem label="宋玲"/>
+					<comboitem label="林君玉"/>
+				</combobox>
+			</cell>
+			<cell width="80px">领取时间</cell>
+			<cell><datebox id="sendtime"></datebox></cell>
+		</row>
+	</rows>
+	<foot>
+		<footer align="center">
+			<button onClick="@command('send',win=sendwin,sendtime=sendtime.value,takeclient=takeclient.value)">提交</button>
+		</footer>
+	</foot>
+</grid>
+</window>
+</zk>

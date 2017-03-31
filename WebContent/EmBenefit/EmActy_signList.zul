@@ -1,0 +1,87 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window width="90%" height="90%" title="待签收礼品员工列表" id="winEmp" closable="true"
+		border="normal" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmBenefit.EmActy_signListController')">
+		<style src="/css/style.css"></style>
+				<grid id="gdList" model="@load(vm.list)" vflex="1"
+					 mold="paging" pageSize="200"
+					emptyMessage="暂无数据">
+					<columns>
+						<column align="center" width="40px">序号</column>
+						<column align="center">公司名称</column>
+						<column align="center">姓名</column>
+						<column align="center" width="150px">身份证号</column>
+						<column align="center">项目</column>
+						<column align="center">何时需要</column>
+						<column align="center">礼品内容</column>
+						<column align="center">数量</column>
+						<column align="center">标准</column>
+						<column align="center">部门</column>
+						<column align="center">客服</column>
+						<column align="center">付款性质</column>
+						<column align="center">寄送方式</column>
+						<column align="center"><checkbox onClick="@command('checkall',a=self)" /></column>
+					</columns>
+					<rows>
+					<template name="model">
+						<row>
+							<cell>${forEachStatus.index+1 }</cell>
+							<cell>
+								<label value="@load(each.emwf_company)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emwf_name)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emwf_idcard)" />
+							</cell>
+							<cell>
+								<label value="@load(each.embf_name)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emwf_need)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emwf_prodcontent)" />
+							</cell>
+							<cell>
+								<label value="${each.emwf_producenum}${each.prod_unit}" />
+							</cell>
+							<cell>
+								<label value="@load(each.emwf_charge)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emwf_dept)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emwf_client)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emwf_paykind)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.emwf_delivery)" />
+							</cell>
+							
+							<cell>
+								<hlayout>
+								<checkbox value="@load(each)"/>
+									<a onClick="@command('sign',win=winEmp,model=each)"><label value="签收" /></a>
+									<a visible="false" onClick="@command('cancel',win=winEmp,model=each)"><label value="取消" /></a>
+								</hlayout>
+							</cell>
+						</row>
+					</template>
+					</rows>
+						<foot>
+						<footer align="center" span="15"><button label="下一步"
+								onClick="@command('summitsign')">
+							</button>
+							<button onClick="@command('signall',win=winEmp,gd=gdList)">批量签收</button>
+							</footer>
+					</foot>
+				</grid>
+	</window>
+</zk>

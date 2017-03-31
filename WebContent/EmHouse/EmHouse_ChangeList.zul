@@ -1,0 +1,187 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="公积金交单申报列表" border="normal" vflex="1" id="winGj"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmHouse.EmHouse_ChangeListController')">
+		<style src="/css/style.css"></style>
+		<borderlayout vflex="1">
+			<north border="0" title="检索" collapsible="true" flex="true"
+				style="padding-bottom:10px;" open="true">
+				<grid>
+					<rows>
+						<row>
+							<cell width="80px">公司名称</cell>
+							<cell>
+								<textbox width="80%" id="company"
+									instant="true" mold="rounded"
+									value="@bind(vm.ecgm.ehcg_company)" />
+							</cell>
+							<cell width="80px">员工姓名</cell>
+							<cell>
+								<textbox id="name" mold="rounded"
+									instant="true" value="@bind(vm.ecgm.ehcg_name)" />
+							</cell>
+							<cell width="80px">所属月份</cell>
+							<cell>
+								<combobox id="ownmonth" mold="rounded"
+									instant="true" value="@bind(vm.ecgm.ownmonth)"
+									model="@load(vm.ownmonthlist)">
+									<template name="model">
+										<comboitem
+											label="@load(each.ownmonth)">
+										</comboitem>
+									</template>
+								</combobox>
+							</cell>
+							<cell width="80px">状态</cell>
+							<cell>
+								<combobox id="states" readonly="true"
+									instant="true" mold="rounded"
+									onChange="@command('stateInfo',a=self)">
+									<comboitem label="" value=""></comboitem>
+									<comboitem label="未申报" value="0"></comboitem>
+									<comboitem label="申报中" value="2"></comboitem>
+									<comboitem label="已申报" value="1"></comboitem>
+									<comboitem label="退回" value="3"></comboitem>
+								</combobox>
+							</cell>
+						</row>
+					</rows>
+					<foot>
+						<footer align="center">
+							<button onClick="@command('search')">
+								查询
+							</button>
+							<button onClick="@command('declareall')">
+								批量申报
+							</button>
+						</footer>
+					</foot>
+				</grid>
+			</north>
+			<center>
+				<grid width="100%" height="100%" emptyMessage="没有申报数据"
+					mold="paging" sizedByContent="true" span="true" pageSize="500"
+					model="@load(vm.list)" id="gg">
+					<columns>
+						<column label="序号" width="50px" align="center" />
+						<column label="单位公积金号" align="center" />
+						<column label="公司名称" align="center" />
+						<column label="所属月份" align="center" />
+						<column label="姓名" align="center" />
+						<column label="变动情况" align="center" />
+						<column label="公积金号" align="center" />
+						<column label="身份证号码" align="center" />
+						<column label="变动内容" align="center" />
+						<column label="添加人" align="center"></column>
+						<column label="添加时间" align="center"></column>
+						<column label="申报时间" align="center"></column>
+						<column label="申报人" align="center"></column>
+						<column label="状态" align="center"></column>
+						<column label="操作" align="center"></column>
+						<column align="center">
+							<checkbox id="cka"
+								onClick="@command('checkall')" />
+						</column>
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<cell>
+									<label
+										value="${forEachStatus.index+1 }">
+									</label>
+								</cell>
+								<cell><label value="@load(each.emhu_companyid)"/></cell>
+								<cell>
+									<label
+										value="@load(each.coba_shortname)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ownmonth)">
+									</label>
+								</cell>
+								<cell>
+
+									<label
+										value="@load(each.ehcg_name)">
+									</label>
+
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ehcg_change)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emhu_houseid)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emhu_idcard)">
+									</label>
+								</cell>
+								<cell tooltiptext="@load(each.ehcg_content)">
+									<label maxlength="15"
+										value="@load(each.ehcg_content)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ehcg_addname)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ehcg_addtime)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ehcg_declareTime)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ehcg_declareName)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.statename)">
+									</label>
+								</cell>
+								<cell>
+									<menubar autodrop="true"
+										width="50px" sclass="mymb">
+										<menu
+											image="../images/pencil-small.png">
+											<menupopup>
+												<menuitem label="申报"
+													if="${each.ehcg_ifdeclare==0 or each.ehcg_ifdeclare==2 }"
+													onClick="@command('declare',a=each)" />
+												<menuitem label="退回"
+													if="${each.ehcg_ifdeclare==0 or each.ehcg_ifdeclare==2 }"
+													onClick="@command('returnInfo',a=each)" />
+
+											</menupopup>
+										</menu>
+									</menubar>
+								</cell>
+								<cell>
+									<checkbox value="@load(each)"
+										if="${each.ehcg_ifdeclare==0 or each.ehcg_ifdeclare==2 }"
+										checked="@bind(each.checked)" />
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

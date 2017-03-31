@@ -1,0 +1,73 @@
+<?page title="任务单流程管理-修改任务信息" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winMissionUp" title="修改任务" border="normal"
+		apply="org.zkoss.bind.BindComposer" width="60%" closable="true">
+		<grid width="100%" height="350px"
+			apply="Controller.Workflow.WfDefination_ModController">
+			<rows>
+				<row>
+					<cell width="10%" style="color:#666;">任务类型：</cell>
+					<cell>
+						<combobox readonly="true" id="wf_Type"
+							mold="rounded" width="200px" model="${$composer.getWfcList()}"
+							value="${$composer.getWfdList().get(0).wfcl_name}">
+							<template name="model">
+								<comboitem value="${each.wfcl_id}"
+									label="${each.wfcl_name}">
+								</comboitem>
+							</template>
+						</combobox>
+						<label style="color:red;">(*)</label>
+					</cell>
+
+				</row>
+				<row>
+					<cell width="10%" style="color:#666;">任务名称：</cell>
+					<cell>
+						<textbox id="wf_Name" width="200px"
+							mold="rounded"
+							value="${$composer.getWfdList().get(0).wfde_name}" />
+						<label style="color:red;">(*)</label>
+					</cell>
+
+				</row>
+
+				<row>
+					<cell>任务标识码:</cell>
+					<cell>
+						<textbox id="wf_Code" width="200px"
+							mold="rounded"
+							value="${$composer.getWfdList().get(0).wfde_code}" />
+						<label style="color:red;">(*)</label>
+					</cell>
+				</row>
+				<row>
+					<cell>备注：</cell>
+					<cell>
+						<textbox id="wf_Remark" rows="5" width="50%"
+							value="${$composer.getWfdList().get(0).wfde_remark}" />
+					</cell>
+				</row>
+				<row>
+					<cell>状态:</cell>
+					<cell>
+						<combobox readonly="true" id="wf_State"
+							mold="rounded" width="200px" 
+							value="${$composer.getWfdList().get(0).wfde_stateName}">
+							
+							<comboitem value="1"
+									label="生效" />
+							<comboitem value="0"
+									label="取消" />
+						</combobox>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button label="提交" id="btSubmit" />
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

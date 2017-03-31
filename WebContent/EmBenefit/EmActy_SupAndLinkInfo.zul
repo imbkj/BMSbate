@@ -1,0 +1,62 @@
+
+<window  border="0" apply="org.zkoss.bind.BindComposer" id="windeclare"
+	viewModel="@id('vm') @init('Controller.EmBenefit.EmActy_SupAndLinkInfoController')">
+<groupbox mold="3d" open="true" title="联系人信息" visible="${vm.connum>0 }">
+<grid emptyMessage="没有联系人信息" model="@load(vm.conlist)">
+	<columns>
+		<column label="序号" width="40px" align="center"/>
+		<column label="姓名" align="center"/>
+		<column label="电话号码" align="center"/>
+		<column label="手机号码" align="center"/>
+		<column label="电子邮箱" align="center"/>
+		<column label="地址" align="center"/>
+		<column label="添加人" align="center"/>
+		<column label="备注" align="center"/>
+		<column label="状态" align="center"/>
+	</columns>
+	<rows>
+	<template name="model">
+		<row>
+			<cell><label value="${forEachStatus.index+1 }"></label></cell>
+			<cell><label value="@load(each.coct_name)"></label></cell>
+			<cell><label value="@load(each.coct_phone)"></label></cell>
+			<cell><label value="@load(each.coct_mobile)"></label></cell>
+			<cell><label value="@load(each.coct_Email)"></label></cell>
+			<cell><label value="@load(each.coct_address)"></label></cell>
+			<cell><label value="@load(each.coct_addname)"></label></cell>
+			<cell><label value="@load(each.coct_remark)"></label></cell>
+			<cell><label value="${each.coct_state==1?'有效':'无效' }"></label></cell>
+		</row>
+		</template>
+	</rows>
+</grid>
+</groupbox>
+<groupbox mold="3d" open="true" title="报价信息" visible="false">
+<grid emptyMessage="没有报价信息" model="@load(vm.prolist)">
+	<columns>
+		<column label="序号" width="40px" align="center"/>
+		<column label="产品名称" align="center"/>
+		<column label="原价" align="center"/>
+		<column label="折扣价" align="center"/>
+		<column label="折扣" align="center"/>
+		<column label="添加人" align="center"/>
+		<column label="备注" align="center"/>
+		<column label="状态" align="center"/>
+	</columns>
+	<rows>
+	<template name="model">
+		<row>
+			<cell><label value="${forEachStatus.index+1 }"></label></cell>
+			<cell><label value="@load(each.prod_name)"></label></cell>
+			<cell><label value="@load(each.prod_price)"></label></cell>
+			<cell><label value="@load(each.prod_discountprice)"></label></cell>
+			<cell><label value="@load(each.prod_discount)"></label></cell>
+			<cell><label value="@load(each.prod_addname)"></label></cell>
+			<cell><label value="@load(each.prod_remark)"></label></cell>
+			<cell><label value="${each.prod_state==1?'有效':'无效' }"></label></cell>
+		</row>
+		</template>
+	</rows>
+</grid>
+</groupbox>
+</window>

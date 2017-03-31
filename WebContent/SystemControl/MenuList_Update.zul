@@ -1,0 +1,34 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="菜单更新" border="normal" width="400px" closable="true" height="350px" id="win"
+	apply="Controller.SystemControl.MenuList_UpdateController">
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell width="70px">菜单名称</cell><cell><textbox id="menuname" value="${arg.model.meu_name}"/></cell>	
+		</row>
+		<row>
+			<cell>连接地址</cell><cell><textbox id="menuurl" hflex="1" value="${arg.model.meu_url}"/></cell>	
+		</row>
+		<row>
+			<cell>父菜单名称</cell>
+			<cell>
+				<combobox id="menupname">
+				</combobox>
+			</cell>	
+		</row>
+		<row>
+			<cell>菜单排序</cell><cell><intbox id="maneorder" value="${arg.model.meu_orderid}"/></cell>	
+		</row>
+		<row>
+			<cell>备注</cell><cell><textbox id="menuremark" value="${arg.model.meu_remark}" hflex="1" rows="3"/></cell>	
+		</row>	
+	</rows>
+	<foot>
+		<footer align="center">
+			<button id="summit">提交</button>
+		</footer>
+	</foot>
+</grid>
+</window>
+</zk>

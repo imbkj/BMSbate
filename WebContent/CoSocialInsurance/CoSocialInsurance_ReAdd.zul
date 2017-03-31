@@ -1,0 +1,306 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="win" title="缴存登记 - 重新提交" border="normal" width="880px"
+		apply="org.zkoss.bind.BindComposer" closable="true"
+		viewModel="@id('vm') @init('Controller.CoSocialInsurance.CoSocialInsurance_ReAddController')">
+		<scrollview>
+			<grid>
+				<columns>
+					<column width="15%"></column>
+					<column></column>
+					<column width="15%"></column>
+					<column></column>
+					<column width="15%"></column>
+					<column></column>
+				</columns>
+				<rows>
+					<row>
+						<cell>
+							<label style="color:#666" value="退回原因" />
+						</cell>
+						<cell colspan="5">
+							<label
+								value="@load(vm.m.csbc_return_reason)" style="color:red" />
+						</cell>
+					</row>
+					<row>
+						<cell>
+							<label style="color:#666" value="组织机构代码" />
+						</cell>
+						<cell>
+							<textbox value="@bind(vm.m.csbc_comid)" />
+						</cell>
+						<cell>
+							<label style="color:#666" value="单位名称(全称)" />
+						</cell>
+						<cell colspan="3">
+							<label value="@load(vm.m.coba_company)" />
+						</cell>
+					</row>
+					<row>
+						<cell>
+							<label style="color:#666" value="工商注册号" />
+						</cell>
+						<cell>
+							<textbox value="@bind(vm.m.csbc_regid)" />
+						</cell>
+						<cell>
+							<label style="color:#666" value="企业所在辖区" />
+						</cell>
+						<cell>
+							<combobox readonly="true"
+								model="@load(vm.areaList)" selectedItem="@bind(vm.areaModel)"
+								onChange="@command('areaChange')">
+								<template name="model">
+									<comboitem label="@load(each.name)" />
+								</template>
+							</combobox>
+						</cell>
+						<cell>
+							<label style="color:#666" value="街道" />
+						</cell>
+						<cell>
+							<combobox readonly="true"
+								model="@load(vm.streetList1)" value="@bind(vm.m.csbc_street)">
+								<template name="model">
+									<comboitem label="@load(each.name)" />
+								</template>
+							</combobox>
+						</cell>
+					</row>
+					<row>
+						<cell>
+							<label style="color:#666" value="经济类型" />
+						</cell>
+						<cell>
+							<combobox readonly="true"
+								value="@bind(vm.m.csbc_ecoclass)">
+								<comboitem></comboitem>
+								<comboitem label="国有全资"></comboitem>
+								<comboitem label="集体全资"></comboitem>
+								<comboitem label="股份合作"></comboitem>
+								<comboitem label="联营企业"></comboitem>
+								<comboitem label="有限责任公司"></comboitem>
+								<comboitem label="股份有限公司"></comboitem>
+								<comboitem label="私有企业"></comboitem>
+								<comboitem label="其它内资企业"></comboitem>
+								<comboitem label="港、澳、台投资"></comboitem>
+								<comboitem label="国外投资"></comboitem>
+							</combobox>
+						</cell>
+						<cell>
+							<label style="color:#666" value="行业一级" />
+						</cell>
+						<cell>
+							<combobox readonly="true"  selectedItem="@bind(vm.industryFirstModel)"
+								model="@load(vm.industryFirstList)" onChange="@command('industryFirstChange')"
+								value="@bind(vm.m.csbc_iclassfirst)">
+								<template name="model">
+									<comboitem label="@load(each.name)" />
+								</template>
+							</combobox>
+						</cell>
+						<cell>
+							<label style="color:#666" value="行业二级" />
+						</cell>
+						<cell>
+							<combobox readonly="true"
+								model="@load(vm.industryList1)"
+								value="@bind(vm.m.csbc_industryclass)">
+								<template name="model">
+									<comboitem label="@load(each.name)" />
+								</template>
+							</combobox>
+						</cell>
+					</row>
+					<row>
+						<cell>
+							<label style="color:#666" value="发工商执照日期" />
+						</cell>
+						<cell>
+							<datebox value="@bind(vm.m.csbc_licdate)"
+								format="yyyy-MM-dd" />
+						</cell>
+						<cell>
+							<label style="color:#666" value="组成形式" />
+						</cell>
+						<cell colspan="3">
+							<combobox readonly="true"
+								value="@bind(vm.m.csbc_forms)">
+								<comboitem></comboitem>
+								<comboitem label="个体"></comboitem>
+								<comboitem label="公司"></comboitem>
+								<comboitem label="社团或协会"></comboitem>
+								<comboitem label="民办非企业"></comboitem>
+								<comboitem label="分支机构"></comboitem>
+							</combobox>
+						</cell>
+					</row>
+					<!-- <row>
+						
+						<cell>
+							<label style="color:#666" value="镇" />
+						</cell>
+						<cell>
+							<combobox readonly="true"
+								model="@load(vm.townList1)" selectedItem="@bind(vm.townModel)"
+								onChange="@command('townChange')">
+								<template name="model">
+									<comboitem label="@load(each.name)" />
+								</template>
+							</combobox>
+						</cell>
+						
+					</row> -->
+					<row>
+						<cell>
+							<label style="color:#666" value="企业注册地址" />
+						</cell>
+						<cell colspan="3">
+							<textbox hflex="1"
+								value="@bind(vm.m.csbc_regadd)" />
+						</cell>
+						<cell>
+							<label style="color:#666" value="企业邮编" />
+						</cell>
+						<cell>
+							<textbox value="@bind(vm.m.csbc_pastcode)" />
+						</cell>
+					</row>
+					<row>
+						<cell>
+							<label style="color:#666" value="法人姓名" />
+						</cell>
+						<cell>
+							<textbox value="@bind(vm.m.csbc_corname)" />
+						</cell>
+						<cell>
+							<label style="color:#666" value="法人身份证号" />
+						</cell>
+						<cell>
+							<textbox value="@bind(vm.m.csbc_coridcard)" />
+						</cell>
+						<cell>
+							<label style="color:#666" value="企业主管部门" />
+						</cell>
+						<cell>
+							<textbox value="@bind(vm.m.csbc_dep)" />
+						</cell>
+					</row>
+					<row>
+						<cell>
+							<label style="color:#666" value="经办人姓名" />
+						</cell>
+						<cell>
+							<textbox value="@bind(vm.m.csbc_attnname)" />
+						</cell>
+						<cell>
+							<label style="color:#666" value="经办人移动电话" />
+						</cell>
+						<cell>
+							<textbox
+								value="@bind(vm.m.csbc_attnmobile)" />
+						</cell>
+						<cell>
+							<label style="color:#666" value="企业联系电话座机" />
+						</cell>
+						<cell>
+							<textbox value="@bind(vm.m.csbc_cotel)" />
+						</cell>
+					</row>
+					<row>
+						<cell>
+							<label style="color:#666" value="托收银行编码" />
+						</cell>
+						<cell>
+							<combobox readonly="true" width="200px"
+								model="@load(vm.bankList)" value="@bind(vm.m.csbc_bankcode)">
+								<template name="model">
+									<comboitem label="@load(each.name)" />
+								</template>
+							</combobox>
+						</cell>
+						<cell>
+							<label style="color:#666"
+								value="银行全称(营业部全称)" />
+						</cell>
+						<cell colspan="3">
+							<textbox value="@bind(vm.m.csbc_bankname)"
+								hflex="1" />
+						</cell>
+					</row>
+					<row>
+						<cell>
+							<label style="color:#666" value="银行账号" />
+						</cell>
+						<cell>
+							<textbox
+								value="@bind(vm.m.csbc_bankacctid)" />
+						</cell>
+						<cell>
+							<label style="color:#666"
+								value="医疗机构(就近杜康点)" />
+						</cell>
+						<cell colspan="3">
+							<combobox width="350px" autodrop="true"
+								model="@load(vm.healthList)" value="@bind(vm.m.csbc_heaname)">
+								<template name="model">
+									<comboitem label="@load(each.name)" />
+								</template>
+							</combobox>
+						</cell>
+					</row>
+					<row>
+						<cell>
+							<label style="color:#666"
+								value="社保业务主要提交方式" />
+						</cell>
+						<cell>
+							<textbox
+								value="@bind(vm.m.csbc_submission)" />
+						</cell>
+						<cell>
+							<label style="color:#666" value="收据送达方式" />
+						</cell>
+						<cell>
+							<combobox readonly="true"
+								value="@bind(vm.m.csbc_payapply)">
+								<comboitem />
+								<comboitem label="邮政送达" />
+								<comboitem label="银行自取" />
+							</combobox>
+						</cell>
+						<cell>
+							<label style="color:#666" value="社保托收方式" />
+						</cell>
+						<cell>
+							<textbox value="@bind(vm.m.csbc_paytype)"
+								readonly="true" />
+						</cell>
+					</row>
+					<row>
+						<cell>
+							<label style="color:#666" value="参加险种" />
+						</cell>
+						<cell colspan="5">
+							<label style="color:red"
+								value="养老、医疗(综合、住院、劳务工)、工伤、失业、住房" />
+						</cell>
+					</row>
+					<row>
+						<cell>
+							<label style="color:#666" value="备注" />
+						</cell>
+						<cell colspan="5">
+							<textbox rows="5" hflex="1"
+								value="@bind(vm.m.csbc_remark)" />
+						</cell>
+					</row>
+				</rows>
+			</grid>
+			<hbox width="100%" align="center" pack="center">
+				<button label="提交" onClick="@command('submit',win=win)" />
+			</hbox>
+		</scrollview>
+	</window>
+</zk>

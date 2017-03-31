@@ -1,0 +1,524 @@
+<!--
+	创建人：林少斌
+	创建时间：2014-7-4
+	用途：委托单确认(调整单)
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winCA" title="智翼通接口 -- 调整委托单操作" border="normal"
+		width="99%" height="99%" apply="org.zkoss.bind.BindComposer"
+		closable="true" onCreate="@command('wininfo',a=self)"
+		viewModel="@id('vm') @init('Controller.EmZYT.EmZYT_ConfirmAdjustController')">
+		<borderlayout vflex="1">
+			<west collapsible="true" width="39%" splittable="true"
+				vflex="1" title="委托单信息">
+				<grid width="100%" height="100%">
+					<rows>
+						<row>
+							<cell colspan="3" align="center">
+								<label
+									value="委托单（${arg.emztM.emzt_class}）" />
+							</cell>
+						</row>
+						<row>
+							<cell colspan="3"></cell>
+						</row>
+						<!-- <row>
+							<cell>
+								<label value="To：中智深圳" />
+							</cell>
+							<cell></cell>
+							<cell>
+								<label value="From： " />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="联系人：" />
+							</cell>
+							<cell></cell>
+							<cell>
+								<label value="经办人：" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="TEL： 0755-83323640" />
+							</cell>
+							<cell></cell>
+							<cell>
+								<label value="客服负责人 " />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="FAX： 0755-83361044" />
+							</cell>
+							<cell></cell>
+							<cell></cell>
+						</row> -->
+						<row>
+							<cell>
+								<label
+									value="公司编号： ${arg.emztM.emzt_wtcid}" />
+							</cell>
+							<cell colspan="2">
+								<label
+									value="公司名称： ${arg.emztM.emzt_company}" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label
+									value="雇员编号：${arg.emztM.emzt_wtgid}" />
+							</cell>
+							<cell>
+								<label
+									value="雇员姓名：${arg.emztM.emzt_name}" />
+							</cell>
+							<cell>
+								<label value="性别：${arg.emztM.emzt_sex}" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="执行城市： 深圳" />
+							</cell>
+							<cell colspan="2">
+								<label
+									value="身份证号码：${arg.emztM.emzt_idcard}" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="单位电话：" />
+							</cell>
+							<cell>
+								<label
+									value="家庭电话：${arg.emztM.emzt_tel}" />
+							</cell>
+							<cell>
+								<label
+									value="个人手机：${arg.emztM.emzt_mobile}" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label
+									value="档案保管：${arg.emztM.emzt_filesingle}" />
+							</cell>
+							<cell>
+								<label
+									value="养老保险情况：${arg.emztM.emzt_sbsingle}" />
+							</cell>
+							<cell>
+								<label
+									value="公积金情况：${arg.emztM.emzt_housesingle}" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label
+									value="社保城市备注：${arg.emztM.emzt_cityremark}" />
+							</cell>
+							<cell colspan="2">
+								<label
+									value="公积金城市备注：${arg.emztM.emzt_housetitle}" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label
+									value="办理用工情况：${arg.emztM.emzt_rsingle}" />
+							</cell>
+							<cell>
+								<label
+									value="合同开始日期：${arg.emztM.emzt_compactstart}" />
+							</cell>
+							<cell>
+								<label
+									value="合同结束日期：${arg.emztM.emzt_compactstop}" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="客户公司性质：" />
+							</cell>
+							<cell>
+								<label value="劳动合同版本：" />
+							</cell>
+							<cell>
+								<label value="劳动合同签订方：" />
+							</cell>
+						</row>
+						<row>
+							<cell colspan="3">
+								<grid sizedByContent="true">
+									<columns>
+										<column label="类别" width="35px" />
+										<column width="20px" />
+										<column label="项目" />
+										<column label="公司基数" />
+										<column label="个人基数" />
+										<column label="企业缴费比例" />
+										<column label="个人缴费比例" />
+										<column label="合计月缴费" />
+										<column label="委托缴费月" />
+									</columns>
+									<rows>
+										<row>
+											<cell rowspan="11">
+												<vbox>
+													<label value="社" />
+													<label value="会" />
+													<label value="保" />
+													<label value="险" />
+												</vbox>
+											</cell>
+											<cell>
+												<label value="1" />
+											</cell>
+											<cell>
+												<label value="养老保险" />
+											</cell>
+											<cell>
+												<label
+													value="${arg.emztM.emzt_ylradix}" />
+											</cell>
+											<cell>
+												<label
+													value="${arg.emztM.emzt_ylradix}" />
+											</cell>
+											<cell>
+												<label
+													value="${arg.emztM.emzt_ylcpp}" />
+											</cell>
+											<cell>
+												<label
+													value="${arg.emztM.emzt_ylopp}" />
+											</cell>
+											<cell>
+												<label
+													value="${arg.emztM.emzt_yltotal}" />
+											</cell>
+											<cell>
+												<label
+													value="${arg.emztM.emzt_ylstart}" />
+											</cell>
+										</row>
+										<row>
+											<cell>
+												<label value="2" />
+											</cell>
+											<cell>
+												<label value="失业保险" />
+											</cell>
+											<cell>
+												<label
+													value="${arg.emztM.emzt_syeradix}" />
+											</cell>
+											<cell>
+												<label
+													value="${arg.emztM.emzt_syeradix}" />
+											</cell>
+											<cell>
+												<label
+													value="${arg.emztM.emzt_syecpp}" />
+											</cell>
+											<cell>
+												<label
+													value="${arg.emztM.emzt_syeopp}" />
+											</cell>
+											<cell>
+												<label
+													value="${arg.emztM.emzt_syetotal}" />
+											</cell>
+											<cell>
+												<label
+													value="${arg.emztM.emzt_syestart}" />
+											</cell>
+										</row>
+										<row>
+											<cell>
+												<label value="3" />
+											</cell>
+											<cell>
+												<label value="工伤保险" />
+											</cell>
+											<cell>
+												<label
+													value="${arg.emztM.emzt_gsradix}" />
+											</cell>
+											<cell>
+												<label
+													value="${arg.emztM.emzt_gsradix}" />
+											</cell>
+											<cell>
+												<label
+													value="${arg.emztM.emzt_gscpp}" />
+											</cell>
+											<cell>
+												<label
+													value="${arg.emztM.emzt_gsopp}" />
+											</cell>
+											<cell>
+												<label
+													value="${arg.emztM.emzt_gstotal}" />
+											</cell>
+											<cell>
+												<label
+													value="${arg.emztM.emzt_gsstart}" />
+											</cell>
+										</row>
+										<row>
+											<cell>
+												<label value="4" />
+											</cell>
+											<cell>
+												<label value="医疗保险" />
+											</cell>
+											<cell>
+												<label
+													value="${arg.emztM.emzt_jlradix}" />
+											</cell>
+											<cell>
+												<label
+													value="${arg.emztM.emzt_jlradix}" />
+											</cell>
+											<cell>
+												<label
+													value="${arg.emztM.emzt_jlcpp}" />
+											</cell>
+											<cell>
+												<label
+													value="${arg.emztM.emzt_jlopp}" />
+											</cell>
+											<cell>
+												<label
+													value="${arg.emztM.emzt_jltotal}" />
+											</cell>
+											<cell>
+												<label
+													value="${arg.emztM.emzt_jlstart}" />
+											</cell>
+										</row>
+										<row>
+											<cell>
+												<label value="5" />
+											</cell>
+											<cell>
+												<label value="生育保险" />
+											</cell>
+											<cell>
+												<label
+													value="${arg.emztM.emzt_syuradix}" />
+											</cell>
+											<cell>
+												<label
+													value="${arg.emztM.emzt_syuradix}" />
+											</cell>
+											<cell>
+												<label
+													value="${arg.emztM.emzt_syucpp}" />
+											</cell>
+											<cell>
+												<label
+													value="${arg.emztM.emzt_syuopp}" />
+											</cell>
+											<cell>
+												<label
+													value="${arg.emztM.emzt_syutotal}" />
+											</cell>
+											<cell>
+												<label
+													value="${arg.emztM.emzt_syustart}" />
+											</cell>
+										</row>
+										<row>
+											<cell>
+												<label value="6" />
+											</cell>
+											<cell>
+												<label value="住房公积金" />
+											</cell>
+											<cell>
+												<label
+													value="${arg.emztM.emzt_houseradix}" />
+											</cell>
+											<cell>
+												<label
+													value="${arg.emztM.emzt_houseradix}" />
+											</cell>
+											<cell>
+												<label
+													value="${arg.emztM.emzt_housecpp}" />
+											</cell>
+											<cell>
+												<label
+													value="${arg.emztM.emzt_houseopp}" />
+											</cell>
+											<cell>
+												<label
+													value="${vm.house_total}" />
+											</cell>
+											<cell>
+												<label
+													value="${arg.emztM.emzt_housestart}" />
+											</cell>
+										</row>
+										<row>
+											<cell>
+												<label value="7" />
+											</cell>
+											<cell>
+												<label value="补充公积金" />
+											</cell>
+											<cell>
+												<label value="0.00" />
+											</cell>
+											<cell>
+												<label value="0.00" />
+											</cell>
+											<cell>
+												<label value="0.00" />
+											</cell>
+											<cell>
+												<label value="0.00" />
+											</cell>
+											<cell>
+												<label value="0.00" />
+											</cell>
+											<cell>
+												<label
+													value="${arg.emztM.emzt_housestart}" />
+											</cell>
+										</row>
+										<row>
+											<cell>
+												<label value="" />
+											</cell>
+											<cell>
+												<label value="小计" />
+											</cell>
+											<cell colspan="5">
+												<label value="" />
+											</cell>
+											<cell>
+												<label value="" />
+											</cell>
+										</row>
+										<row>
+											<cell>
+												<label value="" />
+											</cell>
+											<cell>
+												<label value="社保合计" />
+											</cell>
+											<cell colspan="5"></cell>
+											<cell>
+												<label
+													value="${arg.emztM.emzt_sbtotal}" />
+											</cell>
+										</row>
+										<row>
+											<cell>
+												<label value="" />
+											</cell>
+											<cell>
+												<label value="福利津小计" />
+											</cell>
+											<cell colspan="5">
+												<label
+													value="${arg.emztM.emzt_flcontent}" />
+											</cell>
+											<cell>
+												<label
+													value="${arg.emztM.emzt_flfee}" />
+											</cell>
+										</row>
+										<row>
+											<cell>
+												<label value="备注" />
+											</cell>
+											<cell colspan="7"></cell>
+										</row>
+									</rows>
+								</grid>
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label
+									value="服务费：${arg.emztM.emzt_fee}" />
+							</cell>
+							<cell>
+								<label value="档案费：${vm.filefee}" />
+							</cell>
+							<cell>
+								<label
+									value="总计：${arg.emztM.emzt_total}" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="${vm.iffeefile}" />
+							</cell>
+							<cell></cell>
+							<cell></cell>
+						</row>
+						<row>
+							<cell colspan="3"></cell>
+						</row>
+						<row>
+							<cell>
+								<label value="委托方留言" />
+							</cell>
+							<cell></cell>
+							<cell></cell>
+						</row>
+						<row>
+							<cell colspan="2">
+								<label
+									value="委托单上传的日期：${arg.emztM.emzt_uptime}${vm.ezcg_addtime}。${arg.emztM.emzt_remark}" />
+							</cell>
+							<cell></cell>
+						</row>
+					</rows>
+					<foot>
+						<footer align="center">
+							<button label="已处理" id="btSubmit2"
+								onClick="@command('success',win=winCA)" />
+							<button label="公司业务中心"
+								if="${arg.emztM.emzt_class=='服务项目调整' or arg.emztM.emzt_class=='服务费调整' }"
+								onClick="@command('openCoManager')" />
+						</footer>
+					</foot>
+				</grid>
+			</west>
+			<east title="业务中心" width="60%" splittable="true"
+				vflex="1">
+				<grid width="100%" height="100%">
+					<rows>
+						<row>
+							<cell>
+								<include
+									src="../SystemControl/EmBuCenterInfoList.zul"
+									if="${arg.emztM.emzt_class=='特殊调整' or arg.emztM.emzt_class=='服务项目调整' or arg.emztM.emzt_class=='一次性费用' }"
+									height="800px" daid="${vm.gid}" embaId="${vm.embaId}" />
+								<include src="EmZYT_SheBaoSalary.zul"
+									if="${arg.emztM.emzt_class=='社保基数调整'}" height="800px"
+									emztM="${arg.emztM}" />
+								<include src="EmZYT_ChangeHJ.zul"
+									if="${arg.emztM.emzt_class=='户籍调整'}" height="800px"
+									emztM="${arg.emztM}" />
+								<include src="../Embase/EmQuotation.zul"
+									if="${arg.emztM.emzt_class=='服务费调整' }" height="800px"
+									daid="${vm.gid}" embaId="${vm.embaId}" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</east>
+		</borderlayout>
+	</window>
+</zk>

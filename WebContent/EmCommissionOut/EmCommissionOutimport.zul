@@ -1,0 +1,489 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="委托外地批量新增" id="win" border="normal" vflex="1"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmCommissionOut.EmCommissionOutimport_Controller')">
+		<scrollview >
+			<tabbox width="100%" tabscroll="false">
+				<tabs>
+					<tab label="代码查询" />
+					<tab label="导入操作" />
+
+				</tabs>
+				<tabpanels>
+					<tabpanel>
+						<groupbox context="服务费代码">
+							<grid id="wf" emptyMessage="无数据" vflex="1" hflex="1"
+								model="@load(vm.wtoutFeeList)" mold="paging"
+								pageSize="8">
+								<columns>
+									<column width="40px"
+										align="center">
+										序号
+									</column>
+									<column align="center">
+										服务费代码
+										<textbox value="@bind(vm.wtot_feeid)"
+											onChange="@command('searchWtoutFee')">
+										</textbox>
+									</column>
+									<column align="center">
+										公司编号
+										<textbox value="@bind(vm.cid)"
+											onChange="@command('searchWtoutFee')">
+										</textbox>
+									</column>
+						
+									<column align="center"
+										style="white-space:normal">
+										服务费名称
+										<combobox
+											value="@bind(vm.wtot_feetitle)" mold="rounded" width="80%"
+											onChange="@command('searchWtoutFee')" instant="true"
+											model="@load(vm.feetitlelist)">
+											<template name="model">
+												<comboitem
+													label="@load(each)" />
+											</template>
+										</combobox>
+									</column>
+									<column align="center"
+										style="white-space:normal">
+										服务费
+										</column>
+									<column align="center">
+										标准名称
+										<combobox
+											value="@bind(vm.wtss_title)" mold="rounded" width="80%"
+											onChange="@command('searchWtoutFee')" instant="true"
+											model="@load(vm.titlelist)">
+											<template name="model">
+												<comboitem
+													label="@load(each)" />
+											</template>
+										</combobox>
+									</column>
+									<column align="center">
+										城市
+										<combobox value="@bind(vm.city)"
+											mold="rounded" width="80%"
+											onChange="@command('searchWtoutFee')" instant="true"
+											model="@load(vm.citylist)">
+											<template name="model">
+												<comboitem
+													label="@load(each)" />
+											</template>
+										</combobox>
+									</column>
+									<column align="center"
+										style="white-space:normal">
+										机构名
+										<combobox
+											value="@bind(vm.coab_name)" mold="rounded" width="80%"
+											onChange="@command('searchWtoutFee')" instant="true"
+											model="@load(vm.namelist)">
+											<template name="model">
+												<comboitem
+													label="@load(each)" />
+											</template>
+										</combobox>
+									</column>
+								</columns>
+								<rows>
+									<template name="model">
+										<row align="center">
+											<label
+												value="${forEachStatus.index+1 }" />
+											<label
+												value="@load(each.wtot_feeid)" />
+											<label
+												value="@load(each.cid)" />
+											 
+											<label
+												value="@load(each.wtot_feetitle)" />
+												<label
+												value="@load(each.wtot_fee)" />
+											<label
+												value="@load(each.wtss_title)" />
+											<label
+												value="@load(each.city)" />
+											<label
+												value="@load(each.coab_name)" />
+										</row>
+									</template>
+								</rows>
+							</grid>
+							</groupbox>
+							<groupbox tooltiptext="标准代码">
+							
+							<grid id="si" emptyMessage="无数据" vflex="1" hflex="1"
+								 model="@load(vm.socialInsuranceList)" mold="paging"
+								pageSize="8">
+								<columns>
+									<column width="40px"
+										align="center">
+										序号
+									</column>
+									<column 
+										align="center">
+										当地标准代码
+											<textbox value="@bind(vm.soin_id)"
+											onChange="@command('searchSocialInsurance')">
+										</textbox>
+									</column>
+									<column align="center">
+										标准名
+										<combobox value="@bind(vm.soin)"
+											mold="rounded" width="80%"
+											onChange="@command('searchSocialInsurance')" instant="true"
+											model="@load(vm.soinlist)">
+											<template name="model">
+												<comboitem
+													label="@load(each)" />
+											</template>
+										</combobox>
+									</column>
+									<column align="center"
+										style="white-space:normal">
+										城市
+										<combobox
+											value="@bind(vm.soincity)" mold="rounded" width="80%"
+											onChange="@command('searchSocialInsurance')" instant="true"
+											model="@load(vm.soincitylist)">
+											<template name="model">
+												<comboitem
+													label="@load(each)" />
+											</template>
+										</combobox>
+									</column>
+									<column align="center">
+										机构
+										<combobox
+											value="@bind(vm.soinname)" mold="rounded" width="80%"
+											onChange="@command('searchSocialInsurance')" instant="true"
+											model="@load(vm.soinnamelist)">
+											<template name="model">
+												<comboitem
+													label="@load(each)" />
+											</template>
+										</combobox>
+									</column>
+									<column align="center">详细</column>
+								</columns>
+								<rows>
+									<template name="model">
+										<row align="center">
+											<label
+												value="${forEachStatus.index+1 }" />
+											<label
+												value="@load(each.soin_id)" />
+											<label
+												value="@load(each.soin_title)" />
+											<label
+												value="@load(each.city)" />
+											<label
+												value="@load(each.coab_name)" />
+											<label
+												value="@load(each.sial_sb_remark)" />
+										</row>
+									</template>
+								</rows>
+							</grid>
+
+						</groupbox>
+					</tabpanel>
+					<tabpanel>
+						<groupbox >
+							<grid width="100%">
+								<rows>
+									<row>
+										<cell width="20%">
+										导入模板:
+										</cell>
+										<cell width="80%">
+										<button label="下载导入模板"
+												onClick="@command('downloadTemplet')" />
+										</cell>
+								</row>
+								<row>
+										<cell width="20%">
+										导入数据：
+										</cell>
+										
+										<cell width="80%">
+											<textbox mold="rounded" width="40%"
+												rows="1" readonly="true" value="@load(vm.uploadFlieName)"
+												/>
+											<button label="浏览..."
+												upload="true,multiple=true" onUpload="@command('browse')" />
+													
+											<button label="导入数据"
+												onClick="@command('summitUpload')">
+												
+											</button>
+											<label
+												value=" (注意：如果修改基数采集模板文件的格式，将无法正常导入数据！)" style="color:red" />
+										</cell>
+								</row>
+								
+									<row>
+								
+									<cell  width="20%">
+										操作：
+											</cell>
+											<cell width="50%" >
+												<button
+												onClick="@command('summitUploadinto',gd=listGid)">
+												生成委托外地任务单
+											</button>
+											<button
+												onClick="@command('deleteUpload',gd=listGid)">
+												删除数据
+											</button>
+										</cell>
+								
+								</row>
+								
+								
+								</rows>
+
+							</grid>
+							<grid span="true"  model="@load(vm.list)" id="listGid"   vflex="1"
+								 mold="paging" pageSize="10" 
+								sizedByContent="true">
+
+								<frozen columns="7"></frozen>
+						
+									<columns>
+									<column align="center"
+							width="80px"><label value="序号"/><checkbox value="@load(each)" onClick="@command('checkAll',gd=listGid,ck=self)"></checkbox></column>
+									
+									<column width="100px"
+										align="center">
+										员工编号
+									</column>
+									<column width="150px"
+										align="center">
+										员工姓名
+										<combobox
+											value="@bind(vm.ecouname)" mold="rounded" width="60%"
+											onChange="@command('searchEntrustInfo')" instant="true"
+											model="@load(vm.ecounamelist)">
+											<template name="model">
+												<comboitem
+													label="@load(each)" />
+											</template>
+										</combobox>
+									</column>
+									<column width="150px"
+										align="center">
+										身份证号码
+									</column>
+									<column width="100px"
+										align="center">
+										工作电话
+									</column>
+									<column width="100px"
+										align="center">
+										个人手机
+									</column>
+									<column width="150px"
+										align="center">
+										添加人
+										<combobox
+											value="@bind(vm.addname)" mold="rounded" width="60%"
+											onChange="@command('searchEntrustInfo')" instant="true"
+											model="@load(vm.addnamelist)">
+											<template name="model">
+												<comboitem
+													label="@load(each)" />
+											</template>
+										</combobox>
+									</column>
+									<column width="100px"
+										align="center">
+										服务费标准代码
+									</column>
+									<column width="100px"
+										align="center">
+										当地标准代码
+									</column>
+									<column width="100px"
+										align="center">
+										是否保管档案
+									</column>
+									<column width="100px"
+										align="center">
+										合同起始时间
+									</column>
+									<column width="100px"
+										align="center">
+										合同结束时间
+									</column>
+									<column width="100px"
+										align="center">
+										实际工资
+									</column>
+									<column width="100px"
+										align="center">
+										社保基数
+									</column>
+									<column width="100px"
+										align="center">
+										公积金基数
+									</column>
+									<column width="100px"
+										align="center">
+										养老起始
+									</column>
+									<column width="100px"
+										align="center">
+										医疗起始
+									</column>
+									<column width="100px"
+										align="center">
+										大病起始
+									</column>
+									<column width="100px"
+										align="center">
+										生育起始
+									</column>
+									<column width="100px"
+										align="center">
+										工伤起始
+									</column>
+									<column width="100px"
+										align="center">
+										失业保险起始
+									</column>
+									<column width="100px"
+										align="center">
+										住房起始
+									</column>
+									<column width="100px"
+										align="center">
+										住房单位比例
+									</column>
+									<column width="100px"
+										align="center">
+										住房个人比例
+									</column>
+									<column width="100px"
+										align="center">
+										补充公积金起始
+									</column>
+									<column width="120px"
+										align="center">
+										补充公积金单位比例
+									</column>
+									<column width="100px"
+										align="center">
+										补充个人比例
+									</column>
+									<column width="100px"
+										align="center">
+										残保金起始
+									</column>
+									<column width="100px"
+										align="center">
+										服务费起始
+									</column>
+									<column width="100px"
+										align="center">
+										备注
+									</column>
+									<column width="80px" label="操作"
+										align="center" />
+								</columns>
+								<rows>
+									<template name="model">
+										<row align="center">
+										<cell onClick="@command('checkCb',cel=self,m=each)"><label value="${forEachStatus.index + 1}" /><checkbox value="@load(each)"></checkbox></cell>
+											<label
+												value="@load(each.gid)" />
+											<label
+												value="@load(each.ecou_name)" />
+											<label
+												value="@load(each.ecou_idcard)" />
+											<label
+												value="@load(each.ecou_com_phone)" />
+											<label
+												value="@load(each.ecou_mobile)" />
+											<label
+												value="@load(each.ecou_addname)" />
+											<label
+												value="@load(each.ecou_ecos_id)" />
+											<label
+												value="@load(each.ecou_soin_id)" />
+											<label
+												value="${each.ecou_filestate!='0'?'是':'否'}" />
+											<label
+												value="@load(each.ecou_compact_f)" />
+											<label
+												value="@load(each.ecou_compact_l)" />
+											<label
+												value="@load(each.ecou_salary)" />
+											<label
+												value="@load(each.ecou_sb_base)" />
+											<label
+												value="@load(each.ecou_house_base)" />
+											<label
+												value="@load(each.ecou_yldate)" />
+											<label
+												value="@load(each.ecou_yliaodate)" />
+											<label
+												value="@load(each.ecou_dbdate)" />
+											<label
+												value="@load(each.ecou_syudate)" />
+											<label
+												value="@load(each.ecou_gsdate)" />
+											<label
+												value="@load(each.ecou_sydate)" />
+											<label
+												value="@load(each.ecou_zfdate)" />
+											<label
+												value="@load(each.ecou_zfcp)" />
+											<label
+												value="@load(each.ecou_zfop)" />
+											<label
+												value="@load(each.ecou_bczfdate)" />
+											<label
+												value="@load(each.ecou_bczfcp)" />
+											<label
+												value="@load(each.ecou_bczfop)" />
+											<label
+												value="@load(each.ecou_cbjdate)" />
+											<label
+												value="@load(each.ecou_fwfdate)" />
+											<label
+												value="@load(each.ecou_remark)" />
+											<menubar autodrop="true">
+												<menu
+													image="../images/pencil-small.png">
+													<menupopup>
+														<menuitem
+															label="修改" onClick="@command('update',model=each)" />
+														<menuitem
+															label="删除" onClick="@command('delete',model=each)" />
+													</menupopup>
+												</menu>
+											</menubar>
+										</row>
+									</template>
+								</rows>
+								
+							</grid>
+						
+
+						</groupbox>
+					</tabpanel>
+
+
+				</tabpanels>
+
+			</tabbox>
+		</scrollview>
+
+
+	</window>
+</zk>

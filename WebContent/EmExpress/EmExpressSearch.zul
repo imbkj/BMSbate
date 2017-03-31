@@ -1,0 +1,23 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="物流动态" border="normal" width="50%" height="60%"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmExpress.EmExpressSearchController')"
+		closable="true">
+		<grid vflex="1" model="@load(vm.list)" emptyMessage="@load(vm.errorMsg)">
+			<rows>
+				<template name="model">
+					<row>
+						<cell width="140px">
+							<!-- <include src="search.jsp" width="960" height="800"></include> -->
+							<label value="@load(each.expr_operattime)"></label>
+						</cell>
+						<cell>
+							<label value="@load(each.expr_operatecontent)"></label>
+						</cell>
+					</row>
+				</template>
+			</rows>
+		</grid>
+	</window>
+</zk>

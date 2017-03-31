@@ -1,0 +1,293 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<?component name="docDataList" macro-uri="../DocumentsInfo/DocumentsInfo_AddPageList.zul" inline="true"?>
+<zk>
+	<window title="档案变更(交单)" id="winInfo" width="600px" height="99%"
+		closable="true" border="normal" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmHouse.EmHouse_ChangeGjjInfoController')"
+		onCreate="@command('winC',a=self)">
+		<borderlayout>
+			<center>
+				<scrollview height="100%">
+					<groupbox height="100%">
+						<caption label="基本信息" />
+						<grid height="100%">
+							<columns visible="false">
+								<column align="left" width="120px" />
+								<column align="left" />
+							</columns>
+							<rows>
+								<row>
+									<cell width="100px">所属月份</cell>
+									<cell>
+										<combobox readonly="true"
+											mold="rounded" value="@bind(vm.ehg.ownmonth)"
+											model="@load(vm.ownmonthList)">
+											<template name="model">
+												<comboitem
+													label="@load(each)" />
+											</template>
+										</combobox>
+
+									</cell>
+								</row>
+
+								<row>
+									<cell>单位名称</cell>
+									<cell>
+										<label
+											value="@load(vm.ehg.ehcg_company)" />
+									</cell>
+								</row>
+								<row>
+									<cell>单位公积金号</cell>
+									<cell>
+										<label
+											value="@load(vm.ehg.emhu_companyid)" />
+									</cell>
+								</row>
+								<row>
+									<cell>个人公积金账号</cell>
+									<cell>
+										<label
+											value="@load(vm.ehg.emhu_houseid)" />
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+					<groupbox height="100%">
+						<caption label="核准类信息" />
+						<grid height="100%">
+							<columns>
+								<column width="120px"></column>
+								<column label="变更前" />
+								<column label="变更后" />
+							</columns>
+							<rows>
+								<row>
+									<cell>姓名</cell>
+									<cell>
+										<label
+											value="@load(vm.ehg.ehcg_name_p)" />
+									</cell>
+									<cell>
+										<textbox width="100%"
+											value="@bind(vm.ehg.ehcg_name_n)" mold="rounded" />
+									</cell>
+								</row>
+								<row>
+									<cell>证件类型</cell>
+									<cell>
+										<label
+											value="@load(vm.ehg.ehcg_idcardclass_p)" />
+									</cell>
+									<cell>
+										<combobox readonly="true"
+											width="100%" model="@load(vm.idcardclassList)"
+											value="@bind(vm.ehg.ehcg_idcardclass_n)" mold="rounded">
+											<template name="model">
+												<comboitem
+													value="@load(each.pcco_code)" label="@load(each.pcco_cn)" />
+											</template>
+										</combobox>
+									</cell>
+								</row>
+								<row>
+									<cell>证件号码</cell>
+									<cell>
+										<label
+											value="@load(vm.ehg.ehcg_idcard_p)" />
+
+									</cell>
+									<cell>
+										<textbox width="100%"
+											value="@bind(vm.ehg.ehcg_idcard_n)" mold="rounded" />
+									</cell>
+								</row>
+								<row>
+									<cell>性别</cell>
+									<cell>
+										<combobox readonly="true"
+											width="100%" value="@bind(vm.ehg.ehcg_sex_p)"
+											mold="rounded">
+											<comboitem label="" />
+											<comboitem label="男" />
+											<comboitem label="女" />
+										</combobox>
+									</cell>
+									<cell>
+										<combobox readonly="true"
+											width="100%" value="@bind(vm.ehg.ehcg_sex_n)"
+											mold="rounded">
+											<comboitem label="" />
+											<comboitem label="男" />
+											<comboitem label="女" />
+										</combobox>
+									</cell>
+								</row>
+								<row>
+									<cell>户籍情况</cell>
+									<cell>
+										<label
+											value="@load(vm.ehg.ehcg_hj_p)" />
+									</cell>
+									<cell>
+										<combobox readonly="true"
+											width="100%" model="@load(vm.hjList)"
+											value="@bind(vm.ehg.ehcg_hj_n)" mold="rounded">
+											<template name="model">
+												<comboitem
+													value="@load(each.pcco_code)" label="@load(each.pcco_cn)" />
+											</template>
+										</combobox>
+									</cell>
+								</row>
+								<row>
+									<cell>社保电脑号</cell>
+									<cell>
+										<textbox width="100%"
+											value="@bind(vm.ehg.ehcg_sbid_p)" mold="rounded" />
+									</cell>
+									<cell>
+										<textbox width="100%"
+											value="@bind(vm.ehg.ehcg_sbid_n)" mold="rounded" />
+									</cell>
+								</row>
+								<row>
+									<cell>婚姻状况</cell>
+									<cell>
+										<label
+											value="@load(vm.ehg.ehcg_marry_p)" />
+									</cell>
+									<cell>
+										<combobox readonly="true"
+											width="100%" model="@load(vm.marryList)"
+											value="@bind(vm.ehg.ehcg_marry_n)" mold="rounded">
+											<template name="model">
+												<comboitem
+													value="@load(each.pcco_code)" label="@load(each.pcco_cn)" />
+											</template>
+										</combobox>
+									</cell>
+								</row>
+								<row>
+									<cell>配偶姓名</cell>
+									<cell>
+										<label
+											value="@load(vm.ehg.ehcg_wifename_p)" />
+									</cell>
+									<cell>
+										<textbox width="100%"
+											value="@bind(vm.ehg.ehcg_wifename_n)" mold="rounded" />
+									</cell>
+								</row>
+								<row>
+									<cell>配偶证件号码</cell>
+									<cell>
+										<label
+											value="@load(vm.ehg.ehcg_wifeidcard_p)" />
+									</cell>
+									<cell>
+										<textbox width="100%"
+											value="@bind(vm.ehg.ehcg_wifeidcard_n)" mold="rounded" />
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+					<groupbox height="100%">
+						<caption label="备案类信息" />
+						<grid height="100%">
+							<columns visible="false">
+								<column width="120px"></column>
+								<column />
+								<column />
+							</columns>
+							<rows>
+								<row>
+									<cell>职称</cell>
+									<cell>
+										<label
+											value="@load(vm.ehg.ehcg_title_p)" />
+									</cell>
+									<cell>
+										<combobox readonly="true"
+											width="100%" model="@load(vm.titleList)"
+											value="@bind(vm.ehg.ehcg_title_n)" mold="rounded">
+											<template name="model">
+												<comboitem
+													value="@load(each.pcco_code)" label="@load(each.pcco_cn)" />
+											</template>
+										</combobox>
+									</cell>
+								</row>
+								<row>
+									<cell>最高学位</cell>
+									<cell>
+										<label
+											value="@load(vm.ehg.ehcg_degree_p)" />
+									</cell>
+									<cell>
+										<combobox readonly="true"
+											width="100%" model="@load(vm.degreeList)"
+											value="@bind(vm.ehg.ehcg_degree_n)" mold="rounded">
+											<template name="model">
+												<comboitem
+													value="@load(each.pcco_code)" label="@load(each.pcco_cn)" />
+											</template>
+										</combobox>
+									</cell>
+								</row>
+								<row>
+									<cell>电子邮箱</cell>
+									<cell>
+										<textbox width="100%"
+											value="@bind(vm.ehg.ehcg_email_p)" mold="rounded" />
+									</cell>
+									<cell>
+										<textbox width="100%"
+											value="@bind(vm.ehg.ehcg_email_n)" mold="rounded" />
+									</cell>
+								</row>
+								<row>
+									<cell>移动电话</cell>
+									<cell>
+										<textbox width="100%"
+											value="@bind(vm.ehg.ehcg_phone_p)" mold="rounded" />
+									</cell>
+									<cell>
+										<textbox width="100%"
+											value="@bind(vm.ehg.ehcg_phone_n)" mold="rounded" />
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+				</scrollview>
+			</center>
+			<south>
+				<div>
+					<grid>
+						<columns visible="false">
+							<column width="120px"/>
+							<column/>
+						</columns>
+						<rows>
+							<row>
+								<cell>出错原因</cell>
+								<cell>
+									<textbox rows="3" mold="rounded"
+										width="100%" value="@bind(vm.ehg.ehcg_remark)" />
+								</cell>
+							</row>
+						</rows>
+					</grid>
+
+					<div align="center">
+						<button label="提交" onClick="@command('submit')" />
+					</div>
+				</div>
+			</south>
+		</borderlayout>
+	</window>
+</zk>

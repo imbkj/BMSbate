@@ -1,0 +1,23 @@
+<window border="0"
+	apply="org.zkoss.bind.BindComposer" id="windeclare"
+	viewModel="@id('vm') @init('Controller.EmHouseCard.HuCard_TakeCardRemarkListController')"
+>
+<grid model="@load(vm.list)">
+		<columns>
+			<column label="序号" width="40px" align="center"/>
+			<column label="备注内容" align="center"/>
+			<column label="添加人" align="center"/>
+			<column label="添加时间" align="center"/>
+		</columns>
+		<rows>
+			<template name="model">
+			<row>
+				<cell><label value="${forEachStatus.index+1 }"></label></cell>
+				<cell><label value="@load(each.fail_content)"></label></cell>
+				<cell><label value="@load(each.fail_addname)"></label></cell>
+				<cell><label value="@load(each.fail_addtime)"></label></cell>
+			</row>
+			</template>
+		</rows>
+	</grid>
+</window>

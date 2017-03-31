@@ -1,0 +1,187 @@
+<?page title="体检合作机构信息修改" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="体检合作机构信息修改" border="normal" closable="true"
+		width="90%" height="100%" id="winupdate"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmBodyCheck.Embc_SetupModController')"
+		onCreate="@command('winC',a=self)">
+		<borderlayout>
+			<north>
+				<grid>
+					<columns>
+						<column width="12%" />
+						<column />
+						<column width="12%" />
+						<column />
+					</columns>
+					<rows>
+						<row>
+							<cell>机构名称</cell>
+							<cell colspan="3">
+								<textbox width="70%" mold="rounded"
+									value="@bind(vm.esm.ebcs_hospital)" />
+							</cell>
+						</row>
+						<row>
+							<cell>联系人</cell>
+							<cell>
+								<textbox mold="rounded"
+									value="@bind(vm.esm.ebcs_name)" />
+							</cell>
+							<cell>联系电话</cell>
+							<cell>
+								<textbox mold="rounded"
+									value="@bind(vm.esm.ebcs_phone)" />
+							</cell>
+						</row>
+						<row>
+							<cell>合作起始日</cell>
+							<cell>
+								<datebox mold="rounded"
+									value="@bind(vm.esm.inuredate)" />
+							</cell>
+							<cell>协议到期日</cell>
+							<cell>
+								<datebox mold="rounded"
+									value="@bind(vm.esm.indate)" />
+							</cell>
+						</row>
+						<row>
+							<cell>最低收费标准</cell>
+							<cell>
+								<textbox mold="rounded"
+									value="@bind(vm.esm.ebcs_limit)" />
+							</cell>
+							<cell>收费标准限制</cell>
+							<cell>
+								<combobox mold="rounded"
+									value="@bind(vm.esm.pstate)" readonly="true">
+									<comboitem label="生效" />
+									<comboitem label="取消" />
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>结算类型</cell>
+							<cell>
+								<combobox mold="rounded"
+									value="@bind(vm.esm.ebcs_balance)" readonly="true">
+									<comboitem label="月结" />
+									<comboitem label="季结" />
+									<comboitem label="年结" />
+									<comboitem label="其他" />
+								</combobox>
+							</cell>
+							<cell>状态</cell>
+							<cell>
+								<combobox mold="rounded"
+									value="@bind(vm.esm.stateName)" readonly="true">
+									<comboitem label="生效" />
+									<comboitem label="终止" />
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>操作流程</cell>
+							<cell colspan="3">
+								<textbox rows="3" width="70%"
+									value="@bind(vm.esm.ebcs_flow)" />
+							</cell>
+						</row>
+						<row>
+							<cell>备注</cell>
+							<cell colspan="3">
+								<textbox rows="3" width="70%"
+									value="@bind(vm.esm.ebcs_remark)" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</north>
+			<center>
+				<grid width="100%" height="100%" sizedByContent="true"
+					span="true" model="@load(vm.alist)">
+					<columns>
+						<column align="center">
+							<label style="font-weight:bold"
+								value="机构地址" />
+							<textbox mold="rounded" instant="true"
+								value="@bind(vm.addName)" onChange="@command('searchAdd')" />
+						</column>
+						<column align="center" width="50px" label="状态" />
+						<column align="center" width="90px"
+							label="体检类型" />
+						<column align="center" width="30px" label="介绍信" />
+						<column align="center" label="日" />
+						<column align="center" label="一" />
+						<column align="center" label="二" />
+						<column align="center" label="三" />
+						<column align="center" label="四" />
+						<column align="center" label="五" />
+						<column align="center" label="六" />
+					</columns>
+					<template name="model">
+						<row visible="@load(each.display)">
+							<cell>
+								<textbox width="100%" mold="rounded"
+									value="@bind(each.ebsa_address)" />
+							</cell>
+							<cell>
+								<combobox mold="rounded" width="100%"
+									value="@bind(each.stateName)" readonly="true">
+									<comboitem label="有效" />
+									<comboitem label="取消" />
+								</combobox>
+							</cell>
+							<cell>
+								<checkbox label="入职体检"
+									checked="@bind(each.ebsa_ichecked)" />
+								<checkbox label="年度体检"
+									checked="@bind(each.ebsa_ychecked)" />
+							</cell>
+							<cell>
+								<menubar autodrop="true" width="50px">
+									<menu>
+										<menupopup>
+											<menuitem label="上传"
+												upload="true,multiple=false"
+												onUpload="@command('menu',a=self,b=each)" />
+											<menuitem label="下载"
+												onClick="@command('menu',a=self,b=each)" />
+										</menupopup>
+									</menu>
+								</menubar>
+							</cell>
+							<cell>
+								<checkbox checked="@bind(each.w7)" />
+							</cell>
+							<cell>
+								<checkbox checked="@bind(each.w1)" />
+							</cell>
+							<cell>
+								<checkbox checked="@bind(each.w2)" />
+							</cell>
+							<cell>
+								<checkbox checked="@bind(each.w3)" />
+							</cell>
+							<cell>
+								<checkbox checked="@bind(each.w4)" />
+							</cell>
+							<cell>
+								<checkbox checked="@bind(each.w5)" />
+							</cell>
+							<cell>
+								<checkbox checked="@bind(each.w6)" />
+							</cell>
+						</row>
+					</template>
+				</grid>
+			</center>
+			<south>
+				<div align="center">
+					<button label="提交" onClick="@command('submit')" />
+				</div>
+			</south>
+		</borderlayout>
+	</window>
+</zk>

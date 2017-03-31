@@ -1,0 +1,155 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="员工体检信息编辑" border="normal" width="80%" height="80%"
+		closable="true" apply="org.zkoss.bind.BindComposer" id="signwin"
+		viewModel="@id('vm') @init('Controller.EmBodyCheck.Embc_SignRepartController')">
+		<grid vflex="1">
+			<rows>
+				<row>
+					<cell width="100px">单位全称</cell>
+					<cell>
+						<textbox width="80%"
+							value="${vm.model.embc_company }" readonly="true">
+						</textbox>
+					</cell>
+					<cell width="100px">单位简称</cell>
+					<cell>
+						<textbox width="80%"
+							value="${vm.model.embc_shortname }" readonly="true">
+						</textbox>
+					</cell>
+				</row>
+				<row>
+					<cell>员工姓名</cell>
+					<cell>
+						<textbox value="${vm.model.embc_name }"
+							readonly="true">
+						</textbox>
+					</cell>
+					<cell>员工性别</cell>
+					<cell>
+						<textbox value="${vm.model.embc_sex }"
+							readonly="true">
+						</textbox>
+					</cell>
+				</row>
+				<row>
+					<cell>员工年龄</cell>
+					<cell>
+						<textbox value="${vm.model.embc_age }"
+							readonly="true">
+						</textbox>
+					</cell>
+					<cell>身份证号</cell>
+					<cell>
+						<textbox value="@load(vm.model.embc_idcard )"
+							width="80%" readonly="true">
+						</textbox>
+					</cell>
+				</row>
+				<row>
+					<cell>婚姻状况</cell>
+					<cell>
+						<textbox value="${vm.model.embc_marry }"
+							readonly="true">
+						</textbox>
+					</cell>
+					<cell>客服</cell>
+					<cell>
+						<textbox value="${vm.model.embc_client }"
+							readonly="true">
+						</textbox>
+					</cell>
+				</row>
+				<row>
+					<cell>体检医院</cell>
+					<cell>
+						<textbox width="80%"
+							value="${vm.model.ebcs_hospital }" readonly="true">
+						</textbox>
+					</cell>
+					<cell>体检类型</cell>
+					<cell>
+						<textbox value="@load(vm.model.ebcl_typename)"
+							readonly="true">
+						</textbox>
+					</cell>
+				</row>
+				<row>
+					<cell>体检地址</cell>
+					<cell colspan="3">
+						<textbox width="80%"
+							value="${vm.model.ebsa_address }" readonly="true">
+						</textbox>
+					</cell>
+				</row>
+				<row>
+					<cell>预约时间</cell>
+					<cell>
+						<textbox value="${vm.model.ebcl_bookdate }"
+							readonly="true">
+						</textbox>
+					</cell>
+					<cell>预约模式</cell>
+					<cell>
+						<textbox
+							value="${vm.model.ebcl_bookmode==1?'固定时间':'不固定时间'}"
+							readonly="true">
+						</textbox>
+					</cell>
+				</row>
+				<row>
+					<cell>联系医院时间</cell>
+					<cell>
+						<textbox value="@load(vm.model.ebcl_linkdate)" readonly="true"></textbox>
+					</cell>
+					<cell>安排体检时间</cell>
+					<cell>
+						<textbox value="@load(vm.model.ebcl_plandate)" readonly="true"></textbox>
+					</cell>
+				</row>
+				<row>
+					<cell>福利组领报告时间</cell>
+					<cell><textbox value="@load(vm.model.ebcl_completedate)" readonly="true"></textbox></cell>
+					<cell>收报告人</cell>
+					<cell><textbox value="@load(vm.model.ebcl_showreportpeople)" readonly="true"></textbox></cell>
+				</row>
+				<row>
+					<cell>保健号</cell>
+					<cell><textbox value="@load(vm.model.ebcl_bcid)" readonly="true" ></textbox></cell>
+					<cell>报告联系人</cell>
+					<cell><textbox value="@load(vm.pomodel.cosp_bcrp_caliname)" readonly="true" ></textbox></cell>
+				</row>
+				<row>
+					<cell>客服签收报告时间</cell>
+					<cell>
+						<datebox id="clientshowdate" value="@bind(vm.clientshowdate)"></datebox>
+						<label style="color:red;">(*)</label>
+					</cell>
+					<cell>签收人</cell>
+					<cell>
+						<textbox id="showclient"
+							value="@load(vm.username)">
+						</textbox>
+						<label style="color:red;">(*)</label>
+					</cell>
+				</row>
+				<row>
+					<cell>备注</cell>
+					<cell colspan="3">
+						<textbox width="80%" rows="5"
+							value="${vm.model.embc_remark }" readonly="true">
+						</textbox>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button onClick="@command('signreport',win=signwin)">
+						提交
+					</button>
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

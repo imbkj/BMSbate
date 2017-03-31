@@ -1,0 +1,194 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="合同合同 - 员工项目分配" border="normal" width="100%"
+		height="100%" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoCompact.Compact_EmpAllotContrller')"
+		onCreate="@command('sWin',a=self)">
+		<borderlayout>
+			<east width="20%">
+				<grid id="gdEmp" model="@load(vm.embaseList)"
+					height="100%" emptyMessage="暂无数据">
+					<auxhead>
+						<auxheader colspan="2">
+							<textbox id="emp" mold="rounded"
+								onChange="@command('searchEmbase')" instant="true" />
+						</auxheader>
+					</auxhead>
+					<columns>
+						<column width="40px">
+							<checkbox id="cka"
+								onClick="@command('checkAllEmp')" />
+						</column>
+						<column align="center" label="姓名" />
+					</columns>
+					<template name="model">
+						<row>
+							<cell>
+								<checkbox checked="@bind(each.checked)"
+									onClick="@command('sum',a=self)" />
+							</cell>
+							<cell>
+								<label if="${each.num>0 }"
+									style="color:blue" value="@load(each.emba_name)" />
+								<label if="${each.num==0 }"
+									style="color:black" value="@load(each.emba_name)" />
+							</cell>
+						</row>
+					</template>
+					<foot>
+						<footer span="2">
+							<div>
+								已选择
+								<label style="color:red"
+									value="@load(vm.num)" />
+								人
+							</div>
+						</footer>
+					</foot>
+				</grid>
+			</east>
+			<center>
+				<borderlayout>
+					<north>
+						<grid>
+							<rows>
+								<row>
+									<cell width="120px">公司列表</cell>
+									<cell>
+										<combobox id="company"
+											onChange="@command('searchCobase')" instant="true"
+											mold="rounded" model="@load(vm.cobaseList)">
+											<template name="model">
+												<comboitem
+													value="@load(each.cid)" label="@load(each.coba_company)" />
+											</template>
+										</combobox>
+									</cell>
+									<cell width="120px">客服</cell>
+									<cell>
+										<combobox id="client"
+											readonly="true" onChange="@command('searchCobase')"
+											instant="true" mold="rounded" model="@load(vm.clientList)">
+											<template name="model">
+												<comboitem
+													value="@load(each.coba_client)"
+													label="@load(each.coba_client)" />
+											</template>
+										</combobox>
+									</cell>
+								</row>
+								<row>
+									<cell>合同</cell>
+									<cell>
+										<combobox id="compact"
+											readonly="true" onChange="@command('searchCooffer')"
+											instant="true" mold="rounded"
+											model="@load(vm.compactList)">
+											<template name="model">
+												<comboitem
+													value="@load(each.coco_id)"
+													label="@load(each.coco_compactid)" />
+											</template>
+										</combobox>
+									</cell>
+									<cell>报价单</cell>
+									<cell>
+										<combobox id="cooffer"
+											readonly="true" mold="rounded"
+											model="@load(vm.coofferList)">
+											<template name="model">
+												<comboitem
+													value="@load(each.coof_id)" label="@load(each.coof_name)" />
+											</template>
+										</combobox>
+									</cell>
+								</row>
+								<row>
+									<cell>产品名称</cell>
+									<cell colspan="3">
+										<textbox id="item"
+											mold="rounded" onChange="@command('searchItemList')"
+											instant="true" />
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</north>
+					<center>
+						<grid id="gd" height="100%"
+							model="@load(vm.itemList)">
+							<columns>
+								<column width="60px" align="center">
+									序号
+								</column>
+								<column align="center">合同</column>
+								<column align="center">报价单</column>
+								<column align="center">产品名称</column>
+								<column align="center">费用</column>
+								<column align="center">服务起始月</column>
+								<column align="center">收费起始月</column>
+								<column width="60px" align="center">
+									<checkbox id="cba"
+										onClick="@command('checkAll')" />
+								</column>
+							</columns>
+							<template name="model">
+								<row>
+									<cell>
+										${forEachStatus.index+1 }
+									</cell>
+									<cell>
+										<label
+											value="@load(each.coco_compactid)" />
+									</cell>
+									<cell>
+										<label
+											value="@load(each.coof_name)" />
+									</cell>
+									<cell>
+										<label
+											value="@load(each.coli_name)" />
+									</cell>
+									<cell>
+										<label
+											value="@load(each.coli_cpfc_name)" />
+									</cell>
+									<cell>
+										<hbox>
+											<monthbox mold="rounded"
+												readonly="true" value="@load(each.cgli_startdate2)"
+												onChange="@command('updateDate',a=each,b=self,c=1)" />
+											<image
+												src="../images/130.gif" style="cursor:pointer;"
+												onClick="@command('copyDate',a=each,b=self,c=forEachStatus.index,d=5)" />
+										</hbox>
+									</cell>
+									<cell>
+										<hbox>
+											<monthbox mold="rounded"
+												readonly="true" value="@load(each.cgli_startdate)"
+												onChange="@command('updateDate',a=each,b=self,c=2)" />
+											<image
+												src="../images/130.gif" style="cursor:pointer;"
+												onClick="@command('copyDate',a=each,b=self,c=forEachStatus.index,d=6)" />
+										</hbox>
+									</cell>
+									<cell>
+										<checkbox
+											checked="@bind(each.checked)" />
+									</cell>
+								</row>
+							</template>
+							<foot>
+								<footer span="8" align="center">
+									<button label="提交"
+										onClick="@command('submit')" />
+								</footer>
+							</foot>
+						</grid>
+					</center>
+				</borderlayout>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

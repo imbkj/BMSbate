@@ -1,0 +1,89 @@
+<?page title="工资重发" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window border="normal" height="100%" width="100%"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmSalary.EmSalaryList_RepayController')">
+		<borderlayout>
+			<north border="0">
+				<grid width="100%">
+					<rows>
+						<row>
+							<cell width="10%" style="color:#666;"
+								align="center">
+								所属月份
+							</cell>
+							<combobox model="@load(vm.ownmonthlist)"
+								readonly="true" width="60%" autodrop="true" mold="rounded"
+								value="@bind(vm.ownmonth)">
+								<template name="model">
+									<comboitem label="@load(each)" />
+								</template>
+							</combobox>
+							<cell width="10%" style="color:#666;"
+								align="center" tooltiptext="可以输入 公司编号 或 公司简称 搜索">
+								公司查询
+							</cell>
+							<textbox width="90%" mold="rounded"
+								value="@bind(vm.company)" />
+							<cell width="10%" style="color:#666;" tooltiptext="可以输入 员工编号 或 员工姓名 搜索"
+								align="center">
+								员工姓名
+							</cell>
+							<textbox width="90%" mold="rounded"
+								value="@bind(vm.ename)" />
+						</row>
+					</rows>
+					<foot>
+						<footer align="center">
+							<button label="查询"
+								onClick="@command('search')" />
+						</footer>
+					</foot>
+				</grid>
+			</north>
+			<center border="0">
+				<grid height="100%" emptyMessage="暂无数据"
+					model="@load(vm.emsdata)" width="100%" mold="paging"
+					pageSize="30">
+					<columns>
+						<column label="所属月份" align="center"
+							sort="auto(ownmonth)" />
+						<column label="公司编号" align="center"
+							sort="auto(cid)" />
+						<column label="公司简称" align="center"
+							sort="auto(coba_shortname)" />
+						<column label="员工编号" align="center"
+							sort="auto(gid)" />
+						<column label="姓名" align="center"
+							sort="auto(esda_ba_name)" />
+						<column label="数据类型" align="center"/>
+						<column label="用途" align="center"/>
+						<column label="状态" align="center"/>
+						<column label="发放时间" align="center" />
+						<column label="是否台账内" align="center" />
+						<column label="所属模块" align="center" />
+						<column label="操作" align="center"/>
+						<column label="实发金额" align="center"/>
+					</columns>
+					<template name="model">
+						<row>
+							<label value="@load(each.ownmonth)" />
+							<label value="@load(each.cid)" />
+							<label value="@load(each.coba_shortname)" />
+							<label value="@load(each.gid)" />
+							<label value="@load(each.esda_ba_name)" />
+							<label value="@load(each.esda_data_typestr)" />
+							<label value="@load(each.esda_usage_typestr)" />
+							<label value="@load(each.esda_payment_statestr)" />
+							<label value="@load(each.esda_payment_date)" />
+							<label value="@load(each.esda_oof_statestr)" />
+							<label value="@load(each.d_type)" />
+							<a label="重发" onClick="@command('openUrl',d_type=each.d_type,tid=each.esda_id)" />
+							<label value="@load(each.esda_pay)" />
+						</row>
+					</template>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

@@ -1,0 +1,209 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="调户详细信息" border="normal" width="80%" height="80%" closable="true"
+	apply="org.zkoss.bind.BindComposer"
+    viewModel="@id('vm') @init('Controller.EmCensus.EmDh.Emdh_InfoDetailController')">
+<scrollview vflex="1">
+<groupbox closable="true" style="margin-bottom:10px;">
+	<caption>
+		<label>员工调户信息</label>
+	</caption>
+	<grid>
+		<rows>
+			<row>
+				<cell width="100px">公司名称</cell>
+				<cell><textbox value="${ arg.model.emdh_company}" readonly="true"></textbox></cell>
+				<cell width="100px">客服</cell>
+				<cell><textbox value="${ arg.model.emdh_client}" readonly="true"></textbox></cell>
+			</row>
+			<row>
+				<cell>账户类型</cell>
+				<cell><textbox value="${ arg.model.emdh_zhtype}" readonly="true"></textbox></cell>
+				<cell>员工姓名</cell>
+				<cell><textbox value="${ arg.model.emdh_name}" readonly="true"></textbox></cell>
+			</row>
+			<row>
+				<cell>档案托管</cell>
+				<cell><textbox value="${ arg.model.emdh_ifdn}" readonly="true"></textbox></cell>
+				<cell>户口挂靠</cell>
+				<cell><textbox value="${ arg.model.emdh_ifhk}" readonly="true"></textbox></cell>
+			</row>
+			<row>
+				<cell>联系电话</cell>
+				<cell><textbox value="${ arg.model.emdh_tel}" readonly="true"></textbox></cell>
+				<cell>电子邮箱</cell>
+				<cell><textbox value="${ arg.model.emdh_mail}" readonly="true"></textbox></cell>
+			</row>
+			<row>
+				<cell>调户方式</cell>
+				<cell><textbox value="${ arg.model.emdh_dhtype}" readonly="true"></textbox></cell>
+				<cell>身份证号码</cell>
+				<cell><textbox value="${ arg.model.emdh_idcard}" readonly="true"></textbox></cell>
+			</row>
+			<row>
+				<cell>婚姻状况</cell>
+				<cell><textbox value="${ arg.model.emdh_marital}" readonly="true"></textbox></cell>
+				<cell>学历学位</cell>
+				<cell><textbox value="${ arg.model.emdh_education}" readonly="true"></textbox></cell>
+			</row>
+			<row>
+				<cell>客服备注</cell>
+				<cell colspan="3"><textbox value="${ arg.model.emdh_remark}" width="80%" readonly="true"></textbox></cell>
+			</row>
+		</rows>
+	</grid>
+</groupbox>
+<groupbox closable="true" style="margin-bottom:10px;">
+	<caption>
+		<label>调户状态记录</label>
+	</caption>
+	<grid visible="${arg.model.emdh_dhtype!='毕业生接收' }">
+		<rows>
+			<row>
+				<cell width="100px">调户类型</cell>
+				<cell><textbox value="${ arg.model.emdh_dhtype}" readonly="true"></textbox></cell>
+				<cell width="100px">当前状态</cell>
+				<cell><textbox value="${ arg.model.states}" readonly="true"></textbox></cell>
+			</row>
+			<row visible="${arg.model.emdh_state==0 }">
+				<cell width="100px">取消理由</cell>
+				<cell colspan="3"><textbox value="${ arg.model.emdh_endreason}" width="95%" readonly="true"></textbox></cell>
+			</row>
+			<row>
+				<cell>初审交齐材料日期</cell>
+				<cell><textbox value="${ arg.model.emdh_time2}" readonly="true"></textbox></cell>
+				<cell>条件审查日期</cell>
+				<cell><textbox value="${ arg.model.emdh_time3}" readonly="true"></textbox></cell>
+			</row>
+			<row>
+				<cell>信息预审日期</cell>
+				<cell><textbox value="${ arg.model.emdh_time4}" readonly="true"></textbox></cell>
+				<cell>预审通过日期</cell>
+				<cell><textbox value="${ arg.model.emdh_time5}" readonly="true"></textbox></cell>
+			</row>
+			<row>
+				<cell>员工领取材料日期</cell>
+				<cell><textbox value="${ arg.model.emdh_time6}" readonly="true"></textbox></cell>
+				<cell>员工正式提交材料日期</cell>
+				<cell><textbox value="${ arg.model.emdh_time7}" readonly="true"></textbox></cell>
+			</row>
+			<row>
+				<cell>上报材料日期</cell>
+				<cell><textbox value="${ arg.model.emdh_time8}" readonly="true"></textbox></cell>
+				<cell>调令下达日期</cell>
+				<cell><textbox value="${ arg.model.emdh_time9}" readonly="true"></textbox></cell>
+			</row>
+			<row>
+				<cell>员工领取调令日期</cell>
+				<cell colspan="3"><textbox value="${ arg.model.emdh_time10}" readonly="true"></textbox></cell>
+			</row>
+		</rows>
+	</grid>
+	<grid visible="${arg.model.emdh_dhtype=='毕业生接收' }">
+		<rows>
+			<row>
+				<cell width="120px">调户类型</cell>
+				<cell><textbox value="${ arg.model.emdh_dhtype}" readonly="true"></textbox></cell>
+				<cell width="110px">当前状态</cell>
+				<cell><textbox value="${ arg.model.states}" readonly="true"></textbox></cell>
+			</row>
+			<row>
+				<cell>初次交齐材料日期</cell>
+				<cell><textbox value="${ arg.model.emdh_time2}" readonly="true"></textbox></cell>
+				<cell>条件审查日期</cell>
+				<cell><textbox value="${ arg.model.emdh_time3}" readonly="true"></textbox></cell>
+			</row>
+			<row>
+				<cell>信息预审日期</cell>
+				<cell><textbox value="${ arg.model.emdh_time4}" readonly="true"></textbox></cell>
+				<cell>预审通过日期</cell>
+				<cell><textbox value="${ arg.model.emdh_time5}" readonly="true"></textbox></cell>
+			</row>
+			<row>
+				<cell>盖章表格返回日期</cell>
+				<cell><textbox value="${ arg.model.emdh_time6}" readonly="true"></textbox></cell>
+				<cell>材料上报日期</cell>
+				<cell><textbox value="${ arg.model.emdh_time7}" readonly="true"></textbox></cell>
+			</row>
+			<row>
+				<cell>接收函下达日期</cell>
+				<cell><textbox value="${ arg.model.emdh_time8}" readonly="true"></textbox></cell>
+				<cell>员工领取接收函日期</cell>
+				<cell><textbox value="${ arg.model.emdh_time9}" readonly="true"></textbox></cell>
+			</row>
+			<row>
+				<cell>员工交齐报到材料日期</cell>
+				<cell><textbox value="${ arg.model.emdh_time10}" readonly="true"></textbox></cell>
+				<cell>报到日期</cell>
+				<cell><textbox value="${ arg.model.emdh_time11}" readonly="true"></textbox></cell>
+			</row>
+			<row>
+				<cell>员工领取介绍信日期</cell>
+				<cell colspan="3"><textbox value="${ arg.model.emdh_time12}" readonly="true"></textbox></cell>
+			</row>
+		</rows>
+	</grid>
+</groupbox>
+
+<groupbox closable="true" style="margin-bottom:10px;">
+	<caption>
+		<label>政府费用</label>
+	</caption>
+	<grid>
+		<rows>
+			<row>
+				<cell width="100px">金额</cell>
+				<cell><textbox value="${ arg.model.emdh_govefee}" readonly="true"></textbox></cell>
+				<cell width="100px">收费对象</cell>
+				<cell><textbox value="${ arg.model.emdh_govetar}" readonly="true"></textbox></cell>
+			</row>
+		</rows>
+	</grid>
+</groupbox>
+<groupbox closable="true" style="margin-bottom:10px;">
+	<caption>
+		<label>服务费用</label>
+	</caption>
+	<grid>
+		<rows>
+			<row>
+				<cell width="100px">金额</cell>
+				<cell><textbox value="${ arg.model.emdh_govefee}" readonly="true"></textbox></cell>
+				<cell width="100px">收费对象</cell>
+				<cell><textbox value="${ arg.model.emdh_govetar}" readonly="true"></textbox></cell>
+			</row>
+			<row>
+				<cell>收取方式</cell>
+				<cell><textbox value="${ arg.model.emdh_servetype}" readonly="true"></textbox></cell>
+				<cell>实收费用</cell>
+				<cell><textbox value="${ arg.model.emdh_getfee}" readonly="true"></textbox></cell>
+			</row>
+		</rows>
+	</grid>
+</groupbox>
+<groupbox closable="true" style="margin-bottom:10px;">
+	<caption>
+		<label>备注信息</label>
+	</caption>
+	<grid model="@load(vm.model)" emptyMessage="没有备注信息" vflex="1">
+	<columns>
+		<column label="序号" width="30px"/>
+		<column label="添加人" width="70px"/>
+		<column label="添加时间" width="80px"/>
+		<column label="备注"/>
+	</columns>
+	<rows>
+		<template name="model">
+			<row>
+				<label value="${forEachStatus.index+1 }"></label>
+				<label value="@load(each.eare_addname)"></label>
+				<label value="@load(each.eare_addtime)"></label>
+				<label value="@load(each.eare_content)"></label>
+		   </row>
+		</template>
+	</rows>
+</grid>
+</groupbox>
+</scrollview>
+</window>
+</zk>

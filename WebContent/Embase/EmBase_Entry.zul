@@ -1,0 +1,67 @@
+<!-- 员工入职第二页 -->
+
+<?page title="员工入职" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window width="99%" height="99%" id="@load(vm.winId)" closable="true"
+		title="员工入职" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.Embase.EmBase_EntryController')"
+		onCreate="@command('wininfo',a=self)">
+		<tabbox  width="99%" height="99%">
+				<tabs>
+				<tab label="员工入职" />
+				<tab label="员工信息采集" visible="@load(vm.ifembasenotin)" />
+				</tabs>
+			<tabpanels>
+				<tabpanel >
+		<borderlayout>
+			<west width="220px" splittable="true" collapsible="true">
+				<tree id="emTree" model="@load(vm.tree)" vflex="1"
+					hflex="1" >
+					<template name="model">
+						<treeitem>
+							<treerow 
+								onClick="@command('link',a=each,b=self)">
+								<treecell
+									label="@load(each.data.name)">
+								</treecell>
+							</treerow>
+						</treeitem>
+					</template>
+				</tree>
+			</west>
+			<center>
+				<custom-attributes gid="${vm.ebm.gid }"
+					cid="${vm.ebm.cid }" embaId="${vm.ebm.emba_id }" win="${vm.winE }"
+					emztM="${vm.emztM}" />
+				<include id="refleshurl" vflex="1" hflex="1"
+					src="@load(vm.url)" gid="${gid }" cid="${cid }" embaId="${embaId }" step="2"
+					emztM="${emztM}">
+				</include>
+			</center>
+			<south>
+				<grid>
+					<rows>
+						<row>
+							<cell align="center">
+								<button label="上一步" onClick="@command('prev')" />
+								<button label="提交任务单" if="${vm.ebm.emba_tapr_id==null}" onClick="@command('submit')" />
+								<button label="提交任务单" if="${vm.ebm.emba_tapr_id>0 }" onClick="@command('next')" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</south>
+		</borderlayout>
+				</tabpanel>
+				<tabpanel>
+					<custom-attributes emba_id="${vm.emba_id }" cid="${vm.cid }" />
+						<include src="../Embase/Embase_Addsec.zul" 
+						daid="${emba_id}" cid="${cid}"  />
+				</tabpanel>
+				</tabpanels>
+				</tabbox>
+				
+		
+
+	</window>
+</zk>

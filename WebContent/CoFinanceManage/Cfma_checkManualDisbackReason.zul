@@ -1,0 +1,24 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="退回原因" closable="true" border="normal" width="50%"
+		height="40%" id="wins" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoFinanceManage.Cfma_checkManualDisbackReasonController')">
+		<borderlayout>
+			<north>
+				<div>请填写退回原因:</div>
+			</north>
+			<center>
+				<div>
+					<textbox rows="30" width="100%" mold="rounded"
+						value="@bind(vm.backReason)" />
+				</div>
+			</center>
+			<south>
+				<div align="center">
+					<button label="确定"
+						onClick="@command('submit',wins=wins)" />
+				</div>
+			</south>
+		</borderlayout>
+	</window>
+</zk>

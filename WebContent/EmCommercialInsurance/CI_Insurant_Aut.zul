@@ -1,0 +1,143 @@
+<?page title="商业保险审核" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="商业保险审核" border="normal"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmCommercialInsurance.CI_AutInsurant_Controller')">
+		<grid id="searchGird" width="100%">
+			<rows>
+				<row>
+
+					<cell width="100px">投保类型</cell>
+					<cell>
+					<combobox mold="rounded" readonly="true"
+						width="120px" value="全部" id="castsort" model="@load(vm.castsortlist)">
+						<template name="model">
+								<comboitem label="@load(each.ecin_castsort)"
+									value="@load(each.ecin_castsort)">
+								</comboitem>
+							</template>
+					</combobox>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button id="btSearch" label="查询"
+						onClick="@command('search',castsort=castsort)" />
+				</footer>
+			</foot>
+		</grid>
+		<div
+			style="width:100%;height:430px;overflow-y:scroll;overflow-x:hidden;border:1px solid #bcbdbf;">
+			<grid width="100%" id="g1"
+				model="@load(vm.ci_insurant_list)">
+				<columns>
+					<column label="序号" align="center"  width="60px"/>
+					<column label="公司名称" align="center" />
+					<column label="被保险人" align="center"  width="80px"/>
+					<column label="主险人" align="center"  width="60px"/>
+					<column label="身份证" align="center" />
+					<column label="出生日期" align="center"  width="80px"/>
+					<column label="投保类型" align="center" />
+					<column label="投保份数" align="center" />
+					<column label="投保时间" align="center"  width="80px"/>
+					<column label="停缴时间" align="center"  width="80px"/>
+					<column label="客服代表" align="center" />
+					<column label="合同签订方" align="center" />
+					<column label="社保缴交地" align="center" />
+					<column label="状态" align="center" />
+					<column label="操作" align="center" />
+					<column width="50px" align="center">
+
+					</column>
+					
+					<column label="" align="center" visible="false" />
+					<column label=""  width="50px"  align="center"  />
+				</columns>
+				<rows>
+					<template name="model">
+						<row>
+							<cell>
+								<label
+									value="${forEachStatus.index + 1}" />
+							</cell>
+							<cell>
+								<label value="@load(each.coba_company)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.ecin_insurant)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.ecin_insurer)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.ecin_idcard)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.ecin_birthday)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.ecin_castsort)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.ecin_buy_count)" />
+							</cell>
+							<cell>
+								<label value="@load(each.ecin_in_date)" />
+							</cell>
+							<cell>
+								<label value="@load(each.ecin_st_date)" />
+							</cell>
+							<cell>
+								<label value="@load(each.coba_client)" />
+							</cell>
+							<cell>
+								<label value="@load(each.ecin_balance_name)" />
+							</cell>
+							<cell>
+								<label value="@load(each.ecin_work_city)" />
+							</cell>
+							<cell>
+								<label value="@load(each.ecin_state)" />
+							</cell>
+							<cell>
+								<label value="退回"  onClick="@command('ci_insurant_back',emco=each,castsort=castsort)" style="cursor:pointer"  />
+							</cell>
+							<cell>
+								<checkbox value="@load(each.ecin_id)"   if="${each.ecin_cl_count==0 and each.ecin_account>0?true:false}"/>
+							</cell>
+							<cell visible="false">
+								<label value="@load(each.ecin_tapr_id)" />
+							</cell>
+							<cell>
+							<label value="签收"  onClick="@command('sign_st',emco=each,castsort=castsort)" style="cursor:pointer"  if="${each.ecin_cl_count==1?true:false}"/>
+							</cell>
+						</row>
+					</template>
+				</rows>
+
+			</grid>
+		</div>
+		<grid>
+			<rows>
+				<row>
+					<cell align="right" width="55%">						　
+						<button label="导出"
+							onClick="@command('ci_insurant_down', emco=each,gridco=g1)" />
+					</cell>
+					<cell align="right">
+						全选
+						<checkbox id="cka"
+							onClick="@command('checkall',a=self.checked,b=g1)" />
+					</cell>
+				</row>
+			</rows>
+		</grid>
+	</window>
+</zk>

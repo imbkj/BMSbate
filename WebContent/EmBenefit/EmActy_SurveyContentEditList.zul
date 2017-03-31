@@ -1,0 +1,27 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="编辑调查内容" border="normal" width="80%" height="80%" id="winedit" closable="true"
+	apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('vm') @init('Controller.EmBenefit.EmActy_SurveyContentEditListController')"
+>
+<grid  vflex="1" model="@load(vm.list)" id="gd" mold="paging" pageSize="500">
+	<columns visible="false">
+		<column width="40px" align="center" />
+		<column label="序号" width="40px" align="center"/>
+		<column label="题目"/>
+	</columns>
+	<rows>
+		<template name="model">
+			<row>
+				<custom-attributes sury_id="${each.sury_id }" />
+			<detail open="true">
+					<include src="/EmBenefit/EmActy_SurveyContentList.zul" sury_id="${sury_id}" />
+			</detail>
+				<cell><label value="${forEachStatus.index+1 }"></label></cell>
+				<cell><label value="@load(each.sury_title)"></label></cell>
+			</row>
+		</template>
+	</rows>
+</grid>
+</window>
+</zk>

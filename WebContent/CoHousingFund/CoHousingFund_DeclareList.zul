@@ -1,0 +1,160 @@
+<?page title="单位公积金-变更申报" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="单位公积金-变更申报" border="normal" width="100%"
+		height="100%" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoHousingFund.CoHousingFund_DeclareListController')">
+		<script type="text/javascript" src="/js/Datebox.js"></script>
+		<borderlayout>
+			<north title="综合查询" collapsible="true" open="false"></north>
+			<center>
+				<grid hflex="1" vflex="1" emptyMessage="暂无数据"
+					model="@load(vm.scohfList)" mold="paging">
+					<columns sizable="true">
+						<column align="center" width="40px"></column>
+						<column align="center" label="公司编号">
+							<separator></separator>
+							<textbox width="50%" mold="rounded"
+								instant="true" value="@bind(vm.cid)"
+								onChange="@command('search')" />
+						</column>
+						<column align="center" label="公司简称">
+							<separator></separator>
+							<textbox width="90%" mold="rounded"
+								value="@bind(vm.shortname)" onChange="@command('search')" />
+						</column>
+						<column align="center" label="首次托收月">
+							<separator></separator>
+							<datebox format="yyyyMM" mold="rounded"
+								sclass="datebox-month-only" value="@bind(vm.firmonth)"
+								onChange="@command('search')" />
+						</column>
+						<column align="center" label="托收日">
+							<separator></separator>
+							<textbox width="90%" mold="rounded"
+								value="@bind(vm.tsday)" onChange="@command('search')" />
+						</column>
+						<column align="center" label="公积金号">
+							<separator></separator>
+							<textbox width="90%" mold="rounded"
+								value="@bind(vm.houseid)" onChange="@command('search')" />
+						</column>
+						<column align="center" label="有无密钥">
+							<separator></separator>
+							<combobox width="90%" mold="rounded"
+								instant="true" readonly="true" value="@bind(vm.ispwd)"
+								onChange="@command('search')">
+								<comboitem />
+								<comboitem label="有" />
+								<comboitem label="无" />
+							</combobox>
+						</column>
+						<column align="center" label="服务状态">
+							<separator></separator>
+							<combobox width="90%" mold="rounded"
+								instant="true" readonly="true" value="@bind(vm.statename)"
+								onChange="@command('search')">
+								<comboitem />
+								<comboitem label="服务中" />
+								<comboitem label="申报中" />
+								<comboitem label="终止服务" />
+							</combobox>
+						</column>
+						<column align="center" label="添加人"></column>
+						<column align="center" label="添加时间"></column>
+						<column align="center" label="客服">
+							<separator></separator>
+							<combobox width="90%" mold="rounded"
+								readonly="true" instant="true" model="@load(vm.clientList)"
+								value="@bind(vm.client)" onChange="@command('search')">
+								<template name="model">
+									<comboitem label="@load(each)" />
+								</template>
+							</combobox>
+						</column>
+						<column align="center" label="操作"
+							width="60px">
+						</column>
+					</columns>
+					<template name="model">
+						<row>
+							<custom-attributes cid="${each.cid }" />
+							<detail fulfill="onOpen" open="false">
+								<include
+									src="/CoHousingFund/CoHousingFund_SelectList_Detail.zul"
+									cid="${cid }">
+								</include>
+							</detail>
+							<cell>
+								<label value="@load(each.cid)"
+									if="${not empty each.cid }" />
+								<label value="中智大户" style="color:blue"
+									if="${empty each.cid }" />
+							</cell>
+							<label value="@load(each.coba_shortname)" />
+							<label value="@load(each.cohf_firmonth)" />
+							<label value="@load(each.cohf_tsday)" />
+							<label value="@load(each.cohf_houseid)" />
+							<label value="@load(each.ispwd)" />
+							<cell>
+								<label value="@load(each.statename)"
+									if="${each.statename eq '申报中' }" />
+								<label value="@load(each.statename)"
+									if="${each.statename eq '服务中' }" style="color:blue" />
+								<label value="@load(each.statename)"
+									if="${each.statename eq '终止服务' }" style="color:red" />
+							</cell>
+							<label value="@load(each.cohf_addname)" />
+							<label
+								value="@load(each.cohf_addtimeString)" />
+							<label value="@load(each.coba_client)" />
+							<cell>
+								<menubar autodrop="true"
+									orient="vertical">
+									<menu
+										image="../images/pencil-small.png">
+										<menupopup>
+											<menuitem label="比例调整 " 
+												onClick="@command('openwin',each=each,
+												url='/CoHousingFund/CoHousingFund_RadixCpp.zul')"
+												disabled="${each.cppChange eq 'true' }" />
+											<menuitem label="降低比例 "
+												onClick="@command('openwin',each=each,
+												url='/CoHousingFund/CoHousingFund_RadixLow.zul')"
+												disabled="${each.cohf_if_low eq 'true' }" />
+											<menuitem label="缓缴 "
+												onClick="@command('openwin',each=each,
+												url='/CoHousingFund/CoHousingFund_RadixHj.zul')"
+												disabled="${each.cohf_if_hj eq 'true' }" />
+											<menuitem label="信息变更 "
+												onClick="@command('openwin',each=each,
+												url='/CoHousingFund/CoHousingFund_InforChange.zul')" />
+											<menuseparator></menuseparator>
+											<menuitem
+												label="降低比例/缓缴提前终止 "
+												onClick="@command('openwin',each=each,
+												url='/CoHousingFund/CoHousingFund_Termination.zul')"
+												disabled="${not(each.cohf_if_low eq 'true' or each.cohf_if_hj eq 'true') }">
+											</menuitem>
+											<menuseparator></menuseparator>
+											<menuitem label="登记注销 "
+												onClick="@command('openwin',each=each,
+												url='/CoHousingFund/CoHousingFund_Cancel.zul')"
+												disabled="${each.cohf_state eq 0 or
+												each.em_notstop_count gt 0 }">
+											</menuitem>
+											<menuitem label="合同终止 "
+												onClick="@command('openwin',each=each,
+												url='/CoHousingFund/CoHousingFund_Surrender.zul')"
+												disabled="${each.cohf_state eq 0  }">
+											</menuitem>
+										</menupopup>
+									</menu>
+								</menubar>
+							</cell>
+						</row>
+					</template>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

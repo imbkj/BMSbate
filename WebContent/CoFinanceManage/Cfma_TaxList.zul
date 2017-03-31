@@ -1,0 +1,31 @@
+<?page title="个税信息" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<grid id="gdTax" height="100%" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoFinanceManage.Cfma_TaxListController')"
+		emptyMessage="暫未找到数据" mold="paging" pageSize="10"
+		model="@load(vm.taxList)" width="100%">
+		<columns sizable="true">
+			<column label="序号" width="50px" align="center" />
+			<column label="员工编号" align="center" sort="auto(gid)" />
+			<column label="员工姓名" align="center" sort="auto(emba_name)" />
+			<column label="个税类型" align="center"
+				sort="auto(emsdModel.esda_usage_typestr)" />
+			<column label="税款" align="center"
+				sort="auto(emsdModel.esda_payment_statestr)" />
+			<column label="应收" align="center"
+				sort="auto(efsa_Receivable)" />
+		</columns>
+		<rows>
+			<template name="model">
+				<row>
+					<label value="${forEachStatus.index + 1}" />
+					<label value="@load(each.gid)" />
+					<label value="@load(each.emba_name)" />
+					<label value="@load(each.efta_tax_classStr)" />
+					<label value="@load(each.efta_tax)" />
+					<label value="@load(each.efta_receivable)" />
+				</row>
+			</template>
+		</rows>
+	</grid>
+</zk>

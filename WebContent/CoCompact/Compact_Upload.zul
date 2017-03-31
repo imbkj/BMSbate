@@ -1,0 +1,50 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winDocCompany" title="合同文件上传" border="normal"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoCompact.Compact_UploadController')"
+		closable="true" sizable="true" width="500px" height="180px">
+		<label value="${arg.daid}" id="coco_id" visible="false"/>
+		<borderlayout>
+			<north border="0" title="合同文件上传" collapsible="true"
+				flex="true">
+				<grid width="100%">
+					<rows>
+						<row>
+							<cell align="right" width="40%">
+								<label value="上传类型：" />
+							</cell>
+							<cell width="100%">
+								<combobox id="cbClass" readonly="true" mold="rounded"
+									constraint="no empty:请先选择上传文件的类型。">
+										<comboitem
+											label="合同上传" value="1" />
+										<comboitem
+											label="特殊申请扫描件上传" value="2" />
+								</combobox>
+							</cell>
+						</row>
+
+						<row>
+							<cell align="right" width="80px">
+								<label value="文件目录：" />
+							</cell>
+							<cell width="100%">
+								<textbox mold="rounded" rows="1"
+									readonly="true" value="@load(vm.filename)" />
+								<button label="浏览..."
+									upload="true,multiple=true" onUpload="@command('browse')" />
+							</cell>
+						</row>
+					</rows>
+					<foot>
+						<footer align="center">
+							<button label="提交" id="btSubmit"
+								onClick="@command('upload',class=cbClass,cocoid=coco_id)" />
+						</footer>
+					</foot>
+				</grid>
+			</north>
+		</borderlayout>
+	</window>
+</zk>

@@ -1,0 +1,169 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window width="700px" height="365px" title="员工福利待确认" id="winEmpinfo"
+		border="normal" apply="org.zkoss.bind.BindComposer" closable="true"
+		viewModel="@id('vm') @init('Controller.EmBenefit.EmBenefit_comitInfoController')">
+		<grid vflex="1">
+			<columns visible="false">
+				<column width="80px"></column>
+				<column></column>
+				<column width="90px"></column>
+				<column></column>
+			</columns>
+			<rows>
+				<row>
+					<cell>公司名称</cell>
+					<cell colspan="3">
+						<label value="@load(vm.ewm.emwf_company)" />
+					</cell>
+				</row>
+				<row>
+					<cell>姓名</cell>
+					<cell>
+						<label value="@load(vm.ewm.emwf_name)" />
+					</cell>
+					<cell>项目</cell>
+					<cell>
+						<label value="@load(vm.ewm.embf_name)" />
+					</cell>
+				</row>
+				<row>
+					<cell>身份证</cell>
+					<cell>
+						<label value="@load(vm.ewm.emwf_idcard)" />
+					</cell>
+					<cell visible="false">供应商</cell>
+					<cell visible="false">
+						<combobox id="sup" model="@load(vm.easuList)"
+							value="@load(vm.ewm.suppName)" readonly="true" mold="rounded"
+							onChange="@command('searchPd',a=self)">
+							<template name="model">
+								<comboitem value="@load(each.supp_id)"
+									label="@load(each.supp_name)" />
+							</template>
+						</combobox>
+					</cell>
+					<cell>享受标准</cell>
+					<cell>
+						<label
+							value="@bind(vm.ewm.emwf_charge)"/>
+					</cell>
+				</row>
+				<row>
+					<cell>入职时间</cell>
+					<cell>
+						<label value="@load(vm.ewm.emwf_intime)" />
+					</cell>
+				</row>
+				<row>
+					<cell>产品</cell>
+					<cell colspan="3">
+						<hlayout>
+							<combobox id="pd" model="@load(vm.plist)" width="120px"
+								value="@load(vm.pmodel.prod_name)" readonly="true" mold="rounded"
+								onChange="@command('selectPd',a=self,pt=pt)">
+								<template name="model">
+									<comboitem value="@load(each)"
+										label="@load(each.prod_name)" />
+								</template>
+							</combobox>
+							<combobox model="@load(vm.ptlist)" width="120px" id="pt" visible="@load(vm.visType)"
+								value="@load(vm.ptm.prty_name)" mold="rounded" 
+								onChange="@command('selectPtd',pt=self)"
+								>
+								<template name="model">
+									<comboitem value="@load(each)"
+										label="@load(each.prty_name)" />
+								</template>
+							</combobox>
+							，每人：
+							<intbox value="@bind(vm.ewm.emwf_producenum)" width="60px"></intbox>
+							<label value="@load(vm.pmodel.prod_unit)"></label>
+						</hlayout>
+					</cell>
+				</row>
+				<row>
+					<cell>付款性质</cell>
+					<cell>
+						<combobox readonly="true"
+							value="@bind(vm.ewm.emwf_paykind)" mold="rounded">
+							<comboitem label="公司按月支付" />
+							<comboitem label="公司一次性支付" />
+							<comboitem label="服务费中包含" />
+							<comboitem label="个人付" />
+						</combobox>
+					</cell>
+					<cell>何时需要</cell>
+					<cell>
+						<datebox value="@bind(vm.need)" mold="rounded" />
+					</cell>
+				</row>
+				<row>
+					<cell>享受方式</cell>
+					<cell>
+						<combobox readonly="true" model="@load(vm.stlist)"
+							value="@bind(vm.ewm.emwf_standard)" mold="rounded">
+							<template name="model">
+								<comboitem label="@load(each)" />
+							</template>
+						</combobox>
+					</cell>
+					<cell>寄送方式</cell>
+					<cell>
+						<combobox readonly="true"
+							onSelect="@command('disLink')"
+							value="@bind(vm.ewm.emwf_delivery)" mold="rounded">
+							<comboitem label="自取" />
+							<comboitem label="快递" />
+							<comboitem label="公司送货上门" />
+						</combobox>
+					</cell>
+					<!-- 
+						<cell>是否包含家属</cell>
+						<cell>
+						<combobox readonly="true"
+						value="@bind(vm.ewm.emwf_family)" mold="rounded">
+						<comboitem label="是" />
+						<comboitem label="否" />
+						</combobox>
+						</cell>
+					-->
+				</row>
+				<row visible="@load(vm.link)">
+					<cell>联系人</cell>
+					<cell>
+						<combobox mold="rounded" model="@load(vm.linkmanList)" value="@load(vm.ewm.linkman)"
+							onSelect="@command('modLinkList',a=self.selectedItem.value)" readonly="true">
+							<template name="model">
+								<comboitem value="@load(each)"
+									label="@load(each.cali_name)" />
+							</template>
+						</combobox>
+					</cell>
+					<cell>
+						联系电话
+					</cell>
+					<cell><textbox mold="rounded" value="@load(vm.ewm.mobile)" /></cell>
+				</row>
+				<row visible="@load(vm.link)">
+					<cell>联系地址</cell>
+					<cell colspan="3">
+						<textbox mold="rounded" value="@load(vm.ewm.address)" />
+					</cell>
+				</row>
+				<row>
+					<cell>备注</cell>
+					<cell colspan="3">
+						<textbox width="80%" rows="3" value="@bind(vm.ewm.emwf_remark)"></textbox>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer span="4" align="center">
+					<button id="btn" label="提交"
+						onClick="@command('submit')" />
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

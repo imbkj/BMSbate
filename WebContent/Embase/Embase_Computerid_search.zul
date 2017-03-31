@@ -1,0 +1,7 @@
+<?page title="社保电脑号查询" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="社保电脑号查询" border="normal" closable="true"
+		height="350px" width="500px">
+		<iframe src="${arg.url }" hflex="1" vflex="1"></iframe>
+	</window>
+</zk>

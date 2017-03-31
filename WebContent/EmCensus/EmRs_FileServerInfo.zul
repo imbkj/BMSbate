@@ -1,0 +1,428 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="人事信息" border="normal" width="100%" height="100%"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmCensus.EmRs_FileServerInfoController')">
+		<scrollview vflex="1" hflex="1">
+			<groupbox open="true" title="档案信息">
+				<grid model="@load(vm.archivelist)" height="100px"
+					emptyMessage="没有档案信息">
+					<columns>
+						<column label="序号" align="center" width="50px" />
+						<column label="存档方式" align="center"
+							width="70px" />
+						<column label="类型" align="center" width="50px" />
+						<column label="档案号" align="center" width="50px" />
+						<column label="档案何处转入" align="center" />
+						<column label="档案存放地" align="center" />
+						<column label="协议书签订时间" align="center" />
+						<column label="初次协议到期日" align="center" />
+						<column label="续签协议到期日" align="center" />
+						<column label="状态" align="center" width="50px" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<cell>
+									<label
+										value="${forEachStatus.index+1 }">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emar_archivetype)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emar_archivearea)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emar_fid)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emar_archivesource)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emar_archiveplace)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emar_prodate)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emar_firstdeadline)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emar_continuedeadline)">
+									</label>
+								</cell>
+								<cell>
+									<label value="@load(each.state)"></label>
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox open="true" title="档案业务信息">
+				<grid model="@load(vm.datumlist)" height="150px"
+					emptyMessage="没有档案业务信息">
+					<columns>
+						<column label="序号" align="center" width="50px" />
+						<column label="存档方式" align="center"
+							width="70px" />
+						<column label="档案号" align="center" />
+						<column label="业务类型" align="center" />
+						<column label="客服" align="center" />
+						<column label="添加时间" align="center" />
+						<column label="添加人" align="center" />
+						<column label="状态" align="center" />
+						<column label="短信" align="center" />
+						<column label="操作" align="center" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<cell>
+									<label
+										value="${forEachStatus.index+1 }">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.eada_filetype)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.eada_fid)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.eada_type)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.coba_client)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.eada_addtime)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.eada_addname)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.eada_final)">
+									</label>
+								</cell>
+								<cell>
+									<a
+										onClick="@command('sendmsg',table='EmArchiveDatum',tid=each.eada_id,title='档案业务——${each.eada_type }',client=each.coba_client)">
+										<image src="../images/mail.png"
+											if="${each.symr_readstate!=0 }">
+										</image>
+									</a>
+									<a
+										onClick="@command('sendmsg',table='EmArchiveDatum',tid=each.eada_id,title='档案业务——${each.eada_type }',client=each.coba_client)">
+										<image
+											src="../images/mail_new.gif"
+											if="${each.symr_readstate==0 }">
+										</image>
+									</a>
+								</cell>
+								<cell>
+									<a onClick="@command('deleada',model=each)" visible="${each.eada_final=='已退回' or each.eada_final=='待处理' }" if="${each.eada_type=='档案调出'}"><label>删除</label></a>
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox open="true" title="档案续费记录">
+				<grid model="@load(vm.eaplist)" height="150px"
+					emptyMessage="没有档案续费信息">
+					<columns>
+						<column label="序号" align="center" width="50px" />
+						<column label="所属月份" align="center"
+							width="70px" />
+						<column label="缴费时段" align="center" />
+						<column label="档案" align="center" />
+						<column label="户口" align="center" />
+						<column label="滞纳金" align="center" />
+						<column label="借款申请人" align="center" />
+						<column label="交发票日期" align="center" />
+						<column label="费用状态" align="center" />
+						<column label="短信" align="center" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<cell>
+									<label
+										value="${forEachStatus.index+1 }">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ownmonth)">
+									</label>
+								</cell>
+								<cell>
+									<label value="@load(each.cddate)"></label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emap_file)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emap_hj)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emap_op)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emap_lname)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emap_itime)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.lstatename)">
+									</label>
+								</cell>
+								<cell>
+									<a
+										onClick="@command('sendmsg',table='emarchivepayment',tid=each.emap_id,title='档案续费',client='')">
+										<image src="../images/mail.png"
+											if="${each.symr_readstate!=0 }">
+										</image>
+									</a>
+									<a
+										onClick="@command('sendmsg',table='emarchivepayment',tid=each.emap_id,title='档案续费',client='')">
+										<image
+											src="../images/mail_new.gif"
+											if="${each.symr_readstate==0 }">
+										</image>
+									</a>
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox open="true" title="户口信息">
+				<grid model="@load(vm.hjlist)" height="100px"
+					emptyMessage="没有户口信息">
+					<columns>
+						<column label="序号" align="center" width="50px" />
+						<column label="户口编号" align="center" />
+						<column label="姓名" align="center" />
+						<column label="公司" align="center" />
+						<column label="身份证号" align="center" />
+						<column label="户口所在地" align="center" />
+						<column label="入户时间" align="center" />
+						<column label="入户方式" align="center" />
+						<column label="状态" align="center" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<cell>
+									<label
+										value="${forEachStatus.index+1 }">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emhj_no)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emhj_name)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.coba_shortname)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emhj_idcard)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emhj_place)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emhj_in_time)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emhj_in_class)">
+									</label>
+								</cell>
+								<cell>
+									<label value="@load(each.states)"></label>
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox open="true" title="调户信息">
+				<grid model="@load(vm.dhlist)" height="100px"
+					emptyMessage="没有调户信息">
+					<columns>
+						<column label="序号" align="center" width="50px" />
+						<column label="姓名" align="center" />
+						<column label="联系方式" align="center" />
+						<column label="调户方式" align="center" />
+						<column label="账户类型" align="center" />
+						<column label="客服" align="center" />
+						<column label="状态" align="center" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<cell>
+									<label
+										value="${forEachStatus.index+1 }">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emdh_name)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emdh_tel)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emdh_dhtype)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emdh_zhtype)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emdh_client)">
+									</label>
+								</cell>
+								<cell>
+									<label value="@load(each.states)"></label>
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox open="true" title="户口卡借卡信息">
+				<grid model="@load(vm.borrowlist)" height="300px"
+					emptyMessage="没有借卡信息">
+					<columns>
+						<column label="序号" align="center" width="50px" />
+						<column label="户口类型" align="center" />
+						<column label="户口编号" align="center" />
+						<column label="借卡日期" align="center" />
+						<column label="借卡人" align="center" />
+						<column label="还卡日期" align="center" />
+						<column label="换卡人" align="center" />
+						<column label="押金" align="center" />
+						<column label="状态" align="center" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<cell>
+									<label
+										value="${forEachStatus.index+1 }">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emhj_type)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emhj_no)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ehbc_outime)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ehbc_handin_name)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ehbc_backtime)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ehbc_backname)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ehbc_fees)">
+									</label>
+								</cell>
+								<cell>
+									<label value="@load(each.states)"></label>
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</groupbox>
+		</scrollview>
+	</window>
+</zk>

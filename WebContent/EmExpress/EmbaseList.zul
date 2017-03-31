@@ -1,0 +1,79 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="员工收件地址信息列表" border="normal"  width="100%" height="100%"
+	apply="org.zkoss.bind.BindComposer"
+    viewModel="@id('vm') @init('Controller.EmExpress.EmbaseListController')">
+ <borderlayout>
+<north border="0" title="检索" collapsible="true" flex="true" style="padding-bottom:10px;" open="false">
+<grid>
+	<rows>
+		<row>
+			<cell width="50px" align="center"><label>员工姓名</label></cell>
+			<cell><textbox value="@bind(vm.embaname)"></textbox></cell>
+			<cell width="50px" align="center"><label>员工编号</label></cell>
+			<cell><textbox value="@bind(vm.gid)"></textbox></cell>
+			<cell width="50px" align="center"><label>客服</label></cell>
+			<cell>
+				<combobox model="@load(vm.clientlist)" value="@bind(vm.client)">
+					<template name="model">
+						<comboitem label="@load(each)"/>
+					</template>
+				</combobox>
+			</cell>
+			<cell width="50px" align="center"><label>公司名称</label></cell>
+			<cell><textbox value="@bind(vm.cobaname)"></textbox></cell>
+		</row>
+	</rows>
+	<foot><footer align="center">
+		<button onClick="@command('search')">查询</button>
+	</footer></foot>
+</grid>
+</north>
+<center>
+<grid  width="100%" height="100%" model="@load(vm.list)" mold="paging" pageSize="40">
+		<columns>
+			<column width="40px" align="center"/>
+			<column label="序号" width="40px" align="center"/>
+			<column label="员工编号" align="center"/>
+			<column label="员工姓名" align="center"/>
+			<column label="单位编号" align="center"/>
+			<column label="单位名称" align="center"/>
+			<column label="客服" align="center"/>
+			<column label="状态" align="center"/>
+			<column label="操作" align="center"/>
+		</columns>
+		<rows>
+		<template name="model">
+			<row>
+			<custom-attributes gid="${each.gid}" />
+			<detail open="false" fulfill="onOpen" visible="${each.num>0 }">
+				<include src="/EmExpress/EmExpressContactInfoList.zul" gid="${gid}"/>
+			</detail>
+				<cell><label value="${forEachStatus.index+1 }"></label></cell>
+				<cell><label value="@load(each.gid)"></label></cell>
+				<cell><label value="@load(each.emba_name)"></label></cell>
+				<cell><label value="@load(each.cid)"></label></cell>
+				<cell><label value="@load(each.coba_shortname)"></label></cell>
+				<cell><label value="@load(each.coba_client)"></label></cell>
+				<cell><label value="${each.emba_state==1?'在职':'离职' }"></label></cell>
+				<cell>
+					<menubar autodrop="true">
+					<menu
+					image="../images/pencil-small.png">
+						<menupopup>
+							<menuitem label="添加收件地址"
+								onClick="@command('address',model=each)" />
+							<menuitem label="新增快递"
+								onClick="@command('addexpress',model=each)" />
+						</menupopup>
+					</menu>
+				</menubar>
+				</cell>
+			</row>
+			</template>
+		</rows>
+	</grid>
+</center>
+</borderlayout>
+</window>
+</zk>

@@ -1,0 +1,76 @@
+<?page title="商业保险新增" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="商业保险连带人购买" border="normal" width="100%"
+		apply="org.zkoss.bind.BindComposer" sizable="true" id="sbl_w1"
+		viewModel="@id('vm') @init('Controller.EmCommercialInsurance.CI_Insurant_Controller')"
+		onCreate="@command('winL',a=self)">
+		<groupbox title="商保投保信息" mold="3d">
+			<grid width="100%" mold="paging" pageSize="19" id="g1"
+				model="@load(vm.ci_insurant_applycastsort)">
+				<columns>
+					<column label="序号" align="center" width="60px" />
+					<column label="投保类型" align="center" />
+					<column label="添加时间" align="center" />
+					<column label="处理状态" align="center" />
+				</columns>
+				<rows>
+					<template name="model">
+						<row>
+							<cell>
+								<label
+									value="${forEachStatus.index + 1}" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.ecin_castsort)" />
+							</cell>
+							<cell>
+								<label value="@load(each.ecin_addtime)" />
+							</cell>
+							<cell>
+								<label value="@load(each.ecin_state)" />
+							</cell>
+						</row>
+					</template>
+				</rows>
+			</grid>
+		</groupbox>
+
+		<groupbox title="联系员工购买连带人险" mold="3d">
+			<grid width="100%"  id="g3">
+				<rows>
+					<row align="left">
+						<cell align="right"  >配偶</cell>
+						<cell align="left"  >
+
+							<checkbox id="ch2" value="1"  disabled="${vm.coats1==0?true:false}"/>
+						</cell>
+
+						<cell align="right"  >子女</cell>
+						<cell align="left" >
+							<checkbox id="ch1" value="1"  disabled="${vm.coats2==0?true:false}"/>
+							
+						</cell>
+
+						<cell align="right">生效时间</cell>
+						<cell align="left">
+							<datebox width="130px" readonly="true" id="fl_date"
+								mold="rounded" format="yyyy-MM-dd" />
+						</cell>
+					</row>
+				</rows>
+			</grid>
+			<grid width="100%">
+				<rows>
+					<row>
+						<cell colspan="5" align="center">
+							<button label="提交"
+								onClick="@command('ci_insurant_linkapply', emco=each,gridco3=g3,gid=gid,cid=cid,sbl_w1=sbl_w1,castsort=castsort,ch1=ch1,ch2=ch2,fl_date=fl_date)" />
+						</cell>
+					</row>
+
+				</rows>
+			</grid>
+		</groupbox>
+	</window>
+</zk>

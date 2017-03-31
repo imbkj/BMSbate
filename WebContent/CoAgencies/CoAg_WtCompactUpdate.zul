@@ -1,0 +1,74 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="委托合同修改" border="normal" width="80%" height="80%" closable="true"
+	apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('vm') @init('Controller.CoAgencies.CoAg_CompactUpdateController')"
+>
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell width="80px">合同编号</cell>
+			<cell><textbox value="@bind(vm.model.coct_compactid)"></textbox></cell>
+			<cell width="80px">合同类型</cell>
+			<cell><textbox value="@bind(vm.model.coct_category)"></textbox></cell>
+		</row>
+		<row>
+			<cell>签订时间</cell>
+			<cell><datebox value="@bind(vm.signdate)"></datebox></cell>
+			<cell>合同生效时间</cell>
+			<cell><datebox value="@bind(vm.effectdate)"></datebox></cell>
+		</row>
+		<row>
+			<cell>合同到期时间</cell>
+			<cell><datebox value="@bind(vm.expiredate)"></datebox></cell>
+			<cell>是否自动续约</cell>
+			<cell>
+				<combobox readonly="true" value="@bind(vm.model.autoex)">
+					<comboitem label="是"/>
+					<comboitem label="否"/>
+				</combobox>
+			</cell>
+		</row>
+		<row>
+			<cell>备注</cell>
+			<cell colspan="3"><textbox value="@bind(vm.model.coct_remark)" rows="3" width="80%"></textbox></cell>
+		</row>
+		<row>
+			<cell>委托机构</cell>
+			<cell colspan="3">
+				<combobox readonly="true" model="@load(vm.coaglist)" width="60%" value="@bind(vm.model.coct_coagname)"
+				onChange="@command('changecity',cb=self)">
+					<template name="model">
+						<comboitem label="@load(each.coab_name)" value="@load(each)"/>
+					</template>
+				</combobox>
+			</cell>
+		</row>
+		<row>
+			<cell>服务城市</cell>
+			<cell colspan="3">
+				<grid model="@load(vm.citylist)" emptyMessage="请选择委托机构" id="gd">
+					<columns>
+						<column label="序号" width="100px" align="center"/>
+						<column label="城市名称" align="center"/>
+						<column align="center" width="100px"><checkbox onCheck="@command('checkall',cb=self,gd=gd)"></checkbox></column>
+					</columns>
+					<rows>
+						<template name="model">
+						<row>
+							<cell><label value="${forEachStatus.index+1 }"></label></cell>
+							<cell><label value="@load(each.name)"></label></cell>
+							<cell><checkbox value="@load(each)" onCheck="@command('checkck',cb=self,gd=gd)" checked="${each.ctcy_cabc_id!=null }"></checkbox></cell>
+						</row>
+						</template>
+					</rows>
+				</grid>
+			</cell>
+		</row>
+	</rows>
+	<foot>
+		<footer align="center"><button onClick="@command('summit',gd=gd)">提交</button></footer>
+	</foot>
+</grid>
+</window>
+</zk>

@@ -1,0 +1,56 @@
+<!--
+	创建人：林少斌
+	创建时间：2013-11-22
+	用途：公司合同补充协议归档页面
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="w1" title="公司合同补充协议 -- 归档页面" border="normal" width="95%"
+		height="95%" closable="true"
+		apply="Controller.CoCompact.CoCompactSA.CompactSA_InFileController">
+		<grid width="100%">
+			<rows>
+				<row>
+					<cell width="15%" style="color:#666;">归档日期：</cell>
+					<cell width="20%">
+						<datebox id="ccsa_filedate" readonly="true"
+							format="yyyy-MM-dd" mold="rounded" width="60%" />
+						<label style="color:red;">(*)</label>
+					</cell>
+					<cell width="15%" style="color:#666;">存档编号：</cell>
+					<cell width="20%">
+						<textbox id="ccsa_fileid" mold="rounded"
+							width="60%" />
+					</cell>
+				</row>
+				<row>
+					<cell width="15%" style="color:#666;">中文补充协议份数：</cell>
+					<cell>
+						<intbox id="ccsa_chs_copies" mold="rounded"
+							width="60%" />
+						<label style="color:red;">(*)</label>
+					</cell>
+					<cell width="15%" style="color:#666;">英文补充协议份数：</cell>
+					<cell width="20%">
+						<intbox id="ccsa_en_copies" mold="rounded"
+							width="60%" />
+					</cell>
+				</row>
+				<row>
+					<cell width="15%" style="color:#666;">备注：</cell>
+					<cell width="20%" colspan="3">
+						<textbox id="ccsa_remark" mold="rounded"
+							hflex="1" rows="4"
+							value="${$composer.ccsaList.getCcsa_remark()}" />
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button label="提交" id="btSubmit" />
+				</footer>
+			</foot>
+		</grid>
+		<include src="../CoCompact/CoCompactSA/CompactSA_SelectOffice.jsp?ccsa_id=${arg.daid}"></include>
+	</window>
+</zk>

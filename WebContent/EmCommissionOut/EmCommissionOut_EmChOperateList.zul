@@ -1,0 +1,337 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="委托单退回管理" border="normal" width="100%" height="100%"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmCommissionOut.EmCommissionOut_EmChOperateListController')">
+		<borderlayout>
+			<north title="综合操作" collapsible="true" open="true" visible="false">
+				<vbox width="100%" height="100%">
+					<hbox width="100%" height="100%" pack="center"
+						align="center">
+						<grid width="550px" model="@load(vm.countList)"
+							emptyMessage="暂无统计数据">
+							<columns>
+								<column width="80px" align="center" />
+								<column align="center">
+									<toolbarbutton label="全部"
+										style="cursor:pointer;font-weight:bold"
+										onClick="@command('multsearch',ecoc_addtype='',
+												ecoc_state='')" />
+								</column>
+								<column label="未确认" align="center" />
+								<column label="发单中" align="center" />
+								<column label="确认中" align="center" />
+								<column label="已完成" align="center" />
+								<column label="退回" align="center" />
+								<column label="撤销" align="center" />
+								<column label="取消" align="center" />
+							</columns>
+							<template name="model">
+								<row>
+									<cell>
+										<label
+											value="@load(each.ecoc_addtype)" />
+									</cell>
+									<cell>
+										<div if="${each.c6 eq 0 }">
+											[
+											<label
+												value="@load(each.c6)" />
+											]
+										</div>
+										<div if="${each.c6 gt 0 }"
+											style="cursor:pointer"
+											onClick="@command('multsearch',ecoc_addtype=each.ecoc_addtype,
+												ecoc_state='')">
+											[
+											<label style="color:red"
+												value="@load(each.c6)" />
+											]
+										</div>
+									</cell>
+									<cell>
+										<div if="${each.c1 eq 0 }">
+											[
+											<label
+												value="@load(each.c1)" />
+											]
+										</div>
+										<div if="${each.c1 gt 0 }"
+											style="cursor:pointer"
+											onClick="@command('multsearch',ecoc_addtype=each.ecoc_addtype,
+												ecoc_state='未确认')">
+											[
+											<label style="color:red"
+												value="@load(each.c1)" />
+											]
+										</div>
+									</cell>
+									<cell>
+										<div if="${each.c2 eq 0 }">
+											[
+											<label
+												value="@load(each.c2)" />
+											]
+										</div>
+										<div if="${each.c2 gt 0 }"
+											style="cursor:pointer"
+											onClick="@command('multsearch',ecoc_addtype=each.ecoc_addtype,
+												ecoc_state='发单中')">
+											[
+											<label style="color:red"
+												value="@load(each.c2)" />
+											]
+										</div>
+									</cell>
+									<cell>
+										<div if="${each.c5 eq 0 }">
+											[
+											<label
+												value="@load(each.c5)" />
+											]
+										</div>
+										<div if="${each.c5 gt 0 }"
+											style="cursor:pointer"
+											onClick="@command('multsearch',ecoc_addtype=each.ecoc_addtype,
+												ecoc_state='确认中')">
+											[
+											<label style="color:red"
+												value="@load(each.c5)" />
+											]
+										</div>
+									</cell>
+									<cell>
+										<div if="${each.c7 eq 0 }">
+											[
+											<label
+												value="@load(each.c7)" />
+											]
+										</div>
+										<div if="${each.c7 gt 0 }"
+											style="cursor:pointer"
+											onClick="@command('multsearch',ecoc_addtype=each.ecoc_addtype,
+												ecoc_state='已完成')">
+											[
+											<label style="color:red"
+												value="@load(each.c7)" />
+											]
+										</div>
+									</cell>
+									<cell>
+										<div if="${each.c3 eq 0 }">
+											[
+											<label
+												value="@load(each.c3)" />
+											]
+										</div>
+										<div if="${each.c3 gt 0 }"
+											style="cursor:pointer"
+											onClick="@command('multsearch',ecoc_addtype=each.ecoc_addtype,
+												ecoc_state='退回')">
+											[
+											<label style="color:red"
+												value="@load(each.c3)" />
+											]
+										</div>
+									</cell>
+									<cell>
+										<div if="${each.c4 eq 0 }">
+											[
+											<label
+												value="@load(each.c4)" />
+											]
+										</div>
+										<div if="${each.c4 gt 0 }"
+											style="cursor:pointer"
+											onClick="@command('multsearch',ecoc_addtype=each.ecoc_addtype,
+												ecoc_state='撤销')">
+											[
+											<label style="color:red"
+												value="@load(each.c4)" />
+											]
+										</div>
+									</cell>
+									<cell>
+										<div if="${each.c8 eq 0 }">
+											[
+											<label
+												value="@load(each.c8)" />
+											]
+										</div>
+										<div if="${each.c8 gt 0 }"
+											style="cursor:pointer"
+											onClick="@command('multsearch',ecoc_addtype=each.ecoc_addtype,
+												ecoc_state='取消')">
+											[
+											<label style="color:red"
+												value="@load(each.c8)" />
+											]
+										</div>
+									</cell>
+								</row>
+							</template>
+						</grid>
+					</hbox>
+				</vbox>
+			</north>
+			<center>
+				<listbox id="ltb" hflex="1" vflex="1"
+					emptyMessage="暂无数据" model="@load(vm.secocList)" mold="paging">
+					<listhead sizable="true">
+						<listheader align="center" label="委托类型">
+						</listheader>
+						<listheader align="center" label="雇员姓名">
+						</listheader>
+						<listheader align="center" label="备注信息">
+						</listheader>
+						<listheader align="center" label="委托地">
+							<separator></separator>
+							<combobox width="90%" mold="rounded"
+								model="@load(vm.cityList)" instant="true" readonly="true"
+								value="@bind(vm.city)" onChange="@command('search')">
+								<template name="model">
+									<comboitem label="@load(each.city)" />
+								</template>
+							</combobox>
+						</listheader>
+						<listheader align="center" label="委托机构">
+							<separator></separator>
+							<combobox width="90%" mold="rounded"
+								model="@load(vm.coabList)" instant="true" readonly="true"
+								value="@bind(vm.coabname)" onChange="@command('search')">
+								<template name="model">
+									<comboitem
+										label="@load(each.coab_name)" />
+								</template>
+							</combobox>
+						</listheader>
+						<listheader align="center" label="添加时间"></listheader>
+						<listheader align="center" label="操作类型"></listheader>
+						<listheader align="center" label="状态">
+						</listheader>
+						<listheader align="center" label="操作"
+							width="60px">
+						</listheader>
+					</listhead>
+					<template name="model">
+						<listitem checkable="false">
+							<listcell label="@load(each.ecoc_addtype)" />
+							<listcell label="@load(each.emba_name)" />
+							<listcell label="@load(each.ecoc_remark)"
+								popup="pop_remark_${each.ecoc_id },position=end_after">
+								<popup
+									id="pop_remark_${each.ecoc_id }">
+									${each.ecoc_remark }
+								</popup>
+							</listcell>
+							<listcell label="@load(each.city)" />
+							<listcell label="@load(each.coab_name)" />
+							<listcell>
+								<datebox readonly="true"
+									buttonVisible="false" inplace="true"
+									value="@load(each.ecoc_addtime)" format="yyyy-MM-dd" />
+							</listcell>
+							<listcell label="@load(each.ecoc_addtype)" />
+							<listcell>
+								<label value="@load(each.statename)"
+									if="${each.statename ne '退回' and each.statename ne '撤销'
+										and each.statename ne '取消' and each.statename ne '已完成' }" />
+								<label value="@load(each.statename)"
+									style="color:blue" if="${each.statename eq '已完成' }" />
+								<label value="@load(each.statename)"
+									style="color:red"
+									if="${each.statename eq '退回' or each.statename eq '撤销'
+										or each.statename eq '取消' }" />
+							</listcell>
+							<listcell>
+								<menubar autodrop="true"
+									if="${each.ecoc_addtype eq '新增' }">
+									<menu
+										image="../images/pencil-small.png">
+										<menupopup>
+											<menuitem label="委托单详情 "
+												onClick="@command('detail',each=each,
+												url='/EmCommissionOut/EmCommissionOut_AddDetail.zul')" />
+											<menuitem label="编辑提交"
+												if="${each.ecoc_state eq 4 or each.ecoc_state eq 5 }"
+												onClick="@command('updatestate',each=each,
+													url='/EmCommissionOutNew/EmCommissionOut_AddRe.zul')" />
+											<menuitem label="取消委托单" disabled="true"
+												if="${each.ecoc_state eq 1 or each.ecoc_state eq 2 or each.ecoc_state eq 4 }"
+												onClick="@command('updatestate',each=each,
+													url='/EmCommissionOut/EmCommissionOut_Cancel.zul')" />
+										</menupopup>
+									</menu>
+								</menubar>
+								<menubar autodrop="true"
+									if="${each.ecoc_addtype eq '调整' }">
+									<menu
+										image="../images/pencil-small.png">
+										<menupopup>
+											<menuitem label="委托单详情 "
+												onClick="@command('detail',each=each,
+												url='/EmCommissionOut/EmCommissionOut_ChangeDetail.zul')" />
+											<menuitem label="编辑提交"
+												if="${each.ecoc_state eq 4 or each.ecoc_state eq 5 or each.ecoc_state eq 1 }"
+												onClick="@command('updatestate',each=each,
+													url='/EmCommissionOutNew/EmCommissionOut_ChangeRe.zul')" />
+											<menuitem label="取消委托单" disabled="true"
+												if="${each.ecoc_state eq 1 or each.ecoc_state eq 2 or each.ecoc_state eq 4 }"
+												onClick="@command('updatestate',each=each,
+													url='/EmCommissionOut/EmCommissionOut_Cancel.zul')" />
+										</menupopup>
+									</menu>
+								</menubar>
+								<menubar autodrop="true"
+									if="${each.ecoc_addtype eq '离职' }">
+									<menu
+										image="../images/pencil-small.png">
+										<menupopup>
+											<menuitem label="委托单详情 "
+												onClick="@command('detail',each=each,
+												url='/EmCommissionOut/EmCommissionOut_TerminationDetail.zul')" />
+											<menuitem label="编辑提交"
+												if="${each.ecoc_state eq 4 or each.ecoc_state eq 5 or each.ecoc_state eq 1 }"
+												onClick="@command('updatestate',each=each,
+													url='/EmCommissionOut/EmCommissionOut_TerminationReSub.zul')" />
+											<menuitem label="取消委托单" disabled="true"
+												if="${each.ecoc_state eq 1 or each.ecoc_state eq 2 or each.ecoc_state eq 4 }"
+												onClick="@command('updatestate',each=each,
+													url='/EmCommissionOut/EmCommissionOut_Cancel.zul')" />
+										</menupopup>
+									</menu>
+								</menubar>
+								<menubar autodrop="true"
+									if="${each.ecoc_addtype eq '一次性费用' }">
+									<menu
+										image="../images/pencil-small.png">
+										<menupopup>
+											<menuitem label="委托单详情 "
+												onClick="@command('detail',each=each,
+												url='/EmCommissionOut/EmCommissionOut_OneTimeFeeDetail.zul')" />
+											<menuitem label="编辑提交"
+												if="${each.ecoc_state eq 4 or each.ecoc_state eq 5 or each.ecoc_state eq 1 }"
+												onClick="@command('updatestate',each=each,
+													url='/EmCommissionOut/EmCommissionOut_OneTimeFeeOperate.zul')" />
+										</menupopup>
+									</menu>
+								</menubar>
+								<menubar autodrop="true"
+									if="${each.ecoc_addtype eq '取消' }">
+									<menu
+										image="../images/pencil-small.png">
+										<menupopup>
+											<menuitem label="委托单详情 "
+												onClick="@command('detail',each=each,
+												url='/EmCommissionOut/EmCommissionOut_CancelDetail.zul')" />
+										</menupopup>
+									</menu>
+								</menubar>
+							</listcell>
+						</listitem>
+					</template>
+				</listbox>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

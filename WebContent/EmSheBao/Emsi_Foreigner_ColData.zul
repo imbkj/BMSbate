@@ -1,0 +1,190 @@
+<?page title="外籍人社保-服务中心核收" contentType="text/html;charset=UTF-8"?>
+<?component name="docDataList" macro-uri="/DocumentsInfo/DocumentsInfo_AddPageList.zul" inline="true"?>
+<zk>
+	<window id="winForeignerColData" title="外籍人社保-服务中心核收"
+		border="normal" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmSheBao.Emsi_Foreigner_ColDataController')"
+		height="90%" width="80%" closable="true" sizable="true"
+		maximizable="true">
+		<borderlayout>
+			<north title="个人信息" border="none" splittable="true"
+				collapsible="true">
+				<grid style="border:0px">
+					<rows>
+						<row>
+							<cell width="20%">
+								<label value="公司编号" />
+							</cell>
+							<cell>
+								<label value="@load(vm.efModel.cid)" />
+							</cell>
+							<cell width="20%">
+								<label value="员工编号" />
+							</cell>
+							<cell>
+								<label value="@load(vm.efModel.gid)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="所属公司" />
+							</cell>
+							<cell colspan="3">
+								<label
+									value="@load(vm.efModel.emsc_company)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="所属月份" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.efModel.ownmonth)" />
+							</cell>
+							<cell>
+								<label value="个人电脑号" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.efModel.emsc_computerid)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="姓名" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.efModel.emsc_name)" />
+							</cell>
+							<cell>
+								<label value="配偶姓名" />
+							</cell>
+							<cell>
+								<label value="" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="户籍" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.efModel.emsc_hj)" />
+							</cell>
+							<cell>
+								<label value="性别" />
+							</cell>
+							<cell>
+								<label value="" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="职工性质" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.efModel.emsc_worker)" />
+							</cell>
+							<cell>
+								<label value="身份证号" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.efModel.emsc_idcard)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="职别" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.efModel.emsc_officialrank)" />
+							</cell>
+							<cell>
+								<label value="出生日期" />
+							</cell>
+							<cell>
+								<label value="" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="民族" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.efModel.emsc_folk)" />
+							</cell>
+							<cell>
+								<label value="月工资总额" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.efModel.emsc_radix)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="利手" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.efModel.emsc_hand)" />
+							</cell>
+							<cell>
+								<label value="参保手机" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.efModel.emsc_mobile)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="备注" />
+							</cell>
+							<cell colspan="3">
+								<textbox rows="4"
+									value="@load(vm.efModel.emsc_remark)" width="70%"
+									readonly="true" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</north>
+			<center title="所交资料" border="none" hflex="1" vflex="1">
+				<docDataList id="docGrid" puzu_id="32" doc_type="g"
+					gid="${vm.efModel.gid}" tid="${vm.efModel.id}"
+					log_url="../DocumentsInfo/" ifSubmit="2" dHeight="200px"
+					dWidth="100%" />
+			</center>
+			<south border="none" splittable="true" collapsible="true">
+				<grid width="100%">
+					<rows>
+						<row>
+							<cell width="20%">备注</cell>
+							<cell>
+								<textbox rows="3" width="70%"
+									value="@bind(vm.reason)" />
+							</cell>
+						</row>
+					</rows>
+					<foot>
+						<footer align="center">
+							<button label="联系员工"
+								onClick="@command('lx')" />
+							<button label="退回"
+								onClick="@command('FsbReturn',win=winForeignerColData)" />
+							<button label="提交"
+								onClick="@command('pass',win=winForeignerColData,gd=docGrid)" />
+						</footer>
+					</foot>
+				</grid>
+			</south>
+		</borderlayout>
+	</window>
+</zk>

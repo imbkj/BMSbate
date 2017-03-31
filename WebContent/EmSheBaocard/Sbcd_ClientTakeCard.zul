@@ -1,0 +1,80 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="客服领卡" border="normal" width="80%" height="80%" closable="true"
+	apply="org.zkoss.bind.BindComposer" id="flwin"
+    viewModel="@id('vm') @init('Controller.EmSheBaocard.Sbcd_ClientTakeCardController')">
+<grid vflex="1">
+	<rows>
+			<row>
+				<cell width="100px">员工姓名</cell>
+				<cell><textbox value="@bind(vm.m.sbcd_name)" readonly="true"></textbox></cell>
+				<cell width="100px">员工编号</cell>
+				<cell><textbox value="@bind(vm.m.gid)" readonly="true"></textbox></cell>
+				<cell width="80px">性别</cell>
+				<cell><textbox value="@bind(vm.m.sbcd_sex)" readonly="true"></textbox></cell>
+			</row>
+			<row>
+				<cell>社保单位编码</cell>
+				<cell><textbox value="@bind(vm.m.cid)" readonly="true"></textbox></cell>
+				<cell>社保单位名称</cell>
+				<cell colspan="3"><textbox width="80%" value="@bind(vm.m.sbcd_company)" readonly="true"></textbox></cell>
+			</row>
+			<row>
+				<cell>单位编号</cell>
+				<cell><textbox value="@bind(vm.m.cid)" readonly="true"></textbox></cell>
+				<cell>单位全称</cell>
+				<cell colspan="3"><textbox width="80%" value="@bind(vm.m.sbcd_company)" readonly="true"></textbox></cell>
+			</row>
+			<row>
+				<cell>社保电脑号</cell>
+				<cell><textbox value="@bind(vm.m.sbcd_computerid)" readonly="true"></textbox></cell>
+				<cell>民族</cell>
+				<cell>
+					<textbox value="@bind(vm.m.sbcd_folk)" readonly="true"></textbox>
+				</cell>
+				<cell>移动电话</cell>
+				<cell><textbox value="@bind(vm.m.sbcd_mobile)" readonly="true"></textbox></cell>
+			</row>
+			<row>
+				<cell>户籍所在市</cell>
+				<cell>
+					<textbox value="@bind(vm.m.sbcd_hjcity)" readonly="true"></textbox>
+				</cell>
+				<cell>办理类型</cell>
+				<cell>
+					<textbox value="@bind(vm.m.sbcd_content)" readonly="true"></textbox>
+				</cell>
+				<cell>办卡银行</cell>
+				<cell>
+					<textbox value="@bind(vm.m.sbcd_upbankname)" readonly="true"></textbox>
+					</cell>
+			</row>
+			<row>
+				<cell>服务中心领卡人</cell>
+				<cell>
+					<textbox value="@bind(vm.m.sbcd_centertakename)" readonly="true"></textbox>
+				</cell>
+				<cell>服务中心领卡时间</cell>
+				<cell colspan="3">
+					<textbox value="@bind(vm.m.sbcd_centertaketime)" readonly="true"></textbox>
+				</cell>
+			</row>
+			<row>
+				<cell>客服签收人</cell>
+				<cell>
+					<textbox value="@bind(vm.m.sbcd_clienttakename)" readonly="true"></textbox>
+					<label style="color:red;">(*)</label>
+				</cell>
+				<cell>客服签收时间</cell>
+				<cell colspan="3">
+					<datebox value="@bind(vm.clienttaketime)" readonly="true"></datebox>
+					<label style="color:red;">(*)</label>
+				</cell>
+			</row>
+		</rows>
+		<foot>
+			<footer align="center"><button onClick="@command('clientsummit',win=flwin)">提交</button></footer>
+		</foot>
+	</grid>
+</window>
+</zk>

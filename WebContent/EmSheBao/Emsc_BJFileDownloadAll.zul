@@ -1,0 +1,57 @@
+<!--
+	创建人：林少斌
+	创建时间：2016-4-8
+	用途：补交数据批量下载PDF页面
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window id="winBJADownload" title="社会保险 -- 独立户补交数据下载PDF页面"
+		border="normal" width="800px" height="60%"
+		apply="org.zkoss.bind.BindComposer" closable="true"
+		viewModel="@id('vm') @init('Controller.EmSheBao.Emsc_BJFileDownloadAllController')">
+		<div height="98%" style="overflow-y:scroll">
+			<groupbox>
+				<caption label="下载文件" />
+				<grid style="border:0px">
+					<rows>
+						<row>
+							<cell width="20%">
+								<label value="文件名称：" />
+							</cell>
+							<cell>
+								<textbox mold="rounded" rows="1"
+									readonly="true" width="280px"
+									value="@load(vm.bjModel.emsb_uploadfile)" />
+							</cell>
+						</row>
+						<row>
+							<cell colspan="2" align="center">
+								<button label="下载"
+									onClick="@command('download')" />
+								<button label="转下一步"
+									onClick="@command('submit',win=winBJADownload)" />
+								<button label="退回"
+									onClick="@command('bjReturn',win=winBJADownload,remark=remark)" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox>
+				<grid style="border:0px">
+					<rows>
+						<row>
+							<cell>
+								<label value="备注" />
+							</cell>
+							<cell colspan="3">
+								<textbox rows="4" id="remark"
+									value="@load(vm.bjModel.emsb_remark)" width="70%" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+		</div>
+	</window>
+</zk>

@@ -1,0 +1,167 @@
+<?page title="社会保险申报" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="社会保险申报" border="normal"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmSheBao.Emsi_BaseListController')"
+		height="100%" width="100%">
+		<borderlayout>
+			<center>
+				<borderlayout>
+					<north border="0">
+						<grid>
+							<rows>
+								<row>
+									<cell align="right">公司查询：</cell>
+									<cell>
+										<textbox mold="rounded"
+											onChange="@command('companyChange',com=self.value)"
+											tooltiptext="可以输入 公司编号 或 公司名称 或 拼音简称 搜索" />
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</north>
+					<center border="0">
+						<listbox model="@load(vm.winCompanyList)"
+							hflex="1" vflex="1" emptyMessage="暂无公司数据" width="100%" rows="21"
+							onSelect="@command('selEmbase',selectitem=self.selectedItem)">
+							<listhead sizable="true">
+								<listheader label="公司编号"
+									sort="auto(cid)" align="center" />
+								<listheader label="公司名称"
+									sort="auto(coba_company)" align="center" width="280px" />
+								<listheader label="客服"
+									sort="auto(coba_client)" align="center" />
+								<listheader label="操作" align="center" />
+							</listhead>
+							<template name="model">
+								<listitem>
+									<listcell label="@load(each.cid)" />
+									<listcell>
+										<label
+											value="@load(each.coba_company)" />
+										<label value="(已解约)"
+											if="${each.coba_servicestate==0}" style="color:red;" />
+									</listcell>
+									<listcell
+										label="@load(each.coba_client)" />
+									<listcell>
+										<menubar autodrop="true"
+											width="50px">
+											<menu
+												image="../images/pencil-small.png">
+												<menupopup>
+													<menuitem
+														label="批量操作" />
+
+												</menupopup>
+											</menu>
+										</menubar>
+									</listcell>
+								</listitem>
+							</template>
+						</listbox>
+
+					</center>
+				</borderlayout>
+			</center>
+			<east collapsible="true" splittable="true" width="50%">
+				<borderlayout>
+					<north border="0">
+						<grid>
+							<rows>
+								<row>
+									<cell align="right">员工查询：</cell>
+									<cell>
+										<textbox mold="rounded"
+											onChange="@command('selEm',em=self.value)"
+											tooltiptext="可以输入 员工编号 或 员工姓名 或 拼音简称 搜索" />
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</north>
+					<center border="0">
+						<grid height="100%" width="100%"
+							emptyMessage="暂无员工数据" model="@load(vm.winemList)">
+							<columns sizable="true" menupopup="auto">
+								<column label="员工编号" align="center"
+									sort="auto(gid)" />
+								<column label="姓名" align="center"
+									sort="auto(emba_name)" />
+								<column label="身份证" align="center"
+									sort="auto(emba_idcard)" />
+								<column label="员工状态" align="center"
+									sort="auto(statename)" />
+								<column label="操作" align="center" />
+							</columns>
+							<rows>
+								<template name="model">
+									<row>
+										<label value="@load(each.gid)" />
+										<label
+											value="@load(each.emba_name)" />
+										<label
+											value="@load(each.emba_idcard)" />
+										<label
+											value="@load(each.statename)"
+											style="@load(each.statename eq '在职'?'color:blue':'color:red')" />
+										<menubar autodrop="true"
+											width="50px">
+											<menu
+												image="../images/pencil-small.png">
+												<menupopup>
+													<menu
+														label="社会保险">
+														<menupopup>
+															<menuitem
+																label="调入(有电脑号)"
+																onClick="@command('movein',gid=each.gid)" />
+															<menuitem
+																label="新增(无电脑号)"
+																onClick="@command('newin',gid=each.gid)" />
+															<menuitem
+																label="调回" onClick="@command('moveback',gid=each.gid)" />
+															<menuitem
+																label="外籍人新增"
+																onClick="@command('foreignerNewin',gid=each.gid)" />
+															<menuitem
+																label="外籍人调入"
+																onClick="@command('foreignerMovein',gid=each.gid)" />
+															<menuitem
+																label="外籍人调回"
+																onClick="@command('foreignerMoveback',gid=each.gid)" />
+															<menuitem
+																label="修改工资"
+																onClick="@command('upSalary',gid=each.gid)" />
+															<menuitem
+																label="档案修改" onClick="@command('upfile',gid=each.gid)" />
+															<menuitem
+																label="停交" onClick="@command('stop',gid=each.gid)" />
+															<menuitem
+																label="特殊变更"
+																onClick="@command('changeSZSI',gid=each.gid)" />
+															<menuitem
+																label="新增补缴" onClick="@command('bj',gid=each.gid)" />
+															<menuitem
+																label="编辑变更"
+																onClick="@command('deleteChange',gid=each.gid)" />
+															<menuitem
+																label="编辑补缴"
+																onClick="@command('deleteBj',gid=each.gid)" />
+														</menupopup>
+													</menu>
+												</menupopup>
+											</menu>
+
+										</menubar>
+									</row>
+								</template>
+							</rows>
+						</grid>
+					</center>
+				</borderlayout>
+			</east>
+		</borderlayout>
+	</window>
+</zk>

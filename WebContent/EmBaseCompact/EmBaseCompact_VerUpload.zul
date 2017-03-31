@@ -1,0 +1,127 @@
+<?page title="雇员合同模板上传" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winDocCompany" title="雇员合同模板上传" border="normal"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmBaseCompact.EmBaseCompact_UploadController')"
+		width="95%" height="480px">
+		<label value="1234" id="cid" visible="false" />
+		<groupbox title="版本信息" mold="3d">
+			<div
+				style="width:100%;height:200px;overflow-y:scroll;overflow-x:hidden;border:1px solid #bcbdbf;">
+				<grid width="100%" id="g1" model="@load(vm.verlist)">
+					<columns>
+						<column label="序号" align="center" width="60px" />
+						<column label="上传时间" align="center" />
+						<column label="上传人" align="center" />
+						<column label="版本号" align="center" />
+						<column label="雇员合同类型" align="center" />
+						<column label="执行状态" align="center" />
+						<column label="操作" align="center" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<cell>
+									<label
+										value="${forEachStatus.index + 1}" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ebco_addtime)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ebco_addname)" />
+								</cell>
+								<cell>
+									<label value="@load(each.name)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ebco_compact_type)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ebco_state)" />
+								</cell>
+								<cell>
+									<label style="cursor:pointer"
+										onClick="@command('veremcompact_check', emco=each)"
+										value="查看合同" />
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</div>
+		</groupbox>
+		<groupbox title="版本上传" mold="3d" height="190px">
+			<grid width="100%">
+				<rows>
+					<row>
+						<cell align="right" width="180px">
+							<label value="版本号：" />
+						</cell>
+						<cell width="100%">
+							<textbox id="emcompact_temp"
+								value="@load(vm.vername)" width="150px" mold="rounded" />
+						</cell>
+					</row>
+					<row>
+						<cell  align="right">雇员合同类型：</cell>
+						<cell>
+							<hbox>
+								<combobox mold="rounded"
+									id="compact_type" width="120px" readonly="true" value="">
+									<comboitem label="" value=""></comboitem>
+									<comboitem label="实习生协议"
+										value="实习生协议">
+									</comboitem>
+									<comboitem label="退休人员协议"
+										value="退休人员协议">
+									</comboitem>
+									<comboitem label="劳动合同"
+										value="劳动合同">
+									</comboitem>
+									<comboitem label="劳动合同（受托）"
+										value="劳动合同（受托）">
+									</comboitem>
+									<comboitem label="劳动合同（非全日制）"
+										value="劳动合同（非全日制）">
+									</comboitem>
+									<comboitem label="劳动合同（全日制）"
+										value="劳动合同（全日制）">
+									</comboitem>
+									<comboitem label="外包员工聘用合同"
+											value="外包员工聘用合同">
+										</comboitem>
+										<comboitem label="全外包合同"
+											value="全外包合同">
+										</comboitem>
+								</combobox>
+								<label style="color:red;">(*)</label>
+							</hbox>
+						</cell>
+					</row>
+					<row>
+						<cell align="right" width="180px">
+							<label value="文件目录：" />
+						</cell>
+						<cell width="100%">
+							<textbox mold="rounded" rows="1"
+								readonly="true" value="@load(vm.filename)" />
+							<button label="浏览..."
+								upload="true,multiple=true" onUpload="@command('browse')" />
+						</cell>
+					</row>
+				</rows>
+				<foot>
+					<footer align="center">
+						<button label="提交" id="btSubmit"
+							onClick="@command('ver_upload',emcompact_temp=emcompact_temp,cid=cid,compact_type=compact_type)" />
+					</footer>
+				</foot>
+			</grid>
+		</groupbox>
+	</window>
+</zk>

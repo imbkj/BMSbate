@@ -1,0 +1,99 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="工资单项目设置" id="itemwin" width="60%" height="65%"
+		closable="true" border="normal" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.SalaryPaper.SalaryPaper_ItemInfoController')">
+
+		<grid width="100%" vflex="1" hflex="1">
+			<rows>
+				<row>
+					<cell width="20%" align="center">
+						<label value="公司名称" />
+					</cell>
+					<cell>
+						<label value="@load(vm.m.coba_company)" />
+					</cell>
+				</row>
+				<row>
+					<cell align="center">
+						<label value="公司编号" />
+					</cell>
+					<cell>
+						<label value="@load(vm.m.cid)" />
+					</cell>
+				</row>
+				<row>
+					<cell colspan="2">
+						<hlayout height="300px" style="padding:10px">
+							<grid hflex="1" vflex="true"
+								model="@load(vm.waitSitemList)">
+								<columns>
+									<column label="待选的工资项目" />
+									<column label="项目英文名" />
+									<column label="项目别名" />
+								</columns>
+								<template name="model">
+									<row
+										onClick="@command('rightMove',hehe=each)">
+										<cell>
+											<label
+												value="@load(each.csii_item_name)" />
+										</cell>
+										<cell>
+											<label
+												value="@load(each.csii_item_englishname)" />
+										</cell>
+										<cell>
+											<label
+												value="@load(each.csii_item_anothername)" />
+										</cell>
+									</row>
+								</template>
+							</grid>
+							<vbox spacing="10px" width="24px" align="center">
+
+								<button label="修改工资项目"
+									onClick="@command('updateSalaryIetm')" />
+								<image src="../images/toright.png"
+									onClick="@command('allRight')" />
+								<image src="../images/toleft.png"
+									onClick="@command('allLeft')" />
+							</vbox>
+							<grid hflex="1" vflex="true"
+								model="@load(vm.ietmList)">
+								<columns>
+									<column label="选中的工资项目" />
+									<column label="项目英文名" />
+									<column label="项目别名" />
+								</columns>
+								<template name="model">
+									<row
+										onClick="@command('leftMove',hehe=each)">
+										<cell>
+											<label
+												value="@load(each.csii_item_name)" />
+										</cell>
+										<cell>
+											<label
+												value="@load(each.csii_item_englishname)" />
+										</cell>
+										<cell>
+											<label
+												value="@load(each.csii_item_anothername)" />
+										</cell>
+									</row>
+								</template>
+							</grid>
+						</hlayout>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button label="提交" onClick="@command('save')" />
+				</footer>
+			</foot>
+		</grid>
+
+	</window>
+</zk>

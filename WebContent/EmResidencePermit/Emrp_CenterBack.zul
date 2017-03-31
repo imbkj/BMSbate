@@ -1,0 +1,39 @@
+<?page title="退回" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="backwin" title="退回" height="300px" width="500px"
+		closable="true" border="normal" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmResidencePermit.Emrp_BackController')">
+		<div height="100%">
+			<grid height="85%" width="100%">
+				<columns>
+					<column width="20%" />
+					<column />
+				</columns>
+				<rows>
+					<row>
+						姓名
+						<label value="@load(vm.epm.emba_name)" />
+					</row>
+					<row>
+						<cell colspan="2">
+							<label value="退回原因" style="color:#666" />
+						</cell>
+					</row>
+					<row>
+						<cell colspan="2">
+							<textbox rows="5" width="100%"
+								value="@bind(vm.epm.erpi_return_reason)" />
+						</cell>
+					</row>
+					<row>
+						操作人
+						<label value="@load(vm.epm.erpi_return_people)" />
+					</row>
+				</rows>
+			</grid>
+			<hbox width="100%" pack="center" align="center">
+				<button label="提交" onClick="@command('centerback',win=backwin)" />
+			</hbox>
+		</div>
+	</window>
+</zk>

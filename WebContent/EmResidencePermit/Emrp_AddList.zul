@@ -1,0 +1,69 @@
+<?page title="新增申报列表" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="新增申报列表" border="normal" width="100%" height="100%"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmResidencePermit.Emrp_AddListController')">
+		<grid height="100%" width="100%" emptyMessage="暂无数据"
+			model="@load(vm.semList)" mold="paging">
+			<columns>
+				<column width="40px" label="序号" align="center"></column>
+				<column align="center" label="公司编号">
+					<separator></separator>
+					<textbox mold="rounded" value="@bind(vm.cid)"
+						instant="true" width="30%" onChange="@command('search')" />
+				</column>
+				<column align="center" label="公司简称">
+					<separator></separator>
+					<textbox mold="rounded" value="@bind(vm.shortname)"
+						width="80%" onChange="@command('search')" />
+				</column>
+				<column align="center" label="员工编号">
+					<separator></separator>
+					<textbox mold="rounded" value="@bind(vm.gid)"
+						instant="true" width="30%" onChange="@command('search')" />
+				</column>
+				<column align="center" label="姓名">
+					<separator></separator>
+					<textbox mold="rounded" value="@bind(vm.name)"
+						width="80%" onChange="@command('search')" />
+				</column>
+				<column align="center" label="操作" width="60px"></column>
+			</columns>
+			<template name="model">
+				<row>
+					<label value="${forEachStatus.index+1 }"></label>
+					<label value="@load(each.cid)"></label>
+					<div>
+						<label if="${each.zhtype eq 1 }" tooltiptext="独立户"
+							value="@load(each.coba_shortname)" style="color:blue">
+						</label>
+						<label if="${each.zhtype eq 0 }" tooltiptext="中智户"
+							value="@load(each.coba_shortname)">
+						</label>
+					</div>
+					<label value="@load(each.gid)"></label>
+					<label value="@load(each.emba_name)"></label>
+					<menubar autodrop="true">
+						<menu image="../images/pencil-small.png">
+							<menupopup>
+								<menuitem label="新办"
+									onClick="@command('add',gid=each.gid,type=self.label,
+									erin_id=each.erin_id)"
+									disabled="${not(each.erin_hjtype ne '本市城镇' and 
+									empty each.erpi_state) }" />
+								<menuitem label="补办"
+									disabled="${not(each.erin_hjtype ne '本市城镇' and 
+									each.erpi_state ne 11) }"
+									onClick="@command('add',gid=each.gid,type=self.label,
+									erin_id=each.erin_id)" />
+								<menuitem label="转换"
+									disabled="${not(each.erin_hjtype ne '本市城镇' and not empty each.erin_id) }"
+									onClick="@command('changeadd',each=each)" />
+							</menupopup>
+						</menu>
+					</menubar>
+				</row>
+			</template>
+		</grid>
+	</window>
+</zk>

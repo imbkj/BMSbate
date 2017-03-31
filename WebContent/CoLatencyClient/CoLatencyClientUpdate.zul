@@ -1,0 +1,253 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="潜在客户信息修改页面" border="normal" closable="true"
+		width="80%" id="win" height="80%"
+		apply="Controller.CoLatencyClient.CoLatencyClient_UpdateController">
+		<grid vflex="1">
+			<rows>
+				<row>
+					<cell width="120px">公司名称</cell>
+					<cell>
+						<textbox id="company" width="80%" instant="true"
+							value="${arg.cola.cola_company}" />
+					</cell>
+					<cell width="120px">客户类型</cell>
+					<cell>
+						<combobox id="clientstyle"
+							value="${arg.cola.cola_companytype}">
+							<comboitem label="" />
+							<comboitem label="公司" />
+							<comboitem label="分公司" />
+							<comboitem label="代表处" />
+							<comboitem label="办事处" />
+						</combobox>
+						<label style="color:red;">(*)</label>
+					</cell>
+				</row>
+				<row>
+					<cell>公司网址</cell>
+					<cell>
+						<textbox width="80%" id="website"
+							value="${arg.cola.cola_website}" />
+					</cell>
+					<cell>跟进人</cell>
+					<cell>
+						<combobox id="follower"
+							value="${arg.cola.cola_follower}">
+						</combobox>
+					</cell>
+				</row>
+				<row>
+					<cell>地址</cell>
+					<cell colspan="3">
+						<textbox width="80%" id="address"
+							value="${arg.cola.cola_address}" />
+							<label style="color:red;">(*)</label>
+					</cell>
+				</row>
+				<row>
+					<cell>国内是否注册</cell>
+					<cell>
+						<combobox id="ifsign" readonly="true">
+							<comboitem label="" value="-1" />
+							<comboitem label="是" value="1" />
+							<comboitem label="否" value="0" />
+						</combobox>
+					</cell>
+					<cell>客户位置</cell>
+					<cell>
+						<combobox id="ClientArea"
+							value="${arg.cola.cola_clientarea}">
+							<comboitem label="" />
+							<comboitem label="罗湖区" />
+							<comboitem label="福田区" />
+							<comboitem label="南山区" />
+							<comboitem label="龙岗区" />
+							<comboitem label="盐田区" />
+							<comboitem label="宝安区" />
+							<comboitem label="光明新区" />
+							<comboitem label="坪山区" />
+							<comboitem label="外地" />
+						</combobox>
+						<label style="color:red;">(*)</label>
+					</cell>
+				</row>
+				<row>
+					<cell>客户企业性质</cell>
+					<cell colspan="3">
+						<combobox id="kind" readonly="true"
+							value="${arg.cola.cola_kind}">
+							<comboitem label="" />
+							<comboitem label="央企或下属企业" />
+							<comboitem label="国企" />
+							<comboitem label="股份制企业" />
+							<comboitem label="民企" />
+							<comboitem label="外企" />
+							<comboitem label="中外合资或合作企业" />
+							<comboitem label="事业单位" />
+							<comboitem label="其他性质" />
+						</combobox>
+						<label style="color:red;">(*)</label>
+					</cell>
+				</row>
+				<row>
+					<cell>客户规模</cell>
+					<cell>
+						<combobox id="clientsize"
+							value="${arg.cola.cola_clientsize}">
+							<comboitem label="" />
+							<comboitem label="小型(20人以下)" />
+							<comboitem label="中型(20-50人)" />
+							<comboitem label="大型(50人以上)" />
+						</combobox>
+						<label style="color:red;">(*)</label>
+					</cell>
+					<cell>实际规模</cell>
+					<cell>
+						<combobox id="realsize"
+							value="${arg.cola.cola_realsize}">
+							<comboitem label="" />
+							<comboitem label="小型(20人以下)" />
+							<comboitem label="中型(20-50人)" />
+							<comboitem label="大型(50人以上)" />
+						</combobox>
+						<label style="color:red;">(*)</label>
+					</cell>
+
+				</row>
+				<row>
+					<cell>所属行业</cell>
+					<cell>
+						<combobox id="trade"
+							value="${arg.cola.cola_trade}">
+						</combobox>
+						<label style="color:red;">(*)</label>
+					</cell>
+					<cell>客户来源</cell>
+					<cell>
+						<combobox id="clientsource"
+							value="${arg.cola.cola_clientsource}">
+							<comboitem label="" />
+							<comboitem label="主动开发" />
+							<comboitem label="来电来访咨询" />
+							<comboitem label="客户及雇员介绍" />
+							<comboitem label="中智介绍" />
+							<comboitem label="合作伙伴介绍" />
+							<comboitem label="客户业务开拓" />
+							<comboitem label="中智注册" />
+							<comboitem label="公司系统介绍" />
+							<comboitem label="老客户变更"/>
+						</combobox>
+						<label style="color:red;">(*)</label>
+					</cell>
+				</row>
+				
+					<row>
+						<cell>
+							原有服务供应商： 
+						</cell>
+						<cell colspan="3">
+								<combobox id="ssource" value="${arg.cola.cola_servicessource}">
+								<comboitem label="" />
+								<comboitem label="前程无忧" />
+								<comboitem label="易才" />
+								<comboitem label="南油外服" />
+								<comboitem label="外企德科" />
+								<comboitem label="鹏劳" />
+								<comboitem label="深劳" />
+								<comboitem label="深圳外服" />
+								<comboitem label="泛亚人力" />
+							 
+								
+							</combobox>
+						</cell>
+					</row>
+				
+				<row>
+					<cell>
+						<hlayout>
+							联系记录(
+							<a onClick="addrow()">添加</a>
+							)
+						</hlayout>
+					</cell>
+					<cell colspan="3">
+						<vlayout hflex="1" id="notesvla">
+							<hlayout hflex="1">
+								<hlayout>
+									<datebox id="notes" />
+								</hlayout>
+								<hlayout hflex="1">
+									<textbox id="txtnotes" hflex="1" />
+								</hlayout>
+							</hlayout>
+						</vlayout>
+					</cell>
+				</row>
+				<row>
+					<cell>签约成功率</cell>
+					<cell>
+						<combobox id="slevel"
+							value="${arg.cola.cola_successlevel}" readonly="true">
+							<comboitem value="0" label="" />
+							<comboitem value="5" label="较高(短期签约可能性比较大)" />
+							<comboitem value="3" label="一般(可能性一般)" />
+							<comboitem value="1" label="较低(可能性较小)" />
+						</combobox>
+					</cell>
+					<cell>所属年份</cell>
+					<cell>
+						<intbox id="ownyear"
+							value="${arg.cola.cola_ownyear}" />
+					</cell>
+				</row>
+				<row>
+					<cell>客户要求服务内容</cell>
+					<cell>
+						<textbox multiline="true" rows="5" width="90%"
+							id="servicecontent" value="${arg.cola.cola_servicecontent}" />
+					</cell>
+					<cell>备注</cell>
+					<cell>
+						<textbox multiline="true" rows="5" width="90%"
+							id="remark" value="${arg.cola.cola_remark}" />
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button label="提交" id="updatecola" />
+					<button label="联系人管理" id="linkMan"/>
+				</footer>
+			</foot>
+		</grid>
+		<grid emptyMessage="暂时没有联系人信息" id="linkgd" visible="false">
+		</grid>
+		<zscript><![CDATA[
+	//添加多个联系记录
+	void addrow() {
+		Hlayout hl = new Hlayout();
+		Hlayout h2 = new Hlayout();
+		Hlayout h3 = new Hlayout();
+		h3.setHflex("1");
+		hl.setHflex("1");
+		Datebox datebox = new Datebox();
+		Textbox txtbox = new Textbox();
+		hl.setParent(notesvla);
+		h2.setParent(hl);
+		h3.setParent(hl);
+		datebox.setParent(h2);
+		txtbox.setParent(h3);
+		txtbox.setHflex("1");
+		A rm = new A("删除");
+		rm.addEventListener(Events.ON_CLICK,
+				new org.zkoss.zk.ui.event.EventListener() {
+					public void onEvent(Event event) throws Exception {
+						hl.detach();
+					}
+				});
+		hl.appendChild(rm);
+	}
+]]></zscript>
+	</window>
+</zk>

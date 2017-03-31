@@ -1,0 +1,124 @@
+<?page title="修改工资编辑" contentType="text/html;charset=UTF-8"?>
+<?component name="embase" macro-uri="Emsi_EmBase.zul" inline="true"?>
+<zk>
+	<window id="winSalaryUpEdit" title="修改工资编辑" border="normal"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmSheBao.Emsi_Edit_Salary_UpdateController')"
+		height="500px" width="1060px" closable="true" sizable="true"
+		maximizable="true">
+		<div width="100%" height="100%" if="${vm.existsShebao}"
+			align="center">
+			<label value="${vm.existsMessage}" />
+		</div>
+		<borderlayout if="${!vm.existsShebao}">
+			<north title="个人信息" border="none">
+				<embase gid="${vm.sbModel.gid}"
+					name="${vm.sbModel.esiu_name}" />
+			</north>
+			<center title="参保信息" border="none">
+				<grid width="100%" height="100%">
+					<rows>
+						<row>
+							所属月份
+							<cell>
+								<vlayout>
+									<combobox mold="rounded"
+										readonly="true" value="@bind(vm.ownmonth)"
+										model="@load(vm.ownmonthList)"
+										onChange="@command('ownmonthChange')">
+										<template name="model">
+											<comboitem
+												label="@load(each)" />
+										</template>
+									</combobox>
+									<label value="已过申报截止日，当月已不能变更"
+										if="${vm.isIfStop()}" style="color:red;" />
+								</vlayout>
+							</cell>
+							电脑号
+							<cell>
+								<textbox width="100px" readonly="true"
+									value="@load(vm.ecModel.emsc_computerid)" />
+							</cell>
+
+						</row>
+						<row>
+							月工资总数
+							<cell>
+								<intbox mold="rounded"
+									value="@bind(vm.radix)" />
+							</cell>
+							户籍
+							<cell>
+								<textbox readonly="true" width="80px"
+									value="@load(vm.ecModel.emsc_hj)" />
+							</cell>
+						</row>
+						<row>
+							养老保险
+							<cell>
+								<textbox readonly="true" width="80px"
+									value="@load(vm.ecModel.emsc_yl)" />
+							</cell>
+							医疗保险
+							<cell>
+								<textbox readonly="true" width="80px"
+									value="@load(vm.ecModel.emsc_yltype)" />
+							</cell>
+						</row>
+						<row>
+							工伤保险
+							<cell>
+								<textbox readonly="true" width="80px"
+									value="@load(vm.ecModel.emsc_gs)" />
+							</cell>
+							失业保险
+							<cell>
+								<textbox readonly="true" width="80px"
+									value="@load(vm.ecModel.emsc_sye)" />
+							</cell>
+						</row>
+						<row>
+							生育保险
+							<cell>
+								<textbox readonly="true" width="80px"
+									value="@load(vm.ecModel.emsc_syu)" />
+							</cell>
+							<cell></cell>
+							<cell></cell>
+						</row>
+						<row>
+							是否待确认
+							<cell>
+								<radiogroup id="rgDeclare">
+									<radio label="是" value="4"
+										disabled="@load(vm.aud)" />
+									<radio label="否" value="0"
+										checked="true" />
+								</radiogroup>
+							</cell>
+							是否需审核
+							<cell>
+								<checkbox disabled="true"
+									checked="@load(vm.aud)" />
+							</cell>
+						</row>
+						<row>
+							申请原因
+							<cell colspan="3">
+								<textbox mold="rounded" rows="3"
+									width="30%" value="@bind(vm.remark)" />
+							</cell>
+						</row>
+					</rows>
+					<foot>
+						<footer align="center">
+							<button label="提交" id="btSubmit"
+								onClick="@command('salaryUp',win=winSalaryUpEdit,rg=rgDeclare)" />
+						</footer>
+					</foot>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

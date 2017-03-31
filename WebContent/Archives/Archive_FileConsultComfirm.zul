@@ -1,0 +1,130 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<?component name="docDataList" macro-uri="../DocumentsInfo/DocumentsInfo_UpPageList.zul" inline="true"?>
+
+<zk>
+	<window title="查借材料受理" border="normal" closable="true" id="detail"
+		width="80%" height="80%" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.Archives.Archive_FileConsultComfirmController')">
+		<grid vflex="1">
+			<rows>
+				<!-- 公共显示信息 -->
+				<row>
+					<cell width="100px">公司名称</cell>
+					<cell>
+						<label value="${vm.model.coba_shortname}" />
+					</cell>
+					<cell width="85px">客服</cell>
+					<cell>
+						<label value="${vm.model.coba_client}" />
+					</cell>
+				</row>
+				<row>
+					<cell width="85px">员工姓名</cell>
+					<cell>
+						<label value="${vm.model.emba_name}" />
+					</cell>
+					<cell width="80px">身份证号码</cell>
+					<cell>
+						<label width="50%"
+							value="${vm.model.eada_idcard}" />
+					</cell>
+
+				</row>
+				<row visible="${vm.model.eada_type!='档案调入'}">
+					<cell>档案类型</cell>
+					<cell>
+						<label value="${vm.model.eada_filetype}" />
+					</cell>
+					<cell>档案编号</cell>
+					<cell>
+						<label value="${vm.model.eada_fid}" />
+					</cell>
+				</row>
+
+				<row>
+					<cell>入职中智时间</cell>
+					<cell>
+						<label value="${vm.model.emba_indate}" />
+					</cell>
+					<cell>收费起始日期</cell>
+					<cell>
+						<label />
+					</cell>
+				</row>
+				<row>
+					<cell>存档协议到期日</cell>
+					<cell>
+						<label value="${vm.model.eada_deadline}" />
+					</cell>
+					<cell>存档起始日期</cell>
+					<cell>
+						<label value="${vm.model.eada_savefiledate}" />
+					</cell>
+				</row>
+				<row visible="${vm.model.eada_type!='档案调入'}">
+					<cell>档案所在地</cell>
+					<cell colspan="3">
+						<label width="80%"
+							value="${vm.model.eada_fileplace}" />
+					</cell>
+				</row>
+				<row>
+					<cell>户口详细地址</cell>
+					<cell colspan="3">
+						<label width="80%"
+							value="${vm.amodel.emar_address}" />
+					</cell>
+				</row>
+				<row>
+					<cell width="100px">借用事由</cell>
+					<cell colspan="3">
+						<label value="${vm.model.eada_lendcause}" />
+					</cell>
+				</row>
+				<row>
+					<cell width="100px">是否需要结算费用</cell>
+					<cell>
+						<combobox value="@bind(vm.iffee)">
+							<comboitem label="否" />
+							<comboitem label="是" />
+						</combobox>
+					</cell>
+					<cell>收费情况</cell>
+					<cell><textbox width="80%" value="@bind(vm.feeinfo)"></textbox></cell>
+				</row>
+				<row>
+					<cell>交接材料</cell>
+					<cell colspan="3">
+						<grid>
+							<rows>
+								<row>
+									<cell>
+										<!-- 材料内联页 参数：puzu_id：模块页面id， doc_type：员工(g)还是公司(c)，gid：公司数据则插入空白 ，业务表id ，log_url：获取到页面路径的前部分-->
+										<docDataList id="docGrid"
+											puzu_id="${vm.model.eada_doc}" doc_type="g"
+											gid="${vm.model.gid}" tid="${vm.model.eada_id}"
+											log_url="../DocumentsInfo/" />
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button
+						onClick="@command('summitupdate',detail=detail)">
+						提交
+					</button>
+					<button onClick="@command('addremark',win=detail)">
+						备注
+					</button>
+					<button onClick="@command('back',win=detail)">
+						退回
+					</button>
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

@@ -1,0 +1,212 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="公司信息" border="normal" width="80%" height="80%" closable="true"
+	apply="org.zkoss.bind.BindComposer" id="win"
+	viewModel="@id('vm') @init('Controller.CoLatencyClient.Cobase_ClientManagerAddController')"
+>
+<scrollview vflex="1" hflex="1">
+	<groupbox mold="3d" open="true" title="基本信息">
+<grid>
+	<rows>
+		<row>
+			<cell width="80px">公司全称</cell>
+			<cell><textbox id="companyname" value="@bind(vm.cmodel.coba_company)" readonly="true"/></cell>
+			<cell width="80px">公司简称</cell>
+			<cell><textbox id="shortname" value="@bind(vm.cmodel.coba_shortname)" readonly="true"/></cell>
+		</row>
+		<row>
+			<cell>英文名称</cell><cell><textbox id="enname" value="@bind(vm.cmodel.coba_englishname)" readonly="true"/></cell>
+			<cell>客户来源</cell>
+			<cell>
+				<combobox id="clientsource" value="@bind(vm.cmodel.coba_clientsource)" readonly="true" buttonVisible="false">
+					<comboitem label=""/>
+					<comboitem label="主动开发"/>
+					<comboitem label="来电来访咨询"/>
+					<comboitem label="客户及雇员介绍"/>
+					<comboitem label="中智介绍"/>
+					<comboitem label="合作伙伴介绍"/>
+					<comboitem label="客户业务开拓"/>
+					<comboitem label="中智注册"/>
+				</combobox>
+			</cell>
+		</row>
+		<row>
+			<cell>客户规模</cell>
+			<cell>
+				<combobox id="clientsize" value="@bind(vm.cmodel.coba_clientsize)" readonly="true" buttonVisible="false">
+					<comboitem label=""/>
+					<comboitem label="小型(20人以下)"/>
+					<comboitem label="中型(20-50人)"/>
+					<comboitem label="大型(50人以上)"/>
+				</combobox>
+			</cell>
+			<cell>所属行业</cell>
+			<cell>
+				<textbox id="trade" value="@bind(vm.cmodel.coba_industytype)" readonly="true">
+				</textbox>
+			</cell>
+		</row>
+		<row>
+			<cell>机构性质</cell>
+			<cell>
+				<textbox id="clientstyle" value="@bind(vm.cmodel.coba_setuptype)" readonly="true">
+				</textbox>
+			</cell>
+			<cell>所在区域</cell>
+			<cell>
+				<combobox id="ClientArea" value="@bind(vm.cmodel.coba_area)" readonly="true" buttonVisible="false">
+					<comboitem label=""/>
+					<comboitem label="罗湖区"/>
+					<comboitem label="福田区"/>
+					<comboitem label="南山区"/>
+					<comboitem label="龙岗区"/>
+					<comboitem label="盐田区"/>
+					<comboitem label="宝安区"/>
+					<comboitem label="光明新区"/>
+					<comboitem label="坪山区"/>
+					<comboitem label="外地"/>
+				</combobox>
+			</cell>
+		</row>
+		<row>
+			<cell>注册资金</cell><cell><textbox id="registermoney" value="@bind(vm.cmodel.coba_reg_fund)" readonly="true"/></cell>
+			<cell>国内注册</cell>
+			<cell>
+				<combobox id="ifsign" readonly="true" value="${vm.cmodel.coba_sign==1?'是':'否' }" buttonVisible="false">
+					<comboitem label="" value="-1"/>
+					<comboitem label="是" value="1"/>
+					<comboitem label="否" value="0"/>
+				</combobox>
+			</cell>	
+		</row>
+		<row>
+			<cell>法定代表人</cell><cell colspan="3"><textbox id="commanager" value="@bind(vm.cmodel.coba_companymanager)" readonly="true" /></cell>
+		</row>
+		<row>
+			<cell>代表人地址</cell><cell colspan="3"><textbox width="90%" id="manageraddress" value="@bind(vm.cmodel.coba_manageraddress)" readonly="true" /></cell>
+		</row>
+		<row>
+			<cell>注册地址</cell><cell colspan="3"><textbox id="registeaddress" width="90%" value="@bind(vm.cmodel.coba_address)" readonly="true" /></cell>
+		</row>
+		<row>
+			<cell>发票寄送地址</cell><cell colspan="3"><textbox width="90%" id="invoiceaddress" value="@bind(vm.cmodel.coba_invoiceaddress)" readonly="true" /></cell>
+		</row>
+		<row>
+			<cell>部门经理</cell>
+			<cell><textbox value="@load(vm.cmodel.coba_manager)" readonly="true"></textbox></cell>
+			<cell>客服经理</cell>
+			<cell><textbox value="@load(vm.cmodel.coba_clientmanager)" readonly="true"></textbox></cell>
+		</row>
+		<row>
+			<cell>客服</cell>
+			<cell colspan="3"><textbox value="@load(vm.cmodel.coba_client)" readonly="true"></textbox></cell>
+		</row>
+		<row>
+			<cell>备注</cell><cell colspan="3"><textbox rows="2" id="remark" width="90%" value="@bind(vm.cmodel.coba_remark)" readonly="true"/></cell>
+		</row>
+	</rows>
+</grid>
+</groupbox>
+<groupbox mold="3d" open="true" title="人事服务要求">
+<grid>
+		<rows>
+			<row>
+				<cell width="160px">发票寄送时间</cell>
+				<cell colspan="3">
+					<textbox value="@load(vm.servicemodel.isenddate)" readonly="true" id="senddate">
+					</textbox>
+				</cell>
+				</row>
+			<row>
+				<cell width="160px">社会保险缴纳</cell>
+				<cell>
+					<textbox value="@load(vm.servicemodel.sbtype)" readonly="true"></textbox>
+				</cell>
+				<cell width="80px">社保备注</cell>
+				<cell><textbox width="80%" value="@bind(vm.servicemodel.csqe_sbtype_remark)" readonly="true"></textbox></cell>
+				</row>
+				<row>
+				<cell width="160px">住房公积金缴纳</cell>
+				<cell>
+					<textbox value="${vm.servicemodel.csqe_house}" readonly="true" id="csqe_house">
+					</textbox>
+				</cell>
+				<cell>公积金备注</cell>
+				<cell><textbox width="80%" value="@bind(vm.servicemodel.csqe_house_remark)" readonly="true"></textbox></cell>
+			</row>
+			<row>
+				<cell>劳动就业登记手续办理</cell>
+				<cell>
+					<textbox value="@bind(vm.servicemodel.csqe_regist)" readonly="true">
+					</textbox>
+				</cell>
+				<cell>备注</cell>
+				<cell><textbox width="80%" value="@bind(vm.servicemodel.csqe_regist_remark)" readonly="true"></textbox></cell>
+				</row>
+				<row>
+				<cell>各种证件的办理和费用收取</cell>
+				<cell>
+					<textbox value="@bind(vm.servicemodel.cardpay)" readonly="true" id="cardpay">
+					</textbox>
+				</cell>
+				<cell>备注</cell>
+				<cell><textbox width="80%" readonly="true" value="@bind(vm.servicemodel.csqe_cardpay_remark)"></textbox></cell>
+			</row>
+			<row>
+				<cell>上门服务</cell>
+				<cell>
+					<textbox value="${vm.servicemodel.csqe_dtdservice==1?'有':'无'}" readonly="true" id="dtdservice">
+					</textbox>
+				</cell>
+				<cell>备注</cell>
+				<cell><textbox width="80%" value="@bind(vm.servicemodel.csqe_dtdservice_remark)" readonly="true"></textbox></cell>
+			</row>
+			<row>
+				<cell>委托外地</cell>
+				<cell>
+					<textbox value="${vm.servicemodel.csqe_wt==1?'有':'无'}" readonly="true" id="wt">
+					</textbox>
+				</cell>
+				<cell>备注</cell>
+				<cell><textbox width="80%" value="@bind(vm.servicemodel.csqe_wt_remark)" readonly="true"></textbox></cell>
+			</row>
+			<row>
+				<cell>外籍人服务</cell>
+				<cell>
+					<textbox value="${vm.servicemodel.csqe_fservice==1?'有':'无'}" readonly="true" id="fservice">
+					</textbox>
+				</cell>
+				<cell>备注</cell>
+				<cell><textbox width="80%" value="@bind(vm.servicemodel.csqe_fservice_remark)" readonly="true"></textbox></cell>
+			</row>
+			<row>
+				<cell>每月付款时间</cell>
+				<cell>
+					<combobox model="@load(vm.datelistt)" value="@bind(vm.servicemodel.emfi_backdate)" readonly="true" id="emfi_backdate">
+						<template name="model">
+							<comboitem label="@load(each)"/>
+						</template>
+					</combobox>
+				</cell>
+				<cell>其他</cell>
+				<cell><textbox width="80%" value="@bind(vm.servicemodel.csqe_other)"></textbox></cell>
+			</row>
+			<row>
+				<cell>服务中需注意的事项</cell>
+				<cell colspan="3"><textbox width="80%" rows="2" value="@bind(vm.servicemodel.csqe_ispa)"></textbox></cell>
+			</row>
+			<row>
+				<cell>工作中曾需解决过的事情</cell>
+				<cell colspan="3"><textbox width="80%" rows="2" value="@bind(vm.servicemodel.csqe_ws)"></textbox></cell>
+			</row>
+			<row>
+				<cell>待办事宜</cell>
+				<cell colspan="3"><textbox width="80%" rows="2" value="@bind(vm.servicemodel.csqe_todo)"></textbox></cell>
+			</row>
+		</rows>
+	</grid>
+</groupbox>
+<div align="center"><button id="changeclient" onClick="@command('summitend',win=win)">提交</button></div>
+</scrollview>
+</window>
+</zk>

@@ -1,0 +1,58 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window width="800px" height="500px" title="福利项目关联" id="win"
+		border="normal" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmBenefit.EmBenefit_AllotController')"
+		closable="true">
+		<groupbox height="100%" title="${vm.bfName } - 产品关联">
+			<grid height="100%">
+				<rows>
+					<row>
+						<cell>
+							<grid height="400px"
+								model="@load(vm.cpList)">
+								<columns>
+									<column>
+										服务产品
+										<textbox id="copr"
+											onChange="@command('SearchCp')" instant="true"
+											mold="rounded" />
+									</column>
+								</columns>
+								<template name="model">
+									<row>
+										<cell style="cursor:pointer"
+											onClick="@command('ltr',a=each)">
+											<label
+												value="@load(each.copr_name)" />
+										</cell>
+									</row>
+								</template>
+							</grid>
+						</cell>
+						<cell>
+							<grid height="400px" emptyMessage="暂无数据"
+								model="@load(vm.ebList)">
+								<columns>
+									<column>已选列表</column>
+								</columns>
+								<template name="model">
+									<row>
+										<cell style="cursor:pointer"
+											onClick="@command('rtl',a=each)">
+											<label
+												value="@load(each.copr_name)" />
+										</cell>
+									</row>
+								</template>
+								<foot>
+								<footer align="right"><button label="清空" onClick="@command('clear')"></button></footer>
+								</foot>
+							</grid>
+						</cell>
+					</row>
+				</rows>
+			</grid>
+		</groupbox>
+	</window>
+</zk>

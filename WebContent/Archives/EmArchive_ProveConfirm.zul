@@ -1,0 +1,51 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<?component name="docDataList" macro-uri="../DocumentsInfo/DocumentsInfo_UpPageList.zul" inline="true"?>
+<zk>
+<window title="开具证明" border="normal" closable="true"  width="80%" height="90%" id="win"
+	apply="org.zkoss.bind.BindComposer"
+viewModel="@id('vm') @init('Controller.Archives.Archive_DatadefineController')">
+	<radiogroup id="yorn" onCheck=""/>
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell width="80px">证明类型</cell>
+			<cell>
+				<!-- 材料内联页 参数：puzu_id：模块页面id， doc_type：员工(g)还是公司(c)，gid：公司数据则插入空白 ，业务表id ，log_url：获取到页面路径的前部分-->
+				<docDataList id="docGrid"
+					puzu_id="8" doc_type="g" gid="${vm.models.gid}"
+					tid="${vm.models.eada_id}"
+					log_url="../DocumentsInfo/" dHeight="200px" dWidth="100%"/>
+			</cell>
+		</row>
+		<row>
+			<cell>出具证明事由</cell>
+			<cell>
+				<textbox id="reason" width="80%" rows="5" value="@load(vm.models.eada_cause)"></textbox>
+			</cell>
+		</row>
+		<row visible="${vm.models.eada_final=='已退回' }">
+			<cell>退回原因</cell>
+			<cell><textbox rows="3" width="70%" value="@load(vm.models.eada_backcase)"></textbox></cell>
+		</row>
+		<row>
+			<cell>备注</cell>
+			<cell>
+				<textbox id="remark" width="80%" rows="5" value="@load(vm.remarks)"></textbox>
+			</cell>
+		</row>
+		<row>
+			<cell>是否待确定</cell>
+			<cell>
+				<hlayout>
+				 <radio id="yes" label="是" value="1" radiogroup="yorn" />
+                 <radio id="no" label="否" value="0" radiogroup="yorn" selected="true"/>
+                 </hlayout>
+			</cell>
+		</row>
+	</rows>
+	<foot>
+		<footer align="center"><button id="summit" onClick="@command('summitupdateprove',reason=reason.value,remark=remark.value,yorn=yorn.selectedItem,gd=docGrid,win=win)">提交</button></footer>
+	</foot>
+</grid>
+</window>
+</zk>

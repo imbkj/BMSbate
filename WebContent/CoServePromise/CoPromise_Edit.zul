@@ -1,0 +1,894 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<?component name="docDataList" macro-uri="../DocumentsInfo/DocumentsInfo_AUPageList.zul" inline="true"?>
+<zk>
+	<window title="单位系统服务约束信息修改" border="normal" closable="true"
+		apply="org.zkoss.bind.BindComposer" width="100%" height="100%"
+		id="win" onCreate="@command('createwin',win=self)"
+		viewModel="@id('vm') @init('Controller.CoServePromise.CoPromise_updateController')">
+		<borderlayout vflex="1">
+			<center>
+				<scrollview vflex="1" hflex="1">
+					<groupbox mold="3d" open="false" title="劳动合同签订"
+						style="margin-bottom:10px;">
+						<grid>
+							<rows>
+								<row>
+									<cell>合同签签订时间</cell>
+									<cell>
+										<combobox
+											value="@bind(vm.model.cosp_coco_signtime)">
+											<comboitem label="" />
+											<comboitem label="入职前签订" />
+											<comboitem label="入职当天签订" />
+											<comboitem label="入职后签订" />
+										</combobox>
+									</cell>
+									<cell>
+										<hlayout>
+											<label value="合同签订联系人"></label>
+											<a
+												onClick="@command('linkinfo',val=vm.model.cosp_coco_signname)">
+												<label value="查看"
+													visible="@bind(vm.lkvisbile)" id="lk">
+												</label>
+											</a>
+										</hlayout>
+									</cell>
+									<cell>
+										<combobox
+											value="@bind(vm.model.cosp_coco_signname)" readonly="true"
+											onChange="@command('addlink',val=self.value,lk=lk,flag=1)">
+											<comboitem label="" />
+											<comboitem label="员工本人" />
+											<comboitem label="指定联系人" />
+											<comboitem label="客服" />
+										</combobox>
+									</cell>
+									<cell>合同签订方式</cell>
+									<cell>
+										<combobox
+											value="@bind(vm.model.cosp_coco_signtype)">
+											<comboitem label="" />
+											<comboitem label="员工上门" />
+											<comboitem label="寄送" />
+											<comboitem label="客服上门" />
+										</combobox>
+									</cell>
+								</row>
+								<row>
+									<cell width="100px">聘用书处理方式</cell>
+									<cell>
+										<textbox
+											value="@bind(vm.model.cosp_coco_hiretype)">
+										</textbox>
+									</cell>
+									<cell>客户要求签订合同的份数</cell>
+									<cell>
+										<textbox
+											value="@bind(vm.model.cosp_coco_amount)">
+										</textbox>
+									</cell>
+									<cell>客户要求签订聘用确认书的份数</cell>
+									<cell>
+										<textbox
+											value="@bind(vm.model.cosp_coco_hbamount)">
+										</textbox>
+									</cell>
+								</row>
+								<row>
+									<cell>是否有其他文件需要代签</cell>
+									<cell>
+										<combobox
+											value="@bind(vm.model.cosp_coco_ortherfile)">
+											<comboitem label="" />
+											<comboitem label="是" />
+											<comboitem label="否" />
+										</combobox>
+									</cell>
+									<cell>合同签订注意事项</cell>
+									<cell colspan="3">
+										<textbox rows="2"
+											value="@bind(vm.model.cosp_coco_careinfo)" width="90%">
+										</textbox>
+									</cell>
+								</row>
+								<row>
+									<cell>签订合同需要收集的资料</cell>
+									<cell colspan="5">
+										<docDataList f_puzu_id="" doType="${vm.cocodoType}" id="cocogd"
+											puzu_id="132" tid="${vm.model.cosp_id}"
+											log_url="../DocumentsInfo/" dWidth="100%" />
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+					<groupbox mold="3d" open="false" title="入职手续"
+						style="margin-bottom:10px;">
+						<grid>
+							<rows>
+								<row>
+									<cell width="140px">
+										<hlayout>
+											<label value="员工入职联系人"></label>
+											<a
+												onClick="@command('linkinfo',val=vm.model.cosp_enty_caliname)">
+												<label value="查看"
+													visible="@bind(vm.lkenvisbile)" id="lken">
+												</label>
+											</a>
+										</hlayout>
+									</cell>
+									<cell>
+										<combobox
+											value="@bind(vm.model.cosp_enty_caliname)" readonly="true"
+											onChange="@command('addlink',val=self.value,lk=lken,flag=2)">
+											<comboitem label="" />
+											<comboitem label="员工本人" />
+											<comboitem label="指定联系人" />
+											<comboitem label="客服" />
+										</combobox>
+									</cell>
+									<cell width="120px">证件类费用收取方式</cell>
+									<cell>
+										<combobox
+											value="@bind(vm.model.cosp_enty_feepaytype)">
+											<comboitem label="" />
+											<comboitem label="个人付" />
+											<comboitem label="公司付" />
+											<comboitem label="随付款" />
+										</combobox>
+									</cell>
+								</row>
+								<row>
+									<cell width="120px">入职资料注意事项</cell>
+									<cell colspan="3">
+										<textbox rows="3"
+											value="@bind(vm.model.cosp_enty_careinfo)" width="90%">
+										</textbox>
+									</cell>
+								</row>
+								<row>
+									<cell>入职资料收取</cell>
+									<cell colspan="3">
+										<docDataList f_puzu_id="" doType="${vm.entydoType}" id="entygd"
+											puzu_id="133" dWidth="100%" tid="${vm.model.cosp_id}"
+											log_url="../DocumentsInfo/" />
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+					<groupbox mold="3d" open="false" title="社保公积金交单变更"
+						style="margin-bottom:10px;">
+						<grid>
+							<rows>
+								<row>
+									<cell width="100px">
+										<hlayout>
+											<label value="联系人"></label>
+											<a
+												onClick="@command('linkinfo',val=vm.model.cosp_sbhs_caliname)">
+												<label value="查看"
+													visible="@bind(vm.lkhsvisbile)" id="lkhs">
+												</label>
+											</a>
+										</hlayout>
+									</cell>
+									<cell>
+										<combobox
+											value="@bind(vm.model.cosp_sbhs_caliname)" readonly="true"
+											onChange="@command('addlink',val=self.value,lk=lkhs,flag=3)">
+											<comboitem label="" />
+											<comboitem label="员工本人" />
+											<comboitem label="指定联系人" />
+											<comboitem label="客服" />
+										</combobox>
+									</cell>
+									<cell width="100px">邮寄费用</cell>
+									<cell>
+										<combobox
+											value="@bind(vm.model.cosp_sbhs_postfee)">
+											<comboitem label="" />
+											<comboitem label="客户承担" />
+											<comboitem label="中智承担" />
+											<comboitem label="员工承担" />
+										</combobox>
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<hlayout>
+											<label
+												value="涉及需要客户盖章的表格联系人">
+											</label>
+											<a
+												onClick="@command('linkinfo',val=vm.model.cosp_sbhs_data_caliname)">
+												<label value="查看"
+													visible="false" id="lkhsda">
+												</label>
+											</a>
+										</hlayout>
+									</cell>
+									<cell>
+										<combobox
+											value="@bind(vm.model.cosp_sbhs_data_caliname)" readonly="true"
+											onChange="@command('addlink',val=self.value,lk=lkhsda,flag=13)">
+											<comboitem label="" />
+											<comboitem label="员工本人" />
+											<comboitem label="指定联系人" />
+											<comboitem label="客服" />
+										</combobox>
+									</cell>
+								</row>
+								<row>
+									<cell width="100px">注意事项</cell>
+									<cell colspan="3">
+										<textbox rows="3"
+											value="@bind(vm.model.cosp_sbhs_careinfo)" width="90%">
+										</textbox>
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+					<groupbox mold="3d" open="false" title="就业登记信息"
+						style="margin-bottom:10px;">
+						<grid>
+							<rows>
+								<row>
+									<cell width="170px">
+										<hlayout>
+											<label value="联系人"></label>
+											<a
+												onClick="@command('linkinfo',val=vm.model.cosp_jbrg_caliname)">
+												<label value="查看"
+													visible="@bind(vm.lkrgvisbile)" id="lkrg">
+												</label>
+											</a>
+										</hlayout>
+									</cell>
+									<cell>
+										<combobox
+											value="@bind(vm.model.cosp_jbrg_caliname)" readonly="true"
+											onChange="@command('addlink',val=self.value,lk=lkrg,flag=4)">
+											<comboitem label="" />
+											<comboitem label="员工本人" />
+											<comboitem label="指定联系人" />
+											<comboitem label="客服" />
+										</combobox>
+									</cell>
+									<cell width="120px">邮寄费用</cell>
+									<cell colspan="3">
+										<combobox
+											value="@bind(vm.model.cosp_jbrg_postfee)">
+											<comboitem label="" />
+											<comboitem label="客户承担" />
+											<comboitem label="中智承担" />
+											<comboitem label="员工承担" />
+										</combobox>
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<hlayout>
+											<label
+												value="涉及需要客户盖章的表格联系人">
+											</label>
+											<a
+												onClick="@command('linkinfo',val=vm.model.cosp_jbrg_data_caliname)">
+												<label value="查看"
+													visible="false" id="lkhsjy">
+												</label>
+											</a>
+										</hlayout>
+									</cell>
+									<cell>
+										<combobox
+											value="@bind(vm.model.cosp_jbrg_data_caliname)" readonly="true"
+											onChange="@command('addlink',val=self.value,lk=lkhsjy,flag=14)">
+											<comboitem label="" />
+											<comboitem label="员工本人" />
+											<comboitem label="指定联系人" />
+											<comboitem label="客服" />
+										</combobox>
+									</cell>
+								</row>
+								<row>
+									<cell>所属街道</cell>
+									<cell>
+										<textbox
+											value="@bind(vm.model.cosp_jbrg_street)">
+										</textbox>
+									</cell>
+									<cell>是否有签订责任书</cell>
+									<cell>
+										<combobox
+											value="@bind(vm.model.cosp_jbrg_ifdutybook)">
+											<comboitem label="" />
+											<comboitem label="是" />
+											<comboitem label="否" />
+										</combobox>
+									</cell>
+									<cell>无责任书是否能办理手续</cell>
+									<cell>
+										<combobox
+											value="@bind(vm.model.cosp_jbrg_nodutybookok)">
+											<comboitem label="" />
+											<comboitem label="是" />
+											<comboitem label="否" />
+										</combobox>
+									</cell>
+								</row>
+								<row>
+									<cell width="150px">注意事项</cell>
+									<cell colspan="3">
+										<textbox rows="3"
+											value="@bind(vm.model.cosp_jbrg_careinfo)" width="90%">
+										</textbox>
+									</cell>
+								</row>
+								<row>
+									<cell width="150px">
+										办理各项业务所需资料清单
+									</cell>
+									<cell colspan="5">
+										<docDataList f_puzu_id="" doType="${vm.rgdoType}" id="rggd"
+											puzu_id="134" dWidth="100%" tid="${vm.model.cosp_id}"
+											log_url="../DocumentsInfo/" />
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+					<groupbox mold="3d" open="false"
+						title="各类证件（社保卡、公积金卡、居住证）" style="margin-bottom:10px;">
+						<grid>
+							<rows>
+								<row>
+									<cell width="100px">
+										<hlayout>
+											<label value="发卡对象"></label>
+											<a
+												onClick="@command('linkinfo',val=vm.model.cosp_card_caliname)">
+												<label value="查看"
+													visible="@bind(vm.lkcdvisbile)" id="lkcd">
+												</label>
+											</a>
+										</hlayout>
+									</cell>
+									<cell>
+										<combobox
+											value="@bind(vm.model.cosp_card_caliname)" readonly="true"
+											onChange="@command('addlink',val=self.value,lk=lkcd,flag=5)">
+											<comboitem label="" />
+											<comboitem label="员工本人" />
+											<comboitem label="指定联系人" />
+											<comboitem label="客服" />
+										</combobox>
+									</cell>
+									<cell width="100px">邮寄费用</cell>
+									<cell>
+										<combobox
+											value="@bind(vm.model.cosp_card_postfee)">
+											<comboitem label="" />
+											<comboitem label="客户承担" />
+											<comboitem label="中智承担" />
+											<comboitem label="员工承担" />
+										</combobox>
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<hlayout>
+											<label
+												value="材料联系人">
+											</label>
+											<a
+												onClick="@command('linkinfo',val=vm.model.cosp_card_data_caliname)">
+												<label value="查看"
+													visible="false" id="lkkl">
+												</label>
+											</a>
+										</hlayout>
+									</cell>
+									<cell>
+										<combobox
+											value="@bind(vm.model.cosp_card_data_caliname)" readonly="true"
+											onChange="@command('addlink',val=self.value,lk=lkkl,flag=15)">
+											<comboitem label="" />
+											<comboitem label="员工本人" />
+											<comboitem label="指定联系人" />
+											<comboitem label="客服" />
+										</combobox>
+									</cell>
+								</row>
+								<row>
+									<cell width="100px">注意事项</cell>
+									<cell colspan="3">
+										<textbox rows="3"
+											value="@bind(vm.model.cosp_card_careinfo)" width="90%">
+										</textbox>
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+					<groupbox mold="3d" open="false" title="体检报告"
+						style="margin-bottom:10px;">
+						<grid>
+							<rows>
+								<row>
+									<cell width="100px">
+										<hlayout>
+											<label value="报告联系人"></label>
+											<a
+												onClick="@command('linkinfo',val=vm.model.cosp_bcrp_caliname)">
+												<label value="查看"
+													visible="@bind(vm.lkrpvisbile)" id="lkrp">
+												</label>
+											</a>
+										</hlayout>
+									</cell>
+									<cell>
+										<combobox
+											value="@bind(vm.model.cosp_bcrp_caliname)" readonly="true"
+											onChange="@command('addlink',val=self.value,lk=lkrp,flag=6)">
+											<comboitem label="" />
+											<comboitem label="员工本人" />
+											<comboitem label="指定联系人" />
+											<comboitem label="客服" />
+										</combobox>
+									</cell>
+									<cell width="100px">邮寄费用</cell>
+									<cell>
+										<combobox
+											value="@bind(vm.model.cosp_bcrp_postfee)">
+											<comboitem label="" />
+											<comboitem label="客户承担" />
+											<comboitem label="中智承担" />
+											<comboitem label="员工承担" />
+										</combobox>
+									</cell>
+								</row>
+								<row>
+									<cell width="100px">
+										<hlayout>
+											<label value="体检联系人"></label>
+											<a
+												onClick="@command('linkinfo',val=vm.model.cosp_bcrp_bclinkname)">
+												<label value="查看"
+													visible="false" id="bclkrp">
+												</label>
+											</a>
+										</hlayout>
+									</cell>
+									<cell>
+										<combobox
+											value="@bind(vm.model.cosp_bcrp_bclinkname)" readonly="true"
+											onChange="@command('addlink',val=self.value,lk=bclkrp,flag=16)">
+											<comboitem label="" />
+											<comboitem label="员工本人" />
+											<comboitem label="指定联系人" />
+											<comboitem label="无需联系" />
+										</combobox>
+									</cell>
+									<cell width="100px" visible="false">体检联系电话</cell>
+									<cell visible="false">
+										<textbox
+											value="@bind(vm.model.cosp_bcrp_linknumber)">
+										</textbox>
+									</cell>
+								</row>
+								<row>
+									<cell width="100px">注意事项</cell>
+									<cell colspan="3">
+										<textbox rows="3"
+											value="@bind(vm.model.cosp_bcrp_careinfo)" width="90%">
+										</textbox>
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+					<groupbox mold="3d" open="false" title="业务表格盖章"
+						style="margin-bottom:10px;">
+						<grid>
+							<rows>
+								<row>
+									<cell width="140px">
+										<hlayout>
+											<label value="盖章表格递交人"></label>
+											<a
+												onClick="@command('linkinfo',val=vm.model.cosp_bsal_caliname)">
+												<label value="查看"
+													visible="@bind(vm.lkblvisbile)" id="lkbl">
+												</label>
+											</a>
+										</hlayout>
+									</cell>
+									<cell>
+										<combobox
+											value="@bind(vm.model.cosp_bsal_caliname)" readonly="true"
+											onChange="@command('addlink',val=self.value,lk=lkbl,flag=7)">
+											<comboitem label="" />
+											<comboitem label="员工本人" />
+											<comboitem label="指定联系人" />
+											<comboitem label="客服" />
+										</combobox>
+									</cell>
+									<cell width="100px">邮寄费用</cell>
+									<cell>
+										<combobox
+											value="@bind(vm.model.cosp_bsal_postfee)">
+											<comboitem label="" />
+											<comboitem label="客户承担" />
+											<comboitem label="中智承担" />
+											<comboitem label="员工承担" />
+										</combobox>
+									</cell>
+								</row>
+								<row>
+									<cell width="100px">注意事项</cell>
+									<cell colspan="3">
+										<textbox rows="3"
+											value="@bind(vm.model.cosp_bsal_careinfo)" width="90%">
+										</textbox>
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+					<groupbox mold="3d" open="false" title="发票寄送"
+						style="margin-bottom:10px;">
+						<grid>
+							<rows>
+								<row>
+									<cell width="100px">
+										<hlayout>
+											<label value="联系人"></label>
+											<a
+												onClick="@command('linkinfo',val=vm.model.cosp_invo_caliname)">
+												<label value="查看"
+													visible="@bind(vm.lkiovisbile)" id="lkio">
+												</label>
+											</a>
+										</hlayout>
+									</cell>
+									<cell>
+										<combobox
+											value="@bind(vm.model.cosp_invo_caliname)" readonly="true"
+											onChange="@command('addlink',val=self.value,lk=lkio,flag=8)">
+											<comboitem label="" />
+											<comboitem label="员工本人" />
+											<comboitem label="指定联系人" />
+											<comboitem label="客服" />
+										</combobox>
+									</cell>
+									<cell width="100px">邮寄费用</cell>
+									<cell>
+										<combobox
+											value="@bind(vm.model.cosp_invo_postfee)">
+											<comboitem label="" />
+											<comboitem label="客户承担" />
+											<comboitem label="中智承担" />
+											<comboitem label="员工承担" />
+										</combobox>
+									</cell>
+								</row>
+								<row>
+									<cell width="100px">注意事项</cell>
+									<cell colspan="3">
+										<textbox rows="3"
+											value="@bind(vm.model.cosp_invo_careinfo)" width="90%">
+										</textbox>
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+					<groupbox mold="3d" open="false" title="工资数据"
+						style="margin-bottom:10px;">
+						<grid>
+							<rows>
+								<row>
+									<cell width="170px">
+										<hlayout>
+											<label
+												value="涉及工资数据问题联系对象">
+											</label>
+											<a
+												onClick="@command('linkinfo',val=vm.model.cosp_page_caliname)">
+												<label value="查看"
+													visible="false" id="gzlk">
+												</label>
+											</a>
+										</hlayout>
+									</cell>
+									<cell>
+										<combobox
+											value="@bind(vm.model.cosp_page_caliname)" readonly="true"
+											onChange="@command('addlink',val=self.value,lk=gzlk,flag=12)">
+											<comboitem label="" />
+											<comboitem label="员工本人" />
+											<comboitem label="指定联系人" />
+											<comboitem label="客服" />
+										</combobox>
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+					<groupbox mold="3d" open="false" title="商业保险理赔资料"
+						style="margin-bottom:10px;">
+						<grid>
+							<rows>
+								<row>
+									<cell width="100px">
+										<hlayout>
+											<label value="联系人"></label>
+											<a
+												onClick="@command('linkinfo',val=vm.model.cosp_dali_caliname)">
+												<label value="查看"
+													visible="@bind(vm.lkdivisbile)" id="lkdi">
+												</label>
+											</a>
+										</hlayout>
+									</cell>
+									<cell>
+										<combobox
+											value="@bind(vm.model.cosp_dali_caliname)" readonly="true"
+											onChange="@command('addlink',val=self.value,lk=lkdi,flag=9)">
+											<comboitem label="" />
+											<comboitem label="员工本人" />
+											<comboitem label="指定联系人" />
+											<comboitem label="客服" />
+										</combobox>
+									</cell>
+									<cell width="100px">邮寄费用</cell>
+									<cell>
+										<combobox
+											value="@bind(vm.model.cosp_dali_postfee)">
+											<comboitem label="" />
+											<comboitem label="客户承担" />
+											<comboitem label="中智承担" />
+											<comboitem label="员工承担" />
+										</combobox>
+									</cell>
+								</row>
+								<row>
+									<cell width="100px">注意事项</cell>
+									<cell colspan="3">
+										<textbox rows="3"
+											value="@bind(vm.model.cosp_dali_careinfo)" width="90%">
+										</textbox>
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+					<groupbox mold="3d" open="false" title="员工档案袋管理约定"
+						style="margin-bottom:10px;" visible="false">
+						<grid>
+							<rows>
+								<row>
+									<cell width="170px">
+										员工档案袋管理的规定
+									</cell>
+									<cell>
+										<textbox
+											value="@bind(vm.model.cosp_file_fix)" width="90%" rows="3">
+										</textbox>
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+					<groupbox mold="3d" open="false" title="员工各类证明"
+						style="margin-bottom:10px;">
+						<grid>
+							<rows>
+								<row>
+									<cell width="100px">
+										<hlayout>
+											<label value="联系人"></label>
+											<a
+												onClick="@command('linkinfo',val=vm.model.cosp_prve_caliname)">
+												<label value="查看"
+													visible="@bind(vm.lkpedivisbile)" id="lkpe">
+												</label>
+											</a>
+										</hlayout>
+									</cell>
+									<cell>
+										<combobox
+											value="@bind(vm.model.cosp_prve_caliname)" readonly="true"
+											onChange="@command('addlink',val=self.value,lk=lkpe,flag=10)">
+											<comboitem label="" />
+											<comboitem label="员工本人" />
+											<comboitem label="指定联系人" />
+											<comboitem label="客服" />
+										</combobox>
+									</cell>
+									<cell width="100px">邮寄费用</cell>
+									<cell>
+										<combobox
+											value="@bind(vm.model.cosp_pive_postfee)">
+											<comboitem label="" />
+											<comboitem label="客户承担" />
+											<comboitem label="中智承担" />
+											<comboitem label="员工承担" />
+										</combobox>
+									</cell>
+								</row>
+								<row>
+									<cell width="100px">注意事项</cell>
+									<cell colspan="3">
+										<textbox rows="3"
+											value="@bind(vm.model.cosp_prve_careinfo)" width="90%">
+										</textbox>
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+					<groupbox mold="3d" open="false" title="独立户盖章表格"
+						style="margin-bottom:10px;">
+						<grid>
+							<rows>
+								<row>
+									<cell width="100px">
+										<hlayout>
+											<label value="联系人"></label>
+											<a
+												onClick="@command('linkinfo',val=vm.model.cosp_sing_caliname)">
+												<label value="查看"
+													visible="@bind(vm.lksgvisbile)" id="lksg">
+												</label>
+											</a>
+										</hlayout>
+									</cell>
+									<cell>
+										<combobox
+											value="@bind(vm.model.cosp_sing_caliname)" readonly="true"
+											onChange="@command('addlink',val=self.value,lk=lksg,flag=11)">
+											<comboitem label="" />
+											<comboitem label="员工本人" />
+											<comboitem label="指定联系人" />
+											<comboitem label="客服" />
+										</combobox>
+									</cell>
+								</row>
+								<row>
+									<cell width="100px">注意事项</cell>
+									<cell colspan="3">
+										<textbox rows="3"
+											value="@bind(vm.model.cosp_sing_careinfo)" width="90%">
+										</textbox>
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+					<groupbox mold="3d" open="false" title="企业社保账户信息" visible="false"
+						style="margin-bottom:10px;">
+						<grid>
+							<rows>
+								<row>
+									<cell width="170px">社保账户编号</cell>
+									<cell>
+										<textbox
+											value="@bind(vm.model.cosp_acnt_sbno)">
+										</textbox>
+									</cell>
+									<cell align="right">账户所属社保局</cell>
+									<cell>
+										<textbox
+											value="@bind(vm.model.cosp_acnt_sbiess)">
+										</textbox>
+									</cell>
+									<cell align="right">
+										社保是否有办理UKEY
+									</cell>
+									<cell>
+										<combobox
+											value="@bind(vm.model.cosp_acnt_sbukey)">
+											<comboitem label="" />
+											<comboitem label="有" />
+											<comboitem label="无" />
+										</combobox>
+									</cell>
+									<cell align="right">
+										社保UKEY到期时间
+									</cell>
+									<cell>
+										<datebox id="sbukey"></datebox>
+									</cell>
+								</row>
+								<row>
+									<cell>办理各项业务所需资料清单</cell>
+									<cell colspan="7">
+										<docDataList f_puzu_id="" doType="${vm.sbdoType}" id="sbgd"
+											puzu_id="135" dWidth="100%" tid="${vm.model.cosp_id}"
+											log_url="../DocumentsInfo/" />
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+					<groupbox mold="3d" open="false" title="企业公积金账户信息" visible="false"
+						style="margin-bottom:10px;">
+						<grid>
+							<rows>
+								<row>
+									<cell>企业公积金帐号</cell>
+									<cell>
+										<textbox
+											value="@bind(vm.model.cosp_acnt_houseno)">
+										</textbox>
+									</cell>
+									<cell>企业公积金缴存比例</cell>
+									<cell>
+										<textbox
+											value="@bind(vm.model.cosp_anct_housescale)">
+										</textbox>
+									</cell>
+									<cell>公积金归集银行</cell>
+									<cell>
+										<textbox
+											value="@bind(vm.model.cosp_acnt_housebank)">
+										</textbox>
+									</cell>
+								</row>
+								<row>
+									<cell>扣款时间</cell>
+									<cell>
+										<combobox id="hspaytime"
+											model="@load(vm.datelist)"
+											value="@load(vm.model.cosp_acnt_housepaytime)">
+											<template name="model">
+												<comboitem
+													label="@load(each)" />
+											</template>
+										</combobox>
+									</cell>
+									<cell>公积金是否有办理UKEY</cell>
+									<cell>
+										<combobox
+											value="@bind(vm.model.cosp_acnt_houseukey)">
+											<comboitem label="" />
+											<comboitem label="员工本人" />
+											<comboitem label="指定联系人" />
+											<comboitem label="客服" />
+										</combobox>
+									</cell>
+									<cell>公积金UKEY到期时间</cell>
+									<cell>
+										<datebox id="hsukey"></datebox>
+									</cell>
+								</row>
+								<row>
+									<cell>办理各项业务所需资料清单</cell>
+									<cell colspan="5">
+										<docDataList f_puzu_id="" doType="${vm.hsdoType}" id="hsgd"
+											puzu_id="136" dWidth="100%" tid="${vm.model.cosp_id}"
+											log_url="../DocumentsInfo/" />
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+				</scrollview>
+			</center>
+			<south>
+				<div align="center">
+					<button
+						onClick="@command('submit',win=win,sbukey=sbukey.value,hspaytime=hspaytime.value,
+hsukey=hsukey.value,cocogd=cocogd,entygd=entygd,rggd=rggd,sbgd=sbgd,hsgd=hsgd)">
+						提交
+					</button>
+				</div>
+			</south>
+		</borderlayout>
+	</window>
+</zk>

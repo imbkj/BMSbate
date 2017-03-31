@@ -1,0 +1,149 @@
+<?page title="深圳中智BMS系统"?>
+<zk xmlns:c="client">
+	<script type="text/javascript" src="/js/watermarkinput.js" />
+	<style>
+		.z-north {
+		background:#F7F7F7;background-image:url(images/bg.gif); }
+		.dl-link{ text-decoration: none; cursor: pointer; } .plusTab
+		.z-tab-text{ font-weight: bold; color: #9c9c9c; } .z-iframe{
+		width:100%;height:100%; } .z-tabs,.z-tab {
+		background-image:url(images/content_li_top.png); }
+	</style>
+	<window id="indexwindow" width="100%" height="100%"
+		apply="org.zkoss.bind.BindComposer,Controller.EventQueuesController,Util.PublishWindow"
+		viewModel="@id('vm') @init('Controller.SystemControl.Menu_TreeController')">
+		<menupopup id="onclicktree">
+			<menuitem label="折叠所有节点" id="closetree"
+				onClick="@command('closetree',tree=tree)" />
+			<menuitem label="展开所有节点" id="opentree"
+				onClick="@command('opentree',tree=tree)" />
+		</menupopup>
+		<!-- borderlayout布局 -->
+		<borderlayout height="100%" style="margin-bottom:10px;" id="yy">
+			<north size="90px" border="0">
+			<hbox>
+		 
+				<a href="index.zul">
+					<image sclass="complex-layout-header-img"
+						src="/images/logo.gif" /> 
+				</a>
+			 
+			<vbox>
+				 <a>
+				<label value=" "></label>
+					
+				</a>
+				<a>
+				<label value=" " ></label>
+					
+				</a>
+				 <a>
+				<label value=" " ></label>
+					
+				</a>
+					 <a>
+				<label value=" "></label>
+					
+				</a>
+				<a>
+				<label value=" " ></label>
+					
+				</a>
+				 <a>
+				<label value=" " ></label>
+					
+				</a>
+					 <a>
+				<label value=" "></label>
+					
+				</a>
+				<a>
+				<label value=" " ></label>
+					
+				</a>
+				 <a>
+				<label value=" " ></label>
+					
+				</a>
+				 <a>
+				<label value="V3.6.28"></label>
+					
+				</a>
+			 </vbox>
+				</hbox>
+			</north>
+			<west collapsible="true" width="220px" splittable="true"
+				open="true">
+				
+					<caption>
+						<include src="threadHead.zul"></include>
+					</caption>
+					<scrollview height="100%">
+					<vlayout sclass="fn-panel1" height="100%">
+						<div id="gdv" visible="false" height="100%">
+							<include height="100%"
+								src="/Taskflow/Task_ClassList.zul" />
+						</div>
+						<hlayout sclass="fn-subpanel" id="hl"
+							height="100%">
+							<tree id="tree" height="100%"
+								style="border:0px" zclass="z-filetree"
+								onCreate="@command('addTree',tree=self,onclicktree=onclicktree,tbx1=tbx1,fixedtab=fixedtab,tig_1=tig_1,tig00=tig00)">
+							</tree>
+						</hlayout>
+					</vlayout>
+				</scrollview>
+			</west>
+			<center sclass="nested-center" style="border:0;">
+				<borderlayout vflex="min" style="border:0;">
+					<center style="border:0;">
+						<tabbox height="100%" id="tbx1"
+							onCreate="@command('addFixedTab',tbx1=self,tig_1=tig_1,fixedtab=fixedtab,tig00=tig00,tree=tree)">
+							<tabs id="tabs" context="editPopup"
+								onClick="@command('onClickTab',tbx1=tbx1,frstindex=frstindex,fixedtab=fixedtab,tree=tree,frstindex=frstindex,fixedtab=fixedtab)"
+								onDoubleClick="@command('doubleTab',tbx1=tbx1,tig00=tig00)">
+								<tab label="首页" closable="false"
+									id="tig00" image="images/1.gif" />
+								<tab id="tig_1" visible="false" />
+							</tabs>
+							<tabpanels>
+								<tabpanel id="frstindex">
+									<iframe src="@load(vm.indexsrc)"></iframe>
+								</tabpanel>
+							</tabpanels>
+						</tabbox>
+					</center>
+				</borderlayout>
+			</center>
+			<south sclass="footer" height="30px">
+				<vbox align="center" pack="center" width="100%"
+					height="100%" sclass="footer-box">
+					<hbox>
+						<label value="欢迎使用深圳中智BMS系统"
+							style="margin-right:20px;" />
+						<label sclass="footer_text">目前账户:</label>
+						<label style="margin-right:20px;color:#FF0000;"
+							id="nowname" value="@load(vm.username)" />
+						<label value="当前时间:" />
+						<timer delay="1000" repeats="true"
+							onTimer="@command('getnowtime')" />
+						<label value="@load(vm.nowtime)"
+							style="margin-right:20px;" />
+
+						<label sclass="footer_text">
+							版权所有：深圳中智经济技术合作有限公司
+						</label>
+					</hbox>
+				</vbox>
+			</south>
+		</borderlayout>
+		<menupopup id="editPopup">
+			<menuitem label="关闭所有标签" id="closeAll"
+				onClick="@command('closeAllTab',tbx1=tbx1,tig00=tig00)" />
+			<menuitem label="关闭其他标签" id="closeother"
+				onClick="@command('closeOtherTab',tbx1=tbx1)" />
+			<menuitem label="固定标签" id="fixedtab" visible="false"
+				onClick="@command('fixedtab',tbx1=tbx1,fixedtab=fixedtab)" />
+		</menupopup>
+	</window>
+</zk>

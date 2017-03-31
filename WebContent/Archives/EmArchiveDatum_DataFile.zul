@@ -1,0 +1,17 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="材料归档" border="normal" width="300px" height="250px" closable="true" id="filewin"
+		apply="Controller.Archives.EmArchiveDatum_DataFileController">
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell width="60px">归档时间</cell>
+			<cell><datebox id="filedate" /></cell>
+		</row>
+	</rows>
+	<foot>
+		<footer align="center"><button id="summit">提交</button></footer>
+	</foot>
+</grid>
+</window>
+</zk>

@@ -1,0 +1,60 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="户口卡借卡" border="normal" closable="true" width="80%" height="80%" onCreate="@command('ifok',win=self)"
+	apply="org.zkoss.bind.BindComposer" id="win"
+	viewModel="@id('vm') @init('Controller.EmCensus.EmCensus_BorrowCard_AddController')">
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell width="80px">姓名</cell>
+			<cell><label value="@load(vm.embamodel.emba_name)"></label></cell>
+			<cell width="100px">身份证号</cell>
+			<cell><label value="@load(vm.embamodel.emba_idcard)"></label></cell>
+		</row>
+		<row>
+			<cell>户口编号</cell>
+			<cell>
+				<label value="@load(vm.hjno)"></label>
+			</cell>
+			<cell>借卡类型</cell>
+			<cell>
+				<hlayout>
+				<checkbox value="1" label="首页" id="home"/>
+				<checkbox value="1" label="首页复印件" id="homecopy"/>
+				<checkbox value="1" label="户口卡" id="hjcard"/>
+				</hlayout>
+			</cell>
+		</row>
+		<row>
+			<cell>是否家属借卡</cell>
+			<cell colspan="3">
+				<combobox onChange="@command('ifvisible',val=self.value,family=family)" id="iffamily">
+					<comboitem label="是"/>
+					<comboitem label="否"/>
+				</combobox>
+			</cell>
+		</row>
+		<row visible="false" id="family">
+			<cell>家属名称</cell>
+			<cell>
+			<combobox  onChange="@command('family',familyname=self)" readonly="true" id="familyname" model="@load(vm.emlist)" value="@bind(vm.familyname)">
+			<template name="model">
+				<comboitem label="@load(each.emhj_name)" value="@load(each)"/>
+			</template>
+			</combobox>
+			</cell>
+			<cell>身份证号码</cell>
+			<cell><textbox id="wtidcard" value="@bind(vm.wtidcard)" width="160px"/></cell>
+		</row>
+		<row>
+			<cell>借卡理由</cell>
+			<cell colspan="3"><textbox width="95%" rows="5" id="borrowreason"/></cell>
+		</row>
+	</rows>
+	<foot>
+		<footer align="center"><button onClick="@command('EmHJBorrowCardAdd',home=home,homecopy=homecopy,hjcard=hjcard,iffamily=iffamily.value,
+		familyname=familyname.value,wtidcard=wtidcard.value,borrowreason=borrowreason.value,win=win)">提交</button></footer>
+	</foot>
+</grid>
+</window>
+</zk>

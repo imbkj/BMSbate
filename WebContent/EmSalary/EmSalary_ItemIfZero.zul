@@ -1,0 +1,41 @@
+<!--
+	创建人：林少斌
+	创建时间：2015-7-28
+	用途：工资项目清零状态修改页面
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window id="winItemIfZero" title="薪酬管理 -- 工资项目清零状态修改页面" border="normal" width="70%"
+		height="50%" closable="true" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmSalary.EmSalary_ItemIfZeroController')">
+		<grid width="100%" height="100%">
+			<rows>
+				<row>
+					<cell align="left" width="15%">
+						<label value="项目名称：" />
+					</cell>
+					<cell align="left" width="80%">
+						<textbox id="csii_item_name" readonly="true" width="50%"  mold="rounded" value="${arg.csiiM.csii_item_name}"/>
+					</cell>
+				</row>
+				<row>
+					<cell align="left">
+						<label value="是否每月清零：" />
+						<label style="color:red;">(*)</label>
+					</cell>
+					<cell align="left">
+						<radiogroup id="csii_ifzero">
+							<radio label="是" value="1" checked="${arg.csiiM.csii_ifzero==1?true:false}"/>
+							<radio label="否" value="0" checked="${arg.csiiM.csii_ifzero==0?true:false}"/>
+						</radiogroup>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button label="提交" id="btSubmit" onClick="@command('submit',win=winItemIfZero,csii_ifzero=csii_ifzero)" />
+				</footer>
+			</foot>
+		</grid>
+</window>
+</zk>

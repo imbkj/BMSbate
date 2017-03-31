@@ -1,0 +1,512 @@
+<?page title="社保详情" contentType="text/html;charset=UTF-8"?>
+<!-- 调用内联页的文件名 -->
+<?component name="docDataList" macro-uri="/DocumentsInfo/DocumentsInfo_HOPageList.zul" inline="true"?>
+<zk>
+	<window id="winMADetail" title="社会保险 -- 生育津贴申报" border="normal"
+		width="800px" height="580px" apply="org.zkoss.bind.BindComposer"
+		closable="true" sizable="true"
+		viewModel="@id('vm') @init('Controller.EmSheBao.Emsc_DetailMAController')">
+		<div height="98%" style="overflow-y:scroll">
+			<groupbox>
+				<caption label="申报状态更改/备注" />
+				<grid style="border:0px">
+					<rows>
+						<row>
+							<cell width="20%">
+								<label value="申报状态：" />
+							</cell>
+							<cell>
+								<radiogroup id="rgState">
+									<radio label="未申报" value="0"
+										disabled="true"
+										selected="${vm.maModel.escm_ifdeclare==0?true:false}" />
+									<radio label="申报中"
+										style="color:green" value="2"
+										disabled="${vm.maModel.escm_ifdeclare==3 or vm.maModel.escm_ifdeclare==0?false:true}"
+										selected="${vm.maModel.escm_ifdeclare==2?true:false}" />
+									<radio label="已申报"
+										style="color:blue" value="1"
+										disabled="${vm.maModel.escm_ifdeclare!=2}"
+										selected="${vm.maModel.escm_ifdeclare==1?true:false}" />
+									<radio label="退回" style="color:red"
+										value="3"
+										disabled="${vm.maModel.escm_ifdeclare==1 or vm.maModel.escm_ifdeclare==11 or vm.maModel.escm_ifdeclare==12 or vm.maModel.escm_ifdeclare==13?true:false}"
+										selected="${vm.maModel.escm_ifdeclare==3?true:false}" />
+								</radiogroup>
+								<button label="修改状态"
+									onClick="@command('upState',state=rgState,win=winMADetail,cb=cb)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="退回短信收件人：" />
+							</cell>
+							<cell>
+								<bandbox id="bd" mold="rounded"
+									autodrop="true" readonly="true" width="95%"
+									value="@bind(vm.selectedname)">
+									<bandpopup>
+										<grid width="370px"
+											model="@load(vm.deptlist)">
+											<columns>
+												<column width="40px" />
+											</columns>
+											<rows>
+												<template
+													name="model">
+													<row>
+														<detail
+															open="false" fulfill="onOpen">
+															<listbox
+																width="170px" model="@load(each.loginlist)"
+																checkmark="true" multiple="true">
+																<template
+																	name="model">
+																	<listitem
+																		label="@load(each.log_name)" value="@load(each)"
+																		onClick="@command('checkname',model=each,bd=bd,lbitem=self)" />
+																</template>
+															</listbox>
+														</detail>
+														<cell>
+															<label
+																value="@load(each.dep_name)">
+															</label>
+														</cell>
+													</row>
+												</template>
+											</rows>
+										</grid>
+									</bandpopup>
+								</bandbox>
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="退回原因模板：" />
+							</cell>
+							<cell>
+								<combobox model="@load(vm.temList)"
+									readonly="true" onChange="@command('temselect',temcb=self)">
+									<template name="model">
+										<comboitem
+											label="@load(each.pmte_model)" value="@load(each)" />
+									</template>
+								</combobox>
+								<checkbox label="发邮件" checked="true"
+									style="border:0;margin-left:10px;" id="cb">
+								</checkbox>
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="退回原因：" />
+							</cell>
+							<cell>
+								<textbox id="epms_content"
+									value="@bind(vm.reason)" readonly="false" width="70%"
+									mold="rounded" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="历史小信封和退回原因：" />
+							</cell>
+							<cell>
+								<grid model="@load(vm.list)"
+									emptyMessage="没有联系记录">
+									<columns>
+										<column align="center">
+											<label>发件人</label>
+										</column>
+										<column align="center">
+											<label>收件人</label>
+										</column>
+										<column align="center">
+											<label>发件时间</label>
+										</column>
+										<column align="center">
+											<label>短信内容</label>
+										</column>
+										<column align="center">
+											<label>状态</label>
+										</column>
+									</columns>
+									<rows>
+										<template name="model">
+											<row
+												style="border:1px dotted #cad9ea;background-color:#f5fafe;">
+												<cell>
+													<label
+														value="@load(each.syme_addname)">
+													</label>
+												</cell>
+												<cell>
+													<label
+														value="@load(each.symr_name)">
+													</label>
+												</cell>
+												<cell>
+													<label
+														value="@load(each.syme_addtime)">
+													</label>
+												</cell>
+												<cell>
+													<label
+														value="@load(each.syme_content)">
+													</label>
+												</cell>
+												<cell>
+													<label
+														value="@load(each.statename)">
+													</label>
+												</cell>
+											</row>
+										</template>
+									</rows>
+								</grid>
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="备忘：" />
+							</cell>
+							<cell>
+								<textbox id="txtFlag" mold="rounded"
+									value="@load(vm.maModel.escm_flag)" />
+								<button label="添加备忘"
+									onClick="@command('addFlag',flag=txtFlag)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="批次号：" />
+							</cell>
+							<cell>
+								<textbox id="txtNum" mold="rounded"
+									value="@load(vm.maModel.escm_batchnum)" />
+								<button label="更新批次号"
+									onClick="@command('addNum',num=txtNum)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="金额：" />
+							</cell>
+							<cell>
+								<textbox id="txtFee" mold="rounded"
+									value="@load(vm.maModel.escm_fee)" />
+								<button label="更新金额"
+									onClick="@command('addFee',fee=txtFee)" />
+							</cell>
+						</row>
+						<row>
+							<cell rowspan="2">
+								<label value="上传文件：" />
+							</cell>
+							<cell>
+								<label value="申请表：" />
+								<textbox mold="rounded" rows="1"
+									readonly="true" width="250px" value="@load(vm.uploadFlie[0])" />
+								<button label="浏览..."
+									upload="true,multiple=true"
+									onUpload="@command('browse',type=1)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="批量表：" />
+								<textbox mold="rounded" rows="1"
+									value="@load(vm.uploadFlie[1])" readonly="true" width="250px" />
+								<button label="浏览..."
+									upload="true,multiple=true"
+									onUpload="@command('browse',type=2)" />
+								<button label="上传"
+									onClick="@command('upload')" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox>
+				<caption label="个人信息" />
+				<grid style="border:0px">
+					<rows>
+						<row>
+							<cell width="20%">
+								<label value="公司编号" />
+							</cell>
+							<cell>
+								<label value="@load(vm.maModel.cid)" />
+							</cell>
+							<cell width="20%">
+								<label value="员工编号" />
+							</cell>
+							<cell>
+								<label value="@load(vm.maModel.gid)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="所属公司" />
+							</cell>
+							<cell colspan="3">
+								<label
+									value="@load(vm.maModel.escm_company)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="所属月份" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.maModel.ownmonth)" />
+							</cell>
+							<cell>
+								<label value="个人电脑号" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.maModel.escm_computerid)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="姓名" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.maModel.escm_name)" />
+							</cell>
+							<cell></cell>
+							<cell></cell>
+						</row>
+						<row>
+							<cell>
+								<label value="户籍" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.maModel.escm_hj)" />
+							</cell>
+							<cell>
+								<label value="性别" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.maModel.escm_sex)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="年龄" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.maModel.escm_age)" />
+							</cell>
+							<cell>
+								<label value="身份证号" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.maModel.escm_idcard)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="备注" />
+							</cell>
+							<cell colspan="3">
+								<textbox rows="4"
+									value="@load(vm.maModel.escm_remark)" width="70%"
+									readonly="true" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox if="${vm.maModel.escm_ifdata==1}">
+				<caption label="材料交接" />
+				<grid width="100%" height="100%">
+					<rows>
+						<row>
+							<cell>
+								<!-- 材料内联页 参数：puzu_id：模块页面id， doc_type：员工(g)还是公司(c)，gid：公司数据则插入空白 ，业务表id,log_url：获取到页面路径的前部分，ifSubmit：当前页面已勾选后的材料状态 -->
+								<docDataList id="docGrid" puzu_id="359"
+									doc_type="g" gid="${vm.maModel.gid}" tid="${vm.maModel.id}"
+									log_url="../DocumentsInfo/" ifSubmit="2" dHeight="200px"
+									dWidth="100%" />
+							</cell>
+						</row>
+						<row>
+							<cell align="center">
+								<button label="更新材料"
+									onClick="@command('upDocData',gd=docGrid,win=winMADetail)" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox>
+				<caption label="生育津贴申请信息" />
+				<grid width="100%" height="100%">
+					<rows>
+						<row>
+							<cell align="right" rowspan="8">
+								申请项目(多选)
+							</cell>
+							<cell colspan="3" align="center">
+								<label style="font-weight:bold;"
+									value="生育产假" />
+							</cell>
+						</row>
+						<row>
+							<cell colspan="3">
+								<hlayout>
+									<checkbox label="顺产"
+										checked="@load(vm.maModel.chkeasylabour)" />
+									<textbox width="45px"
+										readonly="true" mold="rounded"
+										value="@load(vm.maModel.escm_easylabourmb_str)" />
+									<label value="胞胎" />
+								</hlayout>
+							</cell>
+						</row>
+						<row>
+							<cell colspan="3">
+								<hlayout>
+									<checkbox label="难产"
+										checked="@load(vm.maModel.chkdystocia)" />
+									<textbox width="90px"
+										readonly="true" mold="rounded"
+										value="@load(vm.maModel.escm_dystociatype_str)" />
+									<textbox width="45px"
+										readonly="true" mold="rounded"
+										value="@load(vm.maModel.escm_dystociamb_str)" />
+									<label value="胞胎" />
+								</hlayout>
+							</cell>
+						</row>
+						<row>
+							<cell colspan="3">
+								<hlayout>
+									<checkbox label="怀孕未满4个月流产的"
+										checked="@load(vm.maModel.chkabortion_nfm)" />
+									<space />
+									<space />
+									<checkbox label="怀孕满4个月流产的"
+										checked="@load(vm.maModel.chkabortion_fm)" />
+								</hlayout>
+							</cell>
+						</row>
+						<row>
+							<cell colspan="3" align="center">
+								<label style="font-weight:bold;"
+									value="计划生育手术产假" />
+							</cell>
+						</row>
+						<row>
+							<cell colspan="3">
+								<hlayout>
+									<checkbox label="放置宫内节育器"
+										checked="@load(vm.maModel.chksetiud)" />
+									<space />
+									<space />
+									<checkbox label="取出宫内节育器"
+										checked="@load(vm.maModel.chkgetiud)" />
+								</hlayout>
+							</cell>
+						</row>
+						<row>
+							<cell colspan="3">
+								<hlayout>
+									<checkbox label="施行输卵管结扎"
+										checked="@load(vm.maModel.chktuballigation)" />
+									<space />
+									<space />
+									<checkbox label="输卵管复通手术"
+										checked="@load(vm.maModel.chktubalreversal)" />
+								</hlayout>
+							</cell>
+						</row>
+						<row>
+							<cell colspan="3">
+								<hlayout>
+									<checkbox label="施行输精管结扎"
+										checked="@load(vm.maModel.chkvasoligation)" />
+									<space />
+									<space />
+									<checkbox label="输精管复通手术"
+										checked="@load(vm.maModel.chkvasostomy)" />
+								</hlayout>
+							</cell>
+						</row>
+						<row>
+							<cell align="right">妊娠/计划生育结束日期</cell>
+							<cell>
+								<hlayout>
+									<textbox
+										value="@load(vm.maModel.escm_endoffp)" readonly="true"
+										width="80px" mold="rounded" />
+									<label value="(YYYY-MM-DD)"
+										style="color:red;" />
+								</hlayout>
+							</cell>
+							<cell align="right">联系电话</cell>
+							<cell>
+								<textbox mold="rounded" readonly="true"
+									value="@load(vm.maModel.escm_mobile)" />
+							</cell>
+						</row>
+						<row>
+							<cell align="right">垫付情况</cell>
+							<cell colspan="3">
+								<vlayout>
+									<label
+										value="是否确认对上述职工垫付产假期间的生育津贴？" />
+									<label
+										value="@load(vm.maModel.escm_ifpay_str)" />
+								</vlayout>
+							</cell>
+						</row>
+						<row>
+							<cell align="right">重要提示内容</cell>
+							<cell colspan="3">
+								<vlayout>
+									<label
+										value="1、按规定，生育津贴将拨付到企业社保缴费的账户，贵单位目前缴费账户：" />
+									<hlayout>
+										<space />
+										<label value="银行名称：" />
+										<label
+											value="@load(vm.maModel.escm_bank)" />
+										<space />
+										<space />
+										<space />
+										<label value="银行账户：" />
+										<label
+											value="@load(vm.maModel.escm_bankacc)" />
+									</hlayout>
+									<hlayout>
+										<space />
+										<space />
+										<space />
+										<space />
+										<label value="是否同意以上内容：" />
+										<label
+											value="@load(vm.maModel.escm_ifagree_str)" />
+									</hlayout>
+								</vlayout>
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox>
+				<caption label="系统日志" />
+			</groupbox>
+		</div>
+	</window>
+</zk>

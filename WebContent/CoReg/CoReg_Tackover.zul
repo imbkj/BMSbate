@@ -1,0 +1,584 @@
+<?page title="公司网上立户接管" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="win" title="@load(vm.cm.coba_company)" border="normal"
+		height="100%" width="100%" closable="true"
+		apply="org.zkoss.bind.BindComposer"
+		onCreate="@command('createwin',win=self)"
+		viewModel="@id('vm') @init('Controller.CoReg.CoReg_TackoverController')">
+		<grid vflex="1">
+			<rows>
+				<row>
+					<cell width="10%" style="color:#666;">注册代理方：</cell>
+					<cell width="20%">
+						<combobox id="coba_regagent" mold="rounded"
+							readonly="true" value="@bind(vm.model.coba_regagent)">
+							<comboitem label="中智" />
+							<comboitem label="非中智" />
+						</combobox>
+					</cell>
+					<cell width="10%" style="color:#666;">法定代表人：</cell>
+					<cell width="20%">
+						<textbox id="coba_companymanager" mold="rounded"
+							value="@bind(vm.model.coba_companymanager)" />
+					</cell>
+					<cell width="10%" style="color:#666;">注册地址：</cell>
+					<cell width="20%">
+						<textbox id="coba_address" mold="rounded"
+							value="@bind(vm.model.coba_address)" />
+					</cell>
+				</row>
+				<row>
+					<cell style="color:#666;">证件类型：</cell>
+					<cell>
+						<combobox id="coba_certificate" mold="rounded"
+							readonly="true" value="@bind(vm.model.coba_certificate)">
+							<comboitem label="营业执照" />
+							<comboitem label="登记证" />
+							<comboitem label="许可证" />
+						</combobox>
+					</cell>
+					<cell style="color:#666;">工商登记号：</cell>
+					<cell>
+						<textbox id="coba_bregid" mold="rounded"
+							value="@bind(vm.model.coba_bregid)" />
+					</cell>
+					<cell style="color:#666;">驻在期限(代表处)：</cell>
+					<cell>
+						<datebox id="coba_regexpires"
+							value="@bind(vm.s_regexpires)" readonly="true"
+							format="yyyy-MM-dd" mold="rounded" />
+					</cell>
+				</row>
+				<row>
+					<cell style="color:#666;">工商登记时间</cell>
+					<cell>
+						<datebox id="coba_regtime"
+							value="@bind(vm.s_regtime)" readonly="true" format="yyyy-MM-dd"
+							mold="rounded" />
+					</cell>
+					<cell style="color:#666;">工商登记有效期</cell>
+					<cell>
+						<datebox id="coba_reglimit"
+							value="@bind(vm.s_reglimit)" readonly="true" format="yyyy-MM-dd"
+							mold="rounded" />
+					</cell>
+					<cell></cell>
+					<cell></cell>
+				</row>
+				<row>
+					<cell style="color:#666;">组织机构代码</cell>
+					<cell>
+						<textbox id="coba_organcode"
+							value="@bind(vm.model.coba_organcode)" mold="rounded" />
+					</cell>
+					<cell style="color:#666;">组织机构代码登记时间</cell>
+					<cell>
+						<datebox id="coba_orregtime"
+							value="@bind(vm.s_orregtime)" readonly="true" format="yyyy-MM-dd"
+							mold="rounded" />
+					</cell>
+					<cell style="color:#666;">组织机构代码有效期</cell>
+					<cell>
+						<datebox id="coba_organdeadline"
+							value="@bind(vm.s_organdeadline)" readonly="true"
+							format="yyyy-MM-dd" mold="rounded" />
+					</cell>
+				</row>
+				<row>
+					<cell style="color:#666;">网上登录帐号</cell>
+					<cell>
+						<textbox value="@bind(vm.model.coba_regaccount)"></textbox>
+					</cell>
+					<cell style="color:#666;">网上登录密码</cell>
+					<cell colspan="3">
+						<textbox value="@bind(vm.model.coba_regaccountpwd)"></textbox>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center"><button onClick="@command('summit',win=win)">提交</button></footer>
+			</foot>
+		</grid>
+		<div height="95%" style="overflow-y:scroll" if="false">
+			<groupbox mold="3d" title="基本信息">
+				<grid>
+					<columns>
+						<column width="13%" />
+						<column width="230px" />
+						<column width="12%" />
+						<column />
+						<column width="10%" />
+						<column />
+					</columns>
+					<rows>
+						<row>
+							行业类型
+							<combobox mold="rounded" readonly="true"
+								model="@load(vm.pubindustryList)" hflex="1"
+								value="@bind(vm.com.cori_industry_type)">
+								<template name="model">
+									<comboitem label="@load(each)" />
+								</template>
+							</combobox>
+							注册资金
+							<doublebox format=",###.##" mold="rounded"
+								value="@bind(vm.com.cori_reg_fund)">
+							</doublebox>
+							隶属单位
+							<textbox mold="rounded"
+								value="@bind(vm.com.cori_belong_unit)">
+							</textbox>
+						</row>
+						<row>
+							法定代表人
+							<textbox mold="rounded"
+								value="@bind(vm.com.cori_legal_person)">
+							</textbox>
+							联系电话
+							<textbox mold="rounded"
+								value="@bind(vm.com.cori_lp_tel)">
+							</textbox>
+							公司传真
+							<textbox mold="rounded"
+								value="@bind(vm.com.cori_fax)">
+							</textbox>
+						</row>
+						<row>
+							单位负责人
+							<textbox mold="rounded"
+								value="@bind(vm.com.cori_unti_principal)">
+							</textbox>
+							联系电话
+							<textbox mold="rounded"
+								value="@bind(vm.com.cori_up_tel)">
+							</textbox>
+							邮政编码
+							<textbox mold="rounded"
+								value="@bind(vm.com.cori_postcode)">
+							</textbox>
+						</row>
+						<row>
+							开业时间
+							<textbox mold="rounded"
+								value="@bind(vm.com.cori_open_date)">
+							</textbox>
+							经营起始日期
+							<textbox mold="rounded"
+								value="@bind(vm.com.cori_operate_s_date)">
+							</textbox>
+							社保编号
+							<textbox mold="rounded"
+								value="@bind(vm.com.cori_ss_code)">
+							</textbox>
+						</row>
+						<row>
+							单位月平均工资
+							<doublebox format=",###.##" mold="rounded"
+								value="@bind(vm.com.cori_salary)" />
+							网上登录密码
+							<cell colspan="3">
+								<textbox mold="rounded"
+									value="@bind(vm.com.cori_web_password)" />
+							</cell>
+						</row>
+						<row>
+							主管单位联营单位或股东单位
+							<cell colspan="5">
+								<grid>
+									<columns>
+										<column width="15%" />
+										<column />
+									</columns>
+									<rows>
+										<row>
+											股东单位1
+											<textbox mold="rounded"
+												hflex="1" value="@bind(vm.com.cori_stock_unit1)">
+											</textbox>
+										</row>
+										<row>
+											股东单位2
+											<textbox mold="rounded"
+												hflex="1" value="@bind(vm.com.cori_stock_unit2)">
+											</textbox>
+										</row>
+										<row>
+											股东单位3
+											<textbox mold="rounded"
+												hflex="1" value="@bind(vm.com.cori_stock_unit3)">
+											</textbox>
+										</row>
+										<row>
+											股东单位4
+											<textbox mold="rounded"
+												hflex="1" value="@bind(vm.com.cori_stock_unit4)">
+											</textbox>
+										</row>
+									</rows>
+								</grid>
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox mold="3d" title="单位劳动用工信息">
+				<grid>
+					<columns>
+						<column width="20%" />
+						<column />
+					</columns>
+					<rows>
+						<row>
+							劳动规章制度
+							<cell>
+								<grid>
+									<columns>
+										<column width="25%" />
+										<column />
+									</columns>
+									<rows>
+										<row>
+											是否依法建立和完善
+											<combobox mold="rounded"
+												readonly="true" width="50px" value="@bind(vm.if_build)">
+												<comboitem label="是" />
+												<comboitem label="否" />
+											</combobox>
+										</row>
+										<row>
+											是否通过平等协商确定
+											<combobox mold="rounded"
+												readonly="true" width="50px" value="@bind(vm.if_pass)">
+												<comboitem label="是" />
+												<comboitem label="否" />
+											</combobox>
+										</row>
+										<row>
+											是否公示或告知员工
+											<combobox mold="rounded"
+												readonly="true" width="50px" value="@bind(vm.if_tell)">
+												<comboitem label="是" />
+												<comboitem label="否" />
+											</combobox>
+										</row>
+									</rows>
+								</grid>
+							</cell>
+						</row>
+						<row>
+							员工人数
+							<cell>
+								<grid>
+									<columns>
+										<column width="10%" />
+										<column />
+										<column width="10%" />
+										<column />
+										<column width="17%" />
+										<column />
+									</columns>
+									<rows>
+										<row>
+											总人数
+											<hlayout>
+												<intbox width="50px"
+													instant="true" mold="rounded"
+													value="@bind(vm.com.cori_all_p)"
+													onChange="@command('emcount',a=3)">
+												</intbox>
+												人
+											</hlayout>
+											深户
+											<hlayout>
+												<intbox width="50px"
+													instant="true" mold="rounded"
+													value="@bind(vm.com.cori_sz_p)"
+													onChange="@command('emcount',a=1)">
+												</intbox>
+												人
+											</hlayout>
+											非深户
+											<hlayout>
+												<intbox mold="rounded"
+													instant="true" width="50px"
+													value="@bind(vm.com.cori_foreign_p)"
+													onChange="@command('emcount',a=2)">
+												</intbox>
+												人
+											</hlayout>
+										</row>
+									</rows>
+								</grid>
+							</cell>
+						</row>
+						<row>
+							劳动合同
+							<cell>
+								<grid>
+									<columns>
+										<column width="25%" />
+										<column />
+									</columns>
+									<rows>
+										<row>
+											已签订劳动合同
+											<hlayout>
+												<intbox width="50px"
+													mold="rounded"
+													value="@bind(vm.com.cori_sign_contract_p)">
+												</intbox>
+												人
+											</hlayout>
+										</row>
+										<row>
+											合同文本是否交付劳动者
+											<combobox mold="rounded"
+												readonly="true" width="50px" value="@bind(vm.if_give)">
+												<comboitem label="是" />
+												<comboitem label="否" />
+											</combobox>
+										</row>
+										<row>
+											是否建立劳动合同签收备案制度
+											<combobox mold="rounded"
+												readonly="true" width="50px"
+												value="@bind(vm.if_build_sign_in)">
+												<comboitem label="是" />
+												<comboitem label="否" />
+											</combobox>
+										</row>
+									</rows>
+								</grid>
+							</cell>
+						</row>
+						<row>
+							工作时间
+							<cell>
+								<combobox mold="rounded"
+									value="@bind(vm.com.cori_wtime_type)" readonly="true"
+									onChange="@command('wtime')">
+									<comboitem label="标准工时制度" />
+									<comboitem label="不定时工作制" />
+									<comboitem label="综合计算工时制" />
+								</combobox>
+								<space></space>
+								<textbox mold="rounded" hflex="1"
+									visible="@load(vm.wtimeVis1)"
+									value="@bind(vm.com.cori_i_work)">
+								</textbox>
+								<textbox mold="rounded" hflex="1"
+									visible="@load(vm.wtimeVis2)"
+									value="@bind(vm.com.cori_sc_man_hour)">
+								</textbox>
+								<grid visible="@load(vm.wtimeVis)">
+									<columns>
+										<column width="25%" />
+										<column />
+									</columns>
+									<rows>
+										<row>
+											工作时制
+											<div>
+												<hlayout>
+													<intbox
+														mold="rounded" width="35px"
+														value="@bind(vm.com.cori_hour_per_day)">
+													</intbox>
+													小时/天
+												</hlayout>
+												<space></space>
+												<hlayout>
+													<intbox
+														mold="rounded" width="35px"
+														value="@bind(vm.com.cori_hour_per_week)">
+													</intbox>
+													小时/周
+												</hlayout>
+												<space></space>
+												<hlayout>
+													每周工作
+													<intbox
+														mold="rounded" width="35px"
+														value="@bind(vm.com.cori_day_per_week)">
+													</intbox>
+													天
+												</hlayout>
+											</div>
+										</row>
+										<row>
+											是否存在超时加班加点情况
+											<combobox mold="rounded"
+												readonly="true" width="50px" value="@bind(vm.if_ot)">
+												<comboitem label="是" />
+												<comboitem label="否" />
+											</combobox>
+										</row>
+									</rows>
+								</grid>
+							</cell>
+						</row>
+						<row>
+							工资支付
+							<cell>
+								<grid>
+									<columns>
+										<column width="25%" />
+										<column />
+										<column width="25%" />
+										<column />
+									</columns>
+									<rows>
+										<row>
+											每月工资发放时间
+											<hlayout>
+												<intbox mold="rounded"
+													width="50px" value="@bind(vm.com.cori_salary_date)" />
+												日
+											</hlayout>
+											是否存在拖欠员工工资情况
+											<combobox mold="rounded"
+												readonly="true" width="50px" value="@bind(vm.if_arrear)">
+												<comboitem label="是" />
+												<comboitem label="否" />
+											</combobox>
+										</row>
+										<row>
+											是否低于最低工资标准
+											<combobox mold="rounded"
+												readonly="true" width="50px" value="@bind(vm.if_lowest)">
+												<comboitem label="是" />
+												<comboitem label="否" />
+											</combobox>
+											是否按规定支付加班加点工资
+											<combobox mold="rounded"
+												readonly="true" width="50px" value="@bind(vm.if_ar_ot)">
+												<comboitem label="是" />
+												<comboitem label="否" />
+											</combobox>
+										</row>
+									</rows>
+								</grid>
+							</cell>
+						</row>
+						<row>
+							社会保险
+							<cell>
+								<grid>
+									<columns>
+										<column width="25%" />
+										<column />
+										<column width="25%" />
+										<column />
+									</columns>
+									<rows>
+										<row>
+											是否参加社会保险
+											<combobox mold="rounded"
+												readonly="true" width="50px" value="@bind(vm.if_join_ss)">
+												<comboitem label="是" />
+												<comboitem label="否" />
+											</combobox>
+											参加人数
+											<hlayout>
+												<intbox mold="rounded"
+													width="50px" value="@bind(vm.com.cori_join_p)">
+												</intbox>
+												人
+											</hlayout>
+										</row>
+									</rows>
+								</grid>
+							</cell>
+						</row>
+						<row>
+							其他
+							<cell>
+								<grid>
+									<columns>
+										<column width="25%" />
+										<column />
+										<column width="25%" />
+										<column />
+									</columns>
+									<rows>
+										<row>
+											是否发生30人以上群体性劳资纠纷
+											<cell colspan="3">
+												<combobox mold="rounded"
+													readonly="true" width="50px"
+													value="@bind(vm.if_happen_ld)">
+													<comboitem
+														label="是" />
+													<comboitem
+														label="否" />
+												</combobox>
+											</cell>
+										</row>
+										<row>
+											是否招用童工
+											<combobox mold="rounded"
+												readonly="true" width="50px" value="@bind(vm.if_kid)">
+												<comboitem label="是" />
+												<comboitem label="否" />
+											</combobox>
+											是否成立工会组织
+											<combobox mold="rounded"
+												readonly="true" width="50px" value="@bind(vm.if_union)">
+												<comboitem label="是" />
+												<comboitem label="否" />
+											</combobox>
+										</row>
+									</rows>
+								</grid>
+							</cell>
+						</row>
+						<row>
+							计划生育责任书
+							<cell>
+								<grid>
+									<columns>
+										<column width="25%" />
+										<column />
+									</columns>
+									<rows>
+										<row>
+											是否已签订计划生育责任书
+											<combobox mold="rounded"
+												readonly="true" width="50px"
+												value="@bind(vm.if_responsebook)"
+												onChange="@command('response')">
+												<comboitem label="是" />
+												<comboitem label="否" />
+											</combobox>
+										</row>
+										<row
+											visible="@load(vm.jsVis)">
+											是否需要签订计划生育责任书
+											<combobox mold="rounded"
+												readonly="true" width="50px"
+												value="@bind(vm.if_sign_responsebook)">
+												<comboitem label="是" />
+												<comboitem label="否" />
+											</combobox>
+										</row>
+									</rows>
+								</grid>
+							</cell>
+						</row>
+						<row if="false">
+							开户办理类型
+							<combobox mold="rounded" readonly="true"
+								value="@bind(vm.com.cori_reg_transact_type)">
+								<comboitem label="中智办理" />
+								<comboitem label="独自办理" />
+							</combobox>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+		</div>
+		<hbox if="false" width="100%" pack="center" align="center">
+			<button label="提交" onClick="@command('submit',win=win)" />
+		</hbox>
+	</window>
+</zk>

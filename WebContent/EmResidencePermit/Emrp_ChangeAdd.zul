@@ -1,0 +1,368 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="win" title="员工居住证转换" border="normal" vflex="1" hflex="1"
+		closable="true" apply="org.zkoss.bind.BindComposer"
+		onCreate="@command('createwin',win=self)"
+		viewModel="@id('vm') @init('Controller.EmResidencePermit.Emrp_ChangeAddController')">
+		<div height="100%" style="overflow-y:scroll">
+			<groupbox title="基本信息" mold="3d">
+				<grid>
+					<columns>
+						<column width="10%" />
+						<column />
+						<column width="12%" />
+						<column />
+						<column width="12%" />
+						<column />
+					</columns>
+					<rows>
+						<row>
+							公司编号
+							<cell>
+								<label value="@load(vm.erm.cid)" />
+							</cell>
+							公司名称
+							<cell colspan="3">
+								<label
+									value="@load(vm.erm.coba_company)" />
+							</cell>
+						</row>
+						<row>
+							员工编号
+							<cell>
+								<label value="@load(vm.erm.gid)" />
+							</cell>
+							姓名
+							<cell colspan="3">
+								<label value="@load(vm.erm.emba_name)" />
+							</cell>
+						</row>
+						<row>
+							身份证
+							<cell>
+								<label
+									value="@load(vm.erm.erin_idcard)" />
+							</cell>
+							客服代表
+							<cell colspan="3">
+								<label style="color:#666"
+									value="@load(vm.erm.emba_name)" />
+							</cell>
+						</row>
+						<row>
+							曾用名
+							<cell>
+								<label
+									value="@bind(vm.erm.erin_former_name)" />
+							</cell>
+							性别
+							<cell>
+								<label value="@load(vm.erm.emba_sex)" />
+							</cell>
+							相片图像号
+							<cell>
+								<label
+									value="@bind(vm.erm.erin_photo_number)" />
+							</cell>
+						</row>
+						<row>
+							民族
+							<cell>
+								<label value="@bind(vm.erm.erin_folk)" />
+							</cell>
+							出生日期
+							<cell>
+								<label value="@load(vm.erm.emba_birth)" />
+							</cell>
+							文化程度
+							<cell>
+								<label
+									value="@bind(vm.erm.erin_education)" />
+							</cell>
+						</row>
+						<row>
+							户籍类型
+							<cell>
+								<label
+									value="@bind(vm.erm.erin_hjtype)" />
+							</cell>
+							政治面貌
+							<cell>
+								<label value="@bind(vm.erm.erin_party)" />
+							</cell>
+							婚姻状况
+							<cell>
+								<label
+									value="@bind(vm.erm.erin_marital)" />
+							</cell>
+						</row>
+						<row>
+							户籍地址
+							<cell colspan="5">
+								<label value="@bind(vm.erm.erin_hjadd)" />
+							</cell>
+						</row>
+						<row>
+							现居住地址
+							<cell colspan="5">
+								<label
+									value="@bind(vm.erm.erin_nowadd)" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox title="居住证信息" mold="3d" open="false">
+				<grid>
+					<columns>
+						<column width="16%" />
+						<column />
+						<column width="15%" />
+						<column />
+						<column width="14%" />
+						<column />
+					</columns>
+					<rows>
+						<row>
+							本单位工作起始日期
+							<cell>
+								<label
+									value="@bind(vm.erm.erin_unit_b_date)" />
+							</cell>
+							职业技能等级
+							<cell>
+								<label
+									value="@bind(vm.erm.erin_skilllevel)" />
+							</cell>
+							职称
+							<cell>
+								<label value="@bind(vm.erm.erin_title)" />
+							</cell>
+						</row>
+						<row>
+							是否兼职
+							<cell>
+								<label value="@bind(vm.is_parttime)" />
+							</cell>
+							就业类型
+							<cell>
+								<label value="@bind(vm.erm.oe_type)" />
+							</cell>
+							工种
+							<cell>
+								<label value="@bind(vm.erm.erin_wcin)" />
+							</cell>
+						</row>
+						<row>
+							劳动合同开始日期
+							<cell>
+								<label
+									value="@bind(vm.erm.erin_compact_s_date)" />
+							</cell>
+							劳动合同结束日期
+							<cell>
+								<label
+									value="@bind(vm.erm.erin_compact_e_date)" />
+							</cell>
+							无固定劳动期限
+							<cell>
+								<label value="@bind(vm.if_unlimited)" />
+							</cell>
+						</row>
+						<row>
+							个人社保电脑号
+							<cell>
+								<label
+									value="@bind(vm.erm.erin_computerid)" />
+							</cell>
+							参加工作时间
+							<cell>
+								<label
+									value="@bind(vm.erm.erin_worktime)" />
+							</cell>
+							月均工资(元)
+							<cell>
+								<label
+									value="@bind(vm.erm.erin_salary)" />
+							</cell>
+						</row>
+						<row>
+							居住房屋地址编码
+							<cell colspan="5">
+								<label
+									value="@bind(vm.erm.erin_address_number)" />
+							</cell>
+						</row>
+						<row>
+							身份证完整住址
+							<cell colspan="5">
+								<label
+									value="@bind(vm.erm.erin_idcard_address)" />
+							</cell>
+						</row>
+						<row>
+							申办类型
+							<label value="@bind(vm.epm.app_type)" />
+							申领居住证条件
+							<cell colspan="3">
+								<label value="@bind(vm.epm.app_con)" />
+							</cell>
+						</row>
+						<row>
+							来深时间
+							<cell>
+								<label
+									value="@bind(vm.erm.erin_come_sz_date)" />
+							</cell>
+							服务处所
+							<cell colspan="3">
+								<label
+									value="@bind(vm.erm.erin_s_place)" />
+							</cell>
+						</row>
+						<row>
+							来深居住事由
+							<cell>
+								<label
+									value="@bind(vm.erm.come_sz_reason)" />
+							</cell>
+							住所类别
+							<cell>
+								<label
+									value="@bind(vm.erm.house_class)" />
+							</cell>
+							居住方式
+							<cell>
+								<label value="@bind(vm.erm.house_mode)" />
+							</cell>
+						</row>
+						<row>
+							入住时间
+							<cell>
+								<label
+									value="@bind(vm.erm.erin_r_date)" />
+							</cell>
+							本人固定电话
+							<cell>
+								<label value="@bind(vm.erm.erin_phone)" />
+							</cell>
+							本人手机
+							<cell>
+								<label
+									value="@bind(vm.erm.erin_mobile)" />
+							</cell>
+						</row>
+						<row>
+							紧急联系人姓名
+							<cell>
+								<label
+									value="@bind(vm.erm.erin_epname)" />
+							</cell>
+							紧急联系人固定电话
+							<cell>
+								<label
+									value="@bind(vm.erm.erin_epphone)" />
+							</cell>
+							紧急联系人手机
+							<cell>
+								<label
+									value="@bind(vm.erm.erin_epmobile)" />
+							</cell>
+						</row>
+						<row>
+							广东省流动人口避孕节育情况报告单号
+							<cell colspan="5">
+								<label
+									value="@bind(vm.erm.erin_birthcontrol)" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox title="办理信息" mold="3d" open="false">
+				<grid>
+					<columns>
+						<column width="14%" />
+						<column />
+						<column width="12%" />
+						<column />
+						<column width="12%" />
+						<column />
+					</columns>
+					<rows>
+						<row>
+							付款性质
+							<cell>
+								<label
+									value="@bind(vm.epm.erpi_payment_kind)" />
+							</cell>
+							办理性质
+							<cell>
+								<label
+									value="@bind(vm.epm.erpi_t_kind)" />
+							</cell>
+							交接人
+							<cell>
+								<label
+									value="@bind(vm.epm.erpi_handover_people)" />
+							</cell>
+						</row>
+						<row>
+							是否需要发票
+							<cell>
+								<label value="@bind(vm.if_invoice)" />
+							</cell>
+							收费状态
+							<cell>
+								<label value="@bind(vm.epm.fee_state)" />
+							</cell>
+							所属月份
+							<cell>
+								<label value="@load(vm.epm.ownmonth)" />
+							</cell>
+						</row>
+						<row>
+							发证对象
+							<cell>
+								<label
+									value="@bind(vm.epm.erpi_send_target)" />
+							</cell>
+							工本费
+							<cell colspan="3">
+								<label value="@bind(vm.epm.erpi_fee)" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox title="状态变更记录" mold="3d" open="false">
+				<grid width="100%" emptyMessage="暂无数据"
+					model="@load(vm.hosList)">
+					<columns>
+						<column align="center" label="状态" />
+						<column align="center" label="操作" />
+						<column align="center" label="完成时间" />
+						<column align="center" label="添加人" />
+						<column align="center" label="添加时间" />
+						<column align="center" label="备注" />
+					</columns>
+					<template name="model">
+						<row>
+							<label value="@load(each.statename)" />
+							<label value="@load(each.operate)" />
+							<label value="@load(each.epsr_statetime)" />
+							<label value="@load(each.epsr_addname)" />
+							<label value="@load(each.epsr_addtime)" />
+							<label value="@load(each.epsr_remark)" />
+						</row>
+					</template>
+				</grid>
+			</groupbox>
+			<grid>
+				<foot>
+					<footer align="center"><button onClick="@command('change',win=win)">居住证转换</button></footer>
+				</foot>
+			</grid>
+		</div>
+	</window>
+</zk>

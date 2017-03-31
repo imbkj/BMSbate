@@ -1,0 +1,90 @@
+<?page title="状态变更" contentType="text/html;charset=UTF-8"?>
+<!-- 调用内联页的文件名 -->
+<?component name="docDataList" macro-uri="/DocumentsInfo/DocumentsInfo_UpPageList.zul" inline="true"?>
+<zk>
+	<window id="win" title="员工居住证 - 状态变更" border="normal" width="80%"
+		closable="true" apply="org.zkoss.bind.BindComposer" height="80%"
+		viewModel="@id('vm') @init('Controller.EmResidencePermit.Emrp_OperateController')">
+		<grid vflex="1">
+			<columns>
+				<column width="10%"></column>
+				<column></column>
+				<column width="15%"></column>
+				<column></column>
+			</columns>
+			<rows>
+				<row>
+					公司编号
+					<label value="@load(vm.epm.cid)" />
+					公司名称
+					<label value="@load(vm.epm.coba_company)" />
+				</row>
+				<row>
+					员工姓名
+					<label value="@load(vm.epm.emba_name)" />
+					身份证号
+					<label value="@load(vm.epm.emba_idcard)" />
+				</row>
+				<row>
+					<cell>备注</cell>
+					<cell colspan="3">
+						<textbox rows="5" width="95%" value="@load(vm.epm.erpi_remark)" readonly="true"></textbox>
+					</cell>
+				</row>
+				<row if="${vm.state==2 }">
+					<cell colspan="4">
+						<label value="签收材料" style="color:#666" />
+					</cell>
+				</row>
+				<row if="${vm.state==2 }">
+					<cell colspan="4">
+						<docDataList id="docGrid" puzu_id="34"
+							doc_type="g" gid="${vm.epm.gid }" tid="${vm.daid }"
+							log_url="/DocumentsInfo/" dHeight="230px" dWidth="100%" />
+					</cell>
+				</row>
+				<row if="${vm.state==10 }">
+					收费状态
+					<combobox mold="rounded" readonly="true"
+						model="@load(vm.feeList)" selectedItem="@bind(vm.feeM)">
+						<template name="model">
+							<comboitem label="@load(each.pcco_cn)" />
+						</template>
+					</combobox>
+					发证对象
+					<combobox mold="rounded" readonly="true"
+						model="@load(vm.tarList)" selectedItem="@bind(vm.tarM)">
+						<template name="model">
+							<comboitem label="@load(each.pcco_cn)" />
+						</template>
+					</combobox>
+				</row>
+				<row>
+					<label value="@load(vm.timestr)" />
+					<cell colspan="3">
+						<datebox mold="rounded" format="yyyy-MM-dd"
+							value="@bind(vm.statetime)">
+						</datebox>
+					</cell>
+				</row>
+				<row>
+					备注
+					<cell colspan="3">
+						<textbox rows="5" mold="rounded" hflex="1"
+							value="@bind(vm.epm.epsr_remark)">
+						</textbox>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center" span="4">
+					<button label="提交"
+						onClick="@command('submit',win=win,gd=docGrid)" />
+					<button label="退回"
+						visible="${vm.epm.erpi_state!=9 and vm.epm.erpi_state!=10 }"
+						onClick="@command('back',win=win)" />
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

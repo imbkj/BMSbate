@@ -1,0 +1,406 @@
+<?page title="社会保险" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="社会保险" border="normal"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmSheBao.Emsi_IndexController')"
+		height="99%" width="99%" closable="true" sizable="true"
+		maximizable="true">
+		<borderlayout>
+			<north border="none" collapsible="true" open="true"
+				height="8%">
+				<grid>
+					<rows>
+						<row>
+							<cell>
+								<hbox>
+									<button label="社保局参保记录"
+										onClick="@command('allShebao')" />
+									<button label="所有变更记录"
+										onClick="@command('allShebaoChange')" />
+									<button label="智翼通委托单"
+										onClick="@command('zyt')" />
+								</hbox>
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</north>
+			<center title="历史变更" border="none">
+				<grid span="true" model="@load(vm.changeList)"
+					emptyMessage="暂无变更数据" sizedByContent="true" hflex="1" vflex="1">
+					<columns sizable="true">
+						<column label="序号" align="center" width="40px" />
+						<column label="公司简称" align="center"
+							sort="auto(emsc_shortname)" />
+						<column label="参保姓名" align="center"
+							sort="auto(emsc_name)" />
+						<column label="帐户类型" align="center"
+							sort="auto(emsc_singleStr)" />
+						<column label="所属月份" align="center"
+							sort="auto(ownmonth)" />
+						<column label="基数" align="center" />
+						<column label="变动类型" align="center"
+							sort="auto(emsc_change)" />
+						<column label="变动内容" align="center"
+							sort="auto(emsc_content)" />
+						<column label="添加时间" align="center"
+							sort="auto(emsc_addtime)" width="70px" />
+						<column label="添加人" align="center"
+							sort="auto(emsc_addname)" />
+						<column label="状态" align="center"
+							sort="auto(emsc_ifdeclare)" />
+						<column label="短信" align="center" />
+						<column label="备注" align="center" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<cell>
+									<label
+										value="${forEachStatus.index + 1}" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emsc_shortname)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emsc_name)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emsc_singleStr)" />
+								</cell>
+								<cell>
+									<label value="@load(each.ownmonth)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emsc_radix)" if="${each.emsc_radix != 0}" />
+									<label value="--"
+										if="${each.emsc_radix ==0}" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emsc_change)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emsc_content)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emsc_addtime)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emsc_addname)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emsc_ifdeclare)" />
+								</cell>
+								<cell>
+									<image src="../images/noread.gif"
+										style="cursor:pointer;" tooltiptext="存在未读小信封。"
+										if="${each.msg_a=='0'}"
+										onClick="@command('msg',id=each.id,emsc_addname=each.emsc_addname,type=each.changetype)" />
+									<image src="../images/return.gif"
+										style="cursor:pointer;" tooltiptext="已回复。"
+										if="${each.msg_a=='2'}"
+										onClick="@command('msg',id=each.id,emsc_addname=each.emsc_addname,type=each.changetype)" />
+									<image src="../images/readed.gif"
+										style="cursor:pointer;" tooltiptext="已读。"
+										if="${each.msg_a=='1'}"
+										onClick="@command('msg',id=each.id,emsc_addname=each.emsc_addname,type=each.changetype)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emsc_remark)" />
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</center>
+			<south border="none" height="50%">
+				<div width="100%" height="100%" if="${!vm.existsShebao}"
+					align="center">
+					<label value="该员工尚无社会保险在册数据！" />
+				</div>
+				<div style="overflow:auto" width="100%" height="100%"
+					if="${vm.existsShebao}">
+					<groupbox open="true" title="当前社保信息" mold="3d">
+						<grid>
+							<rows>
+								<row visible="@load(vm.tipvis)">
+									<cell colspan="4">
+										<vbox>
+											<label
+												value="@load(vm.tips1)" style="color:red;" />
+											<label
+												value="@load(vm.tips2)" style="color:red;" />
+										</vbox>
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<label value="所属月份：" />
+									</cell>
+									<cell>
+										<label
+											value="@load(vm.upModel.ownmonth)" />
+									</cell>
+									<cell>
+										<label value="个人电脑号：" />
+									</cell>
+									<cell>
+										<label
+											value="@load(vm.upModel.esiu_computerid)" />
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<label value="姓名：" />
+									</cell>
+									<cell>
+										<label
+											value="@load(vm.upModel.esiu_name)" />
+									</cell>
+									<cell>
+										<label value="户籍：" />
+									</cell>
+									<cell>
+										<label
+											value="@load(vm.upModel.esiu_hj)" />
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<label value="劳动保障卡号：" />
+									</cell>
+									<cell>
+										<label value="" />
+									</cell>
+									<cell>
+										<label value="身份证号码：" />
+									</cell>
+									<cell>
+										<label
+											value="@load(vm.upModel.esiu_idcard)" />
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<label value="月工资总额：" />
+									</cell>
+									<cell>
+										<label
+											value="@load(vm.upModel.esiu_radix)" />
+									</cell>
+									<cell>
+										<label value="民族：" />
+									</cell>
+									<cell>
+										<label
+											value="@load(vm.upModel.esiu_folk)" />
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<label value="职工性质：" />
+									</cell>
+									<cell>
+										<label
+											value="@load(vm.upModel.esiu_officialrank)" />
+									</cell>
+									<cell>
+										<label value="利手：" />
+									</cell>
+									<cell>
+										<label
+											value="@load(vm.upModel.esiu_hand)" />
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+					<groupbox open="true" title="参保险种" mold="3d">
+						<grid>
+							<rows>
+								<row>
+									<cell>
+										<label value="养老参保情况：" />
+									</cell>
+									<cell>
+										<label
+											value="@load(vm.upModel.esiu_yl)" />
+									</cell>
+									<cell>
+										<label value="医疗参保情况：" />
+									</cell>
+									<cell>
+										<label
+											value="@load(vm.upModel.esiu_yltype)" />
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<label value="工伤参保情况：" />
+									</cell>
+									<cell>
+										<label
+											value="@load(vm.upModel.esiu_gs)" />
+									</cell>
+									<cell>
+										<label value="失业参保情况：" />
+									</cell>
+									<cell>
+										<label
+											value="@load(vm.upModel.esiu_sye)" />
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<label value="生育参保情况：" />
+									</cell>
+									<cell>
+										<label
+											value="@load(vm.upModel.esiu_syu)" />
+									</cell>
+									<cell>
+										<label value="" />
+									</cell>
+									<cell>
+										<label value="" />
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+					<groupbox open="true" title="金额计算 " mold="3d">
+						<grid>
+							<rows>
+								<row>
+									<cell>
+										<label value="养老保险单位交金额：" />
+									</cell>
+									<cell>
+										<label
+											value="@load(vm.upModel.esiu_ylcp)" />
+									</cell>
+									<cell>
+										<label value="养老保险个人交金额：" />
+									</cell>
+									<cell>
+										<label
+											value="@load(vm.upModel.esiu_ylop)" />
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<label value="医疗保险单位交金额：" />
+									</cell>
+									<cell>
+										<label
+											value="@load(vm.upModel.esiu_jlcp)" />
+									</cell>
+									<cell>
+										<label value="医疗保险个人交金额：" />
+									</cell>
+									<cell>
+										<label
+											value="@load(vm.upModel.esiu_jlop)" />
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<label value="生育保险单位交金额：" />
+									</cell>
+									<cell>
+										<label
+											value="@load(vm.upModel.esiu_syucp)" />
+									</cell>
+									<cell>
+										<label value="生育保险个人交金额：" />
+									</cell>
+									<cell>
+										<label
+											value="@load(vm.upModel.esiu_syuop)" />
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<label value="失业保险单位交金额：" />
+									</cell>
+									<cell>
+										<label
+											value="@load(vm.upModel.esiu_syecp)" />
+									</cell>
+									<cell>
+										<label value="失业保险个人交金额：" />
+									</cell>
+									<cell>
+										<label
+											value="@load(vm.upModel.esiu_syeop)" />
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<label value="工伤保险单位交金额：" />
+									</cell>
+									<cell>
+										<label
+											value="@load(vm.upModel.esiu_gscp)" />
+									</cell>
+									<cell>
+										<label value="工伤保险个人交金额：" />
+									</cell>
+									<cell>
+										<label
+											value="@load(vm.upModel.esiu_gsop)" />
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<label value="当月单位交金额合计：" />
+									</cell>
+									<cell>
+										<label
+											value="@load(vm.upModel.esiu_totalcp)" />
+									</cell>
+									<cell>
+										<label value="当月个人交金额合计：" />
+									</cell>
+									<cell>
+										<label
+											value="@load(vm.upModel.esiu_totalop)" />
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<label value="当月金额合计：" />
+									</cell>
+									<cell>
+										<hbox align="center">
+											<label 
+												value="@load(vm.upModel.esiu_totalop+vm.upModel.esiu_totalcp)" />
+											<button label="计算" onClick="@command('countShebao')"/>
+										</hbox>
+									</cell>
+									<cell>
+										<label value="" />
+									</cell>
+									<cell>
+										<label value="" />
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+				</div>
+			</south>
+		</borderlayout>
+
+	</window>
+</zk>

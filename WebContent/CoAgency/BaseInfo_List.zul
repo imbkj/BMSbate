@@ -1,0 +1,27 @@
+<!--
+	创建人：林少斌
+	创建时间：2013-9-25
+	用途：委托机构列表
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<style src="./css/style.css" />
+	<grid width="95%" height="95%" apply="org.zkoss.bind.BindComposer"  emptyMessage="无数据"
+	viewModel="@id('vm') @init('Controller.CoAgency.BaseInfo_ListController')"
+	model="@load(vm.cobaBaseList)">
+		<columns sizable="true">
+			<column label="机构编号" align="center" width="100px"/>
+			<column label="机构名称" align="center" sort="auto(coab_name)" />
+			<column label="操作" align="center" width="100px" />
+		</columns>
+		<rows>
+			<template name="model">
+				<row>
+					<label value="@load(each.coab_id)" />
+					<label value="@load(each.coab_name)" />
+					<label style="cursor:pointer; color:#666;" value="详细" onClick="@command('allinone',coabM=each)"/>
+				</row>
+			</template>
+		</rows>
+	</grid>
+</zk>

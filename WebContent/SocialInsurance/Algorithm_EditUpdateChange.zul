@@ -1,0 +1,261 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winEditUpAlg"
+		apply="Controller.SocialInsurance.Algorithm_EditUpdateChangeController"
+		title="更新社保算法变更信息" border="normal" height="99%" width="99%"
+		closable="true">
+		<borderlayout>
+			<north border="none">
+				<grid width="100%">
+					<rows>
+						<row>
+							<cell width="8%" style="color:#666;">
+								城市：
+							</cell>
+							<cell width="10%" style="color:#666;">
+								<label
+									value="${$composer.saModel.getCity()}" />
+							</cell>
+							<cell width="8%" style="color:#666;">
+								机构名称：
+							</cell>
+							<cell width="10%" style="color:#666;">
+								<label
+									value="${$composer.saModel.getCoab_name()}" />
+							</cell>
+							<cell width="8%" style="color:#666;">
+								算法描述：
+							</cell>
+							<cell width="10%" style="color:#666;">
+								<label
+									value="${$composer.saModel.getSoin_title()}" />
+							</cell>
+							<cell width="8%" style="color:#666;">
+								开始执行年月：
+							</cell>
+							<cell width="10%" style="color:#666;">
+								<datebox id="dbExecDate"
+									value="${$composer.saModel.getSial_execdate()}"
+									format="yyyy年MM月" constraint="no empty:请输入开始执行年月"
+									buttonVisible="false" mold="rounded" readonly="true"
+									style="${$composer.saModel.getSial_execdate()!=$composer.saModel.om.getSial_execdate()?'color:red;':''}" />
+							</cell>
+						</row>
+						<row>
+							<cell width="8%" style="color:#666;">
+								社保标准：
+							</cell>
+							<cell width="10%" style="color:#666;">
+								<combobox id="cbSbStandard"
+									readonly="true" model="${$composer.getSbStandardList()}"
+									mold="rounded"
+									style="${$composer.saModel.getSial_sb_standard()!=$composer.saModel.om.getSial_sb_standard()?'color:red;':''}">
+									<template name="model">
+										<comboitem
+											label="${each.sist_standard}" value="${each.sist_id}" />
+									</template>
+								</combobox>
+							</cell>
+							<cell width="10%" style="color:#666;">
+								公积金标准：
+							</cell>
+							<cell width="10%" style="color:#666;">
+								<combobox id="cbGjjStandard"
+									mold="rounded" readonly="true"
+									model="${$composer.getGjjStandardList()}"
+									style="${$composer.saModel.getSial_gjj_standard()!=$composer.saModel.om.getSial_gjj_standard()?'color:red;':''}">
+									<template name="model">
+										<comboitem
+											label="${each.sist_standard}" value="${each.sist_id}" />
+									</template>
+								</combobox>
+							</cell>
+							<cell width="10%" style="color:#666;">
+								算法标准：
+							</cell>
+							<cell width="10%" style="color:#666;"
+								colspan="3">
+								<textbox id="txtStandard"
+									style="${$composer.saModel.getSial_standard()!=$composer.saModel.om.getSial_standard()?'color:red;':''}"
+									value="${$composer.saModel.getSial_standard()}" mold="rounded" />
+							</cell>
+						</row>
+						<row>
+							<cell width="8%" style="color:#666;">
+								月平均工资：
+							</cell>
+							<cell width="10%" style="color:#666;">
+								<decimalbox id="dbAvgSalary"
+									format="###.##"
+									value="${$composer.saModel.getSial_avg_salary()==null?0:$composer.saModel.getSial_avg_salary()}"
+									mold="rounded"
+									style="${$composer.saModel.getSial_avg_salary()!=$composer.saModel.om.getSial_avg_salary()?'color:red;':''}" />
+							</cell>
+							<cell width="10%" style="color:#666;">
+								最低工资：
+							</cell>
+							<cell width="10%" style="color:#666;">
+								<decimalbox id="dbLowestSalary"
+									format="###.##"
+									value="${$composer.saModel.getSial_lowest_salary()==null?0:$composer.saModel.getSial_lowest_salary()}"
+									mold="rounded"
+									style="${$composer.saModel.getSial_lowest_salary()!=$composer.saModel.om.getSial_lowest_salary()?'color:red;':''}" />
+							</cell>
+							<cell width="10%" style="color:#666;">
+								城市备注：
+							</cell>
+							<cell width="10%" style="color:#666;"
+								colspan="3">
+								<textbox id="txtCityRemark"
+									value="${$composer.saModel.getSial_city_remark()}"
+									mold="rounded" width="90%"
+									style="${$composer.saModel.getSial_city_remark()!=$composer.saModel.om.getSial_city_remark()?'color:red;':''}" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</north>
+			<center border="none">
+				<grid id="gdInfo" width="100%" hflex="1" vflex="1">
+					<auxhead>
+						<auxheader label="类别" align="center" />
+						<auxheader label="项目" colspan="2"
+							align="center" />
+						<auxheader label="基数下限" align="center" />
+						<auxheader label="最低缴存额" align="center" />
+						<auxheader label="基数上限" align="center" />
+						<auxheader label="最高缴存额" align="center" />
+						<auxheader label="缴费比例" align="center" />
+						<auxheader label="具体算法" align="center" />
+						<auxheader label="小数处理" align="center" />
+						<auxheader label="备注" align="center" />
+					</auxhead>
+					<columns sizable="true"></columns>
+					<rows>
+						<template name="model">
+							<row>
+								<cell sclass="class" align="center"
+									width="5%" rowspan="${each.sicl_ifclass}"
+									if="${each.sicl_ifclass!=0?true:false}">
+									<label value="${each.sicl_class}" />
+								</cell>
+								<cell sclass="name" align="center"
+									rowspan="${each.sicl_ifname}"
+									if="${each.sicl_ifname!=0?true:false}">
+									<label value="${each.sicl_name}" />
+								</cell>
+								<cell sclass="util" align="center">
+									<label value="${each.sicl_payunit}" />
+								</cell>
+								<cell align="center">
+									<decimalbox
+										value="${each.siai_basic_dd==null?0:each.siai_basic_dd}"
+										format="###.##" inplace="true" width="60%"
+										style="${each.siai_basic_dd!=each.om.siai_basic_dd?'color:red;':''}" />
+								</cell>
+								<cell align="center">
+									<decimalbox
+										value="${each.siai_deposit_dd==null?0:each.siai_deposit_dd}"
+										format="###.##" inplace="true" width="60%"
+										style="${each.siai_deposit_dd!=each.om.siai_deposit_dd?'color:red;':''}" />
+								</cell>
+								<cell align="center">
+									<decimalbox
+										value="${each.siai_basic_ud==null?0:each.siai_basic_ud}"
+										format="###.##" inplace="true" width="60%"
+										style="${each.siai_basic_ud!=each.om.siai_basic_ud?'color:red;':''}" />
+								</cell>
+								<cell align="center">
+									<decimalbox
+										value="${each.siai_deposit_ud==null?0:each.siai_deposit_ud}"
+										format="###.##" inplace="true" width="60%"
+										style="${each.siai_deposit_ud!=each.om.siai_deposit_ud?'color:red;':''}" />
+								</cell>
+								<cell align="center">
+									<textbox inplace="true" width="99%"
+										value="${each.siai_proportion}"
+										constraint="/[\d\%\,\-\.\+]*|\s*|[\%]+/:请注意格式：仅可录入/数字/“-”/“,”/“.”/“%”/“+”（符号为半角）。"
+										style="${each.siai_proportion!=each.om.siai_proportion?'color:red;':''}" />
+								</cell>
+								<cell align="center">
+									<textbox inplace="true" width="99%"
+										value="${each.siai_algorithm}"
+										style="${each.siai_algorithm!=each.om.siai_algorithm?'color:red;':''}" />
+								</cell>
+								<cell align="center">
+									<combobox inplace="true" width="90%"
+										value="${each.side_decimal}" mold="rounded" readonly="true"
+										style="${each.side_decimal!=each.om.side_decimal?'color:red;':''}">
+										<comboitem
+											label="${each.side_decimal}" value="${each.side_id}"
+											forEach="${$composer.getDecimalList()}" />
+									</combobox>
+								</cell>
+								<cell align="center">
+									<textbox inplace="true" width="99%"
+										value="${each.siai_remark}"
+										style="${each.siai_remark!=each.om.siai_remark?'color:red;':''}" />
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</center>
+			<south border="none" collapsible="true" splittable="true">
+				<panel border="0">
+
+					<panelchildren>
+
+						<groupbox>
+							<grid width="100%">
+								<rows>
+									<row>
+										<cell align="center"
+											width="20%">
+											社保备注
+										</cell>
+										<cell align="center">
+											<textbox id="txtSbRemark"
+												inplace="true"
+												value="${$composer.saModel.getSial_sb_remark()}" width="99%"
+												rows="2"
+												style="${$composer.saModel.getSial_sb_remark()!=$composer.saModel.om.getSial_sb_remark()?'color:red;':''}" />
+										</cell>
+									</row>
+									<row>
+										<cell align="center">
+											公积金备注
+										</cell>
+										<cell align="center">
+											<textbox id="txtGjjRemark"
+												value="${$composer.saModel.getSial_gjj_remark()}"
+												inplace="true" width="99%" rows="2"
+												style="${$composer.saModel.getSial_gjj_remark()!=$composer.saModel.om.getSial_gjj_remark()?'color:red;':''}" />
+										</cell>
+									</row>
+									<row>
+										<cell align="center">残保备注</cell>
+										<cell align="center">
+											<textbox id="txtCbRemark"
+												inplace="true"
+												value="${$composer.saModel.getSial_cb_remark()}" width="99%"
+												rows="2"
+												style="${$composer.saModel.getSial_cb_remark()!=$composer.saModel.om.getSial_cb_remark()?'color:red;':''}" />
+										</cell>
+									</row>
+								</rows>
+								<foot
+									visible="${$composer.submitVis}">
+									<footer align="center">
+										<button label="提交"
+											id="btSubmit" />
+									</footer>
+								</foot>
+							</grid>
+						</groupbox>
+					</panelchildren>
+				</panel>
+			</south>
+		</borderlayout>
+	</window>
+</zk>

@@ -1,0 +1,231 @@
+<!--
+	创建人：林少斌
+	创建时间：2014-9-23
+	用途：证件及档案费用数据列表
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="证件档案费用 -- 管理页面" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmCAFFeeInfo.EmCAFFeeInfo_ManageController')"
+		border="normal" sizable="true" height="100%" width="100%">
+		<borderlayout>
+			<north border="0" title="数据查询" collapsible="true"
+				flex="true" open="true">
+				<panel border="1">
+					<panelchildren style="padding:5px;">
+						<grid id="searchGird" width="100%">
+							<rows>
+								<row>
+									<cell width="100px">
+										公司名称
+									</cell>
+									<cell>
+										<textbox id="coco_company"
+											width="150px" value="@bind(vm.company)" mold="rounded" />
+									</cell>
+									<cell width="100px">
+										员工名称
+									</cell>
+									<cell>
+										<textbox id="emp" width="150px"
+											value="@bind(vm.emp)" mold="rounded" />
+									</cell>
+									<cell width="100px">状态</cell>
+									<cell>
+										<combobox
+											value="@bind(vm.state)" mold="rounded">
+											<comboitem label="未借款" />
+											<comboitem label="已借款" />
+											<comboitem label="待清帐" />
+											<comboitem label="已清帐" />
+										</combobox>
+									</cell>
+								</row>
+								<row>
+									<cell>类别</cell>
+									<cell>
+										<combobox value="@bind(vm.type)"
+											mold="rounded">
+											<comboitem label="档案" />
+											<comboitem label="社保卡" />
+											<comboitem label="居住证" />
+										</combobox>
+									</cell>
+									<cell>单号</cell>
+									<cell>
+										<textbox value="@bind(vm.pnum)" />
+									</cell>
+									<cell></cell>
+									<cell></cell>
+								</row>
+							</rows>
+							<foot>
+								<footer align="center" >
+									<hbox>
+										<button id="btSearch" label="查询"
+											onClick="@command('search')" />
+										<button id="updateAll"
+											label="批量处理"
+											onClick="@command('openUpdateAll',gridwin=gridwin)" />
+									</hbox>
+								</footer>
+							</foot>
+						</grid>
+					</panelchildren>
+				</panel>
+			</north>
+			<center>
+				<grid model="@load(vm.ecfiList)" id="gridwin"
+					height="100%" width="100%" emptyMessage="暂无数据" mold="paging"
+					pageSize="200">
+					<columns>
+						<column label="客服代表" align="center" sort="auto(client)"/>
+						<column label="公司简称" align="center"  sort="auto(shortname)"/>
+						<column label="所属月份" align="center"  sort="auto(ownmonth)"/>
+						<column label="员工姓名" align="center"  sort="auto(name)"/>
+						<column label="类别" align="center"  sort="auto(ecfi_class)"/>
+						<column label="付款性质" align="center"  sort="auto(ecfi_payment_kind)"/>
+						<column label="金额" align="center"  sort="auto(ecfi_fee)"/>
+						<column label="付款状态" align="center"  sort="auto(ecfi_payment_state)"/>
+						<column label="收款日期" align="center"  sort="auto(ecfi_rec_date)"/>
+						<column label="福利部申请人" align="center"  sort="auto(ecfi_wd_applicant)"/>
+						<column label="福利部借款日期" align="center"  sort="auto(ecfi_wd_loan_date)"/>
+						<column label="收发票日期" align="center"  sort="auto(ecfi_ri_date)"/>
+						<column label="客服部申请人" align="center"  sort="auto(ecfi_csd_applicant)"/>
+						<column label="客服部借款日期" align="center"  sort="auto(ecfi_csd_loan_date)"/>
+						<column label="客服部清账日期" align="center"  sort="auto(ecfi_csd_clearing_date)"/>
+						<column label="状态" align="center"  sort="auto(ecfi_state)"/>
+						<column label="操作" align="center" />
+						<column align="center">
+							<checkbox
+								onClick="@command('checkAll',gridwin=gridwin,cbAll=self)" />
+						</column>
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<cell>
+									<label value="@load(each.client)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.shortname)" />
+								</cell>
+								<cell>
+									<label value="@load(each.ownmonth)" />
+								</cell>
+								<cell>
+									<label value="@load(each.name)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ecfi_class)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ecfi_payment_kind)" />
+								</cell>
+								<cell>
+									<label value="@load(each.ecfi_fee)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ecfi_payment_state)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ecfi_rec_date)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ecfi_wd_applicant)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ecfi_wd_loan_date)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ecfi_ri_date)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ecfi_csd_applicant)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ecfi_csd_loan_date)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ecfi_csd_clearing_date)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ecfi_state)" />
+								</cell>
+								<cell>
+									<label value="处理"
+										style="cursor:pointer;color:#666;"
+										onClick="@command('openUpdate',ecfi_id=each.ecfi_id)" />
+								</cell>
+								<cell>
+									<checkbox
+										value="@load(each.ecfi_id)" />
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</center>
+			<south>
+				<vlayout width="100%">
+					<panel border="0">
+						<panelchildren>
+							<vbox width="100%">
+								<grid width="100%">
+									<rows>
+										<row>
+											<cell style="color:#666;"
+												align="center">
+												<hlayout>
+													当前查询条件总金额 [
+													<label value="" />
+													]
+												</hlayout>
+											</cell>
+											<cell style="color:#666;"
+												align="center">
+												<hlayout>
+													个人付金额 [
+													<label value="" />
+													]
+												</hlayout>
+											</cell>
+											<cell style="color:#666;"
+												align="center">
+												<hlayout>
+													已借款金额 [
+													<label value="" />
+													]
+												</hlayout>
+											</cell>
+											<cell style="color:#666;"
+												align="center">
+												<hlayout>
+													已清帐金额 [
+													<label value="" />
+													]
+												</hlayout>
+											</cell>
+										</row>
+									</rows>
+								</grid>
+							</vbox>
+						</panelchildren>
+					</panel>
+				</vlayout>
+			</south>
+		</borderlayout>
+	</window>
+</zk>

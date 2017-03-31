@@ -1,0 +1,598 @@
+<?page title="未处理委托单" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="委托单处理详情" border="normal" id="win"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmCommissionOutNew.EmCommissionOut_DimAutController')"
+		closable="true" width="95%">
+		<groupbox title="基本信息">
+			<grid width="100%" id="g1">
+				<rows>
+					<row>
+						<cell>公司名称</cell>
+						<cell>
+							<textbox width="140px" mold="rounded"
+								value="@load(vm.wt_list.coba_company)" />
+						</cell>
+						<cell>公司编号</cell>
+						<cell>
+							<textbox width="140px" mold="rounded"
+								value="@load(vm.wt_list.cid)" />
+						</cell>
+						<cell>委托地</cell>
+						<cell>
+							<textbox width="140px" mold="rounded"
+								value="@load(vm.wt_list.city)" />
+						</cell>
+						<cell>所选外地标准</cell>
+						<cell>
+							<textbox width="140px" mold="rounded"
+								value="@load(vm.wt_list.soin_title)" />
+						</cell>
+					</row>
+
+					<row>
+						<cell>员工姓名</cell>
+						<cell>
+							<textbox width="140px" mold="rounded"
+								value="@load(vm.wt_list.emba_name)" />
+						</cell>
+						<cell>员工编号</cell>
+						<cell>
+							<textbox width="140px" mold="rounded"
+								value="@load(vm.wt_list.gid)" />
+						</cell>
+						<cell>身份证号码</cell>
+						<cell>
+							<textbox width="140px" mold="rounded"
+								value="@load(vm.wt_list.ecoc_idcard)" />
+						</cell>
+						<cell>性别</cell>
+						<cell>
+							<textbox width="140px" mold="rounded"
+								value="@load(vm.wt_list.ecoc_statestr)" />
+						</cell>
+					</row>
+
+					<row>
+						<cell>工作电话</cell>
+						<cell>
+							<textbox width="140px" mold="rounded"
+								value="@load(vm.wt_list.ecoc_phone)" />
+						</cell>
+						<cell>个人手机</cell>
+						<cell>
+							<textbox width="140px" mold="rounded"
+								value="@load(vm.wt_list.ecoc_mobile)" />
+						</cell>
+						<cell>邮箱地址</cell>
+						<cell>
+							<textbox width="140px" mold="rounded"
+								value="@load(vm.wt_list.ecoc_email)" />
+						</cell>
+					</row>
+					<row>
+						<cell>离职时间</cell>
+						<cell>
+							<textbox width="140px" mold="rounded"
+								value="@load(vm.wt_list.ecoc_stop_date)" />
+						</cell>
+						<cell>离职原因</cell>
+						<cell colspan="3">
+							<textbox width="440px" mold="rounded"
+								value="@load(vm.wt_list.ecoc_stop_cause)" />
+						</cell>
+
+					</row>
+				</rows>
+			</grid>
+		</groupbox>
+		<tabbox>
+			<tabs>
+				<tab label="委托单详情" />
+
+				<tab label="服务约定" />
+
+				<tab label="委托单操作记录" />
+
+				<tab label="未办原因" />
+
+				<tab label="员工执行详情" />
+			</tabs>
+			<tabpanels>
+				<tabpanel>
+					<grid width="100%" id="g2" height="250px"
+						model="@load(vm.wtout_add_feedetail)">
+						<columns>
+							<column label="项目" align="center" />
+							<column label="企业基数" align="center" />
+							<column label="个人基数" align="center" />
+							<column label="企业比例" align="center" />
+							<column label="个人比例" align="center" />
+							<column label="月缴费" align="center" />
+							<column label="服务结束年月" align="center" />
+						</columns>
+						<rows>
+							<template name="model">
+								<row>
+									<cell>
+										<label
+											value="@load(each.eofc_name)" />
+									</cell>
+									<cell>
+										<label
+											value="@load(each.eofc_co_base)" />
+									</cell>
+									<cell>
+										<label
+											value="@load(each.eofc_em_base)" />
+									</cell>
+									<cell>
+										<label
+											value="@load(each.eofc_cp)" />
+									</cell>
+									<cell>
+										<label
+											value="@load(each.eofc_op)" />
+									</cell>
+									<cell>
+										<label
+											value="@load(each.eofc_month_sum)" />
+									</cell>
+									<cell>
+										<label
+											value="@load(each.eofc_stop_date)" />
+									</cell>
+
+								</row>
+							</template>
+						</rows>
+					</grid>
+
+					<grid>
+						<rows>
+							<row>
+								<cell align="right">
+									<label value="企业缴费总计" />
+								</cell>
+								<cell align="left">
+									<textbox
+										value="@load(vm.wt_list.ecoc_sb_co_sum)" mold="rounded"
+										width="100px" />
+								</cell>
+
+								<cell align="right">
+									<label value="个人缴费总计" />
+								</cell>
+								<cell align="left">
+									<textbox width="100px"
+										value="@load(vm.wt_list.ecoc_sb_em_sum)" mold="rounded" />
+								</cell>
+
+								<cell align="right">
+									<label value="其中公积金缴费" />
+								</cell>
+								<cell align="left">
+									<textbox width="100px"
+										value="@load(vm.wt_list.ecoc_gjj_sum)" mold="rounded" />
+								</cell>
+
+								<cell align="right">
+									<label value="其中社保缴费" />
+								</cell>
+								<cell align="left">
+									<textbox width="100px"
+										value="@load(vm.wt_list.ecoc_sb_sum)" mold="rounded" />
+								</cell>
+							</row>
+						</rows>
+					</grid>
+
+					<groupbox title="福利产品">
+						<grid width="100%" id="g3" height="100px"
+							model="@load(vm.wtout_add_flfeedetail)">
+							<columns>
+								<column label="服务产品" align="left" />
+								<column label="月缴费" align="left" />
+								<column label="起始日" align="left" />
+							</columns>
+							<rows>
+								<template name="model">
+									<row>
+										<cell align="left">
+											<label
+												value="@load(each.eofc_name)" />
+										</cell>
+										<cell align="left">
+											<label
+												value="@load(each.eofc_month_sum)" />
+										</cell>
+										<cell align="left">
+											<label
+												value="@load(each.eofc_start_date)" />
+										</cell>
+
+									</row>
+								</template>
+							</rows>
+						</grid>
+					</groupbox>
+					<groupbox title="委托备注">
+						<hbox>
+							<grid width="100%" id="g11" height="70px"
+								model="@load(vm.wtout_remarklist)">
+								<columns>
+									<column label="添加人" align="left" />
+									<column label="添加时间" align="left" />
+									<column label="备注内容" align="left" />
+								</columns>
+								<rows>
+									<template name="model">
+										<row>
+											<cell align="left">
+												<label
+													value="@load(each.ecoc_addname)" />
+											</cell>
+											<cell align="left">
+												<label
+													value="@load(each.ecoc_addtime1)" />
+											</cell>
+											<cell align="left">
+												<label
+													value="@load(each.ecoc_addtype)" />
+											</cell>
+										</row>
+									</template>
+								</rows>
+							</grid>
+							<button label="添加"
+								onClick="@command('remark_add')" />
+						</hbox>
+					</groupbox>
+					<groupbox title="备注">
+						<grid width="100%" id="g4">
+							<rows>
+								<row>
+									<cell width="100px"
+										align="center">
+										客服备注
+									</cell>
+									<cell>
+										<textbox width="240px" rows="4"
+											mold="rounded" value="@load(vm.wt_list.ecoc_remark)" />
+									</cell>
+
+									<cell width="100px"
+										align="center">
+										退回原因
+									</cell>
+									<cell>
+										<textbox width="240px" rows="4"
+											id="outcontent" mold="rounded" value="" />
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+				</tabpanel>
+
+				<tabpanel>
+					<groupbox title="机构信息">
+						<grid width="100%" id="g7">
+							<rows>
+								<row>
+									<cell>受托城市</cell>
+									<cell>
+										<textbox width="140px"
+											mold="rounded" value="@load(vm.wt_list.coba_company)" />
+									</cell>
+									<cell>受托机构名称</cell>
+									<cell>
+										<textbox width="140px"
+											mold="rounded" value="@load(vm.wt_list.city)" />
+									</cell>
+
+								</row>
+								<row>
+									<cell>联系人</cell>
+									<cell>
+										<textbox width="140px"
+											mold="rounded" value="@load(vm.wt_list.gid)" />
+									</cell>
+									<cell>联系电话</cell>
+									<cell>
+										<textbox width="140px"
+											mold="rounded" value="@load(vm.wt_list.emba_name)" />
+									</cell>
+
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+					<groupbox title="服务约定">
+						<grid width="100%" id="g8">
+							<rows>
+								<row>
+									<cell>合同标准</cell>
+									<cell>
+										<textbox width="140px"
+											mold="rounded" value="@load(vm.wt_list.type)" />
+									</cell>
+									<cell>当地执行标准</cell>
+									<cell>
+										<textbox width="140px"
+											mold="rounded" value="@load(vm.wt_list.soin_title)" />
+									</cell>
+
+								</row>
+								<row>
+									<cell>社保帐户</cell>
+									<cell>
+										<textbox width="140px"
+											mold="rounded" value="@load(vm.wt_list.addtime)" />
+									</cell>
+									<cell>费用支付方式</cell>
+									<cell>
+										<textbox width="140px"
+											mold="rounded" value="@load(vm.wt_list.ecoc_addname)" />
+									</cell>
+
+								</row>
+
+								<row>
+									<cell>公积金帐户</cell>
+									<cell>
+										<textbox width="140px"
+											mold="rounded" value="@load(vm.wt_list.coba_setuptype)" />
+									</cell>
+									<cell>费用支付方式</cell>
+									<cell>
+										<textbox width="140px"
+											mold="rounded" value="@load(vm.wt_list.gjjownmonth)" />
+									</cell>
+
+								</row>
+
+								<row>
+									<cell>合同签订方</cell>
+									<cell>
+										<textbox width="140px"
+											mold="rounded" value="@load(vm.wt_list.ecoc_compact_jud)" />
+									</cell>
+									<cell></cell>
+									<cell>
+
+									</cell>
+
+								</row>
+
+								<row>
+									<cell>合同起始时间</cell>
+									<cell>
+										<textbox width="140px"
+											mold="rounded" value="@load(vm.wt_list.ecoc_compact_f)" />
+									</cell>
+									<cell>合同结束时间</cell>
+									<cell>
+										<textbox width="140px"
+											mold="rounded" value="@load(vm.wt_list.ecoc_compact_l)" />
+									</cell>
+
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+				</tabpanel>
+
+				<tabpanel>
+					<groupbox title="历史记录">
+						<grid width="100%" id="g9" height="200px"
+							model="@load(vm.wtout_change)">
+							<columns>
+								<column label="委托类型" align="left" />
+								<column label="受托城市" align="left" />
+								<column label="提交时间" align="left" />
+								<column label="提交人" align="left" />
+							</columns>
+							<rows>
+								<template name="model">
+									<row>
+										<cell align="left">
+											<label
+												value="@load(each.ecoc_addtype)" />
+										</cell>
+										<cell align="left">
+											<label
+												value="@load(each.city)" />
+										</cell>
+										<cell align="left">
+											<label
+												value="@load(each.ecoc_addtime1)" />
+										</cell>
+										<cell align="left">
+											<label
+												value="@load(each.ecoc_addname)" />
+										</cell>
+									</row>
+								</template>
+							</rows>
+						</grid>
+					</groupbox>
+
+					<groupbox title="操作详情">
+						<grid width="100%" id="g10" height="200px"
+							model="@load(vm.wtout_content)">
+							<columns>
+								<column label="操作详情" align="left" />
+								<column label="操作人" align="left" />
+								<column label="操作时间" align="left" />
+							</columns>
+							<rows>
+								<template name="model">
+									<row>
+										<cell align="left">
+											<label
+												value="@load(each.ecoc_addtype)" />
+										</cell>
+										<cell align="left">
+											<label
+												value="@load(each.ecoc_addname)" />
+										</cell>
+										<cell align="left">
+											<label
+												value="@load(each.ecoc_addtime1)" />
+										</cell>
+
+									</row>
+								</template>
+							</rows>
+						</grid>
+					</groupbox>
+				</tabpanel>
+
+				<tabpanel>
+
+				</tabpanel>
+
+				<tabpanel>
+					<grid width="100%" id="g5" height="250px"
+						model="@load(vm.wtout_add_qd_feedetail)">
+						<columns>
+							<column label="项目" align="center" />
+							<column label="企业基数" align="center" />
+							<column label="个人基数" align="center" />
+							<column label="企业比例" align="center" />
+							<column label="个人比例" align="center" />
+							<column label="月缴费" align="center" />
+							<column label="起始日" align="center" />
+						</columns>
+						<rows>
+							<template name="model">
+								<row>
+									<cell>
+										<label
+											value="@load(each.eofc_name)" />
+									</cell>
+									<cell>
+										<label
+											value="@load(each.eofc_co_base)" />
+									</cell>
+									<cell>
+										<label
+											value="@load(each.eofc_em_base)" />
+									</cell>
+									<cell>
+										<label
+											value="@load(each.eofc_cp)" />
+									</cell>
+									<cell>
+										<label
+											value="@load(each.eofc_op)" />
+									</cell>
+									<cell>
+										<label
+											value="@load(each.eofc_month_sum)" />
+									</cell>
+									<cell>
+										<label
+											value="@load(each.eofc_start_date)" />
+									</cell>
+
+								</row>
+							</template>
+						</rows>
+					</grid>
+
+					<grid>
+						<rows>
+							<row>
+								<cell align="right">
+									<label value="企业缴费总计" />
+								</cell>
+								<cell align="left">
+									<textbox
+										value="@load(vm.wt_qd_list.ecoc_sb_co_sum)" mold="rounded"
+										width="100px" />
+								</cell>
+
+								<cell align="right">
+									<label value="个人缴费总计" />
+								</cell>
+								<cell align="left">
+									<textbox width="100px"
+										value="@load(vm.wt_qd_list.ecoc_sb_em_sum)" mold="rounded" />
+								</cell>
+
+								<cell align="right">
+									<label value="其中公积金缴费" />
+								</cell>
+								<cell align="left">
+									<textbox width="100px"
+										value="@load(vm.wt_qd_list.ecoc_gjj_sum)" mold="rounded" />
+								</cell>
+
+								<cell align="right">
+									<label value="其中社保缴费" />
+								</cell>
+								<cell align="left">
+									<textbox width="100px"
+										value="@load(vm.wt_qd_list.ecoc_sb_sum)" mold="rounded" />
+								</cell>
+							</row>
+						</rows>
+					</grid>
+
+					<groupbox title="福利产品">
+						<grid width="100%" id="g6" height="100px"
+							model="@load(vm.wtout_add_qd_flfeedetail)">
+							<columns>
+								<column label="服务产品" align="left" />
+								<column label="月缴费" align="left" />
+								<column label="起始日" align="left" />
+							</columns>
+							<rows>
+								<template name="model">
+									<row>
+										<cell align="left">
+											<label
+												value="@load(each.eofc_name)" />
+										</cell>
+										<cell align="left">
+											<label
+												value="@load(each.eofc_month_sum)" />
+										</cell>
+										<cell align="left">
+											<label
+												value="@load(each.eofc_start_date)" />
+										</cell>
+
+									</row>
+								</template>
+							</rows>
+						</grid>
+					</groupbox>
+				</tabpanel>
+
+			</tabpanels>
+
+		</tabbox>
+
+
+		<grid>
+			<rows>
+				<row>
+					<cell align="center">
+						<button label="委托单确认" if="${vm.wt_list.coba_company!=1}" 
+							onClick="@command('yc_aut',win=win)" />
+						<button label="生成委托单"
+							onClick="@command('ExportExcel')" />
+						<button label="退回"
+							onClick="@command('Back',win=win,outcontent=outcontent)" />
+						<label value="该员工有未完成的离职单" style="color:red"
+							if="${vm.wt_list.coba_company==1}" />
+					</cell>
+				</row>
+			</rows>
+		</grid>
+
+	</window>
+</zk>

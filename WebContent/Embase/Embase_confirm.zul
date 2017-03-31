@@ -1,0 +1,324 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="客服确认数据" border="normal" width="100%" height="100%"
+		apply="org.zkoss.bind.BindComposer" closable="true"
+		id="@load(vm.winId)"
+		viewModel="@id('vm') @init('Controller.Embase.Embase_confirmController')"
+		onCreate="@command('WinD',a=self)">
+		<borderlayout>
+			<center autoscroll="true" border="none">
+				<vlayout>
+					<groupbox mold="3d" title="基本信息">
+						<grid>
+							<columns>
+								<column width="9%" />
+								<column />
+								<column width="9%" />
+								<column />
+								<column width="10%" />
+								<column />
+							</columns>
+							<rows>
+								<row>
+									<cell>
+										<label value="姓名" />
+									</cell>
+									<cell>
+										<textbox width="120px"
+											mold="rounded" value="@bind(vm.ebm.emba_name)" />
+									</cell>
+									<cell>
+										<label value="正确姓名" />
+									</cell>
+									<cell colspan="3">
+										<textbox readonly="true"
+											mold="rounded" value="@load(vm.emzt.emzt_t_name)" />
+									</cell>
+
+
+								</row>
+								<row>
+									<cell>
+										<label value="身份证号" />
+									</cell>
+									<cell>
+
+										<textbox mold="rounded"
+											width="70%" value="@bind(vm.ebm.emba_idcard)"
+											onChange="@command('idcardhandle')" />
+										<combobox readonly="true"
+											width="30%" mold="rounded"
+											value="@bind(vm.ebm.emba_idcardclass)">
+											<comboitem label="身份证" />
+											<comboitem label="军人证" />
+											<comboitem label="台胞证" />
+											<comboitem label="护照" />
+											<comboitem label="港澳证" />
+										</combobox>
+									</cell>
+									<cell>
+										<label value="正确身份证号" />
+									</cell>
+									<cell colspan="3">
+										<textbox readonly="true"
+											width="30%" mold="rounded"
+											value="@load(vm.emzt.emzt_t_idcard)" />
+									</cell>
+
+								</row>
+								<row>
+									<cell>
+										<label value="性别" />
+									</cell>
+									<cell>
+										<combobox readonly="true"
+											mold="rounded" width="120px"
+											value="@bind(vm.ebm.emba_sex)">
+											<comboitem />
+											<comboitem label="男" />
+											<comboitem label="女" />
+										</combobox>
+									</cell>
+									<cell>
+
+										<label value="民族" />
+									</cell>
+									<cell>
+										<combobox readonly="true"
+											mold="rounded" width="120px" model="@load(vm.folkList)"
+											value="@bind(vm.ebm.emba_folk)">
+											<template name="model">
+												<comboitem
+													label="@load(each)" />
+											</template>
+										</combobox>
+									</cell>
+									<cell>
+										<label value="出生日期" />
+									</cell>
+									<cell>
+										<datebox id="birth"
+											mold="rounded" format="yyyy-MM-dd" value="@bind(vm.birth)" />
+									</cell>
+
+								</row>
+								<row>
+									<cell>
+
+										<label value="家庭电话" />
+									</cell>
+									<cell>
+										<textbox width="120px"
+											mold="rounded" value="@bind(vm.ebm.emba_phone)"
+											onChange="@command('checkPhone')" />
+									</cell>
+									<cell>
+
+										<label value="手机号码" />
+									</cell>
+									<cell>
+										<textbox width="120px"
+											mold="rounded" value="@bind(vm.ebm.emba_mobile)"
+											onChange="@command('checkMobile')" />
+									</cell>
+									<cell>
+
+										<label value="E-mail" />
+									</cell>
+									<cell>
+										<textbox id="emba_emailtxt"
+											mold="rounded" width="160px" value="@bind(vm.ebm.emba_email)"
+											onChange="@command('checkEmailSimple',email=self.value)"
+											context='pop_checkemail'
+											onClick='pop_email.open(self,"after_end")'>
+										</textbox>
+										<popup id="pop_email">
+											点击右键可验证邮箱真实性
+										</popup>
+										<menupopup
+											id="pop_checkemail">
+											<menuitem label="验证真实性"
+												onClick="@command('checkEmail',email=emba_emailtxt.value)">
+											</menuitem>
+										</menupopup>
+									</cell>
+								</row>
+
+							</rows>
+						</grid>
+					</groupbox>
+					<groupbox title="社保信息" mold="3d"
+						visible="@load(vm.sb)">
+
+						<grid>
+							<columns>
+								<column width="80px" />
+								<column />
+								<column width="80px" />
+								<column />
+								<column width="80px" />
+								<column />
+							</columns>
+							<rows>
+								<row>
+									<cell>
+										<label value="姓名" />
+									</cell>
+									<cell>
+										<textbox width="120px"
+											mold="rounded" value="@bind(vm.ebm.emba_sbuname)" />
+									</cell>
+									<cell>
+
+										<label value="身份证号" />
+									</cell>
+									<cell>
+
+										<textbox mold="rounded"
+											width="60%" value="@bind(vm.ebm.emba_sbidcard)"
+											onChange="@command('idcardhandle')" />
+									</cell>
+									<cell>
+										<label value="外籍人参保" />
+									</cell>
+									<cell>
+										<combobox readonly="true"
+											mold="rounded" value="@bind(vm.ebm.emba_emsb_foreigner)"
+											onChange="@command('isForeigner',forei=self.selectedItem.label)">
+											<comboitem label="是" />
+											<comboitem label="否" />
+										</combobox>
+									</cell>
+								</row>
+								<row height="35px">
+									<cell>
+										<label value="基数" />
+									</cell>
+									<cell>
+										<doublebox constraint="no empty"
+											mold="rounded" value="@bind(vm.ebm.emba_sb_radix)" />
+									</cell>
+									<cell>电脑号</cell>
+									<cell colspan="3">
+										<textbox mold="rounded"
+											value="@bind(vm.ebm.emba_computerid)" />
+										<button label="查询电脑号"
+											onClick="@command('computerid_search')" />
+									</cell>
+
+								</row>
+								<row>
+									<cell>
+										<label value="医疗类型" />
+									</cell>
+									<cell>
+										<combobox mold="rounded"
+											value="@bind(vm.ebm.emba_formula)" readonly="true"
+											model="@load(vm.formulaList)"
+											onChange="@command('selFormula',mod=self)"
+											selectedItem="@bind(vm.formula)">
+											<template name="model">
+												<comboitem
+													label="@load(each.emsf_title)" />
+											</template>
+										</combobox>
+									</cell>
+									<cell>
+										<label value="户籍" />
+									</cell>
+									<cell>
+										<textbox mold="rounded"
+											width="80px" value="@load(vm.ebm.emba_sb_hj)" />
+									</cell>
+									<cell>
+										<label value="正确户籍" />
+									</cell>
+									<cell>
+										<textbox readonly="true"
+											mold="rounded" value="@load(vm.emzt.emzt_hjadd)" />
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+					<groupbox title="住房公积金信息" mold="3d"
+						visible="@load(vm.gjj)">
+						<grid>
+							<columns>
+								<column width="80px" />
+								<column />
+								<column width="80px" />
+								<column />
+								<column width="80px" />
+								<column />
+							</columns>
+							<rows>
+								<row>
+									<cell>
+										<label value="姓名" />
+									</cell>
+									<cell>
+										<textbox width="120px"
+											mold="rounded" value="@bind(vm.ebm.emba_gjjuname)" />
+									</cell>
+									<cell>
+
+										<label value="身份证号" />
+									</cell>
+									<cell colspan="3">
+										<textbox mold="rounded"
+											width="22%" value="@bind(vm.ebm.emba_gjjidcard)"
+											onChange="@command('idcardhandle')" />
+									</cell>
+								</row>
+								<row>
+									<cell>
+
+										<label value="基数" />
+									</cell>
+									<cell>
+										<doublebox constraint="no empty"
+											mold="rounded" value="@bind(vm.ebm.emba_house_radix)" />
+									</cell>
+									<cell>
+										<label value="比例" />
+									</cell>
+									<cell>
+										<combobox id="cpp" width="30%"
+											mold="rounded" value="@bind(vm.ebm.emba_house_cpp)"
+											model="@load(vm.cpList)" readonly="true">
+											<template name="model">
+												<comboitem
+													label="@load(each.cp)" />
+											</template>
+										</combobox>
+									</cell>
+									<cell>公积金帐号</cell>
+									<cell>
+										<textbox mold="rounded"
+											value="@bind(vm.ebm.emba_houseid)" />
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+					<groupbox title="退回原因" mold="3d"
+						if="${vm.ebm.emba_state == 2 or vm.ebm.emba_state==3}">
+						<textbox rows="5" width="100%" mold="rounded"
+							value="@bind(vm.ebm.emba_remark)">
+
+						</textbox>
+					</groupbox>
+				</vlayout>
+			</center>
+			<south>
+				<div align="center">
+					<button label="上一步" onClick="@command('back')" />
+					<button label="下一步" onClick="@command('submit')" />
+					<button label="撤销入职" if="${vm.ebm.emba_tapr_id>0 }" onClick="@command('cancel')" />
+				</div>
+			</south>
+		</borderlayout>
+
+	</window>
+</zk>

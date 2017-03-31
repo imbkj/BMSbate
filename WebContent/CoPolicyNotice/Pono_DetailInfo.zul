@@ -1,0 +1,106 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="政策通知详细信息" border="normal" width="70%" height="70%"
+		apply="org.zkoss.bind.BindComposer" closable="true"
+		viewModel="@id('vm') @init('Controller.CoPolicyNotice.Pono_DetailInfoController')">
+		<grid vflex="1">
+			<rows>
+				<row>
+					<cell width="80px">所属月份</cell>
+					<cell>
+						<textbox readonly="true"
+							value="${arg.model.ownmonth}">
+						</textbox>
+					</cell>
+					<cell width="80px">发文城市</cell>
+					<cell>
+						<textbox readonly="true"
+							value="${arg.model.pono_city}">
+						</textbox>
+					</cell>
+				</row>
+				<row>
+					<cell>通知类型</cell>
+					<cell colspan="3">
+						<textbox readonly="true"
+							value="${arg.model.pono_type}" />
+					</cell>
+				</row>
+				<row>
+					<cell>发文机构</cell>
+					<cell colspan="3">
+						<textbox readonly="true"
+							value="${arg.model.pono_agencies}" width="80%">
+						</textbox>
+					</cell>
+				</row>
+				<row>
+					<cell>标题</cell>
+					<cell colspan="3">
+						<textbox width="80%" readonly="true"
+							value="${arg.model.pono_title}">
+						</textbox>
+					</cell>
+				</row>
+				<row>
+					<cell>通知内容</cell>
+					<cell colspan="3">
+						<html content="${arg.model.pono_content}"
+							style="font-size:12px;">
+						</html>
+					</cell>
+				</row>
+				<row>
+					<cell>反馈截止日</cell>
+					<cell>
+						<textbox readonly="true"
+							value="${arg.model.pono_feedbackbydate}">
+						</textbox>
+					</cell>
+					<cell>是否待跟进</cell>
+					<cell>
+						<textbox readonly="true"
+							value="${arg.model.pono_iffollow}">
+						</textbox>
+					</cell>
+				</row>
+				<row>
+					<cell>文件</cell>
+					<cell colspan="3">
+						<grid model="@load(vm.filelist)"
+							emptyMessage="没有数据" vflex="1" id="gd">
+							<columns>
+								<column label="文件名称" align="center" />
+								<column label="文件类型" align="center" />
+								<column label="备注" align="center" />
+							</columns>
+							<rows>
+								<template name="model">
+									<row>
+										<cell>
+											<a
+												onClick="@command('downloadfile',url=each.file_url)">
+												<label
+													value="@load(each.file_title)">
+												</label>
+											</a>
+										</cell>
+										<cell>
+											<label
+												value="@load(each.file_type)" />
+										</cell>
+										<cell>
+											<label width="90%"
+												value="@load(each.file_remark)">
+											</label>
+										</cell>
+									</row>
+								</template>
+							</rows>
+						</grid>
+					</cell>
+				</row>
+			</rows>
+		</grid>
+	</window>
+</zk>

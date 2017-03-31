@@ -1,0 +1,504 @@
+<!--
+	创建人：林少斌
+	创建时间：2013-12-25
+	用途：变更数据申报
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winDeclareSearch" title="社会保险 -- 变更数据申报页面"
+		border="normal" width="100%" height="100%" closable="false"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmSheBao.EmSheBao_DeclareSearchController')">
+		<zscript>
+	//日期
+	day = new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10",
+			"11", "12", "13", "14", "16", "17", "18", "19", "20", "21", "22",
+			"23", "24", "25", "26", "27", "28", "29", "30", "31" };
+	month = new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10",
+			"11", "12" };
+</zscript>
+		<tablelayout columns="2" width="100%" height="100%">
+			<tablechildren height="70%" width="80%" rowspan="2">
+				<groupbox height="100%">
+					<caption label="条件检索" />
+					<grid height="100%">
+						<rows>
+							<row>
+								<cell width="18%">
+									<label value="所属月份：" />
+								</cell>
+								<cell>
+									<combobox id="s_ownmonth"
+										value="@load(vm.nowmonth)" mold="rounded"
+										model="@load(vm.s_ownmonth)" readonly="true"
+										onChange="@command('ndsSearch',s_ownmonth=self)">
+										<template name="model">
+											<comboitem
+												label="@load(each)" />
+										</template>
+									</combobox>
+								</cell>
+								<cell width="18%">
+									<label value="变动情况：" />
+								</cell>
+								<cell>
+									<combobox id="s_change" model="@load(vm.sChangeList)" 
+										mold="rounded" value="@load(vm.s_changeString)" readonly="true">
+										<template name="model">
+											<comboitem
+												label="@load(each)" />
+										</template>
+									</combobox>
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label value="申报状态：" />
+								</cell>
+								<cell>
+									<combobox id="s_state"
+										mold="rounded" value="全部" readonly="true">
+										<comboitem label="全部" value="9" />
+										<comboitem label="已申报"
+											value="1" />
+										<comboitem label="申报中"
+											value="2" />
+										<comboitem label="未申报"
+											value="0" />
+										<comboitem label="退回" value="3" />
+									</combobox>
+								</cell>
+								<cell>
+									<label value="开户状态：" />
+								</cell>
+								<cell>
+									<combobox mold="rounded" value="全部"
+										id="single" readonly="true">
+										<comboitem label="全部" value="9" />
+										<comboitem label="独立开户"
+											value="1" />
+										<comboitem label="中智开户"
+											value="0" />
+										<comboitem label="中智开户(委托)"
+											value="2" />
+										<comboitem label="中智开户(外包)"
+											value="3" />
+										<comboitem label="中智开户(派遣)"
+											value="4" />
+									</combobox>
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label value="特殊筛选：" />
+								</cell>
+								<cell colspan="3">
+									<checkbox label="特殊数据" id="ifsame" />
+									<checkbox label="多次变更"
+										id="ifmodify" />
+									<checkbox label="空电脑号"
+										id="computerid" />
+									<checkbox label="今日确认数据"
+										id="todayAdd" />
+									<checkbox id="flag"
+										image="../images/hongqi.gif" />
+									<checkbox id="ifmsg"
+										image="../images/read.gif" />
+									<checkbox id="ifwrong"
+										image="../images/20070708132244958.gif" />
+									<checkbox id="iffifteen"
+										image="../images/20070730192756162.gif" />
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label value="当月尚未申报完独立户：" />
+								</cell>
+								<cell>
+									<combobox mold="rounded"
+										model="@load(vm.ndscompanyList)" id="scompany" 
+										readonly="true" onChange="@command('getSChange',scompany=self,s_ownmonth=s_ownmonth,s_state=s_state)">
+										<template name="model">
+											<comboitem
+												label="(${each.coba_shortspell})${each.company}(${each.coco_shebaoID})"
+												value="@load(each.coco_shebaoID)" />
+										</template>
+									</combobox>
+								</cell>
+								<cell>
+									<label value="所有独立开户公司：" />
+								</cell>
+								<cell>
+									<combobox mold="rounded"
+										model="@load(vm.scompanyList)" id="allcompany"
+										readonly="true">
+										<template name="model">
+											<comboitem
+												label="(${each.coba_shortspell})${each.company}(${each.coco_shebaoID})"
+												value="@load(each.coco_shebaoID)" />
+										</template>
+									</combobox>
+								</cell>
+							</row>
+							<!-- <row>
+								<cell>
+									<label value="客服代表：" />
+								</cell>
+								<cell>
+									<combobox mold="rounded"
+										model="@load(vm.clientList)" id="client" readonly="true">
+										<template name="model">
+											<comboitem
+												label="@load(each.log_name)" />
+										</template>
+									</combobox>
+								</cell>
+								<cell>
+									<label value="添加人：" />
+								</cell>
+								<cell>
+									<combobox mold="rounded"
+										model="@load(vm.clientList)" id="addname" readonly="true">
+										<template name="model">
+											<comboitem
+												label="@load(each.log_name)" />
+										</template>
+									</combobox>
+								</cell>
+							</row> -->
+							<row>
+								<cell>
+									<label value="快捷查询：" />
+								</cell>
+								<cell>
+									<textbox width="60%" mold="rounded"
+										id="keyword" />
+									<combobox width="30%" value="姓名"
+										id="cont" readonly="true" mold="rounded">
+										<comboitem label="姓名" />
+										<comboitem label="员工编号" />
+										<comboitem label="身份证" />
+										<comboitem label="电脑号" />
+										<comboitem label="公司名称" />
+										<comboitem label="公司编号" />
+									</combobox>
+								</cell>
+								<cell>
+									<label value="申报人：" />
+								</cell>
+								<cell>
+									<combobox mold="rounded"
+										model="@load(vm.dNameList)" id="dname" readonly="true">
+										<template name="model">
+											<comboitem
+												label="@load(each.log_name)" />
+										</template>
+									</combobox>
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label value="申报时间：" />
+								</cell>
+								<cell>
+									<combobox mold="rounded" id="dmonth"
+										width="30%">
+										<comboitem label="${each}"
+											forEach="${month}" />
+									</combobox>
+									<combobox mold="rounded" id="dday"
+										width="30%">
+										<comboitem label="${each}"
+											forEach="${day}" />
+									</combobox>
+									<combobox mold="rounded"
+										id="dbefore" width="30%">
+										<comboitem label="之前" />
+										<comboitem label="之后" />
+										<comboitem label="当日" />
+									</combobox>
+								</cell>
+								<cell>
+									<label value="添加时间：" />
+								</cell>
+								<cell>
+									<combobox mold="rounded" id="amonth"
+										width="30%">
+										<comboitem label="${each}"
+											forEach="${month}" />
+									</combobox>
+									<combobox mold="rounded" id="aday"
+										width="30%">
+										<comboitem label="${each}"
+											forEach="${day}" />
+									</combobox>
+									<combobox mold="rounded"
+										id="abefore" width="30%">
+										<comboitem label="之前" />
+										<comboitem label="之后" />
+										<comboitem label="当日" />
+									</combobox>
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label value="申报文件名：" />
+								</cell>
+								<cell>
+									<textbox id="excelfile"
+										mold="rounded" width="70%" />
+								</cell>
+								<cell>
+									<label value="社保局单位编号：" />
+								</cell>
+								<cell>
+									<textbox id="shebaocoding" value="@load(vm.shebaoId)"
+										mold="rounded" width="70%" />
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label value="上传社保局文件：" />
+								</cell>
+								<cell>
+									<label value="点击上传"
+										onClick="@command('upload')" style="cursor:pointer;" />
+								</cell>
+								<cell>
+									<label value="结果集行数：" />
+								</cell>
+								<cell>
+									<combobox mold="rounded" id="topnum"
+										value="首500行">
+										<comboitem label="全部" />
+										<comboitem label="首100行" />
+										<comboitem label="首200行" />
+										<comboitem label="首300行" />
+										<comboitem label="首400行" />
+										<comboitem label="首500行" />
+									</combobox>
+								</cell>
+							</row>
+						</rows>
+						<foot>
+							<footer align="center">
+								<button label="查询" id="btSubmit"
+									onClick="@command('search',winDeclareSearch=winDeclareSearch,s_ownmonth=s_ownmonth,s_change=s_change,s_state=s_state,keyword=keyword,cont=cont,ifsame=ifsame,ifmodify=ifmodify,computerid=computerid,todayAdd=todayAdd,flag=flag,ifmsg=ifmsg,ifwrong=ifwrong,iffifteen=iffifteen,scompany=scompany,allcompany=allcompany,client=client,addname=addname,single=single,dname=dname,dmonth=dmonth,dday=dday,dbefore=dbefore,amonth=amonth,aday=aday,abefore=abefore,excelfile=excelfile,shebaocoding=shebaocoding,topnum=topnum)" />
+							</footer>
+						</foot>
+					</grid>
+				</groupbox>
+			</tablechildren>
+			<tablechildren>
+				<groupbox height="100%">
+					<caption label="快速检索" />
+					<grid height="100%">
+						<rows>
+							<row>
+								<cell>
+									<vbox>
+										<label value="本月特殊数据" />
+										<label value="本月更改数据" />
+										<label value="中智大户未申报" />
+										<label value="中智大户申报中" />
+										<label value="中智大户退回" />
+										<label value="当月特殊数据" />
+										<label value="当月修改数据 " />
+										<label value="当天添加数据" />
+										<label value="当月独立开户未申报" />
+									</vbox>
+								</cell>
+							</row>
+						</rows>
+					</grid>
+				</groupbox>
+			</tablechildren>
+			<tablechildren rowspan="2" height="65%">
+				<groupbox height="100%">
+					<caption label="详细统计" />
+					<grid height="100%">
+						<rows>
+							<row>
+								<cell width="60%">
+									<label value="当月变更数 ：" />
+								</cell>
+								<cell>
+									<label value="@load(vm.count[0])" />
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label value="已处理数 ：" />
+								</cell>
+								<cell>
+									<label value="@load(vm.count[1])" />
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label value="中智大户总数 ：" />
+								</cell>
+								<cell>
+									<label value="@load(vm.count[2])" />
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label value="委托大户总数 ：" />
+								</cell>
+								<cell>
+									<label value="@load(vm.count[3])" />
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label value="独立开户总数：" />
+								</cell>
+								<cell>
+									<label value="@load(vm.count[4])" />
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label value="外包开户总数：" />
+								</cell>
+								<cell>
+									<label value="@load(vm.count[14])" />
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label value="派遣开户总数：" />
+								</cell>
+								<cell>
+									<label value="@load(vm.count[15])" />
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label value="特殊数据总数：" />
+								</cell>
+								<cell>
+									<label value="@load(vm.count[5])" />
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label value="多次申报数据：" />
+								</cell>
+								<cell>
+									<label value="@load(vm.count[6])" />
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label value="核对有误数据：" />
+								</cell>
+								<cell>
+									<label value="@load(vm.count[7])" />
+								</cell>
+							</row>
+						</rows>
+					</grid>
+				</groupbox>
+			</tablechildren>
+			<tablechildren height="30%">
+				<groupbox height="100%">
+					<caption label="变更统计" />
+					<grid height="100%">
+						<columns sizable="true">
+							<column align="center" label="社保局单位编号" />
+							<column align="center" label="开户状态" />
+							<column align="center" label="总变更数" />
+							<column align="center" label="已申报" />
+							<column align="center" label="未申报" />
+							<column align="center" label="申报中" />
+						</columns>
+						<rows>
+							<row>
+								<cell>
+									<label value="391055" />
+								</cell>
+								<cell>
+									<label value="中智帐户" />
+								</cell>
+								<cell>
+									<label value="@load(vm.count[2])" />
+								</cell>
+								<cell>
+									<label value="@load(vm.count[8])" />
+								</cell>
+								<cell>
+									<label value="@load(vm.count[9])" />
+								</cell>
+								<cell>
+									<label value="@load(vm.count[10])" />
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label value="167120" />
+								</cell>
+								<cell>
+									<label value="中智帐户(委托)" />
+								</cell>
+								<cell>
+									<label value="@load(vm.count[3])" />
+								</cell>
+								<cell>
+									<label value="@load(vm.count[11])" />
+								</cell>
+								<cell>
+									<label value="@load(vm.count[12])" />
+								</cell>
+								<cell>
+									<label value="@load(vm.count[13])" />
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label value="464780" />
+								</cell>
+								<cell>
+									<label value="中智帐户(外包)" />
+								</cell>
+								<cell>
+									<label value="@load(vm.count[16])" />
+								</cell>
+								<cell>
+									<label value="@load(vm.count[17])" />
+								</cell>
+								<cell>
+									<label value="@load(vm.count[18])" />
+								</cell>
+								<cell>
+									<label value="@load(vm.count[19])" />
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label value="464781" />
+								</cell>
+								<cell>
+									<label value="中智帐户(派遣)" />
+								</cell>
+								<cell>
+									<label value="@load(vm.count[20])" />
+								</cell>
+								<cell>
+									<label value="@load(vm.count[21])" />
+								</cell>
+								<cell>
+									<label value="@load(vm.count[22])" />
+								</cell>
+								<cell>
+									<label value="@load(vm.count[23])" />
+								</cell>
+							</row>
+						</rows>
+					</grid>
+				</groupbox>
+			</tablechildren>
+		</tablelayout>
+	</window>
+</zk>

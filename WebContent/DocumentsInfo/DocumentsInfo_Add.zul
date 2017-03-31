@@ -1,0 +1,48 @@
+<!--
+	创建人：张志强
+	创建时间：2013-10-31
+	用途：新增材料页面
+-->
+<?page title="新增材料" contentType="text/html;charset=UTF-8"?>
+<zk xmlns:c="client">
+	<borderlayout width="60%">
+		<north border="0" height="10%"></north>
+		<west border="0" width="20px"></west>
+		<center border="0">
+			<window title="新增材料" id="wins" border="normal"
+				closable="true"
+				apply="org.zkoss.bind.BindComposer,Controller.DocumentsInfo.DocumentsInfo_AddController">
+				<grid width="100%">
+					<rows>
+						<row>
+							<cell>
+								材料类型:
+								<combobox width="168px" readonly="true"
+									id="doin_type" mold="rounded">
+									<comboitem label="员工材料" value="1" />
+									<comboitem label="公司材料" value="2" />
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>
+								材料名称:
+								<textbox id="doin_content"
+									width="160px" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								备注:    
+								<textbox id="doin_remark" width="150px" rows="5" hflex="1"/>
+							</cell>
+						</row>
+					</rows>
+				</grid>
+				<toolbar mold="panel" align="center">
+					<button id="submitButton" label="提 交" />
+				</toolbar>
+			</window>
+		</center>
+	</borderlayout>
+</zk>

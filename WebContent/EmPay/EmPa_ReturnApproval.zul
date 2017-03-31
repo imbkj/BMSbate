@@ -1,0 +1,199 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="个人支付批量修改" border="normal" width="100%" height="90%"
+		apply="org.zkoss.bind.BindComposer" closable="true" id="paywin"
+		viewModel="@id('vm') @init('Controller.EmPay.EmPa_ReturnApprovalController')"
+		onCreate="@command('winD',a=self)">
+		<borderlayout width="100%" height="100%">
+			<center>
+				<grid width="100%" height="100%" model="@load(vm.plist)"
+					id="gd" sizedByContent="true" span="true" emptyMessage="没有数据"
+					mold="paging">
+					<columns>
+						<column label="序号" width="40px" align="center" />
+						<column label="公司名称" align="center" />
+						<column label="姓名" align="center" width="60px" />
+						<column label="帐款所属期" align="center"
+							width="180px">
+						</column>
+						<column label="收款银行账号" align="center"></column>
+						<column label="收款开户行" align="center"></column>
+						<column label="帐户名" align="center"
+							width="70px">
+						</column>
+						<column label="付款金额" align="center"
+							width="70px">
+						</column>
+						<column label="款项类别" align="center"
+							width="100px">
+						</column>
+						<column label="支付方式" align="center"
+							width="100px">
+						</column>
+						<column label="支付形式" align="center"
+							width="100px">
+						</column>
+						<column label="收款方式" align="center"
+							width="100px">
+						</column>
+						<column label="备注（用途）" align="center"></column>
+						<column width="40px" align="center">
+							<checkbox
+								onClick="@command('checkAll',a=self)" />
+						</column>
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<cell>
+									<label
+										value="${forEachStatus.index+1 }">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.coba_shortname)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.empa_name)">
+									</label>
+								</cell>
+								<cell>
+									<hlayout>
+										<datebox width="70px"
+											sclass="datebox-month-only" value="@bind(each.ownmonth2)"
+											format="yyyyMM" />
+										-
+										<datebox width="70px"
+											sclass="datebox-month-only" value="@bind(each.ownmonthend2)"
+											format="yyyyMM" />
+										<image src="../images/130.gif"
+											style="cursor:pointer;"
+											onClick="@command('copy',a=self,b='date',c=each)" />
+									</hlayout>
+								</cell>
+								<cell>
+									<textbox width="95%"
+										value="@bind(each.empa_account)">
+									</textbox>
+								</cell>
+								<cell>
+									<textbox width="95%"
+										value="@bind(each.empa_bank)">
+									</textbox>
+								</cell>
+								<cell>
+									<textbox width="95%"
+										value="@bind(each.empa_ba_name)">
+									</textbox>
+								</cell>
+								<cell>
+									<decimalbox width="70%"
+										value="@bind(each.empa_fee)">
+									</decimalbox>
+									<image src="../images/130.gif"
+										style="cursor:pointer;"
+										onClick="@command('copy',a=self,b='fee',c=each)" />
+								</cell>
+								<cell>
+									<combobox readonly="true"
+										width="80%" value="@bind(each.empa_class)">
+										<comboitem label="体检"></comboitem>
+										<comboitem label="书报"></comboitem>
+										<comboitem label="活动"></comboitem>
+										<comboitem label="商保"></comboitem>
+										<comboitem label="社保"></comboitem>
+										<comboitem label="公积金"></comboitem>
+										<comboitem label="档案费"></comboitem>
+									</combobox>
+									<image src="../images/130.gif"
+										style="cursor:pointer;"
+										onClick="@command('copy',a=self,b='class',c=each)" />
+								</cell>
+								<cell>
+									<combobox readonly="true"
+										width="85%" value="@bind(each.empa_payclass)">
+										<comboitem label="现金支付"></comboitem>
+										<comboitem label="银行支付"></comboitem>
+									</combobox>
+									<image src="../images/130.gif"
+										style="cursor:pointer;"
+										onClick="@command('copy',a=self,b='payclass',c=each)" />
+								</cell>
+								<cell>
+									<combobox readonly="true"
+										width="80%" value="@bind(each.empa_paytype)">
+										<comboitem label="报销" />
+										<comboitem label="个税发放" />
+									</combobox>
+									<image src="../images/130.gif"
+										style="cursor:pointer;"
+										onClick="@command('copy',a=self,b='paytype',c=each)" />
+								</cell>
+								<cell>
+									<combobox readonly="true"
+										width="80%" value="@bind(each.empa_paymenttype)">
+										<comboitem label="中智承担"></comboitem>
+										<comboitem label="随付款"></comboitem>
+									</combobox>
+									<image src="../images/130.gif"
+										style="cursor:pointer;"
+										onClick="@command('copy',a=self,b='paymenttype',c=each)" />
+								</cell>
+								<cell>
+									<textbox width="95%" rows="2"
+										value="@bind(each.empa_remark)">
+									</textbox>
+								</cell>
+								<cell>
+									<checkbox
+										checked="@bind(each.checked)" />
+								</cell>
+							</row>
+						</template>
+					</rows>
+
+				</grid>
+			</center>
+			<south height="200px">
+				<grid width="100%" height="100%" model="@load(vm.blist)">
+					<columns>
+						<column label="退回人" align="center" width="80px" />
+						<column label="退回时间" align="center"
+							width="180px" />
+						<column label="退回原因" align="center" />
+					</columns>
+					<template name="model">
+						<row>
+							<cell>
+								<label
+									value="@load(each.back_addname)">
+								</label>
+							</cell>
+							<cell>
+								<label
+									value="@load(each.back_addtime)">
+								</label>
+							</cell>
+							<cell>
+								<label value="@load(each.back_case)">
+								</label>
+							</cell>
+						</row>
+					</template>
+
+					<foot>
+						<footer align="center" span="14">
+							<button onClick="@command('submit')"
+								label="提交" />
+							<button onClick="@command('del')"
+								label="删除" />
+						</footer>
+					</foot>
+				</grid>
+			</south>
+		</borderlayout>
+	</window>
+</zk>

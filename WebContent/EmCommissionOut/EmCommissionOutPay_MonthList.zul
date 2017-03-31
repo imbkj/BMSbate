@@ -1,0 +1,55 @@
+<?page title="机构帐单列表" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="机构帐单列表" border="normal"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmCommissionOut.EmCommissionOutPayController')" closable="true" width="95%">
+		<label id="dep_company" visible="false" value="${arg.ecop_dep_company }" />
+		<button id="p1" label="完全匹配" onClick="@command('pay_ok',dep_company=dep_company,p1=p1)" /> <button  id="p2" label="部份匹配" onClick="@command('pay_ok2',dep_company=dep_company,p2=p2)" /> <button id="p3" label="完全不匹配"  onClick="@command('pay_ok3',dep_company=dep_company,p3=p3)" /> 
+		<div
+			style="width:100%;height:430px;overflow-y:scroll;overflow-x:hidden;border:1px solid #bcbdbf;">
+			<grid width="100%" id="g1"
+				model="@load(vm.emmonthpaylist)">
+				<columns>
+					<column label="序号" align="center" width="60px" />
+					<column label="帐单月份" align="center" />
+					<column label="委托机构" align="center" />
+					<column label="应付总计" align="center" />
+					<column label="实付总计" align="center" />
+					<column label="差额" align="center" />
+					<column label="状态" align="center" />
+				</columns>
+				<rows>
+					<template name="model">
+						<row>
+							<cell>
+								<label
+									value="${forEachStatus.index + 1}" />
+							</cell>
+							<cell>
+								<label value="@load(each.ownmonth)" />
+							</cell>
+							<cell  style="color:#00f">
+								<label
+									value="@load(each.ecop_dep_company)"  style="cursor:pointer" onClick="@command('empay_base', emco=each)"  />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.ecop_yf_fee)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.ecop_sf_fee)" />
+							</cell>
+							<cell>
+								<label value="@load(each.ecop_yfsf_dis_fee)" />
+							</cell>
+							<cell>
+								未审核
+							</cell>
+						</row>
+					</template>
+				</rows>
+			</grid>
+		</div>
+	</window>
+</zk>

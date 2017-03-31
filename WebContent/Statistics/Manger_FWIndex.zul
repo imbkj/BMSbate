@@ -1,0 +1,271 @@
+<?page title="业务总览" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="win" title="客户服务部管理页面" border="normal" width="99%"
+		height="99%">
+		<script src="../ECharts/echartOp.js"></script>
+		<borderlayout width="100%" apply="org.zkoss.bind.BindComposer"
+			viewModel="@id('vm') @init('chart.bar.BarChartVM')">
+
+			<west width="32%" border="normal">
+
+				<vbox align="center" width="98%">
+					<label value="" />
+					<tabbox>
+						<tabs>
+							<tab label="我的业务" />
+							<tab label="我的短信" />
+						</tabs>
+						<tabpanels>
+							<tabpanel>
+								<grid height="225px">
+									<rows>
+										<row>
+											<cell align="center">
+												<label value="劳动合同应签" />
+											</cell>
+											<cell>
+												<label value="108" />
+											</cell>
+											<cell align="center">
+												<label value="劳动合同实签" />
+											</cell>
+											<cell>
+												<label value="101" />
+											</cell>
+										</row>
+										<row>
+											<cell align="center">
+												<label value="劳动合同未签回" />
+											</cell>
+											<cell>
+												<label value="12" />
+											</cell>
+											<cell align="center">
+												<label value="劳动合同未归档" />
+											</cell>
+											<cell>
+												<label value="52" />
+											</cell>
+										</row>
+										<row>
+											<cell align="center">
+												<label value="劳动合同签订率" />
+											</cell>
+											<cell>
+												<label value="98%" />
+											</cell>
+											<cell align="center">
+												<label value="劳动合同归档率" />
+											</cell>
+											<cell>
+												<label value="91%" />
+											</cell>
+										</row>
+										<row>
+											<cell align="center">
+												<label value="公司合同应签" />
+											</cell>
+											<cell>
+												<label value="37" />
+											</cell>
+											<cell align="center">
+												<label value="公司合同实签" />
+											</cell>
+											<cell>
+												<label value="37" />
+											</cell>
+										</row>
+										<row>
+											<cell align="center">
+												<label value="公司合同未签回" />
+											</cell>
+											<cell>
+												<label value="2" />
+											</cell>
+											<cell align="center">
+												<label value="公司合同未归档" />
+											</cell>
+											<cell>
+												<label value="8" />
+											</cell>
+										</row>
+										<row>
+											<cell align="center">
+												<label value="公司合同签订率" />
+											</cell>
+											<cell>
+												<label value="100%" />
+											</cell>
+											<cell align="center">
+												<label value="公司合同归档率" />
+											</cell>
+											<cell>
+												<label value="90%" />
+											</cell>
+										</row>										
+									</rows>
+								</grid>
+							</tabpanel>
+							<tabpanel>
+								<panel id="xtdx" height="217px"
+									border="normal" collapsible="true" style="margin-bottom:10px"
+									title="系统短信">
+									<caption>
+										<hlayout style="float:right">
+											<toolbar>
+												<toolbarbutton
+													label="发送" onClick="@command('sysmessageadd')"
+													style="color:#666:font-size:8pt" />
+												<toolbarbutton
+													label="收件箱" onClick="@command('reci')"
+													style="color:#666:font-size:8pt" />
+												<toolbarbutton
+													label="已发送信息" onClick="@command('sended')"
+													style="color:#666:font-size:8pt" />
+												<toolbarbutton
+													label="草稿" onClick="@command('draft')" if="false"
+													style="color:#666:font-size:8pt" />
+											</toolbar>
+										</hlayout>
+									</caption>
+									<panelchildren>
+										<include
+											src="SysMessage_NotReadList.zul">
+										</include>
+									</panelchildren>
+								</panel>
+							</tabpanel>
+						</tabpanels>
+					</tabbox>
+					<scrollview id="div" height="270px" width="100%"
+						onCreate="@command('pie_load',st_name='合同回签情况')">
+					</scrollview>
+				</vbox>
+			</west>
+
+			<center border="normal">
+				<vbox align="center" width="100%">
+					<label value="" />
+					<tabbox>
+						<tabs>
+							<tab label="业务合同新签数统计" />
+							<tab label="业务合同解约数统计" onClick="@command('bar_load',st_name='业务合同解约数统计',st_id='bar1')"/>
+						</tabs>
+						<tabpanels>
+							<tabpanel>
+								<scrollview id="bar" height="245px"
+									width="900px"
+									onCreate="@command('bar_load',st_name='自签客户数统计',st_id='bar')">
+								</scrollview>
+							</tabpanel>
+							<tabpanel>
+							<scrollview id="bar1" height="245px"
+									width="900px">
+								</scrollview>
+							</tabpanel>
+						</tabpanels>
+					</tabbox>
+
+
+					<tabbox>
+						<tabs>
+							<tab label="劳动合同派遣员工数统计" />
+							<tab label="劳动合同新签数统计"  onClick="@command('line_load',st_name='劳动合同新签数统计',st_id='line1')"/>
+							<tab label="劳动合同解约数统计"  onClick="@command('line_load',st_name='劳动合同解约数统计',st_id='line2')"/>
+						</tabs>
+						<tabpanels>
+							<tabpanel>
+								<scrollview id="line" height="245px"
+									width="900px"
+									onCreate="@command('line_load',st_name='劳动合同派遣员工数统计',st_id='line')">
+								</scrollview>
+							</tabpanel>
+							<tabpanel>
+							<scrollview id="line1" height="245px"
+									width="900px">
+								</scrollview>
+							</tabpanel>
+							<tabpanel>
+							<scrollview id="line2" height="245px"
+									width="900px">
+								</scrollview>
+							</tabpanel>
+						</tabpanels>
+					</tabbox>
+				</vbox>
+			</center>  
+			<east visible="false" border="normal"></east>
+			<south border="normal">
+				<hbox width="100%" height="160px">
+					<label value="" />
+					<label value="" />
+					<tabbox>
+						<tabs>
+							<tab label="任务单处理情况" />
+							<tab label="任务完成情况" />
+						</tabs>
+						<tabpanels>
+							<tabpanel>
+								<grid width="100%">
+									<columns>
+										<column label="" align="center" />
+										<column label="莫君红"
+											align="center" />
+										<column label="石如超"
+											align="center" />
+									</columns>
+									<rows>
+										<row>
+											<cell>未处理</cell>
+											<cell>13</cell>
+											<cell>37</cell>
+											
+										</row>
+										<row>
+											<cell>处理中</cell>
+											<cell>4</cell>
+											<cell>8</cell>
+											
+										</row>
+										<row>
+											<cell>已完成</cell>
+											<cell>45</cell>
+											<cell>258</cell>
+											
+										</row>
+									</rows>
+								</grid>
+							</tabpanel>
+							<tabpanel>
+								<grid width="100%">
+									<columns>
+										<column label="" align="center" />
+										<column label="莫君红"
+											align="center" />
+										<column label="石如超"
+											align="center" />
+									</columns>
+									<rows>
+										<row>
+											<cell>实际收入</cell>
+											<cell>233</cell>
+											<cell>424</cell>
+											
+										</row>
+										<row>
+											<cell>完成率</cell>
+											<cell>233</cell>
+											<cell>424</cell>
+											
+										</row>
+									</rows>
+								</grid>
+							</tabpanel>
+						</tabpanels>
+					</tabbox>
+				</hbox>
+			</south>
+
+		</borderlayout>
+	</window>
+</zk>

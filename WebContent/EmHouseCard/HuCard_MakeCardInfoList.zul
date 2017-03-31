@@ -1,0 +1,161 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="公积金卡手动制卡信息" border="normal" vflex="1"
+	apply="org.zkoss.bind.BindComposer" id="windeclare"
+	viewModel="@id('vm') @init('Controller.EmHouseCard.HuCard_MakeCardInfoController')"
+>
+<style src="/css/style.css"></style>
+<borderlayout>
+<north border="0" title="检索" collapsible="true" flex="true" style="padding-bottom:10px;" open="false">
+<grid>
+	<rows>
+		<row>
+			<cell width="100px">
+				<combobox width="100px" value="员工姓名" readonly="true" id="nametype">
+					<comboitem label="员工姓名"/>
+					<comboitem label="身份证号"/>
+					<comboitem label="单位简称"/>
+					<comboitem label="个人公积金号"/>
+					<comboitem label="单位公积金号"/>
+				</combobox>
+			</cell>
+			<cell><textbox id="name"></textbox></cell>
+			<cell width="60px">所属月份</cell>
+			<cell>
+				<datebox sclass="datebox-month-only"
+									format="yyyyMM" id="ownmonth">
+								</datebox>
+			</cell>
+		<cell width="100px">
+				<label>客服</label>
+			</cell>
+			<cell>
+				<combobox model="@load(vm.clientlist)" id="client" width="100px">
+				<template name="model">
+					<comboitem label="@load(each)"/>
+					</template>
+				</combobox>
+			</cell>
+			<cell width="60px">状态</cell>
+			<cell>
+				<combobox width="100px" model="@load(vm.slist)" readonly="true" id="statename">
+					<template name="model">
+						<comboitem label="@load(each.state_Name)" value="@load(each.state_Id)"/>
+					</template>
+				</combobox>
+			</cell>
+		</row>
+	</rows>
+	<foot>
+		<footer align="center"><button onClick="@command('search',nametype=nametype.value,name=name.value,
+		ownmonth=ownmonth.value,client=client.value,statename=statename.value)">查询</button>
+		</footer>
+	</foot>
+</grid>
+</north>
+<center>
+<grid vflex="1" model="@load(vm.list)">
+	<columns>
+		<column label="序号" align="center"/>
+		<column label="公司简称" align="center"/>
+		<column label="单位公积金号" align="center"/>
+		<column label="所属月份" align="center"/>
+		<column label="缴存银行" align="center"/>
+		<column label="个人公积金号" align="center"/>
+		<column label="姓名" align="center"/>
+		<column label="身份证号" align="center" width="150px"/>
+		<column label="客服" align="center"/>
+		<column label="添加时间" align="center"/>
+		<column label="添加人" align="center"/>
+		<column label="提交银行时间" align="center"/>
+		<column label="制卡人" align="center"/>
+		<column label="状态" align="center"/>
+		<column label="详细" align="center"/>
+	</columns>
+	<rows>
+	<template name="model">
+		<row>
+			<cell><label value="${forEachStatus.index+1 }"></label></cell>
+			<cell><label value="@load(each.coba_shortname)"></label></cell>
+			<cell><label value="@load(each.gjj_cno)"></label></cell>
+			<cell><label value="@load(each.ownmonth)"></label></cell>
+			<cell><label value="@load(each.gjj_insertblank)"></label></cell>
+			<cell><label value="@load(each.gjj_no)"></label></cell>
+			<cell><label value="@load(each.username)"></label></cell>
+			<cell><label value="@load(each.idcard)"></label></cell>
+			<cell><label value="@load(each.coba_client)"></label></cell>
+			<cell><label value="@load(each.addtime)"></label></cell>
+			<cell><label value="@load(each.gjj_addname)"></label></cell>
+			<cell><label value="@load(each.gjj_tobanktime)"></label></cell>
+			<cell><label value="@load(each.gjj_maker)"></label></cell>
+			<cell><label value="@load(each.state_Name)"></label></cell>
+			<cell><a onClick="@command('opendetail',model=each)"><label value="详细"></label></a></cell>
+		</row>
+		</template>
+	</rows>
+</grid>
+</center>
+</borderlayout>
+</window>
+<script><![CDATA[
+        zk.afterLoad("zul.db", function () {
+            // Datebox Calendar Renderer
+            var _Cwgt = {};
+            zk.override(zul.db.CalendarPop.prototype, _Cwgt, {
+                // switch the view after redraw or open as needed
+                redraw: function (out) {
+                    _Cwgt.redraw.apply(this, arguments); //call the original method
+                    this._customChangeView ();
+                },
+                open: function (silent) {
+                    _Cwgt.open.apply(this, arguments); //call the original method
+                    this._customChangeView ();
+                },
+                _customChangeView: function () {
+                    // cannot show month/day
+                    if (jq(this.parent.$n()).hasClass('datebox-year-only')) {
+                        var view = this._view;
+                        // switch to year view as needed
+                        if (view == 'month' || view == 'day')
+                            this._setView("year");
+                    } else if (jq(this.parent.$n()).hasClass('datebox-month-only')) {
+                        // cannot show day view
+                        // switch to month view as needed
+                        if (this._view == 'day')
+                            this._setView("month");
+                    }
+                },
+                // customize the chooseDate function
+                _chooseDate: function (target, val) {
+                    var view = this._view;
+                    if (jq(this.parent.$n()).hasClass('datebox-month-only')
+                        || jq(this.parent.$n()).hasClass('datebox-year-only')) {
+                        // do customize chooseDate if the parent (datebox)
+                        // has specific class
+                        var date = this.getTime(),
+                            year = (view == 'decade' || view == 'year')? val : date.getFullYear(),
+                            month = view == 'month'? val : 0,
+                            date = 1;
+                        // set date value
+                        this._setTime(year, month, 1);
+                        if (view == 'decade') {
+                            // switch to year view if at decade view
+                            this._setView("year");
+                        } else if (jq(this.parent.$n()).hasClass('datebox-month-only')
+                            && view == 'year') {
+                            // switch to month view if at year view and the month view is allowed
+                            this._setView("month");
+                        } else if (jq(this.parent.$n()).hasClass('datebox-month-only') && view == 'month'
+                            || jq(this.parent.$n()).hasClass('datebox-year-only') && view == 'year') {
+                            // close calendar and update value if already at the smallest allowed view
+                            this.close();
+                            this.parent.updateChange_();
+                        }
+                    } else {
+                        _Cwgt._chooseDate.apply(this, arguments); //call the original method
+                    }
+                }
+            });
+        });
+    ]]></script>
+</zk>

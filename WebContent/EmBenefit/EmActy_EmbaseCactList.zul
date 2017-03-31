@@ -1,0 +1,99 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window width="90%" height="90%" title="客户报名" id="winEmp" closable="true"
+		border="normal" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmBenefit.EmActy_EmbaseController')">
+				<grid id="gdList" vflex="1" model="@load(vm.listc)"
+					sizedByContent="true" span="true" mold="paging" pageSize="200"
+					emptyMessage="暂无数据">
+					<columns>
+						<column align="center">序号</column>
+						<column align="center">公司名称</column>
+						<column align="center">姓名</column>
+						<column align="center">身份证号</column>
+						<column align="center">入职时间</column>
+						<column align="center">礼品内容</column>
+						<column align="center">用途</column>
+						<column align="center">何时需要</column>
+						<column align="center">份数</column>
+						<column align="center">标准</column>
+						<column align="center">部门</column>
+						<column align="center">客服</column>
+						<column align="center">付款性质</column>
+						<column align="center">寄送方式</column>
+						<column align="center"><checkbox onClick="@command('checkallc',a=self,gd=gdList)" /></column>
+					</columns>
+					<rows>
+					<template name="model">
+						<row>
+							<cell>${forEachStatus.index+1 }</cell>
+							<cell>
+								<label value="@load(each.emwf_company)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emwf_name)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emwf_idcard)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emwf_intime)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emwf_content)" />
+							</cell>
+							<cell>
+								<label value="@load(each.embf_name)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emwf_need)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emwf_amount)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emwf_charge)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emwf_dept)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emwf_client)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emwf_paykind)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.emwf_delivery)" />
+							</cell>
+							
+							<cell>
+								<hlayout>
+								<checkbox value="@load(each)"/>
+								<separator />
+									<menubar autodrop="true"
+										width="50px" sclass="mymb">
+										<menu
+											image="../images/pencil-small.png">
+											<menupopup>
+												<menuitem label="确认报名" onClick="@command('link',model=each)" />
+												<menuitem label="取消" onClick="@command('cancel',model=each)" />
+											</menupopup>
+										</menu>
+									</menubar>
+								</hlayout>
+							</cell>
+						</row>
+					</template>
+					</rows>
+					<foot>
+						<footer align="center" span="15"><button label="下一步"
+								onClick="@command('summit')">
+							</button>
+							<button onClick="@command('linkbatch')">批量确认报名</button>
+							</footer>
+					</foot>
+				</grid>
+	</window>
+</zk>

@@ -1,0 +1,98 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="${arg.title }" border="normal" width="80%"
+		height="80%" closable="true" apply="org.zkoss.bind.BindComposer"
+		id="upwin"
+		viewModel="@id('vm') @init('Controller.EmBodyCheck.Embc_InsertEmbcIdController')">
+		<borderlayout>
+			<north>
+				<grid width="100%" height="100%">
+					<rows>
+
+						<row>
+							<cell width="80px">文件</cell>
+							<cell>
+								<textbox width="60%" id="filepath"></textbox>
+								<button id="attachBtn" upload="true"
+									label="选择文件"
+									onUpload="@command('uploadfile',win=upwin,tb=filepath)" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</north>
+			<center>
+				<grid model="@load(vm.list)" width="100%"
+					height="100%">
+					<columns>
+						<column label="序号" width="40px" align="center" />
+						<column label="体检编号" align="center" />
+						<column label="公司编号" align="center" />
+						<column label="员工姓名" align="center" />
+						<column label="身份证号" align="center" />
+						<column label="体检时间" align="center" />
+						<column label="状态" align="center" />
+						<column label="操作" align="center" width="60px" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<cell>
+									<label
+										value="${forEachStatus.index+1 }">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.embc_bcid)">
+									</label>
+								</cell>
+								<cell>
+									<label value="@load(each.cid)"></label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.embc_name)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.embc_idcard)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ebcl_plandate)" />
+								</cell>
+								<cell>
+									<label
+										style="color:${each.embc_statebname!='未导入' and each.embc_statebname!='更新成功' ?'red':'' }"
+										value="@load(each.embc_statebname)">
+									</label>
+								</cell>
+								<cell>
+									<a
+										onClick="@command('cancel',model=each)">
+										<label>取消导入</label>
+									</a>
+								</cell>
+							</row>
+						</template>
+					</rows>
+					<foot>
+						<footer align="center" span="7">
+							<button
+								onClick="@command('summit',win=upwin,flag='0')">
+								提交
+							</button>
+							<button if="${vm.visbtn }"
+								onClick="@command('summit',win=upwin,flag='1')">
+								导入取消数据
+							</button>
+						</footer>
+					</foot>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

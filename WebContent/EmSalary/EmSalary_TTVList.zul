@@ -1,0 +1,59 @@
+<?page title="工资电汇审核" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winEsHistoryList" title="工资电汇审核" border="normal"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmSalary.EmSalary_TTVList_Controller')"
+		height="100%" width="100%">
+		<borderlayout>
+			<north border="0" collapsible="true">
+				<grid width="100%">
+					<rows>
+						<row>
+							<cell width="10%" style="color:#666;"
+								align="center">
+								发放日期
+							</cell>
+							<datebox id="dbPayDate" readonly="true"
+								format="yyyy-MM-dd" mold="rounded" />
+							<cell width="10%" style="color:#666;"
+								align="center">
+								状态
+							</cell>
+							<combobox id="cbState" width="40%"
+								autodrop="true" mold="rounded" value="全部" readonly="true">
+								<comboitem label="全部" />
+								<comboitem label="未审核" />
+								<comboitem label="已审核" />
+							</combobox>
+							<cell width="10%" style="color:#666;"
+								align="center">
+								薪酬负责人
+							</cell>
+							<combobox id="gzaddname" mold="rounded"
+								width="40%" readonly="true">
+								<comboitem label="${each}"
+									forEach="${vm.gzUserList}" />
+							</combobox>
+						</row>
+					</rows>
+					<foot>
+						<footer align="center">
+							<hbox>
+								<button label="查询"
+									onClick="@command('search',db=dbPayDate,cb=cbState,gzaddname=gzaddname)" />
+								<separator />
+								<button label="全部审核"
+									onClick="@command('upState',db=dbPayDate,cb=cbState,gzaddname=gzaddname)" />
+							</hbox>
+						</footer>
+					</foot>
+				</grid>
+			</north>
+			<center border="none" autoscroll="true">
+				<include id="icBase" src="@load(vm.icSrc)"
+					onCreate="@command('setInclude',com=self)" />
+			</center>
+			<south></south>
+		</borderlayout>
+	</window>
+</zk>

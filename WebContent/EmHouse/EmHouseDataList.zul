@@ -1,0 +1,284 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="公积金清册名单" id="winaData" width="100%" height="100%"
+		closable="true" border="normal" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmHouse.EmHouseDataListController')"
+		onCreate="@command('winDa',a=self)">
+		<borderlayout>
+			<north title="搜索条件" collapsible="true" open="true">
+				<grid width="100%" height="100%">
+					<columns visible="false">
+						<column width="120px" />
+						<column />
+						<column width="120px" />
+						<column />
+						<column width="120px" />
+						<column />
+					</columns>
+					<rows>
+						<row>
+							<cell>所属月份</cell>
+							<cell>
+								<combobox value="@bind(vm.egd.ownmonth)"
+									model="@load(vm.ownmonthlist)">
+									<template name="model">
+										<comboitem
+											label="@load(each.ownmonth)" />
+									</template>
+								</combobox>
+							</cell>
+							<cell>客服代表</cell>
+							<cell>
+								<combobox model="@load(vm.clientList)"
+									value="@bind(vm.egd.client)">
+									<template name="model">
+										<comboitem
+											label="@load(each.client)" />
+									</template>
+								</combobox>
+							</cell>
+							<cell>数据类型</cell>
+							<cell>
+								<hbox>
+									<combobox
+										onChange="@command('updateProgress')"
+										value="@bind(vm.egd.change)">
+										<comboitem label="新增" />
+										<comboitem label="调入" />
+										<comboitem label="停交" />
+										<comboitem label="补缴" />
+										<comboitem label="基数调整" />
+									</combobox>
+									<combobox visible="@load(vm.dis)"
+										readonly="true" value="@bind(vm.egd.progress)">
+
+										<comboitem label="等待转移" />
+										<comboitem label="等待启封" />
+									</combobox>
+								</hbox>
+							</cell>
+						</row>
+						<row>
+							<cell>公司名称</cell>
+							<cell>
+								<textbox value="@bind(vm.egd.company)" />
+							</cell>
+							<cell>员工名称</cell>
+							<cell>
+								<textbox value="@bind(vm.egd.name)" />
+							</cell>
+							<cell>清册状态</cell>
+							<cell>
+								<combobox
+									value="@bind(vm.egd.excelState)">
+									<comboitem label="福利未出" />
+									<comboitem label="福利已出" />
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>联系方式</cell>
+							<cell>
+								<combobox
+									value="@bind(vm.egd.cosp_sing_caliname)">
+									<comboitem label="员工本人" />
+									<comboitem label="客服" />
+									<comboitem label="指定联系人" />
+								</combobox>
+							</cell>
+							<cell>扣款日</cell>
+							<cell>
+								<combobox model="@load(vm.tsdayList)"
+									value="@bind(vm.egd.tsday)">
+									<template name="model">
+										<comboitem
+											label="@load(each.tsday)" />
+									</template>
+								</combobox>
+							</cell>
+							<cell>申报状态</cell>
+							<cell>
+								<combobox
+									value="@bind(vm.egd.declareName)">
+									<comboitem label="待确认" />
+									<comboitem label="未申报" />
+									<comboitem label="申报中" />
+									<comboitem label="已申报" />
+									<comboitem label="核查失败" />
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>有无密钥</cell>
+							<cell>
+								<combobox
+									value="@bind(vm.egd.cohf_ispwd)">
+									<comboitem label="有" />
+									<comboitem label="无" />
+								</combobox>
+							</cell>
+							<cell>联系状态</cell>
+							<cell>
+								<combobox model="@load(vm.contactList)"
+									value="@bind(vm.egd.contactstate)">
+									<template name="model">
+										<comboitem
+											label="@load(each.contactstate)" />
+									</template>
+								</combobox>
+							</cell>
+							<cell>材料状态</cell>
+							<cell>
+								<combobox model="@load(vm.dataList)"
+									value="@bind(vm.egd.clstate)">
+									<template name="model">
+										<comboitem
+											label="@load(each.clstate)" />
+									</template>
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>服务中心文员</cell>
+							<cell>
+								<combobox
+									model="@load(vm.assistantlist)"
+									value="@bind(vm.egd.assistant)">
+									<template name="model">
+										<comboitem
+											label="@load(each.log_name)" />
+									</template>
+								</combobox>
+							</cell>
+							<cell />
+							<cell />
+							<cell />
+							<cell />
+						</row>
+					</rows>
+					<foot>
+						<footer span="6" align="center">
+							<button label="查询"
+								onClick="@command('search')" />
+							<button label="生成清册"
+								onClick="@command('export')" />
+							<combobox readonly="true"
+								model="@load(vm.excelList)"
+								onSelect="@command('dl',a=self.selectedItem)">
+								<template name="model">
+									<comboitem value="@load(each.url)"
+										label="@load(each.name)" />
+								</template>
+							</combobox>
+						</footer>
+					</foot>
+				</grid>
+			</north>
+			<center>
+				<grid id="gd" height="100%" sizedByContent="true"
+					mold="paging" pageSize="100" span="true" model="@load(vm.gdlist)"
+					emptyMessage="暂无结果">
+					<columns>
+						<column align="center" label="序号" />
+						<column align="center" label="所属月份" />
+						<column align="center" label="公司编号" />
+						<column align="center" label="公司简称" />
+						<column align="center" label="客服" />
+						<column align="center" label="员工姓名" />
+						<column align="center" label="数据类型" />
+						<column align="center" label="清册状态" />
+						<column align="center" label="任务单提交日期" />
+						<column align="center" label="中心文员" />
+						<column align="center" label="联系方式" />
+						<column align="center" label="扣款日" />
+						<column align="center" label="申报状态" />
+						<column align="center" label="联系状态" />
+						<column align="center" label="材料状态" />
+						<column align="center" label="备注" />
+						<column align="center">
+							<checkbox checked="@bind(vm.egd.checked)"
+								onClick="@command('checkall',a=gd)" />
+						</column>
+					</columns>
+					<template name="model">
+						<row>
+							<cell>
+								<label
+									value="${forEachStatus.index+1 }" />
+							</cell>
+							<cell>
+								<label value="@load(each.ownmonth)" />
+							</cell>
+							<cell>
+								<label value="@load(each.cid)" />
+							</cell>
+							<cell>
+								<label value="@load(each.shortname)" />
+							</cell>
+							<cell>
+								<label value="@load(each.client)" />
+							</cell>
+							<cell>
+								<label value="@load(each.name)" />
+							</cell>
+							<cell>
+								<label value="@load(each.change)" />
+							</cell>
+							<cell>
+								<label value="@load(each.excelState)" />
+							</cell>
+							<cell>
+								<label value="@load(each.addtime)" />
+							</cell>
+							<cell>
+								<label value="@load(each.assistant)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.cosp_sing_caliname)" style="cursor:pointer"
+									onClick="@command('link',a=each)" />
+							</cell>
+							<cell>
+								<label value="@load(each.tsday)" />
+							</cell>
+							<cell>
+								<label value="@load(each.declareName)" />
+							</cell>
+							<cell>
+
+								<combobox width="90px"
+									onChange="@command('mod',a=each)"
+									value="@bind(each.contactstate)">
+									<comboitem label="未联系" />
+									<comboitem label="已联系指定人" />
+									<comboitem label="已联系客服" />
+								</combobox>
+							</cell>
+							<cell>
+								<combobox width="90px"
+									onChange="@command('mod',a=each)"
+									value="@bind(each.clstate)">
+									<comboitem label="未提交" />
+									<comboitem label="部分提交" />
+									<comboitem label="资料齐全" />
+								</combobox>
+
+							</cell>
+							<cell>
+								<image visible="@load(each.remarkFlag2)"
+									src="../images/bbcodeM.png" style="cursor:pointer;"
+									onClick="@command('remark',a=each)" />
+								<image visible="@load(each.remarkFlag)"
+									src="../images/hongqi.gif" style="cursor:pointer;"
+									onClick="@command('remark',a=each)" />
+							</cell>
+							<cell>
+								<checkbox checked="@bind(each.checked)" />
+							</cell>
+						</row>
+					</template>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

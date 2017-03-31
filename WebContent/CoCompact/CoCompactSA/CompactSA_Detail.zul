@@ -1,0 +1,87 @@
+<?page title="合同补充协议的详细信息" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="合同补充协议的详细信息" border="normal" width="600px" closable="true" height="530px"
+	apply="Controller.CoCompact.CoCompactSA.CompactSA_DetailController">
+<grid vflex="1" hflex="1">
+	<rows>
+		<row>
+			<cell width="80px" style="color:#666;">公司名称</cell>
+			<cell><textbox value="${arg.ccsaM.coba_company}" mold="rounded"/></cell>
+			<cell width="80px" style="color:#666;">协议状态</cell>
+			<cell><textbox value="${arg.statename}" mold="rounded"/></cell>
+		</row>
+		<row>
+			<cell width="80px" style="color:#666;">协议类型</cell>
+			<cell><textbox value="${arg.ccsaM.ccsa_type}" mold="rounded"/></cell>
+			<cell width="80px" style="color:#666;">合同编号</cell>
+			<cell><textbox value="${arg.ccsaM.ccsa_said}" mold="rounded"/></cell>
+		</row>
+		<row>
+			<cell width="80px" style="color:#666;">签订时间</cell>
+			<cell><textbox value="${arg.ccsaM.ccsa_signdate}" mold="rounded"/></cell>
+			<cell width="80px" style="color:#666;">签订场地</cell>
+			<cell><textbox value="${arg.ccsaM.ccsa_signplace}" mold="rounded"/></cell>
+		</row>
+		<row>
+			<cell width="80px" style="color:#666;">审核时间</cell>
+			<cell><textbox value="${arg.ccsaM.ccsa_auditingdate}" mold="rounded"/></cell>
+			<cell width="80px" style="color:#666;">打印时间</cell>
+			<cell><textbox value="${arg.ccsaM.ccsa_printdate}" mold="rounded"/></cell>
+		</row>
+		<row>
+			<cell width="80px" style="color:#666;">签回时间</cell>
+			<cell><textbox value="${arg.ccsaM.ccsa_returndate}" mold="rounded"/></cell>
+			<cell width="80px" style="color:#666;">归档时间</cell>
+			<cell><textbox value="${arg.ccsaM.ccsa_filedate}" mold="rounded"/></cell>
+		</row>
+		<row>
+			<cell width="80px" style="color:#666;">存档编号</cell>
+			<cell><textbox value="${arg.ccsaM.ccsa_fileid}" mold="rounded"/></cell>
+			<cell width="80px" style="color:#666;">自动延迟</cell>
+			<cell><textbox value="${arg.ccsaM.ccsa_delay}" mold="rounded"/></cell>
+		</row>
+		<row>
+			<cell width="80px" style="color:#666;">生效日期</cell>
+			<cell><textbox value="${arg.ccsaM.ccsa_inuredate}" mold="rounded"/></cell>
+			<cell width="80px" style="color:#666;">到期日期</cell>
+			<cell><textbox value="${arg.ccsaM.ccsa_indate}" mold="rounded"/></cell>
+		</row>
+		<row>
+			<cell width="80px" style="color:#666;">终止/解除时间</cell>
+			<cell><textbox value="${arg.ccsaM.ccsa_stopdate}" mold="rounded"/></cell>
+			<cell width="80px" style="color:#666;">终止/解除类型</cell>
+			<cell><textbox value="${arg.ccsaM.ccsa_stoptype}" mold="rounded"/></cell>
+		</row>
+		<row>
+			<cell width="80px" style="color:#666;">终止/解除原因</cell>
+			<cell colspan="3" style="color:#666;">
+			<textbox width="90%" value="${arg.ccsaM.ccsa_stopreason}" mold="rounded"/></cell>
+		</row>
+		<row>
+		<cell width="80px" style="color:#666;">中文协议份数</cell>
+			<cell><textbox value="${arg.ccsaM.ccsa_chs_copies}" mold="rounded"/></cell>
+			<cell width="80px" style="color:#666;">英文协议份数</cell>
+			<cell><textbox value="${arg.ccsaM.ccsa_en_copies}" mold="rounded"/></cell>
+		</row>
+		<row>
+			<cell width="80px" style="color:#666;">添加人</cell>
+			<cell><textbox value="${arg.ccsaM.ccsa_addname}" mold="rounded"/></cell>
+			<cell width="80px" style="color:#666;">添加时间</cell>
+			<cell><textbox value="${arg.ccsaM.ccsa_addtime}" mold="rounded"/></cell>
+		</row>
+		<row>
+			<cell width="80px" style="color:#666;">备注</cell>
+			<cell colspan="3"><textbox rows="3" width="89%" value="${arg.ccsaM.ccsa_remark}" mold="rounded"/></cell>
+		</row>
+		<row>
+			<cell width="80px" style="color:#666;">模板下载</cell>
+			<cell colspan="3" >
+				<vlayout id="load">
+					
+				</vlayout>
+			</cell>
+		</row>
+	</rows>
+</grid>
+</window>
+</zk>

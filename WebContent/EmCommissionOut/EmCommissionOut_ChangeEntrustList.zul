@@ -1,0 +1,115 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="委托外地年调查询" border="normal" width="100%" height="100%"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmCommissionOut.EmCommissionOut_ChangeEntrustListController')">
+
+		<grid width="100%" height="5%">
+			<columns>
+
+			</columns>
+			<rows>
+				<row valign="center">
+
+					<button label="导出excel"
+						onClick="@command('excelout')">
+					</button>
+				</row>
+
+			</rows>
+		</grid>
+		<borderlayout>
+		    <center>
+		    
+		       <grid emptyMessage="暂无数据" height="90%" width="100%" model="@load(vm.entrustList)" mold="paging" pageSize="20">
+		           <columns sizable="true">
+		               <column align="center" label="公司编号"  width="60px">
+							<separator></separator>
+							<textbox width="90%" mold="rounded"
+								 value="@bind(vm.cid)"
+								onChange="@command('search')" />
+						</column>
+						<column align="center" label="公司名称" width="240px">
+							<separator></separator>
+							<textbox width="90%" mold="rounded"
+								value="@bind(vm.company)" onChange="@command('search')" />
+						</column>
+						<column align="center" label="员工编号" width="80px">
+						     <separator></separator>
+						     <textbox width="90%" mold="rounded" instant="true" value="@bind(vm.gid)" onChange="@command('search')"/>
+						</column>
+						<column align="center" label="员工姓名">
+						    <separator></separator>
+							<textbox width="90%" mold="rounded"
+								value="@bind(vm.cpname)" onChange="@command('search')" />
+						</column>
+						<column align="center" label="员工身份证号">
+						    <separator></separator>
+							<textbox width="90%" mold="rounded"
+								value="@bind(vm.iscnum)" onChange="@command('search')" />
+						</column>
+						<column align="center" label="社保基数">
+						    <separator></separator>
+						</column>
+						<column align="center" label=" 公积金比例">
+						    <separator></separator>
+						</column>
+						<column align="center" label="公积金基数">
+						    <separator></separator>
+						</column>
+						<column align="center" label="客服">
+						    <separator></separator>
+						    <combobox width="90%" mold="rounded" model="@load(vm.clientList)" instant="true" readonly="true" value="@bind(vm.coba_client)" onChange="@command('search')" >
+						        <template name="model">
+									<comboitem label="@load(each.coba_client)" />
+								</template>
+						   </combobox>
+						</column>
+						<column align="center" label="状态" sort="auto(ecyc_state)">
+						    <separator></separator>
+						    <combobox width="90%" mold="rounded" readonly="true"
+								instant="true" onChange="@command('search')"
+								selectedItem="@bind(vm.ecyc_state)">
+								 <comboitem label="" value=""/>
+						         <comboitem label="未采集" value="0"/>
+						         <comboitem label="未提交" value="1"/>
+						         <comboitem label="未提交 " value="2"/>
+						         <comboitem label="已提交" value="3"/>
+						         <comboitem label="已更新" value="4"/>
+						         <comboitem label="已完成" value="5"/>
+						    </combobox>
+						</column>
+						<column align="center" label="委托地" sort="auto(city)">
+						   <separator></separator>
+						   <combobox width="90%" mold="rounded" model="@load(vm.cityList)" instant="true" readonly="true" value="@bind(vm.city)" onChange="@command('search')" >
+						        <template name="model">
+									<comboitem label="@load(each.city)" />
+								</template>
+						   </combobox>
+						</column>
+						
+						<column align="center" label="年调生效日">
+						    <separator></separator>
+						</column>
+		           </columns>
+		       </grid>
+		       <template name="model">
+						<row>
+							<label value="@load(each.cid)" />
+							<label value="@load(each.coba_company)" />
+							<label value="@load(each.gid)" />
+							<label value="@load(each.emba_name)" />
+							<label value="@load(each.emba_idcard)" />
+							<label value="@load(each.ecyc_sb_base)" />
+                            <label value="@load(each.ecyc_house_cp)" />
+							<label value="@load(each.ecyc_house_base)" />
+							<label value="@load(each.coba_client)" />
+							<label value="@load(each.ecyc_state)"/>
+							<label value="@load(each.city)" />
+							<label value="@load(each.ecyt_startdate)" />
+						</row>
+					</template>
+		    </center>
+		</borderlayout>
+</window>
+</zk>

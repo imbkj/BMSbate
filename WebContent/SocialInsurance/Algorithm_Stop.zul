@@ -1,0 +1,39 @@
+<?page title="停用标准" contentType="text/html;charset=UTF-8"?>
+<?component name="docDataList" macro-uri="../CoPolicyNotice/Pono_PubInfoAdd.zul" inline="true"?>
+<zk>
+	<window id="winAlgorithmStop" title="停用标准" border="normal"
+		closable="true" width="800px"
+		apply="Controller.SocialInsurance.Algorithm_StopController">
+		<panel border="0">
+					<panelchildren >
+				<button id="zcadd"  label="新增政策  " />
+			<groupbox title="相关政策">
+			
+					<docDataList  id="docGrid" log_url="/CoPolicyNotice/"/>
+					</groupbox>
+			<groupbox>
+		<grid width="100%">
+			<rows>
+				<row>
+					<cell width="15%" style="color:#666;">停用原因：</cell>
+					<cell>
+						<textbox id="soin_delreason" rows="5"
+							width="80%" mold="rounded" constraint="no empty:请填写停用原因。" />
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button label="提交" id="btSubmit" />
+					<button label="直接提交(不走流程)" id="btSubmitOld" if="${$composer.admin==1}"/>
+				</footer>
+			</foot>
+		</grid>
+			</groupbox>
+					
+		</panelchildren>
+		</panel>
+	
+		
+	</window>
+</zk>

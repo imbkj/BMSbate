@@ -1,0 +1,85 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="win" title="新增 - 状态变更" border="normal" width="500px"
+		height="250px" closable="true" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoProduct.CoProduct_AddOperateController')">
+		<borderlayout>
+			<center>
+				<grid height="100%">
+					<columns>
+						<column width="20%" />
+						<column />
+					</columns>
+					<rows>
+						<row>
+							<cell>
+								<label value="产品名称" style="color:#666" />
+							</cell>
+							<cell>
+								<label value="@load(vm.m.copr_name)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="财务科目" style="color:#666" />
+							</cell>
+							<cell>
+								<combobox readonly="true"
+									selectedItem="@bind(vm.accountModel)"
+									model="@load(vm.accountList)" mold="rounded">
+									<template name="model">
+										<comboitem
+											label="@load(each.cpac_name)">
+										</comboitem>
+									</template>
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="产品类型" style="color:#666" />
+							</cell>
+							<cell>
+								<hlayout>
+									<label
+										value="@load(vm.m.copc_name)" />
+									/
+									<label
+										value="@load(vm.m.copr_type)" />
+								</hlayout>
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="享受方式" style="color:#666" />
+							</cell>
+							<cell>
+								<label value="@load(vm.m.cpst_name)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="城市/委托机构"
+									style="color:#666" />
+							</cell>
+							<cell>
+								<hlayout>
+									<label value="@load(vm.m.city)" />
+									/
+									<label
+										value="@load(vm.m.coab_name)" />
+								</hlayout>
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</center>
+			<south>
+				<hbox width="100%" align="center" pack="center">
+					<button label="提交"
+						onClick="@command('submit',win=win)" />
+				</hbox>
+			</south>
+		</borderlayout>
+	</window>
+</zk>

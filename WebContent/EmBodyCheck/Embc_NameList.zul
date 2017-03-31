@@ -1,0 +1,221 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="年度体检名单信息表" border="normal" id="winYearCheck"
+		width="100%" height="100%" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmBodyCheck.Embc_NameListController')">
+		<borderlayout>
+			<north border="0" title="检索" collapsible="true">
+				<grid width="100%" height="100%">
+					<columns>
+						<column width="12%" />
+						<column />
+						<column width="12%" />
+						<column />
+						<column width="12%" />
+						<column />
+					</columns>
+					<rows>
+						<row>
+							<cell>公司名称</cell>
+							<cell>
+								<textbox id="company" mold="rounded"
+									value="@bind(vm.ebm.coba_company)">
+								</textbox>
+							</cell>
+							<cell>员工姓名</cell>
+							<cell>
+								<textbox id="name" mold="rounded"
+									value="@bind(vm.ebm.emba_name)">
+								</textbox>
+							</cell>
+							<cell>客服</cell>
+							<cell>
+								<combobox model="@load(vm.clientlist)"
+									value="@bind(vm.ebm.coba_client)" readonly="true" id="client"
+									mold="rounded">
+									<template name="model">
+										<comboitem
+											value="@load(each.log_id)" label="@load(each.log_name)" />
+									</template>
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>性别</cell>
+							<cell>
+								<combobox id="sex" mold="rounded"
+									value="@bind(vm.ebm.emba_sex)">
+									<comboitem value="男" label="男" />
+									<comboitem value="女" label="女" />
+								</combobox>
+							</cell>
+							<cell>婚姻状况</cell>
+							<cell>
+								<combobox id="marry" mold="rounded"
+									value="@bind(vm.ebm.emba_marital)">
+									<comboitem label="未婚" />
+									<comboitem label="已婚" />
+								</combobox>
+							</cell>
+							<cell>所属月份</cell>
+							<cell>
+								<combobox id="ownmonth" mold="rounded"
+									model="@load(vm.ownmonthlist)"
+									value="@bind(vm.ebm.ebcc_ownmonth)">
+									<template name="model">
+										<comboitem
+											label="@load(each.ebcc_ownmonth)" />
+									</template>
+								</combobox>
+							</cell>
+
+						</row>
+					</rows>
+					<foot>
+						<footer span="6">
+							体检医院:
+							<combobox id="hospital" mold="rounded"
+								readonly="true" model="@load(vm.suList)"
+								onChange="@command('getUpdateSAList',a=self)" instant="true">
+								<template name="model">
+									<comboitem
+										value="@load(each.ebcs_id)" label="@load(each.ebcs_hospital)" />
+								</template>
+							</combobox>
+							体检地址:
+							<combobox id="address" mold="rounded"
+								readonly="true" model="@load(vm.saList)">
+								<template name="model">
+									<comboitem
+										value="@load(each.ebsa_id)" label="@load(each.ebsa_address)" />
+								</template>
+							</combobox>
+							体检时间:
+							<datebox id="bookdate" mold="rounded"
+								readonly="true" />
+							体检项目:
+
+							<combobox id="cubeItem"
+								model="@load(vm.cubeList)" mold="rounded" readonly="true">
+								<template name="model">
+									<comboitem value="@load(each)"
+										label="@load(each.ebig_name)" />
+								</template>
+							</combobox>
+							<button label="修改"
+								onClick="@command('modList')" />
+							<button label="删除"
+								onClick="@command('delList')" />
+
+							<button label="新增体检"
+								onClick="@command('addall')" />
+
+							<button label="查询"
+								onClick="@command('search')" />
+						</footer>
+
+					</foot>
+				</grid>
+			</north>
+			<center>
+				<grid id="gd" model="@load(vm.list)" width="100%"
+					height="100%" emptyMessage="没有查询到数据" sizedByContent="true"
+					span="true">
+					<columns>
+						<column align="center" width="35px">序号</column>
+						<column align="center">所属月份</column>
+						<column align="center">单位名称</column>
+						<column align="center">员工姓名(上一次体检时间)</column>
+						<column align="center">性别</column>
+						<column align="center">婚姻状况</column>
+						<column align="center">体检医院</column>
+						<column align="center">体检地址</column>
+						<column align="center">体检时间</column>
+						<column align="center">体检项目</column>
+						<column align="center">客服</column>
+						<column align="center">
+							<checkbox id="allcheck"
+								onClick="@command('checkall',ck=self)">
+							</checkbox>
+						</column>
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<cell>
+									<label
+										value="${forEachStatus.index+1 }">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ebcc_ownmonth)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.coba_shortname)">
+									</label>
+								</cell>
+								<cell
+									tooltiptext="${each.emba_name },身份证:${each.emba_idcard },入职时间:${each.emba_indate }">
+									<label if="${each.month lt 7 }"
+										tooltiptext="6个月内有安排过体检" style="color:red;"
+										value="@load(each.emba_name)">
+									</label>
+									<label
+										if="${each.month >=7 or each.month==null }"
+										value="@load(each.emba_name)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emba_sex)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emba_marital)">
+									</label>
+								</cell>
+								<cell>
+
+									<label
+										value="@load(each.hospital)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.address)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ebcc_bookdate)">
+									</label>
+								</cell>
+								<cell>
+									<label value="@load(each.items)">
+									</label>
+
+								</cell>
+								<cell>
+									<label
+										value="@load(each.coba_client)">
+									</label>
+								</cell>
+								<cell>
+									<checkbox
+										onClick="@command('updateItem',a=each,b=1)"
+										checked="@bind(each.checked)">
+									</checkbox>
+								</cell>
+							</row>
+						</template>
+					</rows>
+
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

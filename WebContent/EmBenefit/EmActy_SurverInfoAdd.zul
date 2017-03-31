@@ -1,0 +1,126 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="满意度调查信息新增" border="normal" vflex="1"
+	apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('vm') @init('Controller.EmBenefit.EmActy_SurverInfoAddController')"
+>
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell width="80px">题目</cell>
+			<cell><textbox width="80%" id="title"></textbox></cell>
+			<cell width="80px">排序</cell>
+			<cell><intbox id="order" value="@load(vm.orderid)"></intbox></cell>
+			<cell width="80px">回答类型</cell>
+			<cell>
+				<combobox id="answertype" readonly="true">
+					<comboitem label="单选" value="1"/>
+					<comboitem label="多选" value="2"/>
+					<comboitem label="填空" value="3"/>
+				</combobox>
+			</cell>	
+		</row>
+		<row>
+			<cell width="80px">内容个数</cell>
+			<cell colspan="5"><spinner id="num" value="4" onChange="addItem()" instant="true"/></cell>	
+		</row>
+		<row>
+			<cell width="80px">
+				<vlayout>
+					<label>调查内容</label>
+				</vlayout>
+			</cell>
+			<cell colspan="5">
+				<grid id="contentgd">
+					<rows id="rws" onCreate="addItem()">
+						<row>
+							<cell width="50px">内容</cell>
+							<cell><textbox width="80%"></textbox></cell>
+							<cell width="50px">分数</cell>
+							<cell><intbox></intbox></cell>
+							<cell width="50px">排序</cell>
+							<cell><intbox value="1"></intbox></cell>
+						</row>
+					</rows>
+				</grid>
+			</cell>	
+		</row>
+	</rows>
+	<foot>
+		<footer align="center"><button onClick="@command('addsurver',title=title.value,order=order.value,gd=contentgd,answertype=answertype.selectedItem.value)">提交</button></footer>
+	</foot>
+</grid>
+<zscript><![CDATA[
+        //declare zscript methods
+        //添加多个联系人
+        void addItem(){
+        if(num.getValue()>=1)
+        {
+           int gdrownum=rws.getChildren().size();
+           if(gdrownum<num.getValue())
+           {
+        	   int n=num.getValue()-gdrownum;
+        	   for(int i=0;i<n;i++)
+        	   {
+        		   gdrownum=gdrownum+1;
+        	   		Row rw=new Row();
+        	   
+        	   		Cell cl1=new Cell();
+        	  		Label bel1=new Label("内容");
+        	  		bel1.setParent(cl1);
+        	   
+        	  		Cell cl2=new Cell();
+        	  		Textbox tx2=new Textbox();
+        	  		tx2.setWidth("80%");
+        	  		tx2.setParent(cl2);
+        	   
+        	  		Cell cl3=new Cell();
+        	   		Label bel3=new Label("分数");
+        	   		bel3.setParent(cl3);
+        	   
+        	   		Cell cl4=new Cell();
+        	   		Intbox tx4=new Intbox();
+        	   		tx4.setParent(cl4);
+        	   
+        	  		Cell cl5=new Cell();
+        	   		Label bel5=new Label("排序");
+        	   		bel5.setParent(cl5);
+        	   
+        	   		Cell cl6=new Cell();
+        	   		Intbox tx6=new Intbox();
+        	   		tx6.setParent(cl6);
+        	   		tx6.setValue(gdrownum);
+        	   
+        	   		cl1.setParent(rw);
+        	  		cl2.setParent(rw);
+        	  		cl3.setParent(rw);
+        	  		cl4.setParent(rw);
+        	   		cl5.setParent(rw);
+        	   		cl6.setParent(rw);
+        	   		rw.setParent(rws);
+        	   }
+           }
+           else if(gdrownum>num.getValue())
+           {
+        	   int n=gdrownum-num.getValue();
+        	   for(int i=0;i<n;i++)
+        	   {
+        		   List r=rws.getChildren();
+        		   int y=r.size();
+    			   if(y>=0)
+    			   {
+    				   Row rw=(Row)r.get(y-1);
+    				   rws.removeChild(rw);
+    			   }
+        	   }
+           }
+        }
+       	else
+        {
+        	Messagebox.show("内容个数不能小于1","提示", Messagebox.OK, Messagebox.INFORMATION);
+        	num.setValue(1);
+        } 
+      }
+    ]]></zscript>
+</window>
+</zk>

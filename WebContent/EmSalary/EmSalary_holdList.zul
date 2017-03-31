@@ -1,0 +1,150 @@
+<?page title="工资暂停发放列表" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="工资暂停发放列表" border="normal"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmSalary.EmSalary_holdListController')"
+		height="100%" width="100%">
+		<borderlayout>
+			<center>
+				<grid height="100%" mold="paging" pageSize="50"
+					model="@load(vm.salaryWinList)" emptyMessage="暂无停发工资数据">
+					<columns sizable="true">
+						<column label="序号" align="center" width="40px" />
+						<column width="100px" align="center"
+							sort="auto(ownmonth)">
+							<vbox align="center">
+								<label value="所属月份"
+									style="color:black;" />
+								<intbox id="ibOwnmonth"
+									constraint="no negative"
+									onChange="@command('changeList', ownmonth=ibOwnmonth,cid=ibCid,shortname=txtShortname,gid=ibGid,emname=txtEmname,usage=cbUsage)" />
+							</vbox>
+						</column>
+						<column width="100px" align="center"
+							sort="auto(cid)">
+							<vbox align="center">
+								<label value="公司编号"
+									style="color:black;" />
+								<intbox id="ibCid"
+									constraint="no negative"
+									onChange="@command('changeList', ownmonth=ibOwnmonth,cid=ibCid,shortname=txtShortname,gid=ibGid,emname=txtEmname,usage=cbUsage)" />
+							</vbox>
+						</column>
+						<column width="150px" align="center"
+							sort="auto(coba_shortname)">
+							<vbox align="center">
+								<label value="公司简称"
+									style="color:black;" />
+								<textbox id="txtShortname"
+									onChange="@command('changeList', ownmonth=ibOwnmonth,cid=ibCid,shortname=txtShortname,gid=ibGid,emname=txtEmname,usage=cbUsage)" />
+							</vbox>
+						</column>
+						<column width="100px" align="center"
+							sort="auto(gid)">
+							<vbox align="center">
+								<label value="员工编号"
+									style="color:black;" />
+								<intbox id="ibGid"
+									constraint="no negative"
+									onChange="@command('changeList', ownmonth=ibOwnmonth,cid=ibCid,shortname=txtShortname,gid=ibGid,emname=txtEmname,usage=cbUsage)" />
+							</vbox>
+						</column>
+						<column width="150px" align="center"
+							sort="auto(name)">
+							<vbox align="center">
+								<label value="员工姓名"
+									style="color:black;" />
+								<textbox id="txtEmname"
+									onChange="@command('changeList', ownmonth=ibOwnmonth,cid=ibCid,shortname=txtShortname,gid=ibGid,emname=txtEmname,usage=cbUsage)" />
+							</vbox>
+						</column>
+						<column width="100px" align="center"
+							sort="auto(esda_usage_typestr)">
+							<vbox align="center">
+								<label value="用途" style="color:black;" />
+								<combobox id="cbUsage" mold="rounded"
+									readonly="true"
+									onChange="@command('changeList', ownmonth=ibOwnmonth,cid=ibCid,shortname=txtShortname,gid=ibGid,emname=txtEmname,usage=cbUsage)"
+									width="80px">
+									<comboitem label="" />
+									<comboitem label="${each.pcco_cn}"
+										forEach="${vm.usageList}" />
+								</combobox>
+							</vbox>
+						</column>
+						<column label="状态" align="center" width="100px" />
+						<column label="操作" align="center" width="60px" />
+						<column label="税前工资" align="center"
+							width="100px" />
+						<column label="个人所得税" align="center"
+							width="100px" />
+						<column label="年终奖金" align="center"
+							width="100px" />
+						<column label="年终奖金税" align="center"
+							width="100px" />
+						<column label="离职补偿金" align="center"
+							width="100px" />
+						<column label="离职补偿金税" align="center"
+							width="100px" />
+						<column label="股票金额" align="center"
+							width="100px" />
+						<column label="股票税" align="center"
+							width="100px" />
+						<column label="实发工资" align="center"
+							width="100px" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<label
+									value="${forEachStatus.index + 1}" />
+								<label value="@load(each.ownmonth)" />
+								<label value="@load(each.cid)" />
+								<label
+									value="@load(each.coba_shortname)" />
+								<label value="@load(each.gid)" />
+								<label value="@load(each.name)" />
+								<label
+									value="@load(each.esda_usage_typestr)" />
+								<label value="暂停发放" />
+								<cell>
+									<menubar autodrop="true">
+										<menu
+											image="../images/pencil-small.png">
+											<menupopup>
+												<menuitem label="退回"
+													onClick="@command('returnSalary',model=each)" />
+												<menuitem label="转待发放"
+													onClick="@command('audtingSalary',model=each)" />
+											</menupopup>
+										</menu>
+									</menubar>
+								</cell>
+								<decimalbox format="###.##"
+									inplace="true" readonly="true"
+									value="@load(each.esda_total_pretax)" />
+								<decimalbox format="###.##"
+									inplace="true" readonly="true" value="@load(each.esda_tax)" />
+								<decimalbox format="###.##"
+									inplace="true" readonly="true" value="@load(each.esda_db)" />
+								<decimalbox format="###.##"
+									inplace="true" readonly="true" value="@load(each.esda_db_tax)" />
+								<decimalbox format="###.##"
+									inplace="true" readonly="true" value="@load(each.esda_dc)" />
+								<decimalbox format="###.##"
+									inplace="true" readonly="true" value="@load(each.esda_dc_tax)" />
+								<decimalbox format="###.##"
+									inplace="true" readonly="true" value="@load(each.esda_stock)" />
+								<decimalbox format="###.##"
+									inplace="true" readonly="true"
+									value="@load(each.esda_stock_tax)" />
+								<decimalbox format="###.##"
+									inplace="true" readonly="true" value="@load(each.esda_pay)" />
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

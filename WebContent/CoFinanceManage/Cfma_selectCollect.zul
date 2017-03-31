@@ -1,0 +1,42 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="打印收款" border="normal" width="40%"
+		apply="org.zkoss.bind.BindComposer" closable="true"
+		viewModel="@id('vm') @init('Controller.CoFinanceManage.Cfma_selectCollectController')">
+
+
+		<grid model="@load(vm.cfcList)" id="gridid">
+			<columns>
+				<column width="8%">
+
+				</column>
+				<column align="right">
+					<button label="全选"
+						onClick="@command('allCheck',gridid=gridid,check='checkall')" />
+					<button label="反选"
+						onClick="@command('allnotCheck',gridid=gridid)" />
+				</column>
+			</columns>
+			<rows>
+				<template name="model">
+					<row>
+						<cell align="center">
+							<checkbox
+								value="@load(each.cfco_cfmb_number)" />
+						</cell>
+						<cell align="left">
+
+							<label value="@load(each.coba_company)" />
+							<label value="@load(each.cfco_cfmb_number)" />
+						</cell>
+					</row>
+				</template>
+			</rows>
+
+		</grid>
+		<div align="center">
+			<button label="下一步"
+				onClick="@command('nextStep',gridid=gridid)" />
+		</div>
+	</window>
+</zk>

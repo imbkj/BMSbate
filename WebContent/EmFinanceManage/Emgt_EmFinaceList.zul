@@ -1,0 +1,101 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="个人收款明细" border="normal" width="60%" height="70%"
+		apply="org.zkoss.bind.BindComposer" closable="true"
+		viewModel="@id('vm') @init('Controller.EmFinanceManage.Emgt_EmFinaceListController')">
+		<grid>
+			<rows>
+				<row>
+					<cell width="80px">公司编号</cell>
+					<cell>
+						<label value="@load(vm.model.cid)"></label>
+					</cell>
+					<cell width="80px">公司全称</cell>
+					<cell>
+						<label value="@load(vm.model.coba_company)"></label>
+					</cell>
+					<cell width="80px">公司简称</cell>
+					<cell>
+						<label value="@load(vm.model.coba_shortname)"></label>
+					</cell>
+				</row>
+				<row>
+					<cell>员工编号</cell>
+					<cell>
+						<label value="@load(vm.model.gid)"></label>
+					</cell>
+					<cell>公员工姓名</cell>
+					<cell>
+						<label value="@load(vm.model.emba_name)"></label>
+					</cell>
+					<cell>身份证号</cell>
+					<cell>
+						<label value="@load(vm.model.emba_idcard)"></label>
+					</cell>
+				</row>
+			</rows>
+		</grid>
+		<grid model="@load(vm.list)" emptyMessage="没有数据" vflex="1"
+			mold="paging" pageSize="50">
+			<columns>
+				<column label="序号" width="40px" align="center" />
+				<column width="60px" align="center">
+					<label>所属月份</label>
+				</column>
+				<column hflex="1" align="center">
+					<label>收费方式</label>
+				</column>
+				<column label="金额" hflex="1" align="center"></column>
+				<column hflex="1" align="center">
+
+					<label>收费类型</label>
+				</column>
+				<column label="备注" hflex="4" align="center" />
+				<column label="添加人" hflex="1" align="center" />
+				<column label="添加时间" hflex="1" align="center" />
+				<column label="修改" width="60px" align="center" />
+			</columns>
+			<rows>
+				<template name="model">
+					<row>
+						<cell>
+							<label value="${forEachStatus.index+1 }"></label>
+						</cell>
+						<cell>
+							<label value="@load(each.ownmonth)"></label>
+						</cell>
+						<cell>
+							<label value="@load(each.emgt_paytype)"></label>
+						</cell>
+						<cell>
+							<label value="@load(each.emgt_fee)"></label>
+						</cell>
+						<cell>
+							<label value="@load(each.emgt_type)"></label>
+						</cell>
+						<cell>
+							<label value="@load(each.emgt_remark)"></label>
+						</cell>
+						<cell>
+							<label value="@load(each.emgt_addname)"></label>
+						</cell>
+						<cell>
+							<label value="@load(each.emgt_addtime)"></label>
+						</cell>
+						<cell>
+							<a
+								onClick="@command('openupdate',model=each)">
+								<label value="修改"></label>
+							</a>
+						</cell>
+					</row>
+				</template>
+			</rows>
+			<foot>
+				<footer span="9">
+					<button onClick="@command('add')">新增收款</button>
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

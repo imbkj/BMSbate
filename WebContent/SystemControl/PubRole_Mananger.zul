@@ -1,0 +1,130 @@
+﻿<!--
+	创建人：张志强
+	创建时间：2013-9-17
+	用途：分配角色页面
+-->
+<?page title="角色分配" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="分配角色" id="wins" border="normal" width="100%"
+		height="100%" closable="true"
+		apply="org.zkoss.bind.BindComposer,Controller.SystemControl.PubRoleManangerController"
+		viewModel="@id('vm') @init('Controller.SystemControl.UserListController')">
+		<grid width="100%">
+			<rows>
+				<row>
+					<cell colspan="1">
+						角色名称:
+						<combobox readonly="true" id="role_id"
+							width="30%" model="@load(vm.rolelist)" constraint="no empty"
+							onChange="@command('rolesubmit',tb1=role_id)">
+							<template name="model">
+								<comboitem label="@load(each.rol_name)"
+									value="@load(each.rol_id)">
+								</comboitem>
+							</template>
+						</combobox>
+						
+					</cell>
+					<cell colspan="1">
+						部门:
+					
+							<combobox readonly="true"
+								model="@load(vm.deplist)" onChange="@command('depsubmit')"
+								value="@bind(vm.depm.dep_name)" >
+								<template name="model">
+									<comboitem label="@load(each.dep_name)" />
+								</template>
+							</combobox>
+						
+						
+					</cell>
+				</row>
+				<row>
+					<cell colspan="2">
+
+						<hlayout height="300px" style="padding:10px">
+							<listbox id="candidateLb" hflex="1"
+								vflex="true" multiple="true" model="@load(vm.userlist)"
+								onSelect="move(candidateLb,chosenLb)">
+								<listhead>
+									<listheader label="拼音首字典"
+										>
+									</listheader>
+									
+									<listheader label="员工姓名"
+										>
+									</listheader>
+
+
+								</listhead>
+								<template name="model">
+									<listitem>
+										<listcell
+											label="@load(each.pyzm)" />
+										<listcell
+											label="@load(each.log_name)" />
+									</listitem>
+								</template>
+							</listbox>
+							<zscript><![CDATA[
+	String imgPath = "/widgets/listbox/dual_listbox/img";
+]]></zscript>
+							<vbox spacing="10px" width="24px">
+								<image style="cursor:pointer"
+									id="chooseAllBtn" src="../images/rightrightarrow_g.png" />
+								<image style="cursor:pointer"
+									id="chooseBtn" src="../images/rightarrow_g.png"
+									onClick="move(candidateLb,chosenLb)" />
+								<image style="cursor:pointer"
+									id="removeBtn" src="../images/leftarrow_g.png"
+									onClick="move(chosenLb,candidateLb)" />
+								<image style="cursor:pointer"
+									id="removeAllBtn" src="../images/leftleftarrow_g.png" />
+							</vbox>
+							<listbox id="chosenLb" hflex="1"
+								vflex="true" multiple="true"
+								onSelect="move(chosenLb,candidateLb)"
+								model="@load(vm.roleclist)">
+								<listhead>
+									<listheader label="拼音首字典"
+										width="100px">
+									</listheader>
+									<listheader label="员工姓名"
+										width="280px">
+									</listheader>
+
+								</listhead>
+								<template name="model">
+									<listitem>
+										<listcell
+											label="@load(each.pyzm)" />
+										<listcell
+											label="@load(each.log_name)" />
+
+
+									</listitem>
+								</template>
+							</listbox>
+
+						</hlayout>
+
+					</cell>
+					<zscript>
+	void move(Listbox src, Listbox dst) {
+		Listitem s = src.getSelectedItem();
+		if (s == null)
+			Messagebox.show("请选中需要分配的员工姓名");
+		else
+			s.setParent(dst);
+		//alert(src.getItemCount());
+	}
+</zscript>
+
+				</row>
+			</rows>
+		</grid>
+		<toolbar mold="panel" align="center">
+			<button id="submitButton" label="提 交" onClick="" />
+		</toolbar>
+	</window>
+</zk>

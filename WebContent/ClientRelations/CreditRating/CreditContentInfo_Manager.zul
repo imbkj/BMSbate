@@ -1,0 +1,67 @@
+<?page title="信誉评价标准" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window border="0" vflex="1">
+<panel apply="org.zkoss.bind.BindComposer" title="信誉评价标准" height="99%"
+viewModel="@id('credit') @init('Controller.ClientRelations.CreditRating.CreditContentInfo_ManagerController')" >
+	<panelchildren>
+	<grid>
+	<rows>
+	<row><cell align="right" style="padding-right:20px;"><button id="addcr" onClick="@command('addCreditCon')">添加新标准</button></cell></row>
+	</rows>
+	</grid>
+	<grid model="@load(credit.creditmodel)" vflex="1">
+		<columns>
+			<column width="40px"/>
+			<column label="序号" align="center" width="80px"/>
+			<column align="center" sort="auto(crcr_content)"><vlayout><label value="标准名称" />
+			<textbox id="creadiname" onChange="@command('searchCreditCriterion')" value="@bind(credit.creaditename)" instant="true"/>
+			</vlayout></column>
+			<column align="center" sort="auto(crcr_type)"><vlayout><label value="标准类型" />
+			<textbox id="creadtype" onChange="@command('searchCreditCriterion')" value="@bind(credit.creaditetype)" instant="true"/>
+			</vlayout></column>
+			<column align="center"><vlayout><label value="添加人" />
+			<textbox id="addnames" onChange="@command('searchCreditCriterion')" value="@bind(credit.creaditeaddName)" instant="true"/>
+			</vlayout></column>
+			<column label="添加时间" align="center" sort="auto(crcr_addtime)"/>
+			<column align="center" width="80px">
+			<vlayout><label value="是否有效" />
+			<combobox id="ifvalid" onChange="@command('searchCreditCriterion')" value="@bind(credit.ifvalidvalue)" width="60px">
+				<comboitem label="" value="00"/>
+				<comboitem label="是"/>
+				<comboitem label="否"/>
+			</combobox>
+			</vlayout>
+			</column>
+			<column label="操作" align="center" width="60px"/>
+		</columns>
+		<rows>
+		<template name="model">
+			<row>
+			<custom-attributes
+			crcr_id="${each.crcr_id }" />
+			<detail open="false" fulfill="onOpen">
+					<include src="/ClientRelations/CreditRating/CreditContentInfoList.zul" crcr_id="${crcr_id}" />
+			</detail>
+			<label value="${forEachStatus.index+1 }"/>
+			<label value="@load(each.crcr_content)"/>
+			<label value="@load(each.crcr_type)"/>
+			<label value="@load(each.crcr_addname)"/>
+			<label value="@load(each.crcr_addtime)"/>
+			<label value="@load(each.crcr_ifstate)"/>
+			<menubar autodrop="true">
+					<menu image="../images/pencil-small.png">
+						<menupopup>
+							<menuitem width="100px" label="新增内容" onClick="@command('addCreditConInfo',con=each)"/>
+							<menuseparator />
+							<menuitem label="修改" onClick="@command('updateCreditCriterion',coninfo=each)"/>
+						</menupopup>
+					</menu>
+			</menubar>
+			</row>
+		</template>
+		</rows>
+	</grid>
+	</panelchildren>
+</panel>
+</window>
+</zk>

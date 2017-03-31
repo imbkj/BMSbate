@@ -1,0 +1,122 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window width="100%" height="100%" title="供应商合同修改"
+		id="wincompactMod" border="normal" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmBenefit.EmActy_compactModController')"
+		closable="true">
+		<borderlayout>
+			<north>
+				<grid>
+					<rows>
+						<row>
+							<cell>供应商</cell>
+							<cell>
+								<label value="@load(vm.eacm.eaco_name)" />
+							</cell>
+							<cell>合同编号</cell>
+							<cell>
+								<combobox mold="rounded" autodrop="true"
+									value="@bind(vm.eacm.eaco_compactid)"
+									model="@load(vm.compactlist)"
+									onChange="@command('updatecompact',a=self.value)"
+									instant="true">
+									<template name="model">
+										<comboitem
+											label="@load(each.eaco_compactid)" />
+									</template>
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>合同签订时间</cell>
+							<cell>
+								<datebox id="signdate" mold="rounded"
+									value="@load(vm.signdate)" />
+							</cell>
+							<cell>合同生效时间</cell>
+							<cell>
+								<datebox id="inuredate" mold="rounded"
+									value="@load(vm.inuredate)" />
+							</cell>
+						</row>
+						<row>
+							<cell>合同到期日</cell>
+							<cell>
+								<datebox id="stopdate" mold="rounded"
+									value="@load(vm.stopdate)" />
+							</cell>
+							<cell>是否自动续约</cell>
+							<cell>
+								<combobox mold="rounded"
+									value="@bind(vm.eacm.eaco_auto2)">
+									<comboitem value="1" label="是" />
+									<comboitem value="0" label="否" />
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>合作状态</cell>
+							<cell colspan="3">
+								<combobox value="@bind(vm.eacm.eaco_together2)">
+									<comboitem value="0" label="未合作" />
+									<comboitem value="1" label="已合作" />
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>备注</cell>
+							<cell colspan="3">
+								<textbox width="50%" rows="3"
+									mold="rounded" value="@bind(vm.eacm.eaco_remark)" />
+							</cell>
+
+						</row>
+					</rows>
+
+				</grid>
+			</north>
+			<center>
+				<groupbox title="产品列表">
+					<grid height="350px" model="@load(vm.prodList)">
+						<columns>
+							<column width="60px" align="center">
+								序号
+							</column>
+							<column align="center">产品名称</column>
+							<column align="center">价格</column>
+							<column align="center">折扣价</column>
+							<column align="center">操作</column>
+						</columns>
+						<template name="model">
+							<row>
+								<cell>${forEachStatus.index+1 }</cell>
+								<cell>
+									<label
+										value="@load(each.prod_name)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.prod_price)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.prod_discountprice)" />
+								</cell>
+								<cell>
+									<button label="删除" if="${vm.eacm.eaco_state==2 || vm.eacm.eaco_state==5}"
+										onClick="@command('delProd',a=each)" />
+								</cell>
+							</row>
+						</template>
+					</grid>
+				</groupbox>
+			</center>
+			<south>
+				<div align="center">
+					<button label="提交" if="${ vm.eacm.eaco_state==2 || vm.eacm.eaco_state==5}"
+						onClick="@command('submit')" />
+				</div>
+			</south>
+		</borderlayout>
+	</window>
+</zk>

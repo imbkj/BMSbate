@@ -1,0 +1,98 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="公积金补缴批量申报列表" border="normal" width="90%" height="90%"
+		closable="true" apply="org.zkoss.bind.BindComposer" id="windeclareall"
+		viewModel="@id('vm') @init('Controller.EmHouse.Emhouse_BjDeclareAllListController')">
+		<radiogroup id="yorn" onCheck="" />
+		<groupbox vflex="1">
+			<caption>打印列表</caption>
+			<grid vflex="1">
+				<rows>
+					<row>
+						<cell>
+							<include
+								src="../EmHouse/Emhouse_BjDeclareAllPrint.jsp?idstr=${vm.idstr }">
+							</include>
+						</cell>
+					</row>
+				</rows>
+			</grid>
+		</groupbox>
+		<groupbox vflex="1">
+			<caption>数据申报列表</caption>
+			<grid emptyMessage="暂时没有数据记录" id="declarelist" width="100%"
+				model="@load(vm.listmodel)">
+				<columns>
+					<column align="center" label="序号" width="40px" />
+					<column label="公司简称" align="left" />
+					<column label="员工姓名" align="center" />
+					<column align="center">
+						<radiogroup
+							onCheck="@command('radioSelectAll',r=self.selectedItem.value,declarelist=declarelist)">
+							<radio label="未申报" value="0"
+								style="margin-right:15px;" />
+							<radio label="申报中" value="2"
+								style="margin-right:15px;" />
+							<radio label="已申报" value="1"
+								style="margin-right:15px;" />
+							<radio label="退回" value="3"
+								style="margin-right:15px;" />
+						</radiogroup>
+					</column>
+					<column>退回原因</column>
+				</columns>
+				<rows>
+					<template name="model">
+						<row>
+							<cell>
+								<label
+									value="${forEachStatus.index+1 }">
+								</label>
+							</cell>
+							<cell>
+								<label
+									value="@load(each.emhb_company)">
+								</label>
+							</cell>
+							<cell>
+								<label value="@load(each.emhb_id)"
+									visible="false">
+								</label>
+							</cell>
+							<cell>
+								<label value="@load(each.emhb_name)"></label>
+							</cell>
+							<cell align="center">
+								<radiogroup>
+									<radio label="未申报" value="0"
+										selected="${each.emhb_ifdeclare==0 }"
+										style="margin-right:15px;" />
+									<radio label="申报中" value="2"
+										selected="${each.emhb_ifdeclare==2 }"
+										style="margin-right:15px;" />
+									<radio label="已申报" value="1"
+										selected="${each.emhb_ifdeclare==1 }"
+										style="margin-right:15px;" />
+									<radio label="退回" value="3"
+										selected="${each.emhb_ifdeclare==3 }"
+										style="margin-right:15px;" />
+								</radiogroup>
+							</cell>
+							<cell>
+								<textbox />
+							</cell>
+						</row>
+					</template>
+				</rows>
+				<foot>
+					<footer align="center" span="4">
+						<button
+							onClick="@command('declareAll',declarelist=declarelist)">
+							确认申报
+						</button>
+					</footer>
+				</foot>
+			</grid>
+		</groupbox>
+	</window>
+</zk>

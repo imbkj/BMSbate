@@ -1,0 +1,45 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="${arg.name}" border="normal"
+		apply="Controller.Workflow.WfNode_ViewController" width="70%"
+		sizable="true" closable="true">
+		<hlayout style="overflow:auto">
+			<tablelayout columns="6"
+				forEach="${$composer.getNodeList()}">
+				<tablechildren colspan="3">
+					<panel style="padding-top:5px">
+						<panelchildren style="padding-left:10px">
+							<image src="../images/workflow/p1.GIF" />
+						</panelchildren>
+					</panel>
+					<panel style="padding-top:20px">
+						<panelchildren>
+							<label width="50px">${each}</label>
+						</panelchildren>
+					</panel>
+				</tablechildren>
+				<tablechildren style="padding-left:10px" colspan="3">
+					<panel style="padding-top:5px">
+						<panelchildren>
+							<image src="../images/workflow/p2.JPG" />
+						</panelchildren>
+					</panel>
+				</tablechildren>
+			</tablelayout>
+			<tablelayout columns="1">
+				<tablechildren>
+					<panel style="padding-top:5px">
+						<panelchildren style="padding-left:5px">
+							<image src="../images/workflow/p6.JPG" />
+						</panelchildren>
+					</panel>
+					<panel style="padding-top:20px">
+						<panelchildren>
+							<label>完成</label>
+						</panelchildren>
+					</panel>
+				</tablechildren>
+			</tablelayout>
+		</hlayout>
+	</window>
+</zk>

@@ -1,0 +1,151 @@
+<!--
+	创建人：林少斌
+	创建时间：2014-3-20
+	用途：智翼通接口数据补充编号
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winUpCG" title="智翼通接口 -- 补充编号" border="normal" width="80%"
+		closable="true" height="80%" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmZYT.EmZYT_UpCidGidController')">
+		<grid width="100%">
+			<rows>
+				<row>
+					<cell width="15%">公司编号</cell>
+					<cell width="35%">
+						<intbox id="cid" value="@load(vm.cid)"
+							width="90%" mold="rounded" />
+					</cell>
+					<cell width="15%">公司名称</cell>
+					<cell width="35%">
+						<textbox id="emzt_company"
+							value="@load(vm.emzt_company)" width="90%" mold="rounded" />
+					</cell>
+				</row>
+				<row>
+					<cell>员工编号</cell>
+					<cell>
+						<intbox id="gid" value="@load(vm.gid)"
+							width="90%" mold="rounded" />
+					</cell>
+					<cell>员工名称</cell>
+					<cell>
+						<textbox id="emzt_name"
+							value="@load(vm.emzt_name)" width="90%" mold="rounded" />
+					</cell>
+				</row>
+				<row>
+					<cell>身份证号</cell>
+					<cell>
+						<textbox id="emzt_idcard"
+							value="@load(vm.emzt_idcard)" width="90%" mold="rounded" />
+					</cell>
+					<cell>手机号</cell>
+					<cell>
+						<textbox id="emzt_mobile"
+							value="@load(vm.emzt_mobile)" width="90%" mold="rounded" />
+					</cell>
+				</row>
+				<row>
+					<cell>可能符合的公司</cell>
+					<cell colspan="3">
+						<grid id="coGrid" width="100%" height="100%"
+							model="@load(vm.coList)" emptyMessage="无数据">
+							<columns sizable="true">
+								<column label="公司编号" align="center" />
+								<column label="公司名称" align="center" />
+								<column label="公司状态" align="center" />
+								<column label="客服" align="center" />
+								<column label="操作" align="center" />
+							</columns>
+							<rows>
+								<template name="model">
+									<row>
+										<cell>
+											<label
+												value="@load(each.cid)" />
+										</cell>
+										<cell>
+											<label
+												value="@load(each.coba_company)" />
+										</cell>
+										<cell>
+											<label
+												value="服务中" if="${each.coba_servicestate eq 1}"/>
+											<label
+												value="解约" if="${each.coba_servicestate eq 0}"/>
+										</cell>
+										<cell>
+											<label
+												value="@load(each.coba_client)" />
+										</cell>
+										<cell>
+											<label value="选择"
+												style="cursor:pointer; color:blue;" onClick="@command('chooseCid',data=each.cid)" />
+										</cell>
+									</row>
+								</template>
+							</rows>
+						</grid>
+					</cell>
+				</row>
+				<row>
+					<cell>可能符合的员工</cell>
+					<cell colspan="3">
+						<grid id="emGrid" width="100%" height="100%"
+							model="@load(vm.emList)" emptyMessage="无数据">
+							<columns sizable="true">
+								<column label="员工编号" align="center" />
+								<column label="所属公司" align="center" />
+								<column label="员工姓名" align="center" />
+								<column label="员工状态" align="center" />
+								<column label="客服" align="center" />
+								<column label="操作" align="center" />
+							</columns>
+							<rows>
+								<template name="model">
+									<row>
+										<cell>
+											<label
+												value="@load(each.gid)" />
+										</cell>
+										<cell>
+											<label
+												value="@load(each.coba_shortname)" />
+										</cell>
+										<cell>
+											<label
+												value="@load(each.emba_name)" />
+										</cell>
+										<cell>
+											<label
+												value="离职" if="${each.emba_state eq 0}"/>
+											<label
+												value="在职" if="${each.emba_state eq 1}"/>
+											<label
+												value="入职中" if="${each.emba_state ne 1 and each.emba_state ne 0}"/>
+										</cell>
+										<cell>
+											<label
+												value="@load(each.coba_client)" />
+										</cell>
+										<cell>
+											<label value="选择"
+												style="cursor:pointer; color:blue;" onClick="@command('chooseGid',data=each)" />
+										</cell>
+									</row>
+								</template>
+							</rows>
+						</grid>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button label="提交" id="btSubmit"
+						onClick="@command('submit',win=winUpCG,gid=gid,cid=cid,emzt_name=emzt_name,emzt_idcard=emzt_idcard,emzt_company=emzt_company,emzt_mobile=emzt_mobile)" />
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

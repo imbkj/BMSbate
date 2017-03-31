@@ -1,0 +1,160 @@
+<!--
+	创建人：林少斌
+	创建时间：2016-12-27
+	用途：生育津贴收款确认
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winDeclareMASearch" title="社会保险 -- 生育津贴收款确认页面"
+		border="normal" width="100%" height="100%" closable="false"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmSheBao.Emsi_fd_DeclareMA_SearchController')">
+		<tablelayout columns="2" width="100%" height="100%">
+			<tablechildren height="100%" width="80%" rowspan="2">
+				<groupbox height="100%">
+					<caption label="条件检索" />
+					<grid>
+						<rows>
+							<row>
+								<cell width="18%">
+									<label value="所属月份：" />
+								</cell>
+								<cell>
+									<combobox id="s_ownmonth"
+										value="@load(vm.nowmonth)" mold="rounded" readonly="true">
+										<comboitem label="全部" />
+										<comboitem label="${each}"
+											forEach="${vm.s_ownmonth}" />
+									</combobox>
+								</cell>
+								<cell width="18%">
+									<label value="申报状态：" />
+								</cell>
+								<cell>
+									<combobox id="s_state"
+										mold="rounded" value="全部" readonly="true">
+										<comboitem label="全部"
+											value="10" />
+										<comboitem label="已确认收款"
+											value="12" />
+										<comboitem label="未确认收款"
+											value="19" />
+									</combobox>
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label value="快捷查询：" />
+								</cell>
+								<cell>
+									<textbox width="60%" mold="rounded"
+										id="keyword" />
+									<combobox width="30%" value="姓名"
+										id="cont" readonly="true" mold="rounded">
+										<comboitem label="姓名" />
+										<comboitem label="员工编号" />
+										<comboitem label="身份证" />
+										<comboitem label="公司名称" />
+										<comboitem label="公司编号" />
+									</combobox>
+								</cell>
+								<cell>
+									<label value="批次号：" />
+								</cell>
+								<cell>
+									<textbox width="60%" mold="rounded"
+										id="batchnum" />
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label value="到账时间：" />
+								</cell>
+								<cell>
+									<datebox id="fd_ctime"
+											width="45%" format="yyyy-MM-dd" />
+								</cell>
+								<cell>
+								</cell>
+								<cell>
+									
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label value="开户状态：" />
+								</cell>
+								<cell>
+									<combobox mold="rounded" value="全部"
+										id="single" readonly="true">
+										<comboitem label="全部" value="9" />
+										<comboitem label="独立开户"
+											value="1" />
+										<comboitem label="中智开户"
+											value="0" />
+										<comboitem label="中智开户(委托)"
+											value="2" />
+									</combobox>
+								</cell>
+								<cell>
+									<label value="客服代表：" />
+								</cell>
+								<cell>
+									<combobox mold="rounded"
+										value="@load(vm.client)" id="client" readonly="true">
+										<comboitem label="全部" />
+										<comboitem
+											forEach="${vm.clientList}" label="${each.log_name}" />
+									</combobox>
+								</cell>
+							</row>
+						</rows>
+						<foot>
+							<footer align="center">
+								<button label="查询" id="btSubmit"
+									onClick="@command('search',win=winDeclareMASearch,s_ownmonth=s_ownmonth,s_state=s_state,keyword=keyword,cont=cont,client=client,single=single,batchnum=batchnum,fd_ctime=fd_ctime)" />
+							</footer>
+						</foot>
+					</grid>
+				</groupbox>
+			</tablechildren>
+			<tablechildren>
+				<groupbox height="100%">
+					<caption label="快速检索" />
+					<grid height="100%">
+						<rows>
+							<row>
+								<cell></cell>
+							</row>
+						</rows>
+					</grid>
+				</groupbox>
+			</tablechildren>
+			<tablechildren height="65%">
+				<groupbox height="100%">
+					<caption label="" />
+					<grid height="100%">
+						<rows>
+							<row>
+								<cell width="60%">
+
+								</cell>
+								<cell>
+
+								</cell>
+							</row>
+							<row>
+								<cell>
+
+								</cell>
+								<cell>
+
+								</cell>
+							</row>
+						</rows>
+					</grid>
+				</groupbox>
+			</tablechildren>
+		</tablelayout>
+	</window>
+</zk>

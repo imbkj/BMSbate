@@ -1,0 +1,68 @@
+<?page title="公司收款" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winCollectToCompany" title="添加收款信息" border="normal"
+		width="500px" height="400px" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoFinanceManage.Cfma_CollectToCompanysController')"
+		closable="true" sizable="true">
+		<grid hflex="1" vflex="1">
+			<rows>
+				<row>
+					<cell>
+						<label value="操作月份："/>
+					</cell>
+					<cell>
+						<datebox format="yyyyMM" value="@bind(vm.ownmonth)"/>
+					</cell>
+				</row>
+				<row>
+					<cell width="30%">
+						<label value="公司编号：" />
+					</cell>
+					<cell>
+						<label value="@load(vm.cid)" />
+					</cell>
+				</row>
+				<row>
+					<cell>
+						<label value="公司名称：" />
+					</cell>
+					<cell>
+						<label value="@load(vm.company)" />
+					</cell>
+				</row>
+				<row>
+					<cell>
+						<label value="添加人：" />
+					</cell>
+					<cell>
+						<label value="@load(vm.username)" />
+					</cell>
+				</row>
+				<row>
+					<cell>
+						<label value="收款金额：" />
+					</cell>
+					<cell>
+						<decimalbox id="dbPaidin" width="50%" value="0"
+							mold="rounded" format="###.##" constraint="no empty" />
+					</cell>
+				</row>
+				<row>
+					<cell>
+						<label value="备注：" />
+					</cell>
+					<cell>
+						<textbox id="txtRemark" rows="3" width="75%"
+							mold="rounded" />
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button label="提交收款"
+						onClick="@command('addCollect',paidin=dbPaidin.value,remark=txtRemark.value,win=winCollectToCompany)" />
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

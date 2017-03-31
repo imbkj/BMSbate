@@ -1,0 +1,1591 @@
+<?page title="员工信息预增" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winyz" title="员工信息预增" width="70%" height="700px"
+		onCreate="@command('createwin',win=self)" border="normal"
+		closable="true" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.Embase.Embase_AddfstController')">
+		<borderlayout>
+			<center autoscroll="true" border="none">
+				<vlayout>
+					<groupbox id="gb1" mold="3d" title="基本信息">
+
+						<checkbox label="全选" style="cursor:pointer"
+							onCheck="@command('allcheck',ck1=emba_sex,
+								ck2=emba_folk,
+								ck3=emba_native,
+								ck4=emba_idcard,
+								ck5=emba_birth,
+								ck6=emba_marital,
+								ck7=emba_school,
+								ck8=emba_specialty,
+								ck9=emba_graduation,
+								ck10=emba_degree,
+								ck11=emba_hjadd,
+								ck12=emba_hjtype,
+								ck13=emba_address,
+								ck14=emba_phone,
+								ck15=emba_mobile,
+								ck16=emba_ep,
+								ck17=emba_email,
+								ck18=emba_party,
+								ck19=emba_status,
+								checked=self.checked)" />
+
+
+
+						<grid id="gd1">
+							<columns>
+								<column width="9%" />
+								<column />
+								<column width="9%" />
+								<column />
+								<column width="10%" />
+								<column />
+								<column width="10%" />
+								<column />
+							</columns>
+							<rows>
+								<row>
+									<cell>
+										<hbox>
+											<!-- 									 <checkbox id="emba_name" -->
+											<!-- 											onCheck="@command('reqcheck',self=self)" disabled="true" -->
+											<!-- 											checked="true" />  -->
+											<label value="*"
+												id="emba_name" style="color:red" />
+											<label value="姓名" />
+
+										</hbox>
+									</cell>
+									<textbox width="120px"
+										value="@bind(vm.m.emba_name)" />
+									<cell>
+										<hbox>
+											<checkbox id="emba_sex"
+												onCheck="@command('reqcheck',self=self)" />
+											<label value="性别" />
+										</hbox>
+									</cell>
+									<combobox readonly="true"
+										width="120px" value="@bind(vm.m.emba_sex)">
+										<comboitem />
+										<comboitem label="男" />
+										<comboitem label="女" />
+									</combobox>
+									<cell>
+										<hbox>
+											<checkbox id="emba_folk"
+												onCheck="@command('reqcheck',self=self)" />
+											<label value="民族" />
+										</hbox>
+									</cell>
+									<combobox readonly="true"
+										width="120px" model="@load(vm.folkList)"
+										value="@bind(vm.m.emba_folk)">
+										<template name="model">
+											<comboitem
+												label="@load(each)" />
+										</template>
+									</combobox>
+									<cell>
+										<hbox>
+											<checkbox id="emba_native"
+												onCheck="@command('reqcheck',self=self)" />
+											<label value="户口所在地" />
+										</hbox>
+									</cell>
+									<textbox width="120px"
+										value="@bind(vm.m.emba_native)" />
+								</row>
+								<row>
+									<cell>
+										<hbox>
+											<checkbox id="emba_idcard"
+												onCheck="@command('reqcheck',self=self)" />
+											<label value="证件类型及号码" />
+										</hbox>
+									</cell>
+									<cell colspan="3">
+										<hbox hflex="1">
+											<combobox readonly="true"
+												hflex="1" value="@bind(vm.m.emba_idcardclass)">
+												<comboitem label="身份证" />
+												<comboitem label="军人证" />
+												<comboitem label="台胞证" />
+												<comboitem label="护照" />
+												<comboitem label="港澳证" />
+											</combobox>
+											<textbox hflex="2"
+												value="@bind(vm.m.emba_idcard)"
+												onChange="@command('idcardhandle')" />
+
+
+										</hbox>
+									</cell>
+									<cell>
+										<hbox>
+											<checkbox id="emba_birth"
+												onCheck="@command('reqcheck',self=self)" />
+											<label value="出生日期" />
+										</hbox>
+									</cell>
+									<datebox format="yyyy-MM-dd"
+										value="@bind(vm.birth)" />
+									<cell>
+										<hbox>
+											<checkbox id="emba_marital"
+												onCheck="@command('reqcheck',self=self)" />
+											<label value="婚姻状况" />
+										</hbox>
+									</cell>
+									<combobox readonly="true"
+										width="120px" value="@bind(vm.m.emba_marital)">
+										<comboitem label="" />
+										<comboitem label="未婚" />
+										<comboitem label="已婚" />
+									</combobox>
+								</row>
+								<row>
+									<cell>
+										<hbox>
+											<checkbox id="emba_school"
+												onCheck="@command('reqcheck',self=self)" />
+											<label value="毕业院校" />
+										</hbox>
+									</cell>
+									<cell colspan="3">
+										<hbox>
+											<textbox width="330px"
+												value="@bind(vm.m.emba_school)" />
+										</hbox>
+									</cell>
+									<cell>
+										<hbox>
+											<checkbox
+												id="emba_specialty"
+												onCheck="@command('reqcheck',self=self)" />
+											<label value="专业" />
+										</hbox>
+									</cell>
+									<cell>
+										<hbox>
+											<textbox width="120px"
+												value="@bind(vm.m.emba_specialty)" />
+										</hbox>
+									</cell>
+									<cell>
+										<hbox>
+											<checkbox
+												id="emba_graduation"
+												onCheck="@command('reqcheck',self=self)" />
+											<label value="毕业时间" />
+										</hbox>
+									</cell>
+									<datebox format="yyyy-MM-dd"
+										value="@bind(vm.graduation)" />
+								</row>
+								<row>
+									<cell>
+										<hbox>
+											<checkbox id="emba_degree"
+												onCheck="@command('reqcheck',self=self)" />
+											<label value="文化程度" />
+										</hbox>
+									</cell>
+									<cell colspan="7">
+										<hbox>
+											<combobox
+												model="@load(vm.degreeList)" readonly="true"
+												selectedItem="@bind(vm.dgModel)">
+												<template
+													name="model">
+													<comboitem
+														label="@load(each.name)" />
+												</template>
+											</combobox>
+										</hbox>
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<hbox>
+											<checkbox id="emba_hjadd"
+												onCheck="@command('reqcheck',self=self)" />
+											<label value="户籍地址" />
+										</hbox>
+									</cell>
+									<cell colspan="5">
+										<hbox>
+											<textbox width="580px"
+												value="@bind(vm.m.emba_hjadd)" />
+										</hbox>
+									</cell>
+									<cell>
+										<hbox>
+											<checkbox id="emba_hjtype"
+												onCheck="@command('reqcheck',self=self)" />
+											<label value="户口类型" />
+										</hbox>
+									</cell>
+									<combobox readonly="true"
+										width="120px" value="@bind(vm.m.emba_hjtype)">
+										<comboitem />
+										<comboitem label="城镇" />
+										<comboitem label="农村" />
+									</combobox>
+								</row>
+								<row>
+									<cell>
+										<hbox>
+											<checkbox id="emba_address"
+												onCheck="@command('reqcheck',self=self)" />
+											<label value="现居住地" />
+										</hbox>
+									</cell>
+									<cell colspan="7">
+										<hbox>
+											<textbox width="580px"
+												value="@bind(vm.m.emba_address)" />
+										</hbox>
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<hbox>
+											<checkbox id="emba_phone"
+												onCheck="@command('reqcheck',self=self)" />
+											<label value="家庭电话" />
+										</hbox>
+									</cell>
+									<textbox width="120px"
+										value="@bind(vm.m.emba_phone)"
+										onChange="@command('checkPhone')" />
+									<cell>
+										<hbox>
+											<checkbox id="emba_mobile"
+												onCheck="@command('reqcheck',self=self)" />
+											<label value="手机号码" />
+										</hbox>
+									</cell>
+									<textbox width="120px"
+										value="@bind(vm.m.emba_mobile)"
+										onChange="@command('checkMobile')" />
+									<cell colspan="2">
+										<hbox>
+											<checkbox id="emba_ep"
+												onCheck="@command('reqcheck',self=self)" />
+											<label value="	紧急联系人" />
+											<textbox width="100px"
+												value="@bind(vm.m.emba_epname)" />
+										</hbox>
+									</cell>
+									<cell colspan="2">
+										<hbox>
+
+											<label value="	紧急联系人电话" />
+											<textbox width="100px"
+												value="@bind(vm.m.emba_epmobile)" />
+										</hbox>
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<hbox>
+											<checkbox id="emba_email"
+												onCheck="@command('reqcheck',self=self)" />
+											<label value="E-mail" />
+										</hbox>
+									</cell>
+									<cell>
+										<hbox>
+											<textbox id="emba_emailtxt"
+												width="120px" value="@bind(vm.m.emba_email)"
+												onChange="@command('checkEmailSimple',email=self.value)"
+												context="pop_checkemail"
+												onClick='pop_email.open(self,"after_end")'>
+											</textbox>
+											<popup id="pop_email">
+												点击右键可验证邮箱真实性
+											</popup>
+											<menupopup
+												id="pop_checkemail">
+												<menuitem label="验证真实性"
+													onClick="@command('checkEmail',email=emba_emailtxt.value)">
+												</menuitem>
+											</menupopup>
+										</hbox>
+									</cell>
+									<cell>
+										<hbox>
+											<checkbox id="emba_party"
+												onCheck="@command('reqcheck',self=self)" />
+											<label value="政治面貌" />
+										</hbox>
+									</cell>
+									<cell>
+										<hbox>
+											<combobox readonly="true"
+												width="120px" value="@bind(vm.m.emba_party)"
+												model="@load(vm.partyList)">
+												<template
+													name="model">
+													<comboitem
+														label="@load(each.pcco_cn)" />
+												</template>
+											</combobox>
+										</hbox>
+									</cell>
+									<cell>
+										<hbox>
+											<checkbox id="emba_status"
+												onCheck="@command('reqcheck',self=self)" />
+											<label value="身份" />
+										</hbox>
+									</cell>
+									<cell>
+										<hbox>
+											<combobox readonly="true"
+												width="120px" value="@bind(vm.m.emba_status)">
+												<comboitem />
+												<comboitem label="干部" />
+												<comboitem label="工人" />
+											</combobox>
+										</hbox>
+									</cell>
+									<cell>
+										<hbox>
+											<checkbox
+												id="emba_service_place"
+												onCheck="@command('reqcheck',self=self)" />
+											<label value="服务地区" />
+										</hbox>
+									</cell>
+									<cell>
+										<hbox>
+											<combobox readonly="true"
+												width="120px" value="@bind(vm.m.emba_service_place)">
+												<comboitem label="本地" />
+												<comboitem label="委托外地" />
+											</combobox>
+										</hbox>
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+					<groupbox title="档案信息" mold="3d">
+						<checkbox label="全选" style="cursor:pointer"
+							onCheck="@command('allcheckda',ck1=emba_fileplace,
+								ck2=emba_fileinclass,
+								ck3=emba_filereason,
+								ck4=emba_filedebts,
+								ck5=emba_filedebtsmonth,
+								ck6=emba_filehj,
+							 
+								checked=self.checked)" />
+						<grid>
+							<columns>
+								<column width="20%" />
+								<column />
+								<column width="17%" />
+								<column />
+							</columns>
+							<rows>
+								<row>
+									<cell>
+										<hbox>
+											<checkbox
+												id="emba_fileplace"
+												onCheck="@command('reqcheck',self=self)" />
+											<label value="档案存放单位" />
+										</hbox>
+									</cell>
+									<textbox width="200px"
+										value="@bind(vm.m.emba_fileplace)" />
+									<cell>
+										<hbox>
+											<checkbox
+												id="emba_fileinclass"
+												onCheck="@command('reqcheck',self=self)" />
+											<label value="是否愿意转入中智托管" />
+										</hbox>
+									</cell>
+									<combobox readonly="true"
+										width="80px" value="@bind(vm.fileinclass)">
+										<comboitem />
+										<comboitem label="是" />
+										<comboitem label="否" />
+									</combobox>
+								</row>
+								<row>
+									<cell>
+										<hbox>
+											<checkbox
+												id="emba_filereason"
+												onCheck="@command('reqcheck',self=self)" />
+											<label value="不转入中智托管原因" />
+										</hbox>
+									</cell>
+									<cell colspan="3">
+										<hbox>
+											<textbox width="600px"
+												value="@bind(vm.m.emba_filereason)" />
+										</hbox>
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<hbox>
+											<label value="档案如果托管在深圳市人才" />
+										</hbox>
+									</cell>
+									<cell colspan="3">
+										<hbox>
+											<grid>
+												<columns>
+													<column width="20%" />
+													<column />
+													<column width="22%" />
+													<column />
+												</columns>
+												<rows>
+													<row>
+														<cell>
+															<hbox>
+																<checkbox
+																	id="emba_filedebts"
+																	onCheck="@command('reqcheck',self=self)" />
+																<label
+																	value="是否有欠费" />
+															</hbox>
+														</cell>
+														<combobox
+															readonly="true" width="80px"
+															value="@bind(vm.filedebts)">
+															<comboitem />
+															<comboitem
+																label="是" />
+															<comboitem
+																label="否" />
+														</combobox>
+														<cell>
+															<hbox>
+																<checkbox
+																	id="emba_filedebtsmonth"
+																	onCheck="@command('reqcheck',self=self)" />
+																<label
+																	value="档案费用缴至哪个月份" />
+															</hbox>
+														</cell>
+														<textbox
+															width="120px" value="@bind(vm.m.emba_filedebtsmonth)" />
+													</row>
+													<row>
+														<cell>
+															<hbox>
+																<checkbox
+																	id="emba_filehj"
+																	onCheck="@command('reqcheck',self=self)" />
+																<label
+																	value="户口是否托管在人才" />
+															</hbox>
+														</cell>
+														<cell
+															colspan="3">
+															<hbox>
+																<combobox
+																	readonly="true" width="80px"
+																	value="@bind(vm.filehj)">
+																	<comboitem />
+																	<comboitem
+																		label="是" />
+																	<comboitem
+																		label="否" />
+																</combobox>
+															</hbox>
+														</cell>
+													</row>
+												</rows>
+											</grid>
+										</hbox>
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+					<groupbox title="社保信息" mold="3d">
+						<checkbox label="全选" style="cursor:pointer"
+							onCheck="@command('allchecksb',ck1=emba_ifcomputerid,
+								ck2=emba_computerid,
+								ck3=emba_hand,
+								ck4=emba_sbcard,
+							 
+								checked=self.checked)" />
+
+						<grid>
+							<columns>
+								<column width="18%" />
+								<column />
+								<column width="20%" />
+								<column />
+							</columns>
+							<rows>
+								<row height="35px">
+									<cell>
+										<hbox>
+											<checkbox
+												id="emba_ifcomputerid"
+												onCheck="@command('reqcheck',self=self)" />
+											<label value="是否有电脑号" />
+										</hbox>
+									</cell>
+									<cell>
+										<hbox>
+											<combobox readonly="true"
+												width="80px" value="@bind(vm.m.emba_ifcomputerid)"
+												onChange="@command('ifcomputerid',computerid=emba_computerid,hand=emba_hand)">
+												<comboitem></comboitem>
+												<comboitem label="是"></comboitem>
+												<comboitem label="否"></comboitem>
+											</combobox>
+										</hbox>
+									</cell>
+									<cell
+										visible="@load(vm.m.vis_computerid)">
+										<hbox>
+											<checkbox
+												id="emba_computerid"
+												onCheck="@command('reqcheck',self=self)" />
+											<label value="社保电脑号" />
+										</hbox>
+									</cell>
+									<cell
+										visible="@load(vm.m.vis_computerid)">
+										<hbox>
+											<textbox width="120px"
+												value="@bind(vm.m.emba_computerid)" />
+											<button label="查询电脑号"
+												onClick="@command('computerid_search')" />
+										</hbox>
+									</cell>
+									<cell
+										visible="@load(vm.m.vis_hand)">
+										<hbox>
+											<checkbox id="emba_hand"
+												onCheck="@command('reqcheck',self=self)" />
+											<label value="利手 （习惯使用哪只手）" />
+										</hbox>
+									</cell>
+									<cell
+										visible="@load(vm.m.vis_hand)">
+										<hbox>
+											<combobox readonly="true"
+												width="120px">
+												<comboitem />
+												<comboitem label="左手" />
+												<comboitem label="右手" />
+											</combobox>
+										</hbox>
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<hbox>
+											<checkbox id="emba_sbcard"
+												onCheck="@command('reqcheck',self=self)" />
+											<label value="是否需要办理社保卡" />
+										</hbox>
+									</cell>
+									<cell colspan="3">
+										<hbox>
+											<combobox readonly="true"
+												width="80px" value="@bind(vm.m.emba_sbcard)"
+												onChange="@command('issbcardnotice')">
+												<comboitem />
+												<comboitem label="是" />
+												<comboitem label="否" />
+											</combobox>
+											<space />
+											<checkbox label="通知员工"
+												checked="@bind(vm.m.emba_sbcard_notice)"
+												visible="@load(vm.m.vis_sbcard_notice)">
+											</checkbox>
+										</hbox>
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+					<groupbox title="住房公积金信息" mold="3d">
+						<checkbox label="全选" style="cursor:pointer"
+							onCheck="@command('allcheckzf',ck1=emba_ifhouse,
+								ck2=emba_houseid,
+								ck3=emba_excompanystate,
+								ck4=emba_excompanyid,
+							 
+							 	ck5=emba_excompany,
+								ck6=emba_wifename,
+									ck7=emba_wifeidcard,
+							 
+								checked=self.checked)" />
+
+						<grid>
+							<columns>
+								<column width="17%" />
+								<column />
+								<column width="20%" />
+								<column />
+								<column width="20%" />
+								<column />
+							</columns>
+							<rows>
+								<row>
+									<cell>
+										<hbox>
+											<checkbox id="emba_ifhouse"
+												onCheck="@command('reqcheck',self=self)" />
+											<label value="是否有公积金账号" />
+										</hbox>
+									</cell>
+									<cell colspan="5">
+										<hbox>
+											<combobox readonly="true"
+												width="80px" value="@bind(vm.m.emba_ifhouse)">
+												<comboitem />
+												<comboitem label="是" />
+												<comboitem label="否" />
+											</combobox>
+										</hbox>
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<hbox>
+											<checkbox id="emba_houseid"
+												onCheck="@command('reqcheck',self=self)" />
+											<label value="个人公积金编号" />
+										</hbox>
+									</cell>
+									<textbox width="120px"
+										value="@bind(vm.m.emba_houseid)" />
+									<cell>
+										<hbox>
+											<checkbox
+												id="emba_excompanystate"
+												onCheck="@command('reqcheck',self=self)" />
+											<label value="原单位是否已封存" />
+										</hbox>
+									</cell>
+									<cell colspan="3">
+										<hbox>
+											<combobox readonly="true"
+												width="80px" value="@bind(vm.excompanystate)">
+												<comboitem />
+												<comboitem label="是" />
+												<comboitem label="否" />
+											</combobox>
+										</hbox>
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<hbox>
+											<checkbox
+												id="emba_excompanyid"
+												onCheck="@command('reqcheck',self=self)" />
+											<label value="封存单位公积金号" />
+										</hbox>
+									</cell>
+									<textbox width="120px"
+										value="@bind(vm.m.emba_excompanyid)" />
+									<cell>
+										<hbox>
+											<checkbox
+												id="emba_excompany"
+												onCheck="@command('reqcheck',self=self)" />
+											<label value="封存单位账户名称" />
+										</hbox>
+									</cell>
+									<cell colspan="3">
+										<hbox>
+											<textbox width="120px"
+												value="@bind(vm.m.emba_excompany)" />
+										</hbox>
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<hbox>
+											<checkbox id="emba_wifename"
+												onCheck="@command('reqcheck',self=self)" />
+											<label value="配偶姓名(未婚者不填)" />
+										</hbox>
+									</cell>
+									<textbox width="120px"
+										value="@bind(vm.m.emba_wifename)" />
+									<cell>
+										<hbox>
+											<checkbox
+												id="emba_wifeidcard"
+												onCheck="@command('reqcheck',self=self)" />
+											<label
+												value="配偶身份证号码(未婚者不填)" />
+										</hbox>
+									</cell>
+									<cell colspan="3">
+										<hbox>
+											<textbox width="145px"
+												value="@bind(vm.m.emba_wifeidcard)" />
+										</hbox>
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+					<groupbox title="工资信息" mold="3d">
+						<checkbox label="全选" style="cursor:pointer"
+							onCheck="@command('allcheckgz',ck1=emba_gz_email,
+								ck2=emba_gz_cemail,
+								ck3=emba_gzbank,
+								 
+							 
+								checked=self.checked)" />
+						<grid>
+							<columns>
+								<column width="17%" />
+								<column />
+							</columns>
+							<rows>
+								<row>
+									<cell>
+										<hbox>
+											<checkbox id="emba_gz_email"
+												onCheck="@command('reqcheck',self=self)" />
+											<label value="工资单email" />
+										</hbox>
+									</cell>
+									<textbox hflex="1"
+										value="@bind(vm.m.emba_gz_email)" />
+								</row>
+								<row>
+									<cell>
+										<hbox>
+											<checkbox
+												id="emba_gz_cemail"
+												onCheck="@command('reqcheck',self=self)" />
+											<label value="工资单抄送email" />
+										</hbox>
+									</cell>
+									<textbox hflex="1"
+										value="@bind(vm.m.emba_gz_cemail)" />
+								</row>
+								<row>
+									<cell>
+										<hbox>
+											<checkbox id="emba_gzbank"
+												onCheck="@command('reqcheck',self=self)" />
+											<label value="个人银行信息" />
+										</hbox>
+									</cell>
+									<cell>
+										<hbox>
+											<grid>
+												<columns>
+													<column width="25%" />
+													<column />
+												</columns>
+												<rows>
+													<row>
+														<label
+															value="工资银行帐号" />
+														<textbox
+															hflex="1" value="@bind(vm.m.emba_gz_account)" />
+													</row>
+													<row>
+														<label
+															value="工资开户行信息(详细到支行)" />
+														<textbox
+															hflex="1" value="@bind(vm.m.emba_gz_bank)" />
+													</row>
+													<row>
+														<label
+															value="报销银行帐号" />
+														<textbox
+															hflex="1" value="@bind(vm.m.emba_writeoff_account)" />
+													</row>
+													<row>
+														<label
+															value="报销开户行信息(详细到支行)" />
+														<textbox
+															hflex="1" value="@bind(vm.m.emba_writeoff_bank)" />
+													</row>
+												</rows>
+											</grid>
+										</hbox>
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+					<groupbox title="就业信息" mold="3d">
+						<checkbox label="全选" style="cursor:pointer"
+							onCheck="@command('allcheckjy',ck1=emba_housecode,
+								ck2=emba_housetime,
+								ck3=emba_housetype,
+								
+								ck4=emba_houseclass,
+								ck5=emba_title,
+								ck6=emba_skilllevel,
+								ck7=emba_worktime,
+								ck8=emba_hjtime,
+								ck9=emba_regtype,
+								 
+								 	ck10=emba_compactlimit,
+								ck11=emba_compactstart,
+								ck12=emba_compactend,
+								ck13=emba_companystart,
+								
+								ck14=emba_station,
+								ck15=emba_birthcontrol,
+								ck16=emba_photonum,
+								ck17=emba_sztime,
+							 
+								checked=self.checked)" />
+						<grid>
+							<columns>
+								<column width="21%" />
+								<column />
+								<column width="15%" />
+								<column width="17%" />
+								<column width="18%" />
+								<column />
+							</columns>
+							<rows>
+								<row>
+									<cell>
+										<hbox>
+											<checkbox
+												id="emba_housecode"
+												onCheck="@command('reqcheck',self=self)" />
+											<label
+												value="房屋地址编码(非深户必填项)" />
+										</hbox>
+									</cell>
+									<cell colspan="3">
+										<hbox>
+											<textbox width="300px"
+												value="@bind(vm.m.emba_housecode)" />
+										</hbox>
+									</cell>
+									<cell>
+										<hbox>
+											<checkbox
+												id="emba_housetime"
+												onCheck="@command('reqcheck',self=self)" />
+											<label value="入住时间" />
+										</hbox>
+									</cell>
+									<datebox format="yyyy年MM月dd日"
+										width="120px" value="@bind(vm.housetime)" />
+								</row>
+								<row>
+									<cell>
+										<hbox>
+											<checkbox
+												id="emba_housetype"
+												onCheck="@command('reqcheck',self=self)" />
+											<label value="住所类别" />
+										</hbox>
+									</cell>
+									<cell colspan="2">
+										<hbox>
+											<combobox readonly="true"
+												width="120px" model="@load(vm.housetypeList)"
+												value="@bind(vm.m.emba_housetype)">
+												<template
+													name="model">
+													<comboitem
+														label="@load(each.pcco_cn)" />
+												</template>
+											</combobox>
+										</hbox>
+									</cell>
+									<cell>
+										<hbox>
+											<checkbox
+												id="emba_houseclass"
+												onCheck="@command('reqcheck',self=self)" />
+											<label value="居住方式" />
+										</hbox>
+									</cell>
+									<cell colspan="2">
+										<hbox>
+											<combobox readonly="true"
+												width="120px" model="@load(vm.houseclassList)"
+												value="@bind(vm.m.emba_houseclass)">
+												<template
+													name="model">
+													<comboitem
+														label="@load(each.pcco_cn)" />
+												</template>
+											</combobox>
+										</hbox>
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<hbox>
+											<checkbox id="emba_title"
+												onCheck="@command('reqcheck',self=self)" />
+											<label value="职称" />
+										</hbox>
+									</cell>
+									<cell colspan="2">
+										<hbox>
+											<combobox readonly="true"
+												width="120px" model="@load(vm.titleList)"
+												value="@bind(vm.m.emba_title)">
+												<template
+													name="model">
+													<comboitem
+														label="@load(each.pcco_cn)" />
+												</template>
+											</combobox>
+										</hbox>
+									</cell>
+									<cell>
+										<hbox>
+											<checkbox
+												id="emba_skilllevel"
+												onCheck="@command('reqcheck',self=self)" />
+											<label value="职业技能等级" />
+										</hbox>
+									</cell>
+									<cell colspan="2">
+										<hbox>
+											<combobox readonly="true"
+												width="150px" model="@load(vm.skilllevelList)"
+												value="@bind(vm.m.emba_skilllevel)">
+												<template
+													name="model">
+													<comboitem
+														label="@load(each.pcco_cn)" />
+												</template>
+											</combobox>
+										</hbox>
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<hbox>
+											<checkbox id="emba_worktime"
+												onCheck="@command('reqcheck',self=self)" />
+											<label value="参加工作时间" />
+										</hbox>
+									</cell>
+									<datebox format="yyyy年MM月dd日"
+										width="120px" value="@bind(vm.worktime)" />
+									<cell>
+										<hbox>
+											<checkbox id="emba_sztime"
+												onCheck="@command('reqcheck',self=self)" />
+											<label value="来深日期" />
+										</hbox>
+									</cell>
+									<datebox format="yyyy年MM月dd日"
+										width="120px" value="@bind(vm.sztime)" />
+									<cell>
+										<hbox>
+											<checkbox id="emba_hjtime"
+												onCheck="@command('reqcheck',self=self)" />
+											<label value="户口进入深圳时间(深户)" />
+										</hbox>
+									</cell>
+									<datebox format="yyyy年MM月dd日"
+										width="120px" value="@bind(vm.hjtime)" />
+								</row>
+								<row>
+									<cell>
+										<hbox>
+											<checkbox id="emba_regtype"
+												onCheck="@command('reqcheck',self=self)" />
+											<label value="就业类型" />
+										</hbox>
+									</cell>
+									<cell colspan="5">
+										<hbox>
+											<combobox readonly="true"
+												width="180px" model="@load(vm.regtypeList)"
+												value="@bind(vm.m.emba_regtype)">
+												<template
+													name="model">
+													<comboitem
+														label="@load(each.pcco_cn)" />
+												</template>
+											</combobox>
+										</hbox>
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<hbox>
+											<checkbox
+												id="emba_compactlimit"
+												onCheck="@command('reqcheck',self=self)" />
+											<label value="劳动合同年限" />
+										</hbox>
+									</cell>
+									<textbox width="60px"
+										value="@bind(vm.m.emba_compactlimit)" />
+									<cell>
+										<hbox>
+											<checkbox
+												id="emba_compactstart"
+												onCheck="@command('reqcheck',self=self)" />
+											<label value="劳动合同开始日期" />
+										</hbox>
+									</cell>
+									<datebox format="yyyy年MM月dd日"
+										width="120px" value="@bind(vm.compactstart)" />
+									<cell>
+										<hbox>
+											<checkbox
+												id="emba_compactend"
+												onCheck="@command('reqcheck',self=self)" />
+											<label value="劳动合同结束日期" />
+										</hbox>
+									</cell>
+									<datebox format="yyyy年MM月dd日"
+										width="120px" value="@bind(vm.compactend)" />
+								</row>
+								<row>
+									<cell>
+										<hbox>
+											<checkbox
+												id="emba_companystart"
+												onCheck="@command('reqcheck',self=self)" />
+											<label value="本单位工作起始日期" />
+										</hbox>
+									</cell>
+									<cell colspan="2">
+										<hbox>
+											<datebox
+												format="yyyy年MM月dd日" width="120px"
+												value="@bind(vm.companystart)" />
+										</hbox>
+									</cell>
+									<cell>
+										<hbox>
+											<checkbox id="emba_station"
+												onCheck="@command('reqcheck',self=self)" />
+											<label value="工作岗位(中文)" />
+										</hbox>
+									</cell>
+									<cell colspan="2">
+										<hbox>
+											<textbox width="250px"
+												value="@bind(vm.m.emba_station)" />
+										</hbox>
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<hbox>
+											<checkbox
+												id="emba_birthcontrol"
+												onCheck="@command('reqcheck',self=self)" />
+											<label
+												value="广东省流动人口避孕节育情况报告单 编号(非深户已婚育龄女性)" />
+										</hbox>
+									</cell>
+									<cell colspan="2">
+										<hbox>
+											<textbox width="250px"
+												value="@bind(vm.m.emba_birthcontrol)" />
+										</hbox>
+									</cell>
+									<cell>
+										<hbox>
+											<checkbox id="emba_photonum"
+												onCheck="@command('reqcheck',self=self)" />
+											<label value="相片图像号(非深户必填)" />
+										</hbox>
+									</cell>
+									<cell colspan="2">
+										<hbox>
+											<textbox width="250px"
+												value="@bind(vm.m.emba_photonum)" />
+										</hbox>
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+					<groupbox title="商保信息" mold="3d">
+						<checkbox label="全选" style="cursor:pointer"
+							onCheck="@command('allchecksybx',ck1=emba_sbinfor,
+								ck2=emba_sbbank,
+								checked=self.checked)" />
+						<grid>
+							<columns>
+								<column width="17%" />
+								<column />
+							</columns>
+							<rows>
+								<row>
+									<cell>
+										<hbox>
+											<checkbox id="emba_sbinfor"
+												onCheck="@command('reqcheck',self=self)" />
+											<label value="子女、配偶信息" />
+										</hbox>
+									</cell>
+									<cell>
+										<hbox>
+											<grid>
+												<columns>
+													<column
+														align="center" />
+													<column
+														align="center" />
+													<column
+														align="center" width="50%" />
+													<column
+														align="center" />
+												</columns>
+												<rows>
+													<row>
+														<label
+															value="姓名" />
+														<label
+															value="年龄" />
+														<label
+															value="身份证号码(无身份证号码者提供准确的出生日期)" />
+														<label
+															value="关系" />
+													</row>
+													<row>
+														<textbox
+															width="100px" value="@bind(vm.m.emba_sbname1)" />
+														<textbox
+															width="100px" value="@bind(vm.m.emba_sbage1)" />
+														<textbox
+															width="250px" value="@bind(vm.m.emba_sbidcard1)" />
+
+														<combobox
+															readonly="true" width="120px"
+															model="@load(vm.sbrelationList)"
+															value="@bind(vm.m.emba_sbrelation1)">
+															<template
+																name="model">
+																<comboitem
+																	label="@load(each)" />
+															</template>
+														</combobox>
+														<!-- 													<textbox -->
+														<!-- 														width="100px" value="@bind(vm.m.emba_sbrelation1)" /> -->
+													</row>
+													<row>
+														<textbox
+															width="100px" value="@bind(vm.m.emba_sbname2)" />
+														<textbox
+															width="100px" value="@bind(vm.m.emba_sbage2)" />
+														<textbox
+															width="250px" value="@bind(vm.m.emba_sbidcard2)" />
+														<combobox
+															readonly="true" width="120px"
+															model="@load(vm.sbrelationList)"
+															value="@bind(vm.m.emba_sbrelation2)">
+															<template
+																name="model">
+																<comboitem
+																	label="@load(each)" />
+															</template>
+														</combobox>
+													</row>
+													<row>
+														<textbox
+															width="100px" value="@bind(vm.m.emba_sbname3)" />
+														<textbox
+															width="100px" value="@bind(vm.m.emba_sbage3)" />
+														<textbox
+															width="250px" value="@bind(vm.m.emba_sbidcard3)" />
+														<combobox
+															readonly="true" width="120px"
+															model="@load(vm.sbrelationList)"
+															value="@bind(vm.m.emba_sbrelation3)">
+															<template
+																name="model">
+																<comboitem
+																	label="@load(each)" />
+															</template>
+														</combobox>
+													</row>
+													<row>
+
+
+														<textbox
+															width="100px" value="@bind(vm.m.emba_sbname4)" />
+														<textbox
+															width="100px" value="@bind(vm.m.emba_sbage4)" />
+														<textbox
+															width="250px" value="@bind(vm.m.emba_sbidcard4)" />
+														<combobox
+															readonly="true" width="120px"
+															model="@load(vm.sbrelationList)"
+															value="@bind(vm.m.emba_sbrelation4)">
+															<template
+																name="model">
+																<comboitem
+																	label="@load(each)" />
+															</template>
+														</combobox>
+													</row>
+												</rows>
+											</grid>
+										</hbox>
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<hbox>
+											<checkbox id="emba_sbbank"
+												onCheck="@command('reqcheck',self=self)" />
+											<label value="个人银行信息(商保索赔)" />
+										</hbox>
+									</cell>
+									<cell>
+										<hbox>
+											<grid>
+												<columns>
+													<column width="20%" />
+													<column />
+												</columns>
+												<rows>
+													<row>
+														<label
+															value="中国银行帐号" />
+														<textbox
+															width="350px" value="@bind(vm.m.emba_sy_account)" />
+													</row>
+													<row>
+														<label
+															value="开户行信息(详细到支行)" />
+														<textbox
+															width="350px" value="@bind(vm.m.emba_sy_bank)" />
+													</row>
+												</rows>
+											</grid>
+										</hbox>
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+					<groupbox title="入职体检信息" mold="3d">
+						<checkbox label="全选" style="cursor:pointer"
+							onCheck="@command('allchecktj',ck1=emba_hospital,
+								ck2=emba_bctime,
+								ck3=emba_bcaddress,
+							 
+								 
+								
+								checked=self.checked)" />
+						<grid>
+							<columns>
+								<column width="12%" />
+								<column />
+								<column width="10%" />
+								<column />
+							</columns>
+							<rows>
+								<row>
+									<cell>
+										<hbox>
+											<checkbox id="emba_hospital"
+												onCheck="@command('reqcheck',self=self)" />
+											<label value="体检医院" />
+										</hbox>
+									</cell>
+									<combobox width="220px"
+										instant="true" readonly="true"
+										selectedItem="@bind(vm.bcsetupModel)"
+										model="@load(vm.bcsetupList)"
+										onChange="@command('getbcadd')">
+										<template name="model">
+											<comboitem
+												label="@load(each.ebcs_hospital)" />
+										</template>
+									</combobox>
+									<cell>
+										<hbox>
+											<checkbox id="emba_bctime"
+												onCheck="@command('reqcheck',self=self)" />
+											<label value="体检时间" />
+										</hbox>
+									</cell>
+									<cell>
+										<hbox>
+											<datebox format="yyyy-MM-dd"
+												value="@bind(vm.bctime)" />
+										</hbox>
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<hbox>
+											<checkbox
+												id="emba_bcaddress"
+												onCheck="@command('reqcheck',self=self)" />
+											<label value="体检地址" />
+										</hbox>
+									</cell>
+									<cell colspan="3">
+										<hbox>
+											<combobox width="600px"
+												readonly="true" value="@bind(vm.m.emba_bcaddress)"
+												model="@load(vm.bcsetupaddList1)">
+												<template
+													name="model">
+													<comboitem
+														label="@load(each.ebsa_address)" />
+												</template>
+											</combobox>
+										</hbox>
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+					<groupbox title="其他信息" mold="3d">
+
+						<checkbox label="全选" style="cursor:pointer"
+							onCheck="@command('allcheckqt',ck1=emba_workinfor,
+								ck2=emba_family,
+								 
+								
+								checked=self.checked)" />
+						<grid>
+							<columns>
+								<column width="15%" />
+								<column />
+							</columns>
+							<rows>
+								<row>
+									<cell>
+										<hbox>
+											<checkbox
+												id="emba_workinfor"
+												onCheck="@command('reqcheck',self=self)" />
+											<label value="工作简历" />
+										</hbox>
+									</cell>
+									<cell>
+										<hbox>
+											<grid>
+												<columns>
+													<column
+														align="center" />
+													<column
+														align="center" />
+													<column
+														align="center" />
+												</columns>
+												<rows>
+													<row>
+														<label
+															value="期间" />
+														<label
+															value="单位" />
+														<label
+															value="职位" />
+													</row>
+													<row>
+														<textbox
+															width="200px" value="@bind(vm.m.emba_worktime1)" />
+														<textbox
+															width="200px" value="@bind(vm.m.emba_workcompany1)" />
+														<textbox
+															width="200px" value="@bind(vm.m.emba_workjob1)" />
+													</row>
+													<row>
+														<textbox
+															width="200px" value="@bind(vm.m.emba_worktime2)" />
+														<textbox
+															width="200px" value="@bind(vm.m.emba_workcompany2)" />
+														<textbox
+															width="200px" value="@bind(vm.m.emba_workjob2)" />
+													</row>
+													<row>
+														<textbox
+															width="200px" value="@bind(vm.m.emba_worktime3)" />
+														<textbox
+															width="200px" value="@bind(vm.m.emba_workcompany3)" />
+														<textbox
+															width="200px" value="@bind(vm.m.emba_workjob3)" />
+													</row>
+													<row>
+														<textbox
+															width="200px" value="@bind(vm.m.emba_worktime4)" />
+														<textbox
+															width="200px" value="@bind(vm.m.emba_workcompany4)" />
+														<textbox
+															width="200px" value="@bind(vm.m.emba_workjob4)" />
+													</row>
+													<row>
+														<textbox
+															width="200px" value="@bind(vm.m.emba_worktime5)" />
+														<textbox
+															width="200px" value="@bind(vm.m.emba_workcompany5)" />
+														<textbox
+															width="200px" value="@bind(vm.m.emba_workjob5)" />
+													</row>
+													<row>
+														<textbox
+															width="200px" value="@bind(vm.m.emba_worktime6)" />
+														<textbox
+															width="200px" value="@bind(vm.m.emba_workcompany6)" />
+														<textbox
+															width="200px" value="@bind(vm.m.emba_workjob6)" />
+													</row>
+												</rows>
+											</grid>
+										</hbox>
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<hbox>
+											<checkbox id="emba_family"
+												onCheck="@command('reqcheck',self=self)" />
+											<label value="家庭主要成员" />
+										</hbox>
+									</cell>
+									<cell>
+										<hbox>
+											<grid>
+												<columns>
+													<column
+														align="center" />
+													<column
+														align="center" />
+													<column
+														align="center" />
+													<column
+														align="center" width="30%" />
+													<column
+														align="center" />
+												</columns>
+												<rows>
+													<row>
+														<label
+															value="称谓" />
+														<label
+															value="姓名" />
+														<label
+															value="年龄" />
+														<label
+															value="工作单位及职务" />
+														<label
+															value="备注" />
+													</row>
+													<row>
+														<textbox
+															width="100px" value="@bind(vm.m.emba_f1)" />
+														<textbox
+															width="100px" value="@bind(vm.m.emba_fn1)" />
+														<textbox
+															width="100px" value="@bind(vm.m.emba_fag1)" />
+														<textbox
+															width="200px" value="@bind(vm.m.emba_fw1)" />
+														<textbox
+															width="100px" value="@bind(vm.m.emba_fr1)" />
+													</row>
+													<row>
+														<textbox
+															width="100px" value="@bind(vm.m.emba_f2)" />
+														<textbox
+															width="100px" value="@bind(vm.m.emba_fn2)" />
+														<textbox
+															width="100px" value="@bind(vm.m.emba_fag2)" />
+														<textbox
+															width="200px" value="@bind(vm.m.emba_fw2)" />
+														<textbox
+															width="100px" value="@bind(vm.m.emba_fr2)" />
+													</row>
+													<row>
+														<textbox
+															width="100px" value="@bind(vm.m.emba_f3)" />
+														<textbox
+															width="100px" value="@bind(vm.m.emba_fn3)" />
+														<textbox
+															width="100px" value="@bind(vm.m.emba_fag3)" />
+														<textbox
+															width="200px" value="@bind(vm.m.emba_fw3)" />
+														<textbox
+															width="100px" value="@bind(vm.m.emba_fr3)" />
+													</row>
+													<row>
+														<textbox
+															width="100px" value="@bind(vm.m.emba_f4)" />
+														<textbox
+															width="100px" value="@bind(vm.m.emba_fn4)" />
+														<textbox
+															width="100px" value="@bind(vm.m.emba_fag4)" />
+														<textbox
+															width="200px" value="@bind(vm.m.emba_fw4)" />
+														<textbox
+															width="100px" value="@bind(vm.m.emba_fr4)" />
+													</row>
+													<row>
+														<textbox
+															width="100px" value="@bind(vm.m.emba_f5)" />
+														<textbox
+															width="100px" value="@bind(vm.m.emba_fn5)" />
+														<textbox
+															width="100px" value="@bind(vm.m.emba_fag5)" />
+														<textbox
+															width="200px" value="@bind(vm.m.emba_fw5)" />
+														<textbox
+															width="100px" value="@bind(vm.m.emba_fr5)" />
+													</row>
+													<row>
+														<textbox
+															width="100px" value="@bind(vm.m.emba_f6)" />
+														<textbox
+															width="100px" value="@bind(vm.m.emba_fn6)" />
+														<textbox
+															width="100px" value="@bind(vm.m.emba_fag6)" />
+														<textbox
+															width="200px" value="@bind(vm.m.emba_fw6)" />
+														<textbox
+															width="100px" value="@bind(vm.m.emba_fr6)" />
+													</row>
+												</rows>
+											</grid>
+										</hbox>
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<hbox>
+											<label value="备注" />
+										</hbox>
+									</cell>
+									<textbox rows="5" hflex="1"
+										value="@bind(vm.m.emba_remark)" />
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+				</vlayout>
+			</center>
+			<south border="none">
+				<hbox width="100%" pack="center" align="center">
+					<button label="提交"
+						onClick="@command('submit',win=win)" />
+				</hbox>
+			</south>
+		</borderlayout>
+	</window>
+</zk>

@@ -1,0 +1,226 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="员工公积金 - 参保信息" id="winSearchList" border="normal"
+		width="100%" height="100%" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmHouse.EmHouse_SearchListController')"
+		closable="true">
+
+		<borderlayout>
+			<north id="north" collapsible="true" title="高级选项"
+				open="true">
+				<grid>
+					<columns visible="false">
+						<column />
+						<column />
+						<column />
+						<column />
+					</columns>
+					<rows>
+						<row>
+							<cell width="100px">公司名称</cell>
+							<cell>
+								<textbox id="company" mold="rounded" />
+							</cell>
+							<cell width="100px">员工姓名</cell>
+							<cell>
+								<textbox id="emp" mold="rounded" />
+							</cell>
+						</row>
+
+					</rows>
+					<foot>
+						<footer align="center" span="3">
+							<button label="查询"
+								onClick="@command('search')" />
+							<button label="申报"
+								onClick="@command('declareInfo')" />
+							<button label="生成清册" visible="@load(vm.qc)"
+								onClick="@command('declareExcel')" />
+							<button label="导出数据"
+								onClick="@command('export')" />
+							<button label="上传退回文件"
+								onClick="@command('errorfile')" />
+						</footer>
+						<footer align="right">
+							共
+							<label style="color:red;"
+								value="${vm.eclist.size()}" />
+							条
+						</footer>
+					</foot>
+				</grid>
+			</north>
+			<center>
+				<grid id="gdList" height="100%" model="@load(vm.eclist)"
+					sizedByContent="true" span="true" mold="paging"
+					pageSize="${vm.ecm.pageSize }" emptyMessage="暂时没有数据记录">
+					<columns>
+						<column width="35px" align="center">序号</column>
+						<column align="center">公司名称</column>
+						<column align="center">所属月份</column>
+						<column align="center">姓名</column>
+						<column align="center">缴存银行</column>
+						<column width="100px" align="center">
+							单位帐号
+						</column>
+						<column align="center">个人帐号</column>
+						<column align="center">身份证</column>
+						<column align="center">基数</column>
+						<column align="center">户籍</column>
+						<column align="center">比例</column>
+						<column align="center">变动情况</column>
+						<column width="80px" align="center">
+							任务单提交时间
+						</column>
+						<column width="80px" align="center">
+							申报时间
+						</column>
+						<column align="center">客服</column>
+						<column align="center">状态</column>
+						<column align="center">办理进度</column>
+						<column align="center">添加人</column>
+						<column align="center">提示</column>
+						<column align="center">操作</column>
+						<column align="center">
+							<checkbox id="cka"
+								onClick="@command('checkall',a=cka,b=self)" />
+						</column>
+					</columns>
+					<template name="model">
+						<row>
+							<cell>${forEachStatus.index+1 }</cell>
+							<cell style="white-space:nowrap;"
+								tooltiptext="${each.coba_shortname }  ${each.cohf_houseid}">
+								<label if="${each.emhc_single==0}"
+									value="@load(each.coba_shortname)" />
+								<label if="${each.emhc_single==2}"
+									style="color:#F00" value="@load(each.coba_shortname)" />
+								<label if="${each.emhc_single==1}"
+									style="color:#00F" value="@load(each.coba_shortname)" />
+								<label if="${each.emhc_single==1}"
+									style="color:#00F" value="(${each.cohf_houseid })" />
+							</cell>
+							<cell>
+								<label value="@load(each.ownmonth)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emhc_name)" />
+							</cell>
+							<cell>
+								<label value="@load(each.jc)" />
+							</cell>
+							<cell>
+								<label
+									tooltiptext="@load(each.emhc_companyid)"
+									value="@load(each.emhc_companyid)" />
+							</cell>
+							<cell>
+								<label
+									tooltiptext="@load(each.emhc_houseid)"
+									value="@load(each.emhc_houseid)" />
+							</cell>
+							<cell>
+								<label
+									tooltiptext="@load(each.emhc_idcard)"
+									value="@load(each.emhc_idcard)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emhc_radix)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emhc_hj)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emhc_cpp)" />
+							</cell>
+							<cell>
+
+								<label value="@load(each.emhc_change)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.emhc_confirmtime)" />
+							</cell>
+
+							<cell>
+								<label
+									value="@load(each.emhc_declaretime)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emhc_client)" />
+							</cell>
+
+							<cell>
+								<label
+									value="@load(each.emhc_statename)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.emhc_progressname)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emhc_addname)" />
+							</cell>
+							<cell style="white-space:nowrap;">
+								<hbox>
+									<image src="../images/ask.gif"
+										if="${each.emhc_ifsame==1 }" tooltiptext="特殊数据">
+									</image>
+									<image
+										src="../images/20070708132244928.gif" if="${each.emhc_tid>0 }"
+										tooltiptext="转账户调基">
+									</image>
+
+									<image src="../images/hongqi.gif"
+										if="${each.emhc_flag==1 }" tooltiptext="备注信息">
+									</image>
+									<image src="../images/sy009bj.jpg"
+										if="${each.bjid>0 }" tooltiptext="当月有未申报的公积金补缴">
+									</image>
+									<image
+										src="../images/20070708132244958.gif"
+										if="${each.emhc_ifwrong==1 }"
+										tooltiptext="核对时与社保局数据不一致，不能申报，请手工核对。">
+									</image>
+									<image style="cursor:pointer"
+										src="../images/noread.gif"
+										onClick="@command('message',a=each)"
+										if="${each.message==true and each.readState==false }" />
+									<image src="../images/readed.gif"
+										onClick="@command('message',a=each)"
+										if="${each.message==true and each.readState==true }" />
+								</hbox>
+							</cell>
+							<cell>
+								<div align="center">
+									<menubar autodrop="true"
+										width="50px" sclass="mymb">
+										<menu
+											image="../images/pencil-small.png">
+											<menupopup>
+												<menuitem label="查看"
+													onClick="@command('checkInfo',a=each)" />
+												<menuitem label="短信"
+													onClick="@command('message',a=each)" />
+												<menuitem
+													if="${each.emhc_ifdeclare==1 }" label="核查失败"
+													onClick="@command('checkerr',a=each)" />
+
+											</menupopup>
+										</menu>
+									</menubar>
+								</div>
+							</cell>
+							<cell>
+								<checkbox value="@load(each.emhc_id)"
+									if="${each.emhc_ifdeclare==0 or each.emhc_ifdeclare==2}"
+									checked="@bind(each.emhc_ischecked)"
+									onClick="@command('checkall',a=cka,b=self)" />
+							</cell>
+						</row>
+					</template>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

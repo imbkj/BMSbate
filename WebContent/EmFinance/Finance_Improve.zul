@@ -1,0 +1,281 @@
+<!--
+	创建人：林少斌
+	创建时间：2014-9-11
+	用途：受托台账调整页面
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="受托台账 -- 补交及报价单调整页面" border="normal" width="95%"
+		height="95%" closable="true" id="winImpe"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmFinance.Finance_ImproveController')">
+		<scrollview vflex="1" hflex="1">
+			<groupbox mold="3d" open="true" title="员工基本信息">
+				<grid>
+					<rows>
+						<row>
+							<cell width="80px">所属公司</cell>
+							<cell style="color:#00F;">
+								<label
+									value="@load(vm.emM.coba_shortname)" />
+							</cell>
+							<cell width="80px">员工姓名</cell>
+							<cell style="color:#00F;">
+								<label value="@load(vm.emM.emba_name)" />
+							</cell>
+							<cell width="80px">身份证号</cell>
+							<cell style="color:#00F;">
+								<label
+									value="@load(vm.emM.emba_idcard)" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox mold="3d" open="true" title="报价单信息">
+				<grid id="coofferlist" model="@load(vm.cflList)"
+					visible="@load(vm.ifCflsit)">
+					<columns>
+						<column align="center">报价单</column>
+						<column align="center">产品类型</column>
+						<column align="center">城市</column>
+						<column align="center">产品名称</column>
+						<column align="center">金额</column>
+						<column align="center">服务起始月</column>
+						<column align="center">收费起始月</column>
+						<column align="center">终止收费月</column>
+						<column width="70px" align="center">
+							<checkbox id="cka" disabled="true"
+								checked="true" />
+						</column>
+					</columns>
+					<rows>
+						<template name="model">
+							<row
+								style="border:1px dotted #cad9ea;background-color:#f5fafe;">
+								<cell>
+									<label
+										value="@load(each.coof_name)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.coli_pclass)" />
+								</cell>
+								<cell>
+									<label value="@load(each.city)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.coli_name)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.coli_fee2)" />
+								</cell>
+								<cell>
+									<hbox>
+										<monthbox format="yyyy-MM-01"
+											readonly="true" value="@load(each.cgli_startdate2)"
+											onChange="@command('setcheck',a=coofferlist,b=self)"
+											mold="rounded" />
+										<image src="../images/130.gif"
+											style="cursor:pointer;"
+											onClick="@command('copysd',a=coofferlist,b=5,rowIndex=forEachStatus.index)" />
+									</hbox>
+								</cell>
+								<cell>
+									<hbox>
+										<monthbox format="yyyy-MM-01"
+											readonly="true" value="@load(each.cgli_startdate)"
+											onChange="@command('setcheck',a=coofferlist,b=self)"
+											mold="rounded" />
+										<image src="../images/130.gif"
+											style="cursor:pointer;"
+											onClick="@command('copysd',a=coofferlist,b=6,rowIndex=forEachStatus.index)" />
+									</hbox>
+								</cell>
+								<cell>
+									<hbox>
+										<monthbox format="yyyy-MM-30"
+											readonly="true" value="@load(each.cgli_stopdate)"
+											onChange="@command('setcheck',a=coofferlist,b=self)"
+											mold="rounded" />
+										<image src="../images/130.gif"
+											style="cursor:pointer;"
+											onClick="@command('copysd',a=coofferlist,b=7,rowIndex=forEachStatus.index)" />
+									</hbox>
+								</cell>
+								<cell>
+									<checkbox
+										value="@load(each.coli_id)" checked="true" disabled="true" />
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox mold="3d" open="true" title="养老补交数据">
+				<grid id="gdShebaobj" model="@load(vm.sbbjList)"
+					visible="@load(vm.ifsbbj)">
+					<columns>
+						<column align="center">所属月份</column>
+						<column align="center">补缴月份</column>
+						<column align="center">补缴基数</column>
+						<column align="center">补缴金额</column>
+						<column align="center">收费月份</column>
+					</columns>
+					<rows>
+						<template name="model">
+							<row
+								style="border:1px dotted #cad9ea;background-color:#f5fafe;">
+								<cell>
+									<textbox visible="false"
+										value="@load(each.id)" />
+									<label value="@load(each.ownmonth)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emsb_startmonth)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emsb_radix)" />
+								</cell>
+								<cell>
+									<label value="${each.emsb_total}" />
+								</cell>
+								<cell>
+									<combobox mold="rounded"
+										readonly="true" model="@load(vm.monthList)"
+										value="@load(each.emsb_feeownmonth)">
+										<template name="model">
+											<comboitem
+												label="@load(each)" value="@load(each)" />
+										</template>
+									</combobox>
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox mold="3d" open="true" title="医疗补交数据">
+				<grid id="gdShebaobjjl" model="@load(vm.sbbjJLList)"
+					visible="@load(vm.ifsbbjjl)">
+					<columns>
+						<column align="center">所属月份</column>
+						<column align="center">补缴月份</column>
+						<column align="center">补缴基数</column>
+						<column align="center">补缴金额</column>
+						<column align="center">收费月份</column>
+					</columns>
+					<rows>
+						<template name="model">
+							<row
+								style="border:1px dotted #cad9ea;background-color:#f5fafe;">
+								<cell>
+									<textbox visible="false"
+										value="@load(each.id)" />
+									<label value="@load(each.ownmonth)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emsb_startmonth)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emsb_radix)" />
+								</cell>
+								<cell>
+									<label value="${each.emsb_total}" />
+								</cell>
+								<cell>
+									<combobox mold="rounded"
+										readonly="true" model="@load(vm.monthList)"
+										value="@load(each.emsb_feeownmonth)">
+										<template name="model">
+											<comboitem
+												label="@load(each)" value="@load(each)" />
+										</template>
+									</combobox>
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox mold="3d" open="true" title="住房公积金补交数据">
+				<grid id="gdGjjbj" model="@load(vm.gjjbjList)"
+					visible="@load(vm.ifgjjbj)">
+					<columns>
+						<column align="center">所属月份</column>
+						<column align="center">补缴起始月份</column>
+						<column align="center">补缴结束月份</column>
+						<column align="center">补缴基数</column>
+						<column align="center">补缴金额</column>
+						<column align="center">收费月份</column>
+					</columns>
+					<rows>
+						<template name="model">
+							<row
+								style="border:1px dotted #cad9ea;background-color:#f5fafe;">
+								<cell>
+									<textbox visible="false"
+										value="@load(each.emhb_id)" />
+									<label value="@load(each.ownmonth)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emhb_startmonth)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emhb_stopmonth)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emhb_radix)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emhb_total)" />
+								</cell>
+								<cell>
+									<combobox mold="rounded"
+										readonly="true" model="@load(vm.monthList)"
+										value="@load(each.emhb_feemonth)">
+										<template name="model">
+											<comboitem
+												label="@load(each)" value="@load(each)" />
+										</template>
+									</combobox>
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</groupbox>
+			<grid>
+				<rows>
+					<row>
+						<cell>
+							<label
+								value="凡是修改养老、医疗、公积金补缴或者报价单的月份后，请重新同步修改前后两个月份的台账数据"
+								style="color:red" />
+						</cell>
+					</row>
+				</rows>
+				<foot>
+					<footer align="center">
+						<hbox>
+							<button label="员工业务中心"
+								onClick="@command('openbucenter')" />
+							<button label="提交" id="btSubmit"
+								onClick="@command('submit',win=winImpe,coofferlist=coofferlist,gdShebaobj=gdShebaobj,gdGjjbj=gdGjjbj,gdShebaobjjl=gdShebaobjjl)" />
+						</hbox>
+					</footer>
+				</foot>
+			</grid>
+		</scrollview>
+	</window>
+</zk>

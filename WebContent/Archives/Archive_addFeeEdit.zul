@@ -1,0 +1,182 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="wEdit" width="900px" height="100%" title="续费信息"
+		border="normal" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.Archives.Archive_addFeeInfoController')"
+		onCreate="@command('winC',a=self)" closable="true">
+		<scrollview height="100%">
+			<groupbox title="员工档案信息" height="100%">
+				<grid>
+					<columns>
+						<column width="120px"></column>
+						<column></column>
+						<column width="120px"></column>
+						<column></column>
+					</columns>
+					<rows>
+						<row>
+							<cell>所属月份</cell>
+							<cell>
+								<label value="@load(vm.epm.ownmonth)" />
+							</cell>
+							<cell>客服</cell>
+							<cell>
+								<label
+									value="@load(vm.epm.emap_client)" />
+							</cell>
+						</row>
+						<row>
+							<cell>公司名称</cell>
+							<cell>
+								<label
+									value="@load(vm.epm.emap_company)" />
+							</cell>
+							<cell>公司编号</cell>
+							<cell>
+								<label value="@load(vm.epm.cid)" />
+							</cell>
+						</row>
+						<row>
+							<cell>员工姓名</cell>
+							<cell>
+								<label value="@load(vm.epm.emap_name)" />
+							</cell>
+							<cell>员工编号</cell>
+							<cell>
+								<label value="@load(vm.epm.gid)" />
+							</cell>
+						</row>
+						<row>
+							<cell>身份证号码</cell>
+							<cell>
+								<label
+									value="@load(vm.epm.emap_idcard)" />
+							</cell>
+							<cell>档案所在地</cell>
+							<cell>
+								<label
+									value="@load(vm.epm.emap_fileplace)" />
+							</cell>
+						</row>
+						<row>
+							<cell>档案付款性质</cell>
+							<cell>
+								<label value="@load(vm.epm.emap_fpay)" />
+							</cell>
+							<cell>户口付款性质</cell>
+							<cell>
+								<label value="@load(vm.epm.emap_hpay)" />
+							</cell>
+						</row>
+						<row>
+							<cell>档案开票方式</cell>
+							<cell>
+								<label
+									value="@load(vm.epm.emap_finvoice)" />
+							</cell>
+							<cell>户口开票方式</cell>
+							<cell>
+								<label
+									value="@load(vm.epm.emap_hinvoice)" />
+							</cell>
+						</row>
+						<row>
+							<cell>离职日期</cell>
+							<cell colspan="3">
+								<label value="@load(vm.epm.outtime)" />
+							</cell>
+
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox title="员工续费信息" height="100%">
+				<grid>
+					<columns>
+						<column width="120px"></column>
+						<column></column>
+						<column width="120px"></column>
+						<column></column>
+					</columns>
+					<rows>
+						<row>
+							<cell>借款单号</cell>
+							<cell>
+								<label
+									value="@load(vm.epm.emap_idlist)" />
+							</cell>
+							<cell>借款日期</cell>
+							<cell>
+								<label value="@load(vm.epm.emap_ltime)" />
+							</cell>
+						</row>
+						<row>
+							<cell>续费日期</cell>
+							<cell>
+								<label value="@load(vm.epm.emap_cdate)" />
+							</cell>
+							<cell>档案费</cell>
+							<cell>
+								<doublebox
+									value="@bind(vm.epm.emap_file)" />
+							</cell>
+						</row>
+						<row>
+							<cell>滞纳金</cell>
+							<cell>
+								<doublebox value="@bind(vm.epm.emap_op)" />
+							</cell>
+							<cell>户口费</cell>
+							<cell>
+								<doublebox value="@bind(vm.epm.emap_hj)" />
+							</cell>
+						</row>
+						<row>
+							<cell>添加时间</cell>
+							<cell>
+								<label
+									value="@load(vm.epm.emap_addtime)" />
+							</cell>
+							<cell>添加人</cell>
+							<cell>
+								<label
+									value="@load(vm.epm.emap_addname)" />
+							</cell>
+						</row>
+					</rows>
+					<foot>
+						<footer span="4" align="center">
+							<button label="提交" onClick="@command('mod')"/>
+						</footer>
+					</foot>
+				</grid>
+			</groupbox>
+			<groupbox title="备注信息">
+				<grid width="100%" height="250px"
+					model="@load(vm.rmList)">
+					<columns>
+						<column width="250px" align="center"
+							label="添加时间">
+						</column>
+						<column width="120px" align="center"
+							label="添加人">
+						</column>
+						<column align="center" label="内容"></column>
+					</columns>
+					<template name="model">
+						<row>
+							<cell><label value="@load(each.eare_addtime)"/></cell>
+							<cell><label value="@load(each.eare_addname)"/></cell>
+							<cell><label value="@load(each.eare_content)"/></cell>
+						</row>
+					</template>
+					<foot>
+						<footer span="3" align="center">
+							<button label="添加备注" onClick="@command('addremark')" />
+						</footer>
+					</foot>
+				</grid>
+			</groupbox>
+		</scrollview>
+	</window>
+</zk>

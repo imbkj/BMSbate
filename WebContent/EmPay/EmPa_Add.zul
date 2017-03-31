@@ -1,0 +1,9 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="个人支付新增" border="normal" width="70%" height="70%"
+	apply="org.zkoss.bind.BindComposer" closable="true" id="paywin"
+	viewModel="@id('vm') @init('Controller.EmPay.EmPa_AddController')"
+>
+
+</window>
+</zk>

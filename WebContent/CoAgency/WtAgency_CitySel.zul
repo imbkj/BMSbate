@@ -1,0 +1,100 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<style src="./css/style.css" />
+	<window title="委托城市查询" border="normal" width="100%"
+		height="100%" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoAgency.WtAgency_CitySelController')">
+		<borderlayout vflex="1">
+			<north border="0" title="数据查询" collapsible="true"
+				flex="true" open="true">
+				<panel border="0">
+					<panelchildren style="padding:5px;">
+						<grid width="100%">
+							<rows>
+								<row>
+									<cell width="10%"
+										style="color:#666;" align="center">
+										地区
+									</cell>
+									<combobox id="cbregion"
+										model="@load(vm.regionlist)" width="40%" autodrop="true"
+										mold="rounded"
+										onChange="@command('selProvince', contact=event.value,com=cbprovince)">
+										<template name="model">
+											<comboitem
+												label="@load(each)" />
+										</template>
+									</combobox>
+									<cell width="10%"
+										style="color:#666;" align="center">
+										省份
+									</cell>
+									<combobox id="cbprovince"
+										model="@load(vm.provincelist)" width="40%" autodrop="true"
+										mold="rounded"
+										onChange="@command('selCity', contact=event.value,com=cbcity)">
+										<template name="model">
+											<comboitem
+												label="@load(each)" />
+										</template>
+									</combobox>
+									<cell width="10%"
+										style="color:#666;" align="center">
+										城市
+									</cell>
+									<combobox id="cbcity"
+										model="@load(vm.citylist)" width="50%" autodrop="true"
+										mold="rounded">
+										<template name="model">
+											<comboitem
+												label="@load(each)" />
+										</template>
+									</combobox>
+									<cell></cell>
+								</row>
+							</rows>
+							<foot>
+								<footer align="center">
+									<button id="btSearch" label="查询"
+										onClick="@command('search',region=cbregion.value,province=cbprovince.value,city=cbcity.value)" />
+								</footer>
+							</foot>
+						</grid>
+					</panelchildren>
+				</panel>
+			</north>
+			<center>
+				<grid id="gdlist" height="100%" emptyMessage="暂无数据"
+					model="@load(vm.winHzCityList)" width="100%" mold="paging"
+					pageSize="15">
+					<columns>
+						<column hflex="1" width="40px" />
+						<column hflex="3" label="序号" align="center" />
+						<column hflex="5" label="地区" align="center"
+							sort="auto(region)" />
+						<column hflex="5" label="省份" align="center"
+							sort="auto(province)" />
+						<column hflex="6" label="城市" align="center"
+							sort="auto(city)" />
+						<column hflex="3" label="合作机构总数" align="center"
+							sort="auto(hzAgencyCount)" />
+					</columns>
+					<template name="model">
+						<row>
+							<custom-attributes city="${each}" />
+							<detail open="false" fulfill="onOpen">
+								<include
+									src="/CoAgency/WtAgency_CitySelBaseList.zul" citymodel="${city}" />
+							</detail>
+							<label value="${forEachStatus.index + 1}" />
+							<label value="@load(each.region)" />
+							<label value="@load(each.province)" />
+							<label value="@load(each.city)" />
+							<label value="@load(each.hzAgencyCount)" />
+						</row>
+					</template>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

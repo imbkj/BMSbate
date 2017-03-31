@@ -1,0 +1,68 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="客服确认户籍变更" border="normal" width="60%" height="60%"
+		apply="org.zkoss.bind.BindComposer" id="firmwin"
+		viewModel="@id('vm') @init('Controller.EmSheBao.Emsi_ConfirmController')"
+		closable="true">
+		<grid vflex="1">
+			<rows>
+				<row>
+					<cell width="80px">公司编号</cell>
+					<cell>
+						<label value="@load(vm.model.cid)"></label>
+					</cell>
+					<cell width="80px">公司简称</cell>
+					<cell>
+						<label value="@load(vm.model.coba_shortname)"></label>
+					</cell>
+				</row>
+				<row>
+					<cell>员工姓名</cell>
+					<cell>
+						<label value="@load(vm.model.emba_name)"></label>
+					</cell>
+					<cell>身份证号</cell>
+					<cell>
+						<label value="@load(vm.model.emba_idcard)"></label>
+					</cell>
+				</row>
+				<row>
+					<cell>所属月份</cell>
+					<cell>
+						<monthbox readonly="true" id="ownmonth" value="@load(vm.ownmonth)"
+							format="yyyyMM" mold="rounded" />
+					</cell>
+					<cell>变更类型</cell>
+					<cell>
+						<label value="@load(vm.model.sbci_change)"></label>
+					</cell>
+				</row>
+				<row>
+					<label value="变更内容" />
+					<cell colspan="3">
+						<label value="@load(vm.model.sbci_content)"></label>
+					</cell>
+				</row>
+				<row>
+					<label value="来源" />
+					<cell colspan="3">
+						<label value="调户完成后系统自动触发变更社保户籍" style="color:red;"></label>
+					</cell>
+				</row>
+				<row>
+					备注（必填）
+					<cell colspan="3">
+						<textbox mold="rounded" rows="3" width="80%"
+							value="@bind(vm.model.sbci_remark)" />
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button label="提交" id="btSubmit"
+						onClick="@command('changeSZSI',win=firmwin,ownmonth=ownmonth.value)" />
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

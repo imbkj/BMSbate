@@ -1,0 +1,565 @@
+<?page title="档案业务信息" contentType="text/html;charset=UTF-8"?>
+<?component name="docDataList" macro-uri="../DocumentsInfo/DocumentsInfo_UpPageList.zul" inline="true"?>
+<zk>
+	<window title="客服通知员工交费" border="normal" closable="true" id="detail"
+		width="80%" height="80%" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.Archives.Archive_FileOutCliDunController')">
+		<scrollview vflex="1">
+			<groupbox closable="false" style="mvmin-bottom:10px;">
+				<caption>
+					<label>档案业务信息</label>
+				</caption>
+				<grid>
+					<rows>
+						<!-- 公共显示信息 -->
+						<row>
+							<cell width="85px">公司名称</cell>
+							<cell>
+								<textbox
+									value="${vm.model.coba_shortname}(${vm.model.cid})"
+									readonly="${vm.model.eada_final=='待处理'}" />
+							</cell>
+							<cell width="85px">员工姓名</cell>
+							<cell>
+								<textbox value="${vm.model.eada_name}"
+									readonly="${vm.model.eada_final=='待处理'}" />
+							</cell>
+						</row>
+						<row>
+							<cell width="80px">身份证号码</cell>
+							<cell colspan="3">
+								<textbox width="50%"
+									value="${vm.model.eada_idcard}"
+									readonly="${vm.model.eada_final=='待处理'}" />
+							</cell>
+						</row>
+						<row>
+							<cell>档案类型</cell>
+							<cell>
+								<textbox
+									value="${vm.model.eada_filetype}"
+									readonly="${vm.model.eada_final=='待处理'}" />
+							</cell>
+							<cell>档案编号</cell>
+							<cell>
+								<textbox value="${vm.model.eada_fid}"
+									readonly="${vm.model.eada_final=='待处理'}" />
+							</cell>
+						</row>
+						<row>
+							<cell>托管方式</cell>
+							<cell>
+								<textbox value="${vm.model.eada_wtmode}"
+									readonly="${vm.model.eada_final=='待处理'}" />
+							</cell>
+							<cell>户籍挂靠</cell>
+							<cell>
+								<textbox
+									value="${vm.model.eada_colhj==1?'是':'否'}"
+									readonly="${vm.model.eada_final=='待处理'}" />
+							</cell>
+						</row>
+						<row>
+
+							<cell>入职中智时间</cell>
+							<cell>
+								<textbox value="${vm.model.emba_indate}"
+									readonly="${vm.model.eada_final=='待处理'}" />
+							</cell>
+							<cell>续签协议到期日</cell>
+							<cell>
+								<textbox
+									value="${vm.amodel.emar_continuedeadline}"
+									readonly="${vm.model.eada_final=='待处理'}" />
+							</cell>
+						</row>
+						<row visible="${vm.model.eada_type!='档案调入'}">
+							<cell>档案所在地</cell>
+							<cell colspan="3">
+								<textbox width="80%"
+									value="${vm.model.eada_fileplace}"
+									readonly="${vm.model.eada_final=='待处理'}" />
+							</cell>
+						</row>
+						<row>
+							<cell>户口详细地址</cell>
+							<cell colspan="3">
+								<textbox width="80%"
+									value="${vm.amodel.emar_address}"
+									readonly="${vm.model.eada_final=='待处理'}" />
+							</cell>
+						</row>
+					</rows>
+					<!-- 公共显示信息End -->
+				</grid>
+			</groupbox>
+			<groupbox closable="false"
+				visible="${vm.model.eada_type=='档案调入'}">
+				<caption>
+					<label>档案调入信息</label>
+				</caption>
+				<!-- 调入显示信息 -->
+				<grid>
+					<rows>
+						<row visible="${vm.model.eada_type=='档案调入'}">
+							<cell width="85px">毕业院校</cell>
+							<cell>
+								<textbox
+									value="${vm.amodel.emar_school}"
+									readonly="${vm.model.eada_final=='待处理'}" />
+							</cell>
+							<cell width="80px">学历</cell>
+							<cell>
+								<textbox
+									value="${vm.amodel.emar_degree}"
+									readonly="${vm.model.eada_final=='待处理'}" />
+							</cell>
+						</row>
+						<row visible="${vm.model.eada_type=='档案调入'}">
+							<cell>学位</cell>
+							<cell>
+								<textbox
+									value="${vm.amodel.emar_degree}"
+									readonly="${vm.model.eada_final=='待处理'}" />
+							</cell>
+							<cell>入深方式</cell>
+							<cell>
+								<textbox
+									value="${vm.amodel.emar_peoplefoldmode}"
+									readonly="${vm.model.eada_final=='待处理'}" />
+							</cell>
+						</row>
+						<row visible="${vm.model.eada_type=='档案调入'}">
+							<cell>婚姻状况</cell>
+							<cell>
+								<textbox
+									value="${vm.amodel.emar_marrystate}"
+									readonly="${vm.model.eada_final=='待处理'}" />
+							</cell>
+							<cell>生育状况</cell>
+							<cell>
+								<textbox
+									value="${vm.amodel.emar_fertilitystate}"
+									readonly="${vm.model.eada_final=='待处理'}" />
+							</cell>
+						</row>
+						<row visible="${vm.model.eada_type=='档案调入'}">
+							<cell>现存档机构全称</cell>
+							<cell>
+								<textbox
+									value="${vm.model.eada_fileplace}"
+									readonly="${vm.model.eada_final=='待处理'}" width="90%" />
+							</cell>
+							<cell>原托管方式</cell>
+							<cell>
+								<textbox value="${vm.model.eada_wtmode}"
+									readonly="${vm.model.eada_final=='待处理'}" />
+							</cell>
+						</row>
+						<row visible="${vm.model.eada_type=='档案调入'}">
+							<cell>存档协议到期日</cell>
+							<cell>
+								<textbox
+									value="${vm.model.eada_deadline}"
+									readonly="${vm.model.eada_final=='待处理'}" />
+							</cell>
+							<cell>商调函编号</cell>
+							<cell>
+								<textbox value="${vm.model.eada_sdh}"
+									readonly="${vm.model.eada_final=='待处理'}" />
+							</cell>
+						</row>
+						<row visible="${vm.model.eada_type=='档案调入'}">
+							<cell>费用结清情况</cell>
+							<cell colspan="3">
+								<textbox value="${vm.model.eada_charge}"
+									width="85%" readonly="${vm.model.eada_final=='待处理'}" />
+							</cell>
+						</row>
+					</rows>
+					<!-- 调入显示信息End -->
+				</grid>
+			</groupbox>
+			<groupbox closable="false"
+				visible="${vm.model.eada_type=='查借材料'}">
+				<caption>
+					<label>查借材料信息</label>
+				</caption>
+				<grid>
+					<rows>
+						<!-- 查借材料End -->
+						<row visible="${vm.model.eada_type=='查借材料'}">
+							<cell>申请借阅材料</cell>
+							<cell colspan="3">
+								<textbox
+									readonly="${vm.model.eada_final=='待处理'}" />
+							</cell>
+						</row>
+						<row visible="${vm.model.eada_type=='查借材料'}">
+							<cell>实际借出材料</cell>
+							<cell colspan="3">
+								<textbox
+									value="${vm.model.eada_archivename}" width="95%"
+									readonly="${vm.model.eada_final=='待处理'}" />
+							</cell>
+						</row>
+						<row visible="${vm.model.eada_type=='查借材料'}">
+							<cell>借用事由</cell>
+							<cell colspan="3">
+								<textbox
+									value="${vm.model.eada_lendcause}" width="95%"
+									readonly="${vm.model.eada_final=='待处理'}" />
+							</cell>
+						</row>
+						<row visible="${vm.model.eada_type=='查借材料'}">
+							<cell>借出日期</cell>
+							<cell>
+								<textbox
+									value="${vm.model.eada_lenddate}"
+									readonly="${vm.model.eada_final=='待处理'}" />
+							</cell>
+							<cell>交接人</cell>
+							<cell>
+								<textbox
+									value="${vm.model.eada_lendpeople}"
+									readonly="${vm.model.eada_final=='待处理'}" />
+							</cell>
+						</row>
+						<row visible="${vm.model.eada_type=='查借材料'}">
+							<cell>归还日期</cell>
+							<cell colspan="3">
+								<textbox
+									value="${vm.model.eada_returnarchivedate}"
+									readonly="${vm.model.eada_final=='待处理'}" />
+							</cell>
+						</row>
+					</rows>
+					<!-- 查借材料End -->
+				</grid>
+			</groupbox>
+
+			<!-- 出具证明-->
+			<groupbox closable="false"
+				visible="${vm.model.eada_type=='出具证明'}">
+				<caption>
+					<label>出具证明信息</label>
+				</caption>
+				<grid>
+					<rows>
+						<row visible="${vm.model.eada_type=='出具证明'}">
+							<cell>申请证明类型</cell>
+							<cell colspan="3">
+								<textbox width="95%"
+									readonly="${vm.model.eada_final=='待处理'}"
+									value="${vm.model.eada_orderdata }" />
+							</cell>
+
+						</row>
+						<row visible="${vm.model.eada_type=='出具证明'}">
+							<cell>实际出具证明</cell>
+							<cell colspan="3">
+								<textbox value="${vm.model.eada_prove}"
+									width="95%" readonly="${vm.model.eada_final=='待处理'}" />
+							</cell>
+						</row>
+						<row visible="${vm.model.eada_type=='出具证明'}">
+							<cell>出具证明事由</cell>
+							<cell colspan="3">
+								<textbox value="${vm.model.eada_cause}"
+									width="95%" readonly="${vm.model.eada_final=='待处理'}" />
+							</cell>
+						</row>
+						<row visible="${vm.model.eada_type=='出具证明'}">
+							<cell>发出证明日期</cell>
+							<cell>
+								<textbox
+									value="${vm.model.eada_drawprovedate}"
+									readonly="${vm.model.eada_final=='待处理'}" />
+							</cell>
+							<cell>交接人</cell>
+							<cell>
+								<textbox
+									value="${vm.model.eada_drawprovepeople}"
+									readonly="${vm.model.eada_final=='待处理'}" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<!-- 出具证明End -->
+
+			<!-- 材料归档-->
+			<groupbox closable="false"
+				visible="${vm.model.eada_type=='材料归档'}">
+				<caption>
+					<label>材料归档信息</label>
+				</caption>
+				<grid>
+					<rows>
+						<row visible="${vm.model.eada_type=='材料归档'}">
+							<cell>拟归档材料名称</cell>
+							<cell>
+								<textbox value="${vm.model.eada_file}"
+									readonly="${vm.model.eada_final=='待处理'}" />
+							</cell>
+							<cell>材料归档时间</cell>
+							<cell>
+								<textbox
+									value="${vm.model.eada_filedate}"
+									readonly="${vm.model.eada_final=='待处理'}" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<!-- 材料归档End-->
+
+			<!-- 转正定级-->
+			<groupbox closable="false"
+				visible="${vm.model.eada_type=='转正定级'}">
+				<caption>
+					<label>转正定级信息</label>
+				</caption>
+				<grid>
+					<rows>
+						<row visible="${vm.model.eada_type=='转正定级'}">
+							<cell>是否需要协助确认转正资格</cell>
+							<cell>
+								<textbox
+									value="${vm.model.eada_zg==1?'是':'否'}"
+									readonly="${vm.model.eada_final=='待处理'}" />
+							</cell>
+							<cell>发出表格日期</cell>
+							<cell>
+								<textbox
+									value="${vm.model.eada_drawformdate}"
+									readonly="${vm.model.eada_final=='待处理'}" />
+							</cell>
+						</row>
+						<row visible="${vm.model.eada_type=='转正定级'}">
+							<cell>是否代购表格</cell>
+							<cell>
+								<textbox
+									value="${vm.model.eada_bf==1?'是':'否'}"
+									readonly="${vm.model.eada_final=='待处理'}" />
+							</cell>
+							<cell>交接人</cell>
+							<cell>
+								<textbox
+									value="${vm.model.eada_drawformpeople}"
+									readonly="${vm.model.eada_final=='待处理'}" />
+							</cell>
+						</row>
+						<row visible="${vm.model.eada_type=='转正定级'}">
+							<cell>后续事宜是否雇员自行办理</cell>
+							<cell>
+								<textbox
+									value="${vm.model.eada_dms==1?'是':'否'}"
+									readonly="${vm.model.eada_final=='待处理'}" />
+							</cell>
+							<cell>回收表格日期</cell>
+							<cell>
+								<textbox
+									value="${vm.model.eada_returnformdate}"
+									readonly="${vm.model.eada_final=='待处理'}" />
+							</cell>
+						</row>
+						<row visible="${vm.model.eada_type=='转正定级'}">
+							<cell>毕业生接收单位</cell>
+							<cell>
+								<textbox value="${vm.model.eada_rsetup}"
+									readonly="${vm.model.eada_final=='待处理'}" />
+							</cell>
+							<cell>毕业生接收时间</cell>
+							<cell>
+								<textbox value="${vm.model.eada_rdate}"
+									readonly="${vm.model.eada_final=='待处理'}" />
+							</cell>
+						</row>
+						<row visible="${vm.model.eada_type=='转正定级'}">
+							<cell>办理转正日期</cell>
+							<cell colspan="3">
+								<textbox
+									value="${vm.model.eada_transactdate}"
+									readonly="${vm.model.eada_final=='待处理'}" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<!-- 转正定级End -->
+			<groupbox closable="false"
+				visible="${vm.model.eada_type=='档案调出'}">
+				<caption>
+					<label>档案调出信息</label>
+				</caption>
+				<grid>
+					<rows>
+						<!-- 档案调出 -->
+						<row visible="${vm.model.eada_type=='档案调出'}">
+							<cell width="100px">员工欠费情况</cell>
+							<cell>
+								<textbox
+									value="${vm.model.eada_arrearageinfo}" width="80%"
+									readonly="${vm.model.eada_final=='待处理'}" />
+							</cell>
+							<cell width="100px">员工欠费时间</cell>
+							<cell>
+								<textbox
+									value="${vm.model.eada_chargedate}"
+									readonly="${vm.model.eada_final=='待处理'}" />
+							</cell>
+						</row>
+						<row visible="${vm.model.eada_type=='档案调出'}">
+							<cell>欠费起始日</cell>
+							<cell>
+								<textbox
+									value="${vm.model.eada_starddate}"
+									readonly="${vm.model.eada_final=='待处理'}" />
+							</cell>
+							<cell>欠费终止日</cell>
+							<cell>
+								<textbox
+									value="${vm.model.eada_stopdate}"
+									readonly="${vm.model.eada_final=='待处理'}" />
+							</cell>
+						</row>
+						<row visible="${vm.model.eada_type=='档案调出'}">
+							<cell>档案费</cell>
+							<cell>
+								<textbox value="${vm.model.eada_dnfee}"
+									readonly="${vm.model.eada_final=='待处理'}" />
+							</cell>
+							<cell>户口费</cell>
+							<cell>
+								<textbox value="${vm.model.eada_hkfee}"
+									readonly="${vm.model.eada_final=='待处理'}" />
+							</cell>
+						</row>
+						<row visible="${vm.model.eada_type=='档案调出'}">
+							<cell>违约金</cell>
+							<cell>
+								<textbox
+									value="${vm.model.eada_promisefee}"
+									readonly="${vm.model.eada_final=='待处理'}" />
+							</cell>
+						</row>
+						<row visible="${vm.model.eada_type=='档案调出'}">
+							<cell>离职时间</cell>
+							<cell>
+								<textbox
+									value="${vm.model.emba_outdate}"
+									readonly="${vm.model.eada_final=='待处理'}" />
+							</cell>
+							<cell>调出日期</cell>
+							<cell>
+								<textbox
+									value="${vm.model.eada_checkoutdate}"
+									readonly="${vm.model.eada_final=='待处理'}" />
+							</cell>
+						</row>
+						<row visible="${vm.model.eada_type=='档案调出'}">
+							<cell>调出方式</cell>
+							<cell>
+								<textbox
+									value="${vm.model.eada_checkoutmode}"
+									readonly="${vm.model.eada_final=='待处理'}" />
+							</cell>
+							<cell>是否委托代办</cell>
+							<cell>
+								<textbox
+									value="${vm.model.eada_deputy==1?'是':'否'}"
+									readonly="${vm.model.eada_final=='待处理'}" />
+							</cell>
+						</row>
+						<row visible="${vm.model.eada_type=='档案调出'}">
+							<cell>调出单位</cell>
+							<cell>
+								<textbox value="${vm.model.eada_rsetup}"
+									readonly="${vm.model.eada_final=='待处理'}" />
+							</cell>
+							<cell>调出原因</cell>
+							<cell>
+								<textbox
+									value="${vm.model.eada_checkoutreason}"
+									readonly="${vm.model.eada_final=='待处理'}" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<!-- 档案调出End -->
+
+			<!-- 欠费查询 -->
+			<groupbox closable="false"
+				visible="${vm.model.eada_type=='欠费查询'}">
+				<caption>
+					<label>欠费信息</label>
+				</caption>
+				<grid>
+					<rows>
+						<row visible="${vm.model.eada_type=='欠费查询'}">
+							<cell>现缴费日期</cell>
+							<cell>
+								<textbox
+									value="${vm.model.eada_paydate}"
+									readonly="${vm.model.eada_final=='待处理'}" />
+							</cell>
+							<cell>档案存放单位全称</cell>
+							<cell>
+								<textbox
+									value="${vm.model.eada_fileplacefull}"
+									readonly="${vm.model.eada_final=='待处理'}" />
+							</cell>
+						</row>
+						<row visible="${vm.model.eada_type=='欠费查询'}">
+							<cell>员工档案欠费情况</cell>
+							<cell colspan="3">
+								<textbox
+									value="${vm.model.eada_arrearageinfo}" width="95%" rows="3"
+									readonly="${vm.model.eada_final=='待处理'}" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<!-- 欠费查询End -->
+			<groupbox visible="${vm.model.eada_type!='转正定级'}"
+				if="${vm.model.eada_type!='欠费查询'}" style="mvmin-top:10px;"
+				closable="false">
+				<caption>
+					<label>递交材料</label>
+				</caption>
+				<grid>
+					<rows>
+						<row>
+							<cell colspan="4">
+								<!-- 材料内联页 参数：puzu_id：模块页面id， doc_type：员工(g)还是公司(c)，gid：公司数据则插入空白 ，业务表id ，log_url：获取到页面路径的前部分-->
+								<docDataList id="docGrid"
+									puzu_id="${vm.model.eada_doc}" doc_type="g"
+									gid="${vm.model.gid}" tid="${vm.model.eada_id}"
+									log_url="../DocumentsInfo/" dHeight="200px" dWidth="100%" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+		</scrollview>
+		<grid>
+			<rows>
+				<row>
+					<cell align="center">
+						<button
+							onClick="@command('summitupdate',detail=detail)">
+							提交
+						</button>
+						<button
+							onClick="@command('addremark',win=detail)">
+							备注
+						</button>
+					</cell>
+				</row>
+			</rows>
+		</grid>
+	</window>
+</zk>

@@ -1,0 +1,124 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="个人收款明细" border="normal" vflex="1"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmFinanceManage.Emgt_InfoListController')">
+		<grid model="@load(vm.list)" emptyMessage="没有数据" vflex="1"
+			mold="paging" pageSize="50">
+			<columns>
+				<column label="序号" width="40px" align="center" />
+				<column width="100px" align="center">
+					<vlayout>
+						<label>所属月份</label>
+						<monthbox id="ownmonth" format="yyyyMM"
+							mold="rounded" width="95%"
+							onChange="@command('search',ownmonth=ownmonth.value)" />
+					</vlayout>
+				</column>
+				<column hflex="3" align="center">
+					<vlayout>
+						<label>公司名称</label>
+						<textbox mold="rounded" width="95%"
+							value="@bind(vm.company)"
+							onChange="@command('search',ownmonth=ownmonth.value)" />
+					</vlayout>
+				</column>
+				<column hflex="1" align="center">
+					<vlayout>
+						<label>员工编号</label>
+						<textbox mold="rounded" width="95%"
+							value="@bind(vm.gid)"
+							onChange="@command('search',ownmonth=ownmonth.value)" />
+					</vlayout>
+				</column>
+				<column hflex="1" align="center">
+					<vlayout>
+						<label>姓名</label>
+						<textbox mold="rounded" width="95%"
+							value="@bind(vm.name)"
+							onChange="@command('search',ownmonth=ownmonth.value)" />
+					</vlayout>
+				</column>
+				<column hflex="1" align="center">
+					<vlayout>
+						<label>收费方式</label>
+						<combobox width="99%" value="@bind(vm.paytype)"
+							onChange="@command('search',ownmonth=ownmonth.value)"
+							readonly="true">
+							<comboitem label="" />
+							<comboitem label="现金交款" />
+							<comboitem label="银行存款" />
+						</combobox>
+					</vlayout>
+				</column>
+				<column label="金额" hflex="1" align="center"></column>
+				<column hflex="1" align="center">
+					<vlayout>
+						<label>收费类型</label>
+						<combobox value="@bind(vm.type)" width="99%"
+							onChange="@command('search',ownmonth=ownmonth.value)"
+							readonly="true">
+							<comboitem label="" />
+							<comboitem label="档案" />
+							<comboitem label="户口" />
+							<comboitem label="入职体检" />
+							<comboitem label="转正定级" />
+							<comboitem label="职称评级" />
+							<comboitem label="调户" />
+							<comboitem label="其他" />
+						</combobox>
+					</vlayout>
+				</column>
+				<column label="备注" hflex="4" align="center" />
+				<column label="添加人" hflex="1" align="center" />
+				<column label="添加时间" hflex="1" align="center" />
+				<column label="修改" width="80px" align="center" />
+			</columns>
+			<rows>
+				<template name="model">
+					<row>
+						<cell>
+							<label value="${forEachStatus.index+1 }"></label>
+						</cell>
+						<cell>
+							<label value="@load(each.ownmonth)"></label>
+						</cell>
+						<cell>
+							<label value="@load(each.coba_shortname)"></label>
+						</cell>
+						<cell>
+							<label value="@load(each.gid)"></label>
+						</cell>
+						<cell>
+							<label value="@load(each.emba_name)"></label>
+						</cell>
+						<cell>
+							<label value="@load(each.emgt_paytype)"></label>
+						</cell>
+						<cell>
+							<label value="@load(each.emgt_fee)"></label>
+						</cell>
+						<cell>
+							<label value="@load(each.emgt_type)"></label>
+						</cell>
+						<cell>
+							<label value="@load(each.emgt_remark)"></label>
+						</cell>
+						<cell>
+							<label value="@load(each.emgt_addname)"></label>
+						</cell>
+						<cell>
+							<label value="@load(each.emgt_addtime)"></label>
+						</cell>
+						<cell>
+							<a
+								onClick="@command('openupdate',model=each)">
+								<label value="修改"></label>
+							</a>
+						</cell>
+					</row>
+				</template>
+			</rows>
+		</grid>
+	</window>
+</zk>

@@ -1,0 +1,62 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="批量处理" border="normal" width="80%" height="80%" closable="true" id="windata"
+	apply="org.zkoss.bind.BindComposer" 
+	viewModel="@id('vm') @init('Controller.EmHouseCard.HuCard_ClientDealAllController')">
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell width="110px">当前状态</cell>
+			<cell><label value="@load(vm.model.state_Name)"></label></cell>
+			<cell width="110px" visible="${vm.model.re_state!=12}" id="clval"><label value="@load(vm.timename)"></label></cell>
+			<cell visible="${vm.model.re_state!=12}"><datebox id="clientuptime"></datebox></cell>
+		</row>
+		<row visible="${vm.model.re_state==13}">
+			<cell width="110px">领卡员工</cell>
+			<cell><textbox id="takecardname"></textbox></cell>
+			<cell width="110px"><label value="领卡方式"></label></cell>
+			<cell>
+				<combobox id="taketype">
+					<comboitem label=""/>
+					<comboitem label="到付邮寄员工" />
+					<comboitem label="统一邮寄联系人" />
+					<comboitem label="上门领卡" />
+					<comboitem label="送卡上门" />
+				</combobox>
+			</cell>
+		</row>
+		<row visible="@bind(vm.ifvis)">
+			<cell width="80px">请选择状态</cell>
+			<cell>
+				<combobox id="statename" readonly="true" onChange="@command('infovisible',cel=cel,takename=takename,takeinfo=takeinfo,val=self.selectedItem.value)">
+					<comboitem label="已交客服" value="1"/>
+					<comboitem label="员工已领" value="2"/>
+				</combobox>
+			</cell>
+			<cell width="80px" visible="@bind(vm.takeinfovis)" id="cel">领卡员工</cell>
+			<cell visible="@bind(vm.takeinfovis)" id="takename"><textbox value="@load(vm.model.username)" id="username"></textbox></cell>
+		</row>
+		<row visible="@bind(vm.takeinfovis)" id="takeinfo">
+			<cell width="80px">发卡时间</cell>
+			<cell><datebox id="sendtime"></datebox></cell>
+			<cell width="80px">发卡方式</cell>
+			<cell>
+				<combobox id="sendtype">
+					<comboitem label="到付邮寄员工"/>
+					<comboitem label="统一邮寄联系人"/>
+					<comboitem label="上门领卡"/>
+					<comboitem label="送卡上门"/>
+				</combobox>
+			</cell>
+		</row>
+	</rows>
+	<foot>
+		<footer align="center">
+			<button onClick="@command('summitqian',win=windata,clientuptime=clientuptime.value,
+			takecardname=takecardname.value,taketype=taketype.value,statename=statename.selectedItem.value,
+			takename=username.value,sendtime=sendtime.value,sendtype=sendtype.value)">提交</button>
+		</footer>
+	</foot>
+</grid>
+</window>
+</zk>

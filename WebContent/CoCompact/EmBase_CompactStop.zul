@@ -1,0 +1,147 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winep" title="员工报价单终止" border="normal" width="100%"
+		closable="true" height="100%" onCreate="@command('winD',a=self)"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoCompact.Embase_CompactStopController')">
+		<borderlayout width="100%" height="100%">
+			<north>
+				<grid>
+					<columns visible="false">
+						<column width="120px" />
+						<column />
+						<column width="120px" />
+						<column />
+					</columns>
+					<rows>
+						<row>
+							<cell>合同</cell>
+							<cell>
+								<combobox id="compact"
+									onChange="@command('updateQuote')" instant="true"
+									autodrop="true" model="@load(vm.compactlist)">
+									<template name="model">
+										<comboitem
+											value="@load(each.coco_id)"
+											label="@load(each.coco_compactid)" />
+									</template>
+								</combobox>
+							</cell>
+							<cell>产品类型</cell>
+							<cell>
+								<combobox id="pclass"
+									model="@load(vm.classlist)" onChange="@command('SearchList')"
+									instant="true" autodrop="true">
+									<template name="model">
+										<comboitem
+											label="@load(each.copc_name)" />
+									</template>
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>报价单</cell>
+							<cell>
+								<combobox id="quote"
+									model="@load(vm.quotelist)" onChange="@command('SearchList')"
+									instant="true" autodrop="true">
+									<template name="model">
+										<comboitem
+											value="@load(each.coof_id)" label="@load(each.coof_name)" />
+									</template>
+								</combobox>
+							</cell>
+							<cell>产品名称</cell>
+							<cell>
+								<textbox id="product"
+									onChange="@command('SearchList')" instant="true" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</north>
+			<center>
+				<grid id="gd" width="100%" height="100%"
+					sizedByContent="true" span="true" emptyMessage="暂无数据"
+					model="@load(vm.emplist)">
+					<columns>
+						<column width="50px" align="center" label="序号" />
+						<column align="center" label="合同" />
+						<column align="center" label="报价单" />
+						<column align="center" label="姓名" />
+						<column width="125px" align="center"
+							label="身份证" />
+						<column align="center" label="产品类型" />
+						<column align="center" label="产品名称" />
+						<column align="center" label="服务起始月" />
+						<column align="center" label="收费起始月" />
+						<column align="center" label="终止收费月" />
+						<column width="50px" align="center">
+							<checkbox id="cka"
+								onClick="@command('checkall',a=self)" />
+						</column>
+					</columns>
+					<template name="model">
+						<row>
+							<cell
+								onClick="@command('checkitem',a=each)">
+								${forEachStatus.index+1 }
+							</cell>
+							<cell
+								onClick="@command('checkitem',a=each)">
+								<label
+									value="@load(each.coco_compactid)" />
+							</cell>
+							<cell
+								onClick="@command('checkitem',a=each)">
+								<label value="@load(each.coof_name)" />
+							</cell>
+							<cell
+								onClick="@command('checkitem',a=each)">
+								<label value="@load(each.emba_name)" />
+							</cell>
+							<cell tooltiptext="@load(each.emba_idcard)"
+								onClick="@command('checkitem',a=each)">
+								<label value="@load(each.emba_idcard)" />
+							</cell>
+							<cell
+								onClick="@command('checkitem',a=each)">
+								<label value="@load(each.coli_pclass)" />
+							</cell>
+							<cell
+								onClick="@command('checkitem',a=each)">
+								<label value="@load(each.coli_name)" />
+							</cell>
+							<cell
+								onClick="@command('checkitem',a=each)">
+								<label
+									value="@load(each.cgli_startdate2)" />
+							</cell>
+							<cell
+								onClick="@command('checkitem',a=each)">
+								<label
+									value="@load(each.cgli_startdate)" />
+							</cell>
+							<cell>
+								<monthbox width="90px" readonly="true"
+									format="yyyy-MM-30" value="@load(each.stopDate)"
+									onChange="@command('updateDate',a=self,b=each)" />
+								<image src="../images/130.gif"
+									style="cursor:pointer;"
+									onClick="@command('copysd',a=each,b=event)" />
+							</cell>
+							<cell>
+								<checkbox checked="@bind(each.checked)" />
+							</cell>
+						</row>
+					</template>
+				</grid>
+			</center>
+			<south>
+				<div align="center">
+					<button label="提交" onClick="@command('submit')" />
+				</div>
+			</south>
+		</borderlayout>
+	</window>
+</zk>

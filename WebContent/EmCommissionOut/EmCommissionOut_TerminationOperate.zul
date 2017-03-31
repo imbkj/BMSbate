@@ -1,0 +1,258 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="win" title="离职 - 状态变更" border="normal" width="1100px"
+		height="580px" closable="true" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmCommissionOut.EmCommissionOut_TerminationOperateController')">
+		<script type="text/javascript" src="/js/Datebox.js"></script>
+		<scrollview vflex="1">
+			<groupbox title="基本信息" mold="3d">
+				<grid width="100%">
+					<columns>
+						<column width="15%" />
+						<column />
+						<column width="15%" />
+						<column />
+					</columns>
+					<rows>
+						<row>
+							<cell>
+								<label value="员工编号" style="color:#666" />
+							</cell>
+							<cell>
+								<label value="@load(vm.m.gid)" />
+							</cell>
+							<cell>
+								<label value="员工姓名" style="color:#666" />
+							</cell>
+							<cell>
+								<label value="@load(vm.m.emba_name)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="合同标准" style="color:#666" />
+							</cell>
+							<cell>
+								<label value="@load(vm.m.ecos_name)" />
+							</cell>
+							<cell>
+								<label value="当地标准" style="color:#666" />
+							</cell>
+							<cell>
+								<label value="@load(vm.m.soin_title)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="离职原因" style="color:#666" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.m.ecoc_stop_cause)" />
+							</cell>
+							<cell>
+								<label value="离职日期" style="color:#666" />
+							</cell>
+							<cell>
+								<label
+									value="@bind(vm.m.ecoc_stop_date)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="备注" style="color:#666" />
+							</cell>
+							<cell colspan="3">
+								<label value="@bind(vm.m.ecoc_remark)"
+									style="color:blue" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="新备注/退回原因"
+									style="color:#666" />
+							</cell>
+							<cell colspan="3">
+								<textbox rows="3" hflex="1"
+									value="@bind(vm.m.ecoc_remark1)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="社保基数" style="color:#666" />
+							</cell>
+							<cell>
+								<label value="@bind(vm.m.ecoc_sb_base)" />
+							</cell>
+							<cell>
+								<label value="公积金基数" style="color:#666" />
+							</cell>
+							<cell>
+								<label
+									value="@bind(vm.m.ecoc_house_base)" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox title="项目明细" mold="3d">
+				<grid width="100%" model="@load(vm.feeList)"
+					emptyMessage="暂无数据">
+					<columns sizable="true">
+						<column label="项目" width="150px" align="center" />
+						<column label="企业基数" align="center" />
+						<column label="个人基数" align="center" />
+						<column label="企业比例" align="center" />
+							<column label="个人比例" align="center" />
+						<column label="月缴费" align="center" />
+						<column label="停缴日" align="center" />
+						<column label="企业实际停缴日" align="center"
+							if="${vm.m.ecoc_state eq 2 or vm.m.ecoc_state eq 3 }">
+						</column>
+						<column width="60px" align="center"
+							if="${vm.m.ecoc_state eq 2 or vm.m.ecoc_state eq 3 }">
+							<hlayout style="cursor:pointer"
+								onClick="@command('dateAll',class='all')">
+								<image src="/images/130.gif"></image>
+								<label value="全选" />
+							</hlayout>
+						</column>
+						<column label="个人实际停缴日" align="center"
+							if="${vm.m.ecoc_state eq 2 or vm.m.ecoc_state eq 3 }">
+						</column>
+						<column width="60px" align="center"
+							if="${vm.m.ecoc_state eq 2 or vm.m.ecoc_state eq 3 }">
+							<hlayout style="cursor:pointer"
+								onClick="@command('dateAll1',class='all')">
+								<image src="/images/130.gif"></image>
+								<label value="全选" />
+							</hlayout>
+						</column>
+					</columns>
+					<template name="model">
+						<row
+							style="border:1px dotted #cad9ea;background-color:#f5fafe;"
+							visible="${not empty each.eofc_start_date }">
+							<label value="@load(each.eofc_name)" />
+							<cell
+								if="${each.sicl_class ne '服务费' and each.sicl_class ne '档案费'
+										and each.sicl_class ne '福利项目' }">
+								<label
+									value="@load(each.eofc_co_base)">
+								</label>
+							</cell>
+							<cell
+								if="${each.sicl_class ne '服务费' and each.sicl_class ne '档案费'
+										and each.sicl_class ne '福利项目' }">
+								<label
+									value="@load(each.eofc_em_base)">
+								</label>
+							</cell>
+							<cell
+								if="${each.sicl_class ne '服务费' and each.sicl_class ne '档案费'
+								and each.sicl_class ne '福利项目' }">
+								<label value="@bind(each.eofc_cp)" />
+								</cell>
+								<cell
+								if="${each.sicl_class ne '服务费' and each.sicl_class ne '档案费'
+								and each.sicl_class ne '福利项目' }">
+								<label value="@bind(each.eofc_op)" />
+								</cell>
+							<cell align="left" colspan="2"
+								if="${each.sicl_class eq '服务费' or each.sicl_class eq '档案费'
+										or each.sicl_class eq '福利项目' }">
+								<label value="@bind(each.eofc_content)" />
+							</cell>
+							<cell>
+								<label
+									value="@bind(each.eofc_month_sum)" />
+							</cell>
+							<cell>
+								<label
+									value="@bind(each.eofc_stop_date)" />
+							</cell>
+							<cell
+								if="${vm.m.ecoc_state eq 2 or vm.m.ecoc_state eq 3 }">
+								<datebox width="70px"
+									value="@bind(each.tempDate)" format="yyyy-MM"
+									onFocus="self.select()" sclass="datebox-month-only" />
+							</cell>
+							<cell
+								if="${vm.m.ecoc_state eq 2 or vm.m.ecoc_state eq 3 }">
+								<div style="cursor:pointer"
+									onClick="@command('dateAll',date=each.tempDate,
+										index=forEachStatus.index,class=each.sicl_class)">
+									<image src="/images/130.gif">
+									</image>
+								</div>
+							</cell>
+							<cell
+								if="${vm.m.ecoc_state eq 2 or vm.m.ecoc_state eq 3 }">
+								<datebox width="70px"
+									value="@bind(each.tempDate1)" format="yyyy-MM"
+									onFocus="self.select()" sclass="datebox-month-only" />
+							</cell>
+							<cell
+								if="${vm.m.ecoc_state eq 2 or vm.m.ecoc_state eq 3 }">
+								<div style="cursor:pointer"
+									onClick="@command('dateAll1',date=each.tempDate1,
+										index=forEachStatus.index,class=each.sicl_class)">
+									<image src="/images/130.gif">
+									</image>
+								</div>
+							</cell>
+						</row>
+					</template>
+					<foot>
+						<footer span="9" align="center">
+							<vlayout>
+								<hlayout>
+									社保企业合计:
+									<label
+										value="@load(vm.m.ecoc_sb_co_sum)" />
+									<space bar="true" orient="vertical" />
+									社保个人合计:
+									<label
+										value="@load(vm.m.ecoc_sb_em_sum)" />
+									<space bar="true" orient="vertical" />
+									社保合计:
+									<label
+										value="@load(vm.m.ecoc_sb_sum)" />
+									<space bar="true" orient="vertical" />
+									公积金企业合计:
+									<label
+										value="@load(vm.m.ecoc_gjj_co_sum)" />
+									<space bar="true" orient="vertical" />
+									公积金个人合计:
+									<label
+										value="@load(vm.m.ecoc_gjj_em_sum)" />
+									<space bar="true" orient="vertical" />
+									公积金合计:
+									<label
+										value="@load(vm.m.ecoc_gjj_sum)" />
+								</hlayout>
+								<hlayout>
+									福利项目合计:
+									<label
+										value="@load(vm.m.ecoc_welfare_sum)" />
+									<space bar="true" orient="vertical" />
+									合同总额:
+									<label style="color:red"
+										value="@load(vm.m.ecoc_sum)" />
+								</hlayout>
+							</vlayout>
+						</footer>
+					</foot>
+				</grid>
+			</groupbox>
+		</scrollview>
+		<hbox width="100%" align="center" pack="center">
+			<button label="一次确认" onClick="@command('submit',win=win)"
+				if="${vm.m.ecoc_state eq 1 }" />
+			<button label="二次确认" onClick="@command('submit',win=win)"
+				if="${vm.m.ecoc_state eq 2 or vm.m.ecoc_state eq 3 }" />
+			<button label="生成委托单" onClick="@command('ExportExcel')" />
+			<button label="退回" onClick="@command('Back',win=win)" />
+		</hbox>
+	</window>
+</zk>

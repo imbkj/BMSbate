@@ -1,0 +1,175 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<?component name="docDataList" macro-uri="../DocumentsInfo/DocumentsInfo_UpPageList.zul" inline="true"?>
+
+<zk>
+	<window title="档案调入 - 材料交接" border="normal" closable="true"
+		id="windata" width="700px" height="600px"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vv') @init('Controller.Archives.Archive_DataFileController')">
+
+		<borderlayout>
+			<north height="95%">
+				<scrollview vflex="1" height="100%">
+					<groupbox closable="false">
+						<caption>
+							<label>档案信息</label>
+						</caption>
+						<grid>
+							<rows>
+								<row>
+									<cell>公司名称:</cell>
+									<cell colspan="3">
+										<label
+											value="@load(vv.edm.coba_company)">
+										</label>
+									</cell>
+
+								</row>
+								<row>
+									<cell>姓名:</cell>
+									<cell>
+										<label
+											value="@load(vv.edm.eada_name)">
+										</label>
+									</cell>
+									<cell>身份证:</cell>
+									<cell>
+										<label
+											value="@load(vv.edm.eada_idcard)">
+										</label>
+									</cell>
+								</row>
+								<row>
+									<cell>档案类型:</cell>
+									<cell>
+										<label
+											value="@load(vv.edm.eada_filetype)">
+										</label>
+									</cell>
+									<cell>户籍挂靠:</cell>
+									<cell>
+										<label
+											value="@load(vv.edm.eada_colhjName)">
+										</label>
+									</cell>
+								</row>
+								<row>
+									<cell>现存档机构地址:</cell>
+									<cell>
+										<label
+											value="@load(vv.edm.eada_fileplace)">
+										</label>
+									</cell>
+									<cell>原托管方式:</cell>
+									<cell>
+										<label
+											value="@load(vv.edm.eada_wtmode)">
+										</label>
+									</cell>
+								</row>
+								<row>
+									<cell>入职中智时间:</cell>
+									<cell>
+										<label
+											value="@load(vv.edm.emba_indate)">
+										</label>
+									</cell>
+									<cell>
+										<label
+											if="${vv.edm.eada_filetype=='委托人才' }">
+											续签协议到期日
+										</label>
+										<label
+											if="${vv.edm.eada_filetype=='中智保管' }">
+											协议书签订到期日
+										</label>
+									</cell>
+									<cell>
+										<label
+											if="${vv.edm.eada_filetype=='委托人才' }"
+											value="@load(vv.edm.emar_continuedeadline)" />
+										<label
+											if="${vv.edm.eada_filetype=='中智保管' }"
+											value="@load(vv.edm.emar_prodate)" />
+									</cell>
+								</row>
+
+								<row>
+									<cell>档案费用付款性质:</cell>
+									<cell>
+										<label
+											value="@load(vv.edm.eada_rspaykind)">
+										</label>
+									</cell>
+									<cell>档案发票:</cell>
+									<cell>
+										<label
+											value="@load(vv.edm.eada_rsinvoice)">
+										</label>
+									</cell>
+								</row>
+								<row>
+									<cell>户口费用付款性质:</cell>
+									<cell>
+										<label
+											value="@load(vv.edm.eada_hjpaykind)">
+										</label>
+									</cell>
+									<cell>户口发票:</cell>
+									<cell>
+										<label
+											value="@load(vv.edm.eada_hjinvoice)">
+										</label>
+									</cell>
+								</row>
+								<row>
+									<cell>费用结清情况:</cell>
+									<cell colspan="3">
+										<label
+											value="@load(vv.edm.eada_charge)">
+										</label>
+									</cell>
+
+								</row>
+								<row>
+									<cell>备注:</cell>
+									<cell colspan="3">
+										<label
+											value="@load(vv.edm.eada_remark)">
+										</label>
+									</cell>
+
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+					<groupbox>
+						<caption>
+							<label>材料交接</label>
+						</caption>
+						<docDataList id="docGrid" puzu_id="5"
+							doc_type="g" gid="${vv.edm.gid}" tid="${vv.edm.eada_id }"
+							log_url="/DocumentsInfo/" dWidth="100%" dHeight="100%" />
+
+					</groupbox>
+				</scrollview>
+			</north>
+			<center>
+				<div align="center">
+					<button label="联系客服" onClick="@command('send')">
+					</button>
+					<button
+						onClick="@command('addremark',win=windata)">
+						备注
+					</button>
+					<button label="修改材料"
+						onClick="@command('modify',win=windata,gd=docGrid)">
+					</button>
+					<button label="下一步"
+						onClick="@command('submit',win=windata,gd=docGrid)">
+					</button>
+				</div>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

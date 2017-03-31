@@ -1,0 +1,101 @@
+<!--
+	创建人：林少斌
+	创建时间：2015-10-26
+	用途：变更数据申报页面
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winShebeoList" title="社会保险 -- 参保记录页面" border="normal" closable="true"
+		width="90%" height="70%" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmSheBao.Emsi_AllRecordController')">
+		<borderlayout vflex="1">
+			<center>
+				<grid id="dataGrid" width="100%" height="100%"
+					model="@load(vm.sbDataList)" emptyMessage="无数据">
+					<columns sizable="true">
+						<column label="所属月份" align="center"
+							sort="auto(ownmonth)" />
+						<column label="姓名" align="center"
+							sort="auto(emsc_name)" />
+						<column label="电脑号" align="center" />
+						<column label="身份证" align="center" />
+						<column label="基数" align="center"
+							sort="auto(emsc_radix)" />
+						<column label="户籍" align="center"
+							sort="auto(emsc_hj)" />
+						<column label="养老" align="center"
+							sort="auto(emsc_yl)" />
+						<column label="医疗" align="center"
+							sort="auto(emsc_yltype)" />
+						<column label="工伤" align="center"
+							sort="auto(emsc_gs)" />
+						<column label="失业" align="center"
+							sort="auto(emsc_sye)" />
+						<column label="生育" align="center"
+							sort="auto(emsc_syu)" />
+						<column label="单位交合计" align="center" />
+						<column label="个人交合计" align="center" />
+						<column label="合计" align="center" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+
+								<cell>
+									<label value="@load(each.ownmonth)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.esiu_name)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.esiu_computerid)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.esiu_idcard)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.esiu_radix)" />
+								</cell>
+								<cell>
+									<label value="@load(each.esiu_hj)" />
+								</cell>
+								<cell>
+									<label value="@load(each.esiu_yl)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.esiu_yltype)" />
+								</cell>
+								<cell>
+									<label value="@load(each.esiu_gs)" />
+								</cell>
+								<cell>
+									<label value="@load(each.esiu_sye)" />
+								</cell>
+								<cell>
+									<label value="@load(each.esiu_syu)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.esiu_totalcp)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.esiu_totalop)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.esiu_totalop+each.esiu_totalcp)" />
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

@@ -1,0 +1,51 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="毕业生接收信息修改" border="normal" width="400px" height="300px" closable="true" id="win"
+	apply="org.zkoss.bind.BindComposer"
+    viewModel="@id('vm') @init('Controller.EmCensus.EmDh.Emdh_Bys_StateUpdateAllController')">
+ <caption>
+	<hlayout style="float:right">
+		<toolbar>
+			<toolbarbutton label="重置流程" onClick="@command('beginagain',win=win)" style="color:#666:font-size:8pt" />
+	   </toolbar>
+	</hlayout>
+</caption>
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell width="110px">当前状态</cell>
+			<cell><textbox readonly="true" value="@load(arg.model.states)"></textbox></cell>
+		</row>
+		<row visible="${vm.tmodel.wfno_step==6 }">
+			<cell>盖章表格返回日期</cell>
+			<cell><datebox id="time6"></datebox></cell>
+		</row>
+		<row visible="${vm.tmodel.wfno_step==7 }">
+			<cell>上报材料日期</cell>
+			<cell><datebox id="time7"></datebox></cell>
+		</row>
+		<row visible="${vm.tmodel.wfno_step==8 }">
+			<cell>接收函下达日期</cell>
+			<cell><datebox id="time8"></datebox></cell>
+		</row>
+		<row visible="${vm.tmodel.wfno_step==9 }">
+			<cell width="120px">员工领取接收函日期</cell>
+			<cell><datebox id="time9"></datebox></cell>
+		</row>
+		<row visible="${vm.tmodel.wfno_step==11 }">
+			<cell width="120px">报到日期</cell>
+			<cell><datebox id="time11"></datebox></cell>
+		</row>
+		<row visible="${vm.tmodel.wfno_step==12 and arg.model.emdh_state!=6 }">
+			<cell width="120px">员工领取介绍信日期</cell>
+			<cell><datebox id="time12"></datebox></cell>
+		</row>
+	</rows>
+	<foot>
+		<footer align="center"><button id="summit" onClick="@command('updatebysstate',win=win,time6=time6.value,
+		time7=time7.value,time8=time8.value,time9=time9.value,time11=time11.value,time12=time12.value)">提交</button>
+		</footer>
+	</foot>
+</grid>
+</window>
+</zk>

@@ -1,0 +1,297 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="公积金变更信息" id="winEdit" width="100%" height="100%"
+		closable="true" border="normal" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmHouse.Emhouse_EditListController')"
+		onCreate="@command('winC',a=self)">
+		<borderlayout>
+			<north open="false" collapsible="true" splittable="true">
+				<grid>
+					<columns>
+						<column width="120px"></column>
+						<column></column>
+						<column width="120px"></column>
+						<column></column>
+					</columns>
+					<rows>
+						<row>
+							<cell>公司编号</cell>
+							<cell>
+								<label value="@load(vm.ebm.cid)" />
+							</cell>
+							<cell>公司名称</cell>
+							<cell>
+								<label
+									value="@load(vm.ebm.coba_shortname)" />
+							</cell>
+						</row>
+						<row>
+							<cell>员工编号</cell>
+							<cell>
+								<label value="@load(vm.ebm.gid)" />
+							</cell>
+							<cell>员工姓名</cell>
+							<cell>
+								<label value="@load(vm.ebm.emba_name)" />
+								<label
+									style="color:blue;cursor:pointer;" value="(联系员工)"
+									onClick="@command('link')" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</north>
+			<center>
+				<scrollview height="100%">
+					<groupbox title="变更列表">
+						<grid model="@load(vm.list)" height="100%"
+							emptyMessage="暂无数据">
+							<columns>
+								<column align="center">所属月份</column>
+								<column align="center">变动类型</column>
+								<column align="center">账户类型</column>
+								<column align="center">基数</column>
+								<column align="center">比例</column>
+								<column align="center">添加时间</column>
+								<column align="center">添加人</column>
+								<column align="center">状态</column>
+								<column align="center">操作</column>
+							</columns>
+							<template name="model">
+								<row>
+									<cell>
+										<label
+											value="@load(each.ownmonth)" />
+									</cell>
+									<cell>
+										<label
+											value="@load(each.emhc_change)" />
+									</cell>
+									<cell>
+										<label
+											value="@load(each.emhc_single2)" />
+									</cell>
+									<cell>
+										<label
+											value="@load(each.emhc_radix)" />
+									</cell>
+									<cell>
+										<label
+											value="@load(each.emhc_cpp2)" />
+									</cell>
+									<cell>
+										<label
+											value="@load(each.emhc_addtime)" />
+									</cell>
+									<cell>
+										<label
+											value="@load(each.emhc_addname)" />
+									</cell>
+									<cell>
+										<label
+											value="@load(each.emhc_ifdeclare2)" />
+									</cell>
+									<cell>
+										<div align="center">
+											<menubar autodrop="true"
+												width="50px" sclass="mymb">
+												<menu
+													image="../images/pencil-small.png">
+													<menupopup>
+														<menuitem
+															label="系统短信" onClick="@command('message',a=1,b=each)" />
+														<menuitem
+															label="删除"
+															if="${each.emhc_ifdeclare==3 or each.emhc_ifdeclare==4 }"
+															onClick="@command('del',a=each)" />
+														<menuitem
+															label="变更状态"
+															if="${each.emhc_ifdeclare==0 or each.emhc_ifdeclare==4 and tapr_state!=5 }"
+															onClick="@command('mod',a=each,b='state')" />
+														<menuitem
+															label="重新发送" if="${each.emhc_ifdeclare==3 and tapr_state!=5 }"
+															onClick="@command('mod',a=each,b='send')" />
+														<menuitem
+															label="修改"
+															if="${each.emhc_ifdeclare==3 or each.emhc_ifdeclare==4 and tapr_state!=5 }"
+															onClick="@command('mod',a=each,b='mod')" />
+														<menuitem
+															label="转调入" onClick="@command('mod',a=each,b='movein')"
+															if="${(each.emhc_ifdeclare==0 or  each.emhc_ifdeclare==3 or each.emhc_ifdeclare==4) and each.emhc_change=='新增' and tapr_state!=5 }" />
+														<menuitem
+															label="转新增" onClick="@command('mod',a=each,b='addnew')"
+															if="${(each.emhc_ifdeclare==0 or  each.emhc_ifdeclare==3 or each.emhc_ifdeclare==4) and each.emhc_content!='基数调整' and each.emhc_change=='调入' and tapr_state!=5}" />
+														<menuitem
+															label="基数调整" if="${each.emhc_ifdeclare==3}"
+															onClick="@command('mod',a=each,b='radix')" />
+														<menuitem
+															label="补充材料" if="${each.emhc_ifdeclare==6}"
+															onClick="@command('errorInfo',a=each)" />
+													</menupopup>
+												</menu>
+											</menubar>
+										</div>
+									</cell>
+								</row>
+							</template>
+						</grid>
+					</groupbox>
+					<groupbox title="补缴变更列表">
+						<grid model="@load(vm.bjlist)" height="100%"
+							emptyMessage="暂无数据">
+							<columns>
+								<column align="center">所属月份</column>
+								<column align="center">收费月份</column>
+								<column align="center">基数</column>
+								<column align="center">补缴起始月</column>
+								<column align="center">补缴终止月</column>
+								<column align="center">补缴金额</column>
+								<column align="center">添加时间</column>
+								<column align="center">添加人</column>
+								<column align="center">状态</column>
+								<column align="center">操作</column>
+							</columns>
+							<template name="model">
+								<row>
+									<cell>
+										<label
+											value="@load(each.ownmonth)" />
+									</cell>
+									<cell>
+										<label
+											value="@load(each.emhb_feemonth)" />
+									</cell>
+									<cell>
+										<label
+											value="@load(each.emhb_radix)" />
+									</cell>
+									<cell>
+										<label
+											value="@load(each.emhb_startmonth)" />
+									</cell>
+									<cell>
+										<label
+											value="@load(each.emhb_stopmonth)" />
+									</cell>
+									<cell>
+										<label
+											value="@load(each.emhb_total)" />
+									</cell>
+									<cell>
+										<label
+											value="@load(each.emhb_addtime)" />
+									</cell>
+									<cell>
+										<label
+											value="@load(each.emhb_addname)" />
+									</cell>
+									<cell>
+										<label
+											value="@load(each.states)" />
+									</cell>
+									<cell>
+										<div align="center">
+											<menubar autodrop="true"
+												width="50px" sclass="mymb">
+												<menu
+													image="../images/pencil-small.png">
+													<menupopup>
+														<menuitem
+															label="系统短信" onClick="@command('message',a=2,b=each)" />
+														<menuitem
+															label="删除"
+															if="${ each.emhb_ifdeclare==3 or each.emhb_ifdeclare==4 }"
+															onClick="@command('bjmod',a=each,b='del')" />
+														<menuitem
+															label="变更状态"
+															if="${each.emhb_ifdeclare==0 or each.emhb_ifdeclare==4 }"
+															onClick="@command('bjmod',a=each,b='state')" />
+														<menuitem
+															label="重新发送" if="${each.emhb_ifdeclare==3 }"
+															onClick="@command('bjmod',a=each,b='send')" />
+														<menuitem
+															label="修改"
+															if="${each.emhb_ifdeclare==0 or each.emhb_ifdeclare==3 or each.emhb_ifdeclare==4 }"
+															onClick="@command('bjmod',a=each,b='mod')" />
+													</menupopup>
+												</menu>
+											</menubar>
+										</div>
+									</cell>
+								</row>
+							</template>
+						</grid>
+					</groupbox>
+					<groupbox title="档案交单变更列表">
+						<grid model="@load(vm.gjjlist)" height="100%"
+							emptyMessage="暂无数据">
+							<columns>
+								<column align="center">所属月份</column>
+								<column align="center">变更类型</column>
+								<column align="center">变更内容</column>
+								<column align="center">申报状态</column>
+								<column align="center">添加时间</column>
+								<column align="center">添加人</column>
+								<column align="center">操作</column>
+							</columns>
+							<template name="model">
+								<row>
+									<cell>
+										<label
+											value="@load(each.ownmonth)" />
+									</cell>
+									<cell>
+										<label
+											value="@load(each.ehcg_change)" />
+									</cell>
+									<cell
+										tooltiptext="@load(each.ehcg_content)">
+										<label maxlength="12"
+											value="@load(each.ehcg_content)" />
+									</cell>
+									<cell>
+										<label
+											value="@load(each.statename)" />
+									</cell>
+									<cell>
+										<label
+											value="@load(each.ehcg_addtime)" />
+									</cell>
+									<cell>
+										<label
+											value="@load(each.ehcg_addname)" />
+									</cell>
+									<cell>
+										<div align="center">
+											<menubar autodrop="true"
+												width="50px" sclass="mymb">
+												<menu
+													image="../images/pencil-small.png">
+													<menupopup>
+														<menuitem
+															label="系统短信" onClick="@command('message',a=3,b=each)" />
+														<menuitem label="修改"
+															onClick="@command('gjjMod',a=each)" />
+														<menuitem
+															label="重新发送" if="${each.ehcg_ifdeclare==3}"
+															onClick="@command('gjjSend',a=each)" />
+														<menuitem
+															label="删除"
+															if="${each.ehcg_ifdeclare==0 or each.ehcg_ifdeclare==3 or each.ehcg_ifdeclare==4 }"
+															onClick="@command('gjjDel',a=each)" />
+													</menupopup>
+												</menu>
+											</menubar>
+										</div>
+									</cell>
+								</row>
+							</template>
+
+						</grid>
+					</groupbox>
+				</scrollview>
+			</center>
+		</borderlayout>
+
+	</window>
+</zk>

@@ -1,0 +1,122 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="导入台帐前账单" id="winFM" width="100%" height="100%"
+		closable="true" border="normal" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmHouse.EmHouse_FinanceMonthController')">
+		<borderlayout>
+			<north title="高级选项" collapsible="true">
+				<grid>
+					<rows>
+						<row>
+							<cell width="100px">公司名称</cell>
+							<cell width="200px">
+								<textbox id="company" mold="rounded"></textbox>
+							</cell>
+							<cell>
+								<button label="查询"
+									onClick="@command('search')" />
+
+							</cell>
+							<cell align="center">
+								<button label="上传公积金台帐文件"
+									onClick="@command('uploadGL')" />
+							</cell>
+							<cell align="center">
+								<button label="清空台帐"
+									onClick="@command('ClearGL')" />
+							</cell>
+							<cell align="center">
+								<button label="启动逻辑检查"
+									onClick="@command('checkerr')" />
+							</cell>
+						</row>
+
+					</rows>
+				</grid>
+			</north>
+			<center>
+				<grid model="@load(vm.egmList)" width="100%"
+					height="100%" sizedByContent="true"
+					span="true" emptyMessage="暂无数据">
+					<columns>
+						<column align="center">序号</column>
+						<column align="center">所属月份</column>
+						<column align="center">公司名称</column>
+						<column align="center">单位编号</column>
+						<column align="center">比例</column>
+						<column align="center">参保人数</column>
+						<column align="center">系统人数</column>
+						<column align="center">差额</column>
+						<column align="center">公积金扣款金额</column>
+						<column align="center">系统扣款金额</column>
+						<column align="center">差额</column>
+						<column align="center">客服代表</column>
+						<column align="center">操作</column>
+					</columns>
+					<template name="model">
+						<row>
+							<cell>${forEachStatus.index+1 }</cell>
+							<cell>
+								<label value="@load(each.ownmonth)">
+								</label>
+							</cell>
+							<cell align="left">
+								<label
+									value="@load(each.emhu_company)">
+								</label>
+							</cell>
+
+							<cell>
+								<label
+									value="@load(each.emhu_companyid)">
+								</label>
+							</cell>
+							<cell>
+								<label value="@load(each.cohf_cpp)">
+								</label>
+							</cell>
+							<cell>
+								<label value="@load(each.num)" />
+							</cell>
+							<cell>
+								<label value="@load(each.num2)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.num-each.num2)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emhu_total)" />
+							</cell>
+							<cell>
+								<label value="@load(each.emhu_total2)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.emhu_total-each.emhu_total2)" />
+							</cell>
+							<cell>
+								<label value="@load(each.cohf_client)" />
+							</cell>
+							<cell>
+								<button label="删除"
+									onClick="@command('del',a=each)" />
+							</cell>
+						</row>
+					</template>
+					<foot>
+						<footer span="15" align="left">
+							参保总人数:
+							<label value="@load(vm.total)" />
+							人,其中独立户:
+							<label value="@load(vm.single)" />
+							人,中智开户:
+							<label value="@load(vm.zz)" />
+							人
+						</footer>
+					</foot>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

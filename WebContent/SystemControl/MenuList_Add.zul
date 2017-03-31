@@ -1,0 +1,87 @@
+<?page title="添加新菜单" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window border="0" apply="org.zkoss.bind.BindComposer" id="win"
+		viewModel="@id('menu') @init('Controller.SystemControl.MenuList_AddController')">
+<panel title="新增一级菜单" apply="Controller.SystemControl.MenuList_AddController" style="margin-bottom:15px;" collapsible="true" closable="true">
+<panelchildren>
+<grid id="addmenu" hflex="1" vflex="1">
+	<rows>
+		<row>
+			<cell align="right" width="80px">菜单名称:</cell>
+			<cell colspan="3"><textbox id="menuname"/></cell>
+		</row>
+		<row>
+			<cell align="right">菜单排序:</cell>
+			<cell><textbox id="menuorder"/></cell>
+			<cell align="right">打开方式:</cell>
+			<cell>
+				<listbox rows="1" mold="select" id="menutarget">
+            		<listitem  selected="true" label="main" value="1"/>
+            		<listitem label="_blank" value="2"/>
+            		<listitem label="_parent" value="3"/>
+            		<listitem label="_self" value="4"/>
+            		<listitem label="_top" value="5"/>
+        		</listbox>
+			</cell>
+		</row>
+		<row>
+			<cell align="right">链接地址:</cell>
+			<cell colspan="3"><textbox id="menuurl" width="50%"/></cell>
+		</row>
+		<row>
+			<cell align="right">备注:</cell>
+			<cell colspan="3"><textbox id="menuremark" width="30%" multiline="true" rows="5"/></cell>
+		</row>
+		<row style="background:#F7F7F7;">
+			<cell align="center" colspan="4"><button id="addmenubtn" label="提交" /></cell>
+		</row>
+	</rows>
+	</grid>
+	</panelchildren>
+</panel>
+<panel title="新增子菜单"  collapsible="true" closable="true">
+<panelchildren>
+<grid id="addtmenu" hflex="1" vflex="1">
+	<rows>
+		<row>
+			<cell align="right" width="80px">菜单名称:</cell>
+			<cell colspan="3">
+				<combobox model="@load(menu.menulist)" id="firstmenu">
+					<template name="model">
+					<comboitem  label="@load(each.meu_name)" value="@load(each.meu_id)"/>
+					</template>
+				</combobox>
+        		<textbox id="tmenuname"/>
+          </cell>
+		</row>
+		<row>
+			<cell align="right">菜单排序:</cell>
+			<cell><textbox id="tmenuorder"/></cell>
+			<cell align="right">打开方式:</cell>
+			<cell>
+			 	<listbox rows="1" mold="select" id="tmenutarget">
+            		<listitem  selected="true" label="main" value="1"/>
+            		<listitem label="_blank" value="2"/>
+            		<listitem label="_parent" value="3"/>
+            		<listitem label="_self" value="4"/>
+            		<listitem label="_top" value="5"/>
+        		</listbox>	
+			</cell>
+		</row>
+		<row>
+			<cell align="right">链接地址:</cell>
+			<cell colspan="3"><textbox id="tmenuurl" width="50%"/></cell>
+		</row>
+		<row>
+			<cell align="right">备注:</cell>
+			<cell colspan="3"><textbox id="tmenuremark" width="30%" multiline="true" rows="5"/></cell>
+		</row>
+		<row style="background:#F7F7F7;">
+			<cell align="center" colspan="4"><button id="taddmenubtn" label="提交"/></cell>
+		</row>
+	</rows>
+	</grid>
+	</panelchildren>
+</panel>
+</window>
+</zk>

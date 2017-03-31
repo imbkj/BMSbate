@@ -1,0 +1,6 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="单位系统服务约束信息列表" border="normal" vflex="1">
+New Content Here!
+</window>
+</zk>

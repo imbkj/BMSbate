@@ -1,0 +1,50 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="上传文件" id="winUpload" width="600px" height="300px"
+		closable="true" border="normal" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmHouse.EmHouse_UpLoadController')">
+		<borderlayout>
+			<center title="注意:公积金台帐文件不能作任何人为修改！">
+				<grid height="100%" id="grid">
+					<columns visible="false">
+						<column width="150px" />
+						<column />
+						<column />
+						<column />
+					</columns>
+					<rows>
+						<row>
+							<cell>
+								<label>所属月份:</label>
+							</cell>
+							<cell colspan="3">
+								<combobox id="ownmonth"
+									value="@load(vm.nowmonth)" mold="rounded"
+									model="@load(vm.s_ownmonth)" readonly="true">
+									<template name="model">
+										<comboitem label="@load(each)" />
+									</template>
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label>请选择公积金台帐文件:</label>
+							</cell>
+							<cell colspan="3">
+								<button label="浏览..."
+									upload="true,multiple=true,maxsize=-1" onUpload="@command('browse')" />
+							</cell>
+						</row>
+					</rows>
+					<foot>
+						<footer span="4" align="center">
+							<button label="提交" id="btSubmit"
+								onClick="@command('upload')" />
+						</footer>
+					</foot>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

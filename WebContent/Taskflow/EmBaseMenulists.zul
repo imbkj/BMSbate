@@ -1,0 +1,51 @@
+<!-- 员工列表第三页 -->
+
+<?page title="员工业务中心" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window width="90%" height="90%" id="@load(vm.winId)"
+		xmlns:w="client" closable="true"
+		apply="org.zkoss.bind.BindComposer" onCreate="@command('WinD',a=self)"
+		viewModel="@id('vm') @init('Controller.Taskflow.EmBaseMenulistsController')">
+		<style src="/css/style.css"></style>
+		<borderlayout
+			style="margin-bottom:3px;background-color:#FFFFFF;" vflex="1"
+			hflex="1">
+			<west width="220px" splittable="true" collapsible="true"
+				title="业务菜单">
+				<vlayout sclass="fn-panel1" vflex="1" hflex="1">
+					<hlayout sclass="fn-subpanel" vflex="1" hflex="1">
+						<tree id="tree" vflex="1"
+							onCreate="@command('oncreatetree',tree=self,refleshurl=refleshurl)">
+						</tree>
+					</hlayout>
+				</vlayout>
+			</west>
+			<center
+				style="border:0;margin-top:8px;padding-bottom:8px;">
+				<custom-attributes gid="${vm.gid }" cid="${vm.cid }"
+					embaId="${vm.embaId }" emmonthmodel="${vm.monthmodel}" win="${vm.win }" />
+				<include id="refleshurl" vflex="1" hflex="1"
+					gid="${gid }" step="2" emmonthmodel="${emmonthmodel}" cid="${cid }" embaId="${embaId }">
+				</include>
+			</center>
+			<south>
+				<grid>
+					<rows>
+						<row>
+							<cell align="center">
+								<button
+									onClick="@command('back',win=embawin)">
+									退回
+								</button>
+								<button
+									onClick="@command('submit',win=embawin)">
+									下一步
+								</button>
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</south>
+		</borderlayout>
+	</window>
+</zk>

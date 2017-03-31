@@ -1,0 +1,53 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="不一致员工" border="normal" width="80%" height="90%" 
+	apply="org.zkoss.bind.BindComposer" closable="true"
+	viewModel="@id('vm') @init('Controller.EmFinance.Finance_DifferentListController')"
+>
+<groupbox mold="3d" open="true" title="系统台账多出人员名单" height="48%"
+ style="margin-bottom:10px;">
+<grid vflex="1" model="@load(vm.fiList)" emptyMessage="没有数据">
+		<columns>
+			<column label="序号" width="60px" align="center"/>
+			<column label="员工编号" align="center"/>
+			<column label="姓名" align="center"/>
+			<column label="身份证号" align="center"/>
+			<column label="系统合计" align="center"/>
+		</columns>
+		<rows>
+			<template name="model">
+			<row>
+				<cell><label value="${forEachStatus.index+1 }"></label></cell>
+				<cell><label value="@load(each.gid)"></label></cell>
+				<cell><label value="@load(each.emfi_name)"></label></cell>
+				<cell><label value="@load(each.emfi_idcard)"></label></cell>
+				<cell><label value="${each.emfi_total}"></label></cell>
+			</row>
+			</template>
+		</rows>
+	</grid>
+</groupbox>
+<groupbox mold="3d" open="true" title="智翼通台账多出人员名单" height="48%">
+<grid vflex="1" model="@load(vm.fzList)" emptyMessage="没有数据" mold="paging" pageSize="100">
+		<columns>
+			<column label="序号" width="60px" align="center"/>
+			<column label="员工编号" align="center"/>
+			<column label="姓名" align="center"/>
+			<column label="身份证号" align="center"/>
+			<column label="智翼通合计" align="center"/>
+		</columns>
+		<rows>
+		<template name="model">
+			<row>
+				<cell><label value="${forEachStatus.index+1 }"></label></cell>
+				<cell><label value="@load(each.gid)"></label></cell>
+				<cell><label value="@load(each.emba_name)"></label></cell>
+				<cell><label value="@load(each.emba_idcard)"></label></cell>
+				<cell><label value="${each.emfz_total }"></label></cell>
+			</row>
+		</template>
+		</rows>
+	</grid>
+</groupbox>
+</window>
+</zk>

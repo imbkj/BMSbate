@@ -1,0 +1,6 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="打印" border="normal" closable="true" width="80%" height="80%">
+New Content Here!
+</window>
+</zk>

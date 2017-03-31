@@ -1,0 +1,111 @@
+<?page title="比例调整 - 申报详情" contentType="text/html;charset=UTF-8"?>
+<!-- 调用内联页的文件名 -->
+<?component name="docDataList" macro-uri="/DocumentsInfo/DocumentsInfo_UpPageList.zul" inline="true"?>
+<zk>
+	<window id="win" title="比例调整 - 申报详情" border="normal" width="800px"
+		closable="true" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoHousingFund.CoHousingFund_RadixCppInfoController')">
+		<borderlayout vflex="min">
+			<center autoscroll="true" border="none">
+				<vbox>
+					<grid>
+						<columns>
+							<column width="20%"></column>
+							<column></column>
+							<column width="20%"></column>
+							<column></column>
+						</columns>
+						<rows>
+							<row>
+								<cell>
+									<label style="color:#666"
+										value="当前状态" />
+								</cell>
+								<cell colspan="3">
+									<label
+										value="@load(vm.chfcModel.statename)" />
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label style="color:#666"
+										value="公司编号" />
+								</cell>
+								<cell>
+									<label
+										value="@load(vm.chfcModel.cid)" />
+								</cell>
+								<cell>
+									<label style="color:#666"
+										value="公司全称" />
+								</cell>
+								<cell>
+									<label
+										value="@load(vm.chfcModel.coba_company)" />
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label style="color:#666"
+										value="缴存比例(单位/个人)" />
+								</cell>
+								<cell colspan="3">
+									<hbox>
+										<label
+											value="@load(vm.cficModel.cfic_changeold)" />
+										<label value="调整为"
+											style="color:red" />
+										<label
+											value="@load(vm.cficModel.cfic_changenew)" />
+									</hbox>
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label style="color:#666"
+										value="操作月份" />
+								</cell>
+								<cell colspan="3">
+									<label
+										value="@bind(vm.chfcModel.ownmonth)" />
+								</cell>
+							</row>
+						</rows>
+					</grid>
+					<groupbox title="状态变更记录" mold="3d">
+						<grid hflex="1" vflex="min" emptyMessage="暂无数据"
+							model="@load(vm.hosList)" mold="paging" pageSize="5">
+							<columns>
+								<column align="center" label="状态" />
+								<column align="center" label="操作" />
+								<column align="center" label="添加人" />
+								<column align="center" label="添加时间" />
+								<column align="center" label="备注" />
+							</columns>
+							<template name="model">
+								<row>
+									<label
+										value="@load(each.pbsr_statename)" />
+									<label
+										value="@load(each.pbsr_content)" />
+									<label
+										value="@load(each.pbsr_addname)" />
+									<label
+										value="@load(each.pbsr_addtime)" />
+									<label
+										value="@load(each.pbsr_remark)" maxlength="20"
+										tooltip="remark_${each.pbsr_id }" style="cursor:pointer" />
+									<popup
+										id="remark_${each.pbsr_id }">
+										<label
+											value="@load(each.pbsr_remark)" style="word-break:break-all" />
+									</popup>
+								</row>
+							</template>
+						</grid>
+					</groupbox>
+				</vbox>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

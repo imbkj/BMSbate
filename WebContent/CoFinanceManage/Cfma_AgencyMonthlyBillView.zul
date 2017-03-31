@@ -1,0 +1,140 @@
+<?page title="机构账单明细" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="机构账单明细" border="normal" width="99%" height="99%"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoFinanceManage.Cfma_AgencyMonthlyBillViewController')"
+		closable="true" sizable="true">
+		<div>
+			<grid>
+				<rows>
+					<row>
+						<cell width="10%">
+							<label value="账单编号：" />
+						</cell>
+						<cell width="15%">
+							<label
+								value="@load(vm.billModel.cfab_number)" style="color:blue;" />
+						</cell>
+						<cell width="10%">
+							<label value="所属月份：" />
+						</cell>
+						<cell width="10%">
+							<label value="@load(vm.billModel.ownmonth)"
+								style="color:blue;font-size:20px;" />
+						</cell>
+						<cell width="10%">
+							<label value="机构名称：" />
+						</cell>
+						<cell>
+							<label value="@load(vm.billModel.coab_name)"
+								style="color:blue;" />
+						</cell>
+						<cell width="10%">
+							<label value="城市：" />
+						</cell>
+						<cell width="10%">
+							<label value="@load(vm.billModel.city)"
+								style="color:blue;" />
+						</cell>
+					</row>
+				</rows>
+			</grid>
+		</div>
+		<borderlayout>
+			<north title="机构账单信息" collapsible="true" splittable="true"
+				border="none">
+				<grid>
+					<rows>
+						<row>
+							<cell>
+								<label value="总应收：" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.billModel.totalReceivable)" />
+							</cell>
+							<cell>
+								<label value="总实收：" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.billModel.cfab_PaidIn)" />
+							</cell>
+							<cell>
+								<label value="差额：" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.billModel.imbalance)"
+									style="color:red;font-size:20px;" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="账单添加时间：" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.billModel.cfab_addtime)" />
+							</cell>
+							<cell>
+								<label value="销账情况：" />
+							</cell>
+							<cell colspan="3">
+								<label
+									value="@load(vm.billModel.writeOffsStr)"
+									style="${vm.billModel.writeOffs==0?'color:red;':'color:#00F;' }" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</north>
+			<center title="公司账单" autoscroll="true" border="none">
+				<grid span="true" mold="paging"
+					model="@load(vm.winbillList)" pageSize="10" emptyMessage="暂未生成账单"
+					sizedByContent="true" hflex="1" height="99%">
+					<columns sizable="true">
+						<column label="序号" align="center" />
+						<column label="公司编号" sort="auto(cid)"
+							align="center" />
+						<column label="公司名称" sort="auto(company)"
+							align="center" />
+						<column sort="auto(cfmb_number)"
+							align="center">
+							<vbox align="center">
+								<label value="账单号" />
+								<textbox id="txtNo" mold="rounded"
+									value="@bind(vm.billNo)" onChange="@command('selBill')" />
+							</vbox>
+						</column>
+						<column label="总应收" sort="auto(totalReceivable)"
+							align="center" />
+						<column label="确认情况"
+							sort="auto(cfmb_PersonnelConfirm)" align="center" />
+						<column label="客服" sort="auto(client)"
+							align="center" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<label
+									value="${forEachStatus.index + 1}" />
+								<label value="@load(each.cid)" />
+								<label value="@load(each.company)" />
+								<label value="@load(each.cfmb_number)"
+									style="cursor:pointer;color:#00F;"
+									onClick="@command('viewBill',billNo=self.value)" />
+								<label
+									value="@load(each.totalReceivable)" style="color:red;" />
+								<label
+									value="@load(each.cfmb_PersonnelConfirmStr)"
+									style="${each.cfmb_PersonnelConfirm==0?'color:red;':''}" />
+								<label value="@load(each.client)" />
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

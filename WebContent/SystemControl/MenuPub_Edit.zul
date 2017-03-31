@@ -1,0 +1,54 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<style>
+		a:link { color: #565a5d; text-decoration: none; }
+
+		a:active { color: #379de9; text-decoration: none; }
+
+		a:visited { color: #565a5d; text-decoration: none; }
+
+		a:hover { color: #379de9; text-decoration: none; }
+	</style>
+<window apply="org.zkoss.bind.BindComposer" vflex="1" hflex="1"
+	viewModel="@id('menu') @init('Controller.SystemControl.MenuPub_EditController')" >
+<panel title="菜单修改" vflex="1" hflex="1">
+<panelchildren>
+<grid vflex="1" hflex="1" emptyMessage="没有数据" model="@load(menu.menumodel)">
+	<columns>
+		<column width="60px" align="center">序号</column>
+		<column align="center">
+		<vlayout>
+		<label>菜单名称</label>
+		<textbox value="@bind(menu.menuname)" onChange="@command('searchmenu')" instant="true"/>
+		</vlayout>
+		</column>
+		<column align="center">菜单链接地址</column>
+		<column align="center">
+		<vlayout>
+		菜单父菜单
+		<textbox value="@bind(menu.pmenuname)" onChange="@command('searchmenu')" instant="true"/>
+		</vlayout>
+		</column>
+		<column align="center" width="60px">排序</column>
+		<column align="center">菜单备注</column>
+		<column align="center" width="80px">操作</column>
+	</columns>
+	<rows>
+	<template name="model">
+		<row align="center">
+			<label value="${forEachStatus.index+1 }" />
+			<label value="@load(each.meu_name)" />
+			<label value="@load(each.meu_url)" />
+			<!--<label value="@load(each.meu_parentname)"/>-->
+			<label value="@load(each.meu_parentname)"></label>
+            <label value="@load(each.meu_orderid)"/>
+			<label value="@load(each.meu_remark)"/>
+			<cell><a onClick="@command('updatemenu',menuupdate=each)" style="margin-right:10px;">修改</a><a onClick="@command('deletemenu',menudelete=each)">删除</a></cell>
+		</row>
+	</template>
+	</rows>
+</grid>
+</panelchildren>
+</panel>
+</window>
+</zk>

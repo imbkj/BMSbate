@@ -1,0 +1,45 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="" border="0" 
+	apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('vm') @init('Controller.EmBenefit.EmBenfit_EmBaseListController')">
+<grid model="@load(vm.list)">
+		<columns>
+			<column label="序号" width="20px" align="center"/>
+			<column label="员工编号" align="center" width="70px"/>
+			<column label="员工姓名" align="center"/>
+			<column label="入职时间" align="center"/>
+			<column label="身份证号码" align="center" width="270px"/>
+			<column label="福利内容" align="center" />
+			<column label="何时需要" align="center"/>
+			<column label="部门" align="center"/>
+			<column label="付款性质" align="center"/>
+			<column label="寄送方式" align="center"/>
+			<column label="状态" align="center"/>
+			<column align="center" width="40px">
+				<checkbox onClick="@command('checkall',a=self,win=winEmp,gd=gdList)" /><label value="操作"/>
+			</column>
+		</columns>
+		<rows>
+			<template name="model">
+			<row>
+				<cell><label value="${forEachStatus.index+1 }"></label></cell>
+				<cell><label value="@load(each.gid)"></label></cell>
+				<cell><label value="@load(each.emwf_name)"></label></cell>
+				<cell><label value="@load(each.emwf_intime)"></label></cell>
+				<cell><label value="@load(each.emwf_idcard)"></label></cell>
+				<cell><label value="@load(each.emwf_content)" /></cell>
+				<cell><label value="@load(each.emwf_need)"></label></cell>
+				<cell><label value="@load(each.emwf_dept)"></label></cell>
+				<cell><label value="@load(each.emwf_paykind)"></label></cell>
+				<cell><label value="@load(each.emwf_delivery)"></label></cell>
+				<cell><label value="在职"></label></cell>
+				<cell>
+					<checkbox value="@load(each)"/>
+				</cell>
+			</row>
+			</template>
+		</rows>
+	</grid>
+</window>
+</zk>

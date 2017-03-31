@@ -1,0 +1,204 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="任务单综合查询" border="normal" width="100%" height="100%"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.Taskflow.Task_FlowControlController')">
+		<borderlayout>
+			<north border="0" title="检索" collapsible="true">
+				<grid>
+					<rows>
+						<row>
+							<cell width="150px">任务单名称</cell>
+							<cell>
+								<textbox mold="rounded" instant="true"
+									value="@bind(vm.tcSearch)" width="85%"
+									onChange="@command('searchTask')" />
+							</cell>
+							<cell width="60px">状态</cell>
+							<cell>
+								<combobox value="@bind(vm.tcState)"
+									instant="true" onChange="@command('searchTask')" mold="rounded"
+									readonly="true">
+									<comboitem label="全部" />
+									<comboitem label="处理中" />
+									<comboitem label="已完成" />
+									<comboitem label="已终止" />
+								</combobox>
+							</cell>
+							<cell>部门</cell>
+							<cell>
+								<combobox value="@bind(vm.deptName)"
+									instant="true" mold="rounded" readonly="true"
+									onChange="@command('searchByDept')">
+									<comboitem label="全部" />
+									<comboitem label="${each.dep_name}"
+										forEach="${vm.deptList}" />
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>流程类型</cell>
+							<cell>
+								<combobox value="@bind(vm.wfClass)"
+									instant="true" mold="rounded" model="@load(vm.wfClassList)"
+									onChange="@command('searchBywfClass')">
+									<template name="model">
+										<comboitem
+											label="@load(each.wfcl_name)" />
+									</template>
+								</combobox>
+							</cell>
+							<cell>流程名称</cell>
+							<cell>
+								<combobox value="@bind(vm.wfDeName)"
+									instant="true" onChange="@command('searchTask')" mold="rounded"
+									model="@load(vm.winwfDeList)">
+									<template name="model">
+										<comboitem
+											label="@load(each.wfde_name)" />
+									</template>
+								</combobox>
+							</cell>
+							<cell>操作人</cell>
+							<cell>
+								<combobox mold="rounded" instant="true"
+									value="@bind(vm.userName)" model="@load(vm.winloginList)"
+									onChange="@command('searchByUser')">
+									<template name="model">
+										<comboitem
+											label="@load(each.log_name)" />
+									</template>
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>业务搜索</cell>
+							<cell colspan="5">
+								<hlayout>
+									<combobox mold="rounded"
+										value="@bind(vm.searchKey)" width="100px" readonly="true">
+										<comboitem label="" value="" />
+										<comboitem label="公司编号"
+											value="cid" />
+										<comboitem label="员工编号"
+											value="gid" />
+										<comboitem label="所属月份"
+											value="ownmonth" />
+										<comboitem label="任务单编号"
+											value="tali_id" />
+									</combobox>
+									<textbox mold="rounded"
+										onChange="@command('searchTask')" instant="true"
+										value="@bind(vm.searchValue)" />
+									<button label="查询"
+										onClick="@command('search')" />
+								</hlayout>
+							</cell>
+
+						</row>
+					</rows>
+				</grid>
+			</north>
+			<center border="0">
+				<borderlayout>
+					<west border="0" collapsible="true"
+						splittable="true" width="300px">
+						<listbox vflex="1" hflex="1"
+							emptyMessage="暂未搜索到任务单" model="@load(vm.winclassList)"
+							onSelect="@command('selectname',model=self.selectedItem.value)">
+							<listhead sizable="true">
+								<listheader label="序号" width="60px"
+									align="center" />
+								<listheader label="任务单类型"
+									sort="auto(tacl_name)" />
+							</listhead>
+							<template name="model">
+								<listitem>
+									<listcell
+										label="${forEachStatus.index+1 }" />
+									<listcell
+										label="@load(each.tacl_name)" />
+								</listitem>
+							</template>
+						</listbox>
+					</west>
+					<center border="0">
+						<grid model="@load(vm.wininfoList)" vflex="1"
+							emptyMessage="请选择类型" mold="paging" pageSize="50">
+							<columns sizable="true">
+								<column label="任务单编号" align="center"
+									width="100px" sort="auto(tali_id)" />
+								<column label="任务名称" align="center"
+									sort="auto(tali_name)" />
+								<column label="发起人" align="center"
+									width="120px" sort="auto(tali_addname)" />
+								<column label="发起时间" align="center"
+									width="120px" sort="auto(tali_addtimeStr)" />
+								<column label="状态" align="center"
+									width="100px" sort="auto(state)" />
+								<column label="操作" align="center"
+									width="120px" />
+							</columns>
+							<rows>
+								<template name="model">
+									<row>
+										<cell>
+											<label
+												value="@load(each.tali_id)">
+											</label>
+										</cell>
+										<cell>
+											<label
+												value="@load(each.tali_name)"
+												style="cursor:pointer;color:#00F;"
+												onClick="@command('taskinfo',model=each)">
+											</label>
+
+										</cell>
+										<cell>
+											<label
+												value="@load(each.tali_addname)">
+											</label>
+										</cell>
+										<cell>
+											<label
+												value="@load(each.tali_addtimeStr)">
+											</label>
+										</cell>
+										<cell>
+											<label
+												value="@load(each.state)">
+											</label>
+										</cell>
+										<cell>
+											<menubar autodrop="true"
+												if="${each.tali_state==1}">
+												<menu
+													image="../images/pencil-small.png">
+													<menupopup>
+														<menuitem
+															label="查看可操作人"
+															onClick="@command('selOpName',tali_id=each.tali_id,tali_name=each.tali_name)" />
+														<menuseparator />
+														<menuitem
+															label="流程调整"
+															onClick="@command('controlNode',tali_id=each.tali_id,tali_name=each.tali_name)" />
+														<menuseparator />
+														<menuitem
+															label="终止任务单"
+															onClick="@command('stopList',tali_id=each.tali_id,tali_name=each.tali_name)" />
+														<menuseparator />
+													</menupopup>
+												</menu>
+											</menubar>
+										</cell>
+									</row>
+								</template>
+							</rows>
+						</grid>
+					</center>
+				</borderlayout>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

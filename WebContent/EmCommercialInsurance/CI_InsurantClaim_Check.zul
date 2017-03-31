@@ -1,0 +1,132 @@
+<?page title="商业保险理赔查询" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="商业保险理赔查询" border="normal"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmCommercialInsurance.CI_InsurantClaim_Controller')">
+		<grid id="searchGird" width="100%">
+			<rows>
+				<row>
+				<cell width="100px">理赔状态</cell>
+					<cell>
+					<combobox mold="rounded" readonly="true" id="state"
+						value="全部" >
+						<comboitem value="全部" label="全部" />
+						<comboitem value="1" label="待处理" />
+						<comboitem value="2" label="处理中" />
+						<comboitem value="3" label="已理赔" />
+					</combobox>
+					</cell>
+					<cell width="100px">赔付时间</cell>
+					<cell>
+					<combobox mold="rounded" readonly="true"
+						width="120px" value="全部" id="pf_date" model="@load(vm.pf_list)">
+						<template name="model">
+								<comboitem label="@load(each.eccl_castsort)"
+									value="@load(each.eccl_castsort)">
+								</comboitem>
+							</template>
+					</combobox>
+					</cell>
+					<cell width="100px">员工姓名</cell>
+					<cell>
+					<textbox width="130px" 	id="name"	mold="rounded" />
+					</cell>
+					<cell width="100px">发票号</cell>
+					<cell>
+					<textbox width="130px" 	id="pd_id"	mold="rounded" />
+					</cell>
+					</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button id="clSearch" label="查  询"
+						onClick="@command('ch_search',pf_date=pf_date,name=name,pd_id=pd_id,state=state)" />
+						  
+						<button id="clDown" label="导  出" visible="false"
+						onClick="@command('ch_down',pf_date=pf_date,name=name,pd_id=pd_id,state=state)" />
+				</footer>
+			</foot>
+		</grid>
+
+			<grid width="100%" id="g1" mold="paging"  pageSize="19" 
+				model="@load(vm.ci_claim_chlist)">
+				<columns>
+					<column label="序号" align="center" width="60px" />
+					<column label="交资料日" align="center" />
+					<column label="公司编号" align="center" />
+					<column label="员工编号" align="center" />
+					<column label="保险公司" align="center" />
+					<column label="公司名称" align="center" />
+					<column label="主险人" align="center" />
+					<column label="附属人" align="center" />
+					<column label="投保类型" align="center" />
+					<column label="索赔金额" align="center" />
+					<column label="发票张数" align="center" />
+					<column label="赔付时间" align="center" />
+					<column label="已赔金额" align="center" />
+					<column label="客服" align="center" />
+					<column label="添加人" align="center" />
+					<column label="" align="center" visible="false" />
+				</columns>
+				<rows>
+					<template name="model">
+						<row>
+							<cell>
+								<label
+									value="${forEachStatus.index + 1}" />
+							</cell>
+							<cell>
+								<label value="@load(each.eccl_associate_date)" />
+							</cell>
+							<cell>
+								<label value="@load(each.cid)" />
+							</cell>
+							<cell>
+								<label value="@load(each.gid)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.bcompany)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.eccl_company)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.eccl_insurant)" />
+							</cell>
+							<cell>
+								<label value="@load(each.eccl_insurer)" />
+							</cell>
+							<cell>
+								<label value="@load(each.eccl_castsort)" />
+							</cell>
+							<cell>
+								<label value="@load(each.eccl_pay_money)" />
+							</cell>
+							<cell>
+								<label value="@load(each.eccl_invoice_count)" />
+							</cell>
+							<cell>
+								<label value="@load(each.eccl_sign_date)" />
+							</cell>
+							<cell>
+								<label value="@load(each.eccl_fact_money)" />
+							</cell>
+							<cell>
+								<label value="@load(each.coba_client)" />
+							</cell>
+							<cell>
+								<label value="@load(each.eccl_addname)" />
+							</cell>
+							<cell visible="false">
+								<label value="@load(each.eccl_tapr_id)" />
+							</cell>
+						</row>
+					</template>
+				</rows>
+
+			</grid>
+	</window>
+</zk>

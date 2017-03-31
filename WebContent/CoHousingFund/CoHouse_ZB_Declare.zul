@@ -1,0 +1,125 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="专办员业务查询" border="normal" width="100%" height="100%"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoHousingFund.CoHouse_Zb_DeclareOkController')">
+		<borderlayout>
+			<!--  <north>
+				<grid height="100%">
+					<rows>
+						<row>
+							<cell>
+								<textbox
+									value="@bind(vm.queryCondition)" width="12%" />
+								<combobox width="10%" value="单位公积金号"
+									id="qcomid">
+									<comboitem value="1" label="单位公积金号" />
+									<comboitem value="2" label="公司编号" />
+									<comboitem value="3" label="公司名称" />
+									<comboitem value="4" label="申报状态" />
+								</combobox>
+							</cell>
+						</row>
+					</rows>
+					<foot>
+						<footer align="center">
+							<button label="查询"
+								onClick="@command('query',status=qcomid.selectedItem.value)" />
+
+						</footer>
+					</foot>
+				</grid>
+			</north>-->
+			<center>
+				<grid height="100%" mold="paging" pageSize="15"
+					model="@load(vm.schfmList)" sizedByContent="true" span="true">
+					<columns>
+						<column label="公司编号" 
+							align="center">
+							<separator></separator>
+							<textbox mold="rounded" width="80%"
+								value="@bind(vm.cid)" onChange="@command('search')" />
+						</column>
+						<column label="公司名称" 
+							align="center">
+							<separator></separator>
+							<textbox mold="rounded" width="80%"
+								value="@bind(vm.coName)" onChange="@command('search')" />
+						</column>
+						<column label="单位公积金号" align="center">
+							<separator></separator>
+							<textbox mold="rounded" width="80%"
+								value="@bind(vm.cogjjid)" onChange="@command('search')" />
+						</column>
+						<column label="专办员姓名" align="center"></column>
+						<column label="专办员号" align="center"></column>
+						<column label="变动情况" align="center"></column>
+						<column label="添加时间" align="center"></column>
+						<column label="申报时间" align="center"></column>
+						<column label="添加人" align="center"></column>
+						<column label="状态" align="center" >
+							<separator></separator>
+							<combobox mold="rounded" instant="true"
+								width="80%" readonly="true"
+								onChange="@command('search',status=self.selectedItem.value)">
+								<comboitem value="" label="" />
+								<comboitem value="1" label="未申报" />
+								<comboitem value="2" label="申报中" />
+								<comboitem value="3" label="已申报" />
+								<comboitem value="4" label="退回" />
+							</combobox>
+						</column>
+						<column label="操作" align="center"></column>
+					</columns>
+					<template name="model">
+						<row>
+							<cell>
+								<label value="@load(each.cid)" />
+							</cell>
+							<cell>
+								<a label="@load(each.cohf_company)"
+									onClick="@command('CoInfo',cid=each.cid,cohf_id=each.cohf_id)" />
+							</cell>
+							<cell>
+								<label value="@load(each.cohf_houseid)" />
+							</cell>
+							<cell>
+								<label value="@load(each.cfzc_name)" />
+							</cell>
+							<cell>
+								<label value="@load(each.cfzc_number)" />
+							</cell>
+							<cell>
+								<label value="@load(each.cfzc_addtype)" />
+							</cell>
+							<cell>
+								<label value="@load(each.cfzc_addtime)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.cohf_completetimeString)" />
+							</cell>
+							<cell>
+								<label value="@load(each.cfzc_addname)" />
+							</cell>
+							<cell>
+								<label value="退回"
+									if="${each.cfzc_state ==4}" style="color:red" />
+								<label value="未申报"
+									if="${each.cfzc_state==1}" style="color:black" />
+								<label value="申报中"
+									if="${each.cfzc_state==2}" style="color:green" />
+								<label value="已申报"
+									if="${each.cfzc_state==3}" style="color:blue" />
+							</cell>
+							<cell>
+								<button label="申报详情"
+									onClick="@command('minute',model=each)" />
+							</cell>
+						</row>
+					</template>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

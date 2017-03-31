@@ -1,0 +1,130 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="员工体检信息修改(${arg.model.gid})" border="normal" width="80%" closable="true" height="80%"
+	apply="org.zkoss.bind.BindComposer" id="uwin"
+    viewModel="@id('vm') @init('Controller.EmBodyCheck.EmBc_InfoUpdateController')">
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell width="130px">单位编号</cell>
+			<cell><textbox width="80%" value="${arg.model.cid}"></textbox></cell>
+			<cell width="130px">单位名称</cell>
+			<cell><textbox width="80%" value="${arg.model.embc_company }"></textbox></cell>
+		</row>
+		<row>
+			<cell>员工姓名</cell>
+			<cell><textbox value="${arg.model.embc_name }"></textbox></cell>
+			<cell>员工性别</cell>
+			<cell><textbox value="${arg.model.embc_sex }"></textbox></cell>
+		</row>
+		<row>
+			<cell>员工年龄</cell>
+			<cell><textbox value="${arg.model.embc_age }"></textbox></cell>
+			<cell>身份证号</cell>
+			<cell><textbox value="@load(vm.emmodel.emba_idcard )" width="80%"></textbox></cell>
+		</row>
+		<row>
+			<cell>婚姻状况</cell>
+			<cell><textbox value="${arg.model.embc_marry }"></textbox></cell>
+			<cell>客服</cell>
+			<cell><textbox value="${arg.model.embc_client }"></textbox></cell>
+		</row>
+		<row>
+			<cell>体检医院</cell>
+			<cell><textbox width="80%" value="${arg.model.ebcs_hospital }"></textbox></cell>
+			<cell>体检类型</cell>
+			<cell><textbox value="@load(vm.embctype)"></textbox></cell>
+		</row>
+		<row>
+			<cell>体检地址</cell>
+			<cell colspan="3"><textbox width="80%" value="${arg.model.ebsa_address }"></textbox></cell>
+		</row>
+		<row>
+			<cell>备注</cell>
+			<cell colspan="3"><textbox width="80%" rows="2" value="${arg.model.embc_remark }"></textbox></cell>
+		</row>
+		<row>
+			<cell>预约时间</cell>
+			<cell><textbox value="${arg.model.ebcl_bookdate }"></textbox></cell>
+			<cell>预约模式</cell>
+			<cell><textbox value="${arg.model.ebcl_bookmode==1?'固定时间':'不固定时间'}"></textbox></cell>
+		</row>
+		<row>
+			<cell>联系医院时间</cell>
+			<cell><datebox id="declaredate" value="@bind(vm.declaredate)"></datebox></cell>
+			<cell>安排体检时间</cell>
+			<cell><datebox id="plandate" value="@bind(vm.plandate)"></datebox></cell>
+		</row>
+		<row if="false">
+			<cell>领取指引单时间</cell>
+			<cell colspan="3"><datebox id="drawformdate" value="@bind(vm.drawformdate)"></datebox></cell>
+		</row>
+		<row if="false">
+			<cell>签收指引单时间</cell>
+			<cell><datebox id="showformdate" value="@bind(vm.showformdate)"></datebox></cell>
+			<cell>指引单签收人</cell>
+			<cell><textbox id="showformpeople" value="@bind(vm.model.ebcl_showformpeople)"></textbox></cell>
+		</row>
+		<row>
+			<cell visible="false">领取体检报告时间</cell>
+			<cell visible="false"><datebox id="drawreportdate" value="@load(vm.drawreportdate)"></datebox></cell>
+			<cell>福利部领取体检报告时间</cell>
+			<cell><datebox id="completeDate" value="@bind(vm.completeDate)"></datebox></cell>
+		</row>
+		<row if="false">
+			<cell>核收体检报告时间</cell>
+			<cell><datebox id="showreportdate" value="@bind(vm.showreportdate)"></datebox></cell>
+			<cell>收报告人</cell>
+			<cell><textbox id="showreportpeople" value="@bind(vm.model.ebcl_showreportpeople)"></textbox></cell>
+		</row>
+		<row>
+			<cell>体检编号</cell>
+			<cell><textbox value="@bind(vm.model.ebcl_bcid)"></textbox></cell>
+			<cell>体检费用</cell>
+			<cell><textbox value="@bind(vm.model.ebcl_charge)" readonly="true"></textbox></cell>
+		</row>
+		<row>
+			<cell>结算时间</cell>
+			<cell><datebox value="@bind(vm.balancedate)"></datebox></cell>
+			<cell>实际体检费用</cell>
+			<cell><textbox value="@bind(vm.model.ebcl_finalcharge)"></textbox></cell>
+		</row>
+		
+		<row>
+			<cell>添加人</cell>
+			<cell><label value="@load(vm.model.ebcl_addname)"></label></cell>
+			<cell>添加时间</cell>
+			<cell><label value="@load(vm.model.ebcl_addtime)"></label></cell>
+		</row>
+		<row>
+			<cell>体检项目</cell>
+			<cell colspan="3">
+				<grid vflex="1" model="@load(vm.itemlist)" id="it" emptyMessage="没有数据">
+					<columns>
+						<column label="序号" align="center" width="50px"/>
+						<column label="项目名称" align="center"/>
+						<column label="项目内容"/>
+						<column label="备注" align="center"/>
+						<column label="适用范围" align="center"/>
+					</columns>
+					<rows id="rws">
+						<template name="model">
+							<row>
+								<cell><label value="${forEachStatus.index+1 }"></label></cell>
+								<cell><label value="@load(each.ebit_name)"></label></cell>
+								<cell><label value="${each.ebit_info }..." maxlength="15" tooltiptext="@load(each.ebit_info)"></label></cell>
+								<cell><label value="@load(each.ebit_remark)"></label></cell>
+								<cell><label value="@load(each.sex)"></label></cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</cell>
+		</row>
+	</rows>
+	<foot>
+		<footer align="center"><button onClick="@command('Edit',win=uwin)">修改</button></footer>
+	</foot>
+</grid>
+</window>
+</zk>

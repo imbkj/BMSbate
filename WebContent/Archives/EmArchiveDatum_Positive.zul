@@ -1,0 +1,34 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="转正定级" border="normal" width="600px" height="400px" closable="true" id="positivewin"
+	apply="Controller.Archives.EmArchiveDatum_PositiveController">
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell width="85px">发出表格日期</cell>
+			<cell><datebox id="sendformdate"/></cell>
+			<cell width="85px">交接人</cell>
+			<cell>
+				<combobox id="takepeop" width="80px">
+				</combobox>
+			</cell>	
+		</row>
+		<row>
+			<cell>毕业生接收单位</cell>
+			<cell><textbox id="receivecom"/></cell>
+			<cell>毕业生接收时间</cell>
+			<cell><datebox id="receivedate"/></cell>	
+		</row>
+		<row>
+			<cell>回收表格日期</cell>
+			<cell><datebox id="takebackformdate"/></cell>
+			<cell>办理转正日期</cell>
+			<cell><datebox id="positivedate"/></cell>	
+		</row>
+	</rows>
+	<foot>
+		<footer align="center"><button id="summit">提交</button></footer>
+	</foot>
+</grid>
+</window>
+</zk>

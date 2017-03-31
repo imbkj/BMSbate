@@ -1,0 +1,154 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window width="100%" height="100%" title="供应商合同管理" id="wincompact"
+		border="normal" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmBenefit.EmActy_compactListController')"
+		closable="true">
+		<borderlayout>
+			<north title="查询条件" collapsible="true" open="false">
+				<grid>
+					<rows>
+						<row>
+							<cell>供应商名称</cell>
+							<cell>
+								<textbox mold="rounded" id="name" />
+							</cell>
+							<cell>合同编号</cell>
+							<cell>
+								<textbox mold="rounded" id="compactid" />
+							</cell>
+						</row>
+						<row>
+							<cell>添加人</cell>
+							<cell>
+								<combobox mold="rounded" id="addname"
+									model="@load(vm.addnameList)">
+									<template name="model">
+										<comboitem
+											label="@load(each.eaco_addname)" />
+									</template>
+								</combobox>
+							</cell>
+							<cell>状态</cell>
+							<cell>
+								<combobox mold="rounded"
+									id="compactState" readonly="true" value="全部">
+									<comboitem label="全部" />
+									
+									<comboitem label="合同制作" />
+									<comboitem label="待审核" />
+									<comboitem label="已审核" />
+									<comboitem label="已签回" />
+									<comboitem label="已归档" />
+									<comboitem label="退回" />
+									<comboitem label="取消" />
+								</combobox>
+							</cell>
+						</row>
+					</rows>
+					<foot>
+						<footer align="center">
+							<button id="btnSearch" label="查询"
+								onClick="@command('Search')" />
+						</footer>
+					</foot>
+				</grid>
+			</north>
+			<center>
+				<grid id="gd" width="100%" height="100%"
+					model="@load(vm.compactList)">
+					<columns>
+						<column align="center">序号</column>
+						<column align="center">供应商名称</column>
+						<column align="center">合同编号</column>
+						<column align="center">合同签订日期</column>
+						<column align="center">合同有效期</column>
+						<column align="center">合同终止日期</column>
+						<column align="center">自动续约</column>
+						<column align="center">合作状态</column>
+						<column align="center">合同状态</column>
+						<column align="center">添加人</column>
+						<column align="center">添加时间</column>
+						<column align="center">操作</column>
+					</columns>
+					<template name="model">
+						<row>
+							<cell>${forEachStatus.index+1 }</cell>
+							<cell>
+								<label value="@load(each.eaco_name)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.eaco_compactid)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.eaco_signdate)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.eaco_inuredate)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.eaco_stopdate)" />
+							</cell>
+							<cell>
+								<label value="@load(each.eaco_auto2)" />
+							</cell>
+							<cell>
+								<label value="@load(each.eaco_together2)" />
+							</cell>
+							<cell>
+								<label value="@load(each.eaco_state2)" />
+							</cell>
+							<cell>
+								<label value="@load(each.eaco_addname)" />
+							</cell>
+							<cell>
+								<label value="@load(each.eaco_addtime)" />
+							</cell>
+							<cell>
+								<menubar autodrop="true" width="50px"
+									sclass="mymb">
+									<menu
+										image="../images/pencil-small.png">
+										<menupopup>
+											<menuitem
+												if="${each.eaco_state!=2}" label="查看合同"
+												onClick="@command('checkInfo',a=each,b=4)" />
+											<menuitem
+												if="${each.eaco_state==3 }" label="撤回"
+												onClick="@command('back',a=each)" />
+											<menuitem
+												if="${each.eaco_state==2}"
+												onClick="@command('checkInfo',a=each)" label="制作合同" />
+												<menuitem
+												if="${each.eaco_state==2 and each.eaco_tapr_id == null }"
+												onClick="@command('upload',a=each)" label="上传合同" />
+											<menuitem
+												if="${each.eaco_state==2 or each.eaco_state==5}" onClick="@command('mod',a=each)"
+												label="修改" />
+											<menuitem
+												if="${each.eaco_state!=2 and each.eaco_state!=5 }" onClick="@command('mod',a=each)"
+												label="详细" />
+											<menuitem if="${each.eaco_state==2 }"
+												onClick="@command('addproduct',a=each)" label="添加产品" />
+												<menuitem if="${each.eaco_state==1 }"
+												onClick="@command('stopcompact',a=each)" label="终止合同" />
+											<menuitem if="${each.eaco_state==2 or each.eaco_state==5}"
+											onClick="@command('del',a=each)" label="删除" />
+										</menupopup>
+									</menu>
+								</menubar>
+							</cell>
+						</row>
+					</template>
+					<foot>
+						<footer></footer>
+					</foot>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

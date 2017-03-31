@@ -1,0 +1,136 @@
+<?page title="工资待发放" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winEmSalaryPayAudting" title="工资待发放" border="normal"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmSalary.EmSalary_PayAudtingListController')"
+		height="100%" width="100%" closable="true" sizable="true">
+		<groupbox title="工资详细" width="100%" height="78%">
+			<grid id="gdSalary" height="100%" emptyMessage="暂无数据"
+				mold="paging" pageSize="50" sizedByContent="true"
+				model="@load(vm.salaryWinList)">
+				<columns sizable="true">
+					<column width="40px" align="center" />
+					<column width="40px" align="center">
+						<checkbox
+							onClick="@command('checkAll',gdSalary=gdSalary,cbAll=self)" />
+					</column>
+					<column label="序号" width="50px" align="center" />
+					<column width="100px" align="center"
+						sort="auto(gid)">
+						<vbox align="center">
+							<label value="员工编号" style="color:black;" />
+							<intbox id="ibGid" constraint="no negative"
+								onChange="@command('changeList', ibGid=ibGid,txtName=txtName)" />
+						</vbox>
+					</column>
+					<column width="150px" align="center"
+						sort="auto(name)">
+						<vbox align="center">
+							<label value="员工姓名" style="color:black;" />
+							<textbox id="txtName"
+								onChange="@command('changeList', ibGid=ibGid,txtName=txtName)" />
+						</vbox>
+					</column>
+					<column label="用途" width="80px" align="center"
+						sort="auto(esda_usage_typestr)" />
+					<column label="备注" width="80px" align="center" />
+					<column label="状态" width="80px" align="center"
+						sort="auto(esda_payment_state)" />
+					<column label="台账财务应收确认情况" width="80px"
+						align="center" sort="auto(tbrb_customInt)" />
+					<column label="实发工资" width="80px" align="center"
+						sort="auto(esda_pay)" />
+					<column label="${each.csii_item_name}" width="100px"
+						forEach="${vm.itemList}" if="${each.csii_fd_state==1?true:false}" />
+
+				</columns>
+				<rows>
+					<template name="model">
+						<row>
+							<custom-attributes item="${each.itemList}" />
+							<detail open="false" fulfill="onOpen">
+								<include
+									src="/EmSalary/EmSalary_ConfirmDetail.zul" item="${item}" />
+							</detail>
+							<checkbox
+								disabled="${each.esda_payment_state==1 and each.esda_ifhold==0?false:true}" />
+							<label value="${forEachStatus.index + 1}" />
+							<label value="@load(each.gid)"
+								style="cursor:pointer;"
+								onClick="@command('SelEmbase', lbl=self)" />
+							<label value="@load(each.name)"
+								style="cursor:pointer;"
+								onClick="@command('upCoGlist', lbl=self)" />
+							<label
+								value="@load(each.esda_usage_typestr)" />
+							<cell align="center">
+								<label
+									style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden"
+									value="@load(esda_remark)" tooltiptext="@load(esda_remark)" />
+							</cell>
+							<label
+								value="@load(each.esda_payment_statestr)"
+								if="${each.esda_ifhold==0}" />
+							<label value="暂停发放"
+								if="${each.esda_ifhold==1}" />
+							<label
+								value="@load(each.tbrb_customInt eq 0?'未确认':'已确认')"
+								if="${each.esda_oof_state==0}"
+								style="${each.tbrb_customInt==0?'color:red':''}" />
+							<label value="台账外"
+								if="${each.esda_oof_state==1}" />
+							<decimalbox format="###.##"
+								value="${each.esda_pay}" inplace="true" readonly="true" />
+							<decimalbox format="###.##"
+								value="${each.amount}" forEach="${each.itemList}" inplace="true"
+								readonly="true" if="${each.csii_fd_state==1?true:false}" />
+						</row>
+					</template>
+				</rows>
+			</grid>
+		</groupbox>
+		<div align="center" width="100%">
+			<button label="台账账单管理" onClick="@command('billManage')" />
+			<button label="待发放确认"
+				onClick="@command('paySalary', gdSalary=gdSalary,win=winEmSalaryPayAudting)" />
+			<!-- <button label="暂停发放"
+				onClick="@command('holdSalary', gdSalary=gdSalary,win=winEmSalaryPayAudting)" /> -->
+			<button label="退回"
+				onClick="@command('returnSalary', gdSalary=gdSalary,win=winEmSalaryPayAudting)" />
+		</div>
+		<groupbox title="工资合计" width="100%" height="20%">
+			<grid height="95%" emptyMessage="暂无数据" mold="paging"
+				pageSize="2" sizedByContent="true"
+				model="@load(vm.salaryWinListSUM)">
+				<frozen style="background: #DFDED8" columns="5">
+					<div style="padding: 0 10px;" />
+				</frozen>
+				<columns>
+					<column width="40px" align="center" />
+					<column label="实发工资" width="80px" align="center" />
+					<column label="${each.csii_item_name}"
+						forEach="${vm.itemListSUM}"
+						if="${each.csii_fd_state==1?true:false}" />
+				</columns>
+				<rows>
+					<template name="model">
+						<row>
+							<custom-attributes
+								item="${each.itemListSUM}" />
+							<detail open="false" fulfill="onOpen">
+								<include
+									src="/EmSalary/EmSalary_ConfirmDetail.zul" item="${item}" />
+							</detail>
+							<decimalbox format="###.##"
+								value="${each.esda_pay}" inplace="true" readonly="true" />
+							<decimalbox format="###.##"
+								value="${each.amount}" forEach="${each.itemListSUM}"
+								inplace="true" readonly="true"
+								if="${each.csii_fd_state==1?true:false}" />
+						</row>
+					</template>
+				</rows>
+			</grid>
+		</groupbox>
+	</window>
+</zk>

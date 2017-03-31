@@ -1,0 +1,157 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="员工公积金 - 公积金变更" id="winInfo" border="normal"
+		closable="true" width="700px" height="480px"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmHouse.EmHouse_InfoController')">
+		<scrollview height="100%">
+			<groupbox height="100%">
+				<caption>详细信息 - ${vm.ehm.emhc_change }</caption>
+				<grid>
+					<rows>
+
+						<row>
+							<cell width="100px">公司编号</cell>
+							<cell>
+								<label value="@load(vm.ehm.cid)" />
+							</cell>
+							<cell width="100px">员工编号</cell>
+							<cell>
+								<label value="@load(vm.ehm.gid)" />
+							</cell>
+						</row>
+						<row>
+							<cell>公司名称</cell>
+							<cell colspan="3">
+								<label
+									value="@load(vm.ehm.emhc_company)" />
+							</cell>
+
+						</row>
+
+						<row>
+							<cell>所属月份</cell>
+							<cell>
+								<label value="@load(vm.ehm.ownmonth)" />
+
+							</cell>
+							<cell>单位公积金编号</cell>
+							<cell>
+								<label
+									value="@load(vm.ehm.emhc_companyid)" />
+							</cell>
+						</row>
+						<row>
+							<cell>姓名</cell>
+							<cell>
+								<label value="@load(vm.ehm.emhc_name)" />
+
+							</cell>
+							<cell>个人公积金编号</cell>
+							<cell>
+								<label
+									value="@load(vm.ehm.emhc_houseid)" />
+							</cell>
+						</row>
+						<row>
+							<cell>证件类型</cell>
+							<cell>
+								<label
+									value="@load(vm.ehm.emhc_idcardclass)" />
+							</cell>
+							<cell>证件号码</cell>
+							<cell>
+								<label value="@load(vm.ehm.emhc_idcard)" />
+
+							</cell>
+
+						</row>
+						<row>
+							<cell>户籍</cell>
+							<cell>
+								<label value="@load(vm.ehm.emhc_hj)" />
+
+							</cell>
+							<cell>缴存工资基数</cell>
+							<cell>
+								<label value="@load(vm.ehm.emhc_radix)" />
+
+							</cell>
+						</row>
+						<row>
+							<cell>单位交比例</cell>
+							<cell>
+								<label value="${vm.ehm.emhc_cpp*100}%" />
+							</cell>
+							<cell>个人交比例</cell>
+							<cell>
+								<label value="${vm.ehm.emhc_opp*100}%" />
+
+							</cell>
+						</row>
+						<row>
+							<cell>职称</cell>
+							<cell>
+								<label value="@load(vm.ehm.emhc_title)" />
+
+							</cell>
+							<cell>最高学历</cell>
+							<cell>
+								<label
+									value="@load(vm.ehm.emhc_degree)" />
+
+							</cell>
+						</row>
+						<row>
+							<cell>配偶姓名</cell>
+							<cell>
+								<label
+									value="@load(vm.ehm.emhc_wifename)" />
+							</cell>
+							<cell>配偶身份证</cell>
+							<cell>
+								<label
+									value="@load(vm.ehm.emhc_wifeidcard)" />
+
+							</cell>
+						</row>
+						<row>
+							<cell>转出单位编号</cell>
+							<cell>
+								<label
+									value="@load(vm.ehm.emhc_excompany)" />
+							</cell>
+							<cell>转出单位名称</cell>
+							<cell>
+								<label
+									value="@load(vm.ehm.emhc_excompanyid)" />
+
+							</cell>
+						</row>
+						<row>
+							<cell>参保人手机</cell>
+							<cell >
+								<label
+									value="@load(vm.ehm.emhc_mobile)" />
+							</cell>
+							<cell>状态</cell>
+							<cell >
+								<label value="@load(vm.ehm.emhc_statename)"></label>
+							</cell>
+						</row>
+						<row>
+							<cell>备注信息</cell>
+							<cell colspan="3">
+								<textbox rows="5" width="60%"
+									value="@bind(vm.ehm.emhc_remark)">
+								</textbox>
+							</cell>
+						</row>
+					</rows>
+					
+				</grid>
+
+			</groupbox>
+		</scrollview>
+	</window>
+</zk>

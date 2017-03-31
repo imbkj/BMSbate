@@ -1,0 +1,73 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="员工设置" id="setwin" width="60%" height="60%"
+		closable="true" border="normal" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.SalaryPaper.SalaryPaper_setCoSpController')">
+		<grid height="100%">
+			<rows>
+				<row>
+					<grid id="grid" vflex="1" hflex="1" span="true"
+						model="@load(vm.esinfoList)" sizedByContent="true">
+						<columns>
+							<column width="40px">
+								<checkbox
+									onCheck="@command('allcheck',grid=grid,allcheck=self)" />
+							</column>
+							<column label="公司编号" />
+							<column label="公司简称" />
+							<column label="员工编号" />
+							<column label="员工姓名" />
+							<column label="操作" />
+						</columns>
+						<template name="model">
+							<row>
+								<cell>
+									<checkbox value="@load(each)"/>
+								</cell>
+								<cell>
+									<label value="@load(each.cid)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.company)" />
+								</cell>
+								<cell>
+									<label value="@load(each.gid)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emba_name)" />
+								</cell>
+								<cell>
+									<div align="left">
+										<menubar autodrop="true"
+											width="50px" sclass="mymb">
+											<menu
+												image="../images/pencil-small.png">
+												<menupopup>
+													<menuitem
+														label="发送方式设置" onClick="@command('setSend',m=each)" />
+													<menuitem
+														label="模版设置" onClick="@command('setModel',m=each)" />
+												</menupopup>
+											</menu>
+										</menubar>
+									</div>
+								</cell>
+							</row>
+						</template>
+					</grid>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button label="批量设置发送方式"
+						onClick="@command('setPlSend',grid=grid)" />
+					<button label="批量设置模版"
+						onClick="@command('setPlModel',grid=grid)" />
+				</footer>
+			</foot>
+		</grid>
+
+	</window>
+</zk>

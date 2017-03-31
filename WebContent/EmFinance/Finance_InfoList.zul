@@ -1,0 +1,274 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="受托对账明细" border="normal" width="100%" height="100%"
+		apply="org.zkoss.bind.BindComposer" id="win"
+		viewModel="@id('vm') @init('Controller.EmFinance.Finance_InfoListController')">
+		<style src="/css/style.css"></style>
+		<borderlayout>
+			<north border="0" title="检索" collapsible="true"
+				style="padding-bottom:10px;" open="true">
+				<grid>
+					<rows>
+						<row>
+							<cell width="100px">
+								<label>所属月份</label>
+							</cell>
+							<cell>
+								<monthbox id="ownmonth" format="yyyyMM"
+									onChange="@command('changearea',ownmonth=self.value)" />
+							</cell>
+							<cell width="100px">
+								<label>受托地区</label>
+							</cell>
+							<cell>
+								<combobox id="wtarea"
+									model="@load(vm.wtarealist)" value="@bind(vm.city)" width="97%"
+									onChange="@command('changesetup',ownmonth=ownmonth.value)">
+									<template name="model">
+										<comboitem label="@load(each)" />
+									</template>
+								</combobox>
+							</cell>
+							<cell width="60px">委托机构</cell>
+							<cell>
+								<combobox model="@load(vm.setuplist)"
+									value="@bind(vm.setup)" width="97%">
+									<template name="model">
+										<comboitem label="@load(each)" />
+									</template>
+								</combobox>
+							</cell>
+							<cell width="60px">客服代表</cell>
+							<cell>
+								<combobox model="@load(vm.loginlist)"
+									value="@bind(vm.client)" width="97%">
+									<template name="model">
+										<comboitem label="@load(each)" />
+									</template>
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label>单位编号</label>
+							</cell>
+							<cell>
+								<textbox id="cid"
+									value="@bind(vm.cid)">
+								</textbox>
+							</cell>
+							<cell>
+								<label>单位名称</label>
+							</cell>
+							<cell>
+								<textbox id="company"
+									value="@bind(vm.company)">
+								</textbox>
+							</cell>
+							<cell width="100px">
+								<label>确认情况</label>
+							</cell>
+							<cell>
+								<combobox value="@bind(vm.confirm)"
+									readonly="true">
+									<comboitem label="" />
+									<comboitem label="未确认" />
+									<comboitem label="已确认" />
+									<comboitem label="未生成账单" />
+								</combobox>
+							</cell>
+							<cell width="60px">有无差额</cell>
+							<cell>
+								<combobox width="100px" id="type"
+									value="@bind(vm.difference)">
+									<comboitem label="" />
+									<comboitem label="有差额" />
+									<comboitem label="无差额" />
+								</combobox>
+							</cell>
+						</row>
+					</rows>
+					<foot>
+						<footer align="center">
+							<button
+								onClick="@command('search',ownmonth=ownmonth.value)">
+								查询
+							</button>
+							<button
+								onClick="@command('batchsynFinance',gd=gd,gdck=gdck)"
+								if="false">
+								批量同步台帐
+							</button>
+							<button
+								onClick="@command('batchcreatebill',gd=gd,gdck=gdck)">
+								批量生成台帐
+							</button>
+							<button
+								onClick="@command('batchconfirmbill',gd=gd,gdck=gdck)">
+								批量确认台帐
+							</button>
+							<button
+								onClick="@command('batchdelbill',gd=gd,gdck=gdck)" if="false">
+								批量撤销账单
+							</button>
+							<button onClick="@command('outexcel')">
+								导出数据
+							</button>
+						</footer>
+					</foot>
+				</grid>
+			</north>
+			<center>
+				<grid width="100%" height="100%" mold="paging" pageSize="1000" id="gd"
+					model="@load(vm.list)" emptyMessage="请输入所属月份和委托地" sizedByContent="true" span="true">
+					<columns>
+						<column width="50px" label="序号" align="center" />
+						<column label="公司编号" align="center" />
+						<column label="公司全称" align="center" />
+						<column label="委托机构" align="center" />
+						<column label="所属月份" align="center" />
+						<column label="系统应收款" align="center" />
+						<column label="机构应收款" align="center" />
+						<column label="差额" align="center"
+							sort="auto(fifztotals)" />
+						<column label="应收确认" align="center"
+							width="90px" />
+						<column label="客服" align="center" />
+						<column label="备注" align="center" />
+						<column label="操作" align="center" />
+						<column align="center">
+							<checkbox id="gdck"
+								onCheck="@command('checkall',ck=self,gd=gd)">
+							</checkbox>
+						</column>
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<cell>
+									<label
+										value="${forEachStatus.index+1 }">
+									</label>
+								</cell>
+								<cell>
+									<label value="@load(each.cid)"></label>
+								</cell>
+								<cell>
+									<a onClick="@command('detail',win=win,model=each)">
+										<label
+											value="@load(each.emfz_company)">
+										</label>
+									</a>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.coab_name)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ownmonth)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emfi_total)">
+									</label>
+								</cell>
+								<cell>
+									<label value="@load(each.total)"></label>
+								</cell>
+								<cell>
+									<label
+										value="${each.emfi_total-each.total }">
+									</label>
+								</cell>
+								<cell>
+									<a
+										onClick="@command('createbill',win=win,model=each)">
+										<label value="未生成账单"
+											visible="${each.stateid==-1 }">
+										</label>
+									</a>
+									<label value="已确认"
+										style="color:#0000CC;" visible="${each.stateid==1 }">
+									</label>
+									<a
+										onClick="@command('confirmbill',win=win,model=each)">
+										<label value="未确认"
+											visible="${each.stateid==0 }">
+										</label>
+									</a>
+									<a
+										onClick="@command('lookbill',win=win,model=each)">
+										<label value="查看台账"
+											visible="${each.stateid!=null and each.stateid!=-1 }">
+										</label>
+									</a>
+									<a
+										onClick="@command('synFinance',model=each)" tooltiptext="同步台帐"
+										visible="${each.stateid==null or each.stateid==0 or each.stateid==-1 }">
+									</a>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.coba_client)">
+									</label>
+								</cell>
+								<cell>
+									<a
+										onClick="@command('addremark',model=each)">
+										<label value="账单备注"
+											visible="${each.stateid!=null and each.stateid!=-1}">
+										</label>
+									</a>
+								</cell>
+								<cell>
+									<a
+										onClick="@command('synFinance',model=each)" tooltiptext="生成台帐"
+										visible="${each.stateid==-1 or each.stateid==0 }">
+										<image
+											src="../images/re1.jpg">
+										</image>
+									</a>
+									<a if="false"
+										onClick="@command('delbill',model=each)" tooltiptext="撤销账单"
+										visible="${each.stateid==0 }">
+										撤销账单
+									</a>
+								</cell>
+								<cell>
+									<checkbox value="@load(each)"></checkbox>
+								</cell>
+							</row>
+						</template>
+					</rows>
+					<foot>
+						<footer span="13">
+							<hlayout>
+								<label value="总计"></label>
+								<label
+									style="color:red;font-weight:bold;font-size:15px;"
+									value="@load(vm.com_num)">
+								</label>
+								<label value="客户，"></label>
+								<label value="应收总金额"></label>
+								<label
+									style="color:red;font-weight:bold;font-size:15px;"
+									value="@load(vm.com_fee)">
+								</label>
+								<label value="元，"></label>
+								<label value="机构总金额"></label>
+								<label
+									style="color:red;font-weight:bold;font-size:15px;"
+									value="@load(vm.zyt_fee)">
+								</label>
+								<label value="元"></label>
+							</hlayout>
+						</footer>
+					</foot>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

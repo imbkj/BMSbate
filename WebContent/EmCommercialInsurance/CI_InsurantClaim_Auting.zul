@@ -1,0 +1,162 @@
+<?page title="商业保险审核" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="商业保险处理中" border="normal"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmCommercialInsurance.CI_InsurantClaim_Controller')">
+		<grid id="searchGird" width="100%">
+			<rows>
+				<row>
+				<cell align="right">
+						<label value="终止退回（"
+							onClick="@command('cs_url0')" style="cursor:pointer" />
+						<label value="@load(vm.ci_state.d0_state)"
+							onClick="@command('cs_url0')" style="cursor:pointer" />
+						<label value="）" onClick="@command('cs_url0')"
+							style="cursor:pointer" />
+					</cell>
+					<cell align="center">
+						<label value="初审退回（"
+							onClick="@command('cs_url1')" style="cursor:pointer" />
+							<label value="@load(vm.ci_state.d1_state)"
+							onClick="@command('cs_url1')" style="cursor:pointer" />
+							<label value="）"
+							onClick="@command('cs_url1')" style="cursor:pointer" />
+					</cell>
+					<cell align="center">
+						<label value="理赔待处理（"
+							onClick="@command('cs_url2')" style="cursor:pointer" />
+						<label value="@load(vm.ci_state.d2_state)"
+							onClick="@command('cs_url2')" style="cursor:pointer" />
+						<label value="）"
+							onClick="@command('cs_url2')" style="cursor:pointer" />
+					</cell>
+					<cell align="center">
+						<label value="理赔处理中（"
+							onClick="@command('cs_url3')" style="cursor:pointer" />
+							<label value="@load(vm.ci_state.d3_state)"
+							onClick="@command('cs_url3')" style="cursor:pointer" />
+							<label value="）"
+							onClick="@command('cs_url3')" style="cursor:pointer" />
+					</cell>
+					<cell align="left">
+						<label value="理赔已理赔（"
+							onClick="@command('cs_url4')" style="cursor:pointer" />
+							<label value="@load(vm.ci_state.d4_state)"
+							onClick="@command('cs_url4')" style="cursor:pointer" />
+							<label value="）"
+							onClick="@command('cs_url4')" style="cursor:pointer" />
+					</cell>
+				</row>
+			</rows>
+		</grid>
+		<groupbox title="理赔处理中" mold="3d">
+		<div
+			style="width:100%;height:430px;overflow-y:scroll;overflow-x:hidden;border:1px solid #bcbdbf;">
+			<grid width="100%" id="g1"
+				model="@load(vm.ci_claim_autlist)">
+				<columns>
+					<column label="序号" align="center" width="60px" />
+					<column label="交资料日" align="center" />
+					<column label="公司编号" align="center" />
+					<column label="员工编号" align="center" />
+					<column label="保险公司" align="center" />
+					<column label="公司名称" align="center" />
+					<column label="被保险人" align="center" />
+					<column label="主险人" align="center" />
+					<column label="投保类型" align="center" />
+					<column label="索赔金额" align="center" />
+					<column label="实际金额" align="center" />
+					<column label="发票张数" align="center" />
+					<column label="客服" align="center" />
+					<column label="添加人" align="center" />
+					<column label="操作" align="center" />
+					<column width="30px" align="center">
+
+					</column>
+					<column label="" align="center" visible="false" />
+				</columns>
+				<rows>
+					<template name="model">
+						<row>
+							<cell>
+								<label
+									value="${forEachStatus.index + 1}" />
+							</cell>
+							<cell>
+								<label value="@load(each.eccl_associate_date)" />
+							</cell>
+							<cell>
+								<label value="@load(each.cid)" />
+							</cell>
+							<cell>
+								<label value="@load(each.gid)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.bcompany)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.eccl_company)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.eccl_insurant)" />
+							</cell>
+							<cell>
+								<label value="@load(eccl_insurer)" />
+							</cell>
+							<cell>
+								<label value="@load(eccl_castsort)" />
+							</cell>
+							<cell>
+								<label value="@load(each.eccl_pay_money)" />
+							</cell>
+							<cell>
+								<label value="@load(each.eccl_auditing_money)" />
+							</cell>
+							<cell>
+								<label value="@load(each.eccl_invoice_count)" />
+							</cell>
+							<cell>
+								<label value="@load(each.coba_client)" />
+							</cell>
+							<cell>
+								<label value="@load(each.eccl_addname)" />
+							</cell>
+							<cell>
+								<label visible="false" value="赔付明细" onClick="@command('ci_claim_pidup', emco=each)" style="cursor:pointer" />　<label value="备注" onClick="@command('ci_claim_remark', emco=each)" style="cursor:pointer" />
+							</cell>
+							<cell>
+								<checkbox value="@load(each.eccl_id)"   if="${each.eccl_fact_money==1?true:false}"/>
+							</cell>
+							<cell visible="false">
+								<label value="@load(each.eccl_tapr_id)" />
+							</cell>
+						</row>
+					</template>
+				</rows>
+
+			</grid>
+		</div>
+		</groupbox>
+		<grid>
+			<rows>
+				<row>
+					<cell align="right" width="55%">
+					<button label="导入明细"
+							onClick="@command('ci_insurant_up', emco=each,gridco=g1)" />
+							　
+						<button label="提交"
+							onClick="@command('ci_claim_autup', emco=each,gridco=g1)" />
+					</cell>
+					<cell align="right">
+						全选
+						<checkbox id="cka"
+							onClick="@command('checkautall',a=self.checked,b=g1)" />
+					</cell>
+				</row>
+			</rows>
+		</grid>
+	</window>
+</zk>

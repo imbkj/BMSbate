@@ -1,0 +1,326 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="win" title="调整 - 详情" border="normal" width="950px"
+		height="580px" closable="true" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmCommissionOut.EmCommissionOut_ChangeDetailController')">
+		<label if="${vm.m.ecoc_state eq 0 }" style="color:red">
+			该单已被取消
+		</label>
+		<scrollview vflex="1">
+			<groupbox title="基本信息" mold="3d">
+				<grid width="100%">
+					<columns>
+						<column width="15%" />
+						<column />
+						<column width="15%" />
+						<column />
+					</columns>
+					<rows>
+						<row>
+							<cell>
+								<label value="员工编号" style="color:#666" />
+							</cell>
+							<cell>
+								<label value="@load(vm.m.gid)" />
+							</cell>
+							<cell>
+								<label value="员工姓名" style="color:#666" />
+							</cell>
+							<cell>
+								<label value="@load(vm.m.emba_name)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="身份证号" style="color:#666" />
+							</cell>
+							<cell colspan="3">
+								<label value="@load(vm.m.ecoc_idcard)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="合同标准" style="color:#666" />
+							</cell>
+							<cell>
+								<label value="@load(vm.m.ecos_name)" />
+							</cell>
+							<cell>
+								<label value="当地标准（执行日）"
+									style="color:#666" />
+							</cell>
+							<cell>
+								<hlayout>
+									<label
+										value="@load(vm.m.soin_title)" />
+									(
+									<label
+										value="@load(vm.m.ecoc_title_date)" />
+									)
+								</hlayout>
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="社保账户" style="color:#666" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.stardModel.ecos_shebao_zhtype)" />
+							</cell>
+							<cell>
+								<label value="费用支付方式"
+									style="color:#666" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.stardModel.ecos_shebao_feetype)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="公积金账户" style="color:#666" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.stardModel.ecos_gjj_zhtype)" />
+							</cell>
+							<cell>
+								<label value="费用支付方式"
+									style="color:#666" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.stardModel.ecos_gjj_feetype)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="合同签定方" style="color:#666" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.m.ecoc_compact_jud)" />
+							</cell>
+							<cell>
+								<label value="工作电话" style="color:#666" />
+							</cell>
+							<cell>
+								<label value="@bind(vm.m.ecoc_phone)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="个人手机" style="color:#666" />
+							</cell>
+							<cell>
+								<label value="@bind(vm.m.ecoc_mobile)" />
+							</cell>
+							<cell>
+								<label value="户籍" style="color:#666" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.m.ecoc_domicile)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="合同起始时间"
+									style="color:#666" />
+							</cell>
+							<cell>
+								<label
+									value="@bind(vm.m.ecoc_compact_f)" />
+							</cell>
+							<cell>
+								<label value="合同结束时间"
+									style="color:#666" />
+							</cell>
+							<cell>
+								<label
+									value="@bind(vm.m.ecoc_compact_l)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="电子邮件" style="color:#666" />
+							</cell>
+							<cell>
+								<label value="@load(vm.m.ecoc_email)" />
+							</cell>
+							<cell>
+								<label value="实际工资" style="color:#666" />
+							</cell>
+							<cell>
+								<label value="@bind(vm.m.ecoc_salary)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="备注" style="color:#666" />
+							</cell>
+							<cell colspan="3">
+								<label value="@bind(vm.m.ecoc_remark)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="社保基数" style="color:#666" />
+							</cell>
+							<cell>
+								<label value="@bind(vm.m.ecoc_sb_base)" />
+							</cell>
+							<cell>
+								<label value="公积金基数" style="color:#666" />
+							</cell>
+							<cell>
+								<label
+									value="@bind(vm.m.ecoc_house_base)" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox title="项目明细" mold="3d">
+				<grid width="100%" model="@load(vm.feeList)"
+					emptyMessage="暂无数据" sizedByContent="true" span="true">
+					<columns sizable="true">
+						<column label="项目" align="center" />
+						<column label="企业基数" align="center" />
+						<column label="个人基数" align="center" />
+						<column label="企业比例" align="center" />
+						<column label="个人比例" align="center" />
+						<column label="月缴费" align="center" />
+						<column label="起始日" align="center" />
+						<column label="企业实际起始日" align="center" />
+						<column label="个人实际起始日" align="center" />
+						<column label="内容" align="center" />
+					</columns>
+					<template name="model">
+						<row
+							style="border:1px dotted #cad9ea;background-color:#f5fafe;"
+							visible="${not empty each.eofc_start_date }">
+							<cell>
+								<label
+									if="${each.sicl_class ne '福利项目' }"
+									value="@load(each.eofc_name)" />
+								<label
+									if="${each.sicl_class eq '福利项目' }" style="color:blue"
+									value="@load(each.eofc_name)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.eofc_co_base)">
+								</label>
+							</cell>
+							<cell>
+								<label
+									value="@load(each.eofc_em_base)">
+								</label>
+							</cell>
+							<cell>
+								<label value="@bind(each.eofc_cp)" />
+							</cell>
+							<cell>
+								<label value="@bind(each.eofc_op)" />
+							</cell>
+							<cell>
+								<label
+									value="@bind(each.eofc_month_sum)" />
+							</cell>
+							<cell>
+								<label
+									value="@bind(each.eofc_start_date)" />
+							</cell>
+							<cell>
+								<label
+									value="@bind(each.eofc_co_fstart_date)" />
+							</cell>
+							<cell>
+								<label
+									value="@bind(each.eofc_em_fstart_date)" />
+							</cell>
+							<cell align="left">
+								<label value="@bind(each.eofc_content)"
+									maxlength="8" tooltip="pop_${each.eofc_id }"
+									style="cursor:pointer" />
+								<popup id="pop_${each.eofc_id }"
+									width="200px">
+									<label
+										value="@bind(each.eofc_content)" style="word-break:break-all" />
+								</popup>
+							</cell>
+						</row>
+					</template>
+					<foot>
+						<footer span="9" align="center">
+							<vlayout>
+								<hlayout>
+									社保企业合计:
+									<label
+										value="@load(vm.m.ecoc_sb_co_sum)" />
+									<space bar="true" orient="vertical" />
+									社保个人合计:
+									<label
+										value="@load(vm.m.ecoc_sb_em_sum)" />
+									<space bar="true" orient="vertical" />
+									社保合计:
+									<label
+										value="@load(vm.m.ecoc_sb_sum)" />
+									<space bar="true" orient="vertical" />
+									公积金企业合计:
+									<label
+										value="@load(vm.m.ecoc_gjj_co_sum)" />
+									<space bar="true" orient="vertical" />
+									公积金个人合计:
+									<label
+										value="@load(vm.m.ecoc_gjj_em_sum)" />
+									<space bar="true" orient="vertical" />
+									公积金合计:
+									<label
+										value="@load(vm.m.ecoc_gjj_sum)" />
+								</hlayout>
+								<hlayout>
+									福利项目合计:
+									<label
+										value="@load(vm.m.ecoc_welfare_sum)" />
+									<space bar="true" orient="vertical" />
+									合同总额:
+									<label style="color:red"
+										value="@load(vm.m.ecoc_sum)" />
+								</hlayout>
+							</vlayout>
+						</footer>
+					</foot>
+				</grid>
+			</groupbox>
+			<groupbox title="状态变更记录" mold="3d">
+				<grid width="100%" emptyMessage="暂无数据"
+					model="@load(vm.hosList)" mold="paging" pageSize="5">
+					<columns>
+						<column align="center" label="状态" />
+						<column align="center" label="操作" />
+						<column align="center" label="添加人" />
+						<column align="center" label="添加时间" />
+						<column align="center" label="备注" />
+					</columns>
+					<template name="model">
+						<row>
+							<label value="@load(each.pbsr_statename)" />
+							<label value="@load(each.pbsr_content)" />
+							<label value="@load(each.pbsr_addname)" />
+							<label value="@load(each.pbsr_addtime)" />
+							<label value="@load(each.pbsr_remark)"
+								maxlength="20" tooltip="remark_${each.pbsr_id }"
+								style="cursor:pointer" />
+							<popup id="remark_${each.pbsr_id }">
+								<html>${each.pbsr_remark }</html>
+							</popup>
+						</row>
+					</template>
+				</grid>
+			</groupbox>
+		</scrollview>
+	</window>
+</zk>

@@ -1,0 +1,31 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="体检机构结束须知" border="normal" width="80%" height="80%"
+		apply="org.zkoss.bind.BindComposer" id="filewin"
+		viewModel="@id('vm') @init('Controller.EmBodyCheck.Embc_AddressDocController')"
+		closable="true">
+		<grid vflex="1">
+			<rows>
+				<row>
+					<cell width="80px">上传文件</cell>
+					<cell>
+						<textbox width="50%" value="@bind(vm.filename)"
+							readonly="true">
+						</textbox>
+						<button id="attachBtn" upload="true"
+							style="margin-right:10px;margin-left:10px;"
+							onUpload="@command('upfile')" label="选择政策文件" />
+						<button onClick="@command('summit')">上传</button>
+					</cell>
+				</row>
+				<row>
+					<cell>
+						<include
+							src="../EmBodyCheck/Embc_addressFile.jsp?id=${vm.model.ebsa_id}">
+						</include>
+					</cell>
+				</row>
+			</rows>
+		</grid>
+	</window>
+</zk>

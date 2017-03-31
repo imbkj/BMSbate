@@ -1,0 +1,68 @@
+<!--
+	创建人：林少斌
+	创建时间：2016-5-19
+	用途：合同每月付款日修改页面
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<zscript>
+	//日期
+	day = new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10",
+			"11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21",
+			"22", "23", "24", "25", "26", "27", "28", "29", "30", "31" };
+</zscript>
+	<window id="winUpPaydate" title="公司合同 -- 每月付款日及增值税比例修改页面"
+		border="normal" width="700px" height="170px" closable="true"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoCompact.Compact_UpPaydateController')">
+		<grid width="100%">
+			<rows>
+				<row>
+					<cell width="18%" style="color:#666;">每月付款日：</cell>
+					<cell>
+						<hbox>
+							<combobox id="coco_paydate" width="60%"
+								value="@bind(vm.cocoM.coco_paydate)" readonly="true" mold="rounded">
+								<comboitem label="${each}"
+									forEach="${day}" />
+							</combobox>
+						</hbox>
+					</cell>
+					<cell width="18%" style="color:#666;" />
+					<cell />
+					<cell width="18%" style="color:#666;" />
+					<cell />
+				</row>
+				<row>
+					<cell style="color:#666;">服务税金比例</cell>
+					<cell>
+						<hbox>
+							<textbox mold="rounded" width="40px" value="@bind(vm.fw_per)"/>
+							<label value="%" />
+						</hbox>
+					</cell>
+					<cell style="color:#666;">福利税金比例</cell>
+					<cell>
+						<hbox>
+							<textbox mold="rounded" width="40px" value="@bind(vm.fl_per)"/>
+							<label value="%" />
+						</hbox>
+					</cell>
+					<cell style="color:#666;">代扣代缴税金比例</cell>
+					<cell>
+						<hbox>
+							<textbox mold="rounded" width="40px" value="@bind(vm.dk_per)"/>
+							<label value="%" />
+						</hbox>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button label="提交" id="btSubmit"
+						onClick="@command('submit',win=winUpPaydate)" />
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

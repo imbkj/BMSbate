@@ -1,0 +1,115 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="恢复入职" border="normal" width="80%" height="80%" closable="true"
+	apply="org.zkoss.bind.BindComposer" id="cwin"
+	viewModel="@id('vm') @init('Controller.Embase.Embase_CancelDimissionController')"
+>
+<scrollview vflex="1" hflex="1">
+<groupbox mold="3d" open="true" title="员工基本信息" style="margin-bottom:10px;">
+<grid>
+	<rows>
+		<row>
+			<cell width="80px"></cell>
+			<cell></cell>
+			<cell width="80px"></cell>
+			<cell></cell>
+			<cell width="80px"></cell>
+			<cell></cell>
+		</row>
+		<row>
+			<cell>单位编号</cell>
+			<cell style="color:#00F;"><label value="@bind(vm.model.cid)"></label></cell>
+			<cell>单位名称</cell>
+			<cell style="color:#00F;"><label value="@bind(vm.model.coba_company)"></label></cell>
+			<cell>离职时间</cell>
+			<cell style="color:#00F;"><label value="@bind(vm.model.emba_outdate)"></label></cell>
+		</row>
+		<row>
+			<cell>员工编号</cell>
+			<cell style="color:#00F;"><label value="@bind(vm.model.gid)"></label></cell>
+			<cell>员工姓名</cell>
+			<cell style="color:#00F;"><label value="@bind(vm.model.emba_name)"></label></cell>
+			<cell>身份证号</cell>
+			<cell style="color:#00F;"><label value="@bind(vm.model.emba_idcard)"></label></cell>
+		</row>
+</rows>
+</grid>
+</groupbox>
+<groupbox mold="3d" open="true" title="业务信息" style="margin-bottom:10px;">
+	<grid model="@load(vm.list)">
+		<columns>
+			<column label="序号" width="40px" align="center"/>
+			<column label="业务名称" align="center"/>
+			<column label="操作内容" align="center"/>
+			<column label="添加人" align="center"/>
+			<column label="添加时间" align="center"/>
+			<column label="状态" align="center"/>
+			<column label="短信" align="center" width="80px"/>
+		</columns>
+		<rows>
+			<template name="model">
+			<row>
+				<cell>${forEachStatus.index + 1}</cell>
+				<cell><label value="@load(each.infoname)"></label></cell>
+				<cell><label value="@load(each.change)"></label></cell>
+				<cell><label value="@load(each.addname)"></label></cell>
+				<cell><label value="@load(each.addtime)"></label></cell>
+				<cell><label value="@load(each.statename)"></label></cell>
+				<cell>
+					<a onClick="@command('send',model=each)" if="${each.readstate==-1 }"><label value="发短信"></label></a>
+					<a onClick="@command('send',model=each)" if="${each.readstate==1 }">
+						<image src="../images/noread.gif" style="cursor:pointer"/>
+					</a>
+					<a onClick="@command('send',model=each)" if="${each.readstate==2 }">
+						<image src="../images/readed.gif" style="cursor:pointer"/>
+					</a>
+					<a onClick="@command('send',model=each)" if="${each.readstate==3 }">
+						<image src="../images/return.gif" style="cursor:pointer"/>
+					</a>
+				</cell>
+			</row>
+			</template>
+		</rows>
+	</grid>
+</groupbox>
+<groupbox mold="3d" open="true" title="报价单信息">
+				<grid id="coofferlist" model="@load(vm.cflList)">
+					<columns>
+						<column align="center">报价单</column>
+						<column align="center">产品类型</column>
+						<column align="center">城市</column>
+						<column align="center">产品名称</column>
+						<column align="center">终止收费月</column>
+					</columns>
+					<rows>
+						<template name="model">
+							<row
+								style="border:1px dotted #cad9ea;background-color:#f5fafe;">
+								<cell>
+									<label
+										value="@load(each.coof_name)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.coli_pclass)" />
+								</cell>
+								<cell>
+									<label value="@load(each.city)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.coli_name)" />
+								</cell>
+								<cell>
+									<label value="@load(each.stopdate)"></label>
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</groupbox>
+
+<div align="center"><button onClick="@command('submit',win=cwin)" >提交</button></div>
+</scrollview>
+</window>
+</zk>

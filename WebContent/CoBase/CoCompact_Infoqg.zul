@@ -1,0 +1,532 @@
+<!--
+	创建人：林少斌
+	创建时间：2015-1-19
+	用途：报价单管理(全国项目部)
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<!-- 调用内联页的文件名 -->
+<?component name="docDataList" macro-uri="../DocumentsInfo/DocumentsInfo_UpPageList.zul" inline="true"?>
+<zk>
+	<window title="报价单管理" border="normal" width="97%" height="97%"
+		closable="true">
+		<scrollview vflex="1" hflex="1">
+			<div style="overflow-y:auto"
+				apply="org.zkoss.bind.BindComposer"
+				viewModel="@id('vm') @init('Controller.CoBase.CoCompact_InfoqgController')">
+				<groupbox title="合同基本信息" mold="3d">
+					<grid height="95%" width="100%"
+						style="border:0px">
+						<rows>
+							<row>
+								<cell width="80px"
+									style="color:#666;">
+									受托机构：
+								</cell>
+								<cell>
+									<hbox>
+										<label value="@load(vm.model.city)" />
+										<label value=" -- " />
+										<label value="@load(vm.model.agency)" />
+									</hbox>
+								</cell>
+							</row>
+							<!-- <row>
+								<cell width="80px"
+								style="color:#666;">
+								签订日期：
+								</cell>
+								<cell>
+								<textbox readonly="true"
+								value="@load(vm.model.coco_signdate)" mold="rounded" />
+								</cell>
+								<cell width="80px"
+								style="color:#666;">
+								生效日期：
+								</cell>
+								<cell>
+								<textbox mold="rounded"
+								readonly="true" value="@load(vm.model.coco_inuredate)" />
+								</cell>
+								</row>
+								<row>
+								<cell style="color:#666;">到期日期：</cell>
+								<cell>
+								<textbox
+								value="@load(vm.model.coco_indate)" mold="rounded"
+								readonly="true" />
+								</cell>
+								<cell style="color:#666;">自动延迟：</cell>
+								<cell>
+								<textbox mold="rounded"
+								value="@load(vm.model.coco_delay)" readonly="true" />
+								</cell>
+								</row>
+								<row>
+								<cell style="color:#666;">发票类型：</cell>
+								<cell>
+								<textbox
+								value="@load(vm.model.coco_invoice)" mold="rounded"
+								readonly="true" />
+								</cell>
+								<cell style="color:#666;">合同履行地：</cell>
+								<cell>
+								<textbox mold="rounded"
+								value="@load(vm.model.coco_servicearea)" readonly="true" />
+								</cell>
+								</row>
+								<row>
+								<cell style="color:#666;">解除时间：</cell>
+								<cell>
+								<textbox
+								value="@load(vm.model.coco_stopdate)" mold="rounded"
+								readonly="true" />
+								</cell>
+								<cell style="color:#666;">解除原因：</cell>
+								<cell>
+								<textbox readonly="true"
+								mold="rounded" value="@load(vm.model.coco_stopreason)" />
+								</cell>
+								</row>
+								<row>
+								<cell>备注：</cell>
+								<cell colspan="3">
+								<textbox id="coco_remark" rows="3"
+								readonly="true" value="@load(vm.model.coco_remark)"
+								mold="rounded" width="70%" />
+								</cell>
+								</row> -->
+						</rows>
+					</grid>
+				</groupbox>
+				<groupbox title="合同信息" mold="3d">
+					<!-- 社保 -->
+					<grid visible="@load(vm.cctaModel.sbVis)">
+						<columns>
+							<column width="15%" />
+							<column />
+						</columns>
+						<rows>
+							<row>
+								<cell>
+									<label value="社会保险开户" />
+								</cell>
+								<cell>
+									<grid>
+										<columns>
+											<column width="15%" />
+											<column />
+										</columns>
+										<rows>
+											<row>
+												<cell width="120px">
+													<label
+														value="社保开户状态" />
+												</cell>
+												<cell>
+													<textbox
+														readonly="true" value="@load(vm.model.coco_shebao)" />
+												</cell>
+											</row>
+											<row>
+												<cell width="120px">
+													<label value="工伤比例" />
+												</cell>
+												<cell>
+													<textbox
+														readonly="true" value="@load(vm.model.coco_Injury)" />
+												</cell>
+											</row>
+											<row>
+												<cell width="120px">
+													<label
+														value="失业下浮比例" />
+												</cell>
+												<cell>
+													<textbox
+														readonly="true" value="@load(vm.model.coco_sb_sye)" />
+												</cell>
+											</row>
+											<row>
+												<cell width="120px">
+													<label
+														value="社保单位编码" />
+												</cell>
+												<cell>
+													<textbox
+														readonly="true" value="@load(vm.model.coco_shebaoID)" />
+												</cell>
+											</row>
+											<row>
+												<label value="支付方式" />
+												<cell>
+													<radiogroup
+														selectedItem="@bind(vm.coco_sbfee)">
+														<hbox>
+															<radio
+																label="中智转帐" value="1">
+															</radio>
+															<label
+																style="color:red"
+																value="(客户把社保款项汇至中智，再由中智将款项转入客户社保帐户内)" />
+														</hbox>
+														<separator></separator>
+														<hbox>
+															<radio
+																label="客户存款" value="2">
+															</radio>
+															<label
+																style="color:red" value="(社保款项由客户自己存入其社保帐户内)" />
+														</hbox>
+													</radiogroup>
+												</cell>
+											</row>
+										</rows>
+									</grid>
+								</cell>
+							</row>
+						</rows>
+					</grid>
+
+					<!-- 公积金 -->
+					<grid visible="@load(vm.cctaModel.gjjVis)">
+						<columns>
+							<column width="15%" />
+							<column />
+						</columns>
+						<rows>
+							<row>
+								<cell>
+									<label value="住房公积金开户" />
+								</cell>
+								<cell>
+									<grid>
+										<columns>
+											<column width="15%" />
+											<column />
+										</columns>
+										<rows>
+											<row>
+												<cell width="120px">
+													<label
+														value="公积金开户状态" />
+												</cell>
+												<cell>
+													<textbox
+														readonly="true" value="@load(vm.model.coco_house)" />
+												</cell>
+											</row>
+											<row>
+												<label value="公积金比例" />
+												<cell>
+													<vlayout>
+														<hlayout>
+															单位比例：
+															<textbox
+																value="@load(vm.model.coco_cpp)" readonly="true">
+															</textbox>
+															<label
+																value="单位百分比" style="color:red;" />
+														</hlayout>
+														<hlayout>
+															个人比例：
+															<textbox
+																value="@load(vm.model.coco_opp)" readonly="true">
+															</textbox>
+															<label
+																value="单位百分比" style="color:red;" />
+														</hlayout>
+													</vlayout>
+												</cell>
+											</row>
+											<row>
+												<cell width="120px">
+													<label
+														value="公积金单位编码" />
+												</cell>
+												<cell>
+													<textbox
+														readonly="true" value="@load(vm.model.coco_houseid)" />
+												</cell>
+											</row>
+											<row>
+												<label value="支付方式" />
+												<cell>
+													<radiogroup
+														selectedItem="@bind(vm.coco_housefee)">
+														<hbox>
+															<radio
+																value="1" label="中智转帐">
+															</radio>
+															<label
+																style="color:red"
+																value="(客户把公积金款项汇至中智，再由中智将款项转入客户公积金帐户内)" />
+														</hbox>
+														<separator></separator>
+														<hbox>
+															<radio
+																value="2" label="客户存款">
+															</radio>
+															<label
+																style="color:red" value="(公积金款项由客户自己存入其公积金帐户内)" />
+														</hbox>
+													</radiogroup>
+												</cell>
+											</row>
+										</rows>
+									</grid>
+								</cell>
+							</row>
+						</rows>
+					</grid>
+
+					<!-- 就业登记 -->
+					<!-- <grid visible="@load(vm.cctaModel.jyVis)">
+						<columns>
+						<column width="15%" />
+						<column />
+						</columns>
+						<rows>
+						<row>
+						<cell>
+						<label value="就业登记开户信息" />
+						</cell>
+						<cell>
+						<grid>
+						<columns>
+						<column width="15%" />
+						<column />
+						</columns>
+						<rows>
+						<row>
+						<label value="就业登记开户状态" />
+						<combobox mold="rounded"
+						readonly="true">
+						</combobox>
+						</row>
+						</rows>
+						</grid>
+						</cell>
+						</row>
+						</rows>
+						</grid> -->
+
+					<!-- 工资 -->
+					<grid visible="@load(vm.cctaModel.gzVis)">
+						<columns>
+							<column width="15%" />
+							<column />
+						</columns>
+						<rows>
+							<row>
+								<cell>
+									<label value="工资支付方式" />
+								</cell>
+								<cell>
+									<grid>
+										<columns>
+											<column width="15%" />
+											<column />
+										</columns>
+										<rows>
+											<row>
+												<cell width="120px">
+													<label
+														value="台帐中工资所属期" />
+												</cell>
+												<cell>
+													<textbox
+														value="@load(vm.model.coco_gzmonth)">
+													</textbox>
+												</cell>
+											</row>
+											<row>
+												<label value="工资款" />
+												<cell>
+													<radiogroup
+														selectedItem="@load(vm.coco_gzperfee)">
+														<hbox>
+															<radio
+																value="1" label="中智发放">
+															</radio>
+															<label
+																style="color:red" value="(通过中智银行账户发放)" />
+														</hbox>
+														<separator></separator>
+														<hbox>
+															<radio
+																value="2" label="客户发放">
+															</radio>
+															<label
+																style="color:red" value="(通过客户银行账户发放)" />
+														</hbox>
+													</radiogroup>
+												</cell>
+											</row>
+											<!-- <row>
+												<label value="社保个人部分" />
+												<cell>
+												<radiogroup
+												selectedItem="@load(vm.coco_sbperfee)">
+												<hbox>
+												<radio
+												value="1" label="中智转帐">
+												</radio>
+												<label
+												style="color:red"
+												value="(客户把社保款项汇至中智，再由中智将款项转入客户社保帐户内)" />
+												</hbox>
+												<separator></separator>
+												<hbox>
+												<radio
+												value="2" label="客户存款">
+												</radio>
+												<label
+												style="color:red" value="(社保款项由客户自己存入其社保帐户内)" />
+												</hbox>
+												</radiogroup>
+												</cell>
+												</row>
+												<row>
+												<label
+												value="住房公积金个人部分" />
+												<cell>
+												<radiogroup
+												selectedItem="@load(vm.coco_houseperfee)">
+												<hbox>
+												<radio
+												value="1" label="中智转帐">
+												</radio>
+												<label
+												style="color:red"
+												value="(客户把公积金款项汇至中智，再由中智将款项转入客户公积金帐户内)" />
+												</hbox>
+												<separator></separator>
+												<hbox>
+												<radio
+												value="2" label="客户存款">
+												</radio>
+												<label
+												style="color:red" value="(公积金款项由客户自己存入其公积金帐户内)" />
+												</hbox>
+												</radiogroup>
+												</cell>
+												</row> -->
+										</rows>
+									</grid>
+								</cell>
+							</row>
+						</rows>
+					</grid>
+
+					<!-- 个税 -->
+					<grid visible="@load(vm.cctaModel.gsVis)">
+						<columns>
+							<column width="15%" />
+							<column />
+						</columns>
+						<rows>
+							<row>
+								<cell>
+									<label value="个税支付方式" />
+								</cell>
+								<cell>
+									<grid>
+										<columns>
+											<column width="15%" />
+											<column />
+										</columns>
+										<rows>
+											<row>
+												<label value="个税开户状态" />
+												<cell align="left">
+													<textbox
+														value="@load(vm.model.coco_gs)">
+													</textbox>
+												</cell>
+											</row>
+											<row>
+												<cell width="120px">
+													<label
+														value="台帐中个税所属期" />
+												</cell>
+												<cell>
+													<textbox
+														value="@load(vm.model.coco_gsmonth)">
+													</textbox>
+												</cell>
+											</row>
+											<row visible="${vm.model.coco_gs=='独立开户'?true:false}">
+												<label value="个人所得税 " />
+												<cell>
+													<radiogroup
+														selectedItem="@load(vm.coco_gsfee)">
+														<hbox>
+															<radio
+																value="1" label="中智扣缴">
+															</radio>
+															<label
+																style="color:red" value="(中智从雇员工资中扣除后，转到客户独立帐户中缴交)" />
+														</hbox>
+														<separator></separator>
+														<hbox>
+															<radio
+																value="2" label="客户扣缴">
+															</radio>
+															<label
+																style="color:red" value="(直接在客户独立账户中缴交)" />
+														</hbox>
+													</radiogroup>
+												</cell>
+											</row>
+										</rows>
+									</grid>
+								</cell>
+							</row>
+						</rows>
+					</grid>
+				</groupbox>
+				<groupbox title="报价单信息" mold="3d" visible="false">
+
+					<grid width="100%" model="@load(vm.scoofferList)"
+						mold="paging" emptyMessage="暂无报价单数据">
+
+						<columns>
+							<column width="40px"></column>
+							<column label="所属合同" />
+							<column label="报价单名称" />
+							<column label="报价金额" />
+							<column label="合同类型" />
+							<column label="人数规模" />
+							<column label="添加人" />
+							<column label="添加时间" />
+							<column label="操作" width="60px" />
+						</columns>
+						<template name="model">
+							<row>
+								<custom-attributes
+									daid="${each.coof_id }" />
+								<detail open="false" fulfill="onOpen">
+									<include
+										src="/CoBase/CoBase_SelectCoOffer_Detail.zul"
+										daid="${daid }">
+									</include>
+								</detail>
+								<label
+									value="@load(each.coco_compactid)" />
+								<label value="@load(each.coof_name)" />
+								<label value="@load(each.coof_sum)" />
+								<label value="@load(each.cpct_name1)" />
+								<label value="@load(each.coof_gm)" />
+								<label value="@load(each.coof_addname)" />
+								<label value="@load(each.addtime)" />
+								<label value="项目详情"
+									style="cursor:pointer" onClick="@command('chakan',model=each)" />
+							</row>
+						</template>
+					</grid>
+
+				</groupbox>
+			</div>
+		</scrollview>
+	</window>
+</zk>

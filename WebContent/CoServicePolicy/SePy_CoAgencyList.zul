@@ -1,0 +1,76 @@
+<!--
+	创建人：陈耀家
+	创建时间：2013-1-11
+	用途：委托机构详细信息查询按机构显示
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<style src="./css/style.css" />
+	<window title="委托机构详细信息查询 -- 按机构显示" border="normal" width="100%" height="100%"
+		apply="org.zkoss.bind.BindComposer" 
+		viewModel="@id('vm') @init('Controller.CoAgency.BaseInfo_SelectListController')">
+		<borderlayout vflex="1">
+			<north border="0" title="数据查询" collapsible="true"
+				flex="true" open="true">
+					<panel border="1">
+						<panelchildren style="padding:5px;">
+							<grid id="searchGird" width="100%" >
+								<rows>
+									<row>
+										<cell width="100px" style="color:#666;">省份</cell>
+										<combobox id="coab_province" model="@load(vm.agProvinceList)" selectedItem="@bind(vm.coab_province)" width="80px" 
+										onChange="@command('selAgCity', contact=event.value,cb=coab_city)"  autodrop="true" mold="rounded" >
+											<template name="model">
+												<comboitem label="@load(each)"/>
+											</template>
+										</combobox>
+										<cell width="100px"  style="color:#666;">城市</cell>
+										<combobox id="coab_city" width="80px" model="@load(vm.agCityList)"
+											 selectedItem="@bind(vm.coab_city)" autodrop="true" mold="rounded" >
+											<template name="model">
+												<comboitem label="@load(each)" />
+											</template>
+										</combobox>
+										<cell width="100px" style="color:#666;">机构名称</cell>
+										<textbox id="coab_name"  width="150px" hflex="1" value="@bind(vm.coab_name)" mold="rounded"/>
+										<cell></cell>
+									</row>
+								</rows>
+								<foot>
+									<footer align="center">
+										<button id="btSearch" label="查询"
+											onClick="@command('search')" />
+									</footer>
+								</foot>
+							</grid>
+						</panelchildren>
+					</panel>
+			</north>
+			<center>
+				<grid width="100%" height="100%"  model="@load(vm.coagBaseList)" emptyMessage="无数据" mold="paging" pageSize="20">
+					<columns sizable="true">
+						<column label="序号" align="center"  width="60px"/>
+						<column label="省份" align="center" sort="auto(coab_province)" />
+						<column label="城市" align="center" sort="auto(coab_city)"/>
+						<column label="机构名称" align="center" sort="auto(coab_name)"/>
+						<column label="操作" align="center" width="100px"/>
+					</columns>
+					<rows>
+						<template name="model">
+							<row>	
+								<label value="${forEachStatus.index + 1}" />
+								<label value="@load(each.coab_province)" />
+								<label value="@load(each.coab_city)" />
+								<label value="@load(each.coab_name)" />
+								<cell>
+									<label style="cursor:pointer; color:#666;" value="新增服务政策" 
+									onClick="@command('openzul',model=each)"/>
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

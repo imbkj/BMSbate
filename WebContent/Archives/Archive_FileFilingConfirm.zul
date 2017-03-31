@@ -1,0 +1,43 @@
+<?page title="材料鉴别归档信息确认" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="材料鉴别归档信息确认" border="normal"  width="80%" height="90%" closable="true"
+	apply="org.zkoss.bind.BindComposer" id="win"
+    viewModel="@id('vm') @init('Controller.Archives.Archive_FileFilingController')">
+<radiogroup id="yorn" onCheck=""/>
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell width="100px">拟归档材料名称</cell>
+			<cell>
+				<combobox id="dataclass" value="${vm.models.eada_file }">
+					<comboitem label="学籍档案"/>
+					<comboitem label="党员材料"/>
+					<comboitem label="招工通知书"/>
+					<comboitem label="调工通知书"/>
+					<comboitem label="深圳市人事局干部调动通知"/>
+					<comboitem label="深圳市大中专毕业生介绍信"/>
+					<comboitem label="留学生介绍信原件"/>
+					<comboitem label="其他"/>
+				</combobox>
+			</cell>
+		</row>
+		<row>
+			<cell>备注</cell>
+			<cell><textbox id="remark" width="90%" rows="5" value="${vm.remarks }"></textbox></cell>
+		</row>
+		<row>
+			<cell>是否待确定</cell>
+			<cell>
+				<hlayout>
+				 <radio id="yes" label="是" value="0" radiogroup="yorn" />
+                 <radio id="no" label="否" value="1" radiogroup="yorn" selected="true"/>
+                 </hlayout>
+			</cell>
+		</row>
+	</rows>
+	<foot>
+		<footer align="center"><button onClick="@command('summitupdate',dataclass=dataclass.value,yorn=yorn.selectedItem,remark=remark.value,win=win)">提交</button></footer>
+	</foot>
+</grid>
+</window>
+</zk>

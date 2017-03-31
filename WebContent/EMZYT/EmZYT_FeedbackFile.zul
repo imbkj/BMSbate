@@ -1,0 +1,79 @@
+<!--
+	创建人：林少斌
+	创建时间：2014-12-17
+	用途：历史反馈文件下载页面
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="智翼通接口 -- 历史反馈文件下载页面" border="normal" width="100%"
+		height="100%" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmZYT.EmZYT_FeedbackFileController')">
+		<borderlayout vflex="1">
+			<north border="0" title="数据查询" collapsible="true"
+				flex="true" open="true">
+				<panel border="1">
+					<panelchildren style="padding:5px;">
+						<grid width="100%">
+							<rows>
+								<row>
+									<cell width="15%">
+										<label value="文件名称" />
+									</cell>
+									<cell>
+										<textbox id="filename" value="@bind(vm.filename)"
+											mold="rounded" />
+									</cell>
+									<cell width="15%">
+										<label value="操作人" />
+									</cell>
+									<cell>
+										<textbox id="addname" value="@bind(vm.addname)"
+											mold="rounded" />
+									</cell>
+								</row>
+								<row>
+									<cell align="center" colspan="4">
+										<button label="查询"
+											onClick="@command('search')" />
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</panelchildren>
+				</panel>
+			</north>
+			<center>
+				<grid id="dataGrid" width="100%" height="100%" model="@load(vm.dataList)"
+					mold="paging" pageSize="100" emptyMessage="无数据">
+					<columns sizable="true">
+						<column label="文件名称" align="center" />
+						<column label="操作人" align="center" />
+						<column label="操作" align="center" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<cell>
+									<hbox>
+										<image src="../images/xls.gif"
+											width="10" height="11" border="0" />
+										<label
+											value="@load(each.ezff_filename)" />
+									</hbox>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ezff_addname)" />
+								</cell>
+								<cell>
+									<label value="下载" onClick="@command('download',url=each.ezff_fileurl)"
+										style="cursor:pointer;" />
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

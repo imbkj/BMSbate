@@ -1,0 +1,121 @@
+package dal.Embase;
+
+import Model.EmbaseModel;
+import java.util.ArrayList;
+import java.util.List;
+
+import Conn.dbconn;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+public class Embasedal {
+	private static dbconn conn = new dbconn();
+	
+
+	// 根据查询语句获取员工列表数据集
+	private ResultSet getembase(String str) throws Exception {
+			ResultSet rs = null;
+			StringBuilder sql = new StringBuilder();
+			sql.append("SELECT * from  View_Embaselist where 1=1");
+			sql.append(str);
+			sql.append(" order by gid desc");
+			System.out.println(sql);
+			rs = conn.GRS(sql.toString());
+			return rs;
+	}
+	
+	// 根据查询语句获取员工列表数据集
+	private ResultSet getcountsumres(String str) throws Exception {
+			ResultSet rs = null;
+			StringBuilder sql = new StringBuilder();
+			sql.append("select  (SELECT count(*) from  View_Embaselist where 1=1 ");
+			sql.append(str);
+			sql.append(" )  as countall ,(select COUNT (*) from View_Embaselist where emba_state=1 ");
+			sql.append(str);
+			sql.append(" ) as counton ,(select COUNT (*) from View_Embaselist where emba_state=0  ");
+			sql.append(str);
+			sql.append(" )  as countout ");
+			System.out.println(sql);
+			rs = conn.GRS(sql.toString());
+			return rs;
+	}
+	
+	// 根据查询语句获取员工列表数据集
+	public List<EmbaseModel> getembaList(String str) {
+		List<EmbaseModel> embaList = new ArrayList<EmbaseModel>();
+		try {
+			ResultSet rs = getembase(str);
+			while (rs.next()) {
+				embaList.add(new EmbaseModel(rs.getInt("gid"), rs.getInt("cid"),rs.getString("emba_name"),rs.getString("emba_spell"),
+						rs.getString("emba_pinyin"),rs.getString("emba_sex"),rs.getString("emba_idcard"),
+						rs.getString("emba_idcardclass"),rs.getString("emba_mobile"),rs.getString("emba_email"),
+						rs.getInt("emba_state"),rs.getString("emba_wt"),rs.getString("coba_shortname"),
+						rs.getString("coba_client"),rs.getString("sein_shebao"),rs.getString("sein_gjj"),
+						rs.getString("sein_shangbao"),rs.getString("sein_wt"),rs.getString("sein_shebaob"),
+						rs.getString("sein_gjjb"),rs.getString("sein_da"),rs.getString("sein_zj"),rs.getString("sein_ldyg"),
+						rs.getString("sein_xc"),rs.getString("emba_statestr")
+						)
+				);
+			}
+
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return embaList;
+	}
+	
+	
+	// 根据查询语句获取页面统计数
+		
+		public List<Integer> getcountsum(String str) {
+			//int[] i =new int[5] ;
+			List<Integer> i = new ArrayList<Integer>();
+			
+			try {
+				ResultSet rs = getcountsumres(str);
+				 
+				while (rs.next()) {
+					i.add(rs.getInt("countall"));
+					i.add(rs.getInt("counton"));
+					i.add(rs.getInt("countout"));
+
+				}
+				System.out.println(i.get(0));
+				System.out.println(i.get(1));
+				System.out.println(i.get(2));
+				
+				}
+			
+			catch (Exception e) {
+				System.out.println(e.toString());
+			}
+			
+			return i;
+		}
+	
+	
+	//综合查询列表
+	public String[] getembaList() {
+
+		StringBuilder spstr = new StringBuilder();
+
+		try {
+		
+			ResultSet rs= conn.GRS("SELECT  * from  View_Embaselist where 1=1");
+			while (rs.next()) {
+			
+				spstr.append(rs.getString("emba_spell")+"|"+rs.getInt("gid")+"|"+rs.getString("emba_name")+"|"+rs.getString("emba_statestr")+"|"+rs.getString("coba_shortname"));
+				spstr.append(",");
+			}
+
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		System.out.println(spstr);
+		//System.out.println(spstr.toString().split(",")[9].toString());
+		return spstr.toString().split(",");
+		
+	}
+
+}

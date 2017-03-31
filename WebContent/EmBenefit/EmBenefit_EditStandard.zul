@@ -1,0 +1,6 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="修改标准" border="normal" width="600px" height="500px" closable="true">
+
+</window>
+</zk>

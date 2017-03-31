@@ -1,0 +1,107 @@
+<!-- 
+	创建人：林少斌
+	创建时间：2015-1-19
+	用途：报价单详情
+-->
+<?page contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window border="normal" title="项目修改" width="100%" 
+		closable="true" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoQuotation.CoQuotationInfoSelectqgController')">
+		
+		<grid model="@load(vm.coofferinfoList)" emptyMessage="暂无数据"
+			height="100%" width="100%" >
+			<columns sizable="true">
+				<column label="序号" width="40px"></column>
+				<column label="产品名称"></column>
+				<column label="收费金额/收费单位"></column>
+				<column label="产品类型"></column>
+				<column label="城市/机构"></column>
+				<column label="享受方式" width="80px"></column>
+				<column label="份数" width="50px"></column>
+				<column label="描述" width="20%"></column>
+				<column label="备注"></column>
+				<column label="操作" width="60px"></column>
+			</columns>
+			<template name="model">
+				<row>
+				<cell>
+					<label value="${forEachStatus.index+1 }" /></cell>
+					<cell>
+						<label value="@load(each.coli_name)" />
+					</cell>
+					<cell if="${each.coli_group_count ne 0 }"
+						rowspan="${each.coli_group_count }">
+						<hbox>
+							<label value="@load(each.coli_fee)" />
+							<space />
+							<label value="@load(each.coli_cpfc_name)" />
+						</hbox>
+					</cell>
+					<cell>
+						<label value="@load(each.coli_pclass)" />
+					</cell>
+					<cell>
+						<hbox if="${not empty each.city }">
+							<label value="@load(each.city)" />
+							/
+							<label value="@load(each.coab_name)" />
+						</hbox>
+					</cell>
+					<cell>
+					<label value="@load(each.coli_standard)" /></cell>
+					<cell>
+						<hbox if="${each.coli_pclass=='商业保险' }">
+							<label value="@load(each.coli_amount)" />
+							份
+						</hbox>
+					</cell>
+					<cell>
+					<div
+						style="cursor:pointer;overflow:hidden;-ms-text-overflow: ellipsis;-o-text-overflow: ellipsis;"
+						tooltip="content_${each.coli_id },position=after_end">
+						<label
+							style="white-space: nowrap;text-overflow:ellipsis;cursor:pointer"
+							value="@load(each.coli_content)">
+						</label>
+						<popup id="content_${each.coli_id }"
+							width="200px">
+							<label value="@load(each.coli_content)">
+							</label>
+						</popup>
+					</div>
+					</cell>
+					<cell>
+					<div
+						tooltip="remark_${each.coli_id },position=after_pointer">
+						<label
+							style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;
+									cursor:pointer"
+							value="@load(each.coli_remark)">
+						</label>
+						<popup id="remark_${each.coli_id }"
+							width="200px">
+							<label value="@load(each.coli_remark)">
+							</label>
+						</popup>
+					</div>
+					</cell>
+					<cell>
+					<div>
+						<menubar autodrop="true">
+							<menu image="../images/pencil-small.png">
+								<menupopup>
+									<menuitem label="费用调整"
+										onClick="@command('co_change',a=each)" />
+									<menuitem label="产品终止" if="${each.coli_pclass ne '人事基础服务费' }"
+										onClick="@command('co_del',a=each)" />
+								</menupopup>
+							</menu>
+						</menubar>
+					</div>
+					</cell>
+				</row>
+			</template>
+		</grid>
+	</window>
+</zk>

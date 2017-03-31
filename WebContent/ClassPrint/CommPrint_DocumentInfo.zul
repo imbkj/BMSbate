@@ -1,0 +1,46 @@
+<!-- 
+         创建人：suhongyuan
+         创建时间：2016-05-12
+         用途：常用资料打印
+ -->
+<?page contentType="text/html;charset=UTF-8"?>
+ <zk>
+ 
+    <window title="常用资料打印" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CommPrintDocumentInfoController')"
+		border="normal" sizable="true" height="100%" width="100%" >
+       <borderlayout> 
+         <north border="0" title="模板列表"></north>
+  <center>
+  <div  style="overflow:auto; " height="500px" width="100%">
+  <grid  model="@load(vm.list)" id="gridwin" 
+	height="500px" width="100%" emptyMessage="暂无数据"  mold="paging" pageSize="50"
+	>
+	<columns>
+		<column label="序号" hflex="1"  align="center"/>
+		<column label="所屬类别" hflex="2" align="center" sort=" "/>
+		<column label="模板名称" hflex="5" align="center" sort=" "/>
+		<column label="适用范围" hflex="2" align="center" sort=" "/>
+		<column label="操作" hflex="2" align="center" sort=" "/>
+	</columns>
+	
+	<template name="model">
+	
+	   <row>
+	     <label value="@bind(each.id)" />
+	     <label value="@bind(each.classtype)" />
+	     <label value="@bind(each.classname)" />
+	     <label value="@bind(each.classuse)" />
+	     <label value="@bind(each.classmode)" style="cursor:pointer" onClick="@command('print', cpm=each)"/>
+	   </row>
+	
+	</template> 
+	 
+ </grid>
+ </div>
+  </center>
+  
+       </borderlayout>
+    </window> 
+ </zk>
+

@@ -1,0 +1,168 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="政策通知更新" border="normal" width="80%" height="90%" closable="true" 
+	apply="org.zkoss.bind.BindComposer" id="editwin"
+	viewModel="@id('vm') @init('Controller.CoPolicyNotice.PoNo_InfoUpdateController')"
+>
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell width="80px">所属月份</cell>
+			<cell><datebox sclass="datebox-month-only" format="yyyyMM" id="ownmonth" value="@bind(vm.ownmonth)"/></cell>
+			<cell>城市</cell>
+			<cell>
+				<combobox readonly="true" model="@load(vm.citylist)" value="@bind(vm.model.pono_city)"
+				  buttonVisible="false">
+					<template name="model">
+						<comboitem label="@load(each.name)" value="@load(each)"/>
+					</template>
+				</combobox>
+			</cell>
+		</row>
+		<row>
+			<cell width="80px">发文机构</cell>
+			<cell colspan="3">
+				<combobox readonly="true" model="@load(vm.coaglist)" width="60%" buttonVisible="false"
+				value="@bind(vm.model.pono_agencies)"
+				onChange="@command('changecity',cb=self)">
+					<template name="model">
+						<comboitem label="@load(each.coab_name)" value="@load(each)"/>
+					</template>
+				</combobox>
+			</cell>
+			
+		</row>
+		<row>
+			<cell>标题</cell>
+			<cell><textbox width="80%" value="@bind(vm.model.pono_title)"></textbox></cell>
+			<cell>通知类型</cell>
+			<cell>
+				<combobox readonly="true" value="@bind(vm.model.pono_type)" buttonVisible="false">
+					<comboitem label="机构通知"/>
+					<comboitem label="政府通知"/>
+				</combobox>
+			</cell>	
+		</row>
+		<row>
+			<cell>通知内容</cell>
+			<cell colspan="3">
+				<ckeditor id="answer" toolbar="MyToolbar"
+					hflex="3" value="@bind(vm.model.pono_content)"
+					customConfigurationsPath="/js/ckeditor-config.js">
+				</ckeditor>
+			</cell>
+		</row>
+		<row>
+			<cell>反馈截止日</cell>
+			<cell><datebox value="@bind(vm.feedbackbydate)"></datebox></cell>
+			<cell>是否待跟进</cell>
+			<cell>
+				<combobox readonly="true" value="@bind(vm.model.pono_iffollow)">
+					<comboitem label="是"/>
+					<comboitem label="否"/>
+				</combobox>
+			</cell>	
+		</row>
+		<row>
+			<cell>上传文件</cell>
+			<cell colspan="3"><button id="attachBtn" upload="true" label="添加文件" onUpload="@command('upfile')"/></cell>
+		</row>
+		<row visible="@bind(vm.filegdvisible)">
+			<cell>已选择文件</cell>
+			<cell colspan="3">
+				<grid model="@load(vm.filelist)" id="gd">
+					<columns>
+						<column label="文件名称" align="center"/>
+						<column label="文件类型" align="center"/>
+						<column label="备注" align="center"/>
+						<column label="操作" align="center" width="80px"/>
+					</columns>
+					<rows>
+						<template name="model">
+						<row>
+							<cell><label value="@load(each.file_title)"></label></cell>
+							<cell>
+								<combobox value="@bind(each.file_type)">
+									<comboitem label="社保"/>
+									<comboitem label="公积金"/>
+									<comboitem label="机构要求"/>
+									<comboitem label="残保金"/>
+									<comboitem label="档案"/>
+									<comboitem label="外籍人/台港澳社保"/>
+									<comboitem label="政策法规"/>
+								</combobox>
+							</cell>
+							<cell><textbox width="90%" value="@bind(each.file_remark)"></textbox></cell>
+							<cell><a onClick="@command('del',model=each)"><label>删除</label></a></cell>	
+						</row>
+						</template>
+					</rows>
+				</grid>
+			</cell>
+		</row>
+	</rows>
+	<foot><footer align="center"><button onClick="@command('summit',gd=gd,win=editwin)">提交</button></footer></foot>
+</grid>
+<script><![CDATA[
+        zk.afterLoad("zul.db", function () {
+            // Datebox Calendar Renderer
+            var _Cwgt = {};
+            zk.override(zul.db.CalendarPop.prototype, _Cwgt, {
+                // switch the view after redraw or open as needed
+                redraw: function (out) {
+                    _Cwgt.redraw.apply(this, arguments); //call the original method
+                    this._customChangeView ();
+                },
+                open: function (silent) {
+                    _Cwgt.open.apply(this, arguments); //call the original method
+                    this._customChangeView ();
+                },
+                _customChangeView: function () {
+                    // cannot show month/day
+                    if (jq(this.parent.$n()).hasClass('datebox-year-only')) {
+                        var view = this._view;
+                        // switch to year view as needed
+                        if (view == 'month' || view == 'day')
+                            this._setView("year");
+                    } else if (jq(this.parent.$n()).hasClass('datebox-month-only')) {
+                        // cannot show day view
+                        // switch to month view as needed
+                        if (this._view == 'day')
+                            this._setView("month");
+                    }
+                },
+                // customize the chooseDate function
+                _chooseDate: function (target, val) {
+                    var view = this._view;
+                    if (jq(this.parent.$n()).hasClass('datebox-month-only')
+                        || jq(this.parent.$n()).hasClass('datebox-year-only')) {
+                        // do customize chooseDate if the parent (datebox)
+                        // has specific class
+                        var date = this.getTime(),
+                            year = (view == 'decade' || view == 'year')? val : date.getFullYear(),
+                            month = view == 'month'? val : 0,
+                            date = 1;
+                        // set date value
+                        this._setTime(year, month, 1);
+                        if (view == 'decade') {
+                            // switch to year view if at decade view
+                            this._setView("year");
+                        } else if (jq(this.parent.$n()).hasClass('datebox-month-only')
+                            && view == 'year') {
+                            // switch to month view if at year view and the month view is allowed
+                            this._setView("month");
+                        } else if (jq(this.parent.$n()).hasClass('datebox-month-only') && view == 'month'
+                            || jq(this.parent.$n()).hasClass('datebox-year-only') && view == 'year') {
+                            // close calendar and update value if already at the smallest allowed view
+                            this.close();
+                            this.parent.updateChange_();
+                        }
+                    } else {
+                        _Cwgt._chooseDate.apply(this, arguments); //call the original method
+                    }
+                }
+            });
+        });
+    ]]></script>
+</window>
+</zk>

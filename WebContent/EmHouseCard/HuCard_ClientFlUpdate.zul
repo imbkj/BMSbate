@@ -1,0 +1,61 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<?component name="docDataList" macro-uri="../DocumentsInfo/DocumentsInfo_PageList.zul" inline="true"?>
+<zk>
+<window title="领卡信息处理" border="normal" width="80%" height="80%" closable="true" id="windata"
+	apply="org.zkoss.bind.BindComposer" 
+	viewModel="@id('vm') @init('Controller.EmHouseCard.HuCard_ClientUpDataInfoController')">
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell width="110px">单位编号</cell>
+			<cell><label value="@load(vm.model.cid)"></label></cell>
+			<cell width="110px"><label value="单位名称"></label></cell>
+			<cell><label value="@load(vm.model.coba_shortname)"></label></cell>
+		</row>
+		<row>
+			<cell width="110px">员工编号</cell>
+			<cell><label value="@load(vm.model.gid)"></label></cell>
+			<cell width="110px"><label value="员工姓名"></label></cell>
+			<cell><label value="@load(vm.model.username)"></label></cell>
+		</row>
+		<row visible="${vm.model.state_Name=='中心核收'}">
+			<cell width="110px">上一步核收材料人</cell>
+			<cell><label value="@load(vm.model.pla_clientassistant)"></label></cell>
+			<cell width="110px"><label value="上一步核收材料时间"></label></cell>
+			<cell><label value="@load(vm.model.pla_clientassistanttime)"></label></cell>
+		</row>
+		<row>
+			<cell width="110px">当前状态</cell>
+			<cell><label value="@load(vm.model.state_Name)"></label></cell>
+			<cell width="110px"><label value="@load(vm.timename)"></label></cell>
+			<cell><datebox id="clientuptime"></datebox></cell>
+		</row>
+		<row visible="${vm.model.re_state==9 }">
+			<cell width="120px">制卡银行</cell>
+			<cell colspan="3">
+				<combobox model="@load(vm.banklist)" id="bank" value="@load(vm.takebank)">
+					<template name="model">
+						<comboitem label="@load(each)"/>
+					</template>
+				</combobox>
+			</cell>
+		</row>
+		<row visible="${vm.model.re_state==8 }">
+			<cell>提交资料</cell>
+			<cell colspan="3">
+				<docDataList id="docGrid"
+					puzu_id="${vm.model.re_docId }" doc_type="g" gid="${vm.model.gid}"
+					tid="${vm.model.re_id}"
+					log_url="../DocumentsInfo/" dHeight="100%" dWidth="100%"/>
+			</cell>	
+		</row>
+	</rows>
+	<foot>
+		<footer align="center">
+			<button onClick="@command('summitfl',win=windata,gd=docGrid,clientuptime=clientuptime.value,bank=bank.value)">提交</button>
+			<button onClick="@command('summitback',win=windata)">退回</button>
+		</footer>
+	</foot>
+</grid>
+</window>
+</zk>

@@ -1,0 +1,50 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="就业登记办理状态处理" border="normal" width="80%" height="80%"
+		apply="org.zkoss.bind.BindComposer" closable="true" id="updatewin"
+		viewModel="@id('vm') @init('Controller.EmReg.EmReg_StopDealController')">
+		<grid vflex="1">
+			<rows>
+				<row>
+					<cell width="80px">单位简称</cell>
+					<cell align="left"><label value="${arg.model.coba_shortname }"></label></cell>
+					<cell width="80px">单位编号</cell>
+					<cell align="left"><label value="${arg.model.cid }"></label></cell>
+					<cell width="80px">客服</cell>
+					<cell><label value="${arg.model.coba_client }"></label></cell>
+				</row>
+				<row>
+					<cell>员工姓名</cell>
+					<cell><label value="${arg.model.emba_name }"></label></cell>
+					<cell>员工编号</cell>
+					<cell><label value="${arg.model.gid }"></label></cell>
+					<cell>身份证号</cell>
+					<cell><label value="${arg.model.erin_idcard }"></label></cell>
+				</row>
+				<row>
+					<cell>交接日期</cell>
+					<cell><datebox value="@bind(vm.erin_handover_date)"></datebox></cell>
+					<cell>申报日期</cell>
+					<cell><datebox value="@bind(vm.erin_declare_date)"></datebox></cell>
+					<cell>收盖章日期</cell>
+					<cell><datebox value="@bind(vm.erin_wd_seal_date)"></datebox></cell>
+				</row>
+				<row>
+					<cell>办成日期</cell>
+					<cell><datebox value="@bind(vm.erin_success_date)"></datebox></cell>
+					<cell>领取日期</cell>
+					<cell><datebox value="@bind(vm.erin_get_date)"></datebox></cell>
+					<cell>领取人</cell>
+					<cell><textbox value="@bind(vm.model.erin_get_people)"></textbox></cell>
+				</row>
+				<row>
+					<cell>备注</cell>
+					<cell colspan="5"><textbox rows="5" width="80%" value="@bind(vm.remark)"></textbox></cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center"><button onClick="@command('submit',win=updatewin)">提交</button></footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

@@ -1,0 +1,85 @@
+<?page title="社会保险" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<grid span="true" mold="paging" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoFinanceManage.Cfma_SheBaoListController')"
+		model="@load(vm.shebaoList)" pageSize="10" emptyMessage="暫未找到数据"
+		hflex="1" vflex="1">
+		<auxhead>
+			<auxheader label="序号" rowspan="2" align="center"
+				width="10px" />
+			<auxheader label="员工编号" rowspan="2" align="center" />
+			<auxheader label="姓名" rowspan="2" align="center" />
+			<auxheader label="户籍" rowspan="2" align="center" />
+			<auxheader label="社保基数" rowspan="2" align="center" />
+			<auxheader label="养老保险" colspan="2" align="center" />
+			<auxheader label="医疗保险" colspan="2" align="center" />
+			<auxheader label="生育保险" align="center" />
+			<auxheader label="工伤保险" align="center" />
+			<auxheader label="失业保险" colspan="2" align="center" />
+			<auxheader label="社保合计" rowspan="2" align="center" />
+			<auxheader label="应收" rowspan="2" align="center" />
+		</auxhead>
+		<auxhead>
+			<auxheader label="公司支付" align="center" />
+			<auxheader label="个人支付" align="center" />
+			<auxheader label="公司支付" align="center" />
+			<auxheader label="个人支付" align="center" />
+			<auxheader label="公司支付" align="center" />
+			<auxheader label="公司支付" align="center" />
+			<auxheader label="公司支付" align="center" />
+			<auxheader label="个人支付" align="center" />
+		</auxhead>
+		<columns></columns>
+		<rows>
+			<template name="model">
+				<row>
+					<cell align="center">
+						<label value="${forEachStatus.index + 1}" />
+					</cell>
+					<cell align="center">
+						<label value="@load(each.gid)" />
+					</cell>
+					<cell align="center">
+						<label value="@load(each.emba_name)" />
+					</cell>
+					<cell align="center">
+						<label value="@load(each.efsb_esiu_hj)" />
+					</cell>
+					<cell align="center">
+						<label value="@load(each.efsb_esiu_radix)" />
+					</cell>
+					<cell align="center">
+						<label value="@load(each.efsb_esiu_ylcp)" />
+					</cell>
+					<cell align="center">
+						<label value="@load(each.efsb_esiu_ylop)" />
+					</cell>
+					<cell align="center">
+						<label value="@load(each.efsb_esiu_jlcp)" />
+					</cell>
+					<cell align="center">
+						<label value="@load(each.efsb_esiu_jlop)" />
+					</cell>
+					<cell align="center">
+						<label value="@load(each.efsb_esiu_syucp)" />
+					</cell>
+					<cell align="center">
+						<label value="@load(each.efsb_esiu_gscp)" />
+					</cell>
+					<cell align="center">
+						<label value="@load(each.efsb_esiu_syecp)" />
+					</cell>
+					<cell align="center">
+						<label value="@load(each.efsb_esiu_syeop)" />
+					</cell>
+					<cell align="center">
+						<label value="@load(each.efsb_totalsum)" />
+					</cell>
+					<cell align="center">
+						<label value="@load(each.efsb_receivable)" />
+					</cell>
+				</row>
+			</template>
+		</rows>
+	</grid>
+</zk>

@@ -1,0 +1,109 @@
+<!--
+	创建人：林少斌
+	创建时间：2014-12-22
+	用途：智翼通接口社保基数调整页面
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<?component name="embase" macro-uri="../EmSheBao/Emsi_EmBase.zul" inline="true"?>
+<zk>
+	<window id="winSBS" title="智翼通接口 -- 社保基数调整操作" border="normal"
+		apply="org.zkoss.bind.BindComposer" onCreate="@command('readInfo',a=self)" 
+		viewModel="@id('vm') @init('Controller.EmZYT.EmZYT_SheBaoSalaryController')"
+		height="90%" width="100%" closable="false" sizable="true">
+		<div width="100%" height="100%" if="${vm.existsShebao}"
+			align="center">
+			<label value="${vm.existsMessage}" />
+		</div>
+		<borderlayout if="${!vm.existsShebao}">
+			<north title="个人信息" border="none">
+				<embase gid="${vm.sbModel.gid}" name="${vm.sbModel.esiu_name}" />
+			</north>
+			<center title="参保信息" border="none">
+				<grid width="100%" height="100%">
+					<rows>
+						<row>
+							所属月份
+							<cell>
+								<vlayout>
+									<combobox mold="rounded"
+										readonly="true" value="@bind(vm.ownmonth)"
+										model="@load(vm.ownmonthList)">
+										<template name="model">
+											<comboitem
+												label="@load(each)" />
+										</template>
+									</combobox>
+									<label value="已过申报截止日，当月已不能变更"
+										if="${vm.isIfStop()}" style="color:red;" />
+								</vlayout>
+							</cell>
+							电脑号
+							<cell>
+								<textbox width="100px" readonly="true"
+									value="@load(vm.sbModel.esiu_computerid)" />
+							</cell>
+						</row>
+						<row>
+							月工资总数
+							<cell>
+								<intbox mold="rounded" readonly="true"
+									value="@bind(vm.radix)" />
+							</cell>
+							户籍
+							<cell>
+								<textbox readonly="true" width="80px"
+									value="@load(vm.sbModel.esiu_hj)" />
+							</cell>
+						</row>
+						<row>
+							养老保险
+							<cell>
+								<textbox readonly="true" width="80px"
+									value="@load(vm.sbModel.esiu_yl)" />
+							</cell>
+							医疗保险
+							<cell>
+								<textbox readonly="true" width="80px"
+									value="@load(vm.sbModel.esiu_yltype)" />
+							</cell>
+						</row>
+						<row>
+							工伤保险
+							<cell>
+								<textbox readonly="true" width="80px"
+									value="@load(vm.sbModel.esiu_gs)" />
+							</cell>
+							失业保险
+							<cell>
+								<textbox readonly="true" width="80px"
+									value="@load(vm.sbModel.esiu_sye)" />
+							</cell>
+						</row>
+						<row>
+							生育保险
+							<cell>
+								<textbox readonly="true" width="80px"
+									value="@load(vm.sbModel.esiu_syu)" />
+							</cell>
+							<cell></cell>
+							<cell></cell>
+						</row>
+						<row>
+							申请原因
+							<cell colspan="3">
+								<textbox mold="rounded" rows="3"
+									width="30%" value="@bind(vm.remark)" />
+							</cell>
+						</row>
+					</rows>
+					<foot>
+						<footer align="center">
+							<button label="提交" id="btSubmit"
+								onClick="@command('salaryUp')" />
+						</footer>
+					</foot>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

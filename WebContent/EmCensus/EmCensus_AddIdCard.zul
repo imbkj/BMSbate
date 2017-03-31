@@ -1,0 +1,19 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="填写身份证号码" border="normal" id="win" height="300px" width="400px" closable="true"
+apply="org.zkoss.bind.BindComposer"
+    viewModel="@id('vm') @init('Controller.EmCensus.EmCensus_BorrowCardController')">
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell width="80px">身份证号码</cell>
+			<cell><textbox id="idcard" value="${arg.model.emhj_idcard }" width="200px"></textbox></cell>	
+		</row>
+	</rows>
+		<foot>
+		<footer align="center">
+			<button onClick="@command('addIdcard',idcard=idcard.value,win=win)">提交</button></footer>
+	</foot>
+</grid>
+</window>
+</zk>

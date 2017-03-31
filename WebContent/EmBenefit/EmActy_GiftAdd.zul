@@ -1,0 +1,111 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="福利享受申请" border="normal" width="90%" height="90%"
+		closable="true" id="addwin" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmBenefit.EmActy_GiftAddController')">
+		<grid vflex="1">
+			<rows>
+				<row>
+					<cell width="80px">所属月份</cell>
+					<cell>
+						<monthbox readonly="true" format="yyyyMM"
+							mold="rounded" id="ownmonth" />
+					</cell>
+				</row>
+				<row if="false">
+					<cell>备注</cell>
+					<cell>
+						<textbox id="remark" width="80%" rows="3"
+							value="@bind(vm.m.gift_remark)" mold="rounded">
+						</textbox>
+					</cell>
+				</row>
+				<row>
+					<cell>员工名单</cell>
+					<cell>
+						<grid id="gdList" model="@load(vm.list)"
+							vflex="1" mold="paging" pageSize="10" emptyMessage="暂无数据">
+							<columns>
+								<column align="center" width="40px">
+									序号
+								</column>
+								<column align="center">公司名称</column>
+								<column align="center">姓名</column>
+								<column align="center">福利内容</column>
+								<column align="center">福利项目</column>
+								<column align="center">福利类型</column>
+								<column align="center">客服</column>
+								<column align="center">付款性质</column>
+								<column align="center">寄送方式</column>
+								<column align="center">备注</column>
+							</columns>
+							<template name="model">
+								<row>
+									<cell>
+										${forEachStatus.index+1 }
+									</cell>
+									<cell>
+										<label
+											value="@load(each.emwf_company)" />
+									</cell>
+									<cell>
+										<label
+											value="@load(each.emwf_name)" />
+									</cell>
+									<cell>
+										<label
+											value="@load(each.emwf_producefo)" />
+									</cell>
+									<cell>
+										<label
+											value="@load(each.embf_name)" />
+									</cell>
+									<cell>
+										<label
+											value="@load(each.embf_mold)">
+										</label>
+									</cell>
+									<cell>
+										<label
+											value="@load(each.emwf_client)" />
+									</cell>
+									<cell>
+										<label
+											value="@load(each.emwf_paykind)" />
+									</cell>
+									<cell>
+										<label
+											value="@load(each.emwf_delivery)" />
+									</cell>
+									<cell>
+										<label
+											value="@load(each.emwf_remark)" />
+									</cell>
+								</row>
+							</template>
+							<foot>
+								<footer span="9">
+									<hlayout>
+										<label>统计：</label>
+										<label
+											style="margin-right:20px;color:#FF0000;">
+											${vm.tjstr }
+										</label>
+									</hlayout>
+								</footer>
+							</foot>
+						</grid>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button
+						onClick="@command('summit',addwin=addwin,ownmonth=ownmonth.value)">
+						提交
+					</button>
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

@@ -1,0 +1,89 @@
+<!--
+	创建人：林少斌
+	创建时间：2014-10-9
+	用途：证件及档案费用退回数据处理列表
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="证件档案费用 -- 收款及借款页面" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmCAFFeeInfo.EmCAFFeeInfo_GatherListController')"
+		border="normal" sizable="true" height="100%" width="100%">
+		<borderlayout>
+			<north border="0" title="数据查询" collapsible="true"
+				flex="true" open="false">
+				<panel border="1">
+					<panelchildren style="padding:5px;">
+						<grid id="searchGird" width="100%">
+							<rows>
+								<row>
+									<cell width="100px"
+										style="color:#666;">
+										收款日期
+									</cell>
+									<datebox id="rec_date"
+										width="150px" value="@bind(vm.rec_date)" mold="rounded" />
+								</row>
+							</rows>
+							<foot>
+								<footer align="center">
+									<button id="btSearch" label="查询"
+										onClick="@command('search')" />
+								</footer>
+							</foot>
+						</grid>
+					</panelchildren>
+				</panel>
+			</north>
+			<center>
+				<grid model="@load(vm.ecfiList)" id="gridwin"
+					height="100%" width="100%" emptyMessage="暂无数据" mold="paging"
+					pageSize="200">
+					<columns>
+						<column label="日  期" align="center" />
+						<column label="居住证个人付收款额" align="center" />
+						<column label="社保卡个人付收款额" align="center" />
+						<column label="总个人付收款额" align="center" />
+						<column label="(福利)居住证借款额" align="center" />
+						<column label="(福利)社保卡借款额" align="center" />
+						<column label="(福利)总借款额" align="center" />
+						<column label="差额" align="center" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<cell>
+									<label value="@load(each.ecfi_rec_date)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.per_fee)" />
+								</cell>
+								<cell>
+									<label value="@load(each.esp_fee)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_fee)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.wd_per_fee)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.wd_esp_fee)" />
+								</cell>
+								<cell>
+									<label value="@load(each.wd_all_fee)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.all_wd_bfee)" />
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

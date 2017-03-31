@@ -1,0 +1,74 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<?component name="docDataList" macro-uri="../DocumentsInfo/DocumentsInfo_PageList.zul" inline="true"?>
+<zk>
+<window title="公积金制卡信息" border="normal" width="80%" height="80%" closable="true"
+	apply="org.zkoss.bind.BindComposer" vflex="1"
+	viewModel="@id('vm') @init('Controller.EmHouseCard.HuCard_MakeCardInfosController')"
+>
+<grid vflex="1">
+		<rows>
+			<row>
+				<cell width="120px">单位公积金号</cell>
+				<cell><label value="@load(vm.model.gjj_cno)"></label></cell>
+				<cell width="120px">公司简称</cell>
+				<cell><label value="@load(vm.model.coba_shortname)"></label></cell>
+			</row>
+			<row>
+				<cell>公积金缴存银行</cell>
+				<cell><label value="@load(vm.model.gjj_insertblank)"></label></cell>
+				<cell>个人公积金账号</cell>
+				<cell><label value="@load(vm.model.gjj_no)"></label></cell>
+			</row>
+			<row>
+				<cell>姓名</cell>
+				<cell><label value="@load(vm.model.username)"></label></cell>
+				<cell>身份证号</cell>
+				<cell><label value="@load(vm.model.idcard)"></label></cell>
+			</row>
+			<row>
+				<cell>客服</cell>
+				<cell><label value="@load(vm.model.coba_client)"></label></cell>
+				<cell>客服提交时间</cell>
+				<cell><label value="@load(vm.model.gjj_clienttime)"></label></cell>
+			</row>
+			<row>
+				<cell>客服助理</cell>
+				<cell><label value="@load(vm.model.gjj_clientassistant)"></label></cell>
+				<cell>客服助理提交时间</cell>
+				<cell><label value="@load(vm.model.gjj_clientassistanttime)"></label></cell>
+			</row>
+			<row>
+				<cell>福利助理</cell>
+				<cell><label value="@load(vm.model.gjj_welfreassistant)"></label></cell>
+				<cell>福利助理核收时间</cell>
+				<cell><label value="@load(vm.model.gjj_welfreassistanttime)"></label></cell>
+			</row>
+			<row>
+				<cell>制卡人</cell>
+				<cell><label value="@load(vm.model.gjj_maker)"></label></cell>
+				<cell>制卡时间</cell>
+				<cell><label value="@load(vm.model.gjj_tobanktime)"></label></cell>
+			</row>
+			<row>
+				<cell>制卡银行</cell>
+				<cell><label value="@load(vm.model.gjj_makebank)"></label></cell>
+				<cell>制卡进度</cell>
+				<cell><label value="@load(vm.model.state_Name)"></label></cell>
+			</row>
+			<row>
+				<cell>重新制卡原因</cell>
+				<cell colspan="3"><label value="@load(vm.model.gjj_case)"></label></cell>
+			</row>
+			<row>
+				<cell>交接资料</cell>
+				<cell colspan="3">
+					<docDataList id="docGrid"
+					puzu_id="44" doc_type="g" gid="${vm.model.gid}"
+					tid="${vm.model.id}"
+					log_url="../DocumentsInfo/" dWidth="100%"/>
+				</cell>
+			</row>
+		</rows>
+	</grid>
+</window>
+</zk>

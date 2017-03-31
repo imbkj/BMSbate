@@ -1,0 +1,87 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<?component name="docDataList" macro-uri="../DocumentsInfo/DocumentsInfo_UpPageList.zul" inline="true"?>
+<zk>
+	<window title="档案变更(交单)" id="win" width="700px" height="550px"
+		closable="true" border="normal" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmHouse.EmHouse_ChangeGjjConfirmController')"
+		onCreate="@command('winC',a=self)">
+		<borderlayout>
+			<north border="0">
+				<groupbox height="100%">
+					<caption>
+						(${vm.ecm.cid})${vm.ecm.ehcg_company} -
+						(${vm.ecm.gid})${vm.ecm.ehcg_name}
+					</caption>
+					<grid height="100%">
+						<columns visible="false">
+							<column width="100px"></column>
+							<column></column>
+						</columns>
+						<rows>
+							<row>
+								<cell>所属月份</cell>
+								<cell>
+									<label
+										value="@load(vm.ecm.ownmonth)" />
+								</cell>
+							</row>
+							<row>
+								<cell>变更类型</cell>
+								<cell>
+									<label
+										value="@load(vm.ecm.ehcg_change)" />
+								</cell>
+							</row>
+							<row>
+								<cell>变更内容</cell>
+								<cell>
+									<label 
+										value="@load(vm.ecm.ehcg_content)" />
+								</cell>
+							</row>
+							<row>
+								<cell>出错原因</cell>
+								<cell>
+									<label
+										value="@load(vm.ecm.ehcg_remark)" />
+								</cell>
+							</row>
+							<row>
+								<cell>退回原因</cell>
+								<cell>
+									<label
+										value="@load(vm.ecm.ehcg_remark)" />
+								</cell>
+							</row>
+						</rows>
+					</grid>
+				</groupbox>
+			</north>
+			<center>
+				<groupbox height="100%">
+					<caption>材料交接</caption>
+					<grid height="100%">
+						<rows>
+							<row>
+								<cell>
+									<!-- 材料内联页 参数：puzu_id：模块页面id， doc_type：员工(g)还是公司(c)，gid：公司数据则插入空白 ，业务表id ，log_url：获取到页面路径的前部分-->
+									<docDataList id="docGrid"
+										puzu_id="35" doc_type="g" gid="${vm.ecm.gid}"
+										tid="${vm.ecm.ehcg_id }" log_url="/DocumentsInfo/" />
+								</cell>
+							</row>
+						</rows>
+					</grid>
+				</groupbox>
+			</center>
+			<south>
+				<div align="center">
+					<button label="提交" onClick="@command('submit')" />
+					<button label="退回" onClick="@command('back')"/>
+					<button label="联系记录" onClick="@command('link')" />
+					
+				</div>
+			</south>
+		</borderlayout>
+	</window>
+</zk>

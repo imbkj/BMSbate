@@ -1,0 +1,98 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winAgManage" title="委托机构管理" border="normal" width="100%"
+		height="100%" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoAgency.WtAgency_ManageController')"
+		closable="true" sizable="true">
+		<style src="/css/style.css"></style>
+		<borderlayout
+			style="margin-bottom:3px;background-color:#FFFFFF;" vflex="1"
+			hflex="1">
+			<west width="220px" splittable="true" collapsible="true"
+				title="业务菜单" border="none">
+				<vlayout sclass="fn-panel1" vflex="1" hflex="1">
+					<hlayout sclass="fn-subpanel" vflex="1" hflex="1">
+						<tree id="tree" vflex="1">
+							<treechildren>
+								<treeitem>
+									<treerow>
+										<treecell label="机构基本信息"
+											onClick="@command('changePage',lbl=self.label)" />
+									</treerow>
+								</treeitem>
+								<treeitem>
+									<treerow>
+										<treecell label="联系人信息"
+											onClick="@command('changePage',lbl=self.label)" />
+									</treerow>
+								</treeitem>
+								<treeitem>
+									<treerow>
+										<treecell label="机构合同信息"
+											onClick="@command('changePage',lbl=self.label)" />
+									</treerow>
+								</treeitem>
+								<treeitem>
+									<treerow>
+										<treecell label="机构产品"
+											onClick="@command('changePage',lbl=self.label)" />
+									</treerow>
+								</treeitem>
+								<treeitem>
+									<treerow>
+										<treecell label="政策信息"
+											onClick="@command('changePage',lbl=self.label)" />
+									</treerow>
+								</treeitem>
+								<treeitem>
+									<treerow>
+										<treecell label="社保字典库"
+											onClick="@command('changePage',lbl=self.label)" />
+									</treerow>
+								</treeitem>
+							</treechildren>
+						</tree>
+					</hlayout>
+				</vlayout>
+			</west>
+			<center
+				style="border:0;margin-top:8px;padding-bottom:8px;">
+				<borderlayout vflex="1" hflex="1">
+					<north border="none">
+						<div vflex="1" hflex="1"
+							style="border-style:solid; border-width:1px; border-color:#CCCCCC;">
+							<grid>
+								<rows>
+									<row>
+										<cell width="80px">编号</cell>
+										<cell width="180px">
+											<label
+												value="@load(vm.coabModel.cabc_id)">
+											</label>
+										</cell>
+										<cell width="80px">机构名称</cell>
+										<cell>
+											<label
+												value="@load(vm.coabModel.coab_name)">
+											</label>
+										</cell>
+										<cell width="80px">服务城市</cell>
+										<cell width="250px">
+											<label
+												value="@load(vm.coabModel.city)">
+											</label>
+										</cell>
+									</row>
+								</rows>
+							</grid>
+						</div>
+					</north>
+					<center style="margin-top:8px;" border="none">
+						<include id="icPage" src="@load(vm.icSrc)"
+							vflex="1" hflex="1" />
+					</center>
+				</borderlayout>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

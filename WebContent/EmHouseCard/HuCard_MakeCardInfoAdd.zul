@@ -1,0 +1,67 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<?component name="docDataList" macro-uri="../DocumentsInfo/DocumentsInfo_AddPageList.zul" inline="true"?>
+<zk>
+<window title="手动制卡信息新增" border="normal" vflex="1" hflex="1" 
+	apply="org.zkoss.bind.BindComposer" id="windeclare"
+	viewModel="@id('vm') @init('Controller.EmHouseCard.HuCard_MakeCardInfoAddController')">
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell width="120px">所属月份</cell>
+			<cell>
+				<combobox model="@load(vm.ownmonthlist)" id="ownmonth" value="@load(vm.ownmon)">
+					<template name="model">
+						<comboitem label="@load(each)"/>
+					</template>
+				</combobox>
+			</cell>
+			<cell width="120px">员工姓名</cell>
+			<cell><textbox value="@load(vm.cmodel.emba_name)" id="username"></textbox></cell>
+		</row>
+		<row>
+			<cell>缴存公积金单位名称</cell>
+			<cell><textbox value="@load(vm.cmodel.coba_company)" width="80%" id="company"></textbox></cell>
+			<cell>单位公积金号</cell>
+			<cell><textbox value="@load(vm.model.emhu_companyid)" id="companyid"></textbox></cell>
+		</row>
+		<row>
+			<cell>公积金缴存银行</cell>
+			<cell>
+				<combobox model="@load(vm.banklist)" id="bank" value="@load(vm.model.emhu_remark)">
+					<template name="model">
+						<comboitem label="@load(each)"/>
+					</template>
+				</combobox>
+			</cell>
+			<cell>个人公积金账号</cell>
+			<cell><textbox value="@load(vm.model.emhu_houseid)" id="houseid"></textbox></cell>
+		</row>
+		<row>
+			<cell>重新制卡原因</cell>
+			<cell colspan="3">
+				<radiogroup id="rp">
+					<hlayout>
+						<radio label="联网核查失败"/>
+						<radio label="销卡重新制卡"/>
+						<radio label="换领他行卡"/>
+						<radio label="银行原因"/>
+					</hlayout>
+				</radiogroup>
+			</cell>
+		</row>
+		<row>
+			<cell>提交资料</cell>
+			<cell colspan="3">
+				<docDataList id="docGrid" puzu_id="44" 
+						dWidth="100%" pUsername="陈耀家" pUserId="248" />
+			</cell>
+		</row>
+	</rows>
+	<foot>
+		<footer align="center"><button  onClick="@command('summit',ownmonth=ownmonth.value,username=username.value,
+		company=company.value,companyid=companyid.value,bank=bank.value,houseid=houseid.value,
+		makecase=rp.selectedItem.label,windeclare=windeclare,gd=docGrid)">提交</button></footer>
+	</foot>
+</grid>
+</window>
+</zk>

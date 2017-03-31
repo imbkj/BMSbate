@@ -1,0 +1,71 @@
+<!--
+	创建人：张志强
+	创建时间：2013-12-5
+	用途：劳动合同制作页面框架
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="雇员合同制作" border="normal" width="95%" id="win1"
+		apply="org.zkoss.bind.BindComposer" closable="true"
+		viewModel="@id('vm') @init('Controller.EmBaseCompact.EmBaseCompact_MakeListController')" onCreate="@command('aw',a=self)">
+		<zscript language="Java">
+	import Util.UserInfo;
+	String user = UserInfo.getUserid();
+</zscript>
+		<label id="ebcc_id" value="${arg.daid}" visible="false" />
+		<label id="userid" value="${user}" visible="false" />
+		<label id="ebcc_tapr_id" value="${arg.id}" visible="false" />
+		<label value="　" visible="false" />
+		<label value="劳动合同模板：" visible="false" />
+		<combobox id="emco_temp" mold="rounded" width="90px"
+			visible="false" readonly="true" onChange="getemcompact()"
+			value="请选择劳动合同模板" model="@load(vm.templist)">
+			<comboitem label="标准模板" />
+			<template name="model">
+				<comboitem label="@load(each.name)"
+					value="@load(each.ebco_id)">
+				</comboitem>
+			</template>
+		</combobox>
+		<label value="退回原因：" height="20px" if="${vm.conname!=''}" /><label value="@load(vm.conname)" height="20px" />
+		<grid model="@load(vm.com_state)">
+			<rows>
+				<template name="model">
+					<row>
+						<cell>
+							<custom-attributes ebcc_id1="${vm.ebcc_id}"
+								user="${user}" ebcc_tapr_id="${arg.id}" win1="${vm.win1}" />
+							<include id="incl_id"
+								if="${each.ebco_state!=10?true:false}"
+								src="../EmBaseCompact/EmBaseCompact_AddDoc.jsp?ebcc_id=${ebcc_id.value}&amp;ebcc_tapr_id=${ebcc_tapr_id.value }&amp;user=${ userid.value}"
+								>
+							</include>
+				
+							<include id="incl_id1"
+								if="${each.ebco_state==10?true:false}"  win1="${win1}" 
+								src="../EmBaseCompact/EmBaseCompact_Edit.zul"
+								ebcc_id1="${ebcc_id1}" user="${user }"
+								ebcc_tapr_id="${ebcc_tapr_id }">
+							</include>
+						</cell>
+					</row>
+				</template>
+			</rows>
+		</grid>
+
+		<zscript><![CDATA[
+	void getemcompact() {
+		if (emco_temp.getValue().equals("标准模板")) {
+			incl_id.setSrc("../EmBaseCompact/EmBaseCompact_AddDoc.jsp?ebcc_id="
+					+ ebcc_id.getValue() + "&user=" + userid.getValue()
+					+ "&ebcc_tapr_id=" + ebcc_tapr_id.getValue() + "&bz=0");
+		} else {
+			incl_id.setSrc("../EmBaseCompact/EmBaseCompact_AddDoc.jsp?ebcc_id="
+					+ ebcc_id.getValue() + "&user=" + userid.getValue()
+					+ "&ebcc_tapr_id=" + ebcc_tapr_id.getValue() + "&bz="
+					+ emco_temp.getValue());
+		}
+	}
+]]></zscript>
+	</window>
+</zk>

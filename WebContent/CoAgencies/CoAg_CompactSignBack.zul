@@ -1,0 +1,35 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="合同签回" border="normal" closable="true" id="signwin" width="80%" height="80%"
+	apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('vm') @init('Controller.CoAgencies.CoAg_ComapctSignBackController')"
+>
+<grid vflex="1">
+		<rows>
+			<row>
+				<cell width="80px"></cell>
+				<cell></cell>
+				<cell width="80px"></cell>
+				<cell></cell>
+			</row>
+			<row>
+				<cell>委托机构</cell>
+				<cell colspan="3"><textbox width="80%" readonly="true" value="@load(vm.model.coct_coagname)"></textbox></cell>
+			</row> 
+			<row>
+				<cell>合同类型</cell>
+				<cell><textbox readonly="true" value="@load(vm.model.coct_type)"></textbox></cell>
+				<cell>合同编号</cell>
+				<cell><textbox readonly="true" value="@load(vm.model.coct_compactid)"></textbox></cell>
+			</row>
+			<row>
+				<cell>合同签回时间</cell>
+				<cell colspan="3"><datebox value="@bind(vm.signbacktime)"></datebox></cell>
+			</row>
+		</rows>
+		<foot>
+			<footer align="center"><button onClick="@command('summit',win=signwin)">提交</button></footer>
+		</foot>
+	</grid>
+</window>
+</zk>

@@ -1,0 +1,6 @@
+<?page title="报价单预览" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="报价单预览" border="none" width="95%" closable="true" maximizable="true">
+	<include src="../CoQuotation/Quotation_ExcelAdd.jsp?coof_id=${arg.model.coof_id}"></include>
+</window>
+</zk>

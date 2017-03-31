@@ -1,0 +1,201 @@
+<?page title="委托标准重新提交" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="win" title="委托标准重新提交" border="normal" width="600px"
+		closable="true" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmCommissionOut.Standard.Standard_ReSubmitController')">
+		<div height="100%">
+			<grid vflex="1">
+				<columns>
+					<column width="15%" />
+					<column />
+					<column width="15%" />
+					<column />
+				</columns>
+				<rows>
+					<row>
+						<cell>
+							<label value="公司名称" style="color:#666" />
+						</cell>
+						<cell>
+							<label value="@load(vm.m.coba_company)" />
+						</cell>
+						<cell>
+							<label value="公司编号" style="color:#666" />
+						</cell>
+						<cell>
+							<label value="@load(vm.m.cid)" />
+						</cell>
+					</row>
+					<row>
+						<cell>
+							<label value="标准名称" style="color:#666" />
+						</cell>
+						<cell colspan="3">
+							<textbox value="@bind(vm.m.ecos_name)"
+								mold="rounded" readonly="true" />
+						</cell>
+					</row>
+					<row>
+						<cell>
+							<label value="委托地区" style="color:#666" />
+						</cell>
+						<cell>
+							<combobox mold="rounded" autodrop="true"
+								hflex="1" autocomplete="true" instant="true"
+								model="@load(vm.cityList)" selectedItem="@bind(vm.ppcModel)"
+								onChange="@command('cityOnChange')">
+								<template name="model">
+									<comboitem label="@load(each.name)" />
+								</template>
+							</combobox>
+						</cell>
+						<cell>
+							<label value="委托机构" style="color:#666" />
+						</cell>
+						<cell>
+							<combobox mold="rounded" readonly="true"
+								model="@load(vm.caList)" selectedItem="@bind(vm.caM)"
+								onChange="@command('CoAgencyOnChange')">
+								<template name="model">
+									<comboitem
+										label="@load(each.coab_name)" />
+								</template>
+							</combobox>
+						</cell>
+					</row>
+					<row>
+						<cell>
+							<label value="勾选福利产品" style="color:#666" />
+						</cell>
+						<cell colspan="3">
+							<listbox id="ltb" checkmark="true"
+								height="150px" multiple="@load(vm.ltbmu)" emptyMessage="暂无数据"
+								model="@load(vm.colList)">
+								<listhead>
+									<listheader width="40px"
+										align="center" />
+									<listheader align="center">
+										<label value="产品名称" />
+									</listheader>
+									<listheader align="center">
+										<label value="收费金额/收费单位" />
+									</listheader>
+								</listhead>
+								<template name="model">
+									<listitem
+										onCreate="@command('CoOfferListInit',listitem=self)">
+										<listcell></listcell>
+										<listcell>
+											<label
+												value="@load(each.coli_name)" />
+										</listcell>
+										<listcell>
+											<hlayout>
+												<label
+													value="@load(each.coli_fee)" />
+												<space />
+												<label
+													value="@load(each.coli_cpfc_name)" />
+											</hlayout>
+										</listcell>
+									</listitem>
+								</template>
+							</listbox>
+						</cell>
+					</row>
+					<row>
+						<cell>
+							<label value="社保账户" style="color:#666" />
+						</cell>
+						<cell>
+							<combobox mold="rounded" readonly="true"
+								model="@load(vm.sbzhtypeList)"
+								value="@bind(vm.m.ecos_shebao_zhtype)">
+								<template name="model">
+									<comboitem label="@load(each)" />
+								</template>
+							</combobox>
+						</cell>
+						<cell>
+							<label value="费用支付方式" style="color:#666" />
+						</cell>
+						<cell>
+							<combobox mold="rounded" readonly="true"
+								model="@load(vm.sbfeetypeList)"
+								value="@bind(vm.m.ecos_shebao_feetype)">
+								<template name="model">
+									<comboitem label="@load(each)" />
+								</template>
+							</combobox>
+						</cell>
+					</row>
+					<row>
+						<cell>
+							<label value="公积金账户" style="color:#666" />
+						</cell>
+						<cell>
+							<combobox mold="rounded" readonly="true"
+								model="@load(vm.gjjzhtypeList)"
+								value="@bind(vm.m.ecos_gjj_zhtype)">
+								<template name="model">
+									<comboitem label="@load(each)" />
+								</template>
+							</combobox>
+						</cell>
+						<cell>
+							<label value="费用支付方式" style="color:#666" />
+						</cell>
+						<cell>
+							<combobox mold="rounded" readonly="true"
+								model="@load(vm.gjjfeetypeList)"
+								value="@bind(vm.m.ecos_gjj_feetype)">
+								<template name="model">
+									<comboitem label="@load(each)" />
+								</template>
+							</combobox>
+						</cell>
+					</row>
+					<row>
+						<cell>
+							<label value="服务费" style="color:#666" />
+						</cell>
+						<cell>
+							<doublebox
+								value="@bind(vm.m.ecos_service_fee)" mold="rounded"
+								format=",###.##" />
+						</cell>
+						<cell>
+							<label value="服务费成本" style="color:#666" />
+						</cell>
+						<cell>
+							<label value="@load(vm.m.service_cost)"></label>
+						</cell>
+					</row>
+					<row>
+						<cell>
+							<label value="档案费" style="color:#666" />
+						</cell>
+						<cell colspan="3">
+							<doublebox
+								value="@bind(vm.m.ecos_archvie_fee)" mold="rounded"
+								format=",###.##" />
+						</cell>
+					</row>
+					<row>
+						<cell>
+							<label value="备注" style="color:#666" />
+						</cell>
+						<cell colspan="3">
+							<textbox rows="5" hflex="1"
+								value="@bind(vm.m.ecos_remark)" />
+						</cell>
+					</row>
+				</rows>
+			</grid>
+			<hbox width="100%" pack="center" align="center">
+				<button label="提交"
+					onClick="@command('submit',win=win,set=ltb.selectedItems)" />
+			</hbox>
+		</div>
+	</window>
+</zk>

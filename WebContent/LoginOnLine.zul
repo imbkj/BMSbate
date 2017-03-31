@@ -1,0 +1,35 @@
+<?page title="在线用户" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="在线用户" border="normal"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.LoginOnLineController')"
+		height="99%" width="99%" closable="true" sizable="true"
+		maximizable="true">
+		<borderlayout>
+			<center border="0">
+				<tablelayout columns="10">
+					<tablechildren forEach="${vm.logList}" height="100px"
+							width="100px">
+						<panel border="normal" height="100px"
+							width="100px" style="margin-top:3px;margin-left:10px;">
+							<panelchildren>
+								<vbox pack="center" height="100%"
+									width="100%" align="center">
+									<label value="${each.log_name}" />
+									<label value="${each.log_intime}" />
+								</vbox>
+							</panelchildren>
+						</panel>
+					</tablechildren>
+				</tablelayout>
+			</center>
+			<south collapsible="true" splittable="true" height="30%" border="none">
+				<grid vflex="1" hflex="1">
+					<rows>
+						<row forEach="${vm.loginLog}">${each}</row>
+					</rows>
+				</grid>
+			</south>
+		</borderlayout>
+	</window>
+</zk>

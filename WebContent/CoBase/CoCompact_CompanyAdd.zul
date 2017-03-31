@@ -1,0 +1,465 @@
+<!--
+	创建人：林少斌
+	创建时间：2013-10-16
+	用途：公司合同受托合同页面
+-->
+<?page title="公司合同受托合同页面" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winSTCoCoAdd" title="服务协议 -- 受托服务协议新增页面" border="normal"
+		closable="true" width="100%" height="100%"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoCompact.CoCompact_CompanyAddController')">
+		<label value="${arg.cid}" id="cid" visible="false" />
+		<div height="95%" style="overflow-y:auto">
+			<groupbox title="服务协议基本信息" mold="3d">
+				<grid height="95%" width="100%" style="border:0px">
+					<rows>
+						<!-- 						<row>
+							<cell width="10%" style="color:#666;">
+							合同性质：
+							</cell>
+							<cell width="20%">
+							<combobox id="cbClass1" readonly="true"
+							mold="rounded">
+							<comboitem label="受托" value="1" />
+							</combobox>
+							<label style="color:red;">(*)</label>
+							</cell>
+							<cell width="10%" style="color:#666;">
+							合同版本：
+							</cell>
+							<cell width="20%">
+							<combobox id="cbClass2" readonly="true"
+							mold="rounded">
+							<comboitem label="标准" value="1" />
+							<comboitem label="一般非标准" value="2" />
+							<comboitem label="特殊非标准" value="3" />
+							</combobox>
+							<label style="color:red;">(*)</label>
+							</cell>
+							<cell width="10%" style="color:#666;">
+							合同类型：
+							</cell>
+							<cell width="20%">
+							<combobox id="cbClass3" readonly="true"
+							mold="rounded">
+							<comboitem label="AF" value="AF" />
+							<comboitem label="CS" value="CS" />
+							<comboitem label="FS" value="FS" />
+							<comboitem label="FS-2" value="FS-2" />
+							<comboitem label="FS-3" value="FS-3" />
+							</combobox>
+							<label style="color:red;">(*)</label>
+							</cell>
+							</row>
+							<row>
+							<cell width="10%" style="color:#666;">
+							合同生效日：
+							</cell>
+							<cell width="20%">
+							<datebox width="120px" id="cbClass4"
+							readonly="true" mold="rounded" format="yyyy-MM-dd" />
+							<label style="color:red;">(*)</label>
+							</cell>
+							<cell width="10%" style="color:#666;">
+							合同到期日：
+							</cell>
+							<cell width="20%">
+							<datebox width="120px" id="cbClass5"
+							readonly="true" mold="rounded" format="yyyy-MM-dd" />
+							</cell>
+							<cell width="10%" style="color:#666;">
+							合同自动延长：
+							</cell>
+							<cell width="20%">
+							<combobox id="cbClass6" readonly="true"
+							mold="rounded">
+							<comboitem label="是" value="是" />
+							<comboitem label="否" value="否" />
+							</combobox>
+							</cell>
+							</row>
+							<row>
+							<cell width="10%" style="color:#666;">
+							合同签订时间：
+							</cell>
+							<cell width="20%">
+							<datebox width="120px" id="cbClass7"
+							readonly="true" mold="rounded" format="yyyy-MM-dd" />
+							<label style="color:red;">(*)</label>
+							</cell>
+							<cell width="10%" style="color:#666;">
+							合同币种：
+							</cell>
+							<cell width="20%">
+							<textbox width="120px" id="cbClass8"
+							mold="rounded" />
+							</cell>
+							<cell width="10%" style="color:#666;">
+							发票类型：
+							</cell>
+							<cell width="20%">
+							<combobox id="cbClass9" readonly="true"
+							mold="rounded">
+							<comboitem label="代理发票" value="1" />
+							<comboitem label="全额发票" value="2" />
+							</combobox>
+							</cell>
+							</row> -->
+						<row visible="false">
+							<!-- <cell width="10%" style="color:#666;">
+								合同编号：
+								</cell>
+								<cell width="20%" >
+								<textbox width="120px" id="cbClass10"
+								mold="rounded" />
+								<checkbox label="自动生成" checked="true"/>
+								</cell> -->
+							<cell width="10%" style="color:#666;">
+								合同存档编号：
+							</cell>
+							<cell width="20%" colspan="3">
+								<textbox width="120px" id="fileid"
+									mold="rounded" />
+							</cell>
+							<cell></cell>
+							<cell></cell>
+						</row>
+						<row>
+							<cell width="10%" style="color:#666;">
+								<hbox>
+									<label value="委托机构：" />
+									<label style="color:red;" value="*" />
+								</hbox>
+							</cell>
+							<cell width="20%" colspan="5">
+								<combobox id="cbClass11" mold="rounded"
+									model="@load(vm.citylist)"
+									onChange="@command('search',tb1=cbClass11)">
+									<template name="model">
+										<comboitem
+											label="@load(each[1])" value="@load(each[1])" />
+									</template>
+								</combobox>
+								<combobox id="cbClass12" mold="rounded"
+									model="@load(vm.deplist)">
+									<template name="model">
+										<comboitem
+											label="@load(each.rol_name)" value="@load(each.rol_name)" />
+									</template>
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell width="10%" style="color:#666;">
+								备注：
+							</cell>
+							<cell width="20%" colspan="5">
+								<textbox width="320px" id="cbClass13"
+									mold="rounded" rows="6" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox title="合同信息" mold="3d">
+				<!-- 社保 -->
+				<grid>
+					<columns>
+						<column width="15%" />
+						<column />
+					</columns>
+					<rows>
+						<row>
+							<cell>
+								<label value="社会保险开户" />
+							</cell>
+							<cell>
+								<grid>
+									<columns>
+										<column width="15%" />
+										<column />
+									</columns>
+									<rows>
+										<row>
+											<label value="社保开户状态" />
+											<combobox mold="rounded"
+												selectedItem="@bind(vm.coco_shebao)" readonly="true"
+												model="@load(vm.zhlxList)"
+												onChange="@command('zhlxchange')">
+												<template
+													name="model">
+													<comboitem
+														label="@load(each)" />
+												</template>
+											</combobox>
+										</row>
+										<row
+											visible="@load(vm.cctaModel.sbrowVis)">
+											<label value="支付方式" />
+											<cell>
+												<radiogroup
+													selectedItem="@bind(vm.coco_sbfee)">
+													<radio label="中智转帐"
+														value="1">
+													</radio>
+													<label
+														style="color:red" value="(客户把社保款项汇至中智，再由中智将款项转入客户社保帐户内)" />
+													<separator></separator>
+													<radio label="客户存款"
+														value="2">
+													</radio>
+													<label
+														style="color:red" value="(社保款项由客户自己存入其社保帐户内)" />
+												</radiogroup>
+											</cell>
+										</row>
+									</rows>
+								</grid>
+							</cell>
+						</row>
+					</rows>
+				</grid>
+
+				<!-- 公积金 -->
+				<grid>
+					<columns>
+						<column width="15%" />
+						<column />
+					</columns>
+					<rows>
+						<row>
+							<cell>
+								<label value="住房公积金开户" />
+							</cell>
+							<cell>
+								<grid>
+									<columns>
+										<column width="15%" />
+										<column />
+									</columns>
+									<rows>
+										<row>
+											<label value="公积金开户状态" />
+											<combobox mold="rounded"
+												selectedItem="@bind(vm.coco_house)" readonly="true"
+												model="@load(vm.zhlxList1)"
+												onChange="@command('zhlxchange')">
+												<template
+													name="model">
+													<comboitem
+														label="@load(each)" />
+												</template>
+											</combobox>
+										</row>
+										<row>
+											<label value="公积金比例" />
+											<cell>
+												<hbox>
+													单位比例：
+													<combobox
+														mold="rounded" selectedItem="@bind(vm.coco_cpp)"
+														readonly="true" width="80px" model="@load(vm.blList)">
+														<template
+															name="model">
+															<comboitem
+																label="@load(each)" />
+														</template>
+													</combobox>
+													%
+												</hbox>
+												<space></space>
+												<hbox>
+													个人比例：
+													<combobox
+														mold="rounded" selectedItem="@bind(vm.coco_cpp)"
+														readonly="true" width="80px" model="@load(vm.blList)">
+														<template
+															name="model">
+															<comboitem
+																label="@load(each)" />
+														</template>
+													</combobox>
+													%
+												</hbox>
+											</cell>
+										</row>
+										<row
+											visible="@load(vm.cctaModel.gjjrowVis)">
+											<label value="支付方式" />
+											<cell>
+												<radiogroup
+													selectedItem="@bind(vm.coco_housefee)">
+													<radio value="1"
+														label="中智转帐">
+													</radio>
+													<label
+														style="color:red"
+														value="(客户把公积金款项汇至中智，再由中智将款项转入客户公积金帐户内)" />
+													<separator></separator>
+													<radio value="2"
+														label="客户存款">
+													</radio>
+													<label
+														style="color:red" value="(公积金款项由客户自己存入其公积金帐户内)" />
+												</radiogroup>
+											</cell>
+										</row>
+									</rows>
+								</grid>
+							</cell>
+						</row>
+					</rows>
+				</grid>
+
+				<!-- 就业登记 -->
+				<!-- <grid>
+					<columns>
+					<column width="15%" />
+					<column />
+					</columns>
+					<rows>
+					<row>
+					<cell>
+					<label value="就业登记开户信息" />
+					</cell>
+					<cell>
+					<grid>
+					<columns>
+					<column width="15%" />
+					<column />
+					</columns>
+					<rows>
+					<row>
+					<label value="就业登记开户状态" />
+					<combobox mold="rounded"
+					readonly="true">
+					</combobox>
+					</row>
+					</rows>
+					</grid>
+					</cell>
+					</row>
+					</rows>
+					</grid> -->
+
+				<!-- 工资 -->
+				<grid visible="false">
+					<columns>
+						<column width="15%" />
+						<column />
+					</columns>
+					<rows>
+						<row>
+							<cell>
+								<label value="工资支付方式" />
+							</cell>
+							<cell>
+								<grid>
+									<columns>
+										<column width="15%" />
+										<column />
+									</columns>
+									<rows>
+										<row>
+											<label value="台帐中工资所属期" />
+											<combobox mold="rounded"
+												selectedItem="@bind(vm.coco_gzmonth)" readonly="true"
+												model="@load(vm.monthList)">
+												<template
+													name="model">
+													<comboitem
+														label="@load(each)" />
+												</template>
+											</combobox>
+										</row>
+										<row>
+											<label value="社保个人部分" />
+											<cell>
+												<radiogroup
+													selectedItem="@bind(vm.coco_sbperfee)">
+													<radio value="1"
+														label="中智扣缴">
+													</radio>
+													<label
+														style="color:red" value="(中智从雇员工资中扣除后，在中智社保帐户缴交)" />
+													<separator></separator>
+													<radio value="2"
+														label="客户扣缴">
+													</radio>
+													<label
+														style="color:red" value="(中智从雇员工资中扣除后，转到客户独立帐户中缴交)" />
+												</radiogroup>
+											</cell>
+										</row>
+									</rows>
+								</grid>
+							</cell>
+						</row>
+					</rows>
+				</grid>
+
+				<!-- 个税 -->
+				<grid visible="false">
+					<columns>
+						<column width="15%" />
+						<column />
+					</columns>
+					<rows>
+						<row>
+							<cell>
+								<label value="个税支付方式" />
+							</cell>
+							<cell>
+								<grid>
+									<columns>
+										<column width="15%" />
+										<column />
+									</columns>
+									<rows>
+										<row>
+											<label value="台帐中个税所属期" />
+											<combobox mold="rounded"
+												selectedItem="@bind(vm.coco_gsmonth)" readonly="true"
+												model="@load(vm.monthList1)">
+												<template
+													name="model">
+													<comboitem
+														label="@load(each)" />
+												</template>
+											</combobox>
+										</row>
+										<row>
+											<label value="个人所得税 " />
+											<cell >
+												<radiogroup
+													selectedItem="@bind(vm.coco_gsfee)">
+													<radio value="1"
+														label="中智扣缴">
+													</radio>
+													<label
+														style="color:red" value="(中智从雇员工资中扣除后，转到客户独立账户中缴交)" />
+													<separator></separator>
+													<radio value="2"
+														label="客户扣缴">
+													</radio>
+													<label
+														style="color:red" value="(直接在客户独立账户中缴交)" />
+												</radiogroup>
+											</cell>
+										</row>
+									</rows>
+								</grid>
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+
+		</div>
+		<vbox width="100%" align="center">
+			<button label="提交" id="btSubmit"
+				onClick="@command('addCompactTemp',w1=w1,cbClass1=cbClass1,cbClass2=cbClass2,cbClass3=cbClass3,cbClass4=cbClass4,cbClass5=cbClass5,cbClass6=cbClass6,cbClass7=cbClass7,cbClass8=cbClass8,cbClass9=cbClass9,cbClass10=cbClass10,cbClass11=cbClass11,cbClass12=cbClass12,cbClass13=cbClass13,cid=cid,fileid=fileid)" />
+		</vbox>
+	</window>
+</zk>

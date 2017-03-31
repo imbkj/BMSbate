@@ -1,0 +1,17 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="欠费情况" border="normal" width="500px" height="300px" closable="true" id="feewin"
+	apply="Controller.Archives.EmArchiveDatum_ArrearsController">
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell width="60px">欠费情况</cell>
+			<cell><textbox width="90%" rows="5" id="fee" value="${arg.model.eada_arrearageinfo}"/></cell>
+		</row>
+	</rows>
+	<foot>
+		<footer align="center"><button id="summit">提交</button></footer>
+	</foot>
+</grid>
+</window>
+</zk>

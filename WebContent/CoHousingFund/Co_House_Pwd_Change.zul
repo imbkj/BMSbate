@@ -1,0 +1,116 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="密钥变更" border="normal" height="60%" closable="true"
+		width="40%">
+		<grid>
+			<rows>
+				<row>
+					<grid>
+						<rows>
+							<row>
+								<cell colspan="3" width="20%">
+									<label value="选择要变更的密钥" />
+								</cell>
+								<cell>
+									<combobox
+										value="44302132112135454X(郑芳)" width="40%">
+										<comboitem
+											label="44302132112135454X(郑芳)" />
+									</combobox>
+								</cell>
+							</row>
+						</rows>
+					</grid>
+				</row>
+				<!-- 密钥信息  -->
+				<row>
+					<grid>
+						<rows>
+							<row>
+								<cell align="center" width="15%">
+									<label value="*" style="color:red" />
+									<label value="新专办员" />
+								</cell>
+								<cell>
+									<combobox
+										value="44102132112135124X(陈景桃)" width="40%">
+										<comboitem
+											label="44302132112135454X(陈景桃)" />
+									</combobox>
+								</cell>
+							</row>
+							<row>
+								<cell align="center" width="15%">
+									<label value="*" style="color:red" />
+									<label value="操作月份" />
+								</cell>
+								<cell align="left">
+									<label value="" />
+								</cell>
+							</row>
+							<row>
+								<cell align="center" width="15%">
+									<label value="*" style="color:red" />
+									<label value="备注 " />
+								</cell>
+								<cell align="left" context="2">
+									<textbox value="" width="60%" />
+								</cell>
+							</row>
+						</rows>
+					</grid>
+				</row>
+				<row>
+					<grid>
+
+						<rows>
+							<row>
+								<cell>
+									<label value="提交资料" />
+
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<checkbox value=""
+										label="深圳市住房公积金数字证书申请表  " />
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<checkbox value=""
+										label="组织机构代码证书副本原件及对应复印件  " />
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<checkbox value=""
+										label=" 数字证书介质  " />
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<checkbox value=""
+										label="密钥原专办员的身份证复印件 " />
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<checkbox value=""
+										label="新专办员的身份证复印件  " />
+								</cell>
+							</row>
+						</rows>
+					</grid>
+				</row>
+
+			</rows>
+			<foot>
+				<footer align="center">
+					<button label="提交" />
+				</footer>
+			</foot>
+		</grid>
+
+	</window>
+</zk>

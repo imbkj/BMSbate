@@ -1,0 +1,90 @@
+<?page title="费用添加" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="费用添加" border="normal" closable="true" width="80%"  id="win"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmCommissionOut.EmCommissionOutPay_SFeeCheckController')" >
+		<grid>
+			<rows>
+				<row>
+					<cell>帐单月份：</cell>
+					<cell>
+						<label value="@load(vm.wt_sfeelist.ownmonth)" />
+					</cell>
+					<cell>委托机构：</cell>
+					<cell>
+						<label id="cabc_id" value="@load(vm.wt_sfeelist.ecop_cabc_id)" />
+					</cell>
+				</row>
+
+				<row>
+					<cell>员工姓名：</cell>
+					<cell>
+						<label id="name" value="@load(vm.wt_sfeelist.ecop_name)" />
+					</cell>
+					<cell>公司名称：</cell>
+					<cell>
+						<label id="scid" value="@load(vm.wt_sfeelist.ecop_company)" />
+					</cell>
+				</row>
+
+				<row>
+					<cell>养老：</cell>
+					<cell>
+						<textbox id="yl" mold="rounded" width="80px" value="@load(vm.wt_sfeelist.ecop_yl_yf)"/>
+					</cell>
+					<cell>医疗：</cell>
+					<cell>
+							<textbox id="jl" mold="rounded" width="80px" value="@load(vm.wt_sfeelist.ecop_jl_yf)"/>
+					</cell>
+				</row>
+
+				<row>
+					<cell>工伤：</cell>
+					<cell>
+						<textbox id="gs" mold="rounded" width="80px" value="@load(vm.wt_sfeelist.ecop_gs_yf)"/>
+					</cell>
+					<cell>生育：</cell>
+					<cell>
+						<textbox id="syu" mold="rounded" width="80px" value="@load(vm.wt_sfeelist.ecop_syu_yf)"/>
+					</cell>
+				</row>
+
+				<row>
+					<cell>失业：</cell>
+					<cell>
+						<textbox id="sye" mold="rounded" width="80px" value="@load(vm.wt_sfeelist.ecop_sye_yf)"/>
+					</cell>
+					<cell>公积金：</cell>
+					<cell>
+						<textbox id="house" mold="rounded" width="80px" value="@load(vm.wt_sfeelist.ecop_house_yf)"/>
+					</cell>
+				</row>
+
+				<row>
+					<cell>档案：</cell>
+					<cell>
+						<textbox id="file" mold="rounded" width="80px" value="@load(vm.wt_sfeelist.ecop_file_yf)"/>
+					</cell>
+					<cell>服务费：</cell>
+					<cell>
+						<textbox id="fw" mold="rounded" width="80px" value="@load(vm.wt_sfeelist.ecop_fw_yf)"/>
+					</cell>
+				</row>
+				
+				<row>
+					<cell>其它：</cell>
+					<cell colspan="3">
+						<textbox id="other" mold="rounded" width="80px" value="@load(vm.wt_sfeelist.ecop_other_yf)"/>
+					</cell>
+				</row>
+				
+				<row>
+					<cell>备注：</cell>
+					<cell colspan="3">
+						<textbox id="remark" mold="rounded"  rows="3" width="400px" value="@load(vm.wt_sfeelist.ecop_dep_company)"/>
+					</cell>
+				</row>
+			</rows>
+		</grid>
+	</window>
+</zk>

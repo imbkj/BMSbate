@@ -1,0 +1,145 @@
+<?page title="落户还卡" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="落户还卡" border="normal" width="60%" height="60%"
+		closable="true" apply="org.zkoss.bind.BindComposer" id="win"
+		viewModel="@id('vm') @init('Controller.EmCensus.EmCensus_BorrowCardController')">
+		<grid vflex="1">
+			<rows>
+				<row>
+					<cell width="80px">公司简称</cell>
+					<cell>
+						<label
+							value="@load(vm.hjmodel.coba_shortname)">
+						</label>
+					</cell>
+					<cell width="100px">员工姓名</cell>
+					<cell>
+						<label value="@load(vm.hjmodel.emhj_name)"></label>
+					</cell>
+				</row>
+				<row>
+					<cell width="80px">帐户类型</cell>
+					<cell>
+						<label value="@load(vm.hjmodel.emhj_type)"></label>
+					</cell>
+					<cell width="100px">落户派出所</cell>
+					<cell>
+						<label value="@load(vm.hjmodel.emhj_place)"></label>
+					</cell>
+				</row>
+				<row>
+					<cell>入户方式</cell>
+					<cell>
+						<label
+							value="@load(vm.hjmodel.emhj_in_class)">
+						</label>
+					</cell>
+					<cell>入户时间</cell>
+					<cell>
+						<datebox id="inhjtime" />
+					</cell>
+				</row>
+				<row>
+					<cell>落户类型</cell>
+					<cell>
+						<combobox value="@bind(vm.emcensustype)">
+							<comboitem label="中智集体户"></comboitem>
+							<comboitem label="客户集体户"></comboitem>
+							<comboitem label="自有房产"></comboitem>
+						</combobox>
+					</cell>
+					<cell visible="@load(vm.tyvis)">客户集体户名称</cell>
+					<cell visible="@load(vm.tyvis)">
+						<combobox value="@bind(vm.emcensustypename)">
+							<comboitem label=""></comboitem>
+							<comboitem label="意法集体户"></comboitem>
+							<comboitem label="意法研发集体户"></comboitem>
+							<comboitem label="纽威集体户"></comboitem>
+							<comboitem label="环仪集体户"></comboitem>
+							<comboitem label="戈尔集体户"></comboitem>
+						</combobox>
+					</cell>
+				</row>
+				<row>
+					<cell>还卡类型</cell>
+					<cell colspan="3">
+						<hlayout>
+							<checkbox value="1" label="首页" id="home"
+								checked="${vm.hjmodel.emhj_sy==1?'true':'false'}" />
+							<checkbox value="1" label="首页复印件"
+								id="homecopy"
+								checked="${vm.hjmodel.emhj_syfy==1?'true':'false'}" />
+							<checkbox value="1" label="户口卡" id="hjcard"
+								checked="${vm.hjmodel.emhj_grhk==1?'true':'false'}" />
+						</hlayout>
+					</cell>
+				</row>
+				<row>
+					<cell>还卡人</cell>
+					<cell>
+						<textbox id="returman" width="100px" />
+					</cell>
+					<cell>户口卡编号</cell>
+					<cell>
+						<textbox id="emhjno" value="@load(vm.hjno)"
+							width="100px" />
+					</cell>
+				</row>
+				<row>
+					<cell>退还押金</cell>
+					<cell>
+						<intbox width="100px" id="returncash"
+							value="@load(vm.hjmodel.emhj_fee)" />
+					</cell>
+					<cell>还卡时间</cell>
+					<cell>
+						<datebox width="100px" id="returntime" />
+					</cell>
+				</row>
+				<row>
+
+					<cell visible="@load(vm.idcardvis)">身份证号</cell>
+					<cell visible="@load(vm.idcardvis)">
+						<textbox value="@bind(vm.idcard)" />
+					</cell>
+				</row>
+				<row visible="false">
+					<cell>户口落户地址</cell>
+					<cell>
+						<textbox value="@bind(vm.hjaddress)" />
+					</cell>
+				</row>
+				<row visible="false">
+					<cell>是否变更户籍</cell>
+					<cell>
+						<radiogroup id="ifup"
+							onCheck="@command('checked',rp=self)">
+							<radio label="是" value="1" />
+							<radio label="否" value="0" selected="true" />
+						</radiogroup>
+					</cell>
+					<cell visible="@bind(vm.visable)">户籍变更为</cell>
+					<cell visible="@bind(vm.visable)">
+						<combobox id="newhj" readonly="true">
+							<comboitem label="" />
+							<comboitem label="深户" />
+							<comboitem label="非深户城镇" />
+							<comboitem label="非深户农村" />
+							<comboitem label="其他" />
+						</combobox>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button
+						onClick="@command('returnemCensus',home=home,homecopy=homecopy,hjcard=hjcard,
+		returman=returman.value,emhjno=emhjno.value,returncash=returncash.value,returntime=returntime.value,
+		inhjtime=inhjtime.value,win=win,ifup=ifup,newhj=newhj.value)">
+						提交
+					</button>
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

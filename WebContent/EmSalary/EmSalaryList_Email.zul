@@ -1,0 +1,90 @@
+<?page title="发送电子工资单" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window border="0" height="100%" apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('arch') @init('Controller.EmSalary.EmSalaryList_EmailController')">
+	<style src="/css/style.css"></style>
+<panel title="发送电子工资单"  vflex="1">
+<panelchildren>
+<borderlayout height="100%">
+<north border="0" title="检索" collapsible="true" flex="true" style="padding-bottom:10px;">
+<grid id="secrchgrid">
+	<rows>
+		<row align="left">
+		<cell align="left">所属月份：</cell>
+		<cell>
+			<hlayout hflex="1">
+				<combobox id="cownmonth"  instant="true"  model="@load(arch.ownmonthlist)" selectedItem="@bind(arch.ownmoth)" value="@bind(arch.ownmoth)"  onChange="@command('cobaselsit',contact=event.value,cb=ccobasecname)"  width="115px">
+						<template name="model">
+									<comboitem label="@load(each)" />
+						</template>
+				</combobox>
+				
+			</hlayout>
+		</cell>
+		<cell align="left">公司简称：</cell>
+		<cell>
+		<hlayout hflex="1">
+				<combobox id="ccobasecname"  instant="true" model="@load(arch.cobaselist)" selectedItem="@bind(arch.cosname)" value="@bind(arch.cid)" onChange="@command('scosname',contact=event.value)" >
+						<template name="model">
+									<comboitem label="@load(each)" />
+						</template>
+				</combobox>
+				
+			</hlayout></cell>
+		
+			<cell  align="left" >姓名：</cell>
+		
+		<cell ><textbox id="embaname" value="@bind(arch.embaname)" /></cell>
+		</row>
+		<row>
+<!-- 		<cell width="130px" align="right">公司编号：</cell> -->
+<!-- 		<cell width="160px"><textbox id="Scid" value="@bind(arch.cid)" /></cell> -->
+				
+		<cell align="center" colspan="8">
+				<button id="btSearch" label="查询"
+			onClick="@command('search',gd=salarygrid)" />
+			</cell>
+		</row>
+		
+	</rows>
+</grid>
+</north>
+<center flex="true">
+
+<grid vflex="1" id="salarygrid"  mold="paging" pageSize="40"   >
+	<columns id="gridcols" style="cursor:pointer" onCreate="@command('colsInit',self=salarygrid)" >
+	
+	</columns>
+	<rows id="gridrows" onCreate="@command('rowsInit',self=salarygrid)">
+
+	</rows>
+</grid>
+
+</center>
+<south >
+	<vlayout width="100%">
+					<panel border="0">
+						<panelchildren >
+							<vbox width="100%">
+								<grid width="100%">
+									<rows>
+										<row>
+									<cell align="center">
+				<button id="btplsh" label="批量发工资单"
+			onClick="@command('sendemail',gd=salarygrid)" />
+			</cell>
+			
+										</row>
+									</rows>
+									
+								</grid>
+							</vbox>
+						</panelchildren>
+					</panel>
+				</vlayout>
+</south>
+</borderlayout>
+</panelchildren>
+</panel>
+</window>
+</zk>

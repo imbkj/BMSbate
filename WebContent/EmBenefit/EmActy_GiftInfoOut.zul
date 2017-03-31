@@ -1,0 +1,64 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="礼品出库" border="normal" width="65%" height="65%" closable="true"
+	apply="org.zkoss.bind.BindComposer" id="editwin"
+	viewModel="@id('vm') @init('Controller.EmBenefit.EmActy_GiftInfoEditController')"
+>
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell width="100px">名称</cell>
+			<cell>
+				<textbox id="giftname" value="${arg.model.gift_name }" readonly="true"/>
+			</cell>
+			<cell width="100px">供应商</cell>
+			<cell>
+				<textbox id="supname" value="${arg.model.supp_name }" readonly="true"/>
+			</cell>
+		</row>
+		<row>
+			<cell>类型</cell>
+			<cell><textbox id="gifttype" value="${arg.model.gift_class }" readonly="true"></textbox></cell>
+			<cell>品牌</cell>
+			<cell><textbox id="giftband" value="${arg.model.gift_brand}" readonly="true"></textbox></cell>
+		</row>
+		<row>
+			<cell>颜色</cell>
+			<cell><textbox id="giftcolor" value="${arg.model.gift_color }" readonly="true"></textbox></cell>
+			<cell>生产地</cell>
+			<cell><textbox id="giftaddress" value="${arg.model.gift_production }" readonly="true"></textbox></cell>	
+		</row>
+		<row>
+			<cell>入库时间</cell>
+			<cell><textbox id="intime" value="${arg.model.gift_intime }" readonly="true"></textbox></cell>
+			<cell>入库数量</cell>
+			<cell><textbox id="innum" value="${arg.model.gift_totalnum }" readonly="true"></textbox></cell>
+		</row>
+		<row>
+			<cell>原价</cell>
+			<cell><textbox id="price" value="${arg.model.gift_price }" readonly="true"></textbox></cell>
+			<cell>折扣价</cell>
+			<cell><textbox id="nowprice"  value="${arg.model.gift_nowprice }" readonly="true"></textbox></cell>
+		</row>
+		<row>
+			<cell>现存数量</cell>
+			<cell><textbox id="nownum" value="${arg.model.gift_nownum }" readonly="true"></textbox></cell>
+			<cell>出库数量</cell>
+			<cell><intbox id="outnum" focus="true" onChange="@command('ifmax',num=self.value,outtxt=outnum)"></intbox></cell>
+		</row>
+		<row>
+			<cell>进货地址</cell>
+			<cell colspan="3"><textbox id="address" width="80%" rows="2" value="${arg.model.gift_inaddress }" readonly="true"></textbox></cell>
+		</row>
+		<row>
+			<cell>备注</cell>
+			<cell colspan="3"><textbox id="remark" width="80%" rows="3"></textbox></cell>
+		</row>
+	</rows>
+	<foot>
+		<footer align="center"><button onClick="@command('outgift',outnum=outnum.value,
+		win=editwin,remark=remark.value)">提交</button></footer>
+	</foot>
+</grid>
+</window>
+</zk>

@@ -1,0 +1,20 @@
+
+<listbox model="@load(vm.list)" height="100%" emptyMessage="没有任务"
+ onClick="@command('newtab',tabs=tabs,tree=tree,tig_1=tig_1,tig00=tig00,tbx1=tbx1,
+listb=self)">
+	<listhead>
+		<listheader label="编号" width="40px" align="center" sort="auto(tacl_id)"/>
+		<listheader sort="auto(tacl_name)">
+			<vlayout>
+				<label value="任务类型"></label>
+				<textbox onChange="@command('search',val=self.value)" instant="true"></textbox>
+			</vlayout>
+		</listheader>
+	</listhead>
+	<template name="model">
+	<listitem>
+		<listcell label="@load(each.tacl_id)" />
+		<listcell label="@load(each.tacl_name)" />
+	</listitem>
+	</template>
+</listbox>

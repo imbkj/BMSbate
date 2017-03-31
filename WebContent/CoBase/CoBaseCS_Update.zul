@@ -1,0 +1,110 @@
+<!--
+	创建人：林少斌
+	创建时间：2013-11-28
+	用途：公司财务信息修改页面
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<zscript>
+	//日期
+	day = new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10",
+			"11", "12", "13", "14", "16", "17", "18", "19", "20", "21", "22",
+			"23", "24", "25", "26", "27", "28", "29", "30", "31" };
+</zscript>
+	<window id="winCoBaseCS" title="公司财务信息 -- 修改页面" border="normal"
+		closable="false" width="100%" height="98%"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoBase.CoBaseCS_UpdateController')">
+		<grid width="100%" height="100%">
+			<rows>
+				<row>
+					<cell width="15%" style="color:#666;">
+						人事付款通知发放时间：
+					</cell>
+					<cell width="20%">
+						<combobox id="coba_emfi_paydate" readonly="true"
+							width="60%" mold="rounded"
+							value="@load(vm.model.coba_emfi_paydate)">
+							<comboitem label="${each}" forEach="${day}" />
+						</combobox>
+					</cell>
+					<cell width="15%" style="color:#666;">人事回款时间：</cell>
+					<cell width="20%">
+						<combobox id="coba_emfi_backdate"
+							readonly="true" width="60%" mold="rounded"
+							value="@load(vm.model.coba_emfi_backdate)">
+							<comboitem label="${each}" forEach="${day}" />
+						</combobox>
+					</cell>
+					<cell width="10%"></cell>
+					<cell width="20%"></cell>
+				</row>
+				<row>
+					<cell style="color:#666;">工资发放时间：</cell>
+					<cell>
+						<combobox id="coba_gz_paydate" readonly="true"
+							width="60%" mold="rounded"
+							value="@load(vm.model.coba_gz_paydate)">
+							<comboitem label="${each}" forEach="${day}" />
+						</combobox>
+					</cell>
+					<cell style="color:#666;">电子工资单发放时间：</cell>
+					<cell>
+						<combobox id="coba_emailgz_paydate"
+							readonly="true" width="60%" mold="rounded"
+							value="@load(vm.model.coba_emailgz_paydate)">
+							<comboitem label="${each}" forEach="${day}" />
+						</combobox>
+					</cell>
+					<cell style="color:#666;">纸质工资单发放时间：</cell>
+					<cell>
+						<combobox id="coba_papergz_paydate"
+							readonly="true" width="60%" mold="rounded"
+							value="@load(vm.model.coba_papergz_paydate)">
+							<comboitem label="${each}" forEach="${day}" />
+						</combobox>
+					</cell>
+				</row>
+				<row>
+					<cell style="color:#666;">薪酬台账明细制作时间：</cell>
+					<cell>
+						<combobox id="coba_emfics_deldate"
+							readonly="true" width="60%" mold="rounded"
+							value="@load(vm.model.coba_emfics_deldate)">
+							<comboitem label="${each}" forEach="${day}" />
+						</combobox>
+					</cell>
+					<cell style="color:#666;">薪酬付款通知发放时间：</cell>
+					<cell>
+						<combobox id="coba_emfics_paydate"
+							readonly="true" width="60%" mold="rounded"
+							value="@load(vm.model.coba_emfics_paydate)">
+							<comboitem label="${each}" forEach="${day}" />
+						</combobox>
+					</cell>
+					<cell style="color:#666;">薪酬回款时间：</cell>
+					<cell>
+						<combobox id="coba_emfics_backdate"
+							readonly="true" width="60%" mold="rounded"
+							value="@load(vm.model.coba_emfics_backdate)">
+							<comboitem label="${each}" forEach="${day}" />
+						</combobox>
+					</cell>
+				</row>
+				<row>
+					<cell>发票开票规则</cell>
+					<cell colspan="5">
+						<textbox id="coba_invoicerule"
+							value="@load(vm.model.coba_invoicerule)" />
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button label="提交" id="btSubmit"
+						onClick="@command('updateCoBaseCS',winCoBaseCS=winCoBaseCS,coba_emfi_paydate=coba_emfi_paydate,coba_emfi_backdate=coba_emfi_backdate ,coba_gz_paydate=coba_gz_paydate,coba_emailgz_paydate=coba_emailgz_paydate,coba_papergz_paydate=coba_papergz_paydate,coba_emfics_deldate=coba_emfics_deldate,coba_emfics_paydate=coba_emfics_paydate,coba_emfics_backdate=coba_emfics_backdate,coba_invoicerule=coba_invoicerule)" />
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

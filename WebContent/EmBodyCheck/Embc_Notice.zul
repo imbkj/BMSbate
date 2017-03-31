@@ -1,0 +1,23 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="体检须知" border="normal" vflex="1">
+<grid vflex="1">
+	<columns>
+		<column label="序号" width="50px" align="center"/>
+		<column label="医院名称" align="center"/>
+		<column label="地址" align="center"></column>
+		<column label="修改" width="80px" align="center"></column>
+		<column label="下载" width="80px" align="center"></column>
+	</columns>
+	<rows>
+		<row>
+			<cell><label value="${forEachStatus.index+1 }"></label></cell>
+			<cell><label value=""></label></cell>
+			<cell><label value=""></label></cell>
+			<cell><a><label value="修改"></label></a></cell>
+			<cell><a><label value="下载"></label></a></cell>
+		</row>
+	</rows>
+</grid>
+</window>
+</zk>

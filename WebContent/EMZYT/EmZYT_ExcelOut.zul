@@ -1,0 +1,34 @@
+<!--
+	创建人：林少斌
+	创建时间：2014-5-8
+	用途：文件下载页面
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="智翼通接口 -- 文件下载页面" border="normal" width="40%"
+		height="30%" closable="true" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmZYT.EmZYT_ExcelOutController')">
+		<grid width="100%" height="100%">
+			<rows>
+				<row>
+					<cell align="left" width="20%">
+						<label value="文件名称：" />
+					</cell>
+					<cell align="left">
+						<hbox>
+							<image src="../images/xls.gif" width="10"
+								height="11" border="0" />
+							<label value="@load(vm.filename)" />
+						</hbox>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button label="下载" id="btSubmit"
+						onClick="@command('download')" />
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

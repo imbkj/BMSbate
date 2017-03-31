@@ -1,0 +1,66 @@
+<!--
+	创建人：林少斌
+	创建时间：2014-4-8
+	用途：工资重发原因选择页面
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winRepay" title="薪酬管理 -- 工资重发原因选择页面" border="normal" width="70%"
+		closable="true" sizable="true" height="60%"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmSalary.EmSalary_RepayReasonController')">
+		<grid width="100%" height="100%">
+			<rows>
+				<row>
+					<cell align="left" width="15%">
+						<label value="公司简称：" />
+					</cell>
+					<cell align="left" width="35%">
+						<textbox width="80%" mold="rounded" value="@load(vm.esdaM.coba_shortname)" readonly="true"/>
+					</cell>
+					<cell align="left" width="15%">
+						<label value="公司编号：" />
+					</cell>
+					<cell align="left" width="35%">
+						<textbox width="80%" mold="rounded" value="@load(vm.esdaM.cid)" readonly="true"/>
+					</cell>
+				</row>
+				<row>
+					<cell align="left">
+						<label value="员工姓名：" />
+					</cell>
+					<cell align="left">
+						<textbox width="80%" mold="rounded" value="@load(vm.esdaM.emba_name)" readonly="true"/>
+					</cell>
+					<cell align="left">
+						<label value="员工编号：" />
+					</cell>
+					<cell align="left">
+						<textbox width="80%" mold="rounded" value="@load(vm.esdaM.gid)" readonly="true"/>
+					</cell>
+				</row>
+				<row>
+					<cell align="left">
+						<label value="重发原因：" />
+					</cell>
+					<cell align="left" colspan="3">
+						<combobox id="repay_reason" width="50%"
+							readonly="true" model="@load(vm.reasonList)" autodrop="true"
+							mold="rounded">
+							<template name="model">
+								<comboitem value="@load(each[0])"
+									label="@load(each[1])" />
+							</template>
+						</combobox>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button label="提交" id="btSubmit"
+						onClick="@command('submit',win=winRepay,repay_reason=repay_reason)" />
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

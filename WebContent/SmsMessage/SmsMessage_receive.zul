@@ -1,0 +1,158 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+
+<zk>
+	
+	<window title="短信管理 - 收件列表" id="winSmsRec" border="normal"
+		height="100%" width="90%" apply="org.zkoss.bind.BindComposer"
+		closable="true">
+		<borderlayout hflex="1" vflex="1"
+			apply="Controller.SmsMessage.SmsMessage_receiveController">
+			<north id="north" border="none" collapsible="true"
+				title="高级查询" open="true">
+				<grid width="100%">
+					<rows>
+						<row>
+							<cell width="120px">电话号码:</cell>
+							<cell>
+								<combobox id="cbPhoneNum" mold="rounded"
+									model="${$composer.smrPhoneList }">
+									<template name="model">
+										<comboitem
+											label="${each.sendNumber }" />
+									</template>
+								</combobox>
+							</cell>
+							<cell width="120px">内容:</cell>
+							<cell>
+								<textbox mold="rounded"
+									id="tbContent">
+								</textbox>
+							</cell>
+						</row>
+						<row>
+							<cell>公司编号:</cell>
+							<cell>
+								<combobox id="cbCid" mold="rounded"
+									model="${$composer.cidList }">
+									<template name="model">
+										<comboitem label="${each.cid }" />
+									</template>
+								</combobox>
+							</cell>
+							<cell>公司名称:</cell>
+							<cell>
+								<combobox id="cbCompany" mold="rounded"
+									model="${$composer.companyList }">
+									<template name="model">
+										<comboitem
+											label="${each.coba_company }" />
+									</template>
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>员工编号:</cell>
+							<cell>
+								<combobox id="cbGId" mold="rounded"
+									model="${$composer.gidList }">
+									<template name="model">
+										<comboitem label="${each.gid }" />
+									</template>
+								</combobox>
+							</cell>
+							<cell>姓名:</cell>
+							<cell>
+								<combobox id="cbName" mold="rounded"
+									model="${$composer.nameList }">
+									<template name="model">
+										<comboitem
+											label="${each.emba_name }" />
+									</template>
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell colspan="4" align="center">
+								<button id="btnSubmit" label="查询"  />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+
+			</north>
+			<center>
+				<grid id="gdList" width="100%" height="100%" sizedByContent="true" span="true"
+					mold="paging" pageSize="100" model="${$composer.smrList }">
+					<columns>
+						<column align="center" >序号</column>
+						<column align="center"
+							sort="auto">
+							公司编号
+						</column>
+						<column align="center"
+							sort="auto">
+							员工编号
+						</column>
+						<column align="center"
+							sort="auto">
+							姓名
+						</column>
+						<column align="center" sort="auto">公司简称</column>
+						<column align="center">
+							接收时间
+						</column>
+						<column align="center">
+							电话号码
+						</column>
+						<column align="center">信息内容</column>
+					</columns>
+					<template name="model">
+						<row>
+							<cell>
+								<label sclass="${each.lstyle}">
+									${forEachStatus.index+1 }
+								</label>
+							</cell>
+							<cell>
+								<label sclass="${each.lstyle}">
+									${each.cid }
+								</label>
+							</cell>
+							<cell>
+								<label sclass="${each.lstyle}">
+									${each.gid }
+								</label>
+							</cell>
+								<cell>
+								<label sclass="${each.lstyle}">
+									${each.emba_name }
+								</label>
+							</cell>
+							<cell align="left">
+								<label sclass="${each.lstyle}">
+									${each.coba_shortname}
+								</label>
+							</cell>
+							<cell>
+								<label sclass="${each.lstyle}">
+									${each.smsTime }
+								</label>
+							</cell>
+							<cell>
+								<label sclass="${each.lstyle}">
+									${each.sendNumber }
+								</label>
+							</cell>
+							<cell align="left">
+								<label sclass="${each.lstyle}"
+									value="${each.smsContent }">
+								</label>
+							</cell>
+						</row>
+
+					</template>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

@@ -1,0 +1,194 @@
+<!--
+	创建人：林少斌
+	创建时间：2014-1-16
+	用途：交单数据申报
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winDSZSIList" title="社会保险 -- 交单数据申报页面" border="normal"
+		width="100%" height="100%" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmSheBao.EmSheBao_DSZSIListController')">
+		<borderlayout vflex="1">
+			<north border="0" title="数据查询" collapsible="true"
+				flex="true" open="true">
+				<panel border="1">
+					<panelchildren style="padding:5px;">
+						<grid width="100%">
+							<rows>
+								<row>
+									<cell>
+										<button label="返回"
+											onClick="@command('pageback',win=winDSZSIList)" />
+										<button label="申报变动"
+											onClick="@command('declareForSingle',dataGrid=dataGrid)" />
+										<label value="共 " />
+										<label value="@load(vm.count)" />
+										<label value=" 条数据。" />
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</panelchildren>
+				</panel>
+			</north>
+			<center>
+				<grid id="dataGrid" width="100%" height="100%"
+					model="@load(vm.sbDataList)" emptyMessage="无数据">
+					<columns sizable="true">
+						<column label="序号" align="center" width="30px" />
+						<column label="公司名称" align="center"
+							sort="auto(escs_shortname)" />
+						<column label="所属月份" align="center"
+							sort="auto(ownmonth)" />
+						<column label="姓名" align="center"
+							sort="auto(escs_name)" />
+						<column label="变动情况" align="center"
+							sort="auto(escs_change)" />
+						<column label="电脑号" align="center" />
+						<column label="身份证或护照" align="center" />
+						<column label="变动内容" align="center" />
+						<column label="添加人" align="center" />
+						<column label="确认时间" align="center" />
+						<column label="申报时间" align="center" />
+						<column label="申报人" align="center" />
+						<column label="提示" align="center" />
+						<column align="center">
+							<checkbox checked="@load(vm.all_chkTF)"
+								onClick="@command('gdallselect',grid=dataGrid,check=self.checked)" />
+						</column>
+						<column label="操作" align="center" width="100px" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<cell>
+									<label
+										value="${forEachStatus.index + 1}" />
+								</cell>
+								<cell
+									tooltip="社保单位编码：${each.coco_shebaoid}">
+									<label
+										value="@load(each.escs_company)" style="color:#00F"
+										if="${each.escs_single==1}" />
+									<label
+										value="@load(each.escs_company)" style="color:#F00"
+										if="${each.escs_single==2}" />
+									<label
+										value="@load(each.escs_company)" if="${each.escs_single==0}" />
+									<label
+										value="(${each.coco_shebaoid})" if="${each.coco_shebaoid!=0}" />
+									<label value="(167120)"
+										if="${each.escs_single==2}" />
+									<label value="(391055)"
+										if="${each.escs_single==0}" />
+									<label value="(464780)"
+										if="${each.escs_single==3}" />
+									<label value="(464781)"
+										if="${each.escs_single==4}" />
+								</cell>
+								<cell>
+									<label value="@load(each.ownmonth)" />
+								</cell>
+								<cell>
+									<label value="@load(each.escs_name)"
+										style="color:#00F" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.escs_change)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.computerid)" />
+								</cell>
+								<cell>
+									<label value="@load(each.idcard)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.escs_content)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.escs_addname)" />
+								</cell>
+								<cell tooltiptext="添加时间：${each.escs_addtime }">
+									<label
+										value="@load(each.escs_confirmtime)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.escs_declaretime)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.escs_declarename)" />
+								</cell>
+								<cell>
+									<image src="../images/hongqi.gif"
+										tooltiptext="@load(each.escs_flag)" if="${each.flag_len>0}" />
+									<image src="../images/noread.gif"
+										style="cursor:pointer;" tooltiptext="存在未读小信封。"
+										if="${each.msg_a=='0'}"
+										onClick="@command('msg',model=each)" />
+									<image src="../images/return.gif"
+										style="cursor:pointer;" tooltiptext="已回复。"
+										if="${each.msg_a=='2'}"
+										onClick="@command('msg',model=each)" />
+									<image src="../images/readed.gif"
+										style="cursor:pointer;" tooltiptext="已读。"
+										if="${each.msg_a=='1'}"
+										onClick="@command('msg',model=each)" />
+									<label
+										value="@load(each.escs_remark)"
+										if="${each.escs_remark!=null}" />
+									<space/>
+									<label value="网报" style="color:blue;" if="${each.escs_ifnet==1 and each.escs_change eq '变更户籍'}"/>
+								</cell>
+								<cell align="center">
+									<checkbox
+										if="${each.escs_ifdeclare==8}" />
+									<checkbox
+										if="${each.escs_ifdeclare==6}"
+										disabled="${each.escs_change=='新增'? true:false}" />
+									<label value="未申报"
+										if="${each.escs_ifdeclare==0}" />
+									<label value="已上单"
+										if="${each.escs_ifdeclare==2}" />
+									<label value="中心待核收"
+										if="${each.escs_ifdeclare==7}" />
+									<label value="待申报"
+										if="${each.escs_ifdeclare==8}" />
+									<label value="已交单"
+										if="${each.escs_ifdeclare==6}" style="color:#090" />
+									<label value="已申报"
+										if="${each.escs_ifdeclare==1}" style="color:#00F" />
+									<label value=""
+										if="${each.escs_ifdeclare==2}" />
+									<label value="退回"
+										if="${each.escs_ifdeclare==3 or each.escs_ifdeclare==9}" style="color:#F00" />
+								</cell>
+								<cell>
+									<menubar autodrop="true">
+										<menu
+											image="../images/pencil-small.png">
+											<menupopup>
+												<menuitem label="编辑"
+													onClick="@command('edit',id=each.escs_id)" />
+												<menuitem label="上传单子"
+													onClick="@command('upload',id=each.escs_id)"
+													if="${each.escs_single==1 and each.escs_ifdeclare==0}" />
+												<menuitem label="小信封"
+													onClick="@command('msg',model=each)" />
+											</menupopup>
+										</menu>
+									</menubar>
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

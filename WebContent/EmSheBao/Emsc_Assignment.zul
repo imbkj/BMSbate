@@ -1,0 +1,49 @@
+<?page title="社保申报分配" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="社保申报分配" border="normal"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmSheBao.Emsc_AssigenmentController')"
+		height="680px" width="580px" closable="true" sizable="true"
+		maximizable="true">
+		<grid span="true" model="@load(vm.asList)" mold="paging"
+			pageSize="1000" emptyMessage="无数据" sizedByContent="true" hflex="1"
+			vflex="1">
+			<columns>
+				<column label="所属部门" align="center" sort="auto(0)" />
+				<column label="客服姓名" align="center" sort="auto(1)" />
+				<column label="社保申报操作人" align="center" />
+			</columns>
+			<rows>
+				<template name="model">
+					<row>
+						<cell>
+							<label value="@load(each[0])" />
+						</cell>
+						<cell>
+							<label value="@load(each[1])" />
+						</cell>
+						<cell>
+							<combobox mold="rounded" readonly="true"
+								model="@load(vm.flList)"
+								onChange="@command('change',client=each[1],shebaodeclare=self.selectedItem.value)"
+								selectedItem="@load(each[2])" if="${each[3]!='0'}">
+								<template name="model">
+									<comboitem 
+										label="@load(each)" />
+								</template>
+							</combobox>
+							<label value="此客服没有负责公司"
+								if="${each[3]=='0'}" />
+						</cell>
+					</row>
+				</template>
+			</rows>
+			<foot>
+				<footer align="center" span="3">
+					<button label="提交" id="btSubmit"
+						onClick="@command('submit')" />
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

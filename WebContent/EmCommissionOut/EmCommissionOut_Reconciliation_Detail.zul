@@ -1,0 +1,109 @@
+<grid apply="org.zkoss.bind.BindComposer "
+	viewModel="@id('vm') @init('Controller.EmCommissionOut.EmCommissionOut_Reconciliation_DetailController')"
+	model="@load(vm.echList)" emptyMessage="暂无数据" mold="paging"
+	pageSize="10" sizedByContent="true" span="true">
+	<columns sizable="true">
+		<column align="center">
+			<label value="公司编号" style="font-weight:bold;color:#666" />
+		</column>
+		<column align="center">
+			<label value="公司名称" style="font-weight:bold;color:#666" />
+		</column>
+		<column align="center">
+			<label value="应付人数" style="font-weight:bold;color:#666" />
+		</column>
+		<column align="center">
+			<label value="应收人数" style="font-weight:bold;color:#666" />
+		</column>
+		<column align="center">
+			<label value="实付人数" style="font-weight:bold;color:#666" />
+		</column>
+		<column align="center">
+			<label value="应付金额" style="font-weight:bold;color:#666" />
+		</column>
+		<column align="center">
+			<label value="应收金额" style="font-weight:bold;color:#666" />
+		</column>
+		<column align="center">
+			<label value="实付金额" style="font-weight:bold;color:#666" />
+		</column>
+		<column align="center">
+			<label value="差额（应付-应收）"
+				style="font-weight:bold;color:#666" />
+		</column>
+		<column align="center">
+			<label value="差额（应付-实付）"
+				style="font-weight:bold;color:#666" />
+		</column>
+		<column align="center" width="60px">
+			<label value="操作" style="font-weight:bold;color:#666" />
+		</column>
+	</columns>
+	<template name="model">
+		<row
+			style="border:1px dotted #cad9ea;background-color:white;">
+			<cell>
+				<label value="无法匹配" if="${empty each.cid }"
+					style="color:red" />
+				<label value="@load(each.cid)"
+					if="${not empty each.cid }" />
+			</cell>
+			<label value="@load(each.company)"
+				style="cursor:pointer;color:#666"
+				onClick="@command('openEmList',cid=each.cid)" />
+			<cell>
+				<label value="无数据" style="color:blue"
+					if="${empty each.yf_count }" />
+				<label value="@load(each.yf_count)"
+					if="${not empty each.yf_count }" />
+			</cell>
+			<cell>
+				<label value="无数据" style="color:blue"
+					if="${empty each.ys_count }" />
+				<label value="@load(each.ys_count)"
+					if="${not empty each.ys_count }" />
+			</cell>
+			<cell>
+				<label value="无数据" style="color:blue"
+					if="${empty each.sf_count }" />
+				<label value="@load(each.sf_count)"
+					if="${not empty each.sf_count }" />
+			</cell>
+			<cell>
+				<label value="无数据" style="color:blue"
+					if="${empty each.yf_sum }" />
+				<label value="@load(each.yf_sum)"
+					if="${not empty each.yf_sum }" />
+			</cell>
+			<cell>
+				<label value="无数据" style="color:blue"
+					if="${empty each.ys_sum }" />
+				<label value="@load(each.ys_sum)"
+					if="${not empty each.ys_sum }" />
+			</cell>
+			<cell>
+				<label value="无数据" style="color:blue"
+					if="${empty each.sf_sum }" />
+				<label value="@load(each.sf_sum)"
+					if="${not empty each.sf_sum }" />
+			</cell>
+			<cell>
+				<label value="无数据" style="color:blue"
+					if="${empty each.yf_ys_diff }" />
+				<label value="@load(each.yf_ys_diff)"
+					if="${each.yf_ys_diff eq '0.00' }" />
+				<label value="@load(each.yf_ys_diff)" style="color:red"
+					if="${not empty each.yf_ys_diff  and each.yf_ys_diff ne '0.00' }" />
+			</cell>
+			<cell>
+				<label value="无数据" style="color:blue"
+					if="${empty each.yf_sf_diff }" />
+				<label value="@load(each.yf_sf_diff)"
+					if="${each.yf_sf_diff eq '0.00' }" />
+				<label value="@load(each.yf_sf_diff)" style="color:red"
+					if="${not empty each.yf_sf_diff and each.yf_sf_diff ne '0.00' }" />
+			</cell>
+			<cell></cell>
+		</row>
+	</template>
+</grid>

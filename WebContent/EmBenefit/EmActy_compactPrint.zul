@@ -1,0 +1,37 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="合同制作" border="normal" width="95%"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmBenefit.EmActy_compactPrintController')"
+		closable="true">
+		<grid visible="@load(vm.dis)">
+			<columns visible="false">
+				<column width="120px"></column>
+				<column></column>
+			</columns>
+			<rows>
+				<row>
+					<cell>供应商</cell>
+					<cell>
+						<label value="@load(vm.company)" />
+					</cell>
+				</row>
+				<row>
+					<cell>合同号</cell>
+					<cell>
+						<label value="@load(vm.compactid)" />
+					</cell>
+				</row>
+				<row>
+					<cell>退回原因</cell>
+					<cell>
+						<label value="@load(vm.reason)" />
+					</cell>
+				</row>
+			</rows>
+		</grid>
+		<include
+			src="../EmBenefit/EmActy_compactPrint.jsp?taprId=${vm.taprId}&amp;daid=${vm.daid}&amp;look=${vm.look}&amp;audit=${vm.audit}&amp;taclId=${vm.taclId}">
+		</include>
+	</window>
+</zk>

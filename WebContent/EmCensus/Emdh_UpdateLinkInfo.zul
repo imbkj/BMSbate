@@ -1,0 +1,42 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="联系员工" border="normal" width="80%" height="80%" closable="true"
+	apply="org.zkoss.bind.BindComposer" id="winu"
+    viewModel="@id('vm') @init('Controller.EmCensus.EmDh.Emdh_UpdateLinkInfoController')"
+>
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell width="80px">联系记录</cell>
+			<cell>
+				<grid model="@load(vm.list)" emptyMessage="没有联系记录" height="300px">
+		<columns>
+			<column label="手机号码" align="center" width="100px"/>
+			<column label="发送人" align="center" width="60px"/>
+			<column label="发送时间" align="center" width="100px"/>
+			<column label="内容" align="center"/>
+		</columns>
+		<rows>
+			<template name="model">
+				<row>
+					<cell><label value="@load(each.phoneNumber)"></label></cell>
+					<cell><label value="@load(each.smsUser)"></label></cell>
+					<cell><label value="@load(each.smsTime)"></label></cell>
+					<cell><label value="@load(each.smsContent)"></label></cell>
+				</row>
+			</template>
+		</rows>
+	</grid>
+			</cell>
+		</row>
+	</rows>
+	<foot>
+		<footer align="center">
+			<button onClick="@command('next',win=winu)">下一步</button>
+			<button onClick="@command('sendmsg')">发短信</button>
+			<button onClick="@command('addRemark')">备注</button>
+		</footer>
+	</foot>
+</grid>
+</window>
+</zk>

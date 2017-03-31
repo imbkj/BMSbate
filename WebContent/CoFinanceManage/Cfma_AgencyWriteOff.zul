@@ -1,0 +1,145 @@
+<?page title="机构账单冲销" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="机构账单冲销" border="normal" width="99%" height="99%"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoFinanceManage.Cfma_AgencyWriteOffController')"
+		sizable="true" closable="true">
+		<borderlayout>
+			<north title="冲销记录" border="0" collapsible="true"
+				splittable="true" open="@load(vm.logOpen)" size="50%">
+				<grid height="100%" emptyMessage="暂未冲销记录" mold="paging"
+					pageSize="50" model="@load(vm.woList)" width="100%">
+					<columns>
+						<column width="40px" align="center" />
+						<column label="编号" width="100px" align="center" />
+						<column label="冲销金额" align="center" />
+						<column label="操作人" align="center" />
+						<column label="操作时间" align="center" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+
+								<custom-attributes
+									cawo_id="${each.cawo_id}" />
+								<detail open="false" fulfill="onOpen">
+									<include
+										src="/CoFinanceManage/Cfma_AgencyWriteOffInfo.zul"
+										cawo_id="${cawo_id}" />
+								</detail>
+								<cell>
+									<label value="@load(each.cawo_id)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.cawo_writeOffEx)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.cawo_addname)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.cawo_addtime)" />
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</north>
+			<center border="0">
+				<borderlayout>
+					<west width="50%" title="委托出账单" border="0">
+						<grid id="gdWt" height="100%"
+							emptyMessage="暂未找到账单" model="@load(vm.wtList)" width="100%">
+							<columns>
+								<column width="40px" align="center" />
+								<column label="所属月份" width="100px"
+									align="center" />
+								<column label="支付金额" align="center" />
+								<column label="账单确认情况" align="center" />
+							</columns>
+							<rows>
+								<template name="model">
+									<row>
+										<cell>
+											<checkbox
+												onCheck="@command('checkWt',m=each,check=self.checked)" />
+										</cell>
+										<cell>
+											<label
+												value="@load(each.ownmonth)" />
+										</cell>
+										<cell>
+											<label
+												value="@load(each.imbalance)" />
+										</cell>
+										<cell>
+											<label value="已确认" />
+										</cell>
+									</row>
+								</template>
+							</rows>
+						</grid>
+					</west>
+					<center border="0" title="受托账单">
+						<grid id="gdSt" height="100%"
+							emptyMessage="暂未找到账单" mold="paging" model="@load(vm.stList)"
+							width="100%">
+							<columns>
+								<column width="40px" align="center" />
+								<column label="所属月份" width="100px"
+									align="center" />
+								<column label="收款金额" align="center" />
+								<column label="账单确认情况" align="center" />
+							</columns>
+							<rows>
+								<template name="model">
+									<row>
+										<cell>
+											<checkbox
+												disabled="${each.comCou==0?false:true}"
+												onCheck="@command('checkSt',m=each,check=self.checked)" />
+										</cell>
+										<cell>
+											<label
+												value="@load(each.ownmonth)" />
+										</cell>
+										<cell>
+											<label
+												value="@load(each.imbalance)" />
+										</cell>
+										<cell>
+											<label
+												value="${each.comCou==0?'已确认':'未完全确认'}"
+												style="${each.comCou==0?'':'color:red;'}" />
+										</cell>
+									</row>
+								</template>
+							</rows>
+						</grid>
+					</center>
+					<south>
+						<grid>
+							<rows>
+								<row>
+									<cell align="right">冲销金额：</cell>
+									<cell align="left">
+										<label
+											value="@load(vm.writeOffEx)" style="color:red;" />
+									</cell>
+								</row>
+							</rows>
+							<foot>
+								<footer align="center">
+									<button label="提交"
+										onClick="@command('Submit',gdWt=gdWt,gdSt=gdSt)" />
+								</footer>
+							</foot>
+						</grid>
+					</south>
+				</borderlayout>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

@@ -1,0 +1,39 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="合并发件" border="normal" width="70%" height="70%" closable="true"
+	apply="org.zkoss.bind.BindComposer" id="win"
+    viewModel="@id('vm') @init('Controller.EmExpress.EmExpressInfosUpdateController')"
+>
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell width="80px">快递公司</cell>
+			<cell>
+				<combobox value="@bind(vm.model.expr_company)">
+					<comboitem label="顺丰快递"/>
+					<comboitem label="天天快递"/>
+					<comboitem label="韵达快递"/>
+					<comboitem label="中通快递"/>
+					<comboitem label="圆通快递"/>
+					<comboitem label="申通快递"/>
+					<comboitem label="EMS快递"/>
+				</combobox>
+			</cell>
+			<cell width="80px">运单号</cell>
+			<cell><textbox value="@bind(vm.model.expr_waynumber)"></textbox></cell>
+		</row>
+		<row>
+			<cell>发件人</cell>
+			<cell><textbox value="@bind(vm.model.expr_sendname)"></textbox></cell>
+			<cell>发件时间</cell>
+			<cell><datebox value="@bind(vm.sendtime)"></datebox></cell>
+		</row>
+		<row>
+			<cell>快递费</cell>
+			<cell colspan="3"><textbox value="@bind(vm.model.expr_fee)"></textbox>元（人民币）</cell>
+		</row>
+	</rows>
+	<foot><footer align="center"><button onClick="@command('submit',win=win)">提交</button></footer></foot>
+</grid>
+</window>
+</zk>

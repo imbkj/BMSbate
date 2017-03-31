@@ -1,0 +1,117 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<style>
+		.section{ width:95%; margin:0px 20px; padding:25px 0px 35px; }
+		.section .node { float:left; position:relative;
+		width:13px;height:13px;
+		background-image:url(../images/bg_state.jpg);
+		background-repeat:no-repeat; font-size:12px; } .section .proce {
+		float:left; position:relative; width:123px;height:13px;
+		background-image:url(../images/bg_state.jpg);
+		background-repeat:no-repeat; font-size:12px; border:solid
+		#ffffff; border-width:0px 5px; } .section .space{
+		height:16px!important;height:18px; } .proce.wait {
+		background-position:-0px -30px; } .node.wait2 {
+		background-position:-113px -30px; } .proce.doing {
+		background-position:0px -15px; color:#000066; } .proce.ready {
+		background-position:-0px 0px; } .node.ready2
+		{background-position:-113px 0px; } .node.singular {
+		background-position:-113px -45px; }
+	</style>
+
+	<window id="taskWin" border="normal" 
+		apply="org.zkoss.bind.BindComposer" sizable="true"
+		viewModel="@id('vm') @init('Controller.Taskflow.TaskProcess_ViewController')"
+		closable="true" vflex="1">
+		<borderlayout id="bl" vflex="1">
+			<north>
+				<scrollview hflex="1">
+					<vbox>
+						<hbox sclass="section" style="overflow:auto">
+							<div forEach="${vm.listView }">
+								<hbox>
+									<vbox sclass="space">
+										${each.wfno_name}
+									</vbox>
+								</hbox>
+								<hbox style="cursor:pointer;">
+									<custom-attributes model="${each}" />
+									<vbox
+										style="background-image:url(../images/bg_state.jpg);"
+										sclass="${each.processname}"
+										onClick="@command('getInfo',model =model )">
+									</vbox>
+								</hbox>
+
+								<hbox>
+									<vbox style="color:red"
+										if="${each.tapr_state==6 }">
+										挂起
+									</vbox>
+									<vbox>${each.tapr_endname}</vbox>
+								</hbox>
+								<hbox>
+									<vbox>${each.tapr_endtime}</vbox>
+								</hbox>
+							</div>
+						</hbox>
+					</vbox>
+				</scrollview>
+			</north>
+			<center>
+
+				<grid model="@load(vm.listTP)" id="gdWfDefination"
+					emptyMessage="无数据" height="100%" mold="paging" pageSize="20">
+					<columns>
+						<column align="center" width="40px">序号</column>
+						<column align="center">任务类型</column>
+						<column align="center">任务名称</column>
+						<column align="center">节点名称</column>
+						<column align="center">操作内容</column>
+						<column align="center">操作人</column>
+						<column align="center">操作时间</column>
+						<column align="center">操作状态</column>
+						<column width="70px" align="center">操作</column>
+						<column align="center">备注</column>
+					</columns>
+					<template name="model">
+						<row>
+							<label value="${forEachStatus.index+1 }">
+							</label>
+							<label value="@load(each.tacl_name)"></label>
+							<label value="@load(each.tali_name)"></label>
+							<label value="@load(each.wfno_name)"></label>
+							<label value="@load(each.tapl_content)">
+							</label>
+							<label value="@load(each.tapl_username)">
+							</label>
+							<label value="@load(each.tapl_addtime)">
+							</label>
+							<label value="@load(each.tapr_statename)">
+							</label>
+							<div>
+
+								<button
+									if="${each.tapl_state==1 and each.tapr_statename=='正在执行' and each.wfno_ifrevoke==1 }"
+									label="撤销" onClick="@command('recokeData',a=each)" />
+							</div>
+							<div
+								tooltip="content_${each.tapl_id },position=start_before">
+								<label
+									style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden"
+									value="@load(each.tapl_remark)">
+								</label>
+								<popup id="content_${each.tapl_id}"
+									width="200px">
+									<label
+										value="@load(each.tapl_remark)">
+									</label>
+								</popup>
+							</div>
+						</row>
+					</template>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

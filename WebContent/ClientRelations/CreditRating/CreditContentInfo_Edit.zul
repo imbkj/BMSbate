@@ -1,0 +1,49 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="修改评价标准信息" border="normal" width="400px" closable="true"
+	apply="Controller.ClientRelations.CreditRating.CreditContentInfo_EditController">
+<grid>
+	<rows>
+		<row style="background:#F7F7F7;">
+		<cell colspan="2" >基本信息</cell>
+		</row>
+		<row>
+			<cell colspan="2" ></cell>
+		</row>
+		<row>
+			<cell width="100px"><label style="padding-left:10px;">标准名称</label></cell>
+			<cell><textbox id="conname"  value="${arg.model.crcr_content}"/></cell>
+		</row>
+		<row>
+			<cell><label style="padding-left:10px;">标准类型</label></cell>
+			<cell><textbox id="cclass" value="${arg.model.crcr_type}"/></cell>
+		</row>
+		<row>
+			<cell><label style="padding-left:10px;">是否生效</label></cell>
+			<cell><checkbox id="ifvalid"/></cell>
+		</row>
+	
+		<row style="background:#F7F7F7;">
+			<cell colspan="2">内容信息</cell>
+		</row>
+		<row>
+			<cell width="100px" colspan="2">
+				<grid emptyMessage="没有内容的信息">
+					<columns>
+						<column>内容名称</column>
+						<column width="100px">是否生效</column>
+					</columns>
+					<rows id="conrows">
+					</rows>
+				</grid>
+			</cell>
+		</row>	
+	</rows>
+	<foot>
+	<footer align="center">
+		<button id="summit">提交</button>
+	</footer>
+	</foot>
+</grid>
+</window>
+</zk>

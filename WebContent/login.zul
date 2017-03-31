@@ -1,0 +1,97 @@
+<?page title="深圳中智BMS系统--登录" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window apply="Controller.LoginController" width="100%" height="768px" style="background-image: url(images/login/login_01.gif)" >
+<div style="position:absolute;left:730px;top:449px;width:48px;height:20px;z-index:1;"><label value="${$composer.getVersion()}"></label></div>
+	<tablelayout width="1000px" columns="3" >
+	
+		<tablechildren id="left" width="17%" rowspan="4">
+			<panel >
+				<panelchildren>
+					<image width="100%" height="100%"
+						src="images/login/login_01.gif" />
+				</panelchildren>
+			</panel>
+		</tablechildren>
+		<tablechildren width="644px" id="center">
+			<panel>
+				<panelchildren id="top">
+				   <image width="644px" height="168px"
+						src="images/login/login_02.gif" />
+				</panelchildren>
+			</panel>
+			<panel>
+				<panelchildren>
+				   <image width="644px" height="208px"
+						src="images/login/login_04.gif" />
+				</panelchildren>
+			</panel>
+			<panel>
+				<panelchildren>
+				  <hlayout>
+				    <image width="39px" height="115px"
+						src="images/login/login_05.gif" />
+					<box width="272px" height="115px" align="center" pack="center">
+					<tablelayout columns="3">
+						<tablechildren>
+							<panel style="padding-top:5px">
+								<panelchildren>用户名：</panelchildren>
+							</panel>
+							<panel style="padding-top:20px">
+								<panelchildren>密码       ：</panelchildren>
+							</panel>
+						</tablechildren>
+						<tablechildren>
+							<panel>
+								<panelchildren><textbox id="tbUsername" mold="rounded" maxlength="14" width="100px" constraint="no empty:请输入用户名" onOK="tbPassword.focus()" focus="true"/></panelchildren>
+							</panel>
+							<panel style="padding-top:10px">
+								<panelchildren><textbox id="tbPassword" mold="rounded" type="password" maxlength="14" width="100px" constraint="no empty:请输入密码"/></panelchildren>
+							</panel>
+						</tablechildren>
+						<tablechildren>
+							<panel>
+								<panelchildren>
+								<!-- <button id="btnLogin" label="登录"  width="70px"/> -->
+								<image 	id="btnLogin" src="images/login/login.jpg" style="cursor:pointer"/>
+								</panelchildren>
+							</panel>
+							<panel style="padding-top:10px">
+								<panelchildren>
+								<!-- <button id="btnReg" label="注册用户" width="70px" /> -->
+								<image 	id="btnReg" src="images/login/password.jpg" style="cursor:pointer"/>
+								</panelchildren>
+							</panel>
+						</tablechildren>
+					</tablelayout>
+					</box>
+					<image width="323px" height="115px"
+						src="images/login/login_07.gif" />
+				  </hlayout>
+				</panelchildren>
+			</panel>
+			<panel>
+				<panelchildren>
+				    <image width="644px" height="64px"
+						src="images/login/login_08.gif" />
+				</panelchildren>
+			</panel>
+			<panel>
+				<panelchildren style="background-image: url(images/login/login_09.gif)" >
+				    <hbox height="213px">
+				    	版权所有：深圳中智经济技术合作有限公司		   
+				    </hbox>
+				</panelchildren>
+			</panel>
+		</tablechildren>
+		<tablechildren id="right" width="20%" rowspan="4">
+			<panel>
+				<panelchildren>
+				<image width="100%" height="100%"
+						src="images/login/login_03.gif" />
+				</panelchildren>
+			</panel>
+		</tablechildren>
+	</tablelayout>
+	
+</window>
+</zk>

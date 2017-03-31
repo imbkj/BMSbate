@@ -1,0 +1,6 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="受托机构信息" border="normal" vflex="1">
+
+</window>
+</zk>

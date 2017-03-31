@@ -1,0 +1,193 @@
+<!--
+	创建人：林少斌
+	创建时间：2014-1-26
+	用途：社保台账前导入
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="社会保险 -- 台账前导入页面" border="normal" width="100%"
+		height="100%" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmSheBao.Emsc_SZSI_FinanceMonthController')">
+		<borderlayout vflex="1">
+			<north border="0" title="数据查询" collapsible="true"
+				flex="true" open="true">
+				<panel border="1">
+					<panelchildren style="padding:5px;">
+						<grid width="100%">
+							<rows>
+								<row>
+									<cell align="left" >
+										<combobox id="s_ownmonth"
+											mold="rounded" value="@load(vm.nowmonth)"
+											model="@load(vm.s_ownmonth)" readonly="true">
+											<template name="model">
+												<comboitem
+													label="@load(each)" />
+											</template>
+										</combobox>
+									</cell>
+									<cell>
+										<hbox>
+											<label value="@load(vm.nowmonth)"/>
+											<label value="系统在册人数："/>
+											<label style="color:red;" value="@load(vm.count[0])"/>
+											<label value="，台前人数："/>
+											<label style="color:red;" value="@load(vm.count[1])"/>
+											<label value="，系统在册独立户人数："/>
+											<label style="color:red;" value="@load(vm.count[2])"/>
+											<label value="，台前独立户人数："/>
+											<label style="color:red;" value="@load(vm.count[3])"/>
+										</hbox>
+									</cell>
+								</row>
+								<row>
+									<cell align="right">
+										<button label="查询"
+											onClick="@command('search',s_ownmonth=s_ownmonth)" />
+									</cell>
+									<cell align="right">
+										<button label="清空台帐"
+											onClick="@command('clean',s_ownmonth=s_ownmonth)" />
+										<button label="启动逻辑检查"
+											onClick="@command('checkErr')" />
+										<button label="上传社保局台帐文件"
+											onClick="@command('upload',s_ownmonth=s_ownmonth)" />
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</panelchildren>
+				</panel>
+			</north>
+			<center>
+				<grid id="dataGrid" width="100%" height="100%" model="@load(vm.sbDataList)">
+					<columns sizable="true">
+						<column label="序号" align="center" width="30px" />
+						<column label="公司名称" align="center" />
+						<column label="单位编号" align="center" />
+						<column label="参保人数" align="center" />
+						<column label="系统人数" align="center" />
+						<column label="差额" align="center" />
+						<column label="客服代表" align="center" />
+						<column label="更新人" align="center" />
+						<column label="标识" align="center" />
+						<column label="操作" align="center" width="100px" />
+					</columns>
+					<rows>
+					<template name="model">
+						<!-- <row>
+							<cell>
+								<label value="1" />
+							</cell>
+							<cell>
+								<label value="深圳中智经济技术合作有限公司" />
+							</cell>
+							<cell>
+								<label value="391055" />
+							</cell>
+							<cell>
+								<label value="@load(vm.szsi_0_cou)" />
+							</cell>
+							<cell>
+								<label value="@load(vm.sb_0_cou)" />
+							</cell>
+							<cell>
+								<label value="@load(vm.ce_0_cou)" />
+							</cell>
+							<cell>
+								<label value="" />
+							</cell>
+							<cell>
+								<label value="" />
+							</cell>
+							<cell>
+								<label value="已上传"  visible="@load(vm.szsi_0_cou gt 0?true:false)" style="color:#00F;" />
+								<label value="未上传"  visible="@load(vm.szsi_0_cou eq 0?true:false)" style="color:#666;" />
+							</cell>
+							<cell>
+								<a
+									onClick="@command('delete',sbid=391055,s_ownmonth=s_ownmonth)">
+									删除
+								</a>
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="2" />
+							</cell>
+							<cell>
+								<label value="深圳中智经济技术合作有限公司(委托)" />
+							</cell>
+							<cell>
+								<label value="167120" />
+							</cell>
+							<cell>
+								<label value="@load(vm.szsi_2_cou)" />
+							</cell>
+							<cell>
+								<label value="@load(vm.sb_2_cou)" />
+							</cell>
+							<cell>
+								<label value="@load(vm.ce_2_cou)" />
+							</cell>
+							<cell>
+								<label value="" />
+							</cell>
+							<cell>
+								<label value="" />
+							</cell>
+							<cell>
+								<label value="已上传"  visible="@load(vm.szsi_2_cou gt 0?true:false)" style="color:#00F;" />
+								<label value="未上传"  visible="@load(vm.szsi_2_cou eq 0?true:false)" style="color:#666;" />
+							</cell>
+							<cell>
+								<a
+									onClick="@command('delete',sbid=167120,s_ownmonth=s_ownmonth)">
+									删除
+								</a>
+							</cell>
+						</row> -->
+						<row>
+							<cell>
+								<label
+									value="${forEachStatus.index + 1}" />
+							</cell>
+							<cell>
+								<label value="@load(each.company)" />
+							</cell>
+							<cell>
+								<label value="@load(each.shebaoid)" />
+							</cell>
+							<cell>
+								<label value="@load(each.szsi_1_cou)" />
+							</cell>
+							<cell>
+								<label value="@load(each.sb_1_cou)" />
+							</cell>
+							<cell>
+								<label value="@load(each.ce_1_cou)" />
+							</cell>
+							<cell>
+								<label value="@load(each.client)" />
+							</cell>
+							<cell>
+								<label value="@load(each.addname)" />
+							</cell>
+							<cell>
+								<label value="已上传"  visible="@load(vm.szsi_1_cou gt 0?true:false)" style="color:#00F;" />
+								<label value="未上传"  visible="@load(vm.szsi_1_cou eq 0?true:false)" style="color:#666;" />
+							</cell>
+							<cell>
+								<a
+									onClick="@command('delete',sbid=self.parent.parent.children[2].children[0].value,s_ownmonth=s_ownmonth)">
+									删除
+								</a>
+							</cell>
+						</row>
+						</template>
+					</rows>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

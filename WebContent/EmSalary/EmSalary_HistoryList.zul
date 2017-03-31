@@ -1,0 +1,49 @@
+<?page title="工资发放记录" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winEsHistoryList" title="工资发放情况汇总" border="normal"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmSalary.EmSalary_HistoryListController')"
+		height="100%" width="100%">
+		<borderlayout>
+			<north border="0" collapsible="true">
+				<grid width="100%">
+					<rows>
+						<row>
+							<cell width="10%" style="color:#666;"
+								align="center">
+								生成历史记录日期
+							</cell>
+							<datebox id="dbHisDate" readonly="true"
+								format="yyyy-MM-dd" mold="rounded" />
+							<cell width="10%" style="color:#666;"
+								align="center">
+								发放批次
+							</cell>
+							<combobox id="cbBatch" width="40%"
+								autodrop="true" mold="rounded" value="全部" readonly="true">
+								<comboitem label="全部" />
+								<comboitem label="第一批" />
+								<comboitem label="第二批" />
+							</combobox>
+						</row>
+					</rows>
+					<foot>
+						<footer align="center">
+							<button label="查询"
+								onClick="@command('search',db=dbHisDate,cb=cbBatch)" />
+							<button label="导出报表"
+								onClick="@command('excel',db=dbHisDate,cb=cbBatch)" />
+							<button label="导出用友"
+								onClick="@command('ufOut',db=dbHisDate)" />
+						</footer>
+					</foot>
+				</grid>
+			</north>
+			<center border="none" autoscroll="true">
+				<include id="icBase" src="@load(vm.icSrc)"
+					onCreate="@command('setInclude',com=self)" />
+			</center>
+			<south></south>
+		</borderlayout>
+	</window>
+</zk>

@@ -1,0 +1,38 @@
+<!--
+	创建人：林少斌
+	创建时间：2013-9-24
+	用途：委托机构联系人管理页面
+-->
+<grid width="95%" height="95%" emptyMessage="无数据"
+	apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('vm') @init('Controller.CoAgency.LinkMan_UpdateListController')"
+	model="@load(vm.caliBaseList)">
+	<columns sizable="true">
+		<column label="联系人组名" />
+		<column label="姓名" />
+		<column label="手机" />
+		<column label="座机" />
+		<column label="操作" width="100px"/>
+	</columns>
+	<rows>
+		<template name="model">
+			<row>
+				<label value="@load(each.cali_linkman)" />
+				<label value="@load(each.cali_name)" />
+				<label value="@load(each.cali_mobile)" />
+				<label value="@load(each.cali_tel)" />
+				<menubar autodrop="true">
+					<menu image="../images/pencil-small.png">
+						<menupopup>
+							<menuitem label="修改"
+								onClick="@command('update',caliM=each)" />
+							<menuseparator />
+							<menuitem label="删除"
+								onClick="@command('delete', cali_id=each.cali_id)" />
+						</menupopup>
+					</menu>
+				</menubar>
+			</row>
+		</template>
+	</rows>
+</grid>

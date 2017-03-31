@@ -1,0 +1,159 @@
+<!--
+	创建人：赵敏捷
+	创建时间：2014-1-17
+	用途：全国项目部导出基数，和单项操作列表
+-->
+
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winemco" title="基数采集列表" apply="org.zkoss.bind.BindComposer,Controller.EmCommissionOut.EmCommissionOutntinfoController"
+		viewModel="@id('vm') @init('Controller.EmCommissionOut.EmCommissionOutntinfoController')"
+		border="normal" sizable="true" height="100%" width="100%" closable="true">
+		<borderlayout>
+				<north border="0"   collapsible="true"
+				flex="true" open="true">
+				<panel border="0">
+					<panelchildren style="padding:5px;">
+					<groupbox title="生成年调">
+						<grid width="100%" >
+							<rows>
+								
+								<row>
+								
+					
+										<cell width="10%" 
+										style="color:#666;" align="center">
+										状态：
+</cell>
+									<cell colspan="7"  width="30%">
+									<combobox id="wtzt" 
+										model="@load(vm.wtztlist)" width="50%" autodrop="true" mold="rounded" selectedItem="@bind(vm.wtzt)"
+										onChange="@command('setvsb',contact=event.value,bt=btSubmit)"
+										>
+										
+										<template name="model">
+											<comboitem
+												label="@load(each)" />
+										</template>
+										</combobox>
+									</cell>	
+									
+										<cell  align="left">
+						 公司名：
+					</cell>						
+							<cell  align="left">
+						<textbox   hflex="1"
+								value="@bind(vm.coba_company)" />
+					</cell>	
+					
+										<cell  align="left">
+							公司编号
+					</cell>						
+							<cell  align="left">
+						<textbox   hflex="1"
+								value="@bind(vm.cid)" />
+					</cell>		
+						
+					
+					
+											
+									</row>
+									
+											<row>
+								
+					
+										<cell width="10%" 
+										style="color:#666;" align="center">
+										客服：
+</cell>
+									<cell colspan="7"  width="30%">
+									<combobox id="coclinet" 
+										model="@load(vm.cobasemodellist)" width="50%" autodrop="true" mold="rounded" 
+										selectedItem="@bind(vm.coba_clinet)"
+										
+									 
+										>
+										
+										<template name="model">
+											<comboitem
+												label="@load(each.coba_client)" />
+										</template>
+										</combobox>
+									</cell>	
+										
+										<cell  align="left">
+						员工姓名：
+					</cell>						
+							<cell  align="left">
+						<textbox   hflex="1"
+								value="@bind(vm.emba_name)" />
+					</cell>	
+					
+										<cell  align="left">
+							员工编号
+					</cell>						
+							<cell  align="left">
+						<textbox   hflex="1"
+								value="@bind(vm.gid)" />
+					</cell>		
+						
+									</row>
+									
+										<row >
+										<cell colspan="12" width="100%" align="center">
+									<button label="查询" id="btselect"
+						onClick="@command('selectlist',grd=gridwin)" />
+	
+										</cell>
+										
+										</row>
+							</rows>
+							</grid>
+			</groupbox>
+					</panelchildren>
+				</panel>
+			</north>
+			<center>
+
+		
+<grid vflex="1" id="gridwin"  mold="paging" pageSize="40"   >
+	<columns id="gridcols" style="cursor:pointer" onCreate="@command('colsInit',self=gridwin)" >
+	
+	</columns>
+	<rows id="gridrows" >
+
+	</rows>
+</grid>
+
+
+
+			</center>
+			<south>
+	<vlayout width="100%">
+					<panel border="0">
+						<panelchildren >
+							<vbox width="100%">
+								<grid width="100%">
+									<rows>
+										<row>
+<div align="center" width="100%">
+							<button label="导出" id="btSubmit" disabled="true"
+						onClick="@command('selectexcel', self=gridwin)" />
+					<label value="" style="color:red" />
+					
+						<button label="退回" id="btreback"  
+						onClick="@command('reback', self=gridwin)" />
+</div>
+								</row>
+									</rows>
+								</grid>
+							</vbox>
+						</panelchildren>
+					</panel>
+				</vlayout>
+</south>
+
+		</borderlayout>
+		
+	</window>
+</zk>

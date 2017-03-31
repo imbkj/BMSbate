@@ -1,0 +1,85 @@
+<!-- 
+	创建人：潘浪宇
+	创建时间：2013-10-18
+	用途：报价单详情
+-->
+<?page contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="报价单详情" border="normal" height="90%" width="100%"
+		closable="true" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoQuotation.CoQuotationInfoOpearteController')">
+		<grid model="@load(vm.coofferinfoList)" emptyMessage="暂无数据"
+			height="100%" width="100%" span="true">
+			<columns sizable="true">
+				<column label="序号" width="40px"></column>
+				<column label="产品名称"></column>
+				<column label="收费金额/收费单位"></column>
+				<column label="产品类型"></column>
+				<column label="城市/机构"></column>
+				<column label="享受方式" width="80px"></column>
+				<column label="份数" width="50px"></column>
+				<column label="描述" width="20%"></column>
+				<column label="备注"></column>
+<!-- 				<column label="操作" width="60px"></column> -->
+			</columns>
+			<template name="model">
+				<row>
+					<label value="${forEachStatus.index+1 }" />
+					<cell>
+						<label value="@load(each.coli_name)" />
+					</cell>
+					<cell if="${each.coli_group_count ne 0 }"
+						rowspan="${each.coli_group_count }">
+						<label value="@load(each.coli_fee)" />
+						<space />
+						<label value="@load(each.coli_cpfc_name)" />
+					</cell>
+					<cell>
+						<label value="@load(each.coli_pclass)" />
+					</cell>
+					<cell>
+						<div if="${not empty each.city }">
+							<label value="@load(each.city)" />
+							/
+							<label value="@load(each.coab_name)" />
+						</div>
+					</cell>
+					<label value="@load(each.coli_standard)" />
+					<cell>
+						<div if="${each.coli_pclass=='商业保险' }">
+							<label value="@load(each.coli_amount)" />
+							份
+						</div>
+					</cell>
+					<div
+						style="cursor:pointer;overflow:hidden;-ms-text-overflow: ellipsis;-o-text-overflow: ellipsis;"
+						tooltip="content_${each.coli_id },position=after_end">
+						<label
+							style="white-space: nowrap;text-overflow:ellipsis;cursor:pointer"
+							value="@load(each.coli_content)">
+						</label>
+						<popup id="content_${each.coli_id }"
+							width="200px">
+							<label value="@load(each.coli_content)">
+							</label>
+						</popup>
+					</div>
+					<div
+						tooltip="remark_${each.coli_id },position=after_pointer">
+						<label
+							style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;
+									cursor:pointer"
+							value="@load(each.coli_remark)">
+						</label>
+						<popup id="remark_${each.coli_id }"
+							width="200px">
+							<label value="@load(each.coli_remark)">
+							</label>
+						</popup>
+					</div>
+					<div></div>
+				</row>
+			</template>
+		</grid>
+	</window>
+</zk>

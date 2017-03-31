@@ -1,0 +1,89 @@
+<?page title="拜访计划查看" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window id="win" title="拜访计划审核" border="normal" width="70%" apply="org.zkoss.bind.BindComposer" sizable="true"  height="70%" 
+ viewModel="@id('VisitInfo') @init('Controller.ClientRelations.VisitInfo.visitinfo_auditonecontroller')" closable="true" >
+
+<style src="/css/style.css"></style>
+<borderlayout  vflex="1">
+<north border="0">
+	
+</north>
+<center  style="height:650px;" flex="true">
+<grid   model="@load(VisitInfo.visitInfolist)" id="gridwin" apply="Controller.ClientRelations.VisitInfo.visitinfo_auditonecontroller"
+            emptyMessage="暂无符合条件数据" mold="paging" pageSize="300" height="300px" hflex="1" style="border:0;">
+ 		<auxhead sclass="category-center">
+				<auxheader label="权限列表" colspan="11" />
+			</auxhead>
+			
+		<auxhead sclass="category-center">
+				
+				<auxheader label="序号"      />
+				<auxheader label="  公司名称"   />
+				<auxheader label="拜访方式"   />
+				<auxheader label="  计划拜访时间"     />
+				<auxheader label="  添加人"    />
+				<auxheader label="拜访执行人"  />
+				<auxheader label="次执行人"  />
+				<auxheader label="状态"    />
+				<auxheader label="添加时间"    />
+			
+		</auxhead>
+		<columns sizable="true" visible="false">
+				<column align="center" label="序号" width="5%"/>
+                <column align="center" sort="auto(cid)">
+               	   公司名称
+               
+                </column>
+                <column align="center">
+            	 拜访方式
+                    </column>
+ 
+                <column align="center" width="20%">
+            	    计划拜访时间
+                     </column>
+                <column align="center">
+                	  添加人
+                      </column>
+                   <column align="center"  label="拜访执行人" >
+                   </column>
+                       <column align="center"  label="次执行人" >
+         
+                      </column>
+                          <column align="center"  label="状态" >
+         
+                      </column>
+                <column align="center" label=" 添加时间"/>
+                <column align="center" />
+                <column align="center" />
+                 
+ 
+        </columns>
+			  <template name="model">
+			 <row>
+			 		<label value="@load(forEachStatus.index + 1)" />
+                    <label value="@load(each.cola_company)"/>
+                    <label value="@load(each.viin_class)"/>
+                    <cell>
+                    <hlayout>
+                    <label value="@load(each.viin_starttime)"/>-
+                    <label value="@load(each.viin_endtime)"/>
+                    </hlayout>
+                    </cell>
+                    <label value="@load(each.viin_addname)"/>
+                    <label value="@load(each.viin_person)"/>
+                     <label value="@load(each.viin_subordinate)"/>
+                      <label value="@load(each.viin_stateStr)"/>
+                    <label value="@load(each.viin_addtime)"/>
+                 	
+                </row>	
+			  </template>
+		
+		
+	</grid>
+	
+</center>
+<south></south>
+</borderlayout>
+
+</window>
+</zk>

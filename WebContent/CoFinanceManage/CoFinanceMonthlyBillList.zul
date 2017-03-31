@@ -1,0 +1,20 @@
+<grid apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('linkbill') @init('Controller.CoFinanceManage.CoFinanceMonthlyBillListController')"
+	model="@load(linkbill.cfmbList)" emptyMessage="没有数据信息" width="40%">
+	<columns>
+		<column>财务科目</column>
+		<column>应收款</column>
+		<column>实收款</column>
+		<column>差额</column>
+	</columns>
+	<rows>
+		<template name="model">
+			<row align="center">
+				<label value="@load(each.cfsa_cpac_name)" />
+				<label value="@load(each.cfsa_Receivable)"></label>
+				<label value="@load(each.cfsa_PaidIn)" />
+				<label value="@load(each.imbalance)" />
+			</row>
+		</template>
+	</rows>
+</grid>

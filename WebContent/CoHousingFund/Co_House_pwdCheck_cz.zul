@@ -1,0 +1,472 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<?component name="docDataList" macro-uri="../DocumentsInfo/DocumentsInfo_UpPageList.zul" inline="true"?>
+<zk>
+	<window title="福利录入界面" border="normal" width="60%" closable="true"
+		height="90%" apply="org.zkoss.bind.BindComposer" id="wind"
+		viewModel="@id('vm') @init('Controller.CoHousingFund.CoHouse_PwdCheckCzController')"
+		onCreate="@command('selectPage',addRow=addRow,updateRow=updateRow,showRenewalRow=showRenewalRow,addcheck=addcheck,updatecheck=updatecheck,renewalcheck=renewalcheck,statusRow=statusRow,button=button,gd=gd,gd1=gd1,gd2=gd2,renewalCombo=renewalCombo,addCombox=addCombox,sqsid=sqsid,sqeid=sqeid,xqsid=xqsid,xqeid=xqeid,sqsdid=sqsdid,sqedid=sqedid,xqsdid=xqsdid,xqedid=xqedid,changerow=changerow)">
+		<grid id="gid" height="100%">
+			<rows>
+				<row>
+					<cell>
+						<checkbox label="申请数字证书" id="addcheck"
+							onCheck="@command('showApply',addRow=addRow,addcheck=self,gd=gd,gd1=gd1,gd2=gd2)" />
+						<checkbox label="密钥专办员变更" id="updatecheck"
+							onCheck="@command('showUpdate',updateRow=updateRow,updatecheck=self,gd=gd,gd1=gd1,gd2=gd2)" />
+						<checkbox label="数字证书续期" id="renewalcheck"
+							onCheck="@command('showRenewal',showRenewalRow=showRenewalRow,renewalcheck=self,gd=gd,gd1=gd1,gd2=gd2)" />
+					</cell>
+				</row>
+				<row>
+					<cell width="20%">
+						<label value="申报状态更改/备注" />
+					</cell>
+				</row>
+				<row id="statusRow">
+					<grid>
+						<rows>
+							<row>
+								<cell width="20%">
+									<label value="申报状态" />
+								</cell>
+								<cell>
+									<radiogroup id="okradio">
+										<radio label="未申报" value="1"
+											checked="true"
+											selected="${ vm.cfpc.cfpc_state==1 ? true : false}" />
+										<radio label="申报中" value="2"
+											selected="${ vm.cfpc.cfpc_state==2 ? true : false}" />
+										<radio label="已申报" value="3"
+											selected="${ vm.cfpc.cfpc_state==3 ? true : false}" />
+										<radio label="退回" value="4"
+											selected="${ vm.cfpc.cfpc_state==4 ? true : false}" />
+									</radiogroup>
+									<button label="修改状态"
+										onClick="@command('updateStatus',statusRow=statusRow,status=okradio.selectedItem.value,addcheck=addcheck,updatecheck=updatecheck,renewalcheck=renewalcheck,wind=wind)" />
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label value="退回原因" />
+								</cell>
+								<cell>
+									<textbox mold="rounded"
+										value="@bind(vm.reason)" />
+								</cell>
+							</row>
+						</rows>
+					</grid>
+				</row>
+				<row id="addRow">
+					<cell width="100%">
+						<grid>
+							<rows>
+								<row>
+									<cell>
+										<label value="申请数字证书" />
+									</cell>
+								</row>
+								<row>
+									<cell width="100%">
+										<grid>
+											<rows>
+												<row>
+													<cell align="left"
+														width="15%">
+														<label
+															value="操作月份" />
+														<label value="*"
+															style="color:red" />
+													</cell>
+													<cell
+														align="left">
+														<label
+															width="10%" value="@bind(vm.currentDate)" />
+													</cell>
+													<cell align="left"
+														width="25%">
+														<label
+															value="办理年限" />
+														<label value="*"
+															style="color:red" />
+													</cell>
+													<cell align="left"
+														width="30%">
+														<label
+															value="@bind(vm.addYearLimit)" />
+														<label
+															value="年" />
+													</cell>
+												</row>
+												<row>
+													<cell align="left"
+														width="15%">
+														<label
+															value=" 密钥专办员 " />
+														<label value="*"
+															style="color:red" />
+													</cell>
+													<cell colspan="3"
+														align="left">
+														<combobox
+															mold="rounded" instant="true" readonly="true" width="40%"
+															visible="${!vm.addflag }" model="@load(vm.notPwdZb)"
+															id="addCombox"
+															onSelect="@command('apply',addZbid=self.selectedItem.value)">
+															<template
+																name="model">
+																<comboitem
+																	label="@bind(each.chfz_numberAndName)"
+																	value="@bind(each.chfz_id)" />
+															</template>
+														</combobox>
+														<combobox
+															mold="rounded" instant="true" readonly="true" width="40%"
+															value="${vm.nameAndNumber }" visible="${vm.addflag}">
+															<comboitem
+																label="@load(vm.nameAndNumber)" />
+														</combobox>
+													</cell>
+												</row>
+												<row>
+													<cell align="left"
+														width="15%">
+														<label
+															value="密钥起始日期" />
+														<label value="*"
+															style="color:red" />
+													</cell>
+													<cell
+														align="left">
+														<datebox
+															mold="rounded" instant="true" readonly="true"
+															format="yyyy-MM-dd" value="@bind(vm.addStartDate)"
+															id="sqsdid" />
+														<label
+															value="@load(vm.getDate.startDateString)" id="sqsid"
+															visible="false" />
+													</cell>
+													<cell align="left"
+														width="15%">
+														<label
+															value="密钥到期日期" />
+														<label value="*"
+															style="color:red" />
+													</cell>
+													<cell
+														align="left">
+														<datebox
+															mold="rounded" instant="true" readonly="true"
+															format="yyyy-MM-dd" value="@bind(vm.addEndDate)"
+															id="sqedid" onBlur="@command('addDateCheck')" />
+														<label
+															value="@load(vm.getDate.endDateString)" id="sqeid"
+															visible="false" />
+													</cell>
+												</row>
+												<row>
+													<cell align="left"
+														width="15%">
+														<label
+															value="客服备注 " />
+														<label value="*"
+															style="color:red" />
+													</cell>
+													<cell align="left"
+														colspan="3">
+														<label
+															value="@bind(vm.remark)" width="60%" />
+													</cell>
+												</row>
+											</rows>
+										</grid>
+									</cell>
+								</row>
+
+							</rows>
+						</grid>
+					</cell>
+
+				</row>
+
+				<!-- 变更密钥 -->
+
+				<row id="updateRow" visible="false">
+					<cell>
+						<grid>
+							<rows>
+								<row>
+									<cell width="20%">
+										<label value="密钥专办员变更" />
+									</cell>
+								</row>
+								<!-- 密钥信息  -->
+								<row>
+									<grid>
+										<rows>
+											<row>
+												<cell align="left"
+													width="15%">
+													<label value="操作月份" />
+													<label value="*"
+														style="color:red" />
+												</cell>
+												<cell align="left"
+													colspan="4">
+													<label width="10%"
+														value="@bind(vm.currentDate)" />
+												</cell>
+											</row>
+											<row>
+												<cell width="15%">
+													<label
+														value="原密钥专办员" />
+													<label value="*"
+														style="color:red" />
+												</cell>
+												<cell align="left"
+													width="30%" colspan="4">
+													<label
+														value="@bind(vm.yName)" />
+													<label value="(" />
+													<label
+														value="@bind(vm.yNumber)" />
+													<label value=")" />
+												</cell>
+											</row>
+
+											<row id="changerow">
+												<cell align="left"
+													width="15%">
+													<label
+														value="新密钥专办员" />
+													<label value="*"
+														style="color:red" />
+												</cell>
+												<cell align="left"
+													colspan="4">
+													<combobox
+														width="60%" mold="rounded" instant="true" readonly="true"
+														visible="${!vm.updateflag}" id="changePwdcombox"
+														model="@load(vm.notPwdZb)"
+														onSelect="@command('change',chfz_id=self.selectedItem.value)">
+														<template
+															name="model">
+															<comboitem
+																label="@bind(each.chfz_numberAndName)"
+																value="@bind(each.chfz_id)" />
+														</template>
+													</combobox>
+													<combobox
+														mold="rounded" instant="true" readonly="true"
+														value="${vm.nameAndNumber }" visible="${vm.updateflag}">
+														<comboitem
+															label="@load(vm.nameAndNumber)" />
+													</combobox>
+
+												</cell>
+											</row>
+											<row>
+												<cell align="left"
+													width="15%">
+													<label
+														value="客服备注 " />
+													<label value="*"
+														style="color:red" />
+												</cell>
+												<cell align="left"
+													colspan="4">
+													<label
+														value="@bind(vm.remark)" width="60%" />
+												</cell>
+											</row>
+										</rows>
+									</grid>
+								</row>
+							</rows>
+						</grid>
+					</cell>
+				</row>
+				<!-- 密钥续期 -->
+				<row id="showRenewalRow" visible="false">
+					<cell>
+						<grid>
+							<rows>
+								<row>
+									<cell>
+										<label value="数字证书续期 " />
+									</cell>
+								</row>
+								<row>
+									<grid>
+										<rows>
+											<row>
+												<cell align="left"
+													width="15%">
+													<label value="操作月份" />
+													<label value="*"
+														style="color:red" />
+												</cell>
+												<cell align="left">
+													<label width="10%"
+														value="@bind(vm.currentDate)" />
+												</cell>
+												<cell align="left"
+													width="15%">
+													<label
+														value="密钥续期年限" />
+													<label value="*"
+														style="color:red" />
+												</cell>
+												<cell align="left">
+													<label
+														value="@bind(vm.renewalLimit)" />
+													<label value="年" />
+												</cell>
+											</row>
+											<row>
+												<cell align="left">
+													<label value="续期密钥" />
+													<label value="*"
+														style="color:red" />
+												</cell>
+												<cell colspan="3">
+													<combobox
+														mold="rounded" instant="true" readonly="true" width="40%"
+														visible="${!vm.reneflag}" id="renewalCombo"
+														model="@load(vm.pwdList)"
+														onSelect="@command('renewal',chfp_id=self.selectedItem.value)">
+														<template
+															name="model">
+															<comboitem
+																label="@bind(each.chfp_numberAndName)"
+																value="@bind(each.chfp_id)" />
+														</template>
+													</combobox>
+													<combobox
+														mold="rounded" instant="true" readonly="true"
+														value="${vm.nameAndNumber }" visible="${vm.reneflag}">
+														<comboitem
+															label="@load(vm.nameAndNumber)" />
+													</combobox>
+
+												</cell>
+											</row>
+
+											<row>
+												<cell align="left"
+													width="15%">
+													<label
+														value="密钥起始日期" />
+													<label value="*"
+														style="color:red" />
+												</cell>
+												<cell align="left">
+													<datebox
+														mold="rounded" instant="true" readonly="true"
+														format="yyyy-MM-dd" value="@bind(vm.reneStartDate)"
+														id="xqsdid" />
+													<label
+														value="@load(vm.getDate.startDateString)" id="xqsid"
+														visible="false" />
+												</cell>
+												<cell align="left"
+													width="15%">
+													<label
+														value="密钥到期日期 " />
+													<label value="*"
+														style="color:red" />
+												</cell>
+												<cell align="left">
+													<datebox
+														mold="rounded" instant="true" readonly="true"
+														format="yyyy-MM-dd" value="@bind(vm.reneEndDate)"
+														id="xqedid" onBlur="@command('reneDateCheck')" />
+													<label
+														value="@load(vm.getDate.endDateString)" id="xqeid"
+														visible="false" />
+												</cell>
+											</row>
+											<row>
+												<cell align="left"
+													width="15%">
+													<label
+														value="客服备注 " />
+													<label value="*"
+														style="color:red" />
+												</cell>
+												<cell align="left"
+													colspan="3">
+													<label
+														value="@bind(vm.remark)" width="60%" />
+												</cell>
+											</row>
+										</rows>
+									</grid>
+								</row>
+
+							</rows>
+						</grid>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<grid id="gd">
+						<rows>
+							<row>
+								<cell>
+									<label value="提交资料" />
+								</cell>
+							</row>
+							<row>
+								<cell id="addDoc">
+									<!-- 材料内联页 参数：puzu_id：模块页面id， doc_type：员工(g)还是公司(c)，gid：公司数据则插入空白 ，业务表id,log_url：获取到页面路径的前部分，ifSubmit：当前页面已勾选后的材料状态 -->
+									<docDataList id="docGrid"
+										puzu_id="120" doc_type="c" cid="@bind(vm.cid)"
+										tid="${vm.cfpc_id }" dHeight="200px" dWidth="100%" />
+								</cell>
+							</row>
+						</rows>
+					</grid>
+					<grid id="gd1">
+						<rows>
+							<row>
+								<cell>
+									<label value="提交资料" />
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<!-- 材料内联页 参数：puzu_id：模块页面id， doc_type：员工(g)还是公司(c)，gid：公司数据则插入空白 ，业务表id,log_url：获取到页面路径的前部分，ifSubmit：当前页面已勾选后的材料状态 -->
+									<docDataList id="docGrid1"
+										puzu_id="121" doc_type="c" cid="@bind(vm.cid)"
+										tid="${vm.cfpc_id }" dHeight="200px" dWidth="100%" />
+								</cell>
+							</row>
+						</rows>
+					</grid>
+					<grid id="gd2">
+						<rows>
+							<row>
+								<cell>
+									<label value="提交资料" />
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<!-- 材料内联页 参数：puzu_id：模块页面id， doc_type：员工(g)还是公司(c)，gid：公司数据则插入空白 ，业务表id,log_url：获取到页面路径的前部分，ifSubmit：当前页面已勾选后的材料状态 -->
+									<docDataList id="docGrid2"
+										puzu_id="122" doc_type="c" cid="@bind(vm.cid)"
+										tid="${vm.cfpc_id }" dHeight="200px" dWidth="100%" />
+								</cell>
+							</row>
+						</rows>
+					</grid>
+					<button label="提交" id="button"
+						onClick="@command('submit',status=okradio.selectedItem.value,addcheck=addcheck,updatecheck=updatecheck,renewalcheck=renewalcheck,gd=docGrid,gd1=docGrid1,gd2=docGrid2,wind=wind)" />
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

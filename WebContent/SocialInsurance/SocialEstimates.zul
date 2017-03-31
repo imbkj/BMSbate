@@ -1,0 +1,72 @@
+<?page title="社保测算" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="社保测算" border="normal" width="99%" height="99%"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.SocialInsurance.SocialEstimatesController')"
+		closable="true" sizable="true">
+		<grid>
+			<rows>
+				<row>
+					<cell width="30%">测算数据模板:</cell>
+					<cell>
+						<button label="下载测算数据模板"
+							onClick="@command('downloadTemplet')" />
+					</cell>
+				</row>
+				<row>
+					<cell>上传测算数据:</cell>
+					<cell>
+						<textbox mold="rounded" rows="1" readonly="true"
+							value="@load(vm.uploadFlieName)" width="280px" />
+						<button label="浏览..."
+							upload="true,multiple=true" onUpload="@command('browse')" />
+					</cell>
+				</row>
+				<row>
+					<cell>请选择使用的算法:</cell>
+					<cell>
+						<hlayout valign="middle">
+							<combobox mold="rounded" autodrop="true"
+								width="150px" model="@load(vm.cityList)"
+								onChange="@command('selInsurance',city=self.value)">
+								<template name="model">
+									<comboitem label="@load(each)" />
+								</template>
+							</combobox>
+							<combobox id="cbInsurance" mold="rounded"
+								value="@bind(vm.insurance)" width="300px" autodrop="true"
+								model="@load(vm.insuranceList)"
+								onChange="@command('selByInsurance',cbInsurance=cbInsurance)"
+								readonly="true">
+								<template name="model">
+									<comboitem
+										label="@load(each.soin_title)" value="@load(each)" />
+								</template>
+							</combobox>
+							<label id="lblCoabName" style="color:blue;"
+								value="@load(vm.coabName)" />
+						</hlayout>
+					</cell>
+				</row>
+				<row>
+					<cell>请选择公积金比例:</cell>
+					<cell>
+						<combobox id="cbCpp" mold="rounded"
+							value="@bind(vm.cpp)" autodrop="true" width="100px"
+							model="@load(vm.cppList)">
+							<template name="model">
+								<comboitem label="@load(each)" />
+							</template>
+						</combobox>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button label="下载测算结果"
+						onClick="@command('downloadData',m=cbInsurance.selectedItem.value)" />
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

@@ -1,0 +1,108 @@
+<!--
+	创建人：林少斌
+	创建时间：2014-1-15
+	用途：外籍人新参保数据批量申报列表
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window id="winExcelData" title="社会保险 -- 外籍人新参保数据批量申报" border="normal"
+		width="100%" height="100%" apply="org.zkoss.bind.BindComposer"
+		closable="true"
+		viewModel="@id('vm') @init('Controller.EmSheBao.Emsc_Declare_ForExcelListController')">
+		<borderlayout vflex="1">
+			<north height="25%">
+				<grid width="100%" height="100%">
+					<rows>
+						<row>
+							<cell width="20%">
+								<label value="保存组名：" />
+							</cell>
+							<cell>
+								<textbox value="@load(vm.filename)"
+									width="180px" readonly="true" mold="rounded"/>
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="Excel文件名：" />
+							</cell>
+							<cell>
+								<label
+									value="${vm.filename}${vm.filetype}"
+									style="cursor:pointer;color:blue;"
+									onClick="@command('download')" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="类别：" />
+							</cell>
+							<cell>
+								<label value="外籍人新参保"
+									style="color:blue;" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</north>
+			<center>
+				<grid id="excelDataGrid" width="100%" height="100%" 
+					model="@load(vm.excelDataList)" emptyMessage="无数据">
+					<columns sizable="true">
+						<column label="序号" align="center" width="45px"/>
+						<column label="公司简称" align="center"
+							sort="auto(emsc_shortname)" />
+						<column label="姓名" align="center"
+							sort="auto(emsc_name)" />
+						<column label="申报中" align="center" />
+						<column label="未申报" align="center" />
+						<!-- <column label="退回" align="center" />
+						<column label="不成功原因" align="center" /> -->
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<cell>
+									<label
+										value="${forEachStatus.index + 1}" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emsc_shortname)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emsc_name)" />
+								</cell>
+								<cell>
+									<radiogroup id="rg${each.id}" />
+									<radio radiogroup="rg${each.id}"
+										value="2" selected="true"/>
+								</cell>
+								<cell>
+									<radio radiogroup="rg${each.id}"
+										value="0" />
+								</cell>
+								<!-- <cell>
+									<radio radiogroup="rg${each.id}"
+										value="3" />
+								</cell>
+								<cell>
+									<textbox width="70%" mold="rounded"/>
+								</cell> -->
+							</row>
+						</template>
+					</rows>
+					<foot>
+						<footer align="center" span="7">
+							<button label="申报"
+								onClick="@command('submit',excelDataGrid=excelDataGrid,winExcelData=winExcelData)" />
+							<button label="撤销"
+								onClick="@command('cancel',excelDataGrid=excelDataGrid,winExcelData=winExcelData)" />
+						</footer>
+					</foot>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

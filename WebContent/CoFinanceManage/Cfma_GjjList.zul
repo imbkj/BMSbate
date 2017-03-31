@@ -1,0 +1,67 @@
+<?page title="公积金" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<grid span="true" mold="paging" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoFinanceManage.Cfma_GjjListController')"
+		model="@load(vm.gjjList)" pageSize="10" emptyMessage="暫未找到数据"
+		hflex="1" vflex="1">
+		<auxhead>
+			<auxheader label="序号" rowspan="2" align="center"
+				width="10px" />
+			<auxheader label="员工编号" rowspan="2" align="center" />
+			<auxheader label="姓名" rowspan="2" align="center" />
+			<auxheader label="户籍" rowspan="2" align="center" />
+			<auxheader label="公积金基数" rowspan="2" align="center" />
+			<auxheader label="公积金缴交比例" colspan="2" align="center" />
+			<auxheader label="公积金缴交额" colspan="2" align="center" />
+			<auxheader label="公积金合计" rowspan="2" align="center" />
+			<auxheader label="应收" rowspan="2" align="center" />
+		</auxhead>
+		<auxhead>
+			<auxheader label="公司支付" align="center" />
+			<auxheader label="个人支付" align="center" />
+			<auxheader label="公司支付" align="center" />
+			<auxheader label="个人支付" align="center" />
+		</auxhead>
+		<columns></columns>
+		<rows>
+			<template name="model">
+				<row>
+					<cell align="center">
+						<label value="${forEachStatus.index + 1}" />
+					</cell>
+					<cell align="center">
+						<label value="@load(each.gid)" />
+					</cell>
+					<cell align="center">
+						<label value="@load(each.emba_name)" />
+					</cell>
+					<cell align="center">
+						<label value="@load(each.efhg_emhu_hj)" />
+					</cell>
+					<cell align="center">
+						<label value="@load(each.efhg_emhu_radix)" />
+					</cell>
+					<cell align="center">
+						<label value="@load(each.efhg_emhu_cpp)" />
+					</cell>
+					<cell align="center">
+						<label value="@load(each.efhg_emhu_opp)" />
+					</cell>
+					<cell align="center">
+						<label value="@load(each.efhg_emhu_cp)" />
+					</cell>
+					<cell align="center">
+						<label value="@load(each.efhg_emhu_op)" />
+					</cell>
+					<cell align="center">
+						<label value="@load(each.efhg_emhu_total)" />
+					</cell>
+					<cell align="center">
+						<label value="@load(each.efhg_receivable)" />
+					</cell>
+				</row>
+			</template>
+		</rows>
+	</grid>
+
+</zk>

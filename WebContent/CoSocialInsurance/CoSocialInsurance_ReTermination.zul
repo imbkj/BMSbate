@@ -1,0 +1,64 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="win" title="社保独立账户管理终止 - 重新提交" border="normal"
+		width="740px" closable="true" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoSocialInsurance.CoSocialInsurance_ReTerminationController')">
+		<grid>
+			<columns>
+				<column width="20%" />
+				<column />
+			</columns>
+			<rows>
+				<row>
+					<cell>
+						<label value="社保编号" style="color:#666" />
+					</cell>
+					<cell>
+						<label value="@load(vm.m.cosb_sorid)" />
+					</cell>
+				</row>
+				<row>
+					<cell>
+						<label value="公司名称(全称)" style="color:#666" />
+					</cell>
+					<cell>
+						<label value="@load(vm.m.coba_company)" />
+					</cell>
+				</row>
+				<row>
+					<cell>
+						<label value="终止原因" style="color:#666" />
+					</cell>
+					<cell>
+						<combobox readonly="true"
+							value="@bind(vm.cm.csbc_stop_reason)">
+							<comboitem label="终止社保服务"></comboitem>
+							<comboitem label="转中智大户"></comboitem>
+						</combobox>
+					</cell>
+				</row>
+				<row>
+					<cell>
+						<label value="操作月份" style="color:#666" />
+					</cell>
+					<cell>
+						<datebox format="yyyyMM"
+							value="@bind(vm.ownmonth)" />
+					</cell>
+				</row>
+				<row>
+					<cell>
+						<label value="备注" style="color:#666" />
+					</cell>
+					<cell>
+						<textbox rows="4" hflex="1"
+							value="@bind(vm.cm.csbc_remark)" />
+					</cell>
+				</row>
+			</rows>
+		</grid>
+		<hbox width="100%" align="center" pack="center">
+			<button label="提交" onClick="@command('submit',win=win)" />
+		</hbox>
+	</window>
+</zk>

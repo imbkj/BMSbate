@@ -1,0 +1,28 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="户口迁出" border="normal" closable="true" width="500px" height="400px"
+	apply="org.zkoss.bind.BindComposer" id="win"
+    viewModel="@id('vm') @init('Controller.EmCensus.EmCensus_BorrowCardController')"
+    >
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell width="80px">迁出原因</cell>
+			<cell><textbox width="90%" rows="6" id="outseasion"></textbox></cell>
+		</row>
+		<row>
+			<cell>迁入派出所</cell>
+			<cell><textbox width="90%" id="outaddress"></textbox></cell>
+		</row>
+		<row>
+			<cell>迁出时间</cell>
+			<cell><datebox id="outtime"></datebox></cell>
+		</row>
+	</rows>
+	<foot>
+		<footer align="center"><button onClick="@command('CensusOut',outseasion=outseasion.value,outaddress=outaddress.value,
+		outtime=outtime.value,win=win)">提交</button></footer>
+	</foot>
+</grid>
+</window>
+</zk>

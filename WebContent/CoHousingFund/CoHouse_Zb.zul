@@ -1,0 +1,285 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="专办员业务查询" border="normal" width="100%"
+		height="100%" hflex="1" vflex="1" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoHouse_Zb_Controller')">
+		<grid>
+			<rows>
+				<row spans="4">
+					<cell width="30%">
+						<grid height="100%" width="80%">
+							<columns>
+								<column label="快速索引" />
+							</columns>
+							<rows>
+								<row>
+									<cell>
+										<textbox value="" />
+										<combobox width="30%"
+											value="单位公积金号">
+											<comboitem value=""
+												label="单位公积金号" />
+											<comboitem value=""
+												label="公司编号" />
+											<comboitem value=""
+												label="公司名称" />
+										</combobox>
+									</cell>
+								</row>
+							</rows>
+							<foot>
+								<footer align="center">
+									<button label="查询"
+										onClick="@command('search')">
+									</button>
+								</footer>
+							</foot>
+						</grid>
+
+					</cell>
+					<cell>
+						<grid>
+							<columns>
+								<column label="基本检索" />
+							</columns>
+							<rows>
+								<row>
+									<cell align="center" colspan="2">
+										<label value="所属月份:" />
+									</cell>
+									<cell>
+										<datebox id="" format="yyyyMM"
+											width="90%" />
+									</cell>
+									<cell align="center">
+										<label value="申报类型:" />
+									</cell>
+									<cell>
+										<combobox width="50%" id=""
+											value="全部">
+											<comboitem value=""
+												label="全部" />
+											<comboitem value=""
+												label="未申报" />
+											<comboitem value=""
+												label="申报中" />
+											<comboitem value=""
+												label="已申报" />
+											<comboitem value=""
+												label="退回" />
+
+										</combobox>
+									</cell>
+									<cell align="center">
+										<label value="申请类型:" />
+									</cell>
+									<cell>
+										<combobox width="70%" id=""
+											value="全部">
+											<comboitem value=""
+												label="全部" />
+											<comboitem value=""
+												label="新增专办员" />
+											<comboitem value=""
+												label="专办员信息变更" />
+											<comboitem value=""
+												label="注销专办员" />
+
+										</combobox>
+									</cell>
+									<cell>
+										<button label="确定"
+											onClick="@command('search')" />
+									</cell>
+								</row>
+							</rows>
+						</grid>
+
+					</cell>
+				</row>
+				<row>
+					<cell colspan="4">
+						<grid width="80%">
+							<columns>
+								<column label="数据统计" />
+							</columns>
+							<rows>
+								<row spans="2">
+									<cell align="center">当月变更数:</cell>
+									<cell align="center">
+										[
+										<label style="color:red;"
+											value="0" />
+										]
+									</cell>
+								</row>
+								<row spans="2">
+									<cell align="center">已处理数:</cell>
+									<cell align="center">
+										[
+										<label style="color:red;"
+											value="0" />
+										]
+									</cell>
+								</row>
+							</rows>
+						</grid>
+
+					</cell>
+					<cell>
+						<grid>
+
+							<columns>
+								<column label="综合检索" />
+							</columns>
+							<rows>
+								<row>
+									<cell align="center" colspan="2">
+										<label value="专办员姓名" />
+									</cell>
+									<cell>
+										<combobox width="40%" value="全部"
+											onSelect="@command('setNum',name=self.selectedItem.label,nid=tnum)">
+											<comboitem value=""
+												label="全部" />
+											<comboitem value=""
+												label="高平" />
+											<comboitem value=""
+												label="陈景桃" />
+											<comboitem value=""
+												label="江琦" />
+										</combobox>
+									</cell>
+									<cell align="center">
+										<label value="专办员号" />
+									</cell>
+									<cell>
+										<textbox value="@bind(vm.num)"
+											id="tnum" />
+									</cell>
+								</row>
+								<row>
+									<cell align="center" colspan="2">
+										<label value="申报时间" />
+									</cell>
+									<cell>
+										<combobox width="30%">
+											<comboitem value=""
+												label="1月" />
+											<comboitem value=""
+												label="2月" />
+											<comboitem value=""
+												label="3月" />
+											<comboitem value=""
+												label="4月" />
+											<comboitem value=""
+												label="5月" />
+											<comboitem value=""
+												label="6月" />
+											<comboitem value=""
+												label="7月" />
+											<comboitem value=""
+												label="8月" />
+											<comboitem value=""
+												label="9月" />
+											<comboitem value=""
+												label="10月" />
+											<comboitem value=""
+												label="11月" />
+											<comboitem value=""
+												label="12月" />
+										</combobox>
+										<combobox width="30%"
+											model="@bind(vm.dayList)">
+											<template name="model">
+												<comboitem value=""
+													label="@load(each.day)" />
+											</template>
+										</combobox>
+										<combobox width="30%">
+											<comboitem value=""
+												label="之前" />
+											<comboitem value=""
+												label="之后" />
+											<comboitem value=""
+												label="当日" />
+										</combobox>
+									</cell>
+									<cell align="center">
+										<label value="添加时间" />
+									</cell>
+									<cell>
+										<combobox width="30%">
+											<comboitem value=""
+												label="1月" />
+											<comboitem value=""
+												label="2月" />
+											<comboitem value=""
+												label="3月" />
+											<comboitem value=""
+												label="4月" />
+											<comboitem value=""
+												label="5月" />
+											<comboitem value=""
+												label="6月" />
+											<comboitem value=""
+												label="7月" />
+											<comboitem value=""
+												label="8月" />
+											<comboitem value=""
+												label="9月" />
+											<comboitem value=""
+												label="10月" />
+											<comboitem value=""
+												label="11月" />
+											<comboitem value=""
+												label="12月" />
+										</combobox>
+										<combobox width="30%"
+											model="@bind(vm.dayList)">
+											<template name="model">
+												<comboitem value=""
+													label="@load(each.day)" />
+											</template>
+										</combobox>
+										<combobox width="30%">
+											<comboitem value=""
+												label="之前" />
+											<comboitem value=""
+												label="之后" />
+											<comboitem value=""
+												label="当日" />
+
+										</combobox>
+									</cell>
+								</row>
+								<row>
+									<cell width="25%" align="center">
+										<label value="结果集行数" />
+									</cell>
+									<cell colspan="3">
+										<combobox width="15%"
+											value="全部">
+											<comboitem value=""
+												label="全部" />
+											<comboitem value=""
+												label="首100行" />
+											<comboitem value=""
+												label="首200行" />
+											<comboitem value=""
+												label="首300行" />
+											<comboitem value=""
+												label="首400行" />
+											<comboitem value=""
+												label="首500行" />
+										</combobox>
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</cell>
+				</row>
+			</rows>
+		</grid>
+	</window>
+</zk>

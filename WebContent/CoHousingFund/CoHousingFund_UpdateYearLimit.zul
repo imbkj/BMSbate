@@ -1,0 +1,102 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<?component name="docDataList" macro-uri="../DocumentsInfo/DocumentsInfo_UpPageList.zul" inline="true"?>
+<zk>
+	<window title="new page title" border="normal" width="60%"
+		closable="true" height="70%" apply="org.zkoss.bind.BindComposer"
+		id="win"
+		viewModel="@id('vm') @init('Controller.CoHousingFund.CoHouse_UpdateYearLimitController')">
+		<grid>
+			<rows>
+				<row>
+					<cell width="100%">
+						<grid>
+							<rows>
+								<row>
+									<cell align="left" width="15%">
+										<label value="密钥办理年限" />
+										<label value="*"
+											style="color:red" />
+									</cell>
+									<cell align="left">
+										<combobox mold="rounded"
+											instant="true" readonly="true" id="addYearlimit" width="25%"
+											onSelect="@command('yearLimit',Limit=self.selectedItem.value)">
+											<comboitem label="1年"
+												value="1" />
+											<comboitem label="2年"
+												value="2" />
+											<comboitem label="3年"
+												value="3" />
+										</combobox>
+									</cell>
+									<cell align="left" width="10%">
+										<label value="操作月份" />
+										<label value="*"
+											style="color:red" />
+									</cell>
+									<cell align="left">
+										<label
+											value="@bind(vm.currentime)" />
+									</cell>
+								</row>
+								<row>
+									<cell align="left">
+										<label value="备注 " />
+										<label value="*"
+											style="color:red" />
+									</cell>
+									<cell colspan="3" align="left">
+										<textbox mold="rounded"
+											id="addremark" value="@bind(vm.remark)" width="70%" />
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<grid id="gd"
+						visible="${vm.cfpc.cfpc_addtype=='申请数字证书' }">
+						<rows>
+							<row>
+								<cell>
+									<label value="提交资料" />
+								</cell>
+							</row>
+							<row>
+								<cell id="addDoc">
+									<!-- 材料内联页 参数：puzu_id：模块页面id， doc_type：员工(g)还是公司(c)，gid：公司数据则插入空白 ，业务表id,log_url：获取到页面路径的前部分，ifSubmit：当前页面已勾选后的材料状态 -->
+									<docDataList id="docGrid"
+										puzu_id="120" doc_type="c" cid="@bind(vm.cfpc.cid)"
+										tid="${vm.cfpc.cfpc_id }" dHeight="200px" dWidth="100%" />
+								</cell>
+							</row>
+						</rows>
+					</grid>
+					<grid id="gd1"
+						visible="${vm.cfpc.cfpc_addtype=='数字证书续期' }">
+						<rows>
+							<row>
+								<cell>
+									<label value="提交资料" />
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<!-- 材料内联页 参数：puzu_id：模块页面id， doc_type：员工(g)还是公司(c)，gid：公司数据则插入空白 ，业务表id,log_url：获取到页面路径的前部分，ifSubmit：当前页面已勾选后的材料状态 -->
+									<docDataList id="docGrid1"
+										puzu_id="121" doc_type="c" cid="@bind(vm.cfpc.cid)"
+										tid="${vm.cfpc.cfpc_id }" dHeight="200px" dWidth="100%" />
+								</cell>
+							</row>
+						</rows>
+					</grid>
+					<button label="提交"
+						onClick="@command('submit',gd=docGrid,gd1=docGrid1,win=win)" />
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

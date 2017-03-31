@@ -1,0 +1,43 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="受托账单(机构)" border="normal" vflex="1"
+		apply="org.zkoss.bind.BindComposer" id="win"
+		viewModel="@id('vm') @init('Controller.EmFinance.Finance_InfoListController')">
+		<borderlayout>
+			<north border="0" title="检索" collapsible="true"
+				style="padding-bottom:10px;" open="true">
+
+			</north>
+			<center>
+				<grid>
+					<columns>
+						<column label="序号" align="center" />
+						<column label="委托地区" align="center" />
+						<column label="委托机构" align="center" />
+						<column label="所属月份" align="center" />
+						<column label="系统应收款" align="center" />
+						<column label="系统实收款" align="center" />
+						<column label="差额" align="center" />
+						<column label="确认时间" align="center" />
+						<column label="销帐时间" align="center" />
+						<column label="状态" align="center" />
+					</columns>
+					<rows>
+						<row>
+							<cell></cell>
+							<cell></cell>
+							<cell></cell>
+							<cell></cell>
+							<cell></cell>
+							<cell></cell>
+							<cell></cell>
+							<cell></cell>
+							<cell></cell>
+							<cell></cell>
+						</row>
+					</rows>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

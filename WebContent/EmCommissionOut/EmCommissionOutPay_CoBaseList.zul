@@ -1,0 +1,89 @@
+<?page title="公司帐单列表" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="公司帐单列表" border="normal"
+		apply="org.zkoss.bind.BindComposer" closable="true" width="99%"
+		viewModel="@id('vm') @init('Controller.EmCommissionOut.EmCommissionOutPay_CoBaseController')"
+		height="600px">
+		<label id="cabc_id" visible="false"
+			value="${arg.cabc_id }" />
+		<label id="ownmonth" visible="false" value="${arg.ownmonth }" />
+		<borderlayout>
+			<north>
+
+				<grid width="100%" id="g1" height="500px"
+					model="@load(vm.autpaycolist)">
+					<columns>
+						<column label="序号" align="center" width="60px" />
+						<column label="帐单月份" align="center" />
+						<column label="委托机构" align="center" />
+						<column label="公司名称" align="center" />
+						<column label="系统帐单总计" align="center" />
+						<column label="外地帐单总计" align="center" />
+						<column label="差额" align="center" />
+						<column label="状态" align="center" />
+						<column label="" align="center" width="30px">
+							<checkbox id="cka"
+								onClick="@command('cocheckall',a=self.checked,b=g1)" />
+						</column>
+						<column label="" align="center" visible="false" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<cell>
+									<label
+										value="${forEachStatus.index + 1}" />
+								</cell>
+								<cell>
+									<label value="@load(each.ownmonth)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ecop_dep_company)" style="cursor:pointer"
+										onClick="@command('empay_base', emco=each)" />
+								</cell>
+								<cell style="color:#00f">
+									<label
+										value="@load(each.ecop_company)" style="cursor:pointer"
+										onClick="@command('empay_base', emco=each)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ecop_yf_fee)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ecop_sf_fee)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ecop_yfsf_dis_fee)" />
+								</cell>
+								<cell>
+									<label value="已确认"
+										if="${each.ecop_state==0?true:false}" />
+									<label value="未确认"
+										if="${each.ecop_state!=0?true:false}" />
+								</cell>
+								<cell>
+									<checkbox
+										value="@load(each.ecop_id)"
+										if="${each.ecop_state!=0?true:false}" />
+								</cell>
+								<cell>
+									<label value="@load(each.cid)" />
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</north>
+			<center>
+				<div align="center">
+					<button id="submitButton" label="帐单确认"
+						onClick="@command('wtco_ok', emco=each,gridco=g1,cabc_id=cabc_id,ownmonth=ownmonth)" />
+				</div>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

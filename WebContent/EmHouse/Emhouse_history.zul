@@ -1,0 +1,39 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="个人公积金参保记录" id="winHistory" width="900px" height="500px"
+		closable="true" border="normal" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmHouse.Emhouse_historyController')">
+		<scrollview width="100%" height="100%">
+			<grid width="100%" height="100%" model="@load(vm.list)" sizedByContent="true" span="true">
+				<columns>
+					<column align="center">所属月份</column>
+					<column align="center">姓名</column>
+					<column align="center">身份证号码</column>
+					<column align="center">公积金号</column>
+					<column align="center">基数</column>
+					<column align="center">户籍</column>
+					<column align="center">单位交比例</column>
+					<column align="center">个人交比例</column>
+					<column align="center">单位交合计</column>
+					<column align="center">个人交合计</column>
+					<column align="center">合计</column>
+				</columns>
+				<template name="model">
+					<row>
+						<cell><label value="@load(each.ownmonth)" /></cell>
+						<cell><label value="@load(each.emhu_name)" /></cell>
+						<cell><label value="@load(each.emhu_idcard)" /></cell>
+						<cell><label value="@load(each.emhu_houseid)" /></cell>
+						<cell><label value="@load(each.emhu_radix)" /></cell>
+						<cell><label value="@load(each.emhu_hj)" /></cell>
+						<cell><label value="@load(each.emhu_cpp)" /></cell>
+						<cell><label value="@load(each.emhu_opp)" /></cell>
+						<cell><label value="@load(each.emhu_cp)" /></cell>
+						<cell><label value="@load(each.emhu_op)" /></cell>
+						<cell><label value="@load(each.emhu_total)" /></cell>
+					</row>
+				</template>
+			</grid>
+		</scrollview>
+	</window>
+</zk>

@@ -1,0 +1,71 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winCpp" title="审核公积金比例变更" border="normal" width="500px"
+		height="320px" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoCompact.Compact_houseCppAduitController')"
+		closable="true" onCreate="@command('winD',a=self)">
+		<grid>
+			<columns visible="false">
+				<column width="120px" />
+				<column />
+			</columns>
+			<rows>
+				<row>
+					<cell>公司名称</cell>
+					<cell>
+						<label value="@load(vm.cam.coba_company)" />
+					</cell>
+				</row>
+				<row>
+					<cell>合同编号</cell>
+					<cell>
+						<label value="@load(vm.cam.coco_compactid)" />
+					</cell>
+
+				</row>
+				<row>
+					<cell>单位公积金编号</cell>
+					<cell>
+						<label value="@load(vm.cam.coca_houseid)" />
+					</cell>
+				</row>
+				<row>
+					<cell>公积金比例</cell>
+					<cell>
+						<label value="@load(vm.cam.coca_cpp)" />
+					</cell>
+				</row>
+				<row>
+					<cell>变更原因</cell>
+					<cell>
+						<label value="@load(vm.cam.coca_remark)" />
+
+					</cell>
+				</row>
+				<row>
+					<cell>添加人</cell>
+					<cell>
+						<hbox>
+							<label value="@load(vm.cam.coca_addname)" />
+							(
+							<label value="@load(vm.cam.coca_addtime)" />
+							)
+						</hbox>
+					</cell>
+				</row>
+				<row>
+					<cell>退回原因</cell>
+					<cell>
+						<textbox value="@bind(vm.cam.coca_backreason)" rows="3" />
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer span="2" align="center">
+					<button label="提交" onClick="@command('submit')" />
+					<button label="退回" onClick="@command('back')" />
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

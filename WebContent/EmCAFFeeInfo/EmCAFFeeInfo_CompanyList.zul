@@ -1,0 +1,94 @@
+<!--
+	创建人：林少斌
+	创建时间：2014-9-25
+	用途：公司汇总页面
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="证件档案费用 -- 公司汇总页面" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmCAFFeeInfo.EmCAFFeeInfo_CompanyListController')"
+		border="normal" sizable="true" height="100%" width="100%">
+		<borderlayout>
+			<north border="0" title="数据查询" collapsible="true"
+				flex="true" open="false">
+				<panel border="1">
+					<panelchildren style="padding:5px;">
+						<grid id="searchGird" width="100%">
+							<rows>
+								<row>
+									<cell width="100px"
+										style="color:#666;">
+										公司名称
+									</cell>
+									<textbox id="coco_company"
+										width="150px" value="@bind(vm.company)" mold="rounded" />
+								</row>
+							</rows>
+							<foot>
+								<footer align="center">
+									<button id="btSearch" label="查询"
+										onClick="@command('search')" />
+								</footer>
+							</foot>
+						</grid>
+					</panelchildren>
+				</panel>
+			</north>
+			<center>
+				<grid model="@load(vm.ecfiList)" id="gridwin"
+					height="100%" width="100%" emptyMessage="暂无数据" mold="paging"
+					pageSize="200">
+					<columns>
+						<column label="公司编号" align="center" />
+						<column label="公司简称" align="center" />
+						<column label="总金额" align="center" />
+						<column label="已付金额" align="center" />
+						<column label="未付金额" align="center" />
+						<column label="(福利)已借金额" align="center" />
+						<column label="(福利)已清账金额" align="center" />
+						<column label="(客服)已借金额" align="center" />
+						<column label="(客服)已清账金额" align="center" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<cell>
+									<label value="@load(each.cid)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.shortname)" />
+								</cell>
+								<cell>
+									<label value="@load(each.all_fee)" />
+								</cell>
+								<cell>
+									<label value="@load(each.yf_fee)" />
+								</cell>
+								<cell>
+									<label value="@load(each.wf_fee)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.wd_loan_fee)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.wd_clear_fee)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.csd_loan_fee)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.csd_clear_fee)" />
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

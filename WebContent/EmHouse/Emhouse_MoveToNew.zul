@@ -1,0 +1,36 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="员工公积金 - 新增转调入" id="winMoveNew" border="normal"
+		width="500px" height="180px" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmHouse.Emhouse_MoveNewController')" closable="true">
+		<borderlayout>
+			<center>
+				<grid>
+					<rows>
+						<row>
+							<cell width="120px">个人公积金号</cell>
+							<cell>
+								<textbox id="houseid" value="" mold="rounded" />
+							</cell>
+						</row>
+						<row>
+							<cell>封存单位编号</cell>
+							<cell>
+								<label id="companyid" value="@load(vm.ecm.emhc_companyid)"   />
+							</cell>
+						</row>
+						<row>
+							<cell>封存单位名称</cell>
+							<cell>
+								<label id="company" value="@load(vm.ecm.emhc_company)"  />
+							</cell>
+						</row>
+					</rows>
+					<foot>
+						<footer align="center"><button label="提交" onClick="@command('submit')" /></footer>
+					</foot>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

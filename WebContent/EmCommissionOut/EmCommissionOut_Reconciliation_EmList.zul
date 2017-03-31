@@ -1,0 +1,301 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="委托对账 - 系统对账 - 员工费用列表" border="normal" closable="true"
+		width="90%" height="90%" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmCommissionOut.EmCommissionOut_Reconciliation_EmListController')">
+		<borderlayout>
+			<center>
+				<grid model="@load(vm.emList)" emptyMessage="暂无数据"
+					hflex="1" vflex="1" mold="paging" sizedByContent="true"
+					span="true">
+					<columns sizable="true">
+						<column align="center"></column>
+						<column align="center">
+							<label value="员工编号"
+								style="font-weight:bold;color:#666" />
+						</column>
+						<column align="center">
+							<label value="姓名"
+								style="font-weight:bold;color:#666" />
+						</column>
+						<column align="center">
+							<label value="身份证"
+								style="font-weight:bold;color:#666" />
+						</column>
+						<column align="center">
+							<label value="起始月份"
+								style="font-weight:bold;color:#666" />
+						</column>
+						<column align="center">
+							<label value="缴费类型"
+								style="font-weight:bold;color:#666" />
+						</column>
+						<column align="center">
+							<label value="社保应付总计"
+								style="font-weight:bold;color:#666" />
+						</column>
+						<column align="center">
+							<label value="社保应收总计"
+								style="font-weight:bold;color:#666" />
+						</column>
+						<column align="center">
+							<label value="社保实付总计"
+								style="font-weight:bold;color:#666" />
+						</column>
+						<column align="center">
+							<label value="社保差额（应付-应收）"
+								style="font-weight:bold;color:#666" />
+						</column>
+						<column align="center">
+							<label value="社保差额（应付-实付）"
+								style="font-weight:bold;color:#666" />
+						</column>
+						<column align="center">
+							<label value="公积金应付总计"
+								style="font-weight:bold;color:#666" />
+						</column>
+						<column align="center">
+							<label value="公积金应收总计"
+								style="font-weight:bold;color:#666" />
+						</column>
+						<column align="center">
+							<label value="公积金实付总计"
+								style="font-weight:bold;color:#666" />
+						</column>
+						<column align="center">
+							<label value="公积金差额（应付-应收）"
+								style="font-weight:bold;color:#666" />
+						</column>
+						<column align="center">
+							<label value="公积金差额（应付-实付）"
+								style="font-weight:bold;color:#666" />
+						</column>
+						<column align="center">
+							<label value="福利应付总计"
+								style="font-weight:bold;color:#666" />
+						</column>
+						<column align="center">
+							<label value="福利应收总计"
+								style="font-weight:bold;color:#666" />
+						</column>
+						<column align="center">
+							<label value="福利实付总计"
+								style="font-weight:bold;color:#666" />
+						</column>
+						<column align="center">
+							<label value="福利差额（应付-应收）"
+								style="font-weight:bold;color:#666" />
+						</column>
+						<column align="center">
+							<label value="福利差额（应付-实付）"
+								style="font-weight:bold;color:#666" />
+						</column>
+						<column align="center">
+							<label value="应付总计"
+								style="font-weight:bold;color:#666" />
+						</column>
+						<column align="center">
+							<label value="应收总计"
+								style="font-weight:bold;color:#666" />
+						</column>
+						<column align="center">
+							<label value="实付总计"
+								style="font-weight:bold;color:#666" />
+						</column>
+						<column align="center">
+							<label value="总计差额（应付-应收）"
+								style="font-weight:bold;color:#666" />
+						</column>
+						<column align="center">
+							<label value="总计差额（应付-实付）"
+								style="font-weight:bold;color:#666" />
+						</column>
+						<column align="center" width="60px">
+							<label value="操作"
+								style="font-weight:bold;color:#666" />
+						</column>
+					</columns>
+					<template name="model">
+						<row>
+							<custom-attributes
+								ecoh_id="${each.ecoh_id }" ecpu_id="${each.ecpu_id }"
+								efco_id="${each.efco_id }" efch_id="${each.efch_id }" />
+							<detail open="false" fulfill="onOpen">
+								<include
+									src="/EmCommissionOut/EmCommissionOut_Reconciliation_EmList_Detail.zul"
+									ecoh_id="${ecoh_id }" ecpu_id="${ecpu_id }"
+									efco_id="${efco_id }" efch_id="${efch_id }">
+								</include>
+							</detail>
+							<label value="@load(each.gid)" />
+							<label value="@load(each.emba_name)" />
+							<label value="@load(each.ecoh_idcard)" />
+							<label value="@load(each.bjownmonth)" />
+							<label value="@load(each.ecoh_addtype)" />
+							<cell>
+								<label value="无数据" style="color:blue"
+									if="${empty each.ecoh_sb_sum }" />
+								<label value="@load(each.ecoh_sb_sum)"
+									if="${not empty each.ecoh_sb_sum }" />
+							</cell>
+							<cell>
+								<label value="无数据" style="color:blue"
+									if="${empty each.efco_ecou_sb_sum }" />
+								<label
+									value="@load(each.efco_ecou_sb_sum)"
+									if="${not empty each.efco_ecou_sb_sum }" />
+							</cell>
+							<cell>
+								<label value="无数据" style="color:blue"
+									if="${empty each.ecpu_sb_total }" />
+								<label value="@load(each.ecpu_sb_total)"
+									if="${not empty each.ecpu_sb_total }" />
+							</cell>
+							<cell>
+								<label value="无数据" style="color:blue"
+									if="${empty each.yf_ys_sbsum_diff }" />
+								<label
+									value="@load(each.yf_ys_sbsum_diff)"
+									if="${each.yf_ys_sbsum_diff eq '0.00' }" />
+								<label
+									value="@load(each.yf_ys_sbsum_diff)" style="color:red"
+									if="${not empty each.yf_ys_sbsum_diff and each.yf_ys_sbsum_diff ne '0.00' }" />
+							</cell>
+							<cell>
+								<label value="无数据" style="color:blue"
+									if="${empty each.yf_sf_sbsum_diff }" />
+								<label
+									value="@load(each.yf_sf_sbsum_diff)"
+									if="${each.yf_sf_sbsum_diff eq '0.00' }" />
+								<label
+									value="@load(each.yf_sf_sbsum_diff)" style="color:red"
+									if="${not empty each.yf_sf_sbsum_diff and each.yf_sf_sbsum_diff ne '0.00' }" />
+							</cell>
+							<cell>
+								<label value="无数据" style="color:blue"
+									if="${empty each.ecoh_gjj_sum }" />
+								<label value="@load(each.ecoh_gjj_sum)"
+									if="${not empty each.ecoh_gjj_sum }" />
+							</cell>
+							<cell>
+								<label value="无数据" style="color:blue"
+									if="${empty each.efco_ecou_gjj_sum }" />
+								<label
+									value="@load(each.efco_ecou_gjj_sum)"
+									if="${not empty each.efco_ecou_gjj_sum }" />
+							</cell>
+							<cell>
+								<label value="无数据" style="color:blue"
+									if="${empty each.ecpu_gjj_total }" />
+								<label
+									value="@load(each.ecpu_gjj_total)"
+									if="${not empty each.ecpu_gjj_total }" />
+							</cell>
+							<cell>
+								<label value="无数据" style="color:blue"
+									if="${empty each.yf_ys_gjjsum_diff }" />
+								<label
+									value="@load(each.yf_ys_gjjsum_diff)"
+									if="${each.yf_ys_gjjsum_diff eq '0.00' }" />
+								<label
+									value="@load(each.yf_ys_gjjsum_diff)" style="color:red"
+									if="${not empty each.yf_ys_gjjsum_diff and each.yf_ys_gjjsum_diff ne '0.00' }" />
+							</cell>
+							<cell>
+								<label value="无数据" style="color:blue"
+									if="${empty each.yf_sf_gjjsum_diff }" />
+								<label
+									value="@load(each.yf_sf_gjjsum_diff)"
+									if="${each.yf_sf_gjjsum_diff eq '0.00' }" />
+								<label
+									value="@load(each.yf_sf_gjjsum_diff)" style="color:red"
+									if="${not empty each.yf_sf_gjjsum_diff and each.yf_sf_gjjsum_diff ne '0.00' }" />
+							</cell>
+							<cell>
+								<label value="无数据" style="color:blue"
+									if="${empty each.ecoh_welfare_sum }" />
+								<label
+									value="@load(each.ecoh_welfare_sum)"
+									if="${not empty each.ecoh_welfare_sum }" />
+							</cell>
+							<cell>
+								<label value="无数据" style="color:blue"
+									if="${empty each.efco_ecou_welfare_sum }" />
+								<label
+									value="@load(each.efco_ecou_welfare_sum)"
+									if="${not empty each.efco_ecou_welfare_sum }" />
+							</cell>
+							<cell>
+								<label value="无数据" style="color:blue"
+									if="${empty each.ecpu_welfare_total }" />
+								<label
+									value="@load(each.ecpu_welfare_total)"
+									if="${not empty each.ecpu_welfare_total }" />
+							</cell>
+							<cell>
+								<label value="无数据" style="color:blue"
+									if="${empty each.yf_ys_welsum_diff }" />
+								<label
+									value="@load(each.yf_ys_welsum_diff)"
+									if="${each.yf_ys_welsum_diff eq '0.00' }" />
+								<label
+									value="@load(each.yf_ys_welsum_diff)" style="color:red"
+									if="${not empty each.yf_ys_welsum_diff and each.yf_ys_welsum_diff ne '0.00' }" />
+							</cell>
+							<cell>
+								<label value="无数据" style="color:blue"
+									if="${empty each.yf_sf_welsum_diff }" />
+								<label
+									value="@load(each.yf_sf_welsum_diff)"
+									if="${each.yf_sf_welsum_diff eq '0.00' }" />
+								<label
+									value="@load(each.yf_sf_welsum_diff)" style="color:red"
+									if="${not empty each.yf_sf_welsum_diff and each.yf_sf_welsum_diff ne '0.00' }" />
+							</cell>
+							<cell>
+								<label value="无数据" style="color:blue"
+									if="${empty each.ecoh_sum }" />
+								<label value="@load(each.ecoh_sum)"
+									if="${not empty each.ecoh_sum }" />
+							</cell>
+							<cell>
+								<label value="无数据" style="color:blue"
+									if="${empty each.efco_receivable }" />
+								<label
+									value="@load(each.efco_receivable)"
+									if="${not empty each.efco_receivable }" />
+							</cell>
+							<cell>
+								<label value="无数据" style="color:blue"
+									if="${empty each.ecpu_total }" />
+								<label value="@load(each.ecpu_total)"
+									if="${not empty each.ecpu_total }" />
+							</cell>
+							<cell>
+								<label value="无数据" style="color:blue"
+									if="${empty each.yf_ys_sum_diff }" />
+								<label
+									value="@load(each.yf_ys_sum_diff)"
+									if="${each.yf_ys_sum_diff eq '0.00' }" />
+								<label
+									value="@load(each.yf_ys_sum_diff)" style="color:red"
+									if="${not empty each.yf_ys_sum_diff and each.yf_ys_sum_diff ne '0.00' }" />
+							</cell>
+							<cell>
+								<label value="无数据" style="color:blue"
+									if="${empty each.yf_sf_sum_diff }" />
+								<label
+									value="@load(each.yf_sf_sum_diff)"
+									if="${each.yf_sf_sum_diff eq '0.00' }" />
+								<label
+									value="@load(each.yf_sf_sum_diff)" style="color:red"
+									if="${not empty each.yf_sf_sum_diff and each.yf_sf_sum_diff ne '0.00' }" />
+							</cell>
+							<cell></cell>
+						</row>
+					</template>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

@@ -1,0 +1,77 @@
+<?page title="薪酬设置" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="薪酬设置" border="normal"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmSalary.EmSalary_CompanyListController')"
+		height="100%" width="100%">
+		<borderlayout>
+			<north border="0">
+				<grid>
+					<rows>
+						<row>
+							<cell>薪酬负责人</cell>
+							<cell>
+								<combobox id="cbGzUser" mold="rounded"
+									value="@bind(vm.user)"
+									onChange="@command('search')"
+									readonly="true">
+									<comboitem label="${each}"
+										forEach="${vm.gzUserList}" />
+								</combobox>
+							</cell>
+							<cell>公司简称</cell>
+							<cell>
+								<textbox
+									tooltiptext="可以输入 公司编号 或 公司简称 或 拼音简称 搜索" mold="rounded"
+									value="@bind(vm.coms)" />
+							</cell>
+						</row>
+					</rows>
+					<foot>
+						<footer align="center">
+							<button label="查询" onClick="@command('search')"/>
+						</footer>
+					</foot>
+				</grid>
+			</north>
+			<center border="0">
+				<grid height="100%" width="100%" emptyMessage="暂无数据"
+					mold="paging" pageSize="30" model="@load(vm.coviewList)">
+					<columns sizable="true">
+						<column label="序号" width="50px" align="center" />
+						<column label="公司编号" align="center"
+							sort="auto(cid)" />
+						<column label="公司简称" align="center"
+							sort="auto(coba_shortname)" />
+						<column label="客服代表" align="center"
+							sort="auto(coba_client)" />
+						<column label="薪酬负责人" align="center"
+							sort="auto(coba_gzaddname)" />
+						<column label="状态" align="center"
+							sort="auto(coba_servicestate)" />
+						<column label="操作" align="center" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<label
+									value="${forEachStatus.index + 1}" />
+								<label value="@load(each.cid)" />
+								<label
+									value="@load(each.coba_shortname)" />
+								<label value="@load(each.coba_client)" />
+								<label
+									value="@load(each.coba_gzaddname)" />
+								<label
+									value="@load(each.coba_servicestate eq '1'?'服务中':'已解约')"
+									style="@load(each.coba_servicestate eq '1'?'color:blue;':'')" />
+								<label value="设置" style="cursor:pointer"
+									onClick="@command('set',model=each)" />
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

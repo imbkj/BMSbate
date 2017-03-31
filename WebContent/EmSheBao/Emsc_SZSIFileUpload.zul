@@ -1,0 +1,92 @@
+<!--
+	创建人：林少斌
+	创建时间：2015-4-21
+	用途：独立户变更数据上传PDF页面
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winSZSIUpload" title="社会保险 -- 独立户变更数据上传PDF页面"
+		border="normal" width="800px" height="50%"
+		apply="org.zkoss.bind.BindComposer" closable="true"
+		viewModel="@id('vm') @init('Controller.EmSheBao.Emsc_SZSIFileUploadController')">
+		<div height="98%" style="overflow-y:scroll">
+			<groupbox>
+				<caption label="上传文件" />
+				<grid style="border:0px">
+					<rows>
+						<row>
+							<cell width="20%">
+								<label value="文件路径：" />
+							</cell>
+							<cell>
+								<textbox mold="rounded" rows="1" 
+									readonly="true" width="280px" value="@load(vm.uploadFlieName)"/>
+								<button label="浏览..."
+									upload="true,multiple=true"
+									onUpload="@command('browse')" />
+							</cell>
+						</row>
+						<row>
+							<cell colspan="2" align="center">
+								<button label="上传"
+									onClick="@command('submit',win=winSZSIUpload)" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox>
+				<caption label="社保变更个人档案信息" />
+				<grid style="border:0px">
+					<rows>
+						<row>
+							<cell width="20%">
+								<label value="所属月份" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.sbData.ownmonth)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="公司名称" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.sbData.escs_company)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="姓名" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.sbData.escs_name)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="变更类型" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.sbData.escs_change)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="变动内容" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.sbData.escs_content)" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+		</div>
+	</window>
+</zk>

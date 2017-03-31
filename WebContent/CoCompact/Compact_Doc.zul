@@ -1,0 +1,52 @@
+<!--
+	创建人：张志强
+	创建时间：2013-10-17
+	用途：公司合同添加页面框架
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="合同制作" border="normal" width="95%" closable="true" id="w1"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoCompact.Compact_UploadController')">
+		<zscript language="Java">
+	import Util.UserInfo;
+	String user = UserInfo.getUserid();
+</zscript>
+		<label id="coco_id" value="${arg.daid}" visible="false" />
+		<label id="userid" value="${user}" visible="false" />
+		<label id="coco_tapr_id" value="${arg.id}" visible="false" />
+		<grid width="100%">
+					<rows>
+						<row>
+							<cell width="60px">
+								<label value="上传类型：" />
+							</cell>
+							<cell width="200px">
+								<radiogroup id="cbClass"><radio label="合同上传" value="1" /><radio label="特殊申请扫描件上传" value="2" /></radiogroup>
+							</cell>
+							
+							<cell width="70px">
+								<label value="文件目录：" />
+							</cell>
+							<cell width="240px">
+								<textbox mold="rounded" rows="1"
+									readonly="true" value="@load(vm.filename)" />
+								<button label="浏览..."
+									upload="true,multiple=true" onUpload="@command('browse',in_a=in_a)" />
+							</cell>
+							
+							<cell>
+							<button label="提交" id="btSubmit"
+								onClick="@command('upload',class=cbClass,cocoid=coco_id,tarp_id=coco_tapr_id,w1=w1,in_a=in_a)" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+				<label value="退回原因：" height="20px" if="${vm.conname!=''}" /><label value="@load(vm.conname)" height="20px" />
+	<include id="in_a"
+			src="../CoCompact/Compact_AddDoc.jsp?coco_tapr_id=${arg.id}&amp;coco_id=${arg.daid}&amp;user=${user}&amp;way=${arg.way}">
+		</include>
+		
+	</window>
+
+</zk>

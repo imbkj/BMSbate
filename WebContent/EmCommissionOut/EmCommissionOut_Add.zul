@@ -1,0 +1,570 @@
+<?page title="委托外地新增" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="委托外地新增" border="normal" width="100%" height="100%"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmCommissionOut.EmCommissionOutController')"
+		onCreate="@command('winC',a=self)">
+		<script type="text/javascript" src="/js/Datebox.js"></script>
+		<scrollview visible="@load(vm.step1)" height="95%">
+			<groupbox title="基本信息" mold="3d">
+				<grid width="100%">
+					<columns>
+						<column width="15%" />
+						<column />
+						<column width="15%" />
+						<column />
+					</columns>
+					<rows>
+						<row>
+							<cell>
+								<label value="员工编号" style="color:#666" />
+							</cell>
+							<cell>
+								<label value="@load(vm.m.gid)" />
+							</cell>
+							<cell>
+								<label value="员工姓名" style="color:#666" />
+							</cell>
+							<cell>
+								<label value="@load(vm.m.emba_name)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="身份证号" style="color:#666" />
+							</cell>
+							<cell colspan="3">
+								<textbox maxlength="18" width="160px"
+									readonly="true" value="@bind(vm.m.ecoc_idcard)" />
+							</cell>
+						</row>
+
+						<row>
+							<cell>
+								<hbox>
+									<label value="服务费标准"
+										style="color:#FF0000" />
+									<label value="(*)"
+										style="color:red" />
+								</hbox>
+							</cell>
+							<cell>
+
+								<combobox model="@load(vm.stardList)"
+									 width="150px"
+									selectedItem="@bind(vm.stardModel)" constraint="no empty"
+									onChange="@command('stardChange')">
+									<template name="model">
+										<comboitem
+											label="@load(each.fee_title)" />
+									</template>
+								</combobox>
+
+							</cell>
+							<cell>
+								<hbox>
+									<label value="当地标准"
+										style="color:#FF0000" />
+									<label value="(*)"
+										style="color:red" />
+								</hbox>
+							</cell>
+							<cell>
+
+								<combobox model="@load(vm.titleList)"
+									constraint="no empty" width="150px" readonly="true"
+									selectedItem="@bind(vm.titleModel)"
+									onChange="@command('titleChange')">
+									<template name="model">
+										<comboitem
+											label="@load(each.soin_title)" />
+									</template>
+								</combobox>
+
+							</cell>
+						</row>
+
+						<row>
+							<cell>
+								<label value="社保账户" style="color:#666" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.stardModel.ecos_shebao_zhtype)" />
+							</cell>
+							<cell>
+								<label value="费用支付方式"
+									style="color:#666" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.stardModel.ecos_shebao_feetype)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="公积金账户" style="color:#666" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.stardModel.ecos_gjj_zhtype)" />
+							</cell>
+							<cell>
+								<label value="费用支付方式"
+									style="color:#666" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.stardModel.ecos_gjj_feetype)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="档案" style="color:#666" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.stardModel.wtss_archives)" />
+
+							</cell>
+							<cell>
+								<label value="该员工是否保管档案"
+									style="color:#666" />
+							</cell>
+							<cell>
+								<combobox width="90px" readonly="true"
+									disabled="@load(vm.file_state)" id="ch1"
+									onChange="@command('fileChange',ch1=ch1)">
+									<comboitem label="是" />
+									<comboitem label="否" />
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="合同签定方" style="color:#666" />
+							</cell>
+							<cell>
+
+								<label
+									value="@load(vm.stardModel.wtss_laborcontract)" />
+							</cell>
+							<cell>
+								<hbox>
+									<label value="工作电话"
+										style="color:#666" />
+									<label value="(*)"
+										style="color:red" />
+								</hbox>
+							</cell>
+							<cell>
+								<textbox id="phone"
+									value="@bind(vm.m.ecoc_phone)" />
+
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<hbox>
+									<label value="个人手机"
+										style="color:#666" />
+									<label value="(*)"
+										style="color:red" />
+								</hbox>
+							</cell>
+							<cell>
+								<textbox id="mobile"
+									value="@bind(vm.m.ecoc_mobile)" />
+							</cell>
+							<cell>
+								<label value="户籍" style="color:#666" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.m.ecoc_domicile)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<hbox>
+									<label value="合同起始时间"
+										style="color:#666" />
+									<label value="(*)"
+										style="color:red" />
+								</hbox>
+							</cell>
+							<cell>
+
+								<datebox width="130px"
+									constraint="no empty" value="@bind(vm.compact_f)"
+									format="yyyy-MM-dd" onFocus="self.select()" />
+
+							</cell>
+							<cell>
+								<hbox>
+									<label value="合同结束时间"
+										style="color:#666" />
+									<label value="(*)"
+										style="color:red" />
+								</hbox>
+							</cell>
+							<cell>
+								<combobox width="130px"
+									constraint="no empty" readonly="true"
+									value="@bind(vm.compact_l_str)"
+									onChange="@command('compact_l_change')">
+									<comboitem label="有固定期限" />
+									<comboitem label="无固定期限" />
+								</combobox>
+								<datebox width="130px"
+									constraint="no empty" visible="@load(vm.compact_l_vis)"
+									value="@bind(vm.compact_l)" format="yyyy-MM-dd"
+									onFocus="self.select()" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="电子邮件" style="color:#666" />
+							</cell>
+							<cell>
+								<textbox value="@load(vm.m.ecoc_email)" />
+							</cell>
+							<cell>
+								<label value="实际工资" style="color:#666" />
+							</cell>
+							<cell>
+								<doublebox format=",###.##"
+									value="@bind(vm.m.ecoc_salary)"  />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="备注" style="color:#666" />
+							</cell>
+							<cell colspan="3">
+								<textbox rows="3" hflex="1"
+									value="@bind(vm.m.ecoc_remark)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="社保基数" style="color:#666" />
+							</cell>
+							<cell>
+								<doublebox format=",###.##"
+									value="@bind(vm.m.ecoc_sb_base)"
+									onChange="@command('sb_baseChange')" onFocus="self.select()" />
+							</cell>
+							<cell>
+								<label value="公积金基数" style="color:#666" />
+							</cell>
+							<cell>
+								<doublebox format=",###.##"
+									value="@bind(vm.m.ecoc_house_base)"
+									onChange="@command('house_baseChange')"
+									onFocus="self.select()" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox title="服务项目起始日设置" mold="3d">
+				<grid width="100%" model="@load(vm.feeList)"
+					emptyMessage="暂无数据">
+					<columns sizable="true">
+						<column label="项目" width="150px" align="center" />
+						<column label="起始日" align="center"
+							width="100px" />
+						<column width="60px" align="center">
+							<hlayout style="cursor:pointer"
+								onClick="@command('dateAll',class='all')">
+								<image src="/images/130.gif"></image>
+								<label value="全选" />
+							</hlayout>
+						</column>
+						<column label="内容" align="center" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<cell>
+									<label
+										if="${each.sicl_class ne '福利项目' }"
+										value="@load(each.eofc_name)" />
+									<label
+										if="${each.sicl_class eq '福利项目' }" style="color:blue"
+										value="@load(each.eofc_name)" />
+								</cell>
+								<cell>
+									<datebox hflex="1"
+										onFocus="self.select()" if="${each.isdate }" format="yyyy-MM"
+										sclass="datebox-month-only" value="@bind(each.tempDate)">
+									</datebox>
+								</cell>
+								<cell>
+
+								</cell>
+								<cell>
+									<textbox width="95%"
+										value="@bind(each.eofc_content)"
+										if="${each.sicl_class eq '福利项目' }" />
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</groupbox>
+		</scrollview>
+		<scrollview height="95%" visible="@load(vm.step2)">
+			<grid model="@load(vm.subList)">
+				<template name="model" var="emout">
+					<row if="${emout.ecoc_addtype ne '补缴' }">
+						<cell>
+							<grid>
+								<columns>
+									<column width="15%" />
+									<column />
+									<column width="15%" />
+									<column />
+								</columns>
+								<rows>
+									<row>
+										<cell colspan="4">
+											<label
+												value="@load(emout.ecoc_name)"
+												style="font-weight:bold;color:#666" />
+										</cell>
+									</row>
+									<row>
+										<cell>
+											<label value="合同标准"
+												style="color:#666" />
+										</cell>
+										<cell>
+											<label
+												value="@load(vm.stardModel.ecos_name)" />
+										</cell>
+										<cell>
+											<label value="当地标准"
+												style="color:#666" />
+										</cell>
+										<cell>
+											<label
+												value="@load(vm.titleModel.soin_title)" />
+										</cell>
+									</row>
+									<row>
+										<cell>
+											<label value="社保基数"
+												style="color:#666" />
+										</cell>
+										<cell>
+											<doublebox format=",###.##"
+												value="@bind(emout.ecoc_sb_base)"
+												onChange="@command('fieldchange',each=emout)"
+												onFocus="self.select()" />
+										</cell>
+										<cell>
+											<label value="公积金基数"
+												style="color:#666" />
+										</cell>
+										<cell>
+											<doublebox format=",###.##"
+												value="@bind(emout.ecoc_house_base)"
+												onChange="@command('fieldchange',each=emout)"
+												onFocus="self.select()" />
+										</cell>
+									</row>
+									<row>
+										<cell colspan="4">
+											<grid width="100%"
+												model="@load(emout.feeList)" emptyMessage="暂无数据">
+												<columns
+													sizable="true">
+													<column label="项目"
+														width="150px" align="center" />
+													<column label="企业基数"
+														align="center" />
+													<column label="个人基数"
+														align="center" />
+													<column label="企业比例"
+														align="center" />
+													<column label="个人比例"
+														align="center" />
+													<column label="月缴费"
+														align="center" />
+													<column label="起始日"
+														align="center" width="150px" />
+												</columns>
+												<template name="model"
+													var="fee">
+													<row
+														style="border:1px dotted #cad9ea;background-color:#f5fafe;"
+														visible="${not empty fee.eofc_start_date }">
+														<cell>
+															<label
+																if="${fee.sicl_class ne '福利项目' }"
+																value="@load(fee.eofc_name)" />
+															<label
+																if="${fee.sicl_class eq '福利项目' }" style="color:blue"
+																value="@load(fee.eofc_name)" />
+														</cell>
+														<cell
+															if="${fee.eofc_name ne '服务费' and fee.eofc_name ne '档案费'
+										and fee.sicl_class ne '福利项目' }">
+															<doublebox
+																value="@bind(fee.eofc_co_base)"
+																onChange="@command('fieldchange')" format=",###.##"
+																onFocus="self.select()" />
+														</cell>
+														<cell
+															if="${fee.eofc_name ne '服务费' and fee.eofc_name ne '档案费'
+										and fee.sicl_class ne '福利项目' }">
+															<doublebox
+																value="@bind(fee.eofc_em_base)"
+																onChange="@command('fieldchange')" format=",###.##"
+																onFocus="self.select()" />
+														</cell>
+														<cell
+															if="${fee.eofc_name ne '服务费' and fee.eofc_name ne '档案费'
+										and fee.sicl_class ne '福利项目' }">
+															<div>
+																<label
+																	if="${fee.sicl_class ne '公积金' }"
+																	value="@bind(fee.eofc_cp)" />
+																<combobox
+																	model="@load(fee.cpList)" readonly="true" width="50px"
+																	value="@bind(fee.eofc_cp)"
+																	if="${fee.sicl_class eq '公积金' and not empty fee.eofc_cp }"
+																	onSelect="@command('fieldchange')">
+																	<template
+																		name="model">
+																		<comboitem
+																			label="@load(each)" />
+																	</template>
+																</combobox>
+															</div>
+														</cell>
+														<cell
+															if="${fee.eofc_name ne '服务费' and fee.eofc_name ne '档案费'
+										and fee.sicl_class ne '福利项目' }">
+															<div>
+																<label
+																	if="${fee.sicl_class ne '公积金' }"
+																	value="@bind(fee.eofc_op)" />
+																<combobox
+																	model="@load(fee.opList)" readonly="true" width="50px"
+																	value="@bind(fee.eofc_op)"
+																	if="${fee.sicl_class eq '公积金' and not empty fee.eofc_op }"
+																	onSelect="@command('fieldchange')">
+																	<template
+																		name="model">
+																		<comboitem
+																			label="@load(each)" />
+																	</template>
+																</combobox>
+															</div>
+														</cell>
+														<cell
+															align="left" colspan="4"
+															if="${fee.eofc_name eq '服务费' or fee.eofc_name eq '档案费' or fee.sicl_class eq '福利项目' }">
+															<label
+																value="@bind(fee.eofc_content)" />
+														</cell>
+														<cell>
+															<label
+																value="@bind(fee.eofc_month_sum)" />
+														</cell>
+														<cell>
+															<label
+																value="@bind(fee.eofc_start_date)" />
+														</cell>
+													</row>
+												</template>
+												<foot>
+													<footer span="8"
+														align="center">
+														<hlayout
+															style="word-break: break-all; word-wrap:break-word">
+															社保企业合计:
+															<label
+																value="@load(emout.ecoc_sb_co_sum)" />
+															<space
+																bar="true" orient="vertical" />
+															社保个人合计:
+															<label
+																value="@load(emout.ecoc_sb_em_sum)" />
+															<space
+																bar="true" orient="vertical" />
+															社保合计:
+															<label
+																value="@load(emout.ecoc_sb_sum)" />
+															<space
+																bar="true" orient="vertical" />
+															公积金企业合计:
+															<label
+																value="@load(emout.ecoc_gjj_co_sum)" />
+															<space
+																bar="true" orient="vertical" />
+															公积金个人合计:
+															<label
+																value="@load(emout.ecoc_gjj_em_sum)" />
+															<space
+																bar="true" orient="vertical" />
+															公积金合计:
+															<label
+																value="@load(emout.ecoc_gjj_sum)" />
+															<space
+																bar="true" orient="vertical" />
+															福利项目合计:
+															<label
+																value="@load(emout.ecoc_welfare_sum)" />
+															<space
+																bar="true" orient="vertical" />
+															合同总额:
+															<label
+																style="color:red" value="@load(emout.ecoc_sum)" />
+														</hlayout>
+													</footer>
+												</foot>
+											</grid>
+										</cell>
+									</row>
+								</rows>
+							</grid>
+						</cell>
+					</row>
+					<row if="${emout.ecoc_addtype eq '补缴' }"
+						visible="false">
+					</row>
+				</template>
+			</grid>
+		</scrollview>
+		<hbox width="100%" align="center" pack="center">
+			<hlayout>
+				<button label="下一步" onClick="@command('next')"
+					visible="@load(vm.step1)" />
+				<button label="上一步" onClick="@command('back')"
+					visible="@load(vm.step2)" />
+				<button label="计算费用" onClick="@command('feeCalc')"
+					visible="@load(vm.step2)" />
+				<button label="提交" disabled="@load(vm.iscal)"
+					onClick="@command('submit')" visible="@load(vm.step2)" />
+			</hlayout>
+		</hbox>
+		<zscript><![CDATA[
+	void filech() {
+	//alert(file1.getValue());
+	if(file1.getValue()=="不保管"){
+		ch1.i ;
+	}else{
+		ch1.setDisabled(false) ;
+	}
+}
+	void qk(String pv) {
+		//alert(file1.getValue());
+		pv.value="";
+	}
+]]></zscript>
+	</window>
+</zk>

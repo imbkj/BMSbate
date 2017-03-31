@@ -1,0 +1,76 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="出纳" border="normal" width="70%" height="70%"
+		closable="true" apply="org.zkoss.bind.BindComposer" id="paywin"
+		viewModel="@id('vm') @init('Controller.EmPay.EmPa_CashierApprovalController')">
+		<grid vflex="1" hflex="1">
+			<rows>
+				<row>
+					<cell width="100px">公司编号</cell>
+					<cell><label value="@load(vm.model.cid)"></label></cell>
+					<cell width="80px">公司简称</cell>
+					<cell><label value="@load(vm.model.coba_shortname)"></label></cell>
+					<cell width="100px">公司名称</cell>
+					<cell><label value="@load(vm.model.coba_company)"></label></cell>
+				</row>
+				<row>
+					<cell>员工编号</cell>
+					<cell><label value="@load(vm.model.gid)"></label></cell>
+					<cell>员工姓名</cell>
+					<cell><label value="@load(vm.model.emba_name)"></label></cell>
+					<cell>身份证号</cell>
+					<cell><label value="@load(vm.model.emba_idcard)"></label></cell>
+				</row>
+				<row>
+					<cell>收款人银行账号</cell>
+					<cell><label value="@load(vm.model.empa_account)"></label></cell>
+					<cell>收款人开户行</cell>
+					<cell><label value="@load(vm.model.empa_bank)"></label></cell>
+					<cell>收款人银行账户名</cell>
+					<cell><label value="@load(vm.model.empa_ba_name)"></label></cell>
+				</row>
+				<row>
+					<cell>客服</cell>
+					<cell><label value="@load(vm.model.coba_client)"></label></cell>
+					<cell>帐款所属期</cell>
+					<cell><label value="@load(vm.model.ownmonth)"></label></cell>
+					<cell>款项类别</cell>
+					<cell><label value="@load(vm.model.empa_class)"></label></cell>
+				</row>
+				<row>
+					<cell>支付方式</cell>
+					<cell><label value="@load(vm.model.empa_payclass)"></label></cell>
+					<cell>支付形式</cell>
+					<cell colspan="3"><label value="@load(vm.model.empa_paytype)"></label></cell>
+				</row>
+				<row>
+					<cell>税前金额</cell>
+					<cell><label value="@load(vm.model.empa_aftertax)"></label></cell>
+					<cell>个人所得税</cell>
+					<cell><label value="@load(vm.model.empa_tax)"></label></cell>
+					<cell>实付金额</cell>
+					<cell><label value="@load(vm.model.empa_fee)"></label></cell>
+				</row>
+				<row>
+					<cell>制单人</cell>
+					<cell><label value="@load(vm.model.empa_addname)"></label></cell>
+					<cell>付款时间</cell>
+					<cell><label value="@load(vm.model.empa_addtime)"></label></cell>
+					<cell>状态</cell>
+					<cell><label value="@load(vm.model.state_name)"></label></cell>
+				</row>
+				<row>
+					<cell>备注</cell>
+					<cell colspan="5">
+						<textbox value="@bind(vm.model.empa_remark)" width="80%" rows="4"></textbox>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer span="8" align="center">
+					<button onClick="@command('submit',win=paywin)">提交</button>
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

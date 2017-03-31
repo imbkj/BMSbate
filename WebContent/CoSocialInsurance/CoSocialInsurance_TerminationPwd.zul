@@ -1,0 +1,36 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="win" title="交接密码" border="normal" width="450px"
+		closable="true" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoSocialInsurance.CoSocialInsurance_TerminationPwdController')">
+		<grid>
+			<columns>
+				<column width="15%"></column>
+				<column></column>
+			</columns>
+			<rows>
+				<row>
+					公司名称
+					<cell>
+						<label value="@load(vm.m.coba_company)" />
+					</cell>
+				</row>
+				<row>
+					社保编号
+					<cell>
+						<label value="@load(vm.m.cosb_sorid)" />
+					</cell>
+				</row>
+				<row>
+					密码
+					<cell>
+						<textbox value="@bind(vm.m.cosb_pwd)" />
+					</cell>
+				</row>
+			</rows>
+		</grid>
+		<hbox width="100%" pack="center" align="center">
+			<button label="提交" onClick="@command('submit',win=win)" />
+		</hbox>
+	</window>
+</zk>

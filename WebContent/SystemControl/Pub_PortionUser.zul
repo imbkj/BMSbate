@@ -1,0 +1,110 @@
+<?page title="修改用户信息" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="修改用户信息" id="wins" border="normal" height="100%"
+		closable="true" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.SystemControl.Pub_PortionUserController')">
+		<grid width="100%" height="100%">
+			<rows>
+				<row>
+					<cell width="15%" style="color:#666;">请选择用户:</cell>
+					<cell align="left">
+						<combobox model="@load(vm.loginlist)" value="@bind(vm.m.log_name)" readonly="true" 
+						onChange="@command('selectLogin',cb=self)">
+							<template name="model">
+								<comboitem label="@load(each.log_name)" value="@load(each)" />
+							</template>
+						</combobox>
+					</cell>
+				</row>
+				<row>
+					请输入新密码:
+					<cell align="left">
+						<textbox type="password" id="newpassword"
+							width="50%" value="@bind(vm.newPassWord)" mold="rounded" />
+							<label style="color:red;">不输入密码则表示继续用原密码</label>
+					</cell>
+				</row>
+				<row>
+					再次确认新密码:
+					<cell align="left">
+						<textbox type="password" id="renewpassword"
+							width="50%" value="@bind(vm.rePassWord)" mold="rounded" />
+					</cell>
+				</row>
+				<row>
+					在职状态:
+					<cell align="left">
+						<combobox value="@bind(vm.m.log_state)" readonly="true">
+							<comboitem label="在职"/>
+							<comboitem label="离职" />
+						</combobox>
+					</cell>
+				</row>
+				<row>
+					所属部门:
+					<cell align="left">
+						<combobox model="@load(vm.deplist)" onChange="@command('selectdep',cb=self)" readonly="true" value="@load(vm.m.dep_name)">
+							<template name="model">
+								<comboitem label="@load(each.dep_name)" value="@load(each)" />
+							</template>
+						</combobox>
+					</cell>
+				</row>
+				<row>
+					Team Leader:
+					<cell align="left">
+						<combobox model="@load(vm.leaderlist)" onChange="@command('selectleader',cb=self)" readonly="true" value="@load(vm.m.log_leader)">
+							<template name="model">
+								<comboitem label="@load(each.log_name)" value="@load(each)" />
+							</template>
+						</combobox>
+					</cell>
+				</row>
+				<row>
+					所属角色:
+					<cell align="left">
+						<combobox model="@load(vm.rolelist)" onChange="@command('selectrole',cb=self)" readonly="true" value="@load(vm.m.rol_name)">
+							<template name="model">
+								<comboitem label="@load(each.rol_name)" value="@load(each)" />
+							</template>
+						</combobox>
+					</cell>
+				</row>
+				<row visible="false">
+					首页:
+					<cell align="left">
+						<textbox width="50%"
+							mold="rounded" />
+					</cell>
+				</row>
+				<row>
+					直线电话（八位）:
+					<cell align="left">
+						<textbox width="50%" value="@bind(vm.m.log_tel)"
+							mold="rounded" />
+					</cell>
+				</row>
+				<row>
+					手机:
+					<cell align="left">
+						<textbox width="50%" id="mobile"
+							value="@bind(vm.m.log_mobile)" mold="rounded" />
+					</cell>
+				</row>
+				<row>
+					邮箱:
+					<cell align="left">
+						<textbox id="email" width="50%" mold="rounded"
+							value="@bind(vm.m.log_email)" />
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button label="提 交"
+						onClick="@command('summit',newpassword=newpassword,renewpassword=renewpassword,win=wins)" />
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

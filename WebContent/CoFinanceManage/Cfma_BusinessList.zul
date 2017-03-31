@@ -1,0 +1,66 @@
+<?page title="业务明细" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<tabbox width="100%" tabscroll="false" height="100%"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoFinanceManage.Cfma_BusinessListController')">
+		<tabs>
+			<tab label="社会保险" if="${vm.shebaoListSize>0}" />
+			<tab label="住房公积金" if="${vm.gjjListSize>0}" />
+			<tab label="工资明细" if="${vm.salaryListSize>0}" />
+			<tab label="个税明细" if="${vm.emTaxListSize>0}" />
+			<tab label="员工福利及服务费" if="${vm.emProductListSize>0}" />
+			<tab label="公司福利及服务费" if="${vm.coProductListSize>0}" />
+			<tab label="委托${each.city}"
+				forEach="${vm.emCommissionOutList}" />
+			<tab label="公司费用调整" if="${vm.coDisposableListSize>0}" />
+			<tab label="员工费用调整" if="${vm.emDisposableListSize>0}" />
+			<tab label="增值税金" if="${vm.vatListSize>0}" />
+		</tabs>
+		<tabpanels>
+			<tabpanel if="${vm.shebaoListSize>0}">
+				<include src="../CoFinanceManage/Cfma_SheBaoList.zul"
+					shebaoList="${vm.shebaoList}" />
+			</tabpanel>
+			<tabpanel if="${vm.gjjListSize>0}">
+				<include src="../CoFinanceManage/Cfma_GjjList.zul"
+					gjjList="${vm.gjjList}" />
+			</tabpanel>
+			<tabpanel if="${vm.salaryListSize>0}">
+				<include src="../CoFinanceManage/Cfma_SalaryList.zul"
+					salaryList="${vm.salaryList}" />
+			</tabpanel>
+			<tabpanel if="${vm.emTaxListSize>0}">
+				<include src="../CoFinanceManage/Cfma_TaxList.zul"
+					taxList="${vm.emTaxList}" />
+			</tabpanel>
+			<tabpanel if="${vm.emProductListSize>0}">
+				<include src="../CoFinanceManage/Cfma_EmProductList.zul"
+					emProductList="${vm.emProductList}" />
+			</tabpanel>
+			<tabpanel if="${vm.coProductListSize>0}">
+				<include src="../CoFinanceManage/Cfma_CoProductList.zul"
+					coProductList="${vm.coProductList}" />
+			</tabpanel>
+			<tabpanel forEach="${vm.emCommissionOutList}">
+				<include width="100%" height="100%"
+					src="../CoFinanceManage/Cfma_EmCommissionOutList.zul"
+					emCommissionOutModel="${each}" />
+			</tabpanel>
+			<tabpanel if="${vm.coDisposableListSize>0}">
+				<include
+					src="../CoFinanceManage/Cfma_CoDisposableList.zul"
+					coDisposableList="${vm.coDisposableList}" />
+			</tabpanel>
+
+			<tabpanel if="${vm.emDisposableListSize>0}">
+				<include
+					src="../CoFinanceManage/Cfma_EmDisposableList.zul"
+					emDisposableList="${vm.emDisposableList}" />
+			</tabpanel>
+			<tabpanel>
+				<include src="../CoFinanceManage/Cfma_ValueAddTax.zul"
+					vatList="${vm.vatList}" />
+			</tabpanel>
+		</tabpanels>
+	</tabbox>
+</zk>

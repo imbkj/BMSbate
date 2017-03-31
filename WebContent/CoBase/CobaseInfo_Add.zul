@@ -1,0 +1,184 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="公司信息新增" border="normal" vflex="1" hflex="1" id="win"
+		apply="Controller.CoBase.CoBaseInfo_AddController">
+		<grid vflex="1" hflex="1">
+			<rows>
+				<row>
+					<cell width="80px">公司名称</cell>
+					<cell>
+						<textbox id="company" />
+						<label style="color:red;">(*)</label>
+					</cell>
+					<cell width="80px">公司简称</cell>
+					<cell>
+						<textbox id="shortname" />
+						<label style="color:red;">(*)</label>
+					</cell>
+				</row>
+				<row>
+					<cell>公司网址</cell>
+					<cell>
+						<textbox id="website" />
+					</cell>
+					<cell>英文名称</cell>
+					<cell>
+						<textbox id="enname" />
+					</cell>
+				</row>
+				<row>
+					<cell>客户企业性质</cell>
+					<cell>
+						<combobox id="kind" readonly="true">
+							<comboitem label="" />
+							<comboitem label="央企或下属企业" />
+							<comboitem label="国企" />
+							<comboitem label="股份制企业" />
+							<comboitem label="民企" />
+							<comboitem label="外企" />
+							<comboitem label="中外合资或合作企业" />
+							<comboitem label="事业单位" />
+							<comboitem label="其他性质" />
+						</combobox>
+						<label style="color:red;">(*)</label>
+					</cell>
+
+					<cell>客户来源</cell>
+					<cell>
+						<combobox id="clientsource" readonly="true"
+							value="机构委托">
+							<comboitem label="" />
+							<comboitem label="机构委托" />
+							<comboitem label="主动开发" />
+							<comboitem label="来电来访咨询" />
+							<comboitem label="客户及雇员介绍" />
+							<comboitem label="中智介绍" />
+							<comboitem label="合作伙伴介绍" />
+							<comboitem label="客户业务开拓" />
+							<comboitem label="中智注册" />
+						</combobox>
+					</cell>
+				</row>
+				<row>
+					<cell>客户规模</cell>
+					<cell>
+						<combobox id="clientsize" readonly="true">
+							<comboitem label="" />
+							<comboitem label="小型(20人以下)" />
+							<comboitem label="中型(20-50人)" />
+							<comboitem label="大型(50人以上)" />
+						</combobox>
+					</cell>
+					<cell>所属行业</cell>
+					<cell>
+						<combobox id="trade"
+							model="${win$composer.tradlist}" readonly="true">
+							<template name="model">
+								<comboitem label="${each.name}" />
+							</template>
+						</combobox>
+					</cell>
+				</row>
+				<row>
+					<cell>机构性质</cell>
+					<cell>
+						<combobox id="clientstyle" readonly="true">
+							<comboitem label="" />
+							<comboitem label="公司" />
+							<comboitem label="分公司" />
+							<comboitem label="代表处" />
+							<comboitem label="办事处" />
+						</combobox>
+						<label style="color:red;">(*)</label>
+					</cell>
+					<cell>所在区域</cell>
+					<cell>
+						<combobox id="ClientArea" readonly="true">
+							<comboitem label="" />
+							<comboitem label="罗湖区" />
+							<comboitem label="福田区" />
+							<comboitem label="南山区" />
+							<comboitem label="龙岗区" />
+							<comboitem label="盐田区" />
+							<comboitem label="宝安区" />
+							<comboitem label="光明新区" />
+							<comboitem label="坪山区" />
+							<comboitem label="外地" />
+						</combobox>
+					</cell>
+				</row>
+				<row>
+					<cell>注册资金</cell>
+					<cell>
+						<hlayout>
+							<textbox id="registermaney" />
+							<label style="color:red;">
+								(单位：万元；币种：人民币)
+							</label>
+						</hlayout>
+					</cell>
+					<cell>合作起始日</cell>
+					<cell>
+						<datebox id="hzbegindate" />
+					</cell>
+				</row>
+				<row>
+					<cell>办公地址</cell>
+					<cell colspan="3">
+						<textbox width="70%" id="bgaddress" />
+					</cell>
+					
+				<cell visible="false">发票寄送地址</cell>
+					<cell  visible="false">
+						<textbox width="70%" id="invoiceadd" />
+					</cell>
+				</row>
+				<row>
+				</row>
+				<row>
+					<cell>客服代表</cell>
+					<cell>
+						<combobox id="client" readonly="true">
+							<template name="model">
+								<comboitem label="${each}" />
+							</template>
+						</combobox>
+						<label style="color:red;">(*)</label>
+					</cell>
+					<cell>客服经理</cell>
+					<cell>
+						<combobox id="clientmanager" readonly="true">
+							<template name="model">
+								<comboitem label="${each}" />
+							</template>
+						</combobox>
+						<label style="color:red;">(*)</label>
+					</cell>
+				</row>
+				<row>
+					<cell>部门经理</cell>
+					<cell colspan="3">
+						<combobox id="deptclientmanager"
+							readonly="true">
+							<template name="model">
+								<comboitem label="${each}" />
+							</template>
+						</combobox>
+						<label style="color:red;">(*)</label>
+					</cell>
+				</row>
+				<row>
+					<cell>备注</cell>
+					<cell colspan="3">
+						<textbox width="70%" id="remark" />
+					</cell>
+				</row>
+				<row>
+					<cell colspan="4" align="center">
+						<button id="addcobase">提交</button>
+					</cell>
+				</row>
+			</rows>
+		</grid>
+	</window>
+</zk>

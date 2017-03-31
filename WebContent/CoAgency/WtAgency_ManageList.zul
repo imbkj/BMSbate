@@ -1,0 +1,90 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="委托机构管理" border="normal" width="100%" height="100%"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoAgency.WtAgency_ManageListController')">
+		<borderlayout vflex="1">
+			<north border="0" title="检索">
+				<grid>
+					<rows>
+						<row>
+							<cell width="40%" align="right">城市检索：</cell>
+							<cell>
+								<combobox id="cbCity" width="200px"
+									mold="rounded" model="@load(vm.citylist)">
+									<template name="model">
+										<comboitem label="@load(each)" />
+									</template>
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell width="40%" align="right">机构检索：</cell>
+							<cell>
+								<textbox id="tbAgency" mold="rounded"
+									tooltiptext="可以输入 机构编号 或 机构名称  或 机构拼音 或 客服名称 搜索" width="40%" />
+							</cell>
+						</row>
+					</rows>
+					<foot>
+						<footer align="center">
+							<button id="btSearch" label="查询"
+								onClick="@command('searchAgency',city=cbCity.value,agency=tbAgency.value)" />
+						</footer>
+					</foot>
+				</grid>
+			</north>
+			<center border="0">
+				<grid width="100%" model="@load(vm.wincabaList)"
+					height="100%" emptyMessage="无数据" mold="paging" pageSize="20">
+					<columns sizable="true">
+						<column label="省份" align="center"
+							sort="auto(coab_province)" width="200px" />
+						<column label="城市" align="center"
+							sort="auto(coab_city)" width="160px" />
+						<column label="编号" align="center"
+							sort="auto(cabc_id)" width="100px" />
+						<column label="机构名称" align="center"
+							sort="auto(coab_name)" />
+						<column label="机构性质" align="center"
+							sort="auto(coab_setuptype)" width="100px" />
+						<column label="客服" align="center"
+							sort="auto(coas_client)" width="100px" />
+						<column label="当地默认机构" align="center"
+							sort="auto(cabc_ifdefault)" width="100px" />
+						<!-- <column label="操作" align="center" width="100px" /> -->
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<label
+									value="@load(each.coab_province)" />
+								<label value="@load(each.coab_city)" />
+								<label value="@load(each.cabc_id)" />
+								<label value="@load(each.coab_name)"
+									style="cursor:pointer;color:#00F;"
+									onClick="@command('manage',cabc_id=each.cabc_id)" />
+								<label
+									value="@load(each.coab_setuptype)" />
+								<label value="@load(each.coas_client)" />
+								<label
+									value="@load(each.cabc_ifdefault eq '1'?'是':'否')"
+									style="${each.cabc_ifdefault eq '1'?'color:blue;':''}" />
+								<!-- <menubar autodrop="true">
+									<menu
+										image="../images/pencil-small.png">
+										<menupopup>
+											<menuitem label="新增合同"
+												onClick="@command('addcompact',model=each)" />
+											<menuseparator />
+										</menupopup>
+									</menu>
+								</menubar> -->
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

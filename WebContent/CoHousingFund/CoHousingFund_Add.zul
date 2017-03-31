@@ -1,0 +1,1047 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<?component name="docDataList" macro-uri="../DocumentsInfo/DocumentsInfo_AddPageList.zul" inline="true"?>
+<zk>
+	<window id="wInfo" title="单位公积金账户新增" border="normal" height="100%"
+		width="100%" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoHousingFund.CoHousingFund_AddController')"
+		closable="true">
+		<script type="text/javascript" src="/js/Datebox.js"></script>
+		<borderlayout>
+			<north border="none">
+				<hbox>
+					<label style="color:#666" value="新增账户类型" />
+					<space></space>
+					<combobox readonly="true"
+						value="@bind(vm.m.chfc_addtype)" onChange="@command('addtype')">
+						<comboitem label="缴存登记"></comboitem>
+						<comboitem label="账户接管"></comboitem>
+					</combobox>
+				</hbox>
+			</north>
+			<center border="none" autoscroll="true">
+				<vlayout>
+					<!-- 缴存登记 -->
+					<grid visible="@load(vm.dj)">
+						<columns>
+							<column width="15%"></column>
+							<column width="35%"></column>
+							<column width="8%"></column>
+							<column></column>
+						</columns>
+						<rows>
+							<row>
+								<cell>
+									<label style="color:#666"
+										value="单位名称(全称)" />
+								</cell>
+								<cell>
+									<combobox readonly="true" hflex="1"
+										value="@bind(vm.cobaModel.chfc_company)"
+										model="@load(vm.cobaseList)"
+										selectedItem="@bind(vm.cobaModel)"
+										onChange="@command('companychange')">
+										<template name="model">
+											<comboitem
+												label="@load(each.company)" />
+										</template>
+									</combobox>
+								</cell>
+								<cell colspan="2"></cell>
+							</row>
+							<row>
+								<cell>
+									<label style="color:#666"
+										value="组织机构代码" />
+								</cell>
+								<cell>
+									<textbox
+										value="@bind(vm.m.chfc_comid)" />
+									<label style="color:red;">
+										(*)
+									</label>
+								</cell>
+								<cell>
+									<label style="color:#666"
+										value="资格类型" />
+								</cell>
+								<cell>
+									<combobox readonly="true"
+										width="70px" value="@bind(vm.m.chfc_zgtype)">
+										<comboitem label="法人" />
+										<comboitem label="非法人" />
+									</combobox>
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label style="color:#666"
+										value="单位地址" />
+								</cell>
+								<cell>
+									<textbox
+										value="@bind(vm.m.chfc_address)" hflex="1" />
+									<label style="color:red;">
+										(*)
+									</label>
+								</cell>
+								<cell colspan="2"></cell>
+							</row>
+							<row>
+								<cell>
+									<label style="color:#666"
+										value="行业代码" />
+								</cell>
+								<cell>
+									<combobox model="@load(vm.industryList)" readonly="true" value="@bind(vm.m.chfc_industry)">
+										<template name="model">
+										<comboitem label="@load(each.name)" />
+										</template>
+									</combobox>
+									
+									<label style="color:red;">
+										(*)
+									</label>
+								</cell>
+								<cell>
+									<label style="color:#666"
+										value="邮政编码" />
+								</cell>
+								<cell>
+									<textbox
+										value="@bind(vm.m.chfc_pastal)" />
+									<label style="color:red;">
+										(*)
+									</label>
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label style="color:#666"
+										value="所属行政区域" />
+								</cell>
+								<cell>
+									<combobox readonly="true"
+										model="@load(vm.areaszList)" value="@bind(vm.m.chfc_area)">
+										<template name="model">
+											<comboitem
+												label="@load(each.area)" />
+										</template>
+									</combobox>
+								</cell>
+								<cell>
+									<label style="color:#666"
+										value="性质分类" />
+								</cell>
+								<cell>
+									<combobox
+										model="@load(vm.conatureList)"
+										value="@bind(vm.m.chfc_nature)">
+										<template name="model">
+											<comboitem
+												label="@load(each.pcon_name)" />
+										</template>
+									</combobox>
+									<label style="color:red;">
+										(*)
+									</label>
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label style="color:#666"
+										value="隶属关系" />
+								</cell>
+								<cell>
+									<combobox
+										model="@load(vm.membershipList)"
+										value="@bind(vm.m.chfc_attached)">
+										<template name="model">
+											<comboitem
+												label="@load(each.name)" />
+										</template>
+									</combobox>
+									<label style="color:red;">
+										(*)
+									</label>
+								</cell>
+								<cell>
+									<label style="color:#666"
+										value="企业经济类型" />
+								</cell>
+								<cell>
+									<combobox
+										model="@load(vm.coecoclassList)"
+										value="@bind(vm.m.chfc_ecoclass)">
+										<template name="model">
+											<comboitem
+												label="@load(each.pcoe_name)" />
+										</template>
+									</combobox>
+									<label style="color:red;">
+										(*)
+									</label>
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label style="color:#666"
+										value="法定代表人或负责人" />
+								</cell>
+								<cell colspan="3">
+									<grid style="border:none">
+										<columns>
+											<column width="10%" />
+											<column width="20%" />
+											<column width="10%" />
+											<column />
+										</columns>
+										<rows>
+											<row>
+												<cell>
+													<label
+														style="color:#666" value="姓名" />
+												</cell>
+												<cell>
+													<textbox
+														value="@bind(vm.m.chfc_corname)" />
+												</cell>
+												<cell>
+													<label
+														style="color:#666" value="证件类型" />
+												</cell>
+												<cell>
+													<combobox
+														readonly="true" model="@load(vm.idcardtypeList)"
+														value="@bind(vm.m.chfc_coridtype)">
+														<template
+															name="model">
+															<comboitem
+																label="@load(each.name)" />
+														</template>
+													</combobox>
+												</cell>
+											</row>
+											<row>
+												<cell>
+													<label
+														style="color:#666" value="联系电话" />
+												</cell>
+												<cell>
+													<textbox
+														value="@bind(vm.m.chfc_cortel)" />
+												</cell>
+												<cell>
+													<label
+														style="color:#666" value="证件号码" />
+												</cell>
+												<cell>
+													<textbox
+														value="@bind(vm.m.chfc_coridcard)" />
+												</cell>
+											</row>
+										</rows>
+									</grid>
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label style="color:#666"
+										value="上级主管部门" />
+								</cell>
+								<cell colspan="3">
+									<grid style="border:none">
+										<columns>
+											<column width="10%" />
+											<column />
+										</columns>
+										<rows>
+											<row>
+												<cell>
+													<label
+														style="color:#666" value="名称" />
+												</cell>
+												<cell>
+													<textbox
+														value="@bind(vm.m.chfc_department)" />
+
+												</cell>
+											</row>
+											<row>
+												<cell>
+													<label
+														style="color:#666" value="联系电话" />
+												</cell>
+												<cell>
+													<textbox
+														value="@bind(vm.m.chfc_departmenttel)" />
+
+												</cell>
+											</row>
+										</rows>
+									</grid>
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label style="color:#666"
+										value="单位成立时间" />
+								</cell>
+								<cell>
+									<datebox readonly="true"
+										value="@bind(vm.chfc_createtime)" />
+
+								</cell>
+								<cell>
+									<label style="color:#666"
+										value="社保单位编号" />
+								</cell>
+								<cell>
+									<hlayout>
+										<textbox
+											value="@bind(vm.m.chfc_sorid)" />
+										<label value="(可不填)"
+											style="color:red" />
+									</hlayout>
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label style="color:#666"
+										value="工商注册号" />
+								</cell>
+								<cell>
+									<textbox
+										value="@bind(vm.m.chfc_regid)" />
+								</cell>
+								<cell>
+									<label style="color:#666"
+										value="纳税人识别号" />
+								</cell>
+								<cell>
+									<textbox
+										value="@bind(vm.m.chfc_taxpayerid)" />
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label style="color:#666"
+										value="单位/个人缴存比例" />
+								</cell>
+								<cell>
+									<combobox readonly="true"
+										width="50px" model="@load(vm.cppList)"
+										value="@bind(vm.m.cpp)">
+										<template name="model">
+											<comboitem
+												label="@load(each)" />
+										</template>
+									</combobox>
+									%
+								</cell>
+								<cell>托收日</cell>
+								<cell>
+									<textbox constraint="/^((0?[1-9])|((1|2)[0-9])|30|31)$/"
+										value="@bind(vm.m.chfc_tsday)" />
+									<label style="color:red;">
+										(*)
+									</label>
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label style="color:#666"
+										value="公积金缴存银行" />
+								</cell>
+								<cell>
+									<hlayout>
+										<combobox readonly="true"
+											value="@bind(vm.m.chfc_bankjc)"
+											onChange="@command('bankjcchange')">
+											<comboitem />
+											<comboitem label="建设银行" />
+											<comboitem label="招商银行" />
+											<comboitem label="中国银行" />
+											<comboitem label="工商银行" />
+											<comboitem label="中信银行" />
+											<comboitem label="兴业银行" />
+											<comboitem label="交通银行" />
+										</combobox>
+										<!--  
+											<hbox
+											visible="@load(vm.m.vis_bankjcid)">
+											<space />
+											<label value="账号:"
+											style="color:#666" />
+											<textbox width="160px"
+											value="@bind(vm.m.chfc_bankjcid)" inplace="true" />
+											</hbox>-->
+									</hlayout>
+								</cell>
+								<cell>
+									<label style="color:#666"
+										value="公积金首次托收月" />
+								</cell>
+								<cell>
+									<datebox readonly="true"
+										constraint="after  ${vm.nowdate }:输入月份不能小于当前月份"
+										format="yyyyMM" sclass="datebox-month-only"
+										value="@bind(vm.m.firmonth)" />
+									<label style="color:red;">
+										(*)
+									</label>
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label style="color:#666"
+										value="托收账户开户银行" />
+								</cell>
+								<cell>
+									<combobox readonly="true"
+										model="@load(vm.tsbankList)"
+										value="@bind(vm.m.chfc_bankts)">
+										<template name="model">
+											<comboitem
+												label="@load(each.bank)" />
+										</template>
+									</combobox>
+								</cell>
+								<cell>
+									<label style="color:#666"
+										value="托收账户银行帐号" />
+								</cell>
+								<cell>
+									<textbox hflex="1"
+										value="@bind(vm.m.chfc_banktsid)" />
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label style="color:#666"
+										value="托收账户名称" />
+								</cell>
+								<cell>
+									<textbox hflex="1"
+										value="@bind(vm.m.chfc_banktsacc)" />
+								</cell>
+								<cell colspan="2">
+									<label value="(这里输入单位名称)"
+										style="color:red" />
+								</cell>
+							</row>
+							<!-- 添加专办员和开户所需资料 -->
+							<row>
+								<cell colspan="4">
+									<grid id="khgd">
+										<rows>
+											<row>
+												<cell>
+													<label
+														value="开户 所需材料" />
+												</cell>
+											</row>
+											<row>
+												<cell id="kfDoc">
+													<!-- 材料内联页 参数：puzu_id：模块页面id， doc_type：员工(g)还是公司(c)，gid：公司数据则插入空白 ，业务表id,log_url：获取到页面路径的前部分，ifSubmit：当前页面已勾选后的材料状态 -->
+													<docDataList
+														id="docGridkf" puzu_id="334" doc_type="c"
+														cid="@bind(vm.cobaModel.cid)" dHeight="200px"
+														dWidth="100%" log_url="/DocumentsInfo/" />
+												</cell>
+											</row>
+										</rows>
+									</grid>
+								</cell>
+							</row>
+							<row>
+								<cell colspan="4">
+									<grid>
+										<rows>
+											<!-- 新增专办员信息 -->
+											<row>
+												<cell width="20%">
+													<label
+														value="新增专办员" />
+												</cell>
+											</row>
+											<row>
+												<grid>
+													<rows>
+
+														<row>
+															<cell
+																align="left" width="15%">
+																<label
+																	value="操作月份" />
+
+															</cell>
+															<cell
+																align="left">
+																<datebox
+																	readonly="true" format="yyyyMM"
+																	sclass="datebox-month-only"
+																	value="@bind(vm.m.ownmonthDate)" />
+															</cell>
+														</row>
+														<row>
+															<cell
+																align="left" width="15%">
+																<label
+																	value="备注 " />
+															</cell>
+															<cell
+																align="left" context="2">
+																<textbox
+																	mold="rounded" value="@bind(vm.addzbRemark)"
+																	width="80%" />
+															</cell>
+														</row>
+													</rows>
+												</grid>
+											</row>
+											<row>
+												<grid id="jczbgd">
+													<rows>
+														<row>
+															<cell>
+																<label
+																	value="提交资料" />
+															</cell>
+														</row>
+														<row>
+															<cell
+																id="jcadd">
+																<!-- 材料内联页 参数：puzu_id：模块页面id， doc_type：员工(g)还是公司(c)，gid：公司数据则插入空白 ，业务表id,log_url：获取到页面路径的前部分，ifSubmit：当前页面已勾选后的材料状态 -->
+																<docDataList
+																	id="docGridkfzb" puzu_id="117" doc_type="c"
+																	cid="@bind(vm.cobaModel.cid)" dHeight="200px"
+																	dWidth="100%" log_url="/DocumentsInfo/" />
+															</cell>
+														</row>
+													</rows>
+												</grid>
+											</row>
+										</rows>
+									</grid>
+								</cell>
+							</row>
+
+							<row>
+								<cell>
+									<label style="color:#666"
+										value="操作月份" />
+								</cell>
+								<cell>
+									<datebox readonly="true"
+										format="yyyyMM" sclass="datebox-month-only"
+										value="@bind(vm.m.ownmonthDate)"
+										constraint="after ${vm.nowdate }:输入月份不能小于当前月份" />
+								</cell>
+								<cell>
+									<label style="color:#666"
+										value="是否办理密钥" />
+								</cell>
+								<cell>
+									<radiogroup
+										selectedItem="@bind(vm.m.ispwd)"
+										onCheck="@command('showview',show=self.selectedItem.value)">
+										<radio label="办理" value="1"></radio>
+										<radio label="不办理" value="0"
+											selected="true">
+										</radio>
+									</radiogroup>
+								</cell>
+							</row>
+							<row visible="@load(vm.isshow)">
+								<cell colspan="4">
+									<grid>
+										<rows>
+											<row>
+												<cell align="left"
+													width="15%">
+													<label
+														value="密钥办理年限" />
+												</cell>
+												<cell align="left">
+													<combobox
+														mold="rounded" instant="true" readonly="true"
+														id="addYearlimit" width="25%"
+														onSelect="@command('yearLimit',addLimit=self.selectedItem.value)">
+														<comboitem
+															label="1年" value="1" />
+														<comboitem
+															label="2年" value="2" />
+														<comboitem
+															label="3年" value="3" />
+													</combobox>
+												</cell>
+												<cell align="left"
+													width="10%">
+													<label value="操作月份" />
+
+												</cell>
+												<cell align="left">
+													<datebox
+														readonly="true" format="yyyyMM"
+														sclass="datebox-month-only"
+														value="@bind(vm.m.ownmonthDate)" />
+												</cell>
+											</row>
+											<row>
+												<cell align="left">
+													<label value="备注 " />
+
+												</cell>
+												<cell colspan="3"
+													align="left">
+													<textbox
+														mold="rounded" id="addremark" value="@bind(vm.addRemark)"
+														width="70%" />
+												</cell>
+											</row>
+										</rows>
+									</grid>
+
+									<grid id="gd">
+										<rows>
+											<row>
+												<cell>
+													<label value="提交资料" />
+												</cell>
+											</row>
+											<row>
+												<cell id="addDoc">
+													<!-- 材料内联页 参数：puzu_id：模块页面id， doc_type：员工(g)还是公司(c)，gid：公司数据则插入空白 ，业务表id,log_url：获取到页面路径的前部分，ifSubmit：当前页面已勾选后的材料状态 -->
+													<docDataList
+														id="docGrid" puzu_id="120" doc_type="c"
+														cid="@bind(vm.cobaModel.cid)" dHeight="200px"
+														dWidth="100%" log_url="/DocumentsInfo/" />
+												</cell>
+											</row>
+										</rows>
+									</grid>
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label style="color:#666"
+										value="备注" />
+								</cell>
+								<cell colspan="3">
+									<textbox rows="5" hflex="1"
+										value="@bind(vm.m.chfc_remark)" />
+								</cell>
+							</row>
+						</rows>
+					</grid>
+					<!-- 接管 -->
+					<grid visible="@load(vm.jg)">
+						<columns>
+							<column width="15%"></column>
+							<column></column>
+							<column width="15%"></column>
+							<column></column>
+						</columns>
+						<rows>
+							<row>
+								<cell>
+									<label style="color:#666"
+										value="单位名称(全称)" />
+								</cell>
+								<cell>
+									<combobox readonly="true" hflex="1"
+										value="@bind(vm.cobaModel.chfc_company)"
+										model="@load(vm.cobaseList)"
+										selectedItem="@bind(vm.cobaModel)">
+										<template name="model">
+											<comboitem
+												label="@load(each.coba_company)" />
+										</template>
+									</combobox>
+								</cell>
+								<cell>
+									<label style="color:#666"
+										value="单位公积金账号" />
+								</cell>
+								<cell>
+									<textbox
+										value="@bind(vm.m.chfc_houseid)" />
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label style="color:#666"
+										value="归集银行" />
+								</cell>
+								<cell>
+									<combobox
+										model="@load(vm.gjbankList)" value="@bind(vm.m.chfc_bankgj)"
+										onChange="@command('gjbankchange')">
+										<template name="model">
+											<comboitem
+												label="@load(each.bank)">
+											</comboitem>
+										</template>
+									</combobox>
+								</cell>
+								<cell>
+									<label style="color:#666"
+										value="领卡银行" />
+								</cell>
+								<cell>
+									<textbox
+										value="@bind(vm.m.chfc_banklk)">
+									</textbox>
+								</cell>
+							</row>
+							<row>
+								<cell colspan="4">
+									<grid>
+										<rows>
+											<!-- 新增专办员信息 -->
+											<row>
+												<cell width="20%">
+													<label
+														value="新增专办员" />
+												</cell>
+											</row>
+											<row>
+												<grid>
+													<rows>
+
+														<row>
+															<cell
+																align="left" width="15%">
+																<label
+																	value="操作月份" />
+
+															</cell>
+															<cell
+																align="left">
+																<datebox
+																	readonly="true" format="yyyyMM"
+																	sclass="datebox-month-only"
+																	value="@bind(vm.m.ownmonthDate)" />
+															</cell>
+														</row>
+														<row>
+															<cell
+																align="left" width="15%">
+																<label
+																	value="备注 " />
+															</cell>
+															<cell
+																align="left" context="2">
+																<textbox
+																	mold="rounded" value="@bind(vm.addzbRemark)"
+																	width="80%" />
+															</cell>
+														</row>
+													</rows>
+												</grid>
+											</row>
+											<row>
+												<grid id="gd1">
+													<rows>
+														<row>
+															<cell>
+																<label
+																	value="提交资料" />
+															</cell>
+														</row>
+														<row>
+															<cell
+																id="add">
+																<!-- 材料内联页 参数：puzu_id：模块页面id， doc_type：员工(g)还是公司(c)，gid：公司数据则插入空白 ，业务表id,log_url：获取到页面路径的前部分，ifSubmit：当前页面已勾选后的材料状态 -->
+																<docDataList
+																	id="docGridaddzb" puzu_id="117" doc_type="c"
+																	cid="@bind(vm.cobaModel.cid)" dHeight="200px"
+																	dWidth="100%" log_url="/DocumentsInfo/" />
+															</cell>
+														</row>
+													</rows>
+												</grid>
+											</row>
+										</rows>
+									</grid>
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label style="color:#666"
+										value="有无密钥" />
+								</cell>
+								<cell>
+									<radiogroup
+										selectedItem="@bind(vm.m.ishavepwd)"
+										onCheck="@command('ishavepwdcheck')">
+										<radio label="有" value="1"></radio>
+										<radio label="没有" value="0">
+										</radio>
+									</radiogroup>
+								</cell>
+								<cell>
+									<label style="color:#666"
+										value="是否变更专办员" visible="@load(vm.m.vis_modzb)" />
+								</cell>
+								<cell>
+									<radiogroup
+										selectedItem="@bind(vm.m.ismodzb1)"
+										visible="@load(vm.m.vis_modzb1)"
+										onCheck="@command('showmod',show=self.selectedItem.value)">
+										<radio label="变更" value="1"></radio>
+										<radio label="不变更" value="0">
+										</radio>
+									</radiogroup>
+								</cell>
+							</row>
+							<row visible="@load(vm.m.vis_modzb)">
+								<cell>
+									<label value="请输入密钥" />
+								</cell>
+								<cell colspan="3">
+									<textbox value="@bind(vm.pwd)" />
+								</cell>
+							</row>
+							<row visible="@load(!vm.m.vis_modzb)">
+								<cell>
+									<label value="是否添加密钥" />
+								</cell>
+								<cell colspan="3">
+									<radiogroup
+										selectedItem="@bind(vm.m.isaddzb1)"
+										onCheck="@command('showadd',show=self.selectedItem.value)">
+										<radio label="添加" value="1">
+										</radio>
+										<radio label="不添加" value="0">
+										</radio>
+									</radiogroup>
+								</cell>
+							</row>
+							<row visible="@load(vm.isshowmod)">
+								<cell colspan="4">
+									<grid>
+										<rows>
+											<row>
+												<cell>
+													<label
+														visible="@load(vm.isshowmod)" value="变更密钥专办员" />
+
+												</cell>
+											</row>
+											<row>
+												<cell width="100%">
+													<grid>
+														<rows>
+															<row>
+																<cell
+																	align="left" width="15%">
+																	<label
+																		value="密钥办理年限" />
+																</cell>
+																<cell
+																	align="left">
+																	<combobox
+																		mold="rounded" instant="true" readonly="true"
+																		id="jgaddYearlimit" width="25%"
+																		onSelect="@command('yearLimit',addLimit=self.selectedItem.value)">
+																		<comboitem
+																			label="1年" value="1" />
+																		<comboitem
+																			label="2年" value="2" />
+																		<comboitem
+																			label="3年" value="3" />
+																	</combobox>
+																</cell>
+																<cell
+																	align="left" width="10%">
+																	<label
+																		value="操作月份" />
+
+																</cell>
+																<cell
+																	align="left">
+																	<datebox
+																		readonly="true" format="yyyyMM"
+																		sclass="datebox-month-only"
+																		value="@bind(vm.m.ownmonthDate)" />
+																</cell>
+															</row>
+															<row>
+																<cell
+																	align="left">
+																	<label
+																		value="备注 " />
+																</cell>
+																<cell
+																	colspan="3" align="left">
+																	<textbox
+																		mold="rounded" id="jgaddremark"
+																		value="@bind(vm.addRemark)" width="70%" />
+																</cell>
+															</row>
+														</rows>
+													</grid>
+												</cell>
+											</row>
+
+										</rows>
+									</grid>
+
+								</cell>
+							</row>
+							<row visible="@load(vm.ispwdadd)">
+								<cell colspan="4">
+									<grid>
+										<rows>
+											<row>
+												<cell>
+													<label
+														visible="@load(vm.ispwdadd)" value="新增密钥专办员" />
+												</cell>
+											</row>
+											<row>
+												<cell width="100%">
+													<grid>
+														<rows>
+															<row>
+																<cell
+																	align="left" width="15%">
+																	<label
+																		value="密钥办理年限" />
+																</cell>
+																<cell
+																	align="left">
+																	<combobox
+																		mold="rounded" instant="true" readonly="true"
+																		id="xjgaddYearlimit" width="25%"
+																		onSelect="@command('yearLimit',addLimit=self.selectedItem.value)">
+																		<comboitem
+																			label="1年" value="1" />
+																		<comboitem
+																			label="2年" value="2" />
+																		<comboitem
+																			label="3年" value="3" />
+																	</combobox>
+																</cell>
+																<cell
+																	align="left" width="10%">
+																	<label
+																		value="操作月份" />
+
+																</cell>
+																<cell
+																	align="left">
+																	<datebox
+																		readonly="true" format="yyyyMM"
+																		sclass="datebox-month-only"
+																		value="@bind(vm.m.ownmonthDate)" />
+																</cell>
+															</row>
+															<row>
+																<cell
+																	align="left">
+																	<label
+																		value="备注 " />
+																</cell>
+																<cell
+																	colspan="3" align="left">
+																	<textbox
+																		mold="rounded" id="xjgaddremark"
+																		value="@bind(vm.addRemark)" width="70%" />
+																</cell>
+															</row>
+														</rows>
+													</grid>
+												</cell>
+											</row>
+
+										</rows>
+									</grid>
+
+								</cell>
+							</row>
+							<row visible="@load(vm.isshowmod)">
+								<cell colspan="4">
+									<grid id="gd2">
+										<rows>
+											<row>
+												<cell>
+													<label
+														value="变更密钥专办员材料" />
+												</cell>
+											</row>
+											<row>
+												<cell>
+													<!-- 材料内联页 参数：puzu_id：模块页面id， doc_type：员工(g)还是公司(c)，gid：公司数据则插入空白 ，业务表id,log_url：获取到页面路径的前部分，ifSubmit：当前页面已勾选后的材料状态 -->
+													<docDataList
+														id="docGrid2" puzu_id="122" doc_type="c"
+														cid="@bind(vm.cid)" dHeight="200px" dWidth="100%"
+														log_url="/DocumentsInfo/" />
+												</cell>
+											</row>
+										</rows>
+									</grid>
+								</cell>
+							</row>
+							<row visible="@load(vm.ispwdadd)">
+								<cell colspan="4">
+									<grid id="gd3">
+										<rows>
+											<row>
+												<cell>
+													<label
+														value="新增密钥专办员材料" />
+												</cell>
+											</row>
+											<row>
+												<cell>
+													<!-- 材料内联页 参数：puzu_id：模块页面id， doc_type：员工(g)还是公司(c)，gid：公司数据则插入空白 ，业务表id,log_url：获取到页面路径的前部分，ifSubmit：当前页面已勾选后的材料状态 -->
+													<docDataList
+														id="docGrid3" puzu_id="120" doc_type="c"
+														cid="@bind(vm.cid)" dHeight="200px" dWidth="100%"
+														log_url="/DocumentsInfo/" />
+												</cell>
+											</row>
+										</rows>
+									</grid>
+								</cell>
+							</row>
+						</rows>
+					</grid>
+					<grid>
+						<rows>
+							<row>
+								<cell>
+									<label style="color:#666"
+										value="操作月份" />
+								</cell>
+								<cell colspan="3">
+									<datebox readonly="true"
+										constraint="after ${vm.nowdate }:输入月份不能小于当前月份" format="yyyyMM"
+										sclass="datebox-month-only" value="@bind(vm.m.ownmonthDate)" />
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label style="color:#666"
+										value="备注" />
+								</cell>
+								<cell colspan="3">
+									<textbox rows="5" hflex="1"
+										value="@bind(vm.m.chfc_remark)" />
+								</cell>
+							</row>
+						</rows>
+					</grid>
+				</vlayout>
+			</center>
+			<south border="none">
+				<hbox width="100%" align="center" pack="center">
+					<button label="提交"
+						onClick="@command('submit',gd=docGrid,gd1=docGridaddzb,jczbgd=docGridkfzb,khgd=docGridkf,gd2=docGrid2,gd3=docGrid3)" />
+				</hbox>
+			</south>
+		</borderlayout>
+	</window>
+</zk>

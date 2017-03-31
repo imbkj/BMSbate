@@ -1,0 +1,30 @@
+<!--
+	创建人：张志强
+	创建时间：2013-12-12
+	用途：劳动合同审核页面框架
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="雇员合同模板审核" border="normal" width="95%"
+		closable="true">
+		<zscript language="Java">
+	import Util.UserInfo;
+	String user = UserInfo.getUserid();
+</zscript>
+		<label id="ebct_id" value="${arg.daid}" visible="false" />
+		<label id="userid" value="${user}" visible="false" />
+		<label id="ebct_tapr_id" value="${arg.id}" visible="false" />
+		<radiogroup id="emco_class"><radio label="一般非标" value="1" onClick="getemcompact()"/><radio label="特殊非标" value="2"  onClick="getemcompact()"/><radio label="客户提供" value="3"  onClick="getemcompact()"/></radiogroup>
+		<include id="incl_id"
+			src="../EmBaseCompact/EmBaseCompact_UpAutDoc.jsp?ebct_id=${arg.daid}&amp;user=${user}&amp;ebct_tapr_id=${arg.id}&amp;emco_class=5">
+		</include>
+		<zscript><![CDATA[
+	void getemcompact() {
+		incl_id.setSrc("../EmBaseCompact/EmBaseCompact_UpAutDoc.jsp?ebct_id="
+				+ ebct_id.getValue() + "&user=" + userid.getValue()
+				+ "&ebct_tapr_id=" + ebct_tapr_id.getValue()
+				+ "&bz=0&emco_class=" + emco_class.getSelectedItem().getValue());
+	}
+]]></zscript>
+	</window>
+</zk>

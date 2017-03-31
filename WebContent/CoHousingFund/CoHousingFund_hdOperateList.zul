@@ -1,0 +1,132 @@
+<?page title="单位公积金业务办理" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="单位公积金业务办理" border="normal" width="100%" height="100%"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoHousingFund.CoHousingFund_hdOperateListController')">
+		<script type="text/javascript" src="/js/Datebox.js"></script>
+		<borderlayout>
+			<north title="综合查询" collapsible="true" open="false"></north>
+			<center>
+				<grid width="100%" height="100%" emptyMessage="暂无数据"
+					model="@load(vm.schfcList)" mold="paging">
+					<columns sizable="true">
+						<column align="center" label="公司编号">
+							<separator></separator>
+							<textbox width="50%" mold="rounded"
+								instant="true" value="@bind(vm.cid)"
+								onChange="@command('search')" />
+						</column>
+						<column align="center" label="公司简称">
+							<separator></separator>
+							<textbox width="90%" mold="rounded"
+								value="@bind(vm.shortname)" onChange="@command('search')" />
+						</column>
+						<column align="center" label="变动情况">
+							<separator></separator>
+							<combobox width="90%" mold="rounded"
+								instant="true" readonly="true" value="@bind(vm.addtype)"
+								onChange="@command('search')">
+								<comboitem />
+								<comboitem label="缴存登记" />
+								<comboitem label="账户接管" />
+								<comboitem label="信息变更" />
+								<comboitem label="比例调整" />
+								<comboitem label="降低比例" />
+								<comboitem label="缓缴" />
+								<comboitem label="降低比例/缓缴提前终止" />
+								<comboitem label="登记注销" />
+								<comboitem label="合同终止" />
+							</combobox>
+						</column>
+						<column align="center" label="所属月份">
+							<separator></separator>
+							<textbox width="90%" mold="rounded"
+								value="@bind(vm.ownmonth)" onChange="@command('search')" />
+						</column>
+						<column align="center" label="添加人"></column>
+						<column align="center" label="添加时间"></column>
+						<column align="center" label="申报时间"></column>
+						<column align="center" label="状态">
+							<separator></separator>
+							<combobox width="90%" mold="rounded"
+								model="@load(vm.stateList)" instant="true" readonly="true"
+								value="@bind(vm.state)" onChange="@command('search')">
+								<template name="model">
+									<comboitem
+										label="@load(each.statename)" />
+								</template>
+							</combobox>
+						</column>
+						<column align="center" label="提示" width="60px" />
+						<column align="center" label="表格" width="60px" />
+						<column align="center" label="操作"
+							width="60px">
+						</column>
+					</columns>
+					<template name="model">
+						<row>
+							<label value="@load(each.cid)" />
+							<label value="@load(each.coba_shortname)" />
+							<label value="@load(each.chfc_addtype)" />
+							<label value="@load(each.ownmonth)" />
+							<label value="@load(each.chfc_addname)" />
+							<label value="@load(each.chfc_addtimeStr)" />
+							<label
+								value="@load(each.chfc_completetime)" />
+							<cell>
+								<label value="@load(each.statename)"
+									style="color:#666"
+									if="${each.statename eq '未申报' or each.statename eq '申报中'or each.statename eq '已打单' }" />
+								<label value="@load(each.statename)"
+									style="color:blue" if="${each.statename eq '已申报' }" />
+								<label value="@load(each.statename)"
+									style="color:red"
+									if="${each.statename eq '退回' or each.statename eq '撤销' }" />
+							</cell>
+							<cell>
+								<image
+									src="/images/20070708132244928.gif" tooltiptext="还未退还材料"
+									if="${each.chfc_state eq 3 and each.chfc_tzlstate eq 0 }"
+									style="cursor:pointer" />
+							</cell>
+							<cell>
+								
+								<image if="${each.chfc_file ==null?false:true }" onClick="@command('down',a=each)"
+									src="/images/20070402165940954.gif" tooltiptext="福利已上传表格"
+									style="cursor:pointer" />
+							</cell>
+							<cell>
+								<menubar autodrop="true">
+									<menu
+										image="../images/pencil-small.png">
+										<menupopup>
+											<menuitem label="申报详情 "
+												onClick="@command('openwin',each=each,
+												label=self.label)" />
+											<menuitem label="材料详情 "
+												onClick="@command('openwin',each=each,
+												label=self.label)" />
+											<menuseparator></menuseparator>
+											<menuitem label="状态变更 "
+												disabled="${not(each.chfc_state eq 1 or each.chfc_state eq 2 or each.chfc_state eq 6) }"
+												onClick="@command('openwin',each=each,
+												label=self.label)" />
+											<menuitem label="重新提交 "
+												onClick="@command('openwin',each=each,
+												label=self.label)"
+												disabled="${not((each.chfc_state eq 4 or each.chfc_state eq 5) and
+													each.chfc_laststate eq 0) }" />
+											<menuitem label="上传表格"
+												onClick="@command('upload',a=each)"
+												disabled="${not (each.chfc_state eq 1 or each.chfc_state eq 2) }" />
+										</menupopup>
+									</menu>
+								</menubar>
+							</cell>
+						</row>
+					</template>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

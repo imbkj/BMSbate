@@ -1,0 +1,292 @@
+<!--
+	创建人：赵敏捷
+	创建时间：2015-3-25
+	用途：新增报价单业务中心
+-->
+<?page contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="win" title="4报价单新增(${arg.colacompany })" border="normal"
+		width="1000px" height="650px" closable="true"
+		onClose="@command('close')" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoQuotation.CoQuotation_AddywzxController')">
+		<borderlayout>
+			<north title="基本信息" border="none">
+				<grid id="gdcooffer">
+					<columns>
+						<column width="15%" />
+						<column />
+						<column width="15%" />
+						<column />
+					</columns>
+					<rows>
+						<row>
+							<cell>报价单名称</cell>
+							<cell>
+								<hlayout>
+									<combobox model="@load(vm.coofList)"
+										hflex="1" autocomplete="false"
+										selectedItem="@bind(vm.coofModel)"
+										value="@load(vm.cfModel.coof_name)"
+										onChange="@command('coofNameChange',coofname=self.value)"
+										onFocus="self.select()" popup="pop_coof_name">
+										<template name="model">
+											<comboitem
+												label="@load(each.coof_name1)" />
+										</template>
+									</combobox>
+									<label style="color:red"
+										value="(*)" />
+								</hlayout>
+								<separator></separator>
+								<label style="color:blue" hflex="1"
+									value="@load(vm.cfModel.coof_tooltip)" />
+								<popup id="pop_coof_name">
+									下拉框可选择历史报价单
+								</popup>
+							</cell>
+							<cell visible="@load(vm.deptDis)">
+								是否梯级报价
+							</cell>
+							<cell visible="@load(vm.deptDis)">
+								<hlayout>
+									<combobox value="@bind(vm.is_tjbj)"
+										readonly="true" width="50px"
+										onSelect="@command('handle_vis_rsgm')">
+										<comboitem label="是"></comboitem>
+										<comboitem label="否"></comboitem>
+									</combobox>
+									<space />
+									<hlayout
+										visible="@load(vm.vis_rsgm)">
+										<intbox
+											value="@bind(vm.cfModel.coof_min)" width="45px"
+											onFocus="self.select()" />
+										~
+										<intbox
+											value="@bind(vm.cfModel.coof_max)" width="45px"
+											onFocus="self.select()" />
+									</hlayout>
+								</hlayout>
+							</cell>
+						</row>
+						<row visible="@load(vm.deptDis)">
+							<cell>报价方式</cell>
+							<cell>
+								<combobox
+									value="@bind(vm.cfModel.coof_quotemode)" readonly="true">
+									<comboitem />
+									<comboitem label="邮件" />
+									<comboitem label="电话" />
+									<comboitem label="面谈" />
+								</combobox>
+							</cell>
+							<cell>报价时间</cell>
+							<cell>
+								<datebox
+									value="@bind(vm.cfModel.coof_quotetime)" format="yyyy-MM-dd">
+								</datebox>
+							</cell>
+						</row>
+						<row>
+							<cell>合同类型</cell>
+							<cell>
+								<hbox>
+									<combobox model="@load(vm.cpctList)"
+										selectedItem="@bind(vm.cpctModel)"
+										onCreate="@command('comboboxvis',cmb=cplxcombobox,cmbinfo=cplxcomboboxinfo)"
+										onChange="@command('copcompactChange',cmb=cplxcombobox,cmbinfo=cplxcomboboxinfo)"
+										onSelect="@command('search')" readonly="true">
+										<template name="model">
+											<comboitem
+												label="@load(each.cpct_name)" />
+										</template>
+									</combobox>
+									<label style="color:red"
+										value="(*)" />
+								</hbox>
+							</cell>
+							<cell>国内注册</cell>
+							<cell>
+								<hbox>
+									<radiogroup
+										selectedItem="@bind(vm.coof_register)">
+										<radio label="是" value="1" />
+										<radio label="否" value="0" />
+									</radiogroup>
+									<label style="color:red"
+										value="(*)" />
+								</hbox>
+							</cell>
+						</row>
+						<row>
+
+						</row>
+					</rows>
+				</grid>
+			</north>
+			<center title="选择报价产品" border="none">
+				<borderlayout>
+					<north border="none">
+						<grid>
+							<columns>
+								<column width="15%" />
+								<column />
+								<column width="15%" />
+								<column />
+							</columns>
+							<rows>
+								<row>
+									<cell>产品类型</cell>
+									<cell colspan="3">
+										<hlayout>
+											<combobox id="cplxcombobox"
+												instant="true" readonly="true" value="@bind(vm.copr_type)"
+												model="@load(vm.coprList)" onChange="@command('search')"
+												onSelect="@command('class_change',cpst_name=cpst_name)">
+												<template
+													name="model">
+													<comboitem
+														label="@load(each)">
+													</comboitem>
+												</template>
+											</combobox>
+											<space />
+											<combobox instant="true"
+												id="cplxcomboboxinfo" readonly="true"
+												selectedItem="@bind(vm.cpcModel)"
+												model="@load(vm.sclasslist)"
+												onChange="@command('search')">
+												<template
+													name="model">
+													<comboitem
+														label="@load(each.copc_name)" />
+												</template>
+											</combobox>
+										</hlayout>
+									</cell>
+								</row>
+								<row visible="@load(vm.deptDis)">
+									<cell>城市</cell>
+									<cell>
+										<combobox
+											onChange="@command('search')" autodrop="true"
+											autocomplete="true" instant="true" model="@load(vm.cityList)"
+											selectedItem="@bind(vm.ppcModel)">
+											<template name="model">
+												<comboitem
+													label="@load(each.name)" />
+											</template>
+										</combobox>
+									</cell>
+									<cell>委托机构</cell>
+									<cell>
+										<combobox readonly="true"
+											selectedItem="@bind(vm.abModel)" model="@load(vm.agencyList)"
+											instant="true" onChange="@command('search1')">
+											<template name="model">
+												<comboitem
+													label="@load(each.coab_name)" />
+											</template>
+										</combobox>
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</north>
+					<center border="none">
+						<columnlayout>
+							<columnchildren width="50%">
+								<panel title="产品列表">
+									<panelchildren>
+										<listbox id="ltblogin"
+											height="300px" mold="paging"
+											onCreate="@command('initltb',ltb=self)" emptyMessage="暂无数据"
+											model="@load(vm.notselectList)">
+											<listhead>
+												<listheader
+													align="center">
+													<label value="产品名称" />
+												</listheader>
+
+											</listhead>
+											<template name="model">
+												<listitem
+													onClick="@command('addsingleselect',selectitem=each)">
+													<listcell>
+
+														<label
+															if="${each.fee>0}"
+															value="${each.copr_name}(${each.fee})">
+
+														</label>
+
+
+														<label
+															if="${each.fee==0}" value="${each.copr_name}">
+
+														</label>
+
+													</listcell>
+
+
+												</listitem>
+
+											</template>
+										</listbox>
+									</panelchildren>
+								</panel>
+							</columnchildren>
+							<columnchildren width="70px">
+								<div style="margin:100px 25px">
+									<image style="cursor:pointer"
+										src="/images/rightrightarrow_g.png"
+										onClick="@command('allselect')" />
+									<separator height="15px" />
+									<image style="cursor:pointer"
+										src="/images/leftleftarrow_g.png"
+										onClick="@command('allremove')" />
+								</div>
+							</columnchildren>
+							<columnchildren width="50%">
+								<panel title="已选择的产品">
+									<panelchildren>
+										<listbox id="ltbselect"
+											height="300px" mold="paging"
+											onCreate="@command('initltb',ltb=self)" emptyMessage="暂无数据"
+											model="@load(vm.selectList)">
+											<listhead>
+												<listheader
+													align="center">
+													<label value="产品名称" />
+												</listheader>
+												<listheader
+													align="center">
+													<label value="城市" />
+												</listheader>
+											</listhead>
+											<template name="model">
+												<listitem
+													onClick="@command('removesingleselect',selectitem=each)">
+													<listcell
+														label="@load(each.copr_name)" />
+													<listcell
+														label="@load(each.city)" />
+												</listitem>
+											</template>
+										</listbox>
+									</panelchildren>
+								</panel>
+							</columnchildren>
+						</columnlayout>
+					</center>
+				</borderlayout>
+			</center>
+			<south>
+				<hbox width="100%" align="center" pack="center">
+					<button label="下一步"
+						onClick="@command('nextstep',win=win)" />
+				</hbox>
+			</south>
+		</borderlayout>
+	</window>
+</zk>

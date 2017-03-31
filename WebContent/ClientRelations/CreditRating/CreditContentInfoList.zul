@@ -1,0 +1,20 @@
+<grid apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('creditcon') @init('Controller.ClientRelations.CreditRating.CreditContentInfoList_Controller')" 
+	model="@load(creditcon.commodel)" emptyMessage="暂时标准内容信息">
+		<columns>
+			<column label="内容名称"/>
+			<column label="添加人"/>
+			<column label="添加时间"/>
+			<column label="是否有效"/>
+		</columns>
+		<rows>
+		<template name="model">
+			<row>
+			<label value="@load(each.crst_name)"/>
+			<label value="@load(each.crst_addname)"/>
+			<label value="@load(each.crst_addtime)"/>
+			<label value="@load(each.crst_ifstate)"/>
+			</row>
+		</template>
+		</rows>
+	</grid>

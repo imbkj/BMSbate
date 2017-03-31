@@ -1,0 +1,86 @@
+<zk>
+	<window id="winInfoMod" title="数据预警 - 修改预警项目" border="normal"
+		height="95%" width="95%" closable="true"
+		apply="org.zkoss.bind.BindComposer">
+		<style src="/css/style.css"></style>
+		<div height="100%">
+			<grid
+				apply="Controller.SystemControl.AlarmInfo_ModController">
+				<rows>
+					<row>
+						<cell width="20%">预警类型:</cell>
+						<cell>
+							<combobox readonly="true" id="cbclassName"
+								mold="rounded" model="${$composer.getClassList()}"
+								value="${$composer.getAiList().get(0).alcl_name}">
+								<template name="model">
+									<comboitem value="${each.alcl_id}"
+										label="${each.alcl_name}" />
+								</template>
+							</combobox>
+						</cell>
+					</row>
+					<row>
+						<cell width="20%">项目名称:</cell>
+						<cell>
+							<textbox id="tbitemName" mold="rounded"
+								value="${$composer.getAiList().get(0).alin_name}" />
+						</cell>
+					</row>
+					<row>
+						<cell width="20%">状态:</cell>
+						<cell>
+							<combobox readonly="true" id="cbState"
+								mold="rounded"
+								value="${$composer.getAiList().get(0).alin_stateName}">
+								<comboitem label="生效" value="1" />
+								<comboitem label="取消" value="0" />
+							</combobox>
+						</cell>
+					</row>
+					<row>
+						<cell width="20%">是否需要提醒:</cell>
+						<cell>
+							<combobox readonly="true" id="cbwarning"
+								mold="rounded"
+								value="${$composer.getAiList().get(0).alin_warningName}">
+								<comboitem label="是" value="1" />
+								<comboitem label="否" value="0" />
+							</combobox>
+						</cell>
+					</row>
+
+					<row>
+						<cell width="20%">链接路径:</cell>
+						<cell>
+							<textbox id="tburl" mold="rounded"
+								width="50%" value="${$composer.getAiList().get(0).alin_url}" />
+						</cell>
+					</row>
+					<row>
+						<cell width="20%">更新SQL语句<span style="color:red">(请输出两个值,列名分别为  "num","userid"第二列结果是0表示适用全部用户)</span></cell>
+						<cell>
+							<textbox id="tbsql" mold="rounded" rows="5"
+								width="50%" value="${$composer.getAiList().get(0).alin_sql}" />
+						</cell>
+					</row>
+					<row>
+						<cell width="20%">内容:</cell>
+						<cell>
+							<textbox id="tbcontent" mold="rounded"
+								rows="5" width="50%"
+								value="${$composer.getAiList().get(0).alin_content}" />
+						</cell>
+					</row>
+
+				</rows>
+				<foot>
+					<footer align="center">
+						<button id="btnSubmit" label="提交" />
+					</footer>
+				</foot>
+			</grid>
+
+		</div>
+	</window>
+</zk>

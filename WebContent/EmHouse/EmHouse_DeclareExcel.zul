@@ -1,0 +1,27 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="公积金清册" id="winExcel" width="1000px" height="560px"
+		closable="true" border="normal" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmHouse.EmHouse_DeclareExcelController')">
+		<scrollview>
+			<groupbox>
+				<grid>
+					<rows>
+						<row>
+							<cell width="120px">名单</cell>
+							<cell>
+								<label value="@load(vm.exfileName)" />
+							</cell>
+							<cell>
+								<button label="下载"
+									onClick="@command('download')" />
+							</cell>
+
+						</row>
+					</rows>
+				</grid>
+
+			</groupbox>
+		</scrollview>
+	</window>
+</zk>

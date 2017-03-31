@@ -1,0 +1,53 @@
+<?page title="满意度调查信息修改" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="满意度调查信息修改" border="normal" width="80%" height="80%" closable="true"
+	apply="org.zkoss.bind.BindComposer" id="editwin"
+	viewModel="@id('vm') @init('Controller.EmBenefit.EmActy_SurveryInfoEditController')"
+>
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell width="80px">题目</cell>
+			<cell><textbox width="80%" value="${arg.model.sury_title }" id="title"></textbox></cell>
+			<cell width="80px">类型</cell>
+			<cell>
+				<combobox id="answertype" readonly="true" value="${arg.model.answertype }">
+					<comboitem label="单选" value="1"/>
+					<comboitem label="多选" value="2"/>
+					<comboitem label="填空" value="3"/>
+				</combobox>
+			</cell>
+			<cell width="80px">排序</cell>
+			<cell><textbox value="${arg.model.sury_order}" id="suryorder"></textbox></cell>
+		</row>
+		<row>
+			<cell>调查内容</cell>
+			<cell colspan="5">
+				<grid model="@load(vm.m.list)" id="gd">
+					<columns>
+						<column label="序号" width="40px" align="center"/>
+						<column label="内容" align="center"/>
+						<column label="排序" align="center"/>
+						<column label="状态" align="center" width="60px"/>
+					</columns>
+					<rows>
+						<template name="model">
+						<row>
+							<cell><label value="${forEachStatus.index+1 }"></label></cell>
+							<cell><textbox value="@load(each.cont_content)" width="80%" id="${each.cont_id }"></textbox></cell>
+							<cell><textbox value="@load(each.cont_order)"></textbox></cell>
+							<cell><checkbox value="@load(each.cont_id)" checked="${each.cont_state==1 }"></checkbox></cell>
+						</row>
+						</template>
+					</rows>
+				</grid>
+			</cell>
+		</row>
+	</rows>
+	<foot>
+		<footer align="center"><button onClick="@command('edit',title=title.value,suryorder=suryorder.value,gd=gd,
+		win=editwin,answertype=answertype.selectedItem.value)">修改</button></footer>
+	</foot>
+</grid>
+</window>
+</zk>

@@ -1,0 +1,22 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="服务政策类型更信息新" border="normal" width="500px" height="400px" 
+	closable="true" vflex="1" apply="org.zkoss.bind.BindComposer" id="typewin"
+		viewModel="@id('vm') @init('Controller.CoServicePolicy.SyPy_TypeUpdateController')">
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell width="80px">政策类型</cell>
+			<cell><textbox width="80%" value="@bind(vm.model.note_type)"></textbox></cell>
+		</row>
+		<row>
+			<cell>序号</cell>
+			<cell><intbox value="@bind(vm.model.note_order)"></intbox></cell>
+		</row>
+	</rows>
+	<foot>
+		<footer align="center"><button onClick="@command('update',win=typewin)">提交</button></footer>
+	</foot>
+</grid>
+</window>
+</zk>

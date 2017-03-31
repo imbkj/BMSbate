@@ -1,0 +1,29 @@
+<?page title="网上中智数据导入" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="netmainwin" title="" border="normal" height="100%" width="100%"
+		  closable="true" apply="Controller.CIICNET.netciicmainController"  
+		>
+		<tabbox>
+			<tabs>
+				<tab label="基本信息--${$composer.m.emba_name}" />
+				<tab label="雇员资料记录" />
+			 
+			</tabs>
+			<tabpanels>
+				<tabpanel height="100%" width="100%" >
+						<include src="../CIICNET/Netembase_update.zul" 
+					gid="${$composer.m.gid}" emba_id="${$composer.m.emba_id}"/>
+				</tabpanel>
+
+					<tabpanel>
+					<include src="../Embase/EmPic_Up.zul" 
+					gid="${$composer.m.gid}"/>
+				</tabpanel>
+				
+			
+
+			</tabpanels>
+		</tabbox>
+
+	</window>
+</zk>

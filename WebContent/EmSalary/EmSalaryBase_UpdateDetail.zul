@@ -1,0 +1,18 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<grid height="100%" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmSalary.EmSalaryBase_UpdateDetailController')"
+		emptyMessage="无数据" style="overflow:auto">
+		<columns sizable="true">
+			<column label="${each.csii_item_name}" width="100px"
+				forEach="${vm.itemList}" />
+		</columns>
+		<rows>
+			<row>
+				<decimalbox value="${each.amount}"
+					forEach="${vm.itemList}" format="###.##" inplace="true"
+					readonly="true" />
+			</row>
+		</rows>
+	</grid>
+</zk>

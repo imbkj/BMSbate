@@ -1,0 +1,128 @@
+<?page title="费用添加" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="费用添加" border="normal" closable="true" width="80%"
+		id="win" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmCommissionOut.EmCommissionOutPay_SFeeCheckController')">
+		<label id="ecod_id" value="@load(vm.wt_sfeelist.ecop_id)"
+			visible="false" />
+		<grid>
+			<rows>
+				<row>
+					<cell>帐单月份：</cell>
+					<cell>
+						<combobox mold="rounded"
+							model="@load(vm.ownmonthlist)" width="120px" value="@load(vm.wt_sfeelist.ownmonth)"
+							id="zd_ownmonth">
+							<template name="model">
+								<comboitem label="@load(each.ownmonth)" />
+							</template>
+						</combobox>
+					</cell>
+					<cell>委托机构：</cell>
+					<cell>
+						<label id="cabc_id"
+							value="@load(vm.wt_sfeelist.ecop_ch_st)" />
+					</cell>
+				</row>
+
+				<row>
+					<cell>员工姓名：</cell>
+					<cell>
+						<label id="name"
+							value="@load(vm.wt_sfeelist.ecop_name)" />
+					</cell>
+					<cell>公司名称：</cell>
+					<cell>
+						<label id="scid"
+							value="@load(vm.wt_sfeelist.ecop_company)" />
+					</cell>
+				</row>
+
+				<row>
+					<cell>养老：</cell>
+					<cell>
+						<textbox id="yl" mold="rounded" width="80px"
+							value="@load(vm.wt_sfeelist.ecop_yl_yf)" />
+					</cell>
+					<cell>医疗：</cell>
+					<cell>
+						<textbox id="jl" mold="rounded" width="80px"
+							value="@load(vm.wt_sfeelist.ecop_jl_yf)" />
+					</cell>
+				</row>
+
+				<row>
+					<cell>工伤：</cell>
+					<cell>
+						<textbox id="gs" mold="rounded" width="80px"
+							value="@load(vm.wt_sfeelist.ecop_gs_yf)" />
+					</cell>
+					<cell>生育：</cell>
+					<cell>
+						<textbox id="syu" mold="rounded" width="80px"
+							value="@load(vm.wt_sfeelist.ecop_syu_yf)" />
+					</cell>
+				</row>
+
+				<row>
+					<cell>失业：</cell>
+					<cell>
+						<textbox id="sye" mold="rounded" width="80px"
+							value="@load(vm.wt_sfeelist.ecop_sye_yf)" />
+					</cell>
+					<cell>公积金：</cell>
+					<cell>
+						<textbox id="house" mold="rounded" width="80px"
+							value="@load(vm.wt_sfeelist.ecop_house_yf)" />
+					</cell>
+				</row>
+
+				<row>
+					<cell>档案：</cell>
+					<cell>
+						<textbox id="file" mold="rounded" width="80px"
+							value="@load(vm.wt_sfeelist.ecop_file_yf)" />
+					</cell>
+					<cell>服务费：</cell>
+					<cell>
+						<textbox id="fw" mold="rounded" width="80px"
+							value="@load(vm.wt_sfeelist.ecop_fw_yf)" />
+					</cell>
+				</row>
+
+				<row>
+					<cell>其它：</cell>
+					<cell colspan="3">
+						<textbox id="other" mold="rounded" width="80px"
+							value="@load(vm.wt_sfeelist.ecop_other_yf)" />
+					</cell>
+				</row>
+
+				<row>
+					<cell>备注：</cell>
+					<cell colspan="3">
+						<textbox id="remark" mold="rounded" rows="3"
+							width="400px" value="@load(vm.wt_sfeelist.ecop_dep_company)" />
+					</cell>
+				</row>
+				<row>
+					<cell>是否添加帐单非标：</cell>
+					<cell colspan="3">
+						<combobox mold="rounded" width="120px" value=""
+							id="zd_st">
+							<comboitem label="是" value="是" />
+							<comboitem label="否" value="否" />
+						</combobox>
+					</cell>
+				</row>
+				<row>
+
+					<cell colspan="4" align="center">
+						<button label="提交" id="co_stopok"
+							onClick="@command('zd_add',ecod_id=ecod_id,win=win,zd_ownmonth=zd_ownmonth,zd_st=zd_st)" />
+					</cell>
+				</row>
+			</rows>
+		</grid>
+	</window>
+</zk>

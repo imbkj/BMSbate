@@ -1,0 +1,44 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window width="90%" height="90%" title="支付费用" id="winEmp" closable="true"
+		border="normal" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmBenefit.EmActy_EmbaseController')">
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell width="60px"></cell>
+			<cell></cell>
+			<cell width="60px"></cell>
+			<cell></cell>
+			<cell width="80px"></cell>
+			<cell></cell>
+			<cell width="60px"></cell>
+			<cell></cell>
+		</row>
+		<row>
+			<cell>付款通知</cell>
+			<cell colspan="7">
+				<scrollview>
+					<include height="100%" src="../EmBenefit/EmActy_EmbaseList.jsp?id=${vm.sortid} "></include>
+				</scrollview>
+			</cell>
+		</row>
+		<row>
+		<cell width="80px">交发票时间</cell>
+			<cell><datebox id="upinvda"></datebox></cell>
+			<cell width="80px">发票日期</cell>
+			<cell><datebox id="invda"></datebox></cell>
+			<cell width="100px">发票有效期</cell>
+			<cell><datebox id="vaida"></datebox></cell>
+			<cell width="80px">发票号码</cell>
+			<cell><textbox id="number"></textbox></cell>	
+		</row>
+	</rows>
+	<foot>
+		<footer align="center">
+			<button onClick="@command('pay',invda=invda.value,vaida=vaida.value,number=number.value,upinvda=upinvda.value)">提交</button>
+		</footer>
+	</foot>
+</grid>
+</window>
+</zk>

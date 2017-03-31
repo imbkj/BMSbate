@@ -1,0 +1,54 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winCpp" title="公积金比例变更" border="normal" width="500px"
+		height="240px" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoCompact.Compact_houseCppModController')"
+		closable="true" onCreate="@command('winD',a=self)">
+		<grid>
+			<columns>
+				<column width="120px" />
+				<column />
+
+			</columns>
+			<rows>
+				<row>
+					<cell>合同编号</cell>
+					<cell>
+						<label value="@load(vm.ccm.coco_compactid)" />
+					</cell>
+
+				</row>
+				<row>
+					<cell>单位公积金编号</cell>
+					<cell>
+						<label value="@load(vm.ccm.coco_houseid)" />
+					</cell>
+				</row>
+				<row>
+					<cell>公积金比例</cell>
+					<cell>
+						<combobox id="cpp" model="@load(vm.cplist)"
+							readonly="true" onChange="@command('updateCpp',a=self)"
+							value="@load(vm.ccm.coco_cpp)">
+							<template name="model">
+								<comboitem value="@load(each.companyid)"
+									label="@load(each.cpName)" />
+							</template>
+						</combobox>
+					</cell>
+				</row>
+				<row>
+					<cell>变更原因</cell>
+					<cell>
+						<textbox rows="3" value="@bind(vm.cam.coca_remark)" />
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer span="2" align="center">
+					<button label="提交" onClick="@command('submit')" />
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

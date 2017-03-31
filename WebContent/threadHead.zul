@@ -1,0 +1,21 @@
+<div>
+	<!-- <hbox width="100%" height="100%" align="center" pack="center">
+		<fisheyebar id="fisheyebar" itemWidth="90" itemHeight="23"
+			itemMaxHeight="28" itemMaxWidth="110">
+			<fisheye id="menu" image="/images/menu_2.jpg"
+				onClick="@command('change',fisheye=self,tree=tree,gd=gd,title=title,fisheye1=task)" />
+			<fisheye id="task" image="/images/rw_1.jpg"
+				onClick="@command('change',fisheye=self,tree=tree,gd=gd,title=title,fisheye1=menu,tig_1=tig_1)" />
+		</fisheyebar>
+	</hbox> -->
+	<hbox width="100%" align="center" pack="start">
+		<fisheyebar id="fisheyebar" itemWidth="20"
+			itemHeight="20" itemMaxHeight="30" itemMaxWidth="30">
+			<fisheye id="menu" image="/images/boardM.png"  tooltip="菜单"
+			onClick="@command('change1',fisheye=self,tree=tree,gd=gdv,hl=hl,title=title,tbx1=tbx1,tig00=tig00,tig_1=tig_1,fixedtab=fixedtab)" />
+			<fisheye id="task" image="/images/bbcodeM.png" tooltip="任务单中心"
+			onClick="@command('change1',fisheye=self,tree=tree,gd=gdv,hl=hl,title=title,tbx1=tbx1,tig00=tig00,tig_1=tig_1,fixedtab=fixedtab)" />
+		</fisheyebar>&#160;&#160;&#160;&#160;&#160;
+		<label id="title" value="菜单" style="font-weight:bold"></label>
+	</hbox>
+</div>

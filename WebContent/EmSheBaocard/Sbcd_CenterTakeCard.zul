@@ -1,0 +1,149 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="雇员服务中心领卡" border="normal" width="80%" height="80%" closable="true"
+	apply="org.zkoss.bind.BindComposer" id="flwin"
+    viewModel="@id('vm') @init('Controller.EmSheBaocard.Sbcd_CenterTakeCardController')"
+>
+<grid vflex="1">
+	<rows>
+			<row>
+				<cell width="100px">员工姓名</cell>
+				<cell><textbox value="@bind(vm.m.sbcd_name)" readonly="true"></textbox></cell>
+				<cell width="100px">员工编号</cell>
+				<cell><textbox value="@bind(vm.m.gid)" readonly="true"></textbox></cell>
+				<cell width="80px">性别</cell>
+				<cell><textbox value="@bind(vm.m.sbcd_sex)" readonly="true"></textbox></cell>
+			</row>
+			<row>
+				<cell>社保单位编码</cell>
+				<cell><textbox value="@bind(vm.m.cid)" readonly="true"></textbox></cell>
+				<cell>社保单位名称</cell>
+				<cell colspan="3"><textbox width="80%" value="@bind(vm.m.sbcd_company)" readonly="true"></textbox></cell>
+			</row>
+			<row>
+				<cell>社保电脑号</cell>
+				<cell><textbox value="@bind(vm.m.sbcd_computerid)" readonly="true"></textbox></cell>
+				<cell>民族</cell>
+				<cell>
+					<textbox value="@bind(vm.m.sbcd_folk)" readonly="true"></textbox>
+				</cell>
+				<cell>移动电话</cell>
+				<cell><textbox value="@bind(vm.m.sbcd_mobile)" readonly="true"></textbox></cell>
+			</row>
+			<row>
+				<cell>单位编号</cell>
+				<cell><textbox value="@bind(vm.m.cid)" readonly="true"></textbox></cell>
+				<cell>单位全称</cell>
+				<cell colspan="3"><textbox width="80%" value="@bind(vm.m.sbcd_company)" readonly="true"></textbox></cell>
+			</row>
+			<row>
+				<cell>证件类型</cell>
+				<cell>
+					<textbox value="@bind(vm.m.sbcd_idcardclass)" readonly="true"></textbox>
+				</cell>
+				<cell>证件号码</cell>
+				<cell><textbox value="@bind(vm.m.sbcd_idcard)" readonly="true"></textbox></cell>
+				<cell>发证机关</cell>
+				<cell><textbox value="@bind(vm.m.sbcd_agencies)" readonly="true"></textbox></cell>
+			</row>
+			<row>
+				<cell>证件有效起始日</cell>
+				<cell><textbox value="@bind(vm.m.sbcd_idcardstartdate)" readonly="true"></textbox></cell>
+				<cell>证件有效终止日</cell>
+				<cell><textbox value="@bind(vm.m.sbcd_idcardenddate)" readonly="true"></textbox></cell>
+				<cell>出生日期</cell>
+				<cell><textbox value="@bind(vm.m.sbcd_birthday)" readonly="true"></textbox></cell>
+			</row>
+			<row>
+				<cell>联系地址省</cell>
+				<cell>
+					<textbox value="@bind(vm.m.sbcd_province)" readonly="true"></textbox>
+				</cell>
+				<cell>联系地址市</cell>
+				<cell colspan="3">
+					<textbox value="@bind(vm.m.sbcd_city)" readonly="true"></textbox>
+				</cell>
+			</row>
+			<row>
+				<cell>详细联系地址</cell>
+				<cell colspan="5"><textbox width="80%" value="@bind(vm.m.sbcd_address)" readonly="true"></textbox></cell>
+			</row>
+			<row>
+				<cell>照片回执号</cell>
+				<cell><textbox value="@bind(vm.m.sbcd_photonum)" readonly="true"></textbox></cell>
+				<cell>户籍所在省</cell>
+				<cell>
+					<textbox value="@bind(vm.m.sbcd_hjprovince)" readonly="true"></textbox>
+				</cell>
+				<cell>户籍所在市</cell>
+				<cell>
+					<textbox value="@bind(vm.m.sbcd_hjcity)" readonly="true"></textbox>
+				</cell>
+			</row>
+			<row>
+				<cell>文化程度</cell>
+				<cell>
+					<textbox value="@bind(vm.m.sbcd_education)" readonly="true"></textbox>
+				</cell>
+				<cell>婚姻状况</cell>
+				<cell>
+					<textbox value="@bind(vm.m.sbcd_marry)" readonly="true"></textbox>
+				</cell>
+				<cell>户口性质</cell>
+				<cell>
+					<textbox value="@bind(vm.m.sbcd_hj)" readonly="true"></textbox>
+				</cell>
+			</row>
+			<row>
+				<cell>职业</cell>
+				<cell>
+					<textbox value="@bind(vm.m.sbcd_job)" readonly="true"></textbox>
+				</cell>
+				<cell>办理类型</cell>
+				<cell>
+					<textbox value="@bind(vm.m.sbcd_content)" readonly="true"></textbox>
+				</cell>
+				<cell>办卡银行</cell>
+				<cell>
+					<textbox value="@bind(vm.m.sbcd_upbankname)" readonly="true"></textbox>
+				</cell>
+			</row>
+			<row>
+				<cell>福利核收人</cell>
+				<cell>
+					<textbox value="@bind(vm.m.sbcd_flacceptname)" readonly="true"></textbox>
+				</cell>
+				<cell>核收资料时间</cell>
+				<cell colspan="3">
+					<textbox value="@bind(vm.m.sbcd_flaccpettime)" readonly="true"></textbox>
+				</cell>
+			</row>
+			<row>
+				<cell>福利领卡人</cell>
+				<cell>
+					<textbox value="@bind(vm.m.sbcd_fltakename)" readonly="true"></textbox>
+				</cell>
+				<cell>福利领卡时间</cell>
+				<cell colspan="3">
+					<textbox value="@bind(vm.m.sbcd_fltaketime)" readonly="true"></textbox>
+				</cell>
+			</row>
+			<row>
+				<cell>服务中心领卡人</cell>
+				<cell>
+					<textbox value="@bind(vm.m.sbcd_centertakename)" readonly="true"></textbox>
+					<label style="color:red;">(*)</label>
+				</cell>
+				<cell>服务中心领卡时间</cell>
+				<cell colspan="3">
+					<datebox value="@bind(vm.centertaketime)"></datebox>
+					<label style="color:red;">(*)</label>
+				</cell>
+			</row>
+		</rows>
+		<foot>
+			<footer align="center"><button onClick="@command('flsummit',win=flwin)">提交</button></footer>
+		</foot>
+	</grid>
+</window>
+</zk>

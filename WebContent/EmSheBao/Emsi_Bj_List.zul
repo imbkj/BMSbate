@@ -1,0 +1,166 @@
+<?page title="社保补缴查询" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winBjList" title="社保补缴查询" border="normal" width="100%"
+		height="100%" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmSheBao.Emsi_Bj_ListController')"
+		closable="true" sizable="true">
+		<borderlayout vflex="1">
+			<north border="0" title="数据查询" collapsible="true"
+				flex="true" open="true">
+				<panel border="1">
+					<panelchildren style="padding:5px;">
+						<grid width="100%">
+							<rows>
+								<row>
+									<cell align="left">
+										<hbox>
+											<label value="公司名称" />
+											<label value="蓝色"
+												style="color:#00F" />
+											<label value="：独立开户；" />
+											<label value="红色"
+												style="color:#F00" />
+											<label value="：中智开户(委托)；" />
+											<label value="黑色" />
+											<label value="：中智开户；" />
+										</hbox>
+									</cell>
+									<cell align="right">
+										<label value="共 有" />
+										<label value="@load(vm.count)" />
+										<label value=" 条数据。" />
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</panelchildren>
+				</panel>
+			</north>
+			<center>
+				<grid id="gdBj" span="true" model="@load(vm.bjList)"
+					emptyMessage="无数据" sizedByContent="true" hflex="1" vflex="1">
+					<columns sizable="true">
+						<column label="序号" align="center" />
+						<column label="公司简称" align="center"
+							sort="auto(emsb_company)" />
+						<column label="所属月份" align="center"
+							sort="auto(ownmonth)" />
+						<column label="雇员姓名" align="center"
+							sort="auto(emsb_name)" />
+						<column label="电脑号" align="center" />
+						<column label="身份证" align="center" />
+						<column label="补缴月份" align="center"
+							sort="auto(emsb_startmonth)" />
+						<column label="补缴基数" align="center"
+							sort="auto(emsb_radix)" />
+						<column label="补缴公司部分" align="center" />
+						<column label="补缴个人部分" align="center" />
+						<column label="户籍" align="center"
+							sort="auto(emsb_hj)" />
+						<column label="状态" align="center"
+							sort="auto(emsb_ifdeclare)" />
+						<column label="客服" align="center"
+							sort="auto(coba_client)" />
+						<column label="添加时间" align="center"
+							sort="auto(emsb_addtime)" width="70px" />
+						<column label="添加人" align="center"
+							sort="auto(emsb_addname)" />
+						<column label="短信" align="center"
+							sort="auto(emsb_declarename)" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<cell>
+									<label
+										value="${forEachStatus.index + 1}" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emsb_company)" style="color:#00F"
+										if="${each.emsb_single==1}" />
+									<label
+										value="@load(each.emsb_company)" style="color:#F00"
+										if="${each.emsb_single==2}" />
+									<label
+										value="@load(each.emsb_company)" if="${each.emsb_single==0}" />
+									<label
+										value="(${each.coco_shebaoid})" if="${each.coco_shebaoid!=0}" />
+								</cell>
+								<cell>
+									<label value="@load(each.ownmonth)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emsb_name)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emsb_computerid)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emsb_idcard)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emsb_startmonth)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emsb_radix)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emsb_totalcp)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emsb_totalop)" />
+								</cell>
+								<cell>
+									<label value="@load(each.emsb_hj)" />
+								</cell>
+								<cell>
+									<label value="未申报"
+										if="${each.emsb_ifdeclare==0}" />
+									<label value="中心待核收"
+										if="${each.emsb_ifdeclare==7}" />
+									<label value="待申报"
+										if="${each.emsb_ifdeclare==8}" />
+									<label value="已申报"
+										if="${each.emsb_ifdeclare==1}" style="color:blue" />
+									<label value="已上单"
+										if="${each.emsb_ifdeclare==2}" />
+									<label value="已交单"
+										if="${each.emsb_ifdeclare==6}" style="color:green" />
+									<label value="退回"
+										if="${each.emsb_ifdeclare==3}" style="color:red" />
+									<label value="退回"
+										if="${each.emsb_ifdeclare==9}" style="color:red" />
+									<label value="待确认"
+										if="${each.emsb_ifdeclare==4}" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.coba_client)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emsb_addtime)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.emsb_addname)" />
+								</cell>
+								<cell>
+
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

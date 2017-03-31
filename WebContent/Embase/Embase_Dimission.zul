@@ -1,0 +1,533 @@
+<!--
+	创建人：林少斌
+	创建时间：2014-8-11
+	用途：员工离职页面
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="员工离职" border="normal" width="99%" height="99%"
+		onCreate="@command('readInfo',a=self)" closable="true" id="windim"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.Embase.Embase_DimissionController')">
+		<scrollview vflex="1" hflex="1">
+			<groupbox mold="3d" open="true" title="员工基本信息">
+				<grid>
+					<rows>
+						<row>
+							<cell width="80px">所属公司</cell>
+							<cell style="color:#00F;">
+								<label
+									value="@load(vm.emM.coba_shortname)" />
+							</cell>
+							<cell width="80px">员工姓名</cell>
+							<cell style="color:#00F;">
+								<label value="@load(vm.emM.emba_name)" />
+							</cell>
+							<cell width="80px">身份证号</cell>
+							<cell style="color:#00F;">
+								<label
+									value="@load(vm.emM.emba_idcard)" />
+							</cell>
+						</row>
+						<row>
+							<cell>离职时间</cell>
+							<cell>
+								<datebox id="outdate" readonly="true"
+									mold="rounded" value="@load(vm.outdate)" format="yyyy-MM-dd" />
+							</cell>
+							<cell>离职原因</cell>
+							<cell colspan="3">
+								<combobox id="outreason" mold="rounded"
+									value="@load(vm.outreason)">
+									<comboitem value="员工辞职"
+										label="员工辞职" />
+									<comboitem value="公司辞退"
+										label="公司辞退" />
+									<comboitem value="经济裁员"
+										label="经济裁员" />
+									<comboitem value="公司解约"
+										label="公司解约" />
+									<comboitem value="受托减少"
+										label="受托减少" />
+									<comboitem value="自行管理"
+										label="自行管理" />
+									<comboitem value="其他" label="其他" />
+								</combobox>
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox mold="3d" open="true" title="报价单信息"
+				visible="@load(vm.ifCflsit)">
+				<grid id="coofferlist" model="@load(vm.cflList)">
+					<columns>
+						<column align="center">报价单</column>
+						<column align="center">产品类型</column>
+						<column align="center">城市</column>
+						<column align="center">产品名称</column>
+						<column align="center">终止收费月</column>
+						<column width="70px" align="center">
+							<checkbox id="cka" disabled="true"
+								checked="true" />
+						</column>
+					</columns>
+					<rows>
+						<template name="model">
+							<row
+								style="border:1px dotted #cad9ea;background-color:#f5fafe;">
+								<cell>
+									<label
+										value="@load(each.coof_name)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.coli_pclass)" />
+								</cell>
+								<cell>
+									<label value="@load(each.city)" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.coli_name)" />
+								</cell>
+								<cell>
+									<hbox>
+										<monthbox format="yyyy-MM-30"
+											readonly="true"
+											onChange="@command('setcheck',a=coofferlist,b=self)"
+											mold="rounded" />
+										<image src="../images/130.gif"
+											style="cursor:pointer;"
+											onClick="@command('copysd',a=coofferlist,b=4,rowIndex=forEachStatus.index)" />
+									</hbox>
+								</cell>
+								<cell>
+									<checkbox name="ck"
+										value="@load(each.coli_id)" checked="true" disabled="true" />
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox mold="3d" open="true" title="劳动合同"
+				visible="@load(vm.ifemc)">
+				<grid id="gdEmc">
+					<rows>
+						<row>
+							<cell width="80px">终止时间：</cell>
+							<cell>
+								<datebox readonly="true" mold="rounded"
+									format="yyyy-MM-dd" />
+							</cell>
+							<cell width="80px">文件目录：</cell>
+							<cell colspan="3">
+								<textbox mold="rounded" rows="1"
+									value="@load(vm.emcFilename)" readonly="true" />
+								<button label="浏览..."
+									upload="true,multiple=true" onUpload="@command('emcBrowse')" />
+							</cell>
+						
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox mold="3d" open="true" title="就业登记"
+				visible="@load(vm.ifeeriStop)">
+				<grid id="gdEeri">
+					<rows>
+						<row>
+							<cell width="80px">终止原因</cell>
+							<cell>
+								<combobox mold="rounded"
+									readonly="true">
+									<comboitem
+										forEach="${vm.eeriStopreason }" label="${each }" />
+								</combobox>
+							</cell>
+							<cell width="80px">终止日期</cell>
+							<cell>
+								<datebox format="yyyy-MM-dd"
+									mold="rounded" readonly="true" />
+							</cell>
+							<cell></cell>
+							<cell></cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox mold="3d" open="true" title="社会保险"
+				visible="@load(vm.ifshebao)">
+				<grid id="gdShebao">
+					<rows>
+						<row>
+							<cell width="80px">服务终止日</cell>
+							<cell>
+								<vlayout>
+									<combobox mold="rounded"
+										value="@load(vm.sb_ownmonth)" readonly="true"
+										model="@load(vm.sbownmonthList)"
+										onChange="@command('sbownmonthChange',ownmonth=self.selectedItem.label)">
+										<template name="model">
+											<comboitem
+												label="@load(each)" />
+										</template>
+									</combobox>
+									<label value="已过申报截止日，当月已不能变更"
+										if="${vm.isIfsbStop()}" style="color:red;" />
+								</vlayout>
+							</cell>
+							<cell width="80px">停交原因</cell>
+							<cell>
+								<combobox readonly="true" width="180px"
+									value="@load(vm.sbStopReason)" mold="rounded">
+									<comboitem label="本人意愿中断就业"
+										value="本人意愿中断就业" />
+									<comboitem label="非本人意愿中断就业"
+										value="非本人意愿中断就业" />
+								</combobox>
+							</cell>
+							<cell width="80px" visible="false">
+								申请原因
+							</cell>
+							<cell visible="false">
+								<textbox mold="rounded" />
+							</cell>
+							<cell visible="false">
+								<checkbox disabled="true" label="是否需审核" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox mold="3d" open="true" title="社保补交"
+				visible="@load(vm.ifshebaobj)">
+				<grid id="gdShebaobj">
+					<rows>
+						<row>
+							<cell width="80px">所属月份</cell>
+							<cell>
+								<combobox mold="rounded"
+									model="@load(vm.sbbjownmonthList)" readonly="true">
+									<template name="model">
+										<comboitem
+											label="@load(each)">
+										</comboitem>
+									</template>
+								</combobox>
+							</cell>
+							<cell colspan="4">
+								所选择的月份以后（包括所选月份）的待确认、未申报、已上传、待申报的数据将被系统自动退回并终止任务单。
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox mold="3d" open="true" title="住房公积金"
+				visible="@load(vm.ifgjj)">
+				<grid id="gdGjj">
+					<rows>
+						<row>
+							<cell width="80px">服务终止日</cell>
+							<cell>
+								<combobox mold="rounded" 
+									value="@load(vm.house_ownmonth)"
+									model="@load(vm.gjjownmonthList)" readonly="true"
+									onChange="@command('gjjownmonthChange',ownmonth=self.selectedItem.label)">
+									<template name="model">
+										<comboitem
+											label="@load(each)">
+										</comboitem>
+									</template>
+								</combobox>
+							</cell>
+							<cell width="80px" visible="false">
+								申请原因
+							</cell>
+							<cell visible="false">
+								<textbox mold="rounded" />
+							</cell>
+							<cell visible="false">
+								<checkbox label="是否需审核" disabled="true" />
+							</cell>
+							<cell></cell>
+							<cell></cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox mold="3d" open="true" title="住房公积金补交"
+				visible="@load(vm.ifgjjbj)">
+				<grid id="gdGjjbj">
+					<rows>
+						<row>
+							<cell width="80px">所属月份</cell>
+							<cell>
+								<combobox mold="rounded"
+									model="@load(vm.gjjbjownmonthList)" readonly="true">
+									<template name="model">
+										<comboitem
+											label="@load(each)">
+										</comboitem>
+									</template>
+								</combobox>
+							</cell>
+							<cell colspan="4">
+								所选择的月份以后（包括所选月份）的待确认、未申报的数据将被系统自动退回并终止任务单。
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox mold="3d" open="true" title="委托外地"
+				visible="@load(vm.ifwt)">
+				<grid id="gdWT">
+					<rows>
+						<row>
+							<cell>终止原因</cell>
+							<cell>
+								<combobox model="@load(vm.causeList)"
+									value="@bind(vm.wtcm.ecoc_stop_cause)" readonly="true">
+									<template name="model">
+										<comboitem label="@load(each)" />
+									</template>
+								</combobox>
+							</cell>
+							<cell>终止日期</cell>
+							<cell>
+								<datebox format="yyyy-MM-dd"
+									value="@bind(vm.wtcm.ecoc_stop_date)" readonly="true" />
+							</cell>
+							<cell></cell>
+							<cell></cell>
+						</row>
+						<row>
+							<cell colspan="6">
+								<label value="项目明细"
+									style="font-weight:bold" />
+							</cell>
+						</row>
+						<row>
+							<cell colspan="6">
+								<grid width="100%"
+									model="@load(vm.cfeeList)" emptyMessage="暂无数据">
+									<columns sizable="true">
+										<column label="项目" width="150px"
+											align="center" />
+										<column label="企业基数"
+											align="center" />
+										<column label="个人基数"
+											align="center" />
+										<column label="企业比例"
+											align="center" />
+										<column label="个人比例"
+											align="center" />
+										<column label="月缴费"
+											align="center" />
+										<column label="起始日"
+											align="center" />
+										<column label="停缴日"
+											align="center" width="130px" />
+										<column align="center"
+											width="40px">
+											<div style="cursor:pointer"
+												onClick="@command('dateAll',class='all',gdWT=gdWT)">
+												<image
+													src="/images/130.gif">
+												</image>
+											</div>
+										</column>
+									</columns>
+									<template name="model">
+										<row
+											style="border:1px dotted #cad9ea;background-color:#f5fafe;">
+											<label
+												value="@load(each.eofc_name)" />
+											<cell
+												if="${each.sicl_class ne '服务费' and each.sicl_class ne '档案费' 
+												and each.sicl_class ne '福利项目' }">
+												<label
+													value="@load(each.eofc_co_base)" />
+											</cell>
+											<cell
+												if="${each.sicl_class ne '服务费' and each.sicl_class ne '档案费' 
+												and each.sicl_class ne '福利项目' }">
+												<label
+													value="@load(each.eofc_em_base)" />
+											</cell>
+											<cell
+												if="${each.sicl_class ne '服务费' and each.sicl_class ne '档案费' 
+												and each.sicl_class ne '福利项目' }">
+												<label
+													value="@bind(each.eofc_cp)" />
+											</cell>
+											<cell
+												if="${each.sicl_class ne '服务费' and each.sicl_class ne '档案费' 
+												and each.sicl_class ne '福利项目' }">
+												<label
+													value="@bind(each.eofc_op)" />
+											</cell>
+											<cell align="left"
+												colspan="4"
+												if="${each.sicl_class eq '服务费' or each.sicl_class eq '档案费' 
+												or each.sicl_class eq '福利项目' }">
+												<label
+													value="@bind(each.eofc_content)" />
+											</cell>
+											<cell>
+												<label
+													value="@bind(each.eofc_month_sum)" />
+											</cell>
+											<cell>
+												<label
+													value="@load(each.eofc_start_date)" />
+											</cell>
+											<cell>
+												<!-- <datebox readonly="true"
+													width="100px" format="yyyy-MM-30"
+													sclass="datebox-month-only" value="@bind(each.tempDate)">
+													</datebox> -->
+												<monthbox
+													format="yyyy-MM-30" readonly="true" 
+													onChange="@command('setWTtempDate',date=self,index=forEachStatus.index)"
+													mold="rounded" />
+											</cell>
+											<cell>
+												<div
+													style="cursor:pointer"
+													onClick="@command('dateAll',date=each.tempDate,
+														index=forEachStatus.index,class=each.sicl_class,gdWT=gdWT)">
+													<image
+														src="/images/130.gif">
+													</image>
+												</div>
+											</cell>
+										</row>
+									</template>
+								</grid>
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox mold="3d" open="true" title="商业保险"
+				visible="@load(vm.ifshangbao)">
+				<grid id="gdShangbao" width="100%"
+					model="@load(vm.ci_insurant_castsortout)">
+					<columns>
+						<column label="序号" align="center" width="60px" />
+						<column label="投保类型" align="center" />
+						<column label="投保份数" align="center" />
+						<column label="停缴时间" align="center" />
+						<column label="ID" align="center"
+							visible="false" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<cell>
+									<label
+										value="${forEachStatus.index + 1}" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ecin_castsort)" />
+								</cell>
+								<cell>
+									<combobox mold="rounded"
+										if="${each.ecin_buy_count=='2'?false:true}" width="90px"
+										readonly="true" value="1">
+										<comboitem
+											label="@load(each.ecin_buy_count)" />
+									</combobox>
+								</cell>
+								<cell>
+									<datebox width="130px"
+										readonly="true" mold="rounded" format="yyyy-MM-dd" />
+								</cell>
+								<cell>
+									<label value="@load(each.ecin_id)" />
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox mold="3d" open="true" title="档案保管"
+				visible="@load(vm.ifda)">
+				<grid id="gdDa">
+					<rows>
+						<row>
+							<cell width="80px">存档机构</cell>
+							<cell>
+								<radiogroup>
+									<radio label="委托人才"
+										selected="@load(vm.da_chk)"
+										onClick="@command('createMessage',coofferlist=coofferlist,type=1)"
+										if="${vm.archiveType=='委托人才' }" />
+									<radio label="中智保管"
+										selected="@load(vm.da_chk)"
+										onClick="@command('createMessage',coofferlist=coofferlist,type=2)"
+										if="${vm.archiveType=='中智保管' }" />
+								</radiogroup>
+							</cell>
+							<cell></cell>
+							<cell></cell>
+						</row>
+						<row>
+							<cell>通知方式</cell>
+							<cell>
+								<vbox>
+									<hbox>
+										<checkbox label="短信" />
+										<textbox
+											value="@load(vm.emM.emba_mobile)" readonly="true" />
+									</hbox>
+									<hbox>
+										<checkbox label="邮件" />
+										<textbox
+											value="@load(vm.emM.emba_email)" readonly="true" />
+									</hbox>
+								</vbox>
+							</cell>
+							<cell></cell>
+							<cell></cell>
+						</row>
+						<row>
+							<cell></cell>
+							<cell colspan="3">
+								<textbox value="@bind(vm.daContent)"
+									rows="4" cols="50" />
+							</cell>
+						</row>
+						<row>
+							<cell>调出日期</cell>
+							<cell>
+								<datebox />
+							</cell>
+							<cell></cell>
+							<cell></cell>
+						</row>
+						<row>
+							<cell>调出原因</cell>
+							<cell>
+								<textbox value="离职" />
+							</cell>
+							<cell></cell>
+							<cell></cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<grid>
+				<foot>
+					<footer align="center">
+						<button label="提交" id="btSubmit"
+							onClick="@command('submit',win=windim,outdate=outdate,outreason=outreason,coofferlist=coofferlist,gdShebao=gdShebao,gdShebaobj=gdShebaobj,gdGjj=gdGjj,gdWT=gdWT,gdShangbao=gdShangbao,gdDa=gdDa,gdEmc=gdEmc,gdEeri=gdEeri,gdGjjbj=gdGjjbj)" />
+					</footer>
+				</foot>
+			</grid>
+		</scrollview>
+	</window>
+</zk>

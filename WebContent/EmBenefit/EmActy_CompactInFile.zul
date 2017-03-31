@@ -1,0 +1,46 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winInFile" title="合同归档" border="normal" width="800px"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmBenefit.EmActy_CompactInFileController')"
+		closable="true" onCreate="@command('winD',a=self)">
+		<grid>
+			<columns visible="false">
+				<column width="120px"></column>
+				<column></column>
+				<column width="120px"></column>
+				<column></column>
+			</columns>
+			<rows>
+				<row>
+					<cell>供应商</cell>
+					<cell colspan="3">
+						<label value="@load(vm.ecm.eaco_name)" />
+					</cell>
+				</row>
+				<row>
+					<cell>合同号</cell>
+					<cell colspan="3">
+						<label value="@load(vm.ecm.eaco_compactid)" />
+					</cell>
+				</row>
+				<row>
+					<cell>归档时间</cell>
+					<cell>
+						<datebox value="@bind(vm.ecm.eaco_filedate2)" />
+					</cell>
+					<cell>归档编号</cell>
+					<cell>
+						<textbox value="@bind(vm.ecm.eaco_fileId)" />
+					</cell>
+				</row>
+
+			</rows>
+			<foot>
+				<footer span="4" align="center">
+					<button label="提交" onClick="@command('submit')" />
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

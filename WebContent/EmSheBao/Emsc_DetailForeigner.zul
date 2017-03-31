@@ -1,0 +1,511 @@
+<?page title="社保详情" contentType="text/html;charset=UTF-8"?>
+<!-- 调用内联页的文件名 -->
+<?component name="docDataList" macro-uri="/DocumentsInfo/DocumentsInfo_HOPageList.zul" inline="true"?>
+<zk>
+	<window id="winForeignerDetail" title="社会保险 -- 外籍人申报"
+		border="normal" width="800px" height="580px"
+		apply="org.zkoss.bind.BindComposer" closable="true" sizable="true"
+		viewModel="@id('vm') @init('Controller.EmSheBao.Emsc_DetailForeignerController')">
+		<div height="98%" style="overflow-y:scroll">
+			<groupbox>
+				<caption label="申报状态更改/备注" />
+				<grid style="border:0px">
+					<rows>
+						<row>
+							<cell width="20%">
+								<label value="申报状态：" />
+							</cell>
+							<cell>
+								<radiogroup id="rgState">
+									<radio label="未申报" value="0"
+										disabled="true"
+										selected="${vm.efModel.emsc_ifdeclare==0?true:false}" />
+									<radio label="申报中"
+										style="color:green" value="2"
+										disabled="${vm.efModel.emsc_ifdeclare==3 or vm.efModel.emsc_ifdeclare==0?false:true}"
+										selected="${vm.efModel.emsc_ifdeclare==2?true:false}" />
+									<radio label="已申报"
+										style="color:blue" value="1"
+										disabled="${vm.efModel.emsc_ifdeclare!=6}"
+										selected="${vm.efModel.emsc_ifdeclare==1?true:false}" />
+									<radio label="退回" style="color:red"
+										value="3" disabled="${vm.efModel.emsc_ifdeclare==1}"
+										selected="${vm.efModel.emsc_ifdeclare==3?true:false}" />
+								</radiogroup>
+								<button label="修改状态"
+									onClick="@command('upState',state=rgState,win=winForeignerDetail,cb=cb)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="退回短信收件人：" />
+							</cell>
+							<cell>
+								<bandbox id="bd" mold="rounded"
+									autodrop="true" readonly="true" width="95%"
+									value="@bind(vm.selectedname)">
+									<bandpopup>
+										<grid width="370px"
+											model="@load(vm.deptlist)">
+											<columns>
+												<column width="40px" />
+											</columns>
+											<rows>
+												<template
+													name="model">
+													<row>
+														<detail
+															open="false" fulfill="onOpen">
+															<listbox
+																width="170px" model="@load(each.loginlist)"
+																checkmark="true" multiple="true">
+																<template
+																	name="model">
+																	<listitem
+																		label="@load(each.log_name)" value="@load(each)"
+																		onClick="@command('checkname',model=each,bd=bd,lbitem=self)" />
+																</template>
+															</listbox>
+														</detail>
+														<cell>
+															<label
+																value="@load(each.dep_name)">
+															</label>
+														</cell>
+													</row>
+												</template>
+											</rows>
+										</grid>
+									</bandpopup>
+								</bandbox>
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="退回原因模板：" />
+							</cell>
+							<cell>
+								<combobox model="@load(vm.temList)"
+									readonly="true" onChange="@command('temselect',temcb=self)">
+									<template name="model">
+										<comboitem
+											label="@load(each.pmte_model)" value="@load(each)" />
+									</template>
+								</combobox>
+								<checkbox label="发邮件" checked="true"
+									style="border:0;margin-left:10px;" id="cb">
+								</checkbox>
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="退回原因：" />
+							</cell>
+							<cell>
+								<textbox id="epms_content" value="@bind(vm.reason)"
+									readonly="false" width="70%" mold="rounded" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="历史小信封和退回原因：" />
+							</cell>
+							<cell>
+								<grid model="@load(vm.list)"
+									emptyMessage="没有联系记录">
+									<columns>
+										<column align="center">
+											<label>发件人</label>
+										</column>
+										<column align="center">
+											<label>收件人</label>
+										</column>
+										<column align="center">
+											<label>发件时间</label>
+										</column>
+										<column align="center">
+											<label>短信内容</label>
+										</column>
+										<column align="center">
+											<label>状态</label>
+										</column>
+									</columns>
+									<rows>
+										<template name="model">
+											<row
+												style="border:1px dotted #cad9ea;background-color:#f5fafe;">
+												<cell>
+													<label
+														value="@load(each.syme_addname)">
+													</label>
+												</cell>
+												<cell>
+													<label
+														value="@load(each.symr_name)">
+													</label>
+												</cell>
+												<cell>
+													<label
+														value="@load(each.syme_addtime)">
+													</label>
+												</cell>
+												<cell>
+													<label
+														value="@load(each.syme_content)">
+													</label>
+												</cell>
+												<cell>
+													<label
+														value="@load(each.statename)">
+													</label>
+												</cell>
+											</row>
+										</template>
+									</rows>
+								</grid>
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="备忘：" />
+							</cell>
+							<cell>
+								<textbox id="txtFlag" mold="rounded"
+									value="@load(vm.efModel.emsc_flag)" />
+								<button label="添加备忘"
+									onClick="@command('addFlag',flag=txtFlag)" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox>
+				<caption label="所交材料" />
+				<grid style="border:0px">
+					<rows>
+						<row>
+							<cell>
+								<!-- 材料内联页 参数：puzu_id：模块页面id， doc_type：员工(g)还是公司(c)，gid：公司数据则插入空白 ，业务表id,log_url：获取到页面路径的前部分，ifSubmit：当前页面已勾选后的材料状态 -->
+								<docDataList id="docGrid" puzu_id="32"
+									doc_type="g" gid="${vm.efModel.gid}" tid="${vm.efModel.id}"
+									log_url="../DocumentsInfo/" ifSubmit="2" dHeight="200px"
+									dWidth="100%" />
+							</cell>
+						</row>
+						<row>
+							<cell align="center">
+								<button label="更新材料"
+									onClick="@command('upDocData',gd=docGrid,win=winForeignerDetail)" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox>
+				<caption label="个人信息" />
+				<grid style="border:0px">
+					<rows>
+						<row>
+							<cell width="20%">
+								<label value="公司编号" />
+							</cell>
+							<cell>
+								<label value="@load(vm.efModel.cid)" />
+							</cell>
+							<cell width="20%">
+								<label value="员工编号" />
+							</cell>
+							<cell>
+								<label value="@load(vm.efModel.gid)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="所属公司" />
+							</cell>
+							<cell colspan="3">
+								<label
+									value="@load(vm.efModel.emsc_company)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="所属月份" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.efModel.ownmonth)" />
+							</cell>
+							<cell>
+								<label value="个人电脑号" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.efModel.emsc_computerid)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="姓名" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.efModel.emsc_name)" />
+							</cell>
+							<cell>
+								<label value="配偶姓名" />
+							</cell>
+							<cell>
+								<label value="" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="户籍" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.efModel.emsc_hj)" />
+							</cell>
+							<cell>
+								<label value="性别" />
+							</cell>
+							<cell>
+								<label value="" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="职工性质" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.efModel.emsc_worker)" />
+							</cell>
+							<cell>
+								<label value="身份证号" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.efModel.emsc_idcard)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="职别" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.efModel.emsc_officialrank)" />
+							</cell>
+							<cell>
+								<label value="出生日期" />
+							</cell>
+							<cell>
+								<label value="" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="民族" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.efModel.emsc_folk)" />
+							</cell>
+							<cell>
+								<label value="月工资总额" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.efModel.emsc_radix)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="利手" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.efModel.emsc_hand)" />
+							</cell>
+							<cell>
+								<label value="参保手机" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.efModel.emsc_mobile)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="备注" />
+							</cell>
+							<cell colspan="3">
+								<textbox rows="4" value="@load(vm.efModel.emsc_remark)" width="70%"  readonly="true"/>
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox>
+				<caption label="参保险种" />
+				<grid style="border:0px">
+					<rows>
+						<row>
+							<cell width="20%">
+								<label value="养老参保情况" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.efModel.emsc_yl)" />
+							</cell>
+							<cell width="20%">
+								<label value="医疗参保情况" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.efModel.emsc_yltype)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="工伤参保情况" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.efModel.emsc_gs)" />
+							</cell>
+							<cell>
+								<label value="生育参保情况" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.efModel.emsc_syu)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="失业参保情况" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.efModel.emsc_sye)" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox>
+				<caption label="金额计算" />
+				<grid style="border:0px">
+					<rows>
+						<row>
+							<cell width="20%">
+								<label value="养老保险单位交金额" />
+							</cell>
+							<cell>
+								<decimalbox format="###.##"
+									inplace="true" readonly="true"
+									value="@load(vm.efModel.emshebaoupdateModel.esiu_ylcp)" />
+							</cell>
+							<cell width="20%">
+								<label value="养老保险个人交金额" />
+							</cell>
+							<cell>
+								<decimalbox format="###.##"
+									inplace="true" readonly="true"
+									value="@load(vm.efModel.emshebaoupdateModel.esiu_ylop)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="医疗保险单位交金额" />
+							</cell>
+							<cell>
+								<decimalbox format="###.##"
+									inplace="true" readonly="true"
+									value="@load(vm.efModel.emshebaoupdateModel.esiu_jlcp)" />
+							</cell>
+							<cell>
+								<label value="医疗保险个人交金额" />
+							</cell>
+							<cell>
+								<decimalbox format="###.##"
+									inplace="true" readonly="true"
+									value="@load(vm.efModel.emshebaoupdateModel.esiu_jlop)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="生育保险单位交金额" />
+							</cell>
+							<cell>
+								<decimalbox format="###.##"
+									inplace="true" readonly="true"
+									value="@load(vm.efModel.emshebaoupdateModel.esiu_syucp)" />
+							</cell>
+							<cell>
+								<label value="生育保险个人交金额" />
+							</cell>
+							<cell>
+								<decimalbox format="###.##"
+									inplace="true" readonly="true"
+									value="@load(vm.efModel.emshebaoupdateModel.esiu_syuop)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="失业保险单位交金额" />
+							</cell>
+							<cell>
+								<decimalbox format="###.##"
+									inplace="true" readonly="true"
+									value="@load(vm.efModel.emshebaoupdateModel.esiu_syecp)" />
+							</cell>
+							<cell>
+								<label value="失业保险个人交金额" />
+							</cell>
+							<cell>
+								<decimalbox format="###.##"
+									inplace="true" readonly="true"
+									value="@load(vm.efModel.emshebaoupdateModel.esiu_syeop)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="当月单位交金额合计" />
+							</cell>
+							<cell>
+								<decimalbox format="###.##"
+									inplace="true" readonly="true"
+									value="@load(vm.efModel.emshebaoupdateModel.esiu_totalcp)" />
+							</cell>
+							<cell>
+								<label value="当月个人交金额合计" />
+							</cell>
+							<cell>
+								<decimalbox format="###.##"
+									inplace="true" readonly="true"
+									value="@load(vm.efModel.emshebaoupdateModel.esiu_totalop)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="合计" />
+							</cell>
+							<cell>
+								<decimalbox format="###.##"
+									inplace="true" readonly="true"
+									value="${vm.efModel.emshebaoupdateModel.esiu_totalcp+vm.efModel.emshebaoupdateModel.esiu_totalop}" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox>
+				<caption label="系统日志" />
+			</groupbox>
+		</div>
+	</window>
+</zk>

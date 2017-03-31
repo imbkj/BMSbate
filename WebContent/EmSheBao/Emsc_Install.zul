@@ -1,0 +1,136 @@
+<?page title="社保设置" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="社保设置" border="normal" id="winShebaoInstall"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmSheBao.Emsc_InstallController')"
+		height="100%" width="100%" sizable="true">
+		<grid width="100%" height="100%">
+			<rows>
+				<row>
+					<cell width="200px" align="center">社保变更最后截止日</cell>
+					<cell>
+						每月
+						<spinner constraint="no negative,max 31"
+							maxlength="2" mold="rounded" width="50px" buttonVisible="false"
+							value="@bind(vm.lastday)" />
+						号以后(不含当天)，不能添加当月变更
+						<label value="@load(vm.lastdayname)"
+							style="color: #999999" />
+					</cell>
+				</row>
+				<row visible="false">
+					<cell align="center">社保变更需审核起始日</cell>
+					<cell>
+						每月
+						<spinner constraint="no negative,max 31"
+							value="@bind(vm.auditday)" maxlength="2" mold="rounded"
+							width="50px" buttonVisible="false" />
+						号以后(不含当天)，添加的变更都需客服部门经理审核
+						<label value="@load(vm.lastdayname)"
+							style="color: #999999" />
+					</cell>
+				</row>
+				<row>
+					<cell align="center">生育津贴申请最后截止日</cell>
+					<cell>
+						每月
+						<spinner constraint="no negative,max 31"
+							value="@bind(vm.malastday)" maxlength="2" mold="rounded"
+							width="50px" buttonVisible="false" />
+						号以后(不含当天)，不能添加当月变更
+						<label value="@load(vm.malastdayname)"
+							style="color: #999999" />
+					</cell>
+				</row>
+				<row>
+					<cell align="center">社保补缴最后截止日</cell>
+					<cell>
+						每月
+						<spinner constraint="no negative,max 31"
+							value="@bind(vm.lastdaybj)" maxlength="2" mold="rounded"
+							width="50px" buttonVisible="false" />
+						号以后(不含当天)，不能添加当月补缴
+						<label value="@load(vm.lastdaynamebj)"
+							style="color: #999999" />
+					</cell>
+				</row>
+
+				<row>
+					<cell align="center">禁止变更增删改</cell>
+					<cell>
+						<vlayout>
+							<hlayout>
+								<radiogroup
+									selectedItem="@bind(vm.onairstr)">
+									<radio value="1" label="是" />
+									<radio value="0" label="否" />
+								</radiogroup>
+								<label value="@load(vm.onairname)"
+									style="color: #999999" />
+							</hlayout>
+
+							<separator bar="true" width="100%" />
+							<hlayout valign="middle">
+								原因
+								<textbox mold="rounded" width="300px"
+									value="@bind(vm.reason)" />
+							</hlayout>
+						</vlayout>
+					</cell>
+				</row>
+
+				<row>
+					<cell align="center">禁止补缴增删改</cell>
+					<cell>
+						<vlayout>
+							<hlayout>
+								<radiogroup
+									selectedItem="@bind(vm.onairbjstr)">
+									<radio value="1" label="是" />
+									<radio value="0" label="否" />
+								</radiogroup>
+								<label value="@load(vm.onairnamebj)"
+									style="color: #999999" />
+							</hlayout>
+
+							<separator bar="true" width="100%" />
+							<hlayout valign="middle">
+								原因
+								<textbox mold="rounded" width="300px"
+									value="@bind(vm.reasonbj)" />
+							</hlayout>
+						</vlayout>
+					</cell>
+				</row>
+
+				<row>
+					<cell align="center">生成台帐日</cell>
+					<cell>
+						每月
+						<spinner constraint="no negative,max 31"
+							value="@bind(vm.cwday)" maxlength="2" mold="rounded" width="50px"
+							buttonVisible="false" />
+						号
+						<label value="" />
+					</cell>
+				</row>
+
+				<row>
+					<cell align="center">公司申报分配</cell>
+					<cell>
+						<label value="点击调整"
+							style="cursor:pointer;color:#00F;"
+							onClick="@command('assigenment')" />
+					</cell>
+				</row>
+
+			</rows>
+			<foot>
+				<footer align="center">
+					<button label="更新" id="btSubmit"
+						onClick="@command('setup')" />
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

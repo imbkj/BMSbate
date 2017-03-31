@@ -1,0 +1,31 @@
+<?page title="政策通知" contentType="text/html;charset=UTF-8"?>
+<zk>
+<grid apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('vm') @init('Controller.CoPolicyNotice.Pono_PubInfoListController')"
+	model="@load(vm.list)" height="100%">
+	<columns>
+		<column label="序号" width="50px"/>
+		<column label="所属月份" align="center" vflex="1"/>
+		<column label="类型" align="center" vflex="1"/>
+		<column label="标题" align="center" vflex="4"/>
+		<column label="发文机构" align="center" vflex="4"/>
+		<column label="城市" align="center" vflex="1"/>
+		<column label="添加人" align="center" vflex="1"/>
+		<column label="详细" align="center" width="60px"/>
+	</columns>
+	<rows>
+		<template name="model">
+			<row>
+				<cell><label value="${forEachStatus.index+1 }" ></label></cell>
+				<cell><label value="@load(each.ownmonth)" ></label></cell>
+				<cell><label value="@load(each.pono_type)" ></label></cell>
+				<cell><label value="@load(each.pono_title)" ></label></cell>
+				<cell><label value="@load(each.pono_agencies)" ></label></cell>
+				<cell><label value="@load(each.pono_city)" ></label></cell>
+				<cell><label value="@load(each.pono_addname)" ></label></cell>
+				<cell><a onClick="@command('detail',model=each)" ><label value="详细" ></label></a></cell>
+			</row>
+		</template>
+	</rows>
+</grid>
+</zk>

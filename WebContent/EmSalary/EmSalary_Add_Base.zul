@@ -1,0 +1,166 @@
+<?page title="工资信息新增" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winEmSalaryAdd" title="工资信息新增" border="normal"
+		width="60%" closable="true" sizable="true" height="90%"
+		apply="Controller.EmSalary.EmSalary_Add_BaseController">
+		<div width="100%" height="100%" if="${!$composer.existsCoOffer}"
+			align="center">
+			<label value="${$composer.existsMessage}" />
+		</div>
+		<borderlayout vflex="1" hflex="1" if="${$composer.existsCoOffer}">
+			<north title="个人信息" collapsible="true" splittable="true"
+				autoscroll="true">
+				<grid>
+					<rows>
+						<row>
+							<cell style="color:#666;">公司简称：</cell>
+							<cell style="color:#666;">
+								<label
+									value="${$composer.emdataList.getCoba_shortname()}" />
+							</cell>
+							<cell style="color:#666;">公司编号：</cell>
+							<cell style="color:#666;">
+								<label
+									value="${$composer.emdataList.getCid()}" />
+							</cell>
+						</row>
+						<row>
+							<cell style="color:#666;">员工姓名：</cell>
+							<cell style="color:#666;">
+								<label
+									value="${$composer.emdataList.getEmba_name()}" />
+							</cell>
+							<cell style="color:#666;">员工编号：</cell>
+							<cell style="color:#666;">
+								<label
+									value="${$composer.emdataList.getGid()}" />
+							</cell>
+						</row>
+						<row>
+							<cell style="color:#666;">所属月份：</cell>
+							<cell style="color:#666;">
+								<combobox id="ownmonth" mold="rounded"
+									readonly="true" model="${$composer.getOwnmonthList()}"
+									constraint="no empty:请选择所属月份">
+									<template name="model">
+										<comboitem label="${each}" />
+									</template>
+								</combobox>
+							</cell>
+							<cell style="color:#666;">算法名称：</cell>
+							<cell style="color:#666;">
+								<label
+									value="${$composer.emdataList.getCfin_name()}" />
+							</cell>
+						</row>
+						<row>
+							<cell style="color:#666;">用途：</cell>
+							<cell style="color:#666;">
+								<combobox id="esda_usage_type"
+									mold="rounded" readonly="true"
+									model="${$composer.getUsageList()}">
+									<template name="model">
+										<comboitem
+											label="${each.pcco_cn}" value="${each.pcco_code}" />
+									</template>
+								</combobox>
+							</cell>
+							<cell style="color:#666;">国籍：</cell>
+							<cell style="color:#666;">
+								<label
+									value="${$composer.emdataList.getEmba_Nationality()}" />
+							</cell>
+						</row>
+						<row>
+							<cell style="color:#666;">开户银行：</cell>
+							<cell style="color:#666;">
+								<label id="lblBank"
+									value="${$composer.getBank()}" />
+							</cell>
+							<cell style="color:#666;">所属银行：</cell>
+							<cell style="color:#666;">
+								<label value="" />
+							</cell>
+						</row>
+						<row>
+							<cell style="color:#666;">雇佣性质：</cell>
+							<cell style="color:#666;">
+								<label
+									value="${$composer.emdataList.getEsin_hpro()}" />
+							</cell>
+							<cell style="color:#666;">个税申报地：</cell>
+							<cell style="color:#666;">
+								<label
+									value="${$composer.emdataList.getEsin_taxplace()}" />
+							</cell>
+						</row>
+						<row>
+							<cell style="color:#666;">账户名：</cell>
+							<cell style="color:#666;">
+								<textbox id="esda_ba_name"
+									mold="rounded" readonly="true"
+									value="${$composer.emdataList.getEsda_ba_name()!=null?$composer.emdataList.getEsda_ba_name():$composer.emdataList.getEmba_name()}"
+									constraint="no empty:请出入银行账户名" />
+							</cell>
+							<cell style="color:#666;">银行账户：</cell>
+							<cell style="color:#666;">
+								<label id="lblAccount"
+									value="${$composer.getAccount()}" />
+							</cell>
+						</row>
+						<row>
+							<cell style="color:#666;">是否待确认：</cell>
+							<cell style="color:#666;">
+								<label value="是" />
+							</cell>
+							<cell style="color:#666;">特殊情况：</cell>
+							<cell style="color:#666;">
+								<label value="" />
+							</cell>
+						</row>
+						<row>
+							<cell style="color:#666;">备注：</cell>
+							<cell style="color:#666;" colspan="3">
+								<textbox id="esda_remark" rows="3"
+									width="60%" mold="rounded" />
+							</cell>
+						</row>
+						<row>
+							<cell style="color:#666;">财务备注：</cell>
+							<cell style="color:#666;" colspan="3">
+								<textbox id="esda_fd_remark" rows="3"
+									width="60%" mold="rounded" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</north>
+			<center title="工资信息" autoscroll="true">
+				<grid id="gdItem" emptyMessage="请选择用途。">
+					<rows>
+						<template name="model">
+							<row>
+								<cell width="50%" align="right">
+									<label
+										value="${each.csii_item_name}" />
+								</cell>
+								<cell width="50%">
+									<decimalbox format="###.##" />
+									<label style="color:#0000FF;"
+										value="算法自动计算" if="${each.cfda}" />
+									<label style="color:#666666;"
+										value="(固定项目：${each.csgi_content})" if="${each.if_gd==1}" />
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</center>
+			<south>
+				<div align="center" width="100%">
+					<button label="提交" id="btSubmit" />
+				</div>
+			</south>
+		</borderlayout>
+	</window>
+</zk>

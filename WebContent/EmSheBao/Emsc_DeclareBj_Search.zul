@@ -1,0 +1,268 @@
+<?page title="社保补缴申报" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winDeclareBjSearch" title="社会保险 -- 补缴申报页面"
+		border="normal" width="100%" height="100%"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmSheBao.Emsc_DeclareBj_SearchController')">
+		<zscript>
+	//日期
+	day = new String[] { "1日", "2日", "3日", "4日", "5日", "6日", "7日", "8日", "9日",
+			"10日", "11日", "12日", "13日", "14日", "16日", "17日", "18日", "19日",
+			"20日", "21日", "22日", "23日", "24日", "25日", "26日", "27日", "28日",
+			"29日", "30日", "31日" };
+	month = new String[] { "1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月",
+			"9月", "10月", "11月", "12月" };
+</zscript>
+		<tablelayout columns="2" width="100%" height="100%">
+			<tablechildren height="70%" width="80%" rowspan="2">
+				<groupbox height="100%">
+					<caption label="条件检索" />
+					<grid height="100%">
+						<rows>
+							<row>
+								<cell width="18%">
+									<label value="所属月份：" />
+								</cell>
+								<cell>
+									<combobox value="@bind(vm.ownmonth)"
+										mold="rounded" model="@load(vm.ownmonthList)"
+										readonly="true">
+										<template name="model">
+											<comboitem
+												label="@load(each)" />
+										</template>
+									</combobox>
+								</cell>
+								<cell>
+									<label value="申报状态：" />
+								</cell>
+								<cell>
+									<combobox mold="rounded"
+										value="@bind(vm.ifdeclare)" readonly="true">
+										<comboitem label="全部" />
+										<comboitem label="未申报" />
+										<!-- <comboitem label="已上单" />
+										<comboitem label="中心待核收" /> -->
+										<comboitem label="待申报" />
+										<comboitem label="已交单" />
+										<comboitem label="已申报" />
+										<comboitem label="退回" />
+									</combobox>
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label value="员工查询：" />
+								</cell>
+								<cell colspan="3">
+									<textbox width="180px"
+										mold="rounded" value="@bind(vm.emcon)" />
+									<combobox width="100px"
+										value="@bind(vm.emtype)" readonly="true" mold="rounded">
+										<comboitem label="员工姓名" />
+										<comboitem label="员工编号" />
+										<comboitem label="身份证" />
+										<comboitem label="电脑号" />
+									</combobox>
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label value="公司名称：" />
+								</cell>
+								<cell>
+									<combobox id="cbCompany"
+										mold="rounded" readonly="true" value="所有公司">
+										<comboitem label="所有公司"
+											value="所有公司" />
+										<comboitem
+											label="[${each.cid})](${each.coba_shortspell})${each.coba_shortname}"
+											value="${each.cid}" forEach="${vm.companyList}" />
+									</combobox>
+								</cell>
+								<cell>
+									<label value="客服代表：" />
+								</cell>
+								<cell>
+									<combobox mold="rounded"
+										value="@bind(vm.client)" readonly="true">
+										<comboitem label="全部"
+											value="全部" />
+										<comboitem
+											label="${each.log_name}" forEach="${vm.clientList}" />
+
+									</combobox>
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label value="开户状态：" />
+								</cell>
+								<cell>
+									<combobox mold="rounded"
+										value="@bind(vm.single)" readonly="true">
+										<comboitem label="全部" />
+										<comboitem label="独立开户" />
+										<comboitem label="中智开户" />
+										<comboitem label="中智开户(委托)" />
+									</combobox>
+								</cell>
+								<cell>
+									<label value="添加人：" />
+								</cell>
+								<cell>
+									<combobox mold="rounded"
+										value="@bind(vm.addname)" readonly="true">
+										<comboitem label="全部"
+											value="全部" />
+										<comboitem
+											label="${each.log_name}" forEach="${vm.clientList}" />
+									</combobox>
+								</cell>
+
+							</row>
+							<row>
+								<cell>
+									<label value="申报时间：" />
+								</cell>
+								<cell>
+									<combobox mold="rounded"
+										readonly="true" value="@bind(vm.dmonth)" width="30%">
+										<comboitem label="" />
+										<comboitem label="${each}"
+											forEach="${month}" />
+									</combobox>
+									<combobox mold="rounded"
+										readonly="true" value="@bind(vm.dday)" width="30%">
+										<comboitem label="" />
+										<comboitem label="${each}"
+											forEach="${day}" />
+									</combobox>
+									<combobox mold="rounded"
+										readonly="true" value="@bind(vm.dbefore)" width="30%">
+										<comboitem label="" />
+										<comboitem label="之前" />
+										<comboitem label="之后" />
+										<comboitem label="当日" />
+									</combobox>
+								</cell>
+								<cell>
+									<label value="添加时间：" />
+								</cell>
+								<cell>
+									<combobox mold="rounded"
+										readonly="true" value="@bind(vm.amonth)" width="30%">
+										<comboitem label="" />
+										<comboitem label="${each}"
+											forEach="${month}" />
+									</combobox>
+									<combobox mold="rounded"
+										readonly="true" value="@bind(vm.aday)" width="30%">
+										<comboitem label="" />
+										<comboitem label="${each}"
+											forEach="${day}" />
+									</combobox>
+									<combobox mold="rounded"
+										readonly="true" value="@bind(vm.abefore)" width="30%">
+										<comboitem label="" />
+										<comboitem label="之前" />
+										<comboitem label="之后" />
+										<comboitem label="当日" />
+									</combobox>
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label value="申报文件名：" />
+								</cell>
+								<cell>
+									<textbox value="@bind(vm.excelfile)"
+										mold="rounded" width="70%" />
+								</cell>
+								<cell>
+									<label value="申报人：" />
+								</cell>
+								<cell>
+									<combobox mold="rounded"
+										value="@bind(vm.dname)" readonly="true">
+										<comboitem
+											label="${each.log_name}" forEach="${vm.dNameList}" />
+									</combobox>
+								</cell>
+							</row>
+						</rows>
+						<foot>
+							<footer align="center">
+								<button label="查询" id="btSubmit"
+									onClick="@command('search',win=winDeclareBjSearch,cb=cbCompany)" />
+							</footer>
+						</foot>
+					</grid>
+				</groupbox>
+			</tablechildren>
+			<tablechildren>
+				<groupbox>
+					<caption label="快速检索" />
+					<grid height="100%">
+						<rows>
+							<row>
+								<cell>
+									<vbox>
+										<button label="所有未申报且未退回完成医疗补交数据" onClick="@command('qSearch',win=winDeclareBjSearch,qType=1)" />
+										<!-- <label value="本月特殊数据" />
+										<label value="本月更改数据" />
+										<label value="中智大户未申报" />
+										<label value="中智大户申报中" />
+										<label value="中智大户退回" />
+										<label value="当月特殊数据" />
+										<label value="当月修改数据 " />
+										<label value="当天添加数据" /> -->
+									</vbox>
+								</cell>
+							</row>
+						</rows>
+					</grid>
+				</groupbox>
+				<groupbox>
+					<caption label="详细统计" />
+					<grid height="100%">
+						<rows>
+							<row>
+								<cell width="60%">
+									<label value="当月变更数 ：" />
+								</cell>
+								<cell height="100%">
+									<label value="@load(vm.count[0])" />
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label value="已处理数 ：" />
+								</cell>
+								<cell>
+									<label value="@load(vm.count[1])" />
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label value="中智大户总数 ：" />
+								</cell>
+								<cell>
+									<label value="@load(vm.count[2])" />
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label value="独立开户总数：" />
+								</cell>
+								<cell>
+									<label value="@load(vm.count[4])" />
+								</cell>
+							</row>
+						</rows>
+					</grid>
+				</groupbox>
+			</tablechildren>
+		</tablelayout>
+	</window>
+</zk>

@@ -1,0 +1,83 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="生成报盘" border="normal" width="96%" height="80%"
+		closable="true" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmFinanceManage.Finance_GatherInfoController')">
+		<grid vflex="1" model="@load(vm.list)" id="gd" mold="paging" emptyMessage="没有数据"
+			pageSize="100">
+			<columns>
+				<column label="序号" align="center" width="40px" />
+				<column label="制单日期" align="center" width="120px" />
+				<column label="凭证类别字" align="center" />
+				<column label="凭证号" align="center" width="100px" />
+				<column label="附单据数" align="center" />
+				<column label="摘要" align="center" width="250px" />
+				<column label="科目编码" align="center" />
+				<column label="金额借方" align="center" />
+				<column label="金额贷方" align="center" />
+				<column label="数量" align="center" />
+				<column label="外币" align="center" />
+				<column label="汇率" align="center" />
+				<column label="制单人姓名" align="center" />
+				<column label="票号" align="center" />
+				<column label="票号发生日期" align="center" />
+				<column label="部门编码" align="center" />
+				<column label="客户编码" align="center" />
+				<column label="项目编码" align="center" />
+				<column label="操作" align="center" width="60px" />
+			</columns>
+			<rows>
+				<template name="model">
+					<row>
+						<cell>
+							<label value="${forEachStatus.index + 1}">
+							</label>
+						</cell>
+						<cell>
+							<datebox width="80%"
+								value="@bind(each.makedate)">
+							</datebox>
+							<image src="../images/130.gif"
+								style="cursor:pointer;"
+								onClick="@command('copylp',gd=gd,rowIndex=forEachStatus.index)" />
+						</cell>
+						<cell><label value="记"></label></cell>
+						<cell>
+							
+								<textbox width="80%"
+									value="@bind(each.proofnumber)">
+								</textbox>
+								<image src="../images/130.gif"
+									style="cursor:pointer;"
+									onClick="@command('copynumber',gd=gd,rowIndex=forEachStatus.index)" />
+						</cell>
+						<cell><label value="@load(each.prooffdnum)"></label></cell>
+						<cell>
+							<textbox width="90%" rows="2"
+								value="@bind(each.proofsummary)">
+							</textbox>
+						</cell>
+						<cell><label value="@load(each.subjectnumber)"></label></cell>
+						<cell><decimalbox width="90%" value="@bind(each.borrowmoney)" scale="2"></decimalbox></cell>
+						<cell><decimalbox width="90%" value="@bind(each.lendmoney)" scale="2"></decimalbox></cell>
+						<cell><label value="@load(each.number)"></label></cell>
+						<cell><label value="@load(each.exchange)"></label></cell>
+						<cell><label value="@load(each.exchangerate)"></label></cell>
+						<cell><label value="@load(each.makename)"></label></cell>
+						<cell><label value="@load(each.ticketnumber)"></label></cell>
+						<cell><label value="@load(each.ticketdate)"></label></cell>
+						<cell><label value="@load(each.depnumber)"></label></cell>
+						<cell><label value="@load(each.clientnumber)"></label></cell>
+						<cell><label value="@load(each.projectnumber)"></label></cell>
+						<cell><a onClick="@command('cancel',model=each)">取消</a></cell>
+					</row>
+				</template>
+			</rows>
+			<foot>
+				<footer span="22" align="center">
+					<button onClick="@command('downfile')">导出文件</button>
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

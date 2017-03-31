@@ -1,0 +1,88 @@
+<?page title="委托机构合同" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="委托机构合同" border="normal" vflex="1" hflex="1"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoAgency.WtCompact_ManageController')">
+		<grid width="100%" vflex="1" hflex="1" emptyMessage="暂无合同信息"
+			model="@load(vm.list)">
+			<columns>
+				<column label="序号" width="70px" align="center" />
+				<column label="机构名称" align="center" />
+				<column label="合同编号" align="center" />
+				<column label="合同类型" align="center" />
+				<column label="合同签订日期" align="center" />
+				<column label="合同有效期" align="center" />
+				<column label="合同到期日" align="center" />
+				<column label="自动续约" align="center" />
+				<column label="合同状态" align="center" />
+				<column label="查看" width="80px" align="center"
+					visible="true" />
+			</columns>
+			<rows>
+				<template name="model">
+					<row>
+						<cell>
+							<label value="${forEachStatus.index+1 }">
+							</label>
+						</cell>
+						<cell>
+							<label value="@load(each.coct_coagname)">
+							</label>
+						</cell>
+						<cell>
+							<label value="@load(each.coct_compactid)">
+							</label>
+						</cell>
+						<cell>
+							<label value="@load(each.coct_type)">
+							</label>
+						</cell>
+						<cell>
+							<label value="@load(each.coct_signdate)">
+							</label>
+						</cell>
+						<cell>
+							<label
+								value="@load(each.coct_effectdate)">
+							</label>
+						</cell>
+						<cell>
+							<label
+								value="@load(each.coct_expiredate)">
+							</label>
+						</cell>
+						<cell>
+							<label
+								value="${each.coct_autoextend==0?'否':'是' }">
+							</label>
+						</cell>
+						<cell>
+							<label value="@load(each.statename)">
+							</label>
+						</cell>
+						<cell>
+							<menubar autodrop="true">
+								<menu
+									image="../images/pencil-small.png">
+									<menupopup>
+										<menuitem label="基本信息"
+											onClick="@command('info',model=each)" />
+										<menuitem label="合同内容"
+											visible="${each.coct_state!=0 }"
+											onClick="@command('lookinfo',model=each)" />
+									</menupopup>
+								</menu>
+							</menubar>
+						</cell>
+					</row>
+				</template>
+			</rows>
+			<foot>
+				<footer align="center" span="12">
+					<button label="新增合同"
+						onClick="@command('addCompact')" />
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

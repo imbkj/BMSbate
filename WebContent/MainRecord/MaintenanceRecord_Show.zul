@@ -1,0 +1,110 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="已审核维护记录查询" border="normal" vflex="1"
+		apply="org.zkoss.bind.BindComposer" closable="true"
+		viewModel="@id('vm') @init('Controller.MainRecord.MaintenanceRecord_ShowController')">
+		<borderlayout>
+			<north border="0" title="检索" collapsible="true"
+				style="padding-bottom:10px;">
+				<grid>
+					<rows>
+						<row>
+							<cell width="80px">审批人</cell>
+							<cell>
+								<textbox width="500px" height="30px"  value="@bind(vm.approver)"></textbox>
+							</cell>
+							<cell width="80px">审批时间</cell>
+							<cell>
+							    <combobox width="300px" 
+									model="@load(vm.listAdu)" readonly="true" value="@bind(vm.audittime)">
+									<template name="model">
+										<comboitem label="@load(each)"></comboitem>
+									</template>
+								</combobox>
+							</cell>
+						</row>
+						<row>
+						   <cell width="80px">申请原因</cell>
+							<cell>
+								<textbox width="500px" height="30px" value="@bind(vm.proposereson)"></textbox>
+							</cell>
+							<cell width="80px">申请日期</cell>
+							<cell>
+							    <combobox width="300px"
+									model="@load(vm.listPro)" readonly="true" value="@bind(vm.proposerdate)">
+									<template name="model" >
+										<comboitem label="@load(each)" ></comboitem>
+									</template>
+								</combobox>
+							</cell>
+						</row>
+						<row>
+						  <cell width="80px">申请人</cell>
+							<cell>
+								<textbox width="500px" height="30px" value="@bind(vm.proposer)"></textbox>
+							</cell>
+						</row>
+					</rows>
+					<foot>
+						<footer align="center">
+						   <button onClick="@command('findAuditCore')">查询</button>
+						</footer>
+					</foot>
+				</grid>
+			</north>
+		    <center>
+	          <grid vflex="1" model="@load(vm.mainRecordList)" emptyMessage="无数据" mold="paging" id="lmtGrid"
+					pageSize="20">
+					<columns sizable="true">
+						<column label="序号" align="center" width="60px"/>
+						<column label="申请人" align="center"/>
+						<column label="申请日期" align="center"/>
+						<column label="申请原因" align="center"/>
+						<column label="sql语句" align="center"/>
+						<column label="审批人 " align="center"/>
+						<column label="审核日期" align="center"/>
+						<column label="审核状态" align="center"/>
+						<column label="维护结果" align="center"/>
+						<column label="备份状态" align="center"/>
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+							    <cell >
+								<label value="${forEachStatus.index + 1}" />
+								</cell>
+								<cell>
+                                  <label value="@load(each.proposer)" />
+                                </cell>
+								<cell>
+                                  <label value="@load(each.proposerdate)" />
+                                </cell>
+								<cell>
+								<label value="@load(each.proposereson)" />
+								</cell>
+                                <cell>
+                                <label value="@load(each.sql)" />
+                                </cell>
+                                <cell>
+                                <label value="@load(each.approver)" />
+                                </cell>
+                                <cell>
+                                  <label value="@load(each.audittime)" /> 
+                                </cell>
+                                <cell>
+                                <label style="${each.status=='0'?'color:red;':''}" value="${each.status!='0'?'已审核':'未审核' }" />
+                                </cell>
+                                <cell>
+                                <label value="@load(each.mainresult)" />
+                                </cell>
+                                <cell>
+                                <label style="${each.isbackup=='0'?'color:red;':''}" value="${each.isbackup!='0'?'已备份':'未备份' }" />
+                                </cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+	        </center>
+	  </borderlayout>	
+</window>
+</zk>

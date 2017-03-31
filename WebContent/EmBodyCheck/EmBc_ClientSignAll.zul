@@ -1,0 +1,28 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="批量签收报告" border="normal" width="600px" height="300px"
+		closable="true" apply="org.zkoss.bind.BindComposer" id="signwin"
+		viewModel="@id('vm') @init('Controller.EmBodyCheck.EmBc_ClientSignAllController')">
+		<grid vflex="1">
+			<rows>
+				<row>
+					<cell width="100px">客服签收报告时间</cell>
+					<cell>
+						<datebox value="@bind(vm.signdate)"></datebox>
+						<label style="color:red;">(*)</label>
+					</cell>
+					<cell width="70px">签收人</cell>
+					<cell>
+						<textbox value="@bind(vm.signName)"></textbox>
+						<label style="color:red;">(*)</label>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button onClick="@command('submit',win=signwin)">提交</button>
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

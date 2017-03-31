@@ -1,0 +1,43 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="确认" border="normal" width="80%" height="80%" closable="true"
+		apply="org.zkoss.bind.BindComposer" id="win"
+   	 	viewModel="@id('vm') @init('Controller.EmCensus.EmCensus_ClientComfirmComtroller')"
+	>
+		<grid vflex="1">
+			<rows>
+				<row>
+					<cell width="120px">员工编号</cell>
+					<cell><label value="@load(vm.model.gid)"></label></cell>
+					<cell width="120px">员工姓名</cell>
+					<cell><label value="@load(vm.model.emhj_name)"></label></cell>
+				</row>
+				<row>
+					<cell>单位编号</cell>
+					<cell><label value="@load(vm.model.cid)"></label></cell>
+					<cell>单位名称</cell>
+					<cell><label value="@load(vm.model.coba_shortname)"></label></cell>
+				</row>
+				<row>
+					<cell>身份证号</cell>
+					<cell><label value="@load(vm.model.emhj_idcard)"></label></cell>
+					<cell>账户类型</cell>
+					<cell><label value="@load(vm.model.emhj_type)"></label></cell>
+				</row>
+				<row>
+					<cell>添加人</cell>
+					<cell><label value="@load(vm.model.emhj_addname)"></label></cell>
+					<cell>添加时间</cell>
+					<cell><label value="@load(vm.model.emhj_addtime)"></label></cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button onClick="@command('submit',win=win)">提交</button>
+					<button onClick="@command('back',win=win)">退回</button>
+					<button label="查看报价单" onClick="@command('check')" />
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

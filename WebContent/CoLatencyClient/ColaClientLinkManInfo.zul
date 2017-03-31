@@ -1,0 +1,71 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="潜在客户联系人详细信息页面" border="normal" closable="true"
+		width="600px" id="win">
+		<grid width="100%" id="linkinfo" sizedByContent="true" span="true">
+			<rows>
+				<row>
+					<cell width="100px">联系人姓名</cell>
+					<cell colspan="3">
+						<textbox id="linkname"
+							value="${arg.linkmodel.cali_name}" />
+					</cell>
+				</row>
+				<row>
+					<cell width="100px">职位</cell>
+					<cell>
+						<textbox id="job"
+							value="${arg.linkmodel.cali_job}" />
+					</cell>
+					<cell width="100px">职责</cell>
+					<cell>
+						<textbox value="${arg.linkmodel.cali_duty}" />
+					</cell>
+				</row>
+				<row>
+					<cell>电话号码1</cell>
+					<cell>
+						<textbox id="tel"
+							value="${arg.linkmodel.cali_tel}" />
+					</cell>
+					<cell>电话号码2</cell>
+					<cell>
+						<textbox id="tel1"
+							value="${arg.linkmodel.cali_tel1}" />
+					</cell>
+				</row>
+				<row>
+					<cell>手机号码</cell>
+					<cell>
+						<textbox id="mobile"
+							value="${arg.linkmodel.cali_mobile}" />
+					</cell>
+					<cell>传真</cell>
+					<cell>
+						<textbox id="fax"
+							value="${arg.linkmodel.cali_fax}" />
+					</cell>
+				</row>
+				<row>
+					<cell>电子邮箱1</cell>
+					<cell>
+						<textbox id="email"
+							value="${arg.linkmodel.cali_email}" />
+					</cell>
+					<cell>电子邮箱2</cell>
+					<cell>
+						<textbox id="email1"
+							value="${arg.linkmodel.cali_email1}" />
+					</cell>
+				</row>
+				<row>
+					<cell>备注</cell>
+					<cell colspan="3">
+						<textbox width="80%" rows="3" id="remark"
+							value="${arg.linkmodel.cali_remark}" />
+					</cell>
+				</row>
+			</rows>
+		</grid>
+	</window>
+</zk>

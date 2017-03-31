@@ -1,0 +1,67 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winSetSerAgency" title="委托机构管理--设置合作机构"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoAgency.WtAgency_DisOperateController')"
+		width="80%" closable="true" sizable="true">
+		<grid>
+			<rows>
+				<row>
+					<cell width="45%" style="color:#666;"
+						align="right">
+						合作城市：
+					</cell>
+					<cell align="left" style="color:#666;">
+						<label id="lbCity" value="${arg.city}" />
+					</cell>
+				</row>
+				<row>
+					<cell style="color:#666;" align="right">机构查询：</cell>
+					<cell align="left">
+						<textbox id="tbname" mold="rounded"
+							tooltiptext="可以输入 机构编号 或 机构名称  或 机构拼音 或 客服名称 搜索"
+							onChange="@command('searchAgency',agency=self.value)" />
+					</cell>
+				</row>
+				<row spans="2">
+					<listbox id="lbBase" checkmark="true"
+						emptyMessage="暂无数据" model="@load(vm.winBaseList)" multiple="true"
+						height="50%" mold="paging" pageSize="10">
+						<listhead>
+							<listheader hflex="1" />
+							<listheader label="机构编号" hflex="2"
+								align="center" sort="auto(coab_id)" />
+							<listheader label="机构名称"
+								sort="auto(coab_name)" hflex="6" align="center" />
+							<listheader label="机构性质"
+								sort="auto(coab_setuptype)" hflex="3" align="center" />
+							<listheader label="所属城市"
+								sort="auto(coab_city)" hflex="4" align="center" />
+							<listheader label="客服"
+								sort="auto(cabsModel.coas_client)" hflex="4" align="center" />
+						</listhead>
+						<template name="model">
+							<listitem>
+								<listcell></listcell>
+								<listcell label="@load(each.coab_id)" />
+								<listcell label="@load(each.coab_name)" />
+								<listcell
+									label="@load(each.coab_setuptype)" />
+								<listcell label="@load(each.coab_city)" />
+								<listcell
+									label="@load(each.cabsModel.coas_client)" />
+							</listitem>
+						</template>
+					</listbox>
+
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button label="提交" id="btSubmit"
+						onClick="@command('Submit',lb=lbBase,win=winSetSerAgency)" />
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

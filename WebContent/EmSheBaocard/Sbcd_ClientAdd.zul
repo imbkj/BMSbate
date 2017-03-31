@@ -1,0 +1,193 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<?component name="docDataList" macro-uri="../DocumentsInfo/DocumentsInfo_AddPageList.zul" inline="true"?>
+<zk>
+<window title="社保卡信息新增_客服" border="normal" width="80%" height="80%" closable="true"
+	apply="org.zkoss.bind.BindComposer" id="sbwin" onCreate="@command('addwin',sbwin=self)"
+    viewModel="@id('vm') @init('Controller.EmSheBaocard.Sbcd_InfoAddController')"
+>
+<grid vflex="1">
+		<rows>
+			<row>
+				<cell width="100px">员工姓名</cell>
+				<cell><textbox value="@bind(vm.m.sbcd_name)" readonly="true"></textbox></cell>
+				<cell width="100px">员工编号</cell>
+				<cell><textbox value="@bind(vm.m.gid)" readonly="true"></textbox></cell>
+				<cell width="80px">性别</cell>
+				<cell>
+					<combobox value="@bind(vm.m.sbcd_sex)" readonly="true">
+						<comboitem label="男"/>
+						<comboitem label="女"/>
+					</combobox>
+				</cell>
+			</row>
+			<row>
+				<cell>公司编号</cell>
+				<cell><textbox value="@bind(vm.m.cid)" readonly="true"></textbox></cell>
+				<cell>公司全称</cell>
+				<cell colspan="3"><textbox width="80%" value="@bind(vm.m.sbcd_company)"></textbox></cell>
+			</row>
+			<row>
+				<cell>社保单位编码</cell>
+				<cell><textbox value="@bind(vm.m.sbcd_sbnumber)" readonly="true"></textbox></cell>
+				<cell>社保单位名称</cell>
+				<cell colspan="3"><textbox width="80%" value="@bind(vm.m.sbcd_companyname)" readonly="true"></textbox></cell>
+			</row>
+			<row>
+				<cell>社保电脑号</cell>
+				<cell><textbox value="@bind(vm.m.sbcd_computerid)"></textbox></cell>
+				<cell>民族</cell>
+				<cell>
+					<combobox model="@bind(vm.folklist)" value="@bind(vm.m.sbcd_folk)" readonly="true">
+						<template name="model">
+							<comboitem label="@bind(each.pcco_cn)" value="@bind(each.pcco_id)"/>
+						</template>
+					</combobox>
+					
+				</cell>
+				<cell>移动电话</cell>
+				<cell><textbox value="@bind(vm.m.sbcd_mobile)"></textbox></cell>
+			</row>
+			
+			<row>
+				<cell>证件类型</cell>
+				<cell>
+					<combobox model="@bind(vm.classlist)" value="@bind(vm.m.sbcd_idcardclass)" readonly="true">
+						<template name="model">
+							<comboitem label="@bind(each.pcco_cn)" value="@bind(each.pcco_code)"/>
+						</template>
+					</combobox>
+					
+				</cell>
+				<cell>证件号码</cell>
+				<cell><textbox value="@bind(vm.m.sbcd_idcard)"></textbox></cell>
+				<cell>发证机关</cell>
+				<cell><textbox value="@bind(vm.m.sbcd_agencies)"></textbox></cell>
+			</row>
+			<row>
+				<cell>证件有效起始日</cell>
+				<cell><datebox value="@bind(vm.startdate)" onChange="@command('changedate')"></datebox></cell>
+				<cell>证件有效终止日</cell>
+				<cell><datebox value="@bind(vm.enddate)"></datebox></cell>
+				<cell>出生日期</cell>
+				<cell><datebox value="@bind(vm.birthday)"></datebox></cell>
+			</row>
+			<row>
+				<cell>联系地址省</cell>
+				<cell>
+					<combobox model="@bind(vm.provlist)" onChange="@command('changeaddcity',val=self.value)"
+					value="@bind(vm.m.sbcd_province)" readonly="true">
+						<template name="model">
+							<comboitem label="@bind(each.pcco_cn)" value="@bind(each.pcco_code)"/>
+						</template>
+					</combobox>
+					
+				</cell>
+				<cell>联系地址市</cell>
+				<cell colspan="3">
+					<combobox model="@bind(vm.citylist)" value="@bind(vm.m.sbcd_city)" readonly="true">
+						<template name="model">
+							<comboitem label="@bind(each.pcco_cn)" value="@bind(each.pcco_code)"/>
+						</template>
+					</combobox>
+					
+				</cell>
+			</row>
+			<row>
+				<cell>详细联系地址</cell>
+				<cell colspan="5"><textbox width="80%" value="@bind(vm.m.sbcd_address)"></textbox></cell>
+			</row>
+			<row>
+				<cell>照片回执号</cell>
+				<cell><textbox value="@bind(vm.m.sbcd_photonum)"></textbox></cell>
+				<cell>户籍所在省</cell>
+				<cell>
+					<combobox model="@bind(vm.provlist)" value="@bind(vm.m.sbcd_hjprovince)"
+					onChange="@command('changehjcity',val=self.value)" readonly="true">
+						<template name="model">
+							<comboitem label="@bind(each.pcco_cn)" value="@bind(each.pcco_code)"/>
+						</template>
+					</combobox>
+				</cell>
+				<cell>户籍所在市</cell>
+				<cell>
+					<combobox model="@bind(vm.hjcitylist)" value="@bind(vm.m.sbcd_hjcity)" readonly="true">
+						<template name="model">
+							<comboitem label="@bind(each.pcco_cn)" value="@bind(each.pcco_code)"/>
+						</template>
+					</combobox>
+				</cell>
+			</row>
+			<row>
+				<cell>文化程度</cell>
+				<cell>
+					<combobox model="@bind(vm.edulist)" value="@bind(vm.m.sbcd_education)" readonly="true">
+						<template name="model">
+							<comboitem label="@bind(each.pcco_cn)" value="@bind(each.pcco_code)"/>
+						</template>
+					</combobox>
+				</cell>
+				<cell>婚姻状况</cell>
+				<cell>
+					<combobox model="@bind(vm.marylist)" value="@bind(vm.m.sbcd_marry)" readonly="true">
+						<template name="model">
+							<comboitem label="@bind(each.pcco_cn)" value="@bind(each.pcco_code)"/>
+						</template>
+					</combobox>
+				</cell>
+				<cell>户口性质</cell>
+				<cell>
+					<combobox model="@bind(vm.hjlist)" value="@bind(vm.m.sbcd_hj)" readonly="true">
+						<template name="model">
+							<comboitem label="@bind(each.pcco_cn)" value="@bind(each.pcco_code)"/>
+						</template>
+					</combobox>
+					
+				</cell>
+			</row>
+			<row>
+				<cell>职业</cell>
+				<cell>
+					<combobox model="@bind(vm.joblist)" value="@bind(vm.m.sbcd_job)" readonly="true">
+						<template name="model">
+							<comboitem label="@bind(each.pcco_cn)" value="@bind(each.pcco_code)"/>
+						</template>
+					</combobox>
+				</cell>
+				<cell>办理类型</cell>
+				<cell>
+					<hlayout>
+					<combobox value="@bind(vm.m.sbcd_content)" readonly="true">
+						<comboitem label="新增"/>
+						<comboitem label="存量(换卡)"/>
+					</combobox>
+					<label style="color:red;">(*)</label>
+					</hlayout>
+				</cell>
+				<cell>办卡银行</cell>
+				<cell>
+					<textbox value="@bind(vm.m.sbcd_upbankname)" readonly="true"></textbox>
+				</cell>
+			</row>
+			<row>
+				<cell>备注</cell>
+				<cell colspan="5">
+					<textbox rows="3" width="80%" value="@bind(vm.m.sbcd_remark)"></textbox>
+				</cell>
+			</row>
+			<row>
+			<cell>提交资料</cell>
+			<cell colspan="5">
+				<docDataList id="docGrid" puzu_id="${vm.bankmodel.bank_doc_id }" 
+						dWidth="100%" pUsername="陈耀家" pUserId="248" />
+			</cell>	
+		</row>
+		</rows>
+		<foot>
+			<footer align="center">
+				<button onClick="@command('clientsummit',gd=docGrid,win=sbwin)">提交</button>
+				<button onClick="@command('csummit',gd=docGrid,win=sbwin)" visible="false">暂存</button>
+			</footer>
+		</foot>
+	</grid>
+</window>
+</zk>

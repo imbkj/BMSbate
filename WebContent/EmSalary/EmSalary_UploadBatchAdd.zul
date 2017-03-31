@@ -1,0 +1,57 @@
+<?page title="批量导入数据" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winEmSalaryUpChange" title="批量导入数据" border="normal"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmSalary.EmSalary_UploadBatchAddController')"
+		closable="true" sizable="true" width="650px" height="300px">
+		<borderlayout>
+			<center title="批量导入数据">
+				<grid width="100%" height="100%">
+					<rows>
+						<row>
+							<cell width="30%">数据模板:</cell>
+							<cell>
+								<button label="下载导入模板"
+									onClick="@command('downloadTemplet')" />
+							</cell>
+						</row>
+						<row>
+							<cell>导入数据用途:</cell>
+							<cell>
+								<combobox width="180px" mold="rounded"
+									value="@bind(vm.usageType)" readonly="true">
+									<comboitem label="报销" />
+									<comboitem label="奖金" />
+									<comboitem label="离职补偿金" />
+									<comboitem label="股票分红" />
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>文件上传:</cell>
+							<cell>
+								<textbox mold="rounded" rows="1"
+									readonly="true" value="@load(vm.uploadFlieName)" width="280px" />
+								<button label="浏览..."
+									upload="true,multiple=true" onUpload="@command('browse')" />
+							</cell>
+						</row>
+						<row>
+							<cell colspan="2" align="center">
+								<label
+									value=" (注意：如果修改模板文件的格式，将无法正常导入数据！)" style="color:red" />
+							</cell>
+
+						</row>
+					</rows>
+					<foot>
+						<footer align="center">
+							<button label="提交" id="btSubmit"
+								onClick="@command('upload',win=winEmSalaryUpChange)" />
+						</footer>
+					</foot>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

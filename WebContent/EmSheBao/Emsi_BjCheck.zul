@@ -1,0 +1,143 @@
+<?page title="社保补缴-服务中心核收" contentType="text/html;charset=UTF-8"?>
+<?component name="docDataList" macro-uri="/DocumentsInfo/DocumentsInfo_AddPageList.zul" inline="true"?>
+<zk>
+	<window id="winBjCheck" title="社保补缴-服务中心核收" border="normal"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmSheBao.Emsi_BjCheckController')"
+		height="90%" width="80%" closable="true" sizable="true"
+		maximizable="true">
+		<borderlayout>
+			<north title="个人信息" border="none" splittable="true"
+				collapsible="true">
+				<grid style="border:0px">
+					<rows>
+						<row>
+							<cell width="20%">
+								<label value="公司编号" />
+							</cell>
+							<cell>
+								<label value="@load(vm.bjModel.cid)" />
+							</cell>
+							<cell width="20%">
+								<label value="员工编号" />
+							</cell>
+							<cell>
+								<label value="@load(vm.bjModel.gid)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="所属公司" />
+							</cell>
+							<cell colspan="3">
+								<label
+									value="@load(vm.bjModel.emsb_company)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="所属月份" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.bjModel.ownmonth)" />
+							</cell>
+							<cell>
+								<label value="个人电脑号" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.bjModel.emsb_computerid)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="姓名" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.bjModel.emsb_name)" />
+							</cell>
+							<cell>
+								<label value="身份证号" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.bjModel.emsb_idcard)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="补缴月份" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.bjModel.emsb_startmonth)" />
+							</cell>
+							<cell>
+								<label value="补缴基数" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.bjModel.emsb_radix)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="添加人" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.bjModel.emsb_addname)" />
+							</cell>
+							<cell>
+								<label value="添加时间" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.bjModel.emsb_addtime)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="补缴备注" />
+							</cell>
+							<cell colspan="3">
+								<textbox rows="4"
+									value="@load(vm.bjModel.emsb_remark)" width="70%"
+									readonly="true" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</north>
+			<center title="所交资料" border="none" hflex="1" vflex="1">
+				<docDataList id="docGrid" puzu_id="92"
+					gid="${vm.bjModel.gid}" dWidth="100%" dHeight="100%" />
+			</center>
+			<south border="none" splittable="true" collapsible="true">
+				<grid width="100%">
+					<rows>
+						<row>
+							<cell width="20%">备注</cell>
+							<cell>
+								<textbox rows="3" width="70%"
+									value="@bind(vm.reason)" />
+							</cell>
+						</row>
+					</rows>
+					<foot>
+						<footer align="center">
+							<button label="联系员工"
+								onClick="@command('lx')" />
+							<button label="退回"
+								onClick="@command('bjReturn',win=winBjCheck)" />
+							<button label="提交"
+								onClick="@command('bjPass',win=winBjCheck,gd=docGrid)" />
+						</footer>
+					</foot>
+				</grid>
+			</south>
+		</borderlayout>
+	</window>
+</zk>

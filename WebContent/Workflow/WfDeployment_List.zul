@@ -1,0 +1,90 @@
+<?page title="流程部署" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="flowWin" title="流程部署" border="normal"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.Workflow.WfDeployment_ListController')"
+		width="100%" height="100%">
+		<borderlayout>
+			<north title="搜索">
+				<grid>
+					<rows>
+						<row>
+							<cell width="80px">业务名称</cell>
+							<cell>
+								<textbox id="buName"
+									onChange="@command('search')" instant="true" />
+							</cell>
+							<cell></cell>
+							<cell></cell>
+						</row>
+					</rows>
+				</grid>
+			</north>
+			<west collapsible="true" splittable="true" width="50%">
+				<listbox model="@load(vm.buList)" hflex="1" vflex="1"
+					emptyMessage="暂无业务数据" width="100%" rows="21"
+					onSelect="@command('selDe',selectitem=self.selectedItem)">
+					<listhead sizable="true">
+						<listheader label="业务编号" sort="auto(wfbu_id)"
+							align="center" />
+						<listheader label="业务名称" sort="auto(wfbu_name)"
+							align="center" />
+
+						<listheader label="添加人"
+							sort="auto(wfbu_addname)" align="center" />
+						<listheader label="状态"
+							sort="auto(wfbu_statestr)" align="center" />
+						<listheader label="备注" align="center" />
+						<listheader label="操作" align="center" />
+					</listhead>
+					<template name="model">
+						<listitem>
+							<listcell label="@load(each.wfbu_id)" />
+							<listcell label="@load(each.wfbu_name)" />
+
+							<listcell label="@load(each.wfbu_addname)" />
+							<listcell label="@load(each.wfbu_statestr)"
+								style="${each.wfbu_statestr=='有效'?'color:blue;':''}" />
+							<listcell label="@load(each.wfbu_remark)" />
+							<listcell>
+								<menubar autodrop="true" width="50px">
+									<menu
+										image="../images/pencil-small.png">
+										<menupopup>
+											<menuitem label="分配流程"
+												onClick="@command('add',id=each.wfbu_id,name=each.wfbu_name)" />
+										</menupopup>
+									</menu>
+								</menubar>
+							</listcell>
+						</listitem>
+					</template>
+				</listbox>
+			</west>
+			<center>
+				<grid height="100%" width="100%" emptyMessage="暂无部署流程"
+					model="@load(vm.deList)">
+					<columns>
+						<column label="流程编号" align="center" />
+						<column label="流程" align="center" />
+						<column label="添加人" align="center" />
+						<column label="状态" align="center" />
+						<column label="备注" align="center" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<label value="@load(each.wfde_id)" />
+								<label value="@load(each.wfde_name)" />
+								<label value="@load(each.wfde_addname)" />
+								<label
+									value="@load(each.wfde_state eq '1'?'启用':'无效')" />
+								<label value="@load(each.wfde_remark)" />
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

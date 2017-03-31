@@ -1,0 +1,318 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winGd" width="100%" height="100%" border="normal"
+		closable="true" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.Embase.EmBase_gdController')"
+		onCreate="@command('winD',a=self)">
+		<borderlayout>
+			<north title="搜索条件" collapsible="true" open="true">
+				<grid>
+					<columns visible="false">
+						<column width="120px" />
+						<column />
+						<column width="120px" />
+						<column />
+						<column width="120px" />
+						<column />
+						<column width="120px" />
+						<column />
+					</columns>
+					<rows>
+						<row>
+							<cell>所属月份</cell>
+							<cell>
+								<combobox model="@load(vm.ownmonthList)"
+									value="@bind(vm.egm.ownmonth)">
+									<template name="model">
+										<comboitem
+											label="@load(each.ownmonth)">
+										</comboitem>
+									</template>
+								</combobox>
+							</cell>
+							<cell>客服</cell>
+							<cell>
+								<combobox model="@load(vm.clientList)"
+									value="@bind(vm.egm.client)">
+									<template name="model">
+										<comboitem
+											label="@load(each.client)" />
+									</template>
+								</combobox>
+							</cell>
+							<cell>公司名称</cell>
+							<cell>
+								<textbox value="@bind(vm.egm.company)" />
+							</cell>
+							<cell>开户类型</cell>
+							<cell>
+								<combobox
+									value="@bind(vm.egm.single)">
+									<comboitem label="独立开户" />
+									<comboitem label="中智开户" />
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>任务类型</cell>
+							<cell>
+								<combobox model="@load(vm.typeList)"
+									value="@bind(vm.egm.type)">
+									<template name="model">
+										<comboitem
+											label="@load(each.type)"
+											visible="${each.type=='补缴医疗(社保)'?false:true}" />
+									</template>
+								</combobox>
+							</cell>
+							<cell>操作状态</cell>
+							<cell>
+								<combobox readonly="true"
+									value="@bind(vm.egm.declaretype)">
+									<comboitem label="" />
+									<comboitem label="未处理" />
+									<comboitem label="已联系" />
+									<comboitem label="中心核收" />
+									<comboitem label="福利核收" />
+									<comboitem label="已办理" />
+									<comboitem label="材料退回" />
+									<comboitem label="数据退回" />
+								</combobox>
+							</cell>
+							<cell>姓名</cell>
+							<cell>
+								<textbox value="@bind(vm.egm.name)" />
+							</cell>
+							<cell>服务中心文员</cell>
+							<cell>
+								<combobox model="@load(vm.assistantlist)"
+									value="@bind(vm.egm.assistant)">
+									<template name="model">
+										<comboitem
+											label="@load(each.log_name)" />
+									</template>
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>资料签收方式</cell>
+							<cell>
+								<combobox readonly="true"
+									value="@bind(vm.egm.datatype)">
+									<comboitem label="" />
+									<comboitem label="退回员工本人" />
+									<comboitem label="退回客服专员" />
+									<comboitem label="退回客服指定联系人" />
+
+								</combobox>
+							</cell>
+							<cell>联系方式</cell>
+							<cell>
+								<combobox readonly="true"
+									value="@bind(vm.egm.linktype)">
+									<comboitem label="" />
+									<comboitem label="员工本人" />
+									<comboitem label="指定联系人" />
+									<comboitem label="客服" />
+								</combobox>
+							</cell>
+							<cell>数据状态</cell>
+							<cell>
+								<combobox readonly="true"
+									selectedItem="@bind(vm.egm.declareState)"
+									value="@bind(vm.egm.declareName)">
+									<comboitem value="" label="" />
+									<comboitem value="2" label="未确认" />
+									<comboitem value="7" label="待核收" />
+									<comboitem value="1" label="退回" />
+									<comboitem value="3" label="未申报" />
+									<comboitem value="4" label="申报中" />
+									<comboitem value="5" label="已申报" />
+									<comboitem value="6" label="已上传" />
+								</combobox>
+							</cell>
+							<cell></cell>
+							<cell></cell>
+						</row>
+					</rows>
+					<foot>
+						<footer span="8" align="center">
+							<button label="查询"
+								onClick="@command('Search')" />
+						</footer>
+					</foot>
+				</grid>
+			</north>
+			<center>
+				<grid model="@load(vm.gdlist)" width="100%"
+					id="dataGrid" sizedByContent="true" span="true" height="100%"
+					emptyMessage="暂无数据">
+					<columns>
+						<column width="50px" align="center" label="序号" />
+						<column width="80px" align="center"
+							label="所属月份" />
+						<column align="center" label="公司编号" />
+						<column align="center" label="公司简称" />
+						<column align="center" label="客服" />
+						<column align="center" label="员工编号" />
+						<column align="center" label="姓名" />
+						<column align="center" label="状态" />
+						<column align="center" label="任务类型" />
+						<column align="center" label="数据状态" />
+						<column align="center" label="任务提交时间" />
+						<column align="center" label="中心文员" />
+						<column align="center" label="联系方式" />
+						<column align="center" label="签收方式" />
+						<column align="center" label="操作状态" />
+						<column width="35px" align="center" label="短信" />
+						<!-- <column width="25px" align="center">
+							<checkbox id="cka" visible="false"
+							onClick="@command('gdallselect',grid=dataGrid,check=self,a=cka)" />
+							</column> -->
+						<column align="center" label="操作" />
+					</columns>
+					<template name="model">
+						<row>
+							<cell>
+								<label
+									value="${forEachStatus.index+1 }" />
+							</cell>
+							<cell>
+								<label value="@load(each.ownmonth)" />
+							</cell>
+							<cell>
+								<label value="@load(each.cid)" />
+							</cell>
+							<cell align="left">
+								<label value="@load(each.shortname)" />
+								<label value=" - (独立户)"
+									style="color:blue;" if="${each.single eq '1'}" />
+								<label value=" - (中智开户)"
+									if="${each.single eq '0'}" />
+								<label value=" - (中智开户(委托))"
+									if="${each.single eq '2'}" />
+								<label value=" - (中智开户(外包))"
+									if="${each.single eq '3'}" />
+								<label value=" - (中智开户(派遣))"
+									if="${each.single eq '4'}" />
+							</cell>
+							<cell>
+								<label value="@load(each.client)" />
+							</cell>
+							<cell>
+								<label value="@load(each.gid)" />
+							</cell>
+							<cell>
+								<label value="@load(each.name)" />
+								<label value=" - (共${each.bj_cou}条补缴)"
+									style="color:blue;" if="${each.typeId==4}" />
+							</cell>
+							<cell>
+								<label if="${each.emba_statestr=='离职'}"
+									style="color:red;" value="@load(each.emba_statestr)" />
+								<label if="${each.emba_statestr!='离职'}"
+									value="@load(each.emba_statestr)" />
+							</cell>
+							<cell>
+								<label value="@load(each.type)" />
+								<label value="(${each.startMonth})"
+									if="${each.typeId==4}" />
+							</cell>
+							<cell>
+								<label value="@load(each.declareName)" />
+							</cell>
+
+							<cell>
+								<label value="@load(each.addtime)" />
+							</cell>
+							<cell>
+								<label value="@load(each.assistant)" />
+							</cell>
+							<cell>
+								<label style="cursor:pointer;"
+									onClick="@command('linkinfo',a=each)"
+									value="@bind(each.cosp_sbhs_caliname)" />
+							</cell>
+							<cell>
+								<combobox readonly="true" width="125px"
+									onSelect="@command('mod',a=each)"
+									value="@bind(each.datatype)">
+									<comboitem label="" />
+									<comboitem label="退回员工本人" />
+									<comboitem label="退回客服专员" />
+									<comboitem label="退回客服制定联系人" />
+								</combobox>
+							</cell>
+							<cell>
+								<combobox readonly="true" width="80px"
+									onSelect="@command('mod',a=each)"
+									value="@bind(each.declaretype)">
+									<comboitem label="" />
+									<comboitem label="未处理" />
+									<comboitem label="已联系" />
+									<comboitem label="中心核收" />
+									<comboitem label="福利核收" />
+									<comboitem label="已办理" />
+									<comboitem label="材料退回" />
+									<comboitem label="数据退回"
+										if="${each.declareState==1}" />
+									<comboitem label="退回客服" />
+								</combobox>
+							</cell>
+							<cell>
+								<image src="../images/mobile.gif"
+									style="cursor:pointer" onClick="@command('openmobile',a=each)" />
+							</cell>
+							<!-- <cell>
+								<checkbox value="@load(each.dataId)"
+								checked="@bind(each.checked)"
+								onClick="@command('gdallselect',grid=dataGrid,check=self,a=cka)"
+								if="${(each.declareState==6 or each.declareState==7) and each.typeId==4 and each.type eq '补缴养老(社保)'}" />
+								</cell> -->
+							<cell>
+								<menubar autodrop="true" width="50px"
+									sclass="mymb">
+									<menu
+										image="../images/pencil-small.png">
+										<menupopup>
+											<menuitem label="申报"
+												if="${(each.declareState==1 or  each.declareState==2) and each.typeId !=2 and each.typeId !=4 and each.type ne '补缴医疗(社保)'}"
+												onClick="@command('checkInfo',a=each)" />
+
+											<menuitem label="申报"
+												if="${(each.declareState==1 or  each.declareState==7) and (each.typeId==2 or each.typeId==4) and each.type ne '补缴医疗(社保)'}"
+												onClick="@command('checkInfo',a=each)" />
+
+											<menuitem label="处理"
+												if="${each.declareState==3 and (each.typeId==5 or each.typeId==6) and each.type ne '补缴医疗(社保)'}"
+												onClick="@command('checkInfo',a=each)" />
+											<menuitem label="下载"
+												if="${each.declareState==6 and (each.typeId==2 or each.typeId==4) and each.type ne '补缴医疗(社保)'}"
+												onClick="@command('checkInfo',a=each)" />
+
+											<menuitem label="确认"
+												if="${each.declareState==2 and (each.typeId==2 or each.typeId==4) and each.type ne '补缴医疗(社保)'}"
+												onClick="@command('checkInfo',a=each)" />
+											<menuitem
+												label="请操作相应的养老补交数据" if="${each.type eq '补缴医疗(社保)'}" />
+											<menuitem label="任务单详情"
+												onClick="@command('taskinfo',a=each)" />
+
+											<!-- <menuitem
+												label="下载选中的社保补交PDF" onClick="@command('sbbjDownload')"
+												if="${each.declareState==6 and each.typeId==4 and each.type eq '补缴养老(社保)'}" />
+												<menuitem
+												label="核收选中的社保补交数据" onClick="@command('sbbjCheck')"
+												if="${each.declareState==7 and each.typeId==4 and each.type eq '补缴养老(社保)'}" /> -->
+										</menupopup>
+									</menu>
+								</menubar>
+							</cell>
+						</row>
+					</template>
+
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

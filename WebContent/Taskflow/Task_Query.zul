@@ -1,0 +1,152 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="win" title="任务单查询" border="normal" height="100%"
+		width="100%" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.Taskflow.Task_QueryController')">
+		<borderlayout hflex="1" vflex="1">
+			<north id="north" collapsible="true" title="高级查询"
+				open="false">
+				<grid>
+					<columns>
+						<column width="15%"></column>
+						<column></column>
+						<column width="15%"></column>
+						<column></column>
+					</columns>
+					<rows>
+						<row>
+							<cell align="left" width="120px">部门:</cell>
+							<cell align="left">
+								<combobox id="cbDep" mold="rounded"
+									model="@load(vm.depList)" autodrop="true"
+									onChanging="@command('updateDeplist',a=event)"
+									onChange="@command('changeDep',a=cbDep.selectedItem.value,b=cbRol,c=cbUser)">
+									<template name="model">
+										<comboitem
+											label="@load(each.dep_name)" />
+									</template>
+								</combobox>
+							</cell>
+							<cell align="left" width="120px">角色:</cell>
+							<cell align="left">
+								<combobox id="cbRol" mold="rounded"
+									model="@load(vm.rolList)" autodrop="true"
+									onChanging="@command('updateRollist',a=event,b=cbDep.selectedItem.value)"
+									onChange="@command('changeRol',a=cbRol.selectedItem.value,b=cbDep.selectedItem.value,c=cbUser)">
+									<template name="model">
+										<comboitem
+											label="@load(each.rol_name)" />
+									</template>
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>用户:</cell>
+							<cell>
+								<combobox id="cbUser"
+									model="@load(vm.userList)" mold="rounded" autodrop="true"
+									onChanging="@command('updateUserlist',a=event,b=cbDep.selectedItem.value,c=cbRol.selectedItem.value)">
+									<template name="model">
+										<comboitem
+											label="@load(each.log_name)" />
+									</template>
+								</combobox>
+							</cell>
+							<cell></cell>
+							<cell></cell>
+						</row>
+						<row>
+							<cell>任务类型:</cell>
+							<cell>
+								<combobox id="cbMissionType"
+									model="@load(vm.tcList)" mold="rounded" autodrop="true">
+									<template name="model">
+										<comboitem
+											label="@load(each.tacl_name)" />
+									</template>
+								</combobox>
+							</cell>
+							<cell>任务名称:</cell>
+							<cell>
+								<combobox id="cbMissionName"
+									model="@load(vm.tlList)" mold="rounded" autodrop="true">
+									<template name="model">
+										<comboitem
+											label="@load(each.tali_name)" />
+									</template>
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell colspan="4" align="center">
+								<button id="btnSearch" label="查询"
+									onClick="@command('Search',a=cbDep.selectedItem.value,b=cbRol.selectedItem.value,c=cbUser.selectedItem.value,d=cbMissionType.selectedItem.value,e=cbMissionName.selectedItem.value,f=north)">
+								</button>
+
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</north>
+			<center>
+				<grid mold="paging" pageSize="15" height="100%"
+					model="@load(vm.tasklist)" emptyMessage="暂无数据">
+					<columns>
+						<column align="center" width="40px"></column>
+						<column width="50px" align="center">序号</column>
+						<column align="center">任务类型</column>
+						<column align="center">任务名称</column>
+						<column align="center">任务进度</column>
+						<column align="center">任务执行人</column>
+						<column width="120px" align="center">
+							开始时间
+						</column>
+						<column width="120px" align="center">
+							完成时间
+						</column>
+						<column align="center">任务状态</column>
+						
+					</columns>
+					<template name="model">
+						<row>
+							<custom-attributes
+								tali_id="${each.tali_id }" />
+							<detail open="false" fulfill="onOpen">
+								<include
+									src="/Taskflow/Task_history.zul" tali_id="${tali_id}" />
+							</detail>
+							<cell>
+								<label
+									value="${forEachStatus.index+1 }" />
+							</cell>
+							<cell>
+								<label value="@load(each.tacl_name)" />
+							</cell>
+							<cell>
+								<label value="@load(each.tali_name)" />
+							</cell>
+							<cell>
+								<label value="@load(each.wfno_name)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.tapr_starname)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.tapr_starttime)" />
+							</cell>
+							<cell>
+								<label value="@load(each.tapr_endtime)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.tapr_statename)" />
+							</cell>
+						</row>
+					</template>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

@@ -1,0 +1,23 @@
+<grid apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('vm') @init('Controller.CoProduct.CoProduct_CompactOperateList_DetailController')"
+	model="@load(vm.cpcrList)" mold="paging" pageSize="10" hflex="1"
+	vflex="1" emptyMessage="暂无数据">
+	<columns>
+		<column align="center">产品名称</column>
+		<column align="center" sort="auto(copr_type)">产品大类</column>
+		<column align="center" sort="auto(copc_name)">产品类型</column>
+		<column align="center" sort="auto(cpac_name)">所属科目</column>
+		<column align="center" sort="auto(city)">城市</column>
+		<column align="center">委托机构</column>
+	</columns>
+	<template name="model">
+		<row>
+			<label value="@load(each.copr_name)"></label>
+			<label value="@load(each.copr_type)"></label>
+			<label value="@load(each.copc_name)"></label>
+			<label value="@load(each.cpac_name)"></label>
+			<label value="@load(each.city)"></label>
+			<label value="@load(each.coab_name)"></label>
+		</row>
+	</template>
+</grid>

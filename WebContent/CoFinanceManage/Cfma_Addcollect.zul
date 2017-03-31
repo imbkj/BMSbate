@@ -1,0 +1,376 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="添加收款" border="normal" width="40%" height="75%"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoFinanceManage.Cfma_AddcollectController')"
+		closable="true" sizable="true">
+
+		<grid>
+			<rows>
+				<row>
+					<cell width="25%">
+						<label value="*" style="color:red" />
+						<label value="账款所属月份" />
+					</cell>
+					<cell>
+						<datebox value="@bind(vm.ownmonth)"
+							format="yyyyMM" width="30%" />
+					</cell>
+				</row>
+				<row>
+					<cell>
+						<label value="*" style="color:red" />
+						<label value="公司全称" />
+					</cell>
+					<cell>
+						<label value="@load(vm.m.coba_company)" />
+					</cell>
+				</row>
+				<row>
+					<cell>
+						<label value="*" style="color:red" />
+						<label value="公司简称" />
+					</cell>
+					<cell>
+						<label value="@load(vm.m.shortname)" />
+					</cell>
+				</row>
+				<row>
+					<cell colspan="2">
+						<grid>
+							<rows>
+								<row>
+									<cell>
+										<label value="*"
+											style="color:red" />
+										<label value="服务费" />
+										(
+										<label
+											value="@load(vm.m.serviceFee)" />
+										)
+									</cell>
+									<cell>
+										<doublebox format=",###.##"
+											instant="true" value="@bind(vm.serFee)"
+											onFocus="self.select()"
+											onChange="@command('totalFee',sign='ser')" />
+									</cell>
+									<cell>
+										<label value="*"
+											style="color:red" />
+										<label value="税后工资" />
+										(
+										<label
+											value="@load(vm.m.salaryOfAfterTax)" />
+										)
+									</cell>
+									<cell>
+										<doublebox format=",###.##"
+											value="@bind(vm.sal)" instant="true" onFocus="self.select()"
+											onChange="@command('totalFee',sign='tax')" />
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<label value="*"
+											style="color:red" />
+										<label value="社保费" />
+										(
+										<label
+											value="@load(vm.m.sheBaoFee)" />
+										)
+									</cell>
+									<cell>
+										<doublebox format=",###.##"
+											value="@bind(vm.shebao)" instant="true"
+											onFocus="self.select()"
+											onChange="@command('totalFee',sign='sb')" />
+									</cell>
+									<cell>
+										<label value="*"
+											style="color:red" />
+										<label value="住房公积金" />
+										(
+										<label
+											value="@load(vm.m.houseGjj)" />
+										)
+									</cell>
+									<cell>
+										<doublebox format=",###.##"
+											value="@bind(vm.gjj)" instant="true" onFocus="self.select()"
+											onChange="@command('totalFee',sign='hgjj')" />
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<label value="*"
+											style="color:red" />
+										<label value="商保费" />
+										(
+										<label
+											value="@load(vm.m.businessProtectFee)" />
+										)
+									</cell>
+									<cell>
+										<doublebox format=",###.##"
+											value="@bind(vm.businProf)" instant="true"
+											onFocus="self.select()"
+											onChange="@command('totalFee',sign='businessp')" />
+									</cell>
+									<cell>
+										<label value="*"
+											style="color:red" />
+										<label value="个调税" />
+										(
+										<label
+											value="@load(vm.m.oMoveFee)" />
+										)
+									</cell>
+									<cell>
+										<doublebox format=",###.##"
+											value="@bind(vm.oMove)" instant="true"
+											onFocus="self.select()"
+											onChange="@command('totalFee',sign='om')" />
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<label value="*"
+											style="color:red" />
+										<label value="体检费" />
+										(
+										<label
+											value="@load(vm.m.bodyTestFee)" />
+										)
+									</cell>
+									<cell>
+
+										<doublebox format=",###.##"
+											value="@bind(vm.bodyCheck)" instant="true"
+											onFocus="self.select()"
+											onChange="@command('totalFee',sign='bcheck')" />
+									</cell>
+									<cell>
+										<label value="*"
+											style="color:red" />
+										<label value="财务服务费" />
+										(
+										<label
+											value="@load(vm.m.finanServiceFee)" />
+										)
+									</cell>
+									<cell>
+										<doublebox format=",###.##"
+											value="@bind(vm.finanService)" instant="true"
+											onFocus="self.select()"
+											onChange="@command('totalFee',sign='finanseri')" />
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<label value="*"
+											style="color:red" />
+										<label value="活动费" />
+										(
+										<label
+											value="@load(vm.m.activityFee)" />
+										)
+									</cell>
+									<cell>
+										<doublebox format=",###.##"
+											value="@bind(vm.activity)" instant="true"
+											onFocus="self.select()"
+											onChange="@command('totalFee',sign='activi')" />
+									</cell>
+									<cell>
+										<label value="*"
+											style="color:red" />
+										<label value="档案保管费" />
+										(
+										<label
+											value="@load(vm.m.fileManageFee)" />
+										)
+									</cell>
+									<cell>
+										<doublebox format=",###.##"
+											value="@bind(vm.fileManage)" instant="true"
+											onFocus="self.select()"
+											onChange="@command('totalFee',sign='file')" />
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<label value="*"
+											style="color:red" />
+										<label value="书报费" />
+										(
+										<label
+											value="@load(vm.m.bookFee)" />
+										)
+									</cell>
+									<cell>
+										<doublebox format=",###.##"
+											value="@bind(vm.book)" instant="true" onFocus="self.select()"
+											onChange="@command('totalFee',sign='books')" />
+									</cell>
+									<cell>
+										<label value="*"
+											style="color:red" />
+										<label value="住房返还" />
+										(
+										<label
+											value="@load(vm.m.houseRestore)" />
+										)
+									</cell>
+									<cell>
+										<doublebox format=",###.##"
+											value="@bind(vm.hRestore)" instant="true"
+											onFocus="self.select()"
+											onChange="@command('totalFee',sign='housere')" />
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<label value="*"
+											style="color:red" />
+										<label value="劳动保障卡" />
+										(
+										<label
+											value="@load(vm.m.lasscFee)" />
+										)
+									</cell>
+									<cell>
+										<doublebox format=",###.##"
+											value="@bind(vm.lass)" instant="true" onFocus="self.select()"
+											onChange="@command('totalFee',sign='lasc')" />
+									</cell>
+									<cell>
+										<label value="*"
+											style="color:red" />
+										<label value="居住证" />
+										(
+										<label
+											value="@load(vm.m.residencePermitFee)" />
+										)
+									</cell>
+									<cell>
+										<doublebox format=",###.##"
+											value="@bind(vm.residence)" instant="true"
+											onFocus="self.select()"
+											onChange="@command('totalFee',sign='residen')" />
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<label value="*"
+											style="color:red" />
+										<label value="招聘服务费" />
+										(
+										<label
+											value="@load(vm.m.recruitServiceFee)" />
+										)
+									</cell>
+									<cell>
+										<doublebox format=",###.##"
+											value="@bind(vm.recruit)" instant="true"
+											onFocus="self.select()"
+											onChange="@command('totalFee',sign='recru')" />
+									</cell>
+									<cell>
+										<label value="*"
+											style="color:red" />
+										<label value="商务服务费" />
+										(
+										<label
+											value="@load(vm.m.businessServiceFee)" />
+										)
+									</cell>
+									<cell>
+										<doublebox format=",###.##"
+											value="@bind(vm.businessService)" instant="true"
+											onFocus="self.select()"
+											onChange="@command('totalFee',sign='business')" />
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<label value="*"
+											style="color:red" />
+										<label value="残疾人保障金" />
+										(
+										<label
+											value="@load(vm.m.deformityFee)" />
+										)
+									</cell>
+									<cell>
+										<doublebox format=",###.##"
+											value="@bind(vm.deformity)" instant="true"
+											onFocus="self.select()"
+											onChange="@command('totalFee',sign='defor')" />
+									</cell>
+									<cell>
+										<label value="*"
+											style="color:red" />
+										<label value="其他" />
+										(
+										<label
+											value="@load(vm.m.other)" />
+										)
+									</cell>
+									<cell>
+										<doublebox format=",###.##"
+											value="@bind(vm.other)" instant="true"
+											onFocus="self.select()"
+											onChange="@command('totalFee',sign='others')" />
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<label value="*"
+											style="color:red" />
+										<label value="本次收款合计" />
+										(
+										<label
+											value="@load(vm.m.cfco_TotalPaidIn)" />
+										)
+									</cell>
+									<cell colspan="3">
+										<doublebox format=",###.##"
+											value="@bind(vm.total)" instant="true"
+											onFocus="self.select()"
+											onChange="@command('totalFee',sign='totals')" />
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</cell>
+				</row>
+				<row>
+					<cell>
+						<label value="*" style="color:red" />
+						<label value="添加人" />
+					</cell>
+					<cell>
+						<label value="@load(vm.username)" />
+					</cell>
+				</row>
+				<row>
+					<cell>
+						<label value="*" style="color:red" />
+						<label value="备注" />
+					</cell>
+					<cell>
+						<textbox value="@bind(vm.remark)" width="80%" />
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button label="提交" onClick="@command('submit')" />
+				</footer>
+			</foot>
+		</grid>
+
+
+	</window>
+</zk>

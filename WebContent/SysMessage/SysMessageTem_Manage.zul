@@ -1,0 +1,45 @@
+<?page contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="模板管理" border="normal" height="100%" width="100%"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.SysMessage.SysMessageTem_ManageController')">
+		<grid height="100%" width="100%" model="@load(vm.temList)"
+			emptyMessage="系统暂无数据" mold="paging">
+			<auxhead>
+				<auxheader colspan="7" label="系统短信模板管理列表"
+					style="text-align:center" />
+			</auxhead>
+			<columns>
+				<column width="40px" align="center">序号</column>
+				<column align="center">模板名称</column>
+				<column align="center">模板类型</column>
+				<column align="center">业务类型</column>
+				<column align="center" width="40%">内容</column>
+				<column align="center">添加人</column>
+				<column align="center">添加时间</column>
+				<column align="center" width="60px">操作</column>
+			</columns>
+			<template name="model">
+				<row>
+					<label value="${forEachStatus.index+1 }" />
+					<label value="@load(each.pmte_model)" />
+					<label value="@load(each.pmte_type)" />
+					<label value="@load(each.pmte_class)" />
+					<div>
+						<label value="@load(each.pmte_content)" />
+					</div>
+					<label value="@load(each.pmte_addname)" />
+					<label value="@load(each.pmte_addtime)" />
+					<menubar autodrop="true">
+						<menu image="/images/pencil-small.png">
+							<menupopup>
+								<menuitem label="修改模板" onClick="@command('mod',each=each)" />
+								<menuitem label="删除模板" onClick="@command('delete',id=each.pmte_id)" />
+							</menupopup>
+						</menu>
+					</menubar>
+				</row>
+			</template>
+		</grid>
+	</window>
+</zk>

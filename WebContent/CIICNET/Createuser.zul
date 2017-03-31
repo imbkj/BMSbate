@@ -1,0 +1,95 @@
+<!--
+	创建人：赵敏捷
+	创建时间：2015-7-29
+	用途：网上中智用户创建
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="createuserwin" title="创建网上中智" apply="org.zkoss.bind.BindComposer" closable="true"
+		viewModel="@id('vm') @init('Controller.CIICNET.createuserController')"
+		border="normal" sizable="true" height="60%" width="60%" >
+		<borderlayout>
+		<center>
+	 <grid width="100%">
+	 <columns>
+					<column  />
+					<column />
+					<column  />
+					<column />
+						<column />
+							<column />
+								 
+				</columns>
+					<rows>
+							<row>
+							<cell>
+							姓名
+							</cell>
+							<cell>
+							<textbox value="@bind(vm.embamodel.emba_name)"></textbox>
+							</cell>
+							
+								<cell>
+							身份证
+							</cell>
+							<cell>
+							<textbox value="@bind(vm.embamodel.emba_idcard)"></textbox>
+							</cell>
+							
+								<cell>
+							手机号码
+							</cell>
+							<cell>
+							<textbox value="@bind(vm.embamodel.emba_mobile)"></textbox>
+							</cell>
+							</row>
+							
+							
+								<row>
+							<cell>
+							 <hbox>
+							社保电脑号
+							<button label="查询电脑号"
+											onClick="@command('computerid_search')" />
+											</hbox>
+							</cell>
+							<cell>
+							
+							<textbox value="@bind(vm.embamodel.emba_computerid)"></textbox>
+								
+							</cell>
+							
+								<cell>
+						出生日期
+							</cell>
+							<cell>
+							<textbox value="@bind(vm.embamodel.emba_birth)"></textbox>
+							</cell>
+							
+								<cell>
+							性别
+							</cell>
+							<cell>
+							<textbox value="@bind(vm.embamodel.emba_sex)"></textbox>
+							</cell>
+							</row>
+							<row>
+							<cell colspan="6" align="center">
+							网上中智账号密码信息(默认账号为员工的姓名，密码为员工的身份证号码)
+							</cell>
+							</row>
+							</rows>
+	 
+	 
+	 </grid>
+	 </center>
+	 	<south>
+						<div align="center">
+						
+							<button label="创建"
+								onClick="@command('btnSubmit',picWin=createuserwin)" />
+						</div>
+					</south>
+		</borderlayout>
+	</window>
+</zk>

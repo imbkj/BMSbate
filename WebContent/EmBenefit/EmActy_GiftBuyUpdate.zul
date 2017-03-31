@@ -1,0 +1,29 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="福利享受信息更新" border="normal" width="70%" height="70%" closable="true"
+	apply="org.zkoss.bind.BindComposer" id="editwin"
+	viewModel="@id('vm') @init('Controller.EmBenefit.EmActy_GiftBuyUpdateController')"
+>
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell width="100px"><label value="@load(vm.steppeopstr)"></label></cell>
+			<cell><textbox value="@load(vm.username)" readonly="true" mold="rounded"></textbox></cell>
+			<cell width="100px"><label value="@load(vm.steptimestr)"></label></cell>
+			<cell><datebox focus="true" id="datetxt" mold="rounded"></datebox></cell>
+		</row>
+		<row>
+			<cell width="100px"><label value="采购数量"></label></cell>
+			<cell colspan="3"><textbox value="@bind(vm.buynum)" readonly="true" mold="rounded"></textbox></cell>
+		</row>
+		<row>
+			<cell>备注</cell>
+			<cell colspan="3"><textbox width="80%" rows="3" id="remark" value="@load(vm.model.gift_remark)"></textbox></cell>
+		</row>
+	</rows>
+	<foot>
+		<footer align="center"><button onClick="@command('EditGift',win=editwin,dateval=datetxt.value,remark=remark.value)">提交</button></footer>
+	</foot>
+</grid>
+</window>
+</zk>

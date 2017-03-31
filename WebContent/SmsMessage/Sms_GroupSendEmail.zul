@@ -1,0 +1,125 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="群发邮件" border="normal" width="80%" height="80%"
+		apply="org.zkoss.bind.BindComposer" vflex="1" id="smswin"
+		viewModel="@id('vm') @init('Controller.SmsMessage.Sms_GroupSendController')"
+		closable="true">
+		<div
+			style="margin-top:10px;margin-bottom:10px;margin-left:10px;">
+			<label style="margin-right:10px;">导入名单</label>
+			<textbox value="@bind(vm.filename)" width="30%"
+				id="filepath">
+			</textbox>
+			<button id="attachBtn" upload="true" label="选择文件"
+				onUpload="@command('upfile',type='email')" />
+			<button label="下载模版" onClick="@command('loadfile',type='email')"/>
+		</div>
+		<grid model="@load(vm.list)" vflex="1" mold="paging" pageSize="500">
+			<columns>
+				<column label="序号" width="60px" align="center" />
+				<column label="公司编号" align="center" width="80px" />
+				<column label="公司名称" align="center" />
+				<column label="员工编号" align="center" width="80px" />
+				<column label="员工姓名" align="center" />
+				<column label="身份证号" align="center" />
+				<column label="电子邮件" align="center" />
+				<column label="客服" align="center" width="80px" />
+				<column label="取消" align="center" width="80px" />
+			</columns>
+			<rows>
+				<template name="model">
+					<row>
+						<cell>
+							<label value="${forEachStatus.index+1 }">
+							</label>
+						</cell>
+						<cell>
+							<label value="@load(each.cid)"></label>
+						</cell>
+						<cell>
+							<label value="@load(each.coba_company)">
+							</label>
+						</cell>
+						<cell>
+							<label value="@load(each.gid)"></label>
+						</cell>
+						<cell>
+							<label value="@load(each.emba_name)">
+							</label>
+						</cell>
+						<cell>
+							<label value="@load(each.emba_idcard)">
+							</label>
+						</cell>
+						<cell>
+							<textbox value="@bind(each.emba_email)"
+								instant="true" width="95%">
+							</textbox>
+						</cell>
+						<cell>
+							<label value="@load(each.coba_client)">
+							</label>
+						</cell>
+						<cell>
+							<a
+								onClick="@command('cancel',model=each)">
+								<label value="取消"></label>
+							</a>
+						</cell>
+					</row>
+				</template>
+			</rows>
+		</grid>
+		<grid height="200px">
+			<rows>
+				<row>
+					<cell width="80px">回复接收人</cell>
+					<cell>
+						<combobox model="@load(vm.loginlist)"
+							value="@bind(vm.username)">
+							<template name="model">
+								<comboitem label="@load(each)" />
+							</template>
+						</combobox>
+					</cell>
+				</row>
+				<row>
+					<cell>邮件标题</cell>
+					<cell><textbox width="70%" value="@bind(vm.emailtitle)"></textbox></cell>
+				</row>
+				<row>
+					<cell width="80px">邮件内容</cell>
+					<cell hflex="1">
+						<vlayout hflex="1">
+							<textbox width="80%"
+								value="@bind(vm.content)" onChange="@command('changecontent')"
+								rows="5" instant="true">
+							</textbox>
+							<hlayout hflex="1" valign="top" visible="false">
+								<checkbox id="cksms" label="发短信"
+									checked="true" visible="false">
+								</checkbox>
+								<checkbox id="ck" label="同时发邮件"></checkbox>
+								<label visible="false"
+									style="margin-left:20px;color:red;">
+									剩余数字：
+								</label>
+								<label style="color:red;"
+									visible="false" value="@load(vm.surplus)" maxlength="70">
+								</label>
+							</hlayout>
+						</vlayout>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button
+						onClick="@command('sumbitemail',win=smswin)">
+						发送
+					</button>
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

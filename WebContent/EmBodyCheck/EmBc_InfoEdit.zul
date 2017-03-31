@@ -1,0 +1,213 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="员工体检信息修改2" border="normal" width="80%" closable="true"
+		height="90%" apply="org.zkoss.bind.BindComposer" id="upwin"
+		viewModel="@id('vm') @init('Controller.EmBodyCheck.EmBc_InfoEditController')">
+		<grid width="100%" height="100%">
+			<rows>
+				<row>
+					<cell width="80px">公司名称</cell>
+					<cell>
+						<label value="@load(vm.ecm.embc_company)" />
+					</cell>
+					<cell width="80px">员工姓名</cell>
+					<cell>
+						<label value="@load(vm.ecm.embc_name)" />
+					</cell>
+					<cell width="80px">身份证号</cell>
+					<cell>
+						<label value="@load(vm.ecm.embc_idcard)" />
+					</cell>
+				</row>
+				<row>
+					<cell>员工性别</cell>
+					<cell>
+						<label value="@load(vm.ecm.embc_sex)" />
+					</cell>
+					<cell>婚姻状况</cell>
+					<cell>
+						<label value="@load(vm.ecm.embc_marry)" />
+					</cell>
+					<cell>员工年龄</cell>
+					<cell>
+						<label value="@load(vm.ecm.embc_age)" />
+					</cell>
+				</row>
+				<row>
+					<cell>客服</cell>
+					<cell>
+						<label value="@load(vm.ecm.embc_client)" />
+					</cell>
+					<cell>体检类型</cell>
+					<cell>
+						<label value="@load(vm.ecm.ebcl_typename)"></label>
+					</cell>
+					<cell>体检医院</cell>
+					<cell>
+						<combobox model="@load(vm.setuplist)" id="setup"
+							readonly="true" value="@bind(vm.ecm.ebcs_hospital)"
+							onChange="@command('changeaddress',c=self,cid=cobase.selectedItem.value)">
+							<template name="model">
+								<comboitem
+									label="@load(each.ebcs_hospital)" value="@load(each.ebcs_id)" />
+							</template>
+						</combobox>
+					</cell>
+				</row>
+				<row>
+					<cell>体检地址</cell>
+					<cell colspan="5">
+						<combobox value="@bind(vm.ecm.ebsa_address)"
+							model="@load(vm.addresslist)" width="80%"
+							id="address" readonly="true">
+							<template name="model">
+								<comboitem
+									label="@load(each.ebsa_address)" value="@load(each.ebsa_id)" />
+							</template>
+						</combobox>
+					</cell>
+				</row>
+				<row>
+					<cell>备注</cell>
+					<cell colspan="5">
+						<textbox width="80%"
+							value="@bind(vm.ecm.embc_remark)">
+						</textbox>
+					</cell>
+				</row>
+				<row>
+					<cell>预约时间</cell>
+					<cell>
+						<datebox value="@bind(vm.bookdate)"></datebox>
+					</cell>
+					<cell>预约模式</cell>
+					<cell>
+						<textbox readonly="true"
+							value="${arg.model.ebcl_bookmode==1?'固定时间':'不固定时间'}">
+						</textbox>
+					</cell>
+					<cell>员工联系电话</cell>
+					<cell>
+						<textbox
+							value="@bind(vm.ecm.embc_mobile)">
+						</textbox>
+					</cell>
+				</row>
+				<row>
+					<cell>已选项目</cell>
+					<cell colspan="5">
+						<grid height="200px" model="@load(vm.listed)"
+							id="selectgd" emptyMessage="没有数据">
+							<columns>
+								<column label="序号" align="center"
+									width="70px" />
+								<column label="项目名称" align="center" width="120px" />
+								<column label="项目内容" align="center"  />
+								<column label="备注" align="center" width="200px" />
+								<column label="适用范围" align="center" width="80px"/>
+								<column align="center" width="60px">
+									<label>选择</label>
+								</column>
+							</columns>
+							<rows>
+								<template name="model">
+									<row>
+										<cell>
+											<label
+												value="${forEachStatus.index+1 }">
+											</label>
+										</cell>
+										<cell align="left">
+											<label
+												value="@load(each.ebit_name)">
+											</label>
+										</cell>
+										<cell  align="left" tooltiptext="@load(each.ebit_info)" >
+											<label maxlength="35"
+												value="@load(each.ebit_info)">
+											</label>
+										</cell>
+										<cell align="left" tooltiptext="@load(each.ebit_remark)" >
+											<label maxlength="20"
+												value="@load(each.ebit_remark)">
+											</label>
+										</cell>
+										<cell>
+											<label
+												value="@load(each.sex)">
+											</label>
+										</cell>
+										<cell>
+											<checkbox checked="@load(each.checked)" onCheck="@command('cancel',model=each,cb=self)"
+												value="@load(each)">
+											</checkbox>
+										</cell>
+									</row>
+								</template>
+							</rows>
+						</grid>
+					</cell>
+				</row>
+				<row>
+					<cell>未选项目</cell>
+					<cell colspan="5">
+						<grid width="100%" height="300px" model="@load(vm.itemlist)" 
+							id="it" emptyMessage="没有数据">
+							<columns>
+								<column label="序号" align="center" width="70px"/>
+								<column label="项目名称" align="center"  />
+								<column label="项目内容" align="center"/>
+								<column label="备注" align="center"  width="200px" />
+								<column label="适用范围" align="center" width="120px"/>
+								<column align="center" width="70px">
+									<label>选择</label>
+								</column>
+							</columns>
+							<rows id="rws">
+								<template name="model">
+									<row>
+										<cell>
+											<label
+												value="${forEachStatus.index+1 }">
+											</label>
+										</cell>
+										<cell align="left">
+											<label
+												value="@load(each.ebit_name)">
+											</label>
+										</cell>
+										<cell align="left" tooltiptext="@load(each.ebit_info)" >
+											<label maxlength="20"
+												value="@load(each.ebit_info)">
+											</label>
+										</cell>
+										<cell align="left"  tooltiptext="@load(each.ebit_remark)" >
+											<label maxlength="20"
+												value="@load(each.ebit_remark)">
+											</label>
+										</cell>
+										<cell>
+											<label
+												value="@load(each.sex)">
+											</label>
+										</cell>
+										<cell>
+											<checkbox checked="@load(each.checked)" onCheck="@command('checkcb',model=each,cb=self)"
+												value="@load(each)">
+											</checkbox>
+										</cell>
+									</row>
+								</template>
+							</rows>
+						</grid>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center">
+					<button onClick="@command('update',win=upwin,gd=it)">修改</button>
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

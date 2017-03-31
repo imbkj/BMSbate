@@ -1,0 +1,23 @@
+<?page title="批量二次确认" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="批量退回" border="normal" width="20%" 
+		apply="org.zkoss.bind.BindComposer" closable="true" id="win"
+		viewModel="@id('vm') @init('Controller.EmCommissionOutNew.EmCommissionOut_AllBackController')">
+		<label value="${arg.ecoc_id}" id="ecoc_id" />
+		<grid width="100%" id="g1" mold="paging"
+			sizedByContent="true" span="true">
+			<rows>
+				<row>
+					<cell>
+						<textbox width="240px" rows="4" id="outcontent"
+							mold="rounded" value="" />
+					</cell>
+				</row>
+			</rows>
+		</grid>
+		<div align="center">
+			<button id="submitButton3" label="确认"
+				onClick="@command('wt_backall', win=win,outcontent=outcontent,ecoc_id=ecoc_id)" />
+		</div>
+	</window>
+</zk>

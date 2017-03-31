@@ -1,0 +1,31 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="礼品采购申请信息更新" border="normal" width="70%" height="70%" closable="true"
+	apply="org.zkoss.bind.BindComposer" id="editwin"
+	viewModel="@id('vm') @init('Controller.EmBenefit.EmActy_GiftBuyUpdateController')"
+>
+<grid vflex="1">
+	<rows>
+		<row>
+			<cell width="120px">礼品名称</cell>
+			<cell><textbox width="80%" value="@load(vm.model.gift_name)" readonly="true"></textbox></cell>
+			<cell width="120px">采购数量</cell>
+			<cell><textbox value="@load(vm.model.gift_totalnum)" readonly="true"></textbox></cell>
+		</row>
+		<row>
+			<cell>礼品单价</cell>
+			<cell><textbox value="@load(vm.model.gift_nowprice)" readonly="true"></textbox></cell>
+			<cell>总价</cell>
+			<cell><textbox value="${vm.model.gift_totalnum*vm.model.gift_nowprice }" readonly="true"></textbox></cell>
+		</row>
+		<row>
+			<cell><label value="退回原因"></label></cell>
+			<cell colspan="3"><textbox width="80%" rows="5" id="backcause"></textbox></cell>
+		</row>
+	</rows>
+	<foot>
+		<footer align="center"><button onClick="@command('returnGift',win=editwin,cause=backcause.value)">提交</button></footer>
+	</foot>
+</grid>
+</window>
+</zk>

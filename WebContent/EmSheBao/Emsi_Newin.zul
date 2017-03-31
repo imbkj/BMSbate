@@ -1,0 +1,157 @@
+<?page title="社保新增" contentType="text/html;charset=UTF-8"?>
+<?component name="embase" macro-uri="Emsi_EmBase.zul" inline="true"?>
+<zk>
+	<window id="winNewinAdd" title="社保新增(无电脑号)" border="normal"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmSheBao.Emsi_NewinController')"
+		height="500px" width="1060px" closable="true" sizable="true"
+		maximizable="true">
+		<div width="100%" height="100%" if="${vm.existsShebao}"
+			align="center">
+			<label value="${vm.existsMessage}" />
+		</div>
+		<borderlayout if="${!vm.existsShebao}">
+			<north title="个人信息" border="none">
+				<embase gid="${vm.gid}"
+					name="${vm.emModel.emba_name}(${vm.emModel.emba_pinyin})" />
+			</north>
+			<center title="参保信息" border="none">
+				<grid width="100%" height="100%">
+					<rows>
+						<row>
+							所属模板
+							<cell colspan="3">
+								<combobox mold="rounded" readonly="true"
+									model="@load(vm.formulaList)"
+									onChange="@command('selFormula',mod=self)"
+									selectedItem="@bind(vm.formula)">
+									<template name="model">
+										<comboitem
+											label="@load(each.emsf_title)" />
+									</template>
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							服务起始月
+							<cell>
+								<vlayout>
+									<combobox mold="rounded"
+										readonly="true" value="@bind(vm.ownmonth)"
+										model="@load(vm.ownmonthList)">
+										<template name="model">
+											<comboitem
+												label="@load(each)" />
+										</template>
+									</combobox>
+									<label value="已过申报截止日，当月已不能变更"
+										if="${vm.isIfStop()}" style="color:red;" />
+								</vlayout>
+							</cell>
+							户籍
+							<cell>
+								<textbox readonly="true" width="80px"
+									value="@load(vm.formulaModel.emsf_hj)" />
+							</cell>
+						</row>
+						<row>
+							月工资总数
+							<cell>
+								<intbox mold="rounded"
+									value="@bind(vm.radix)" />
+							</cell>
+							职工性质
+							<cell>
+								<combobox readonly="true" width="100px"
+									mold="rounded" value="@bind(vm.worker)">
+									<comboitem label="" />
+									<comboitem label="合同制" />
+									<comboitem label="劳务" />
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							民族
+							<cell>
+								<combobox mold="rounded" readonly="true"
+									model="@load(vm.folkList)" value="@bind(vm.folk)">
+									<template name="model">
+										<comboitem label="@load(each)" />
+									</template>
+								</combobox>
+							</cell>
+							利手
+							<cell>
+								<combobox readonly="true" width="100px"
+									mold="rounded" value="@bind(vm.hand)">
+									<comboitem label="" />
+									<comboitem label="左" />
+									<comboitem label="右" />
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							养老保险
+							<cell>
+								<textbox readonly="true" width="80px"
+									value="@load(vm.formulaModel.emsf_yl)" />
+							</cell>
+							医疗保险
+							<cell>
+								<textbox readonly="true" width="80px"
+									value="@load(vm.formulaModel.emsf_yltype)" />
+							</cell>
+						</row>
+						<row>
+							工伤保险
+							<cell>
+								<textbox readonly="true" width="80px"
+									value="@load(vm.formulaModel.emsf_gs)" />
+							</cell>
+							失业保险
+							<cell>
+								<textbox readonly="true" width="80px"
+									value="@load(vm.formulaModel.emsf_sye)" />
+							</cell>
+						</row>
+						<row>
+							生育保险
+							<cell>
+								<textbox readonly="true" width="80px"
+									value="@load(vm.formulaModel.emsf_syu)" />
+							</cell>
+							参保人手机
+							<cell>
+								<textbox value="@bind(vm.mobile)"
+									mold="rounded" constraint="/1[3|5|7|8|][0-9]{9}/:格式不正确" />
+							</cell>
+						</row>
+						<row visible="false">
+							是否待确认
+							<cell colspan="3">
+								<radiogroup id="rgDeclare">
+									<radio label="是" value="4" />
+									<radio label="否" value="0"
+										checked="true" />
+								</radiogroup>
+							</cell>
+						</row>
+						<row>
+							申请原因
+							<cell colspan="3">
+								<textbox mold="rounded" rows="3"
+									width="30%" value="@bind(vm.remark)" />
+							</cell>
+						</row>
+					</rows>
+					<foot>
+						<footer align="center">
+							<button label="提交" id="btSubmit"
+								onClick="@command('newin',win=winNewinAdd,rg=rgDeclare)" />
+						</footer>
+					</foot>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

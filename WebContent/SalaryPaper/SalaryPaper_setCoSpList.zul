@@ -1,0 +1,95 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="公司工资单设置" id="winid" width="100%" height="100%"
+		closable="true" border="normal" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.SalaryPaper.SalaryPaper_setCoSpListController')">
+		<borderlayout>
+			<north>
+				<grid>
+					<rows>
+						<row>
+							<cell align="center">
+								<label value="公司检索:" />
+								<textbox width="40%"
+									value="@bind(vm.coinfo)" tooltiptext="请输入公司名称或者公司编号进行查询" />
+							</cell>
+						</row>
+						<row>
+							<cell align="center">
+								<button label="查询"
+									onClick="@command('serach')" />
+								<button label="批量设置工资单"
+									onClick="@command('plSetSalary',gridid=gridid)" />
+								<button label="生成工资单附件密码"
+									onClick="@command('producePassword')" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+
+			</north>
+			<center>
+				<grid model="@load(vm.sCoSetList)" mold="paging"
+					pageSize="50" id="gridid" emptyMessage="无数据" hflex="1" vflex="1">
+					<columns>
+						<column label="公司编号" />
+						<column label="公司简称" />
+						<column label="是否暗送" />
+						<column label="是否抄送" />
+						<column label="是否发送工资单" />
+						<column width="40px">
+							<checkbox
+								onCheck="@command('allcheck',gridid=gridid,c=self)" />
+						</column>
+						<column label="操作" />
+					</columns>
+					<template name="model">
+						<row>
+							<cell>
+								<label value="@load(each.cid)" />
+							</cell>
+							<cell>
+								<label value="@load(each.coba_shortname)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.coss_StringSectetend)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.coss_StringcarbonCopy)" />
+							</cell>
+							<cell>
+								<label
+									value="@load(each.coss_StringSendstate)" />
+							</cell>
+							<cell>
+								<checkbox value="@bind(each)" />
+							</cell>
+							<cell>
+								<div align="center">
+									<menubar autodrop="true"
+										width="50px" sclass="mymb">
+										<menu
+											image="../images/pencil-small.png">
+											<menupopup>
+												<menuitem
+													label="工资单发送方式、模版设置"
+													onClick="@command('setSalary',m=each)" />
+												<menuitem label="公司设置"
+													onClick="@command('setCo',m=each)" />
+												<menuitem
+													label="设置工资单项目" onClick="@command('setSp',m=each)" />
+											</menupopup>
+										</menu>
+									</menubar>
+								</div>
+							</cell>
+						</row>
+					</template>
+				</grid>
+			</center>
+		</borderlayout>
+
+	</window>
+</zk>

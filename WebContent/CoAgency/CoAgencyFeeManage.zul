@@ -1,0 +1,46 @@
+<?page title="新增服务产品" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winfeemanager" title="新增服务产品" border="normal" width="40%" height="60%" closable="true"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoAgency.CoAgencyFeeManageController')">
+		<borderlayout>
+			<center autoscroll="true" border="none">
+				<grid>
+					<columns>
+						<column width="25%"></column>
+						<column style="white-space:nowrap"></column>
+					</columns>
+					<rows>
+					<row>
+							城市/委托机构
+							<cell>
+							<label value="@load(vm.city)"> </label>
+							----
+							<label value="@load(vm.ag)"> </label>
+							
+
+							</cell>
+						</row>
+						<row>
+							<cell style="color:#666;">
+								最低人事服务费设定
+								<label style="color:red" value="(*)" />
+								:
+							</cell>
+							<textbox mold="rounded" width="80px"
+								value="@bind(vm.lsm.cabc_fee)" />
+						</row>
+					
+					</rows>
+				</grid>
+			</center>
+			<south>
+				<vbox align="center" width="100%">
+					<button id="submit" label="提交"
+						onClick="@command('submit')">
+					</button>
+				</vbox>
+			</south>
+		</borderlayout>
+	</window>
+</zk>

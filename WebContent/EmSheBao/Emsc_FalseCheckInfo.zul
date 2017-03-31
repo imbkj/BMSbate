@@ -1,0 +1,177 @@
+<!--
+	创建人：林少斌
+	创建时间：2015-9-18
+	用途：社保台账后对比页面
+-->
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="社会保险 -- 台账后对比页面" border="normal" width="100%"
+		closable="true" height="30%" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmSheBao.Emsc_FalseCheckInfoController')">
+		<borderlayout vflex="1">
+			<center>
+				<grid id="dataGrid" width="100%" height="100%">
+					<columns sizable="true">
+						<column align="center" />
+						<column label="姓名" align="center" />
+						<column label="卡号" align="center" />
+						<column label="基数" align="center" />
+						<column label="户籍" align="center" />
+						<column label="养老" align="center" />
+						<column label="医疗" align="center" />
+						<column label="工伤" align="center" />
+						<column label="失业" align="center" />
+						<column label="生育" align="center" />
+						<column label="养老单" align="center" />
+						<column label="养老个" align="center" />
+						<column label="医疗单" align="center" />
+						<column label="医疗个" align="center" />
+						<column label="工伤单" align="center" />
+						<column label="失业单" align="center" />
+						<column label="生育单" align="center" />
+					</columns>
+					<rows>
+						<row>
+							<cell>
+								<label value="BMS" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.sbDataBMS.esiu_name)" style="${vm.sbDataBMS.esiu_name==vm.sbDataSZSI.esiu_name? 'color: black':'color:red'};"/>
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.sbDataBMS.esiu_lbid)" style="${vm.sbDataBMS.esiu_name==vm.sbDataSZSI.esiu_name? 'color: black':'color:red'};"/>
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.sbDataBMS.esiu_radix)" style="${vm.sbDataBMS.esiu_name==vm.sbDataSZSI.esiu_name? 'color: black':'color:red'};"/>
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.sbDataBMS.esiu_hj)" style="${vm.sbDataBMS.esiu_name==vm.sbDataSZSI.esiu_name? 'color: black':'color:red'};"/>
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.sbDataBMS.esiu_yl)" style="${vm.sbDataBMS.esiu_name==vm.sbDataSZSI.esiu_name? 'color: black':'color:red'};"/>
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.sbDataBMS.esiu_yltype)" style="${vm.sbDataBMS.esiu_name==vm.sbDataSZSI.esiu_name? 'color: black':'color:red'};"/>
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.sbDataBMS.esiu_gs)" style="${vm.sbDataBMS.esiu_name==vm.sbDataSZSI.esiu_name? 'color: black':'color:red'};"/>
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.sbDataBMS.esiu_sye)" style="${vm.sbDataBMS.esiu_name==vm.sbDataSZSI.esiu_name? 'color: black':'color:red'};"/>
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.sbDataBMS.esiu_syu)" style="${vm.sbDataBMS.esiu_name==vm.sbDataSZSI.esiu_name? 'color: black':'color:red'};"/>
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.sbDataBMS.esiu_ylcp)" style="${vm.sbDataBMS.esiu_name==vm.sbDataSZSI.esiu_name? 'color: black':'color:red'};"/>
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.sbDataBMS.esiu_ylop)" style="${vm.sbDataBMS.esiu_name==vm.sbDataSZSI.esiu_name? 'color: black':'color:red'};"/>
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.sbDataBMS.esiu_jlcp)" style="${vm.sbDataBMS.esiu_name==vm.sbDataSZSI.esiu_name? 'color: black':'color:red'};"/>
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.sbDataBMS.esiu_jlop)" style="${vm.sbDataBMS.esiu_name==vm.sbDataSZSI.esiu_name? 'color: black':'color:red'};"/>
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.sbDataBMS.esiu_gscp)" style="${vm.sbDataBMS.esiu_name==vm.sbDataSZSI.esiu_name? 'color: black':'color:red'};"/>
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.sbDataBMS.esiu_syecp)" style="${vm.sbDataBMS.esiu_name==vm.sbDataSZSI.esiu_name? 'color: black':'color:red'};"/>
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.sbDataBMS.esiu_syucp)" style="${vm.sbDataBMS.esiu_name==vm.sbDataSZSI.esiu_name? 'color: black':'color:red'};"/>
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<label value="社保局" />
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.sbDataSZSI.esiu_name)" style="${vm.sbDataBMS.esiu_name==vm.sbDataSZSI.esiu_name? 'color: black':'color:red'};"/>
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.sbDataSZSI.esiu_lbid)" style="${vm.sbDataBMS.esiu_name==vm.sbDataSZSI.esiu_name? 'color: black':'color:red'};"/>
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.sbDataSZSI.esiu_radix)" style="${vm.sbDataBMS.esiu_radix==vm.sbDataSZSI.esiu_radix? 'color: black':'color:red'};"/>
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.sbDataSZSI.esiu_hj)" style="${vm.sbDataBMS.esiu_hj==vm.sbDataSZSI.esiu_hj? 'color: black':'color:red'};"/>
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.sbDataSZSI.esiu_yl)" style="${vm.sbDataBMS.esiu_yl==vm.sbDataSZSI.esiu_yl? 'color: black':'color:red'};"/>
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.sbDataSZSI.esiu_yltype)" style="${vm.sbDataBMS.esiu_yltype==vm.sbDataSZSI.esiu_yltype? 'color: black':'color:red'};"/>
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.sbDataSZSI.esiu_gs)" style="${vm.sbDataBMS.esiu_gs==vm.sbDataSZSI.esiu_gs? 'color: black':'color:red'};"/>
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.sbDataSZSI.esiu_sye)" style="${vm.sbDataBMS.esiu_sye==vm.sbDataSZSI.esiu_sye? 'color: black':'color:red'};"/>
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.sbDataSZSI.esiu_syu)" style="${vm.sbDataBMS.esiu_syu==vm.sbDataSZSI.esiu_syu? 'color: black':'color:red'};"/>
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.sbDataSZSI.esiu_ylcp)" style="${vm.sbDataBMS.esiu_ylcp==vm.sbDataSZSI.esiu_ylcp? 'color: black':'color:red'};"/>
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.sbDataSZSI.esiu_ylop)" style="${vm.sbDataBMS.esiu_ylop==vm.sbDataSZSI.esiu_ylop? 'color: black':'color:red'};"/>
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.sbDataSZSI.esiu_jlcp)" style="${vm.sbDataBMS.esiu_jlcp==vm.sbDataSZSI.esiu_jlcp? 'color: black':'color:red'};"/>
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.sbDataSZSI.esiu_jlop)" style="${vm.sbDataBMS.esiu_jlop==vm.sbDataSZSI.esiu_jlop? 'color: black':'color:red'};"/>
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.sbDataSZSI.esiu_gscp)" style="${vm.sbDataBMS.esiu_gscp==vm.sbDataSZSI.esiu_gscp? 'color: black':'color:red'};"/>
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.sbDataSZSI.esiu_syecp)" style="${vm.sbDataBMS.esiu_syecp==vm.sbDataSZSI.esiu_syecp? 'color: black':'color:red'};"/>
+							</cell>
+							<cell>
+								<label
+									value="@load(vm.sbDataSZSI.esiu_syucp)" style="${vm.sbDataBMS.esiu_syucp==vm.sbDataSZSI.esiu_syucp? 'color: black':'color:red'};"/>
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+</zk>

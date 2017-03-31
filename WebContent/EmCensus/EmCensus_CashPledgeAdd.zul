@@ -1,0 +1,25 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="补交押金" border="normal" width="600px" height="400px" id="cashwin"
+	apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmCensus.EmCensus_CashPledgeAddController')"
+		closable="true">
+		<grid vflex="1">
+			<rows>
+				<row>
+					<cell width="80px">交押金人</cell>
+					<cell><textbox value="@bind(vm.model.ehbc_cashpledname)"></textbox></cell>
+					<cell width="80px">交押金时间</cell>
+					<cell><datebox value="@bind(vm.cashpledtime)"></datebox></cell>
+				</row>
+				<row>
+					<cell>补交押金</cell>
+					<cell colspan="3"><decimalbox value="@bind(vm.model.ehbc_fee)"></decimalbox></cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center"><button onClick="@command('summit',win=cashwin)">提交</button></footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

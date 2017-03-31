@@ -1,0 +1,320 @@
+<?page title="员工居住证信息修改" contentType="text/html;charset=UTF-8"?>
+<?component name="docDataList" macro-uri="../DocumentsInfo/DocumentsInfo_UpPageList.zul" inline="true"?>
+<zk>
+	<window id="win" title="员工居住证信息修改" border="normal" width="80%"
+		height="80%" closable="true" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmResidencePermit.Emrp_ModController')">
+		<div height="95%" style="overflow-y:scroll">
+			<groupbox title="基本信息" mold="3d">
+				<grid>
+					<columns>
+						<column width="10%" />
+						<column />
+						<column width="12%" />
+						<column />
+						<column width="12%" />
+						<column />
+					</columns>
+					<rows>
+						<row>
+							公司编号
+							<label value="@load(vm.emmodel.cid)" />
+							简称
+							<cell colspan="3">
+								<label style="color:#666"
+									value="@load(vm.emmodel.coba_shortname)" />
+							</cell>
+						</row>
+						<row>
+							员工编号
+							<label value="@load(vm.emmodel.gid)" />
+							姓名
+							<label value="@load(vm.emmodel.emba_name)" />
+							身份证
+							<label
+								value="@load(vm.emmodel.emba_idcard)" />
+						</row>
+						<row>
+							曾用名
+							<textbox mold="rounded"
+								value="@bind(vm.erm.erin_former_name)" />
+							性别
+							<cell colspan="3">
+								<label
+									value="@load(vm.emmodel.emba_sex)" />
+							</cell>
+						</row>
+						<row>
+							是否需要修改信息
+							<cell colspan="5">
+								<textbox readonly="true"
+									value="@load(vm.epm.erpi_ifedit)" />
+							</cell>
+						</row>
+						<row>
+							民族
+							<combobox mold="rounded" readonly="true"
+								hflex="1" model="@load(vm.folkList)"
+								selectedItem="@bind(vm.folkM)">
+								<template name="model">
+									<comboitem
+										label="@load(each.pufo_name)" />
+								</template>
+							</combobox>
+							出生日期
+							<label value="@load(vm.erm.emba_birth)" />
+							文化程度
+							<combobox mold="rounded" readonly="true"
+								hflex="1" model="@load(vm.eduList)"
+								selectedItem="@bind(vm.eduM)">
+								<template name="model">
+									<comboitem
+										label="@load(each.pcco_cn)" />
+								</template>
+							</combobox>
+						</row>
+						<row>
+							户籍类型
+							<combobox mold="rounded" readonly="true"
+								hflex="1" model="@load(vm.hjList)"
+								selectedItem="@bind(vm.hjM)">
+								<template name="model">
+									<comboitem
+										label="@load(each.pcco_cn)" />
+								</template>
+							</combobox>
+							政治面貌
+							<combobox mold="rounded" readonly="true"
+								hflex="1" model="@load(vm.partyList)"
+								selectedItem="@bind(vm.parM)">
+								<template name="model">
+									<comboitem
+										label="@load(each.pcco_cn)" />
+								</template>
+							</combobox>
+							婚姻状况
+							<combobox mold="rounded" readonly="true"
+								hflex="1" model="@load(vm.marList)"
+								selectedItem="@bind(vm.marM)">
+								<template name="model">
+									<comboitem
+										label="@load(each.pcco_cn)" />
+								</template>
+							</combobox>
+						</row>
+						<row>
+							户籍地址
+							<cell colspan="5">
+								<textbox mold="rounded" hflex="1"
+									value="@bind(vm.erm.erin_hjadd)" />
+							</cell>
+						</row>
+						<row>
+							现居住地址
+							<cell colspan="5">
+								<textbox mold="rounded" hflex="1"
+									value="@bind(vm.erm.erin_nowadd)" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox title="就业登记信息" mold="3d">
+				<grid>
+					<columns>
+						<column width="16%" />
+						<column />
+						<column width="15%" />
+						<column />
+						<column width="14%" />
+						<column />
+					</columns>
+					<rows>
+						<row>
+							本单位工作起始日期
+							<datebox format="yyyy-MM-dd" mold="rounded"
+								value="@bind(vm.unit_b_date)" />
+							职称
+							<combobox mold="rounded" readonly="true"
+								hflex="1" model="@load(vm.titleList)"
+								selectedItem="@bind(vm.titleM)">
+								<template name="model">
+									<comboitem
+										label="@load(each.pcco_cn)" />
+								</template>
+							</combobox>
+							是否兼职
+							<combobox mold="rounded" readonly="true"
+								width="60px" value="@bind(vm.is_parttime)">
+								<comboitem label="是" />
+								<comboitem label="否" />
+							</combobox>
+						</row>
+						<row>
+							工种
+							<cell colspan="5">
+								<combobox mold="rounded" readonly="true"
+									width="280px" model="@load(vm.wcinList)"
+									selectedItem="@bind(vm.wcinM)">
+									<template name="model">
+										<comboitem
+											label="@load(each.wcin_name)" />
+									</template>
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							劳动合同开始日期
+							<datebox format="yyyy-MM-dd" mold="rounded"
+								value="@bind(vm.compact_s_date)" />
+							劳动合同结束日期
+							<datebox format="yyyy-MM-dd" mold="rounded"
+								value="@bind(vm.compact_e_date)" />
+							无固定劳动期限
+							<combobox mold="rounded" readonly="true"
+								width="60px" value="@bind(vm.if_unlimited)">
+								<comboitem label="是" />
+								<comboitem label="否" />
+							</combobox>
+						</row>
+						<row>
+							个人社保电脑号
+							<textbox mold="rounded" width="80%"
+								value="@bind(vm.erm.erin_computerid)" />
+							参加工作时间
+							<datebox format="yyyy-MM-dd" mold="rounded"
+								value="@bind(vm.worktime)" />
+							月均工资(元)
+							<doublebox mold="rounded" format=",###.##"
+								value="@bind(vm.erm.erin_salary)" />
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+			<groupbox title="办理信息" mold="3d">
+				<grid>
+					<columns>
+						<column width="14%" />
+						<column />
+						<column width="12%" />
+						<column />
+						<column width="12%" />
+						<column />
+					</columns>
+					<rows>
+						<row>
+							是否无需录入信息
+							<cell colspan="5">
+								<combobox mold="rounded" readonly="true"
+									width="60px" value="@bind(vm.dw_entering)"
+									onChange="@command('Opvis1')">
+									<comboitem label="是" />
+									<comboitem label="否" />
+								</combobox>
+							</cell>
+						</row>
+						<row visible="@load(vm.vis1)">
+							需核实信息
+							<cell colspan="5">
+								<hlayout>
+									<checkbox label="数码照相图像号"
+										style="color:#666"
+										checked="@bind(vm.epm.erpi_w_photo_number)">
+									</checkbox>
+									<space />
+									<checkbox label="职业技能等级"
+										style="color:#666"
+										checked="@bind(vm.epm.erpi_w_skill_level)">
+									</checkbox>
+									<space />
+									<checkbox label="来深日期"
+										style="color:#666" checked="@bind(vm.epm.erpi_w_a_sz_date)">
+									</checkbox>
+									<space />
+									<checkbox label="入住日期"
+										style="color:#666" checked="@bind(vm.epm.erpi_w_r_date)">
+									</checkbox>
+									<space />
+									<checkbox label="住所类别"
+										style="color:#666"
+										checked="@bind(vm.epm.erpi_w_house_class)">
+									</checkbox>
+									<space />
+									<checkbox label="居住方式"
+										style="color:#666" checked="@bind(vm.epm.erpi_w_r_mode)">
+									</checkbox>
+									<space />
+								</hlayout>
+							</cell>
+						</row>
+						<row>
+							付款性质
+							<combobox mold="rounded" readonly="true"
+								hflex="1" model="@load(vm.payList)"
+								value="@bind(vm.epm.erpi_payment_kind)">
+								<template name="model">
+									<comboitem
+										label="@load(each.pcco_cn)" />
+								</template>
+							</combobox>
+							办理性质
+							<label value="@bind(vm.epm.erpi_t_kind)" />
+							交接人
+							<combobox mold="rounded" readonly="true"
+								model="@load(vm.handList)"
+								value="@bind(vm.epm.erpi_handover_people)">
+								<template name="model">
+									<comboitem
+										label="@load(each.hape_username)" />
+								</template>
+							</combobox>
+						</row>
+						<row>
+							是否需要发票
+							<combobox mold="rounded" readonly="true"
+								width="60px" value="@bind(vm.if_invoice)">
+								<comboitem label="是" />
+								<comboitem label="否" />
+							</combobox>
+							收费状态
+							<combobox mold="rounded" readonly="true"
+								hflex="1" model="@load(vm.feeList)"
+								selectedItem="@bind(vm.feeM)">
+								<template name="model">
+									<comboitem
+										label="@load(each.pcco_cn)" />
+								</template>
+							</combobox>
+							所属月份
+							<label value="@load(vm.epm.ownmonth)" />
+						</row>
+						<row>
+							备注
+							<cell colspan="5">
+								<textbox rows="5" mold="rounded"
+									hflex="1" value="@bind(vm.epm.erpi_remark)">
+								</textbox>
+							</cell>
+						</row>
+						<row>
+							交接材料
+							<cell colspan="5">
+								<docDataList id="docGrid" puzu_id="34"
+									doc_type="g" gid="" tid="${vm.daid}"
+									log_url="../DocumentsInfo/" dHeight="220px" dWidth="100%" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</groupbox>
+		</div>
+		<hbox width="100%" pack="center" align="center">
+			<button label="暂存"
+				onClick="@command('submit',win=win,a=1,gd=docGrid)" />
+			<button label="提交"
+				onClick="@command('submit',win=win,a=2,gd=docGrid)" />
+			<button label="退回" onClick="@command('back',win=win)" />
+			<button label="联系记录" onClick="@command('link',win=win)" />
+		</hbox>
+	</window>
+</zk>

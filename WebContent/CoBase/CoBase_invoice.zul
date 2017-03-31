@@ -1,0 +1,129 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="发票信息" border="normal" width="100%" height="100%"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoBase.CoBase_invoiceController')">
+		<borderlayout width="100%" height="100%">
+			<center>
+				<grid width="100%" height="100%">
+					<columns visible="false">
+						<column width="15%" />
+						<column />
+						<column width="15%" />
+						<column />
+					</columns>
+					<rows>
+						<row>
+							<cell>增值税一般纳税人</cell>
+							<cell>
+								<hlayout>
+									<combobox id="cfva_taxpayers"
+										onChange="@command('modinfo')"
+										value="@bind(vm.cfm.cfva_taxpayers)">
+										<comboitem label="" />
+										<comboitem label="是" />
+										<comboitem label="否" />
+									</combobox>
+								</hlayout>
+							</cell>
+							<cell>发票类型</cell>
+							<cell>
+								<checkbox label="专票"
+									disabled="@load(vm.only)" checked="@bind(vm.cfm.cfva_only)" />
+								<checkbox label="普票"
+									disabled="@load(vm.simple)"
+									checked="@bind(vm.cfm.cfva_simple)" />
+							</cell>
+						</row>
+						<row>
+							<cell>纳税人识别号（开票用编码）</cell>
+							<cell>
+								<hlayout>
+									<textbox id="cfva_number1"
+										value="@bind(vm.cfm.cfva_number1)" />
+								</hlayout>
+							</cell>
+							<cell>电话</cell>
+							<cell>
+								<textbox value="@bind(vm.cfm.cfva_tel)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<hbox>
+									注册地址
+									<label style="color:red;">
+										(*)
+									</label>
+								</hbox>
+							</cell>
+							<cell colspan="3">
+								<textbox id="adderss" width="70%"
+									value="@bind(vm.cfm.cfva_reg_add)" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<hbox>
+									发票联系人
+									<label style="color:red;"
+										value="(*)" />
+								</hbox>
+							</cell>
+							<cell>
+								<textbox id="cfva_contact"
+									value="@bind(vm.cfm.cfva_contact)" />
+							</cell>
+							<cell>
+								<hbox>
+									发票联系人电话
+									<label style="color:red;"
+										value="(*)" />
+								</hbox>
+							</cell>
+							<cell>
+								<textbox id="cfva_contact_tel"
+									value="@bind(vm.cfm.cfva_contact_tel)" />
+							</cell>
+						</row>
+						<row>
+							<cell>银行账号</cell>
+							<cell>
+								<hlayout>
+									<textbox width="100%"
+										id="cfva_bank_acc" value="@bind(vm.cfm.cfva_bank_acc)" />
+								</hlayout>
+							</cell>
+							<cell>开户银行名称</cell>
+							<cell>
+								<hlayout>
+									<textbox width="100%" id="cfva_bank"
+										value="@bind(vm.cfm.cfva_bank)" />
+								</hlayout>
+							</cell>
+						</row>
+						<row>
+							<cell>发票抬头</cell>
+							<cell colspan="3">
+								<textbox id="cfva_title" width="70%"
+									value="@bind(vm.cfm.cfva_title)" />
+							</cell>
+						</row>
+						<row>
+							<cell>发票接收地址</cell>
+							<cell colspan="3">
+								<textbox id="cfva_vat_add" width="70%"
+									value="@bind(vm.cfm.cfva_vat_add)" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</center>
+			<south>
+				<div align="center">
+					<!-- <button label="提交" onClick="@command('submit')" /> -->
+				</div>
+			</south>
+		</borderlayout>
+	</window>
+</zk>

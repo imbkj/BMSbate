@@ -1,0 +1,119 @@
+<?page contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="拜访/回访计划管理" border="normal" height="100%"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.ClientRelations.VisitInfo.vit_backListController')">
+		<style src="/css/style.css"></style>
+		<grid model="@load(vm.visitList)" id="gdVisitBack"
+			emptyMessage="无数据" height="100%" mold="paging">
+			<auxhead sclass="category-center">
+				<auxheader label="拜访/回访计划已审核列表" colspan="10"></auxheader>
+			</auxhead>
+			<columns>
+				<column width="40px">序号</column>
+				<column>
+					公司名称
+					<image src="/images/SearchM.png" height="15px"
+						width="15px">
+					</image>
+					<textbox id="cola_company" instant="true"
+						mold="rounded" width="60%" onChange="@command('search')"
+						value="@bind(vm.cola_company)" />
+				</column>
+				<column>
+					拜访计划月份
+					<textbox id="viin_month" instant="true"
+						mold="rounded" width="60%" onChange="@command('search')"
+						value="@bind(vm.viin_month)" />
+				</column>
+				<column>
+					主执行人
+					<combobox id="viin_person" readonly="true"
+						model="@load(vm.personList)" mold="rounded" width="50%"
+						onChange="@command('search')" value="@bind(vm.viin_person)">
+						<template name="model">
+							<comboitem label="@load(each)" />
+						</template>
+					</combobox>
+				</column>
+				<column>
+					次执行人
+					<combobox id="viin_subordinate" readonly="true"
+						model="@load(vm.subordinateList)" mold="rounded" width="50%"
+						onChange="@command('search')"
+						value="@bind(vm.viin_subordinate)">
+						<template name="model">
+							<comboitem label="@load(each)" />
+						</template>
+					</combobox>
+				</column>
+				<column>
+					添加人
+					<combobox id="viin_addname" readonly="true"
+						model="@load(vm.addnameList)" mold="rounded" width="50%"
+						onChange="@command('search')" value="@bind(vm.viin_addname)">
+						<template name="model">
+							<comboitem label="@load(each)" />
+						</template>
+					</combobox>
+				</column>
+				<column sort="auto(viin_addtime)">
+					添加时间
+					<datebox id="viin_addtime" instant="true"
+						width="50%" mold="rounded" onChange="@command('search')"
+						value="@bind(vm.viin_addtime)" format="yyyy-MM-dd">
+					</datebox>
+				</column>
+				<column>
+					状态
+					<combobox id="viin_state" instant="true"
+						mold="rounded" width="50%" onChange="@command('search')"
+						value="@bind(vm.viin_state)" readonly="true">
+						<comboitem label="" />
+						<comboitem label="已审核" />
+						<comboitem label="拜访完成" />
+						<comboitem label="跟进中" />
+						<!-- <comboitem label="跟进完成" /> -->
+						<comboitem label="完结" />
+					</combobox>
+				</column>
+				<column>
+					是否跟进
+					<combobox id="viin_iffollow" instant="true"
+						mold="rounded" width="50%" onChange="@command('search')"
+						value="@bind(vm.viin_iffollow)" readonly="true">
+						<comboitem label="" />
+						<comboitem label="是" />
+						<comboitem label="否" />
+					</combobox>
+				</column>
+				<column width="60px">操作</column>
+			</columns>
+			<template name="model">
+				<row>
+					<label value="${forEachStatus.index+1 }" />
+					<label value="@load(each.cola_company)" />
+					<label value="@load(each.viin_month)" />
+					<label value="@load(each.viin_person)" />
+					<label value="@load(each.viin_subordinate)" />
+					<label value="@load(each.viin_addname)" />
+					<label value="@load(each.viin_addtime)" />
+					<label value="@load(each.state)" />
+					<label value="是" if="${each.viin_iffolow }" />
+					<label value="否" if="${not each.viin_iffolow }" />
+					<menubar autodrop="true"
+						onCreate="@command('menubarinit',mb=self,state=each.viin_state)">
+						<menu image="/images/pencil-small.png">
+							<menupopup>
+								<menuitem
+									label="录入拜访详情" onClick="@command('visitback',vim=each)" />
+								<menuitem
+									label="修改拜访详情" onClick="@command('visitbackmod',vim=each)" />
+							</menupopup>
+						</menu>
+					</menubar>
+				</row>
+			</template>
+		</grid>
+	</window>
+</zk>

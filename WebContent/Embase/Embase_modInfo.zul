@@ -1,0 +1,480 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<?component name="docDataList" macro-uri="/DocumentsInfo/DocumentsInfo_AddPageList.zul" inline="true"?>
+<zk>
+	<window id="winbase" title="员工详细信息" border="normal" width="100%"
+		height="100%" apply="org.zkoss.bind.BindComposer"
+		onCreate="@command('winInfo',a=self)"
+		viewModel="@id('vm') @init('Controller.Embase.EmBase_modInfoController')">
+		<borderlayout>
+			<center autoscroll="true" border="none">
+				<vlayout>
+					<groupbox mold="3d" title="基本信息">
+						<grid>
+							<columns visible="false">
+								<column width="9%" />
+								<column />
+								<column width="9%" />
+								<column />
+								<column width="10%" />
+								<column />
+							</columns>
+							<rows>
+								<row>
+									<cell>
+										<label value="姓名" />
+									</cell>
+									<cell>
+										<textbox width="120px"
+											value="@bind(vm.ebm.emba_name)" />
+
+									</cell>
+									<cell>
+										<label value="性别" />
+									</cell>
+									<cell>
+										<combobox readonly="true"
+											width="120px" value="@bind(vm.ebm.emba_sex)">
+											<comboitem />
+											<comboitem label="男" />
+											<comboitem label="女" />
+										</combobox>
+									</cell>
+									<cell>
+
+										<label value="民族" />
+									</cell>
+									<cell>
+										<combobox readonly="true"
+											width="120px" model="@load(vm.folkList)"
+											value="@bind(vm.ebm.emba_folk)">
+											<template name="model">
+												<comboitem
+													label="@load(each)" />
+											</template>
+										</combobox>
+									</cell>
+								</row>
+								<row>
+									<cell>
+
+										<label value="身份证号" />
+									</cell>
+									<cell colspan="3">
+
+										<textbox
+											value="@bind(vm.ebm.emba_idcard)"
+											onChange="@command('idcardhandle')" />
+										<combobox readonly="true"
+											value="@bind(vm.ebm.emba_idcardclass)">
+											<comboitem label="身份证" />
+											<comboitem label="军人证" />
+											<comboitem label="台胞证" />
+											<comboitem label="护照" />
+											<comboitem label="港澳证" />
+										</combobox>
+									</cell>
+									<cell>
+										<label value="出生日期" />
+									</cell>
+									<cell>
+										<datebox id="birth"
+											format="yyyy-MM-dd" value="@bind(vm.birth)" />
+									</cell>
+								</row>
+
+								<row>
+									<cell>
+
+										<label value="家庭电话" />
+									</cell>
+									<cell>
+										<textbox width="120px"
+											value="@bind(vm.ebm.emba_phone)"
+											onChange="@command('checkPhone')" />
+									</cell>
+									<cell>
+
+										<label value="手机号码" />
+									</cell>
+									<cell>
+										<textbox width="120px"
+											value="@bind(vm.ebm.emba_mobile)"
+											onChange="@command('checkMobile')" />
+									</cell>
+									<cell>
+
+										<label value="E-mail" />
+									</cell>
+									<cell>
+										<textbox id="emba_emailtxt"
+											width="120px" value="@bind(vm.ebm.emba_email)"
+											onChange="@command('checkEmailSimple',email=self.value)"
+											context='pop_checkemail'
+											onClick='pop_email.open(self,"after_end")'>
+										</textbox>
+										<popup id="pop_email">
+											点击右键可验证邮箱真实性
+										</popup>
+										<menupopup
+											id="pop_checkemail">
+											<menuitem label="验证真实性"
+												onClick="@command('checkEmail',email=emba_emailtxt.value)">
+											</menuitem>
+										</menupopup>
+									</cell>
+								</row>
+
+							</rows>
+						</grid>
+					</groupbox>
+
+					<groupbox title="社保信息" mold="3d"
+						visible="@load(vm.sb)">
+						<grid>
+							<columns visible="false">
+								<column width="80px" />
+								<column />
+								<column width="80px" />
+								<column />
+								<column width="80px" />
+								<column />
+							</columns>
+							<rows>
+								<row>
+									<cell>所属月份</cell>
+									<cell colspan="5">
+										<combobox
+											model="@load(vm.ownmonthListsb)"
+											value="@bind(vm.ebm.emba_emsb_ownmonth)"
+											onChange="@command('sbbj')">
+											<template name="model">
+												<comboitem
+													label="@load(each)">
+												</comboitem>
+											</template>
+										</combobox>
+
+										<!-- 										<label -->
+										<!-- 											value="@load(vm.ebm.emba_emsb_ownmonth)" /> -->
+										<!-- 											<label value="已过申报截止日，当月已不能新增。" -->
+										<!-- 										if="${vm.sb_ifStop}" style="color:red;" /> -->
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<label value="基数" />
+									</cell>
+									<cell>
+										<intbox constraint="no empty"
+											value="@bind(vm.ebm.emba_sb_radix)" />
+
+									</cell>
+									<cell>电脑号</cell>
+									<cell colspan="3">
+										<textbox
+											value="@bind(vm.ebm.emba_computerid)" />
+										<button label="查询电脑号"
+											onClick="@command('computerid_search')" />
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<label value="社保标准" />
+									</cell>
+									<cell>
+										<combobox
+											value="@bind(vm.ebm.emba_formula)" readonly="true"
+											model="@load(vm.formulaList)"
+											onChange="@command('selFormula',mod=self)"
+											selectedItem="@bind(vm.formula)">
+											<template name="model">
+												<comboitem
+													label="@load(each.emsf_title)" />
+											</template>
+										</combobox>
+									</cell>
+									<cell>
+										<label value="户籍" />
+									</cell>
+									<cell>
+										<textbox readonly="true"
+											width="80px" value="@load(vm.ebm.emba_sb_hj)" />
+									</cell>
+									<cell></cell>
+									<cell></cell>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+					<groupbox title="社保补缴信息" mold="3d"
+						visible="@load(vm.sbbj)">
+						<grid>
+							<columns visible="false">
+								<column width="80px" />
+								<column />
+								<column width="80px" />
+								<column />
+								<column width="120px" />
+								<column />
+							</columns>
+							<rows>
+								<row>
+									<cell>所属月份</cell>
+									<cell>
+										<label
+											value="@load(vm.ebm.emba_emsb_ownmonth)" />
+									</cell>
+									<cell>收费月份</cell>
+									<cell colspan="3">
+										<label
+											value="@load(vm.sbsfownmonth)" />
+
+									</cell>
+								</row>
+								<row visible="@load(vm.sbM1)">
+									<cell>补缴月份</cell>
+									<cell>
+										<textbox
+											value="@load(vm.ebm.emba_emsb_m1)" readonly="true" />
+									</cell>
+									<cell>基数</cell>
+									<cell>
+										<intbox
+											value="@bind(vm.ebm.emba_emsb_r1)" />
+									</cell>
+									<cell>
+										<hbox>
+											<label value="是否需补医疗" />
+											<checkbox
+												checked="@bind(vm.ebm.chk_jlbj1)" />
+										</hbox>
+									</cell>
+									<cell>
+										<label style="color:red;"
+											value="(注：医疗补交必须与养老一起申请交单补交)" />
+									</cell>
+								</row>
+								<row visible="@load(vm.sbM2)">
+									<cell>补缴月份</cell>
+									<cell>
+										<textbox
+											value="@load(vm.ebm.emba_emsb_m2)" readonly="true" />
+									</cell>
+									<cell>基数</cell>
+									<cell>
+										<intbox
+											value="@bind(vm.ebm.emba_emsb_r2)" />
+									</cell>
+									<cell>
+										<hbox>
+											<label value="是否需补医疗" />
+											<checkbox
+												checked="@bind(vm.ebm.chk_jlbj2)" />
+										</hbox>
+									</cell>
+									<cell>
+										<label style="color:red;"
+											value="(注：医疗补交必须与养老一起申请交单补交)" />
+									</cell>
+								</row>
+								<row visible="@load(vm.sbM3)">
+									<cell>补缴月份</cell>
+									<cell>
+										<textbox
+											value="@load(vm.ebm.emba_emsb_m3)" readonly="true" />
+									</cell>
+									<cell>基数</cell>
+									<cell>
+										<intbox
+											value="@bind(vm.ebm.emba_emsb_r3)" />
+									</cell>
+									<cell>
+										<hbox>
+											<label value="是否需补医疗" />
+											<checkbox
+												checked="@bind(vm.ebm.chk_jlbj3)" />
+										</hbox>
+									</cell>
+									<cell>
+										<label style="color:red;"
+											value="(注：医疗补交必须与养老一起申请交单补交)" />
+									</cell>
+								</row>
+								<row visible="@load(vm.sbDoc)">
+									<cell>缴交资料</cell>
+									<cell colspan="5">
+										<docDataList id="docsbGrid"
+											pUsername="@load(vm.username)" pUserId="@load(vm.userId)"
+											puzu_id="94" gid="@load(vm.ebm.gid)" dWidth="100%"
+											dHeight="200px" />
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+					<groupbox title="住房公积金信息" mold="3d"
+						visible="@load(vm.house)">
+						<grid>
+							<columns visible="false">
+								<column width="80px" />
+								<column />
+								<column width="80px" />
+								<column />
+								<column width="80px" />
+								<column />
+							</columns>
+							<rows>
+								<row>
+									<cell>所属月份</cell>
+									<cell colspan="5">
+										<combobox
+											model="@load(vm.ownmonthListgjj)"
+											value="@bind(vm.ebm.emba_emhb_ownmonth)"
+											onChange="@command('gjjbj')">
+											<template name="model">
+												<comboitem
+													label="@load(each)">
+												</comboitem>
+											</template>
+										</combobox>
+
+
+										<!-- 										<label -->
+										<!-- 											value="@load(vm.ebm.emba_emhb_ownmonth)" /> -->
+									</cell>
+								</row>
+								<row>
+									<cell>
+										<label value="基数" />
+									</cell>
+									<cell>
+										<doublebox constraint="no empty"
+											value="@bind(vm.ebm.emba_house_radix)" />
+									</cell>
+									<cell>
+										<label value="比例" />
+									</cell>
+									<cell>
+										<combobox id="cpp"
+											value="@bind(vm.ebm.emba_house_cpp)" model="@load(vm.cpList)"
+											readonly="true">
+											<template name="model">
+												<comboitem
+													label="@load(each.cp)" />
+											</template>
+										</combobox>
+									</cell>
+									<cell>公积金帐号</cell>
+									<cell>
+										<textbox
+											value="@bind(vm.ebm.emba_houseid)" />
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+					<groupbox title="住房公积金补缴信息" mold="3d"
+						visible="@load(vm.housebj)">
+						<grid>
+							<columns>
+								<column width="80px" />
+								<column />
+								<column width="80px" />
+								<column />
+								<column width="80px" />
+								<column />
+							</columns>
+							<rows>
+								<row>
+									<cell>所属月份</cell>
+									<cell>
+										<label
+											value="@load(vm.ebm.emba_emhb_ownmonth)" />
+									</cell>
+									<cell>收费月份</cell>
+									<cell>
+										<label
+											value="@load(vm.ebm.emba_emhb_feeownmonth)" />
+
+									</cell>
+									<cell>公积金号码</cell>
+									<cell>
+										<textbox
+											value="@bind(vm.ebm.emba_houseid)" />
+									</cell>
+
+								</row>
+								<row>
+									<cell>补缴起始月</cell>
+									<cell>
+										<textbox readonly="true"
+											value="@bind(vm.ebm.emba_emhb_startdate)" />
+									</cell>
+									<cell>补缴终止月</cell>
+									<cell>
+										<textbox readonly="true"
+											value="@bind(vm.ebm.emba_emhb_stopdate)" />
+									</cell>
+									<cell>补缴原因</cell>
+									<cell>
+										<combobox readonly="true"
+											value="@bind(vm.ebm.emba_emhb_reason)">
+											<comboitem label="漏缴" />
+											<comboitem label="少缴" />
+											<comboitem label="外省市转入补缴" />
+											<comboitem label="基数调整补缴" />
+											<comboitem label="比例调整补缴" />
+											<comboitem label="缓交补缴" />
+											<comboitem label="其他" />
+										</combobox>
+									</cell>
+								</row>
+								<row>
+									<cell>基数</cell>
+									<cell>
+										<doublebox
+											value="@bind(vm.ebm.emba_emhb_radix)" instant="true"
+											onChange="@command('sumhbTotal')" />
+									</cell>
+									<cell>缴交比例</cell>
+									<cell>
+										<combobox id="bjcpp"
+											value="@bind(vm.ebm.emba_house_cpp)" model="@load(vm.cpList)"
+											readonly="true">
+											<template name="model">
+												<comboitem
+													label="@load(each.cp)" />
+											</template>
+										</combobox>
+									</cell>
+									<cell>补缴金额</cell>
+									<cell>
+										<doublebox
+											value="@bind(vm.ebm.emba_emhb_total)" />
+										<button label="计算"
+											onClick="@command('sumhbTotal')" />
+									</cell>
+								</row>
+								<row visible="@load(vm.gjjDoc)">
+									<cell>缴交资料</cell>
+									<cell colspan="5">
+										<docDataList id="docgjjGrid"
+											pUsername="@load(vm.username)" pUserId="@load(vm.userId)"
+											puzu_id="93" gid="@load(vm.ebm.gid)" dWidth="100%"
+											dHeight="200px" />
+									</cell>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+				</vlayout>
+			</center>
+			<south>
+				<div align="center">
+					<button visible="@load(vm.savebl)" label="暂存"
+						onClick="@command('submit')" />
+				</div>
+			</south>
+		</borderlayout>
+	</window>
+</zk>

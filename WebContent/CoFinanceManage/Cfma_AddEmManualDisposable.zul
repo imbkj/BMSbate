@@ -1,0 +1,163 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="添加员工非标" border="normal" width="60%" height="80%"
+		closable="true" apply="org.zkoss.bind.BindComposer" id="addWin"
+		viewModel="@id('vm') @init('Controller.CoFinanceManage.Cfma_AddEmManualDisposableController')">
+		<borderlayout>
+			<north>
+				<grid>
+					<rows>
+						<row>
+							<cell align="center">
+								<label value="公司名称" />
+							</cell>
+							<cell align="center">
+								<label
+									value="@load(vm.com.coba_company)" />
+							</cell>
+							<cell align="center">
+								<label value="公司编号" />
+							</cell>
+							<cell align="center">
+								<label value="@load(vm.com.cid)" />
+							</cell>
+							<cell align="center">
+								<label value="客服" />
+							</cell>
+							<cell align="center">
+								<label
+									value="@load(vm.com.coba_client)" />
+							</cell>
+						</row>
+
+						<row>
+							<cell>
+								<label value="所属月份" />
+							</cell>
+							<cell colspan="2">
+								<combobox model="@load(vm.monthList)"
+									mold="rounded" readonly="true" value="@bind(vm.m.ownmonth)">
+									<template name="model">
+										<comboitem label="@bind(each)" />
+									</template>
+								</combobox>
+							</cell>
+							<cell>
+								<label value="选择合同" />
+							</cell>
+							<cell colspan="2">
+								<combobox readonly="true" id="cocoCom"
+									mold="rounded"
+									onChange="@command('setbjdlist',coco_id=cocoCom.selectedItem.value)"
+									selectedItem="@bind(vm.cocosm)" model="@load(vm.cocos)">
+									<template name="model">
+										<comboitem
+											label="@bind(each.coco_compactid)"
+											value="@bind(each.coco_id)" />
+									</template>
+								</combobox>
+							</cell>
+
+						</row>
+						<row>
+
+
+							<cell>
+								<label value="产品大类" />
+							</cell>
+							<cell colspan="2">
+								<combobox readonly="true" mold="rounded"
+									model="@load(vm.copas)" selectedItem="@bind(vm.copasm)"
+									onChange="@command('getprinfo')">
+									<template name="model">
+										<comboitem
+											label="@bind(each.coli_name)" value="@bind(each.coli_name)" />
+									</template>
+								</combobox>
+							</cell>
+							<cell>
+								<label value="产品小类" />
+							</cell>
+							<cell colspan="2">
+								<combobox readonly="true" mold="rounded"
+									value="@bind(vm.xl)" model="@load(vm.cocosinfo)"
+									selectedItem="@bind(vm.copasminfo)">
+									<template name="model">
+										<comboitem
+											label="@bind(each.coli_name)" value="@bind(each.cpac_name)" />
+									</template>
+								</combobox>
+							</cell>
+
+
+						</row>
+						<row>
+							<cell>
+								<label value="应收费用" />
+							</cell>
+							<cell colspan="5">
+								<doublebox
+									value="@bind(vm.m.cfmd_Receivable)" mold="rounded" />
+							</cell>
+						</row>
+
+						<row>
+							<cell>
+								<label value="收费原因" />
+							</cell>
+							<cell colspan="5">
+								<textbox rows="3"
+									value="@bind(vm.m.cfmd_Reason)" width="98%" mold="rounded" />
+							</cell>
+						</row>
+					</rows>
+				</grid>
+			</north>
+			<center>
+				<groupbox width="100%" height="100%" mold="3d">
+					<caption label="可添加非标的员工" />
+					<grid model="@load(vm.ems)" height="100%">
+						<columns>
+							<column width="50px">
+								<checkbox
+									onCheck="@command('allcheck',check=self,rows=rows)" />
+							</column>
+							<column width="6%" label="员工编号" />
+
+
+							<column>
+								<vlayout>
+									<label>姓名</label>
+
+									<textbox id="emba_name"
+										instant="true" value="@bind(vm.emname)" width="80%"
+										onChange="@command('searchEm',coco_id=cocoCom.selectedItem.value)"
+										mold="rounded">
+									</textbox>
+								</vlayout>
+							</column>
+
+						</columns>
+						<rows id="rows">
+							<template name="model">
+								<row>
+									<checkbox value="@bind(each)" />
+									<label value="@load(each.gid)" />
+									<label
+										value="@load(each.emba_name)" />
+								</row>
+							</template>
+						</rows>
+					</grid>
+
+				</groupbox>
+			</center>
+			<south>
+				<div align="center">
+					<button label="提交"
+						onClick="@command('submit',addWin=addWin,rows=rows)" />
+				</div>
+			</south>
+		</borderlayout>
+	</window>
+</zk>

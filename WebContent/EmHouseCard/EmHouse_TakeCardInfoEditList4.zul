@@ -1,0 +1,476 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="公积金联名卡领卡信息管理" border="normal" vflex="1"
+		apply="org.zkoss.bind.BindComposer" id="windeclare"
+		viewModel="@id('vm') @init('Controller.EmHouseCard.EmHouse_TakeCardInfoListController')">
+		<style src="/css/style.css"></style>
+		<borderlayout>
+			<north border="0" title="检索" collapsible="true"
+				style="padding-bottom:10px;">
+				<grid>
+					<rows>
+						<row>
+							<cell width="120px">
+								<combobox width="100px" value="员工姓名"
+									readonly="true" id="nametype">
+									<comboitem label="" />
+									<comboitem label="员工姓名" />
+									<comboitem label="员工编号" />
+									<comboitem label="身份证号" />
+									<comboitem label="个人公积金号" />
+								</combobox>
+							</cell>
+							<cell>
+								<textbox id="name"></textbox>
+							</cell>
+							<cell width="100px">
+								<combobox width="100px" value="单位简称"
+									readonly="true" id="comtype">
+									<comboitem label="" />
+									<comboitem label="单位简称" />
+									<comboitem label="单位编号" />
+									<comboitem label="单位公积金号" />
+								</combobox>
+							</cell>
+							<cell>
+								<textbox id="comname"></textbox>
+							</cell>
+							<cell width="60px">所属月份</cell>
+							<cell>
+								<datebox sclass="datebox-month-only"
+									format="yyyyMM" id="ownmonth">
+
+								</datebox>
+							</cell>
+							<cell width="60px">申报月份</cell>
+							<cell>
+								<datebox sclass="datebox-month-only"
+									format="yyyy-MM" id="appmonth" />
+							</cell>
+						</row>
+						<row>
+							<cell>
+								<combobox value="客服核收资料时间" id="timetype"
+									width="100%">
+									<comboitem label="" />
+									<comboitem label="客服核收资料时间" />
+									<comboitem label="助理核收资料时间" />
+									<comboitem label="福利核收资料时间" />
+									<comboitem label="递交银行时间" />
+									<comboitem label="福利领卡时间" />
+									<comboitem label="中心签收时间" />
+									<comboitem label="客服领卡时间" />
+									<comboitem label="员工领卡时间" />
+								</combobox>
+							</cell>
+							<cell>
+								<datebox id="timevalue"></datebox>
+							</cell>
+							<cell width="100px">
+								<combobox width="100px" value="客服"
+									id="clienttype">
+									<comboitem label="" />
+									<comboitem label="客服" />
+									<comboitem label="客服助理" />
+									<comboitem label="福利助理" />
+								</combobox>
+							</cell>
+							<cell>
+								<combobox model="@load(vm.clientlist)"
+									id="client" width="100px">
+									<template name="model">
+										<comboitem label="@load(each)" />
+									</template>
+								</combobox>
+							</cell>
+							<cell width="60px">开户类型</cell>
+							<cell>
+								<combobox width="100px" id="type">
+									<comboitem label="" />
+									<comboitem label="中智大户" />
+									<comboitem label="独立开户" />
+								</combobox>
+							</cell>
+							<cell width="60px">状态</cell>
+							<cell>
+								<combobox width="100px"  value="@load(vm.sName)"
+									model="@load(vm.slist)" readonly="true" id="statename">
+									<template name="model">
+										<comboitem
+											label="@load(each.state_Name)" value="@load(each.state_Id)" />
+									</template>
+								</combobox>
+							</cell>
+							</row>
+							<row>
+							<cell width="140px">
+								身份证复印件
+							</cell>
+							<cell>
+								<combobox width="100px" id="ifidcard" value="@bind(vm.ifidcard)">
+									<comboitem label="" />
+									<comboitem label="有" />
+									<comboitem label="无" />
+								</combobox>
+							</cell>
+							<cell width="80px">发卡对象</cell>
+							<cell>
+								<combobox readonly="true" value="@bind(vm.cosp_card_caliname)">
+									<comboitem label="" />
+									<comboitem label="客服" />
+									<comboitem label="联系人" />
+									<comboitem label="员工本人" />
+								</combobox>
+							</cell>
+							<cell width="80px">在职状态</cell>
+							<cell>
+								<combobox readonly="true" value="@bind(vm.emba_state)">
+									<comboitem label="" />
+									<comboitem label="在职" />
+									<comboitem label="离职" />
+								</combobox>
+							</cell>
+							<cell width="80px">部门</cell>
+							<cell>
+								<combobox readonly="true" value="@bind(vm.emba_dept)">
+									<comboitem label="" />
+									<comboitem label="客户服务部 " />
+									<comboitem label="全国项目部 " />
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell>联系状态</cell>
+							<cell>
+								<combobox value="@bind(vm.contactsate)">
+										<comboitem></comboitem>
+										<comboitem label="未联系"></comboitem>
+										<comboitem label="已联系客服"></comboitem>
+										<comboitem label="已联系指定人"></comboitem>
+									</combobox>
+							</cell>
+							<cell width="80px">材料联系人</cell>
+							<cell>
+								<combobox readonly="true" value="@bind(vm.card_data_caliname)">
+									<comboitem label="" />
+									<comboitem label="客服" />
+									<comboitem label="联系人" />
+									<comboitem label="员工本人" />
+								</combobox>
+							</cell>
+							<cell width="80px">缴存银行</cell>
+							<cell colspan="3">
+								<combobox readonly="true" value="@bind(vm.bankJc)">
+									<comboitem label="" />
+									<comboitem label="中国银行" />
+									<comboitem label="中信银行" />
+								</combobox>
+							</cell>
+						</row>
+					</rows>
+					<foot>
+						<footer align="center">
+							<button
+								onClick="@command('search',nametype=nametype.value,name=name.value,
+		ownmonth=ownmonth.value,appmonth=appmonth.value,ifidcard=ifidcard.value,clienttype=clienttype.value,
+		client=client.value,type=type.value,statename=statename,timetype=timetype.value,timevalue=timevalue.value,
+		comtype=comtype.value,comname=comname.value)">
+								查询
+							</button>
+							<button onClick="@command('Export')">
+								导出数据
+							</button>
+							<button onClick="@command('Exportqingce',gd=gd,rowindex=22)">
+								设立清册
+							</button>
+							<button onClick="@command('Exportqingdan',gd=gd,rowindex=22)">
+								导出交接清单
+							</button>
+							<button onClick="@command('ExportZhaoHang',gd=gd,rowindex=22)">
+								生成招行清册
+							</button>
+							<button onClick="@command('ExportJianhang',gd=gd,rowindex=22)">
+								生成建行清册
+							</button>
+							<button
+								onClick="@command('openZUL',gd=gd,url='HuCard_ClientDealAll.zul',rowindex=22)">
+								批量处理
+							</button>
+						</footer>
+					</foot>
+				</grid>
+			</north>
+			<center>
+				<grid vflex="1" emptyMessage="没有数据" sizedByContent="true"
+					model="@load(vm.list)" mold="paging" pageSize="100" id="gd">
+					<columns>
+						<column width="40px"></column>
+						<column label="序号" width="50px" align="center" />
+						<column label="单位公积金号" align="center" width="85px" />
+						<column label="公司编号" align="center" width="60px" />
+						<column label="公司简称" align="center" width="120px" />
+						<column align="center" label="所属月份" />
+						<column label="个人公积金号" align="center" width="85px" />
+						<column label="员工编号" align="center" width="60px" />
+						<column label="姓名" align="center" width="50px" />
+						<column label="身份证号" align="center"
+							width="140px" />
+						<column label="卡号" align="center" width="145px" />
+						<column label="客服" align="center" width="50px"/>
+						<column label="联系状态" align="center" width="110px" />
+						<column label="发卡对象" align="center" width="70px" />
+						<column label="材料联系人" align="center" width="70px"></column>
+						<column label="申报日期" align="center" width="70px" />
+						<column label="账户类型" align="center" width="70px" />
+						<column label="领卡银行" align="center" width="80px" />
+						<column label="图像" align="center" width="40px" />
+						<column label="状态" align="center" />
+						<column label="短信" width="30px"></column>
+						<column label="操作" align="center" />
+						<column align="center" width="40px">
+							<checkbox id="eheckall"
+								onClick="@command('checkall',ck=self,gd=gd,rowindex=22)">
+							</checkbox>
+						</column>
+					</columns>
+					<rows>
+						<template name="model">
+							<row style="${each.re_accounttype=='独立开户'?'color:#FF0000;':'' }">
+								<custom-attributes
+									re_id="${each.re_id }" />
+								<detail open="false" fulfill="onOpen"
+									visible="${each.num>0 }">
+									<include
+										src="/EmHouseCard/HuCard_TakeCardRemarkList.zul"
+										re_id="${re_id}" />
+								</detail>
+								<cell>
+									<label
+										value="${forEachStatus.index+1 }">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.re_cgjjno)">
+									</label>
+								</cell>
+								<cell>
+									<label value="@load(each.cid)"></label>
+								</cell>
+								<cell>
+									<label
+										value="${each.coba_shortname==null?each.shortname:each.coba_shortname }">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ownmonth)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.re_gjjno)">
+									</label>
+								</cell>
+								<cell>
+									<label value="@load(each.gid)"></label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.username)">
+									</label>
+								</cell>
+								<cell>
+									<label value="@load(each.idcard)"></label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.re_cardid)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="${each.coba_client!=null?each.coba_client:each.re_client }">
+									</label>
+								</cell>
+								<cell>
+									<combobox width="95%" value="@bind(each.re_contactsate)"
+										onChange="@command('changecontactsate',model=each)"
+									>
+										<comboitem></comboitem>
+										<comboitem label="未联系"></comboitem>
+										<comboitem label="已联系客服"></comboitem>
+										<comboitem label="已联系指定人"></comboitem>
+									</combobox>
+								</cell>
+								<cell>
+									<a onClick="@command('opencaliname',model=each,type='1')" if="${each.cosp}">
+										<label
+											value="@load(each.cosp_card_caliname)">
+										</label>
+									</a>
+									<label if="${!each.cosp}"
+										value="@load(each.cosp_card_caliname)">
+									</label>
+								</cell>
+								<cell>
+									<a onClick="@command('opencaliname',model=each,type='2')" if="${each.bs_cosp}">
+										<label
+											value="@load(each.cosp_card_data_caliname)">
+										</label>
+									</a>
+									<label if="${!each.bs_cosp}"
+										value="@load(each.cosp_card_data_caliname)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.re_apptime)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.re_accounttype)">
+									</label>
+								</cell>
+								<cell>
+									<label
+										value="@load(each.re_band)">
+									</label>
+								</cell>
+								<cell>
+									<image src="../images/in_pic.gif"
+										if="${each.picnum>0 }" style="cursor:pointer"
+										onClick="@command('openempic',a=each)" />
+								</cell>
+								<cell>
+									<hlayout>
+										<image
+											src="../images/20070708132244928.gif"
+											visible="${each.gidnum>1 }" width="18" height="18" border="0"
+											style="cursor:pointer;"
+											tooltiptext="该员工有${each.gidnum }条领卡数据" />
+										<label
+											value="@load(each.state_Name)">
+										</label>
+									</hlayout>
+								</cell>
+								<cell>
+									<image src="../images/mobile.gif"
+										style="cursor:pointer"
+										onClick="@command('openmobile',a=each)" />
+								</cell>
+								<cell width="60px">
+									<menubar autodrop="true">
+										<menu
+											image="../images/pencil-small.png">
+											<menupopup>
+												<menuitem label="编辑"
+													visible="${each.re_state==26}"
+													onClick="@command('openzulEdit',model=each,url='HuCard_ClientUpDataInfo.zul')" />
+												<menuitem label="编辑"
+													visible="${each.re_state==23}"
+													onClick="@command('openzulEdit',model=each,url='HuCard_ClientUpDataInfo.zul')" />
+												<menuitem label="编辑"
+													visible="${each.re_state==11}"
+													onClick="@command('openzulEdit',model=each,url='HuCard_ZlBackCardUpdate.zul')" />
+												<menuitem label="编辑"
+													visible="${each.re_state==19}"
+													onClick="@command('openzulEdit',model=each,url='HuCard_ChargedData.zul')" />
+												<menuitem label="编辑"
+													visible="${each.re_state==12}"
+													onClick="@command('openzulEdit',model=each,url='HuCard_ToClient.zul')" />
+												<menuitem label="重新提交"
+													visible="${each.re_state==22}"
+													onClick="@command('openzulEdit',model=each,url='HuCard_ClientZlUpdate.zul')" />
+												<menuitem label="修改状态"
+													visible="${each.re_state==15 or each.re_state==16 or each.re_state==17 
+							or each.re_state==18 or each.re_state==19 or each.re_state==20 or each.re_state==27 or each.re_state==21 or each.re_state==24}"
+													onClick="@command('openzulEdit',model=each,url='EmHouse_TakeCardStateUpdate.zul')" />
+												<menuitem label="退回"
+													visible="false"
+													onClick="@command('openzulEdit',model=each,url='HuCard_ClientBackComfirm.zul')" />
+												<menuitem label="备注"
+													onClick="@command('openzulEdit',model=each,url='EmHouse_TakeCardRemarkAdd.zul')" />
+												<menuitem label="详细"
+													onClick="@command('opendetail',model=each)" />
+											</menupopup>
+										</menu>
+									</menubar>
+									
+								</cell>
+								<cell>
+									<checkbox value="@load(each)"
+										visible="${each.state_Name=='我司待领'||each.state_Name=='客服核收'||each.state_Name=='福利领卡'||each.state_Name=='中心签收'||each.state_Name=='待收资料'}">
+									</checkbox>
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</center>
+		</borderlayout>
+	</window>
+	<script><![CDATA[
+        zk.afterLoad("zul.db", function () {
+            // Datebox Calendar Renderer
+            var _Cwgt = {};
+            zk.override(zul.db.CalendarPop.prototype, _Cwgt, {
+                // switch the view after redraw or open as needed
+                redraw: function (out) {
+                    _Cwgt.redraw.apply(this, arguments); //call the original method
+                    this._customChangeView ();
+                },
+                open: function (silent) {
+                    _Cwgt.open.apply(this, arguments); //call the original method
+                    this._customChangeView ();
+                },
+                _customChangeView: function () {
+                    // cannot show month/day
+                    if (jq(this.parent.$n()).hasClass('datebox-year-only')) {
+                        var view = this._view;
+                        // switch to year view as needed
+                        if (view == 'month' || view == 'day')
+                            this._setView("year");
+                    } else if (jq(this.parent.$n()).hasClass('datebox-month-only')) {
+                        // cannot show day view
+                        // switch to month view as needed
+                        if (this._view == 'day')
+                            this._setView("month");
+                    }
+                },
+                // customize the chooseDate function
+                _chooseDate: function (target, val) {
+                    var view = this._view;
+                    if (jq(this.parent.$n()).hasClass('datebox-month-only')
+                        || jq(this.parent.$n()).hasClass('datebox-year-only')) {
+                        // do customize chooseDate if the parent (datebox)
+                        // has specific class
+                        var date = this.getTime(),
+                            year = (view == 'decade' || view == 'year')? val : date.getFullYear(),
+                            month = view == 'month'? val : 0,
+                            date = 1;
+                        // set date value
+                        this._setTime(year, month, 1);
+                        if (view == 'decade') {
+                            // switch to year view if at decade view
+                            this._setView("year");
+                        } else if (jq(this.parent.$n()).hasClass('datebox-month-only')
+                            && view == 'year') {
+                            // switch to month view if at year view and the month view is allowed
+                            this._setView("month");
+                        } else if (jq(this.parent.$n()).hasClass('datebox-month-only') && view == 'month'
+                            || jq(this.parent.$n()).hasClass('datebox-year-only') && view == 'year') {
+                            // close calendar and update value if already at the smallest allowed view
+                            this.close();
+                            this.parent.updateChange_();
+                        }
+                    } else {
+                        _Cwgt._chooseDate.apply(this, arguments); //call the original method
+                    }
+                }
+            });
+        });
+    ]]></script>
+
+</zk>

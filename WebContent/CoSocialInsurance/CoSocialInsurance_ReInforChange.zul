@@ -1,0 +1,255 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="win" title="单位信息变更 - 重新提交" border="normal" width="740px"
+		closable="true" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoSocialInsurance.CoSocialInsurance_ReInforChangeController')">
+		<scrollview vflex="1">
+			<grid>
+				<columns>
+					<column width="20%" />
+					<column />
+				</columns>
+				<rows>
+					<row>
+						<cell>
+							<label value="社保编号" style="color:#666" />
+						</cell>
+						<cell>
+							<label value="@load(vm.m.cosb_sorid)" />
+						</cell>
+					</row>
+					<row>
+						<cell>
+							<label value="公司名称(全称)" style="color:#666" />
+						</cell>
+						<cell>
+							<label value="@load(vm.m.coba_company)" />
+						</cell>
+					</row>
+					<row>
+						<cell>
+							<label value="企业注册地址" style="color:#666" />
+						</cell>
+						<cell>
+							"
+							<label value="@load(vm.m.cosb_regadd)" />
+							"
+							<space />
+							<label style="color:red">修改为</label>
+							<space />
+							<textbox width="200px"
+								value="@bind(vm.cm.csbc_regadd)" />
+						</cell>
+					</row>
+					<row>
+						<cell>
+							<label value="工商注册号" style="color:#666" />
+						</cell>
+						<cell>
+							"
+							<label value="@load(vm.m.cosb_regid)" />
+							"
+							<space />
+							<label style="color:red">修改为</label>
+							<space />
+							<textbox width="200px"
+								value="@bind(vm.cm.csbc_regid)" />
+						</cell>
+					</row>
+					<row>
+						<cell>
+							<label value="经济类型" style="color:#666" />
+						</cell>
+						<cell>
+							"
+							<label value="@load(vm.m.cosb_ecoclass)" />
+							"
+							<space />
+							<label style="color:red">修改为</label>
+							<space />
+							<combobox readonly="true"
+								value="@bind(vm.cm.csbc_ecoclass)">
+								<comboitem></comboitem>
+								<comboitem label="国有全资"
+									if="${vm.m.cosb_ecoclass ne '国有全资' }">
+								</comboitem>
+								<comboitem label="集体全资"
+									if="${vm.m.cosb_ecoclass ne '集体全资' }">
+								</comboitem>
+								<comboitem label="股份合作"
+									if="${vm.m.cosb_ecoclass ne '股份合作' }">
+								</comboitem>
+								<comboitem label="联营企业"
+									if="${vm.m.cosb_ecoclass ne '联营企业' }">
+								</comboitem>
+								<comboitem label="有限责任公司"
+									if="${vm.m.cosb_ecoclass ne '有限责任公司' }">
+								</comboitem>
+								<comboitem label="股份有限公司"
+									if="${vm.m.cosb_ecoclass ne '股份有限公司' }">
+								</comboitem>
+								<comboitem label="私有企业"
+									if="${vm.m.cosb_ecoclass ne '私有企业' }">
+								</comboitem>
+								<comboitem label="其它内资企业"
+									if="${vm.m.cosb_ecoclass ne '其它内资企业' }">
+								</comboitem>
+								<comboitem label="港、澳、台投资"
+									if="${vm.m.cosb_ecoclass ne '港、澳、台投资' }">
+								</comboitem>
+								<comboitem label="国外投资"
+									if="${vm.m.cosb_ecoclass ne '国外投资' }">
+								</comboitem>
+							</combobox>
+						</cell>
+					</row>
+					<row>
+						<cell>
+							<label value="行业类型" style="color:#666" />
+						</cell>
+						<cell>
+							"
+							<label
+								value="@load(vm.m.cosb_industryclass)" />
+							"
+							<space />
+							<label style="color:red">修改为</label>
+							<space />
+							<combobox readonly="true"  selectedItem="@bind(vm.industryFirstModel)"
+								model="@load(vm.industryFirstList)" onChange="@command('industryFirstChange')"
+								value="@bind(vm.cm.csbc_iclassfirst)">
+								<template name="model">
+									<comboitem label="@load(each.name)" />
+								</template>
+							</combobox>
+							<label value=" - "/>
+							<combobox readonly="true"
+								model="@load(vm.industryList1)"
+								value="@bind(vm.cm.csbc_industryclass)">
+								<template name="model">
+									<comboitem label="@load(each.name)" />
+								</template>
+							</combobox>
+						</cell>
+					</row>
+					<row>
+						<cell>
+							<label value="组织机构代码" style="color:#666" />
+						</cell>
+						<cell>
+							"
+							<label value="@load(vm.m.cosb_comid)" />
+							"
+							<space />
+							<label style="color:red">修改为</label>
+							<space />
+							<textbox width="200px"
+								value="@bind(vm.cm.csbc_comid)" />
+						</cell>
+					</row>
+					<row>
+						<cell>
+							<label value="法人姓名" style="color:#666" />
+						</cell>
+						<cell>
+							"
+							<label value="@load(vm.m.cosb_corname)" />
+							"
+							<space />
+							<label style="color:red">修改为</label>
+							<space />
+							<textbox width="200px"
+								value="@bind(vm.cm.csbc_corname)" />
+						</cell>
+					</row>
+					<row>
+						<cell>
+							<label value="法人身份证号" style="color:#666" />
+						</cell>
+						<cell>
+							"
+							<label value="@load(vm.m.cosb_coridcard)" />
+							"
+							<space />
+							<label style="color:red">修改为</label>
+							<space />
+							<textbox width="200px"
+								value="@bind(vm.cm.csbc_coridcard)" />
+						</cell>
+					</row>
+					<row>
+						<cell>
+							<label value="银行编码" style="color:#666" />
+						</cell>
+						<cell>
+							"
+							<label value="@load(vm.m.cosb_bankcode)" />
+							"
+							<space />
+							<label style="color:red">修改为</label>
+							<space />
+							<combobox readonly="true" width="200px"
+								model="@load(vm.bankList)" value="@bind(vm.cm.csbc_bankcode)">
+								<template name="model">
+									<comboitem label="@load(each.name)" />
+								</template>
+							</combobox>
+						</cell>
+					</row>
+					<row>
+						<cell>
+							<label value="银行全称(营业部全称)"
+								style="color:#666" />
+						</cell>
+						<cell>
+							"
+							<label value="@load(vm.m.cosb_bankname)" />
+							"
+							<space />
+							<label style="color:red">修改为</label>
+							<space />
+							<textbox width="200px"
+								value="@bind(vm.cm.csbc_bankname)" />
+						</cell>
+					</row>
+					<row>
+						<cell>
+							<label value="银行账号" style="color:#666" />
+						</cell>
+						<cell>
+							"
+							<label value="@load(vm.m.cosb_bankacctid)" />
+							"
+							<space />
+							<label style="color:red">修改为</label>
+							<space />
+							<textbox width="200px"
+								value="@bind(vm.cm.csbc_bankacctid)" />
+						</cell>
+					</row>
+					<row>
+						<cell>
+							<label value="操作月份" style="color:#666" />
+						</cell>
+						<cell>
+							<datebox format="yyyyMM"
+								value="@bind(vm.ownmonth)" />
+						</cell>
+					</row>
+					<row>
+						<cell>
+							<label value="备注" style="color:#666" />
+						</cell>
+						<cell>
+							<textbox rows="4" hflex="1"
+								value="@bind(vm.cm.csbc_remark)" />
+						</cell>
+					</row>
+				</rows>
+			</grid>
+			<hbox width="100%" align="center" pack="center">
+				<button label="提交" onClick="@command('submit',win=win)" />
+			</hbox>
+		</scrollview>
+	</window>
+</zk>

@@ -1,0 +1,25 @@
+<?page title="导入收款出错记录" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="导入收款出错记录" border="normal" width="85%" height="80%"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.CoFinanceManage.Cfma_CollectImportErrListController')"
+		sizable="true" closable="true">
+		<grid emptyMessage="暂无出错记录" model="@load(vm.errList)"
+			width="100%" mold="paging" pageSize="15" height="100%">
+			<columns sizable="true">
+				<column label="操作人" align="center" width="80px" />
+				<column label="导入时间" align="center" width="150px" />
+				<column label="出错概要" align="center" />
+			</columns>
+			<rows>
+				<template name="model">
+					<row>
+						<label value="@load(each.ccie_addname)" />
+						<label value="@load(each.ccie_addtime)" />
+						<label value="@load(each.ccie_errCon)" />
+					</row>
+				</template>
+			</rows>
+		</grid>
+	</window>
+</zk>

@@ -1,0 +1,56 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="员工工资单数据" border="normal" id="emswin"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.SalaryPaper.SalaryPaper_EmSalaryDateController')"
+		height="100%" width="100%">
+		<borderlayout>
+			<north border="0">
+				<grid>
+					<columns>
+						<column width="10%"></column>
+						<column width="20%"></column>
+						<column></column>
+					</columns>
+					<rows>
+						<row>
+							<cell align="center" width="10%">
+								<label value="所属月份" />
+							</cell>
+							<cell width="20%" colspan="2">
+
+								<monthbox value="@bind(vm.ownmonth)"
+									format="yyyyMM" onChange="@command('own',month=self.value)" />
+							</cell>
+						</row>
+						<row>
+							<cell align="center">
+								<label value="选择公司" />
+							</cell>
+							<cell>
+								<combobox model="@load(vm.getCoList)" width="95%" readonly="true"
+									id="cocombox">
+									<template name="model">
+										<comboitem
+											value="@bind(each.cid)" label="[${each.cid}] (${each.coba_shortspell}) ${each.coba_shortname}" />
+									</template>
+								</combobox>
+							</cell>
+							<cell>
+								<button label="查询"
+									onClick="@command('search',cocombox=cocombox)" />
+							</cell>
+						</row>
+
+					</rows>
+				</grid>
+			</north>
+			<center border="0">
+				<include id="icBusinessList" src="@load(vm.url)"
+					onCreate="@command('setInclude',com=self)" />
+			</center>
+			<south></south>
+		</borderlayout>
+
+	</window>
+</zk>

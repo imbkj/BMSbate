@@ -1,0 +1,62 @@
+<?page title="员工活动——供应商产品信息新增" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="员工活动——供应商报价信息新增" border="normal" width="800px"
+		height="280px" closable="true" id="proadd"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.EmBenefit.EmActy_SupProductAddController')">
+		<grid width="100%" height="100%">
+			<columns visible="false">
+				<column width="80px" />
+				<column />
+				<column width="80px" />
+				<column />
+			</columns>
+			<rows>
+				<row>
+					<cell>产品名称</cell>
+					<cell colspan="3">
+						<textbox id="proname" mold="rounded"></textbox>
+					</cell>
+				</row>
+				<row>
+					<cell>产品原价</cell>
+					<cell>
+						<doublebox id="price" format="0.00"
+							mold="rounded" width="50%">
+						</doublebox>
+					</cell>
+					<cell>产品折扣价</cell>
+					<cell>
+						<doublebox id="disprice" format="0.00"
+							width="50%" mold="rounded">
+						</doublebox>
+					</cell>
+				</row>
+				<row>
+					<cell>产品折扣</cell>
+					<cell colspan="3">
+						<textbox id="discount" mold="rounded"
+							width="80%" />
+					</cell>
+				</row>
+				<row>
+					<cell>备注</cell>
+					<cell colspan="3">
+						<textbox id="remark" rows="3" width="80%"
+							mold="rounded">
+						</textbox>
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer align="center" span="4">
+					<button
+						onClick="@command('proadd',proname=proname.value,price=price.value,disprice=disprice.value,
+		discount=discount.value,pronum=pronum.value,win=proadd,remark=remark.value)">
+						提交
+					</button>
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

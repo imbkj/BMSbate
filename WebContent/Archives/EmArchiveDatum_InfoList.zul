@@ -1,0 +1,109 @@
+<?page title="档案业务信息列表" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window border="0" height="100%" apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('vm') @init('Controller.Archives.EmArchiveDatum_InfoListController')">
+	<style src="/css/style.css"></style>
+<panel title="档案业务信息列表" height="100%">
+<panelchildren>
+<borderlayout height="100%">
+<north border="0" title="检索" collapsible="true" flex="true" style="padding-bottom:10px;">
+<grid id="secrchgrid">
+	<rows>
+		<row>
+		<cell width="130px" align="right">公司名称：</cell>
+		<cell width="160px"><textbox id="company"/></cell>
+		<cell width="130px" align="right">员工姓名：</cell>
+		<cell width="160px"><textbox id="name"/></cell>
+			<cell width="75px" align="right">档案类型：</cell>
+		<cell width="180px">
+			<combobox id="acclass">
+				<comboitem label=""/>
+				<comboitem label="中智保管"/>
+				<comboitem label="委托人才"/>
+			</combobox>
+		</cell>
+		</row>
+		<row>
+		<cell width="130px" align="right">档案号：</cell>
+		<cell width="160px"><textbox id="acid"/></cell>
+		<cell width="130px" align="right">业务类型：</cell>
+		<cell >
+			<combobox id="yewclass" value="档案调入">
+				<comboitem value="-1" label=""/>
+				<comboitem value="0" label="档案调入"/>
+				<comboitem value="1" label="查借材料"/>
+				<comboitem value="2" label="出具证明"/>
+				<comboitem value="3" label="材料鉴别归档"/>
+				<comboitem value="4" label="转正定级"/>
+				<comboitem value="5" label="档案调出"/>
+				<comboitem value="6" label="欠费查询"/>
+			</combobox>
+		</cell>
+		<cell width="130px" align="right">办理状态：</cell>
+		<cell >
+			<combobox id="astate" value="待处理">
+				<comboitem value="0" label=""/>
+				<comboitem value="1" label="待处理"/>
+				<comboitem value="2" label="处理中"/>
+				<comboitem value="3" label="已处理"/>
+				<comboitem value="4" label="已退回"/>
+			</combobox>
+		</cell>
+		</row>
+		<row>
+			<cell align="center" colspan="6">
+				<button id="btSearch" label="查询"
+			onClick="@command('search',acclass=acclass.value,company=company.value,name=name.value,acid=acid.value,yewclass=yewclass,astate=astate)" />
+			</cell>
+		</row>
+	</rows>
+</grid>
+</north>
+<center>
+<grid hflex="1" vflex="1" emptyMessage="没有档案信息"  model="@load(vm.datumlist)" mold="paging" pageSize="40">
+	<columns>
+		<column width="40px"/>
+		<column label="序号" align="center" width="60px"/>
+		<column label="公司名称" sort="auto(coba_shortname)"/>
+		<column label="员工姓名" align="center" sort="auto(eada_name)"/>
+		<column label="档案类型" align="center" sort="auto(eada_filetype)"/>
+		<column label="档案号" align="center"  sort="auto(eada_fid)"/>
+		<column label="办理业务" align="center"  sort="auto(eada_type)"/>
+		<column label="客服" align="center" width="100px" sort="auto(coba_client)"/>
+		<column label="添加时间" align="center" width="100px" sort="auto(eada_addtime)"/>
+		<column label="状态" align="center"  width="60px" sort="auto(eada_final)"/>
+		<column label="短信" align="center"  width="60px"/>
+		<column label="详细" align="center"  width="140px"/>
+	</columns>
+	<rows>
+	  	<template name="model">
+			<row>
+			<custom-attributes
+			emar_id="${each.eada_id }" gid="${each.gid }" />
+			<detail open="false" fulfill="onOpen" visible="${each.num>0?true:false }">
+					<include src="/Archives/Archives_Remark.zul" emar_id="${emar_id}" gid='${gid}'/>
+			</detail>
+				<cell><label value="${forEachStatus.index+1 }"></label></cell>
+				<cell><label value="@load(each.coba_shortname)"></label></cell>
+				<cell><label value="@load(each.eada_name)"></label></cell>
+				<cell><label value="@load(each.eada_filetype)"></label></cell>
+				<cell><label value="@load(each.eada_fid)"></label></cell>
+				<cell><label value="@load(each.eada_type)"></label></cell>
+				<cell><label value="@load(each.coba_client)"></label></cell>
+				<cell><label value="@load(each.eada_addtime)"></label></cell>
+				<cell><label value="@load(each.eada_final)"></label></cell>
+				<cell><image style="cursor:pointer" src="../images/noread.gif" onClick="@command('message',a=each)"
+									if="${each.message==true and each.readState==false }" />
+									<image src="../images/readed.gif" onClick="@command('message',a=each)"
+									if="${each.message==true and each.readState==true }" /></cell>
+				<cell><hlayout><a onClick="@command('detail',model=each)"><label value="详细"></label></a>|<a onClick="@command('linkinfo',m=each)"><label value="联系记录"></label></a></hlayout></cell>
+			</row>
+		</template>
+	</rows>
+</grid>
+</center>
+</borderlayout>
+</panelchildren>
+</panel>
+</window>
+</zk>

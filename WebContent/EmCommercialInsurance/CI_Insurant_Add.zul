@@ -1,0 +1,173 @@
+<?page title="商业保险新增" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="商业保险新增" border="normal" width="100%" height="100%"
+		id="sb_w1" apply="org.zkoss.bind.BindComposer" sizable="true"
+		viewModel="@id('vm') @init('Controller.EmCommercialInsurance.CI_Insurant_Controller')"
+		onCreate="@command('winC',a=self)">
+		<div width="100%" height="100%" if="${vm.check_ciin}"
+			align="center">
+			<label value="${vm.check_ciinMessage}" />
+		</div>
+		<div
+			style="width:100%;height:94%;overflow-y:scroll;overflow-x:hidden;border:1px solid #bcbdbf;"
+			if="${!vm.check_ciin}">
+			<groupbox title="商保投保信息" mold="3d">
+				<grid width="100%" mold="paging" pageSize="19" id="g1"
+					model="@load(vm.ci_insurant_castsort)">
+					<columns>
+						<column label="序号" align="center" width="60px" />
+						<column label="投保类型" align="center" />
+						<column label="投保份数" align="center" />
+						<column label="生效时间" align="center" />
+						<column label="员工编号" align="center"
+							visible="false" />
+					</columns>
+					<rows>
+						<template name="model">
+							<row>
+								<cell>
+									<label
+										value="${forEachStatus.index + 1}" />
+								</cell>
+								<cell>
+									<label
+										value="@load(each.ecin_castsort)" />
+								</cell>
+								<cell>
+									<combobox mold="rounded"
+										width="90px" readonly="true" disabled="false"
+										model="@load(vm.buycount_lst)"
+										value="@load(each.ecin_buy_count)"
+										onOpen="@command('buycount_on',emin=each)">
+										<template name="model">
+											<comboitem
+												label="@load(each.coba_client)"
+												value="@load(each.coba_client)">
+											</comboitem>
+										</template>
+									</combobox>
+								</cell>
+								<cell>
+									<datebox width="130px"
+										readonly="true" mold="rounded" format="yyyy-MM-dd"
+										value="@load(each.ecin_ef_date1)" />
+								</cell>
+								<cell>
+									<label value="@load(each.gid)" />
+								</cell>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</groupbox>
+
+			<groupbox title="员工基本信息" mold="3d">
+				<grid width="100%" model="@load(vm.embaselist)">
+					<rows>
+						<template name="model">
+							<row>
+								<grid width="100%" id="g2">
+									<rows>
+										<row>
+											<cell>被保险人：</cell>
+											<cell>
+												<textbox mold="rounded"
+													readonly="true" value="@load(each.ecin_insurant)" />
+											</cell>
+											<cell>证件号码：</cell>
+											<cell>
+												<textbox mold="rounded"
+													readonly="true" value="@load(each.ecin_idcard)" />
+											</cell>
+										</row>
+										<row>
+											<cell>性别：</cell>
+											<cell>
+												<textbox mold="rounded"
+													readonly="true" value="@load(each.ecin_sex)" />
+											</cell>
+											<cell>出生日期：</cell>
+											<cell>
+												<textbox mold="rounded"
+													readonly="true" value="@load(each.ecin_birthday)" />
+											</cell>
+										</row>
+										<row>
+											<cell>社保缴交城市：</cell>
+											<cell>
+												<combobox value="" mold="rounded"  readonly="true">
+													<comboitem
+														label="深圳" value="深圳" />
+													<comboitem
+														label="外地" value="外地" />
+												</combobox>
+											</cell>
+											<cell>工作岗位：</cell>
+											<cell>
+												<textbox mold="rounded"
+													value="" />
+											</cell>
+										</row>
+										<row>
+											<cell>合同签订方：</cell>
+											<cell>
+												<combobox value="" mold="rounded" readonly="true">
+													<comboitem
+														label="与中智签订" value="与中智签订" />
+													<comboitem
+														label="与客户签订" value="与客户签订" />
+												</combobox>
+											</cell>
+											<cell></cell>
+											<cell>
+												
+											</cell>
+										</row>
+									</rows>
+								</grid>
+							</row>
+						</template>
+					</rows>
+				</grid>
+			</groupbox>
+
+			<groupbox title="连带人基本信息" mold="3d">
+			<grid width="100%"  id="g3">
+				<rows>
+					<row align="left">
+						<cell align="right"  >配偶</cell>
+						<cell align="left"  >
+
+							<checkbox id="ch2" value="1"  disabled="${vm.coats1==0?true:false}"/>
+						</cell>
+
+						<cell align="right"  >子女</cell>
+						<cell align="left" >
+							<checkbox id="ch1" value="1"  disabled="${vm.coats2==0?true:false}"/>
+							
+						</cell>
+
+						<cell align="right">生效时间</cell>
+						<cell align="left">
+							<datebox width="130px" readonly="true" id="fl_date"
+								mold="rounded" format="yyyy-MM-dd" />
+						</cell>
+					</row>
+				</rows>
+			</grid>
+			
+				
+			</groupbox>
+		</div>
+		<grid width="100%">
+			<rows>
+				<row>
+					<cell colspan="5" align="center">
+						<button label="提交"
+							onClick="@command('ci_insurant_add', emco=each,gridco=g1,gridco2=g2,gridco3=g3,gid=gid,sb_w1=sb_w1,ch1=ch1,ch2=ch2,fl_date=fl_date)" />
+					</cell>
+				</row>
+			</rows>
+		</grid>
+	</window>
+</zk>

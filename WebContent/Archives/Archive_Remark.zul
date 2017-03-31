@@ -1,0 +1,27 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="wRemark" width="500px" height="200px" title="备注信息"
+		border="normal" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('Controller.Archives.Archive_RemarkController')"
+		onCreate="@command('winC',a=self)" closable="true">
+		<grid>
+			<columns visible="false">
+				<column align="center" width="80px" />
+				<column />
+			</columns>
+			<rows>
+				<row>
+					<cell>备注</cell>
+					<cell>
+						<textbox width="100%" value="@bind(vm.content)" rows="5" />
+					</cell>
+				</row>
+			</rows>
+			<foot>
+				<footer span="2" align="center">
+					<button label="提交" onClick="@command('submit')" />
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>
